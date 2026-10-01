@@ -2,10 +2,10 @@
 // Запуск: npm run check:story [-- путь/к/файлу.ink]
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { Compiler, Story } from 'inkjs/full';
+import { Compiler, CompilerOptions, Story } from 'inkjs/full';
 
 const RUNS = 400;
-const TAGS = ['from', 'me', 'sys', 'photo', 'delay', 'unlock', 'title', 'contact', 'to', 'silent'];
+const TAGS = ['from', 'me', 'sys', 'photo', 'delay', 'unlock', 'title', 'contact', 'to', 'silent', 'chapter', 'rename', 'label'];
 const parseDelay = (v) => {
   const m = String(v).trim().match(/^(\d+(?:\.\d+)?)\s*(s|m|h)?$/);
   if (!m) return 0;
@@ -21,7 +21,7 @@ let failed = false;
 
 for (const file of files) {
   const source = readFileSync(file, 'utf8');
-  const compiler = new Compiler(source);
+  const compiler = new Compiler(source, new CompilerOptions(null, [], true));
   let json;
   try {
     json = compiler.Compile().ToJson();
@@ -72,6 +72,10 @@ for (const file of files) {
       const pick = choices[Math.floor(Math.random() * choices.length)];
       choiceTaken.set(pick.text, (choiceTaken.get(pick.text) ?? 0) + 1);
       story.ChooseChoiceIndex(pick.index);
+    }
+    // посещённые узлы по счётчикам ink: надёжнее, чем по текущему пути
+    for (const k of story.mainContentContainer.namedContent.keys()) {
+      if (k !== 'global decl' && story.state.VisitCountAtPathString(k) > 0) knots.add(k);
     }
     maxSteps = Math.max(maxSteps, steps);
     durations.push(delay);

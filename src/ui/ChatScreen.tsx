@@ -114,7 +114,14 @@ export function ChatScreen({
           <div className="choices">
             {choicesHere.map((c) => (
               <button key={c.index} className="choice" onClick={() => engine.choose(c.index)}>
-                {c.text}
+                {c.label ? (
+                  <>
+                    <span className="choice-label">{c.label}</span>
+                    <span className="choice-say">{c.silent ? '' : c.text}</span>
+                  </>
+                ) : (
+                  c.text
+                )}
               </button>
             ))}
             {elsewhere}

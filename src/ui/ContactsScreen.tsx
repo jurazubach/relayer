@@ -53,7 +53,10 @@ export function ContactsScreen({
           );
         })}
       </ul>
-      <footer className="list-footer">{engine.title}</footer>
+      <footer className="list-footer">
+        {engine.title}
+        {view.chapter ? ` · ${view.chapter}` : ''}
+      </footer>
     </div>
   );
 }

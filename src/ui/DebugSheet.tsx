@@ -91,6 +91,15 @@ export function DebugSheet({
                   </button>
                 ))}
               </div>
+              <button
+                className={view.fastTyping ? 'toggle on' : 'toggle'}
+                onClick={() => {
+                  engine.setFastTyping(!view.fastTyping);
+                  refresh();
+                }}
+              >
+                Быстрый набор (×4): {view.fastTyping ? 'вкл' : 'выкл'}
+              </button>
               {view.status ? (
                 <p className="muted">
                   Следующее сообщение в чате «{engine.contact(view.status.thread).name}» через{' '}
@@ -147,21 +156,40 @@ export function DebugSheet({
             </div>
 
             <div className="sheet-group">
-              <h3>Перейти к узлу</h3>
+              <h3>Перейти к главе</h3>
               <div className="knots">
-                {engine.knots.map((k) => (
-                  <button
-                    key={k}
-                    className="chip"
-                    onClick={() => {
-                      engine.jump(k);
-                      onClose();
-                    }}
-                  >
-                    {k}
-                  </button>
-                ))}
+                {engine.knots
+                  .filter((k) => /^ch\d+$/.test(k))
+                  .map((k) => (
+                    <button
+                      key={k}
+                      className="chip"
+                      onClick={() => {
+                        engine.jump(k);
+                        onClose();
+                      }}
+                    >
+                      Глава {k.slice(2)}
+                    </button>
+                  ))}
               </div>
+              <details>
+                <summary className="muted">Все узлы ({engine.knots.length})</summary>
+                <div className="knots">
+                  {engine.knots.map((k) => (
+                    <button
+                      key={k}
+                      className="chip"
+                      onClick={() => {
+                        engine.jump(k);
+                        onClose();
+                      }}
+                    >
+                      {k}
+                    </button>
+                  ))}
+                </div>
+              </details>
             </div>
 
             <div className="sheet-group">

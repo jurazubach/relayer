@@ -123,21 +123,32 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
   background: color-mix(in srgb, var(--accent) 12%, var(--bg));
   color: var(--fg); text-align: left; font-size: 16px;
 }
+.choice-label { display: block; font-weight: 600; }
+.choice-say { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+.choice-say:empty { display: none; }
 .choice:active { background: color-mix(in srgb, var(--accent) 30%, var(--bg)); }
 .elsewhere { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; justify-content: center; }
 .elsewhere .chip { font-family: var(--font); color: var(--fg); }
 .hint { margin: 4px 4px; color: var(--muted); font-size: 14px; text-align: center; }
 
-/* уведомление сверху */
-.toast {
-  position: absolute; z-index: 20; left: 10px; right: 10px; top: calc(env(safe-area-inset-top, 0px) + 8px);
-  display: flex; gap: 10px; align-items: center; padding: 10px 12px;
-  border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--raise) 94%, transparent);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); text-align: left;
-  animation: drop 0.25s ease-out;
+/* уведомление сверху: встаёт в поток и сдвигает экран, ничего не перекрывая */
+.toast-slot {
+  flex: none; overflow: hidden; background: var(--bg);
+  padding: calc(env(safe-area-inset-top, 0px) + 8px) 10px 6px;
+  max-height: 160px;
+  animation: slot-open 0.25s ease-out;
 }
-@keyframes drop { from { transform: translateY(-20px); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+.toast-slot.leaving { animation: slot-close 0.25s ease-in forwards; }
+@keyframes slot-open { from { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; } }
+@keyframes slot-close { to { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .toast-slot, .toast-slot.leaving { animation: none; } }
+/* когда уведомление сверху, шапке экрана отступ под чёлку уже не нужен */
+.toast-slot + .screen .list-header { padding-top: 12px; }
+.toast-slot + .screen .chat-header { padding-top: 6px; }
+.toast {
+  width: 100%; display: flex; gap: 10px; align-items: center; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 18px; background: var(--raise); text-align: left;
+}
 .toast-body { min-width: 0; display: flex; flex-direction: column; }
 .toast-name { font-weight: 600; font-size: 14px; }
 .toast-text { font-size: 14px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

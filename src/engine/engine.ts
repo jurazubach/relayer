@@ -34,6 +34,8 @@ interface Pending {
   typingMs: number;
   typingDone: number;
   unlock: string[];
+  /** Тег #chapter: с этой строки начинается новая глава. */
+  chapter?: string;
 }
 
 export type Phase = 'pause' | 'gap' | 'typing';
@@ -45,6 +47,8 @@ export interface ChoiceView {
   thread: string;
   /** Тег #silent: выбор без исходящего сообщения («промолчать»). */
   silent?: boolean;
+  /** Тег #label:...: что показать на кнопке, если отправляемый текст сам по себе неочевиден. */
+  label?: string;
 }
 
 interface SaveData {
@@ -63,6 +67,8 @@ interface SaveData {
   nextId: number;
   carryDelay: number;
   savedAt: number;
+  chapter?: string;
+  renamed?: Record<string, string>;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -76,6 +82,10 @@ const COLORS: Record<string, string> = {
   purple: '#a78bfa',
   pink: '#f472b6',
   teal: '#2dd4bf',
+  orange: '#fb923c',
+  lime: '#a3e635',
+  cyan: '#22d3ee',
+  indigo: '#818cf8',
 };
 
 export function compileInk(source: string): { json: string } | { errors: string[] } {
@@ -120,6 +130,7 @@ export class Engine {
   readonly contacts: Map<string, Contact> = new Map();
   readonly knots: string[];
   readonly varNames: string[];
+  private originalNames = new Map<string, string>();
 
   private json: string;
   private story!: Story;
@@ -136,6 +147,10 @@ export class Engine {
   private carryDelay = 0;
   /** Следующее входящее идёт сразу после ответа игрока: собеседнику нужно время прочитать. */
   private afterPlayer = false;
+  private chapter = '';
+  private renamed: Record<string, string> = {};
+  /** Отладка: набор текста в 4 раза быстрее. */
+  fastTyping = false;
   private listeners = new Set<() => void>();
   private lastTick = Date.now();
   speed: number = 60;
@@ -157,6 +172,7 @@ export class Engine {
       }
     }
     this.title = title;
+    for (const [id, c] of this.contacts) this.originalNames.set(id, c.name);
     const named = (probe.mainContentContainer as unknown as { namedContent: Map<string, unknown> }).namedContent;
     this.knots = [...named.keys()].filter((k) => k !== 'global decl');
     const globals = (probe.variablesState as unknown as { _globalVariables: Map<string, unknown> })._globalVariables;
@@ -206,8 +222,21 @@ export class Engine {
     this.read = {};
     this.nextId = 1;
     this.carryDelay = 0;
+    this.chapter = '';
+    for (const id of Object.keys(this.renamed)) {
+      const original = this.originalNames.get(id);
+      if (original) this.contact(id).name = original;
+    }
+    this.renamed = {};
     this.lastTick = Date.now();
     this.advance();
+  }
+
+  /** Контакт получает настоящее имя (тег #rename:watcher, Слоун). Сохраняется в прогрессе. */
+  private rename(id: string, name: string) {
+    if (!id || !name) return;
+    this.renamed[id] = name;
+    this.contact(id).name = name;
   }
 
   private unlock(id: string) {
@@ -226,6 +255,8 @@ export class Engine {
       let thread = '';
       let delay = 0;
       const unlock: string[] = [];
+      let chapter: string | undefined;
+      const renames: [string, string][] = [];
       for (const raw of tags) {
         const [k, ...rest] = raw.split(':');
         const key = k.trim();
@@ -236,7 +267,13 @@ export class Engine {
         else if (key === 'photo') kind = 'photo';
         else if (key === 'delay') delay += parseDelay(value);
         else if (key === 'unlock') unlock.push(value);
+        else if (key === 'chapter') chapter = value || text;
+        else if (key === 'rename') {
+          const [id, ...name] = value.split(',');
+          renames.push([id.trim(), name.join(',').trim()]);
+        }
       }
+      renames.forEach(([id, name]) => this.rename(id, name));
       if (!text) {
         // строка без текста: только теги, переносим паузу и открытия на следующую строку
         this.carryDelay += delay;
@@ -256,6 +293,7 @@ export class Engine {
         typingMs: typingTime(kind, text),
         typingDone: 0,
         unlock,
+        chapter,
       };
       this.carryDelay = 0;
       this.afterPlayer = false;
@@ -265,13 +303,15 @@ export class Engine {
       this.choices = this.story.currentChoices.map((c) => {
         let thread = fallback;
         let silent = false;
+        let label: string | undefined;
         for (const raw of c.tags ?? []) {
           const [k, ...rest] = raw.split(':');
           if (k.trim() === 'to') thread = rest.join(':').trim() || fallback;
           if (k.trim() === 'silent') silent = true;
+          if (k.trim() === 'label') label = rest.join(':').trim();
         }
         if (!this.unlocked.includes(thread)) this.unlock(thread);
-        return { index: c.index, text: c.text, thread, silent };
+        return { index: c.index, text: c.text, thread, silent, label };
       });
       this.choiceThread = this.choices.length ? fallback : null;
       this.ended = this.choices.length === 0;
@@ -281,6 +321,7 @@ export class Engine {
   private commit(p: Pending, at = Date.now()) {
     p.unlock.forEach((id) => this.unlock(id));
     this.unlock(p.thread);
+    if (p.chapter) this.chapter = p.chapter;
     this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at });
     this.lastThread = p.thread;
     // поднять чат наверх списка
@@ -293,7 +334,7 @@ export class Engine {
     const dt = Math.max(0, now - start);
     this.lastTick = now;
     const fresh: Msg[] = [];
-    let real = dt; // реальные миллисекунды, которые ещё можно потратить
+    let real = dt * (this.fastTyping ? 4 : 1); // реальные миллисекунды на «подумал» и «печатает»
     let guard = 0;
     while (this.pending && guard++ < 1000) {
       const p = this.pending;
@@ -302,14 +343,15 @@ export class Engine {
       if (delayLeft > 0) {
         if (this.speed === Infinity) p.delayDone = p.delayMs;
         else {
-          const can = real * this.speed;
+          const k = this.speed / (this.fastTyping ? 4 : 1);
+          const can = real * k;
           if (can < delayLeft) {
             p.delayDone += can;
             real = 0;
             break;
           }
           p.delayDone = p.delayMs;
-          real -= delayLeft / this.speed;
+          real -= delayLeft / k;
         }
       }
       // 2. подумал. 3. печатает: всегда в реальном времени
@@ -332,7 +374,7 @@ export class Engine {
       real -= typeLeft;
       this.pending = null;
       // если догоняем офлайн, ставим сообщению то время, когда оно «пришло бы»
-      this.commit(p, Math.round(start + (dt - real)));
+      this.commit(p, Math.round(start + (dt - real / (this.fastTyping ? 4 : 1))));
       fresh.push(this.messages[this.messages.length - 1]);
       this.advance();
     }
@@ -363,6 +405,12 @@ export class Engine {
   skipWait() {
     if (this.pending) this.pending.delayDone = this.pending.delayMs;
     this.tick();
+  }
+
+  setFastTyping(on: boolean) {
+    this.tick();
+    this.fastTyping = on;
+    this.emit();
   }
 
   setSpeed(speed: number) {
@@ -421,9 +469,11 @@ export class Engine {
       choices: this.choices,
       choiceThreads: [...new Set(this.choices.map((c) => c.thread))],
       ended: this.ended,
+      chapter: this.chapter,
       status,
       read: this.read,
       speed: this.speed,
+      fastTyping: this.fastTyping,
     };
   }
 
@@ -448,10 +498,13 @@ export class Engine {
       nextId: this.nextId,
       carryDelay: this.carryDelay,
       savedAt: this.lastTick,
+      chapter: this.chapter,
+      renamed: this.renamed,
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
       localStorage.setItem('relay:speed', String(this.speed));
+      localStorage.setItem('relay:fast', this.fastTyping ? '1' : '0');
     } catch {
       /* хранилище недоступно: играем без сохранения */
     }
@@ -462,6 +515,7 @@ export class Engine {
     try {
       const s = localStorage.getItem('relay:speed');
       if (s) this.speed = s === 'Infinity' ? Infinity : Number(s) || 60;
+      this.fastTyping = localStorage.getItem('relay:fast') === '1';
       const raw = localStorage.getItem(this.storageKey());
       if (!raw) return false;
       const d = JSON.parse(raw) as SaveData;
@@ -478,6 +532,9 @@ export class Engine {
       this.read = d.read;
       this.nextId = d.nextId;
       this.carryDelay = d.carryDelay;
+      this.chapter = d.chapter ?? '';
+      this.renamed = d.renamed ?? {};
+      for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();
       return true;
     } catch {

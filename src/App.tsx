@@ -63,6 +63,11 @@ export function App() {
     return () => window.clearInterval(timer);
   }, [loaded]);
 
+  // открыли чат, о котором было уведомление: уведомление больше не нужно
+  useEffect(() => {
+    if (open) setToast((t) => (t && t.thread === open ? null : t));
+  }, [open]);
+
   const selectStory = useCallback((id: string) => {
     writeLocal(ACTIVE_KEY, id);
     setStoryId(id);
@@ -78,6 +83,17 @@ export function App() {
 
   return (
     <div className="phone">
+      {toast && loaded.engine && (
+        <Toast
+          msg={toast}
+          contact={loaded.engine.contact(toast.thread)}
+          onOpen={() => {
+            setOpen(toast.thread);
+            setToast(null);
+          }}
+          onDone={() => setToast(null)}
+        />
+      )}
       {loaded.engine ? (
         <Game
           engine={loaded.engine}
@@ -97,17 +113,6 @@ export function App() {
             Вернуться к «{STORIES[0].title}»
           </button>
         </div>
-      )}
-      {toast && loaded.engine && (
-        <Toast
-          msg={toast}
-          contact={loaded.engine.contact(toast.thread)}
-          onOpen={() => {
-            setOpen(toast.thread);
-            setToast(null);
-          }}
-          onDone={() => setToast(null)}
-        />
       )}
       {debug && (
         <DebugSheet
