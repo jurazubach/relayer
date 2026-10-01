@@ -23,7 +23,7 @@ export function ChatScreen({
   const msgs = view.messages.filter((m) => m.thread === thread);
   const st = view.status?.thread === thread ? view.status : null;
   const typing = !!st?.typing;
-  const away = !!st && !st.typing;
+  const away = st?.phase === 'pause';
   const choicesHere = view.choices.filter((c) => c.thread === thread);
   const waitingElsewhere = view.choices.length > 0 && choicesHere.length === 0;
   const otherThreads = view.choiceThreads.filter((t) => t !== thread);
@@ -47,7 +47,7 @@ export function ChatScreen({
     endRef.current?.scrollIntoView({ block: 'end' });
   }, [msgs.length, typing, choicesHere.length]);
 
-  const statusText = typing ? 'печатает…' : away && st && st.remainingMs > 60_000 ? 'не в сети' : 'в сети';
+  const statusText = typing ? 'печатает…' : away && st && st.pauseMs > 60_000 ? 'не в сети' : 'в сети';
 
   return (
     <div className="screen chat">
@@ -125,8 +125,8 @@ export function ChatScreen({
           elsewhere
         ) : away && st ? (
           <p className="hint">
-            {contact.name} ответит через {formatDuration(st.remainingMs)}
-            {view.speed > 1 && view.speed !== Infinity ? ` · реально ${formatDuration(st.remainingMs / view.speed)}` : ''}
+            {contact.name} ответит через {formatDuration(st.pauseMs)}
+            {view.speed > 1 && view.speed !== Infinity ? ` · реально ${formatDuration(st.realMs)}` : ''}
           </p>
         ) : (
           <p className="hint">…</p>

@@ -16,15 +16,27 @@ export interface Contact {
   color: string;
 }
 
+/**
+ * Сообщение в очереди проходит три фазы:
+ * 1. pause  — пауза сюжета (#delay). Это «игровое» время, его ускоряет ползунок скорости.
+ * 2. gap    — человек прочитал и думает. Реальное время, индикатора нет.
+ * 3. typing — «печатает…». Реальное время, зависит от длины сообщения.
+ * Фазы 2 и 3 не ускоряются, поэтому переписка всегда идёт в живом темпе.
+ */
 interface Pending {
   thread: string;
   kind: Kind;
   text: string;
   delayMs: number;
+  delayDone: number;
+  gapMs: number;
+  gapDone: number;
   typingMs: number;
-  progress: number;
+  typingDone: number;
   unlock: string[];
 }
+
+export type Phase = 'pause' | 'gap' | 'typing';
 
 export interface ChoiceView {
   index: number;
@@ -36,7 +48,7 @@ export interface ChoiceView {
 }
 
 interface SaveData {
-  v: 1;
+  v: 1 | 2;
   storyId: string;
   storyState: string;
   messages: Msg[];
@@ -84,11 +96,22 @@ function parseDelay(value: string): number {
   return n * (unit === 'h' ? 3_600_000 : unit === 'm' ? 60_000 : 1000);
 }
 
+/** Сколько человек «набирает» сообщение. Примерно 20 знаков в секунду, как на телефоне. */
 function typingTime(kind: Kind, text: string): number {
-  if (kind === 'sys') return 400;
-  if (kind === 'out') return 500;
-  if (kind === 'photo') return 1800;
-  return Math.min(3500, Math.max(900, 500 + text.length * 45));
+  if (kind === 'sys') return 0;
+  if (kind === 'out') return 0;
+  if (kind === 'photo') return 2600;
+  return Math.min(5000, Math.max(1100, 600 + text.length * 50));
+}
+
+/** Пауза перед набором: прочитал, подумал. Детерминированная «случайность» от текста. */
+function gapTime(kind: Kind, text: string, afterPlayer: boolean): number {
+  if (kind === 'sys') return 700;
+  if (kind === 'out') return 900;
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+  const jitter = 350 + (h % 600);
+  return afterPlayer ? jitter + 1200 : jitter;
 }
 
 export class Engine {
@@ -111,6 +134,8 @@ export class Engine {
   private read: Record<string, number> = {};
   private nextId = 1;
   private carryDelay = 0;
+  /** Следующее входящее идёт сразу после ответа игрока: собеседнику нужно время прочитать. */
+  private afterPlayer = false;
   private listeners = new Set<() => void>();
   private lastTick = Date.now();
   speed: number = 60;
@@ -225,11 +250,15 @@ export class Engine {
         kind,
         text,
         delayMs: this.carryDelay + delay,
+        delayDone: 0,
+        gapMs: gapTime(kind, text, this.afterPlayer),
+        gapDone: 0,
         typingMs: typingTime(kind, text),
-        progress: 0,
+        typingDone: 0,
         unlock,
       };
       this.carryDelay = 0;
+      this.afterPlayer = false;
     }
     if (!this.pending && !this.story.canContinue) {
       const fallback = this.lastThread || this.speaker || 'unknown';
@@ -249,10 +278,10 @@ export class Engine {
     }
   }
 
-  private commit(p: Pending) {
+  private commit(p: Pending, at = Date.now()) {
     p.unlock.forEach((id) => this.unlock(id));
     this.unlock(p.thread);
-    this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at: Date.now() });
+    this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at });
     this.lastThread = p.thread;
     // поднять чат наверх списка
     this.unlocked = [p.thread, ...this.unlocked.filter((t) => t !== p.thread)];
@@ -260,21 +289,50 @@ export class Engine {
 
   /** Вызывается по таймеру. Догоняет и время, прошедшее офлайн. Возвращает новые сообщения. */
   tick(now = Date.now()): Msg[] {
-    const dt = Math.max(0, now - this.lastTick);
+    const start = this.lastTick;
+    const dt = Math.max(0, now - start);
     this.lastTick = now;
     const fresh: Msg[] = [];
-    let budget = this.speed === Infinity ? Infinity : dt * this.speed;
+    let real = dt; // реальные миллисекунды, которые ещё можно потратить
     let guard = 0;
-    while (this.pending && guard++ < 500) {
-      const need = this.pending.delayMs + this.pending.typingMs - this.pending.progress;
-      if (budget < need) {
-        this.pending.progress += budget;
+    while (this.pending && guard++ < 1000) {
+      const p = this.pending;
+      // 1. пауза сюжета: ускоряется
+      const delayLeft = p.delayMs - p.delayDone;
+      if (delayLeft > 0) {
+        if (this.speed === Infinity) p.delayDone = p.delayMs;
+        else {
+          const can = real * this.speed;
+          if (can < delayLeft) {
+            p.delayDone += can;
+            real = 0;
+            break;
+          }
+          p.delayDone = p.delayMs;
+          real -= delayLeft / this.speed;
+        }
+      }
+      // 2. подумал. 3. печатает: всегда в реальном времени
+      const gapLeft = p.gapMs - p.gapDone;
+      if (gapLeft > 0) {
+        if (real < gapLeft) {
+          p.gapDone += real;
+          real = 0;
+          break;
+        }
+        p.gapDone = p.gapMs;
+        real -= gapLeft;
+      }
+      const typeLeft = p.typingMs - p.typingDone;
+      if (real < typeLeft) {
+        p.typingDone += real;
+        real = 0;
         break;
       }
-      budget -= need;
-      const p = this.pending;
+      real -= typeLeft;
       this.pending = null;
-      this.commit(p);
+      // если догоняем офлайн, ставим сообщению то время, когда оно «пришло бы»
+      this.commit(p, Math.round(start + (dt - real)));
       fresh.push(this.messages[this.messages.length - 1]);
       this.advance();
     }
@@ -293,6 +351,7 @@ export class Engine {
       this.unlocked = [thread, ...this.unlocked.filter((t) => t !== thread)];
     }
     this.lastThread = thread;
+    this.afterPlayer = !choice.silent;
     this.story.ChooseChoiceIndex(index);
     this.choices = [];
     this.choiceThread = null;
@@ -300,8 +359,9 @@ export class Engine {
     this.emit();
   }
 
+  /** Пропускает паузу сюжета. Набор текста остаётся живым. */
   skipWait() {
-    if (this.pending) this.pending.progress = this.pending.delayMs + this.pending.typingMs;
+    if (this.pending) this.pending.delayDone = this.pending.delayMs;
     this.tick();
   }
 
@@ -342,10 +402,18 @@ export class Engine {
 
   view() {
     const p = this.pending;
-    let status: { thread: string; typing: boolean; remainingMs: number } | null = null;
+    let status: { thread: string; phase: Phase; typing: boolean; pauseMs: number; realMs: number } | null = null;
     if (p) {
-      const remaining = p.delayMs + p.typingMs - p.progress;
-      status = { thread: p.thread, typing: remaining <= p.typingMs && p.kind !== 'sys', remainingMs: Math.max(0, remaining) };
+      const pauseMs = Math.max(0, p.delayMs - p.delayDone);
+      const liveMs = Math.max(0, p.gapMs - p.gapDone) + Math.max(0, p.typingMs - p.typingDone);
+      const phase: Phase = pauseMs > 0 ? 'pause' : p.gapDone < p.gapMs ? 'gap' : 'typing';
+      status = {
+        thread: p.thread,
+        phase,
+        typing: phase === 'typing' && p.typingMs > 0,
+        pauseMs,
+        realMs: (this.speed === Infinity ? 0 : pauseMs / this.speed) + liveMs,
+      };
     }
     return {
       messages: this.messages,
@@ -365,7 +433,7 @@ export class Engine {
 
   private save() {
     const data: SaveData = {
-      v: 1,
+      v: 2,
       storyId: this.storyId,
       storyState: this.story.state.toJson(),
       messages: this.messages,
@@ -397,13 +465,13 @@ export class Engine {
       const raw = localStorage.getItem(this.storageKey());
       if (!raw) return false;
       const d = JSON.parse(raw) as SaveData;
-      if (d.v !== 1 || d.storyId !== this.storyId) return false;
+      if ((d.v !== 1 && d.v !== 2) || d.storyId !== this.storyId) return false;
       this.story.state.LoadJson(d.storyState);
       this.messages = d.messages;
       this.unlocked = d.unlocked;
       this.speaker = d.speaker;
       this.lastThread = d.lastThread;
-      this.pending = d.pending;
+      this.pending = d.pending ? normalizePending(d.pending) : null;
       this.choices = d.choices.map((c) => ({ ...c, thread: c.thread ?? d.choiceThread ?? d.lastThread }));
       this.choiceThread = d.choiceThread;
       this.ended = d.ended;
@@ -431,4 +499,22 @@ export function formatDuration(ms: number): string {
   const m = Math.floor(s / 60);
   if (m < 60) return `${m} мин ${s % 60} с`;
   return `${Math.floor(m / 60)} ч ${m % 60} мин`;
+}
+
+/** Старые сохранения (v1) хранили один общий прогресс. Приводим к фазам. */
+function normalizePending(p: Pending & { progress?: number }): Pending {
+  if (p.delayDone !== undefined) return p;
+  const progress = p.progress ?? 0;
+  return {
+    thread: p.thread,
+    kind: p.kind,
+    text: p.text,
+    delayMs: p.delayMs,
+    delayDone: Math.min(progress, p.delayMs),
+    gapMs: gapTime(p.kind, p.text, false),
+    gapDone: 0,
+    typingMs: typingTime(p.kind, p.text),
+    typingDone: 0,
+    unlock: p.unlock ?? [],
+  };
 }

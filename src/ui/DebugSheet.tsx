@@ -87,14 +87,14 @@ export function DebugSheet({
                       refresh();
                     }}
                   >
-                    {s === Infinity ? 'мгновенно' : `×${s}`}
+                    {s === Infinity ? 'без пауз' : `×${s}`}
                   </button>
                 ))}
               </div>
               {view.status ? (
                 <p className="muted">
                   Следующее сообщение в чате «{engine.contact(view.status.thread).name}» через{' '}
-                  {formatDuration(view.status.remainingMs)} игрового времени.
+                  {formatDuration(view.status.pauseMs)} игрового времени (реально {formatDuration(view.status.realMs)}).
                 </p>
               ) : (
                 <p className="muted">{view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}</p>

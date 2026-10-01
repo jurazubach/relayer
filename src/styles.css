@@ -175,3 +175,8 @@ select { width: 100%; padding: 11px 12px; border-radius: 12px; background: var(-
 .compile-error { padding: 40px 20px; }
 .compile-error h1 { font-size: 22px; }
 .compile-error li { color: var(--danger); font-family: ui-monospace, Menlo, monospace; font-size: 13px; margin-bottom: 6px; }
+
+/* новое сообщение появляется, а не возникает */
+.row, .sys, .choices { animation: rise 0.22s ease-out; }
+@keyframes rise { from { transform: translateY(8px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .row, .sys, .choices { animation: none; } }
