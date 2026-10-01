@@ -124,6 +124,8 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
   color: var(--fg); text-align: left; font-size: 16px;
 }
 .choice:active { background: color-mix(in srgb, var(--accent) 30%, var(--bg)); }
+.elsewhere { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; justify-content: center; }
+.elsewhere .chip { font-family: var(--font); color: var(--fg); }
 .hint { margin: 4px 4px; color: var(--muted); font-size: 14px; text-align: center; }
 
 /* уведомление сверху */

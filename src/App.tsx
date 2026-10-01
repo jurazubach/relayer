@@ -141,7 +141,7 @@ function Game({
   const view = useMemo(() => engine.view(), [engine, version]);
 
   return open ? (
-    <ChatScreen engine={engine} view={view} thread={open} onBack={() => setOpen(null)} onDebug={onDebug} />
+    <ChatScreen engine={engine} view={view} thread={open} onBack={() => setOpen(null)} onDebug={onDebug} onOpen={setOpen} />
   ) : (
     <ContactsScreen engine={engine} view={view} onOpen={setOpen} onDebug={onDebug} />
   );

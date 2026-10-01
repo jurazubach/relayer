@@ -30,7 +30,7 @@ export function ContactsScreen({
           const last = msgs[msgs.length - 1];
           const unread = msgs.filter((m) => m.id > (view.read[id] ?? 0) && m.kind !== 'out').length;
           const typing = view.status?.thread === id && view.status.typing;
-          const waiting = view.choiceThread === id;
+          const waiting = view.choiceThreads.includes(id);
           return (
             <li key={id}>
               <button className="thread" onClick={() => onOpen(id)}>

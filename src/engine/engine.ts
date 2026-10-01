@@ -29,6 +29,10 @@ interface Pending {
 export interface ChoiceView {
   index: number;
   text: string;
+  /** В какой чат уходит ответ (тег #to:id на варианте). */
+  thread: string;
+  /** Тег #silent: выбор без исходящего сообщения («промолчать»). */
+  silent?: boolean;
 }
 
 interface SaveData {
@@ -203,7 +207,7 @@ export class Engine {
         const value = rest.join(':').trim();
         if (key === 'from') this.speaker = value;
         else if (key === 'me') { kind = 'out'; thread = value; }
-        else if (key === 'sys') kind = 'sys';
+        else if (key === 'sys') { kind = 'sys'; if (value) thread = value; }
         else if (key === 'photo') kind = 'photo';
         else if (key === 'delay') delay += parseDelay(value);
         else if (key === 'unlock') unlock.push(value);
@@ -214,7 +218,7 @@ export class Engine {
         unlock.forEach((id) => this.unlock(id));
         continue;
       }
-      if (kind === 'sys') thread = this.lastThread || this.speaker;
+      if (kind === 'sys' && !thread) thread = this.lastThread || this.speaker;
       if (!thread) thread = this.speaker || 'unknown';
       this.pending = {
         thread,
@@ -228,8 +232,19 @@ export class Engine {
       this.carryDelay = 0;
     }
     if (!this.pending && !this.story.canContinue) {
-      this.choices = this.story.currentChoices.map((c) => ({ index: c.index, text: c.text }));
-      this.choiceThread = this.choices.length ? this.lastThread || this.speaker : null;
+      const fallback = this.lastThread || this.speaker || 'unknown';
+      this.choices = this.story.currentChoices.map((c) => {
+        let thread = fallback;
+        let silent = false;
+        for (const raw of c.tags ?? []) {
+          const [k, ...rest] = raw.split(':');
+          if (k.trim() === 'to') thread = rest.join(':').trim() || fallback;
+          if (k.trim() === 'silent') silent = true;
+        }
+        if (!this.unlocked.includes(thread)) this.unlock(thread);
+        return { index: c.index, text: c.text, thread, silent };
+      });
+      this.choiceThread = this.choices.length ? fallback : null;
       this.ended = this.choices.length === 0;
     }
   }
@@ -272,8 +287,11 @@ export class Engine {
     if (this.pending || !this.choices.length) return;
     const choice = this.choices.find((c) => c.index === index);
     if (!choice) return;
-    const thread = this.choiceThread ?? this.speaker;
-    this.messages.push({ id: this.nextId++, thread, kind: 'out', text: choice.text, at: Date.now() });
+    const thread = choice.thread ?? this.choiceThread ?? this.speaker;
+    if (!choice.silent) {
+      this.messages.push({ id: this.nextId++, thread, kind: 'out', text: choice.text, at: Date.now() });
+      this.unlocked = [thread, ...this.unlocked.filter((t) => t !== thread)];
+    }
     this.lastThread = thread;
     this.story.ChooseChoiceIndex(index);
     this.choices = [];
@@ -333,7 +351,7 @@ export class Engine {
       messages: this.messages,
       threads: this.unlocked,
       choices: this.choices,
-      choiceThread: this.choiceThread,
+      choiceThreads: [...new Set(this.choices.map((c) => c.thread))],
       ended: this.ended,
       status,
       read: this.read,
@@ -386,7 +404,7 @@ export class Engine {
       this.speaker = d.speaker;
       this.lastThread = d.lastThread;
       this.pending = d.pending;
-      this.choices = d.choices;
+      this.choices = d.choices.map((c) => ({ ...c, thread: c.thread ?? d.choiceThread ?? d.lastThread }));
       this.choiceThread = d.choiceThread;
       this.ended = d.ended;
       this.read = d.read;

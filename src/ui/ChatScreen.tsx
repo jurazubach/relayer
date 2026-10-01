@@ -10,20 +10,33 @@ export function ChatScreen({
   thread,
   onBack,
   onDebug,
+  onOpen,
 }: {
   engine: Engine;
   view: View;
   thread: string;
   onBack: () => void;
   onDebug: () => void;
+  onOpen: (thread: string) => void;
 }) {
   const contact = engine.contact(thread);
   const msgs = view.messages.filter((m) => m.thread === thread);
   const st = view.status?.thread === thread ? view.status : null;
   const typing = !!st?.typing;
   const away = !!st && !st.typing;
-  const choicesHere = view.choiceThread === thread ? view.choices : [];
-  const waitingElsewhere = view.choices.length > 0 && view.choiceThread !== thread;
+  const choicesHere = view.choices.filter((c) => c.thread === thread);
+  const waitingElsewhere = view.choices.length > 0 && choicesHere.length === 0;
+  const otherThreads = view.choiceThreads.filter((t) => t !== thread);
+  const elsewhere = otherThreads.length > 0 && (
+    <div className="elsewhere">
+      <span>{choicesHere.length ? 'Можно ответить и в другом чате:' : 'Тебя ждут в другом чате:'}</span>
+      {otherThreads.map((t) => (
+        <button key={t} className="chip" onClick={() => onOpen(t)}>
+          {engine.contact(t).name} →
+        </button>
+      ))}
+    </div>
+  );
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,11 +117,12 @@ export function ChatScreen({
                 {c.text}
               </button>
             ))}
+            {elsewhere}
           </div>
         ) : view.ended ? (
           <p className="hint">Конец сцены. Начать заново можно в панели отладки.</p>
         ) : waitingElsewhere ? (
-          <p className="hint">Тебя ждут в другом чате.</p>
+          elsewhere
         ) : away && st ? (
           <p className="hint">
             {contact.name} ответит через {formatDuration(st.remainingMs)}
