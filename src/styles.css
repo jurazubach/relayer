@@ -29,7 +29,7 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
 
 .phone {
   position: relative;
-  height: 100dvh;
+  height: 100%;
   max-width: 440px;
   margin: 0 auto;
   background: var(--bg);
@@ -38,7 +38,7 @@ button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); o
   flex-direction: column;
 }
 @media (min-width: 520px) {
-  .phone { height: min(100dvh, 920px); margin-top: max(0px, calc((100dvh - 920px) / 2)); border-radius: 28px; border: 1px solid var(--line); }
+  .phone { height: min(100%, 920px); margin-top: max(0px, calc((100dvh - 920px) / 2)); border-radius: 28px; border: 1px solid var(--line); }
 }
 
 .screen { flex: 1; display: flex; flex-direction: column; min-height: 0; }
