@@ -10,7 +10,7 @@ import { Notice } from './ui/Notice';
 
 /** Связывание: вся логика в engine, всё оформление в ui. Здесь только маршруты. */
 export function App() {
-  const { route, goHome, openStory, play } = useRouter();
+  const { route, goHome, openStory, play, rememberChat } = useRouter();
   const library = useLibrary(useCallback((story: Story) => openStory(story.id), [openStory]));
 
   if (route.screen === 'home') {
@@ -62,6 +62,8 @@ export function App() {
       key={story.id}
       story={story}
       stories={library.stories}
+      thread={route.thread ?? null}
+      onThreadChange={rememberChat}
       onBack={() => openStory(story.id)}
       onHome={goHome}
       onSelectStory={play}
@@ -73,17 +75,26 @@ export function App() {
 function GameShell({
   story,
   stories,
+  thread,
+  onThreadChange,
   onBack,
   onHome,
   onSelectStory,
 }: {
   story: Story;
   stories: Story[];
+  /** Чат, открытый в прошлый раз: восстанавливаем после перезагрузки. */
+  thread: string | null;
+  onThreadChange: (id: string, thread: string | null) => void;
   onBack: () => void;
   onHome: () => void;
   onSelectStory: (id: string) => void;
 }) {
-  const game = useGame(story);
+  const remember = useCallback(
+    (next: string | null) => onThreadChange(story.id, next),
+    [onThreadChange, story.id],
+  );
+  const game = useGame(story, thread, remember);
   const [debug, setDebug] = useState(false);
 
   return (

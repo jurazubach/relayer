@@ -41,6 +41,11 @@
   color: var(--color-danger);
 }
 
+/* второстепенное действие рядом с главной кнопкой */
+.btn--quiet {
+  color: var(--color-muted);
+}
+
 .btn--icon {
   display: inline-grid;
   place-items: center;

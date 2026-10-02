@@ -3,8 +3,14 @@ import { FLAGS, readLocal, writeLocal } from './flags';
 import { BUILTIN } from './library';
 import { clearProgress } from './progress';
 
-/** Три экрана: витрина → описание истории → игра. Назад всегда на уровень выше. */
-export type Route = { screen: 'home' } | { screen: 'story'; id: string } | { screen: 'game'; id: string };
+/**
+ * Три экрана: витрина → описание истории → игра. Назад всегда на уровень выше.
+ * В игре помним и открытый чат: перезагрузка возвращает ровно туда, где были.
+ */
+export type Route =
+  | { screen: 'home' }
+  | { screen: 'story'; id: string }
+  | { screen: 'game'; id: string; thread?: string | null };
 
 const ROUTE_KEY = 'relay:route';
 
@@ -26,6 +32,8 @@ export interface Router {
   goHome: () => void;
   openStory: (id: string) => void;
   play: (id: string) => void;
+  /** Запомнить, какой чат открыт внутри истории (null — список чатов). */
+  rememberChat: (id: string, thread: string | null) => void;
 }
 
 export function useRouter(): Router {
@@ -41,5 +49,9 @@ export function useRouter(): Router {
     goHome: useCallback(() => setRoute({ screen: 'home' }), [setRoute]),
     openStory: useCallback((id: string) => setRoute({ screen: 'story', id }), [setRoute]),
     play: useCallback((id: string) => setRoute({ screen: 'game', id }), [setRoute]),
+    // чат меняется часто, поэтому пишем в хранилище, но не дёргаем перерисовку маршрута
+    rememberChat: useCallback((id: string, thread: string | null) => {
+      writeLocal(ROUTE_KEY, JSON.stringify({ screen: 'game', id, thread }));
+    }, []),
   };
 }

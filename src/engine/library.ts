@@ -26,9 +26,14 @@ export const BUILTIN: Story[] = Object.entries(files)
 
 export const isBuiltin = (id: string) => BUILTIN.some((s) => s.id === id);
 
-/** Полный список: встроенные плюс загруженные. */
+/**
+ * Полный список: встроенные плюс загруженные.
+ * Если историю сначала загрузили файлом, а потом она приехала в репозиторий,
+ * побеждает встроенная — иначе на главном было бы две одинаковых карточки.
+ * Прогресс у них общий: он хранится по id, а не по происхождению.
+ */
 export function allStories(uploads: Story[] = readUploads()): Story[] {
-  return [...BUILTIN, ...uploads];
+  return [...BUILTIN, ...uploads.filter((s) => !isBuiltin(s.id))];
 }
 
 export function findStory(id: string, uploads: Story[] = readUploads()): Story | undefined {

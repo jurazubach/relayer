@@ -21,7 +21,7 @@ export interface Game {
  * Одна игровая сессия: компиляция сценария, восстановление прогресса,
  * тиканье времени и уведомления о сообщениях в других чатах.
  */
-export function useGame(story: Story): Game {
+export function useGame(story: Story, restoreThread?: string | null, onThreadChange?: (t: string | null) => void): Game {
   const loaded = useMemo(() => {
     const result = compileInk(story.ink);
     if ('errors' in result) return { engine: null as Engine | null, errors: result.errors };
@@ -34,13 +34,16 @@ export function useGame(story: Story): Game {
     return { engine, errors: [] as string[] };
   }, [story.id, story.ink]);
 
-  const [open, setOpen] = useState<string | null>(null);
+  // чат восстанавливаем, только если история его уже открыла: файл мог измениться
+  const [open, setOpen] = useState<string | null>(() => {
+    const threads = loaded.engine?.view().threads ?? [];
+    return restoreThread && threads.includes(restoreThread) ? restoreThread : null;
+  });
   const [notice, setNotice] = useState<Msg | null>(null);
   const openRef = useRef(open);
   openRef.current = open;
 
   useEffect(() => {
-    setOpen(null);
     const engine = loaded.engine;
     if (!engine) return;
     const timer = window.setInterval(() => {
@@ -67,14 +70,23 @@ export function useGame(story: Story): Game {
     errors: loaded.errors,
     view,
     open,
-    openChat: setOpen,
+    openChat: useCallback(
+      (thread: string | null) => {
+        setOpen(thread);
+        onThreadChange?.(thread);
+      },
+      [onThreadChange],
+    ),
     notice,
     openNotice: useCallback(() => {
       setNotice((n) => {
-        if (n) setOpen(n.thread);
+        if (n) {
+          setOpen(n.thread);
+          onThreadChange?.(n.thread);
+        }
         return null;
       });
-    }, []),
+    }, [onThreadChange]),
     hideNotice: useCallback(() => setNotice(null), []),
   };
 }

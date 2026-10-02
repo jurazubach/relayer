@@ -67,7 +67,7 @@ test('«начать заново» стирает прогресс', async ({ p
   await expect(firstThread(page)).toBeVisible();
   await page.getByTestId('back-story').click();
 
-  await page.getByRole('button', { name: 'Начать заново' }).click();
+  await page.getByTestId('reset').click();
   await page.getByRole('button', { name: 'Стереть' }).click();
   await expect(page.getByTestId('play')).toContainText('Начать');
 });
@@ -123,4 +123,67 @@ test('негодный файл не ломает приложение, а об�
   });
   await expect(page.getByTestId('upload-error')).toContainText('не компилируется');
   await expect(page.getByTestId('home')).toBeVisible();
+});
+
+test('перезагрузка возвращает в тот же чат, переписка на месте', async ({ page }) => {
+  await page.goto(fresh);
+  await page.getByTestId('tile-the-number').click();
+  await page.getByTestId('play').click();
+  await firstThread(page).waitFor();
+  const opened = await firstThread(page).getAttribute('data-testid');
+  await firstThread(page).click();
+  await expect(page.getByTestId('chat')).toBeVisible();
+  const before = await page.locator('.message__bubble, .system-line').count();
+
+  // адрес без флагов — так перезагружает страницу игрок
+  await page.goto('/');
+  await expect(page.getByTestId('chat')).toBeVisible();
+  expect(await page.locator('.message__bubble, .system-line').count()).toBeGreaterThanOrEqual(before);
+  // и это тот же самый чат
+  await page.getByLabel('Назад к сообщениям').click();
+  await expect(page.getByTestId(opened!)).toBeVisible();
+});
+
+test('«сбросить прогресс» живёт под кнопкой запуска', async ({ page }) => {
+  await page.goto(fresh);
+  await page.getByTestId('tile-the-number').click();
+  await expect(page.getByTestId('reset')).toHaveCount(0); // нечего сбрасывать
+
+  await page.getByTestId('play').click();
+  await firstThread(page).waitFor();
+  await page.getByTestId('back-story').click();
+
+  const play = await page.getByTestId('play').boundingBox();
+  const reset = await page.getByTestId('reset').boundingBox();
+  expect(reset!.y).toBeGreaterThan(play!.y);
+});
+
+test('на высоком окне страница не прокручивается, экран по центру', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 1600 });
+  await page.goto(fresh);
+  await expect(page.getByTestId('home')).toBeVisible();
+  const m = await page.evaluate(() => {
+    const r = document.querySelector('.phone')!.getBoundingClientRect();
+    return {
+      overflow: document.documentElement.scrollHeight - innerHeight,
+      top: Math.round(r.top),
+      bottom: Math.round(innerHeight - r.bottom),
+    };
+  });
+  expect(m.overflow).toBeLessThanOrEqual(0);
+  expect(Math.abs(m.top - m.bottom)).toBeLessThanOrEqual(2);
+});
+
+test('встроенная история не двоится с ранее загруженной копией', async ({ page }) => {
+  await page.goto(fresh);
+  // как будто игрок загрузил эту историю файлом ещё до того, как она приехала в репозиторий
+  await page.evaluate(() => {
+    const copy = { format: 'relayer-story', version: 1, id: 'the-number', title: 'Старая копия',
+      tagline: 'загружена файлом', cover: { from: '#333', to: '#111', glyph: '?' },
+      ink: '# title: копия\nпривет #from:x\n-> END\n', origin: 'upload' };
+    localStorage.setItem('relay:uploads', JSON.stringify([copy]));
+  });
+  await page.goto(fresh);
+  await expect(page.getByTestId('tile-the-number')).toHaveCount(1);
+  await expect(page.getByTestId('tile-the-number')).toContainText('Пилот');
 });

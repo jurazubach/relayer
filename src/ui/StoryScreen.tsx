@@ -60,6 +60,32 @@ export function StoryScreen({
           <button className="btn btn--primary" onClick={onPlay} data-testid="play">
             {cta} →
           </button>
+          {progress &&
+            (confirm === 'reset' ? (
+              <div className="confirm confirm--center">
+                <span>Стереть прогресс?</span>
+                <button
+                  className="btn btn--danger"
+                  onClick={() => {
+                    onReset();
+                    setConfirm(null);
+                  }}
+                >
+                  Стереть
+                </button>
+                <button className="btn btn--ghost" onClick={() => setConfirm(null)}>
+                  Отмена
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn btn--ghost btn--quiet"
+                onClick={() => setConfirm('reset')}
+                data-testid="reset"
+              >
+                Сбросить прогресс
+              </button>
+            ))}
           <span className="story__where">{where}</span>
         </div>
 
@@ -139,11 +165,6 @@ export function StoryScreen({
             <button className="btn" onClick={() => downloadStory(story)} data-testid="export">
               Скачать .json
             </button>
-            {progress && (
-              <button className="btn btn--danger" onClick={() => setConfirm('reset')}>
-                Начать заново
-              </button>
-            )}
             {onDelete && (
               <button className="btn btn--danger" onClick={() => setConfirm('delete')} data-testid="delete-story">
                 Удалить историю
@@ -151,23 +172,6 @@ export function StoryScreen({
             )}
           </div>
 
-          {confirm === 'reset' && (
-            <div className="confirm">
-              <span>Стереть прогресс?</span>
-              <button
-                className="btn btn--danger"
-                onClick={() => {
-                  onReset();
-                  setConfirm(null);
-                }}
-              >
-                Стереть
-              </button>
-              <button className="btn btn--ghost" onClick={() => setConfirm(null)}>
-                Отмена
-              </button>
-            </div>
-          )}
           {confirm === 'delete' && (
             <div className="confirm">
               <span>Убрать историю из приложения?</span>

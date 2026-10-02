@@ -10,6 +10,15 @@ body,
   margin: 0;
 }
 
+/* Колонка, чтобы «телефон» центрировался автоотступами.
+   Отступом сверху это делать нельзя: он схлопывается наружу, сдвигает #root
+   и документ становится выше окна — появляется лишняя прокрутка страницы. */
+#root {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 body {
   background: var(--color-page);
   color: var(--color-fg);

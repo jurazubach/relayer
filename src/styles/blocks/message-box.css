@@ -55,3 +55,8 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
+
+/* подтверждение прямо под кнопкой запуска: кнопки по центру */
+.confirm--center {
+  justify-content: center;
+}
