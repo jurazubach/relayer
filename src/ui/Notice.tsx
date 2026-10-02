@@ -1,12 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Contact, Msg } from '../engine/engine';
+import type { Contact, Msg } from '../engine';
 import { Avatar } from './Avatar';
 
 /**
  * Уведомление о сообщении в другом чате. Встаёт в поток над экраном и сдвигает его вниз,
  * поэтому не перекрывает шапку и сообщения. Через 4 секунды плавно схлопывается.
  */
-export function Toast({ msg, contact, onOpen, onDone }: { msg: Msg; contact: Contact; onOpen: () => void; onDone: () => void }) {
+export function Notice({
+  msg,
+  contact,
+  onOpen,
+  onDone,
+}: {
+  msg: Msg;
+  contact: Contact;
+  onOpen: () => void;
+  onDone: () => void;
+}) {
   const [leaving, setLeaving] = useState(false);
   const done = useRef(onDone);
   done.current = onDone;
@@ -22,12 +32,12 @@ export function Toast({ msg, contact, onOpen, onDone }: { msg: Msg; contact: Con
   }, [msg]);
 
   return (
-    <div className={leaving ? 'toast-slot leaving' : 'toast-slot'}>
-      <button className="toast" onClick={onOpen}>
+    <div className={leaving ? 'notice notice--leaving' : 'notice'}>
+      <button className="notice__card" onClick={onOpen} data-testid="notice">
         <Avatar contact={contact} size={36} />
-        <span className="toast-body">
-          <span className="toast-name">{contact.name}</span>
-          <span className="toast-text">{msg.text}</span>
+        <span className="notice__body">
+          <span className="notice__name">{contact.name}</span>
+          <span className="notice__text">{msg.text}</span>
         </span>
       </button>
     </div>

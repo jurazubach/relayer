@@ -1,0 +1,20 @@
+/* Блок phone — рамка приложения: колонка во всю высоту, на широком экране — «телефон». */
+.phone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: var(--phone-width);
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+@media (min-width: 520px) {
+  .phone {
+    height: min(100%, var(--phone-height));
+    margin-top: max(0px, calc((100dvh - var(--phone-height)) / 2));
+    border: 1px solid var(--color-line);
+    border-radius: 28px;
+  }
+}

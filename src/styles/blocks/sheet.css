@@ -1,0 +1,53 @@
+/* Блок sheet — шторка снизу. Сейчас в ней панель отладки. */
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: var(--layer-sheet);
+  display: flex;
+  align-items: flex-end;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.sheet {
+  width: 100%;
+  max-height: 88%;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-4) calc(var(--safe-bottom) + var(--space-5));
+  border-radius: 22px 22px 0 0;
+  background: var(--color-surface);
+}
+
+.sheet__header {
+  position: sticky;
+  top: calc(var(--space-2) * -1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+  background: var(--color-surface);
+}
+
+.sheet__title {
+  font-size: var(--text-xl);
+}
+
+.sheet__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.sheet__label {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sheet__note {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}

@@ -1,0 +1,57 @@
+/* Блок confirm — подтверждение опасного действия прямо на месте, без модалки. */
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.confirm--overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--layer-overlay);
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3);
+  background: rgba(8, 10, 14, 0.92);
+  text-align: center;
+}
+
+/* Блок error-box — что-то пошло не так: сценарий не собрался, файл не подошёл. */
+.error-box {
+  margin: 0 var(--space-4) var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 50%, var(--color-line));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-bg));
+}
+
+.error-box__text {
+  margin-bottom: var(--space-2);
+  color: var(--color-fg);
+  font: var(--text-sm) / 1.4 var(--font-mono);
+  white-space: pre-wrap;
+}
+
+.error-box--page {
+  margin: 0;
+  padding: 40px var(--space-5);
+  border: 0;
+  background: transparent;
+}
+
+.error-box__title {
+  margin-bottom: var(--space-3);
+  font-size: 22px;
+}
+
+.error-box__list {
+  margin-bottom: var(--space-3);
+}
+
+.error-box__item {
+  margin-bottom: 6px;
+  color: var(--color-danger);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}

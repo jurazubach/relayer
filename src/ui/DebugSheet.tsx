@@ -1,86 +1,68 @@
-import { useRef, useState } from 'react';
-import { Engine, SPEEDS, formatDuration } from '../engine/engine';
-import { STORIES } from '../stories';
+import { useState } from 'react';
+import type { Engine, Story } from '../engine';
+import { SPEEDS, formatDuration, storyLabel } from '../engine';
 
+/** Шторка отладки: время, переменные, прыжки по сценарию, переключение историй. */
 export function DebugSheet({
   engine,
+  stories,
   storyId,
-  hasCustom,
   onSelectStory,
-  onUpload,
+  onHome,
   onClose,
 }: {
   engine: Engine | null;
+  stories: Story[];
   storyId: string;
-  hasCustom: boolean;
   onSelectStory: (id: string) => void;
-  onUpload: (source: string) => void;
+  onHome: () => void;
   onClose: () => void;
 }) {
   const [, force] = useState(0);
   const [confirmReset, setConfirmReset] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
   const refresh = () => force((n) => n + 1);
   const view = engine?.view();
-
-  const readFile = (file: File) => {
-    file.text().then((text) => {
-      onUpload(text);
-      onClose();
-    });
-  };
 
   return (
     <div className="sheet-backdrop" onClick={onClose}>
       <section className="sheet" onClick={(e) => e.stopPropagation()} aria-label="Панель отладки">
-        <header className="sheet-header">
-          <h2>Отладка</h2>
-          <button className="btn ghost" onClick={onClose}>
+        <header className="sheet__header">
+          <h2 className="sheet__title">Отладка</h2>
+          <button className="btn btn--ghost" onClick={onClose}>
             Готово
           </button>
         </header>
 
-        <div className="sheet-group">
-          <h3>Сценарий</h3>
+        <div className="sheet__group">
+          <h3 className="sheet__label">История</h3>
           <select
-            id="story-select"
+            className="select"
             value={storyId}
             onChange={(e) => {
               onSelectStory(e.target.value);
               onClose();
             }}
           >
-            {STORIES.map((s) => (
+            {stories.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.title}
+                {storyLabel(s)}
               </option>
             ))}
-            {hasCustom && <option value="custom">Загруженный .ink</option>}
           </select>
-          <button className="btn" onClick={() => fileRef.current?.click()}>
-            Загрузить свой .ink
+          <button className="btn" onClick={onHome} data-testid="debug-home">
+            На главный экран
           </button>
-          <input
-            ref={fileRef}
-            id="ink-file"
-            type="file"
-            accept=".ink,text/plain"
-            hidden
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) readFile(f);
-            }}
-          />
         </div>
 
         {engine && view && (
           <>
-            <div className="sheet-group">
-              <h3>Время</h3>
+            <div className="sheet__group">
+              <h3 className="sheet__label">Время</h3>
               <div className="segmented" role="group" aria-label="Скорость времени">
                 {SPEEDS.map((s) => (
                   <button
                     key={String(s)}
+                    className="segmented__btn"
                     aria-pressed={view.speed === s}
                     onClick={() => {
                       engine.setSpeed(s);
@@ -92,7 +74,7 @@ export function DebugSheet({
                 ))}
               </div>
               <button
-                className={view.fastTyping ? 'toggle on' : 'toggle'}
+                className={view.fastTyping ? 'toggle toggle--on' : 'toggle'}
                 onClick={() => {
                   engine.setFastTyping(!view.fastTyping);
                   refresh();
@@ -101,12 +83,13 @@ export function DebugSheet({
                 Быстрый набор (×4): {view.fastTyping ? 'вкл' : 'выкл'}
               </button>
               {view.status ? (
-                <p className="muted">
+                <p className="sheet__note">
                   Следующее сообщение в чате «{engine.contact(view.status.thread).name}» через{' '}
-                  {formatDuration(view.status.pauseMs)} игрового времени (реально {formatDuration(view.status.realMs)}).
+                  {formatDuration(view.status.pauseMs)} игрового времени (реально{' '}
+                  {formatDuration(view.status.realMs)}).
                 </p>
               ) : (
-                <p className="muted">{view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}</p>
+                <p className="sheet__note">{view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}</p>
               )}
               <button
                 className="btn"
@@ -120,18 +103,18 @@ export function DebugSheet({
               </button>
             </div>
 
-            <div className="sheet-group">
-              <h3>Переменные</h3>
-              {engine.varNames.length === 0 && <p className="muted">В сценарии нет переменных.</p>}
-              <ul className="vars">
+            <div className="sheet__group">
+              <h3 className="sheet__label">Переменные</h3>
+              {engine.varNames.length === 0 && <p className="sheet__note">В сценарии нет переменных.</p>}
+              <ul className="var-list">
                 {engine.varNames.map((name) => {
                   const value = engine.getVar(name);
                   return (
-                    <li key={name}>
-                      <span className="var-name">{name}</span>
+                    <li className="var-list__item" key={name}>
+                      <span className="var-list__name">{name}</span>
                       {typeof value === 'boolean' ? (
                         <button
-                          className={value ? 'toggle on' : 'toggle'}
+                          className={value ? 'toggle toggle--on' : 'toggle'}
                           aria-pressed={value}
                           onClick={() => {
                             engine.setVar(name, !value);
@@ -142,12 +125,30 @@ export function DebugSheet({
                         </button>
                       ) : typeof value === 'number' ? (
                         <span className="stepper">
-                          <button onClick={() => { engine.setVar(name, value - 1); refresh(); }} aria-label={`Уменьшить ${name}`}>−</button>
+                          <button
+                            className="stepper__btn"
+                            onClick={() => {
+                              engine.setVar(name, value - 1);
+                              refresh();
+                            }}
+                            aria-label={`Уменьшить ${name}`}
+                          >
+                            −
+                          </button>
                           <span>{value}</span>
-                          <button onClick={() => { engine.setVar(name, value + 1); refresh(); }} aria-label={`Увеличить ${name}`}>+</button>
+                          <button
+                            className="stepper__btn"
+                            onClick={() => {
+                              engine.setVar(name, value + 1);
+                              refresh();
+                            }}
+                            aria-label={`Увеличить ${name}`}
+                          >
+                            +
+                          </button>
                         </span>
                       ) : (
-                        <span className="var-value">{String(value)}</span>
+                        <span>{String(value)}</span>
                       )}
                     </li>
                   );
@@ -155,9 +156,9 @@ export function DebugSheet({
               </ul>
             </div>
 
-            <div className="sheet-group">
-              <h3>Перейти к главе</h3>
-              <div className="knots">
+            <div className="sheet__group">
+              <h3 className="sheet__label">Перейти к главе</h3>
+              <div className="btn-row">
                 {engine.knots
                   .filter((k) => /^ch\d+$/.test(k))
                   .map((k) => (
@@ -174,8 +175,8 @@ export function DebugSheet({
                   ))}
               </div>
               <details>
-                <summary className="muted">Все узлы ({engine.knots.length})</summary>
-                <div className="knots">
+                <summary className="sheet__note">Все узлы ({engine.knots.length})</summary>
+                <div className="btn-row">
                   {engine.knots.map((k) => (
                     <button
                       key={k}
@@ -192,13 +193,13 @@ export function DebugSheet({
               </details>
             </div>
 
-            <div className="sheet-group">
-              <h3>Прогресс</h3>
+            <div className="sheet__group">
+              <h3 className="sheet__label">Прогресс</h3>
               {confirmReset ? (
                 <div className="confirm">
                   <span>Стереть прогресс этой сцены?</span>
                   <button
-                    className="btn danger"
+                    className="btn btn--danger"
                     onClick={() => {
                       engine.reset();
                       setConfirmReset(false);
@@ -207,12 +208,12 @@ export function DebugSheet({
                   >
                     Стереть
                   </button>
-                  <button className="btn ghost" onClick={() => setConfirmReset(false)}>
+                  <button className="btn btn--ghost" onClick={() => setConfirmReset(false)}>
                     Отмена
                   </button>
                 </div>
               ) : (
-                <button className="btn danger" onClick={() => setConfirmReset(true)}>
+                <button className="btn btn--danger" onClick={() => setConfirmReset(true)}>
                   Начать сцену заново
                 </button>
               )}

@@ -73,7 +73,7 @@ interface SaveData {
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
 
-const COLORS: Record<string, string> = {
+export const CONTACT_COLORS: Record<string, string> = {
   blue: '#4f8cff',
   amber: '#f0a830',
   red: '#ff5d5d',
@@ -168,7 +168,7 @@ export class Engine {
       if (key.trim() === 'title') title = value;
       if (key.trim() === 'contact') {
         const [id, name, color] = value.split(',').map((s) => s.trim());
-        if (id) this.contacts.set(id, { id, name: name || id, color: COLORS[color] ?? color ?? COLORS.grey });
+        if (id) this.contacts.set(id, { id, name: name || id, color: CONTACT_COLORS[color] ?? color ?? CONTACT_COLORS.grey });
       }
     }
     this.title = title;
@@ -198,7 +198,7 @@ export class Engine {
   contact(id: string): Contact {
     let c = this.contacts.get(id);
     if (!c) {
-      c = { id, name: id, color: COLORS.grey };
+      c = { id, name: id, color: CONTACT_COLORS.grey };
       this.contacts.set(id, c);
     }
     return c;

@@ -1,11 +1,14 @@
-// Проверка сценариев: компиляция + бот-плейтестер (случайные прохождения).
-// Запуск: npm run check:story [-- путь/к/файлу.ink]
+// Проверка историй: компиляция сценария + бот-плейтестер (случайные прохождения).
+// Запуск: npm run check:story [-- путь/к/истории.json]
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { Compiler, CompilerOptions, Story } from 'inkjs/full';
 
 const RUNS = 400;
-const TAGS = ['from', 'me', 'sys', 'photo', 'delay', 'unlock', 'title', 'contact', 'to', 'silent', 'chapter', 'rename', 'label'];
+
+// Список допустимых тегов берём из реестра возможностей — чтобы он был один на всё приложение.
+const caps = JSON.parse(readFileSync('docs/capabilities.json', 'utf8'));
+const TAGS = caps.features.filter((f) => f.tag && f.status !== 'planned').map((f) => f.tag);
 const parseDelay = (v) => {
   const m = String(v).trim().match(/^(\d+(?:\.\d+)?)\s*(s|m|h)?$/);
   if (!m) return 0;
@@ -15,12 +18,23 @@ const parseDelay = (v) => {
 const fmt = (sec) => `${Math.floor(sec / 3600)} ч ${Math.round((sec % 3600) / 60)} мин`;
 const files = process.argv[2]
   ? [process.argv[2]]
-  : readdirSync('src/stories').filter((f) => f.endsWith('.ink')).map((f) => join('src/stories', f));
+  : readdirSync('src/stories')
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => join('src/stories', f));
+
+/** История — один .json со сценарием внутри; отдельный .ink тоже принимаем. */
+function readInk(file) {
+  const raw = readFileSync(file, 'utf8');
+  if (!file.endsWith('.json')) return raw;
+  const story = JSON.parse(raw);
+  if (!story.ink) throw new Error(`в ${file} нет поля "ink"`);
+  return story.ink;
+}
 
 let failed = false;
 
 for (const file of files) {
-  const source = readFileSync(file, 'utf8');
+  const source = readInk(file);
   const compiler = new Compiler(source, new CompilerOptions(null, [], true));
   let json;
   try {

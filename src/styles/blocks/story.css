@@ -1,0 +1,60 @@
+/* Блок story — экран описания истории: обложка и разделы под ней. */
+.story__cover {
+  position: relative;
+  overflow: hidden;
+  padding: calc(var(--safe-top) + var(--space-3)) var(--space-5) var(--space-5);
+  border-bottom: 1px solid var(--color-line);
+  background: linear-gradient(165deg, var(--cover-from, #27303f), var(--cover-to, #12151b));
+}
+
+.story__glyph {
+  position: absolute;
+  right: -10px;
+  bottom: -34px;
+  color: var(--color-on-cover);
+  font-size: 150px;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.08;
+}
+
+.story__kicker {
+  display: block;
+  color: var(--color-on-cover-dim);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.story__title {
+  margin-top: 2px;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.story__tagline {
+  max-width: 28ch;
+  margin-top: var(--space-2);
+  color: var(--color-on-cover-dim);
+  font-size: var(--text-base);
+  line-height: 1.35;
+}
+
+.story__body {
+  padding: 0 var(--space-5) calc(var(--safe-bottom) + var(--space-6));
+}
+
+.story__play {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) 0 var(--space-1);
+}
+
+.story__where {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}

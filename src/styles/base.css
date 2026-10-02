@@ -1,0 +1,65 @@
+/* Сброс и общая типографика. Ничего оформительского: только то, что верно для всей страницы. */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-fg);
+  font: var(--text-lg) / 1.4 var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* появление: новое сообщение, карточка, блок кнопок — всё всплывает одинаково */
+@keyframes rise {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+
+.is-rising {
+  animation: rise var(--dur-fast) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-rising {
+    animation: none;
+  }
+}

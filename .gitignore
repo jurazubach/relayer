@@ -4,3 +4,12 @@ dist-single
 *.log
 .DS_Store
 *.tsbuildinfo
+
+# Playwright
+test-results
+playwright-report
+screenshots
+
+# локальное
+.idea
+chat-export

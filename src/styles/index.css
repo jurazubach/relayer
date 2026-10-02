@@ -1,0 +1,28 @@
+/*
+ * Оформление собрано по БЭМ: блок — независимая часть интерфейса, элемент — её часть
+ * (block__element), модификатор — вариант (block--modifier). Вложенность классов не
+ * используется: блок знает только про себя, поэтому его можно переставить куда угодно.
+ *
+ * Правила, которых держимся:
+ *   · цвета и размеры берём из токенов, в блоках нет «магических» значений;
+ *   · состояние элемента — модификатор, а не класс-сосед (chat-row__preview--typing);
+ *   · общие состояния — префикс is- (is-rising);
+ *   · на каждый блок свой файл.
+ */
+@import './tokens.css';
+@import './base.css';
+
+@import './blocks/phone.css';
+@import './blocks/screen.css';
+@import './blocks/button.css';
+@import './blocks/story-tile.css';
+@import './blocks/story.css';
+@import './blocks/info.css';
+@import './blocks/chat-list.css';
+@import './blocks/chat.css';
+@import './blocks/message.css';
+@import './blocks/choices.css';
+@import './blocks/notice.css';
+@import './blocks/sheet.css';
+@import './blocks/controls.css';
+@import './blocks/message-box.css';

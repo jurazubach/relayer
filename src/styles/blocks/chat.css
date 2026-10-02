@@ -1,0 +1,54 @@
+/* Блок chat — экран переписки. */
+.chat__header {
+  flex: none;
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: calc(var(--safe-top) + var(--space-2)) var(--space-2) var(--space-2) var(--space-1);
+  border-bottom: 1px solid var(--color-line);
+  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+}
+
+.chat__title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.chat__name {
+  font-weight: 600;
+}
+
+.chat__status {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.chat__status--typing {
+  color: var(--color-accent);
+}
+
+.chat__messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  overscroll-behavior: contain;
+}
+
+.chat__composer {
+  flex: none;
+  padding: var(--space-3) var(--space-3) calc(var(--safe-bottom) + var(--space-3));
+  border-top: 1px solid var(--color-line);
+  background: var(--color-bg);
+}
+
+.chat__hint {
+  margin: var(--space-1);
+  color: var(--color-muted);
+  font-size: var(--text-md);
+  text-align: center;
+}

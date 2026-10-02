@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import type { Engine, View } from '../engine/engine';
-import { formatDuration, formatTime } from '../engine/engine';
+import type { Engine, View } from '../engine';
+import { formatDuration, formatTime } from '../engine';
 import { Avatar } from './Avatar';
 import { BackIcon, CameraIcon, GearIcon } from './Icons';
 
+/** Переписка: сообщения и варианты ответа вместо поля ввода. */
 export function ChatScreen({
   engine,
   view,
@@ -27,16 +28,6 @@ export function ChatScreen({
   const choicesHere = view.choices.filter((c) => c.thread === thread);
   const waitingElsewhere = view.choices.length > 0 && choicesHere.length === 0;
   const otherThreads = view.choiceThreads.filter((t) => t !== thread);
-  const elsewhere = otherThreads.length > 0 && (
-    <div className="elsewhere">
-      <span>{choicesHere.length ? 'Можно ответить и в другом чате:' : 'Тебя ждут в другом чате:'}</span>
-      {otherThreads.map((t) => (
-        <button key={t} className="chip" onClick={() => onOpen(t)}>
-          {engine.contact(t).name} →
-        </button>
-      ))}
-    </div>
-  );
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,77 +38,93 @@ export function ChatScreen({
     endRef.current?.scrollIntoView({ block: 'end' });
   }, [msgs.length, typing, choicesHere.length]);
 
+  const elsewhere = otherThreads.length > 0 && (
+    <div className="elsewhere">
+      <span>{choicesHere.length ? 'Можно ответить и в другом чате:' : 'Тебя ждут в другом чате:'}</span>
+      {otherThreads.map((t) => (
+        <button key={t} className="chip" onClick={() => onOpen(t)}>
+          {engine.contact(t).name} →
+        </button>
+      ))}
+    </div>
+  );
+
   const statusText = typing ? 'печатает…' : away && st && st.pauseMs > 60_000 ? 'не в сети' : 'в сети';
 
   return (
-    <div className="screen chat">
-      <header className="chat-header">
-        <button className="icon-btn" onClick={onBack} aria-label="Назад к сообщениям">
+    <div className="screen" data-testid="chat">
+      <header className="chat__header">
+        <button className="btn btn--icon" onClick={onBack} aria-label="Назад к сообщениям">
           <BackIcon />
         </button>
         <Avatar contact={contact} size={36} />
-        <span className="chat-title">
-          <span className="chat-name">{contact.name}</span>
-          <span className={typing ? 'chat-status typing' : 'chat-status'}>{statusText}</span>
+        <span className="chat__title">
+          <span className="chat__name">{contact.name}</span>
+          <span className={typing ? 'chat__status chat__status--typing' : 'chat__status'}>{statusText}</span>
         </span>
-        <button className="icon-btn" onClick={onDebug} aria-label="Панель отладки">
+        <button className="btn btn--icon" onClick={onDebug} aria-label="Панель отладки">
           <GearIcon />
         </button>
       </header>
 
-      <div className="messages">
+      <div className="chat__messages">
         {msgs.map((m, i) => {
           const prev = msgs[i - 1];
           const grouped = prev && prev.kind === m.kind && m.kind !== 'sys';
+
           if (m.kind === 'sys') {
             return (
-              <div key={m.id} className="sys">
+              <div key={m.id} className="system-line is-rising">
                 {m.text}
               </div>
             );
           }
           if (m.kind === 'photo') {
             return (
-              <div key={m.id} className="row in">
-                <figure className="photo">
-                  <span className="photo-img">
+              <div key={m.id} className="message message--in is-rising">
+                <figure className="photo-message">
+                  <span className="photo-message__img">
                     <CameraIcon />
                   </span>
-                  <figcaption>{m.text}</figcaption>
+                  <figcaption className="photo-message__caption">{m.text}</figcaption>
                 </figure>
               </div>
             );
           }
           return (
-            <div key={m.id} className={`row ${m.kind}${grouped ? ' grouped' : ''}`}>
-              <span className="bubble">
+            <div
+              key={m.id}
+              className={`message message--${m.kind}${grouped ? ' message--grouped' : ''} is-rising`}
+            >
+              <span className="message__bubble">
                 {m.text}
-                <span className="time">{formatTime(m.at)}</span>
+                <span className="message__time">{formatTime(m.at)}</span>
               </span>
             </div>
           );
         })}
+
         {typing && (
-          <div className="row in">
-            <span className="bubble dots" aria-label="печатает">
-              <i />
-              <i />
-              <i />
+          <div className="message message--in">
+            <span className="message__bubble typing-dots" aria-label="печатает">
+              <i className="typing-dots__dot" />
+              <i className="typing-dots__dot" />
+              <i className="typing-dots__dot" />
             </span>
           </div>
         )}
         <div ref={endRef} />
       </div>
 
-      <footer className="composer">
+      <footer className="chat__composer">
         {choicesHere.length > 0 ? (
-          <div className="choices">
+          <div className="choices is-rising">
             {choicesHere.map((c) => (
               <button key={c.index} className="choice" onClick={() => engine.choose(c.index)}>
                 {c.label ? (
                   <>
-                    <span className="choice-label">{c.label}</span>
-                    <span className="choice-say">{c.silent ? '' : c.text}</span>
+                    <span className="choice__label">{c.label}</span>
+                    <span className="choice__say">{c.silent ? '' : c.text}</span>
                   </>
                 ) : (
                   c.text
@@ -127,16 +134,16 @@ export function ChatScreen({
             {elsewhere}
           </div>
         ) : view.ended ? (
-          <p className="hint">Конец сцены. Начать заново можно в панели отладки.</p>
+          <p className="chat__hint">Конец сцены. Начать заново можно в панели отладки.</p>
         ) : waitingElsewhere ? (
           elsewhere
         ) : away && st ? (
-          <p className="hint">
+          <p className="chat__hint">
             {contact.name} ответит через {formatDuration(st.pauseMs)}
             {view.speed > 1 && view.speed !== Infinity ? ` · реально ${formatDuration(st.realMs)}` : ''}
           </p>
         ) : (
-          <p className="hint">…</p>
+          <p className="chat__hint">…</p>
         )}
       </footer>
     </div>

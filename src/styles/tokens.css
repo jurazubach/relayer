@@ -1,0 +1,75 @@
+/**
+ * Токены оформления. Единственное место, где живут цвета, размеры и ритм.
+ * Блоки ниже пользуются только переменными отсюда — поэтому новую тему
+ * или новый размер можно ввести, не трогая сами блоки.
+ */
+:root {
+  /* цвет */
+  --color-bg: #0c0e12;
+  --color-page: #050608;
+  --color-surface: #15181e;
+  --color-raise: #1d2129;
+  --color-line: #262b34;
+  --color-fg: #eef0f3;
+  --color-muted: #8b93a1;
+  --color-accent: #3d7bff;
+  --color-accent-ink: #ffffff;
+  --color-incoming: #22262f;
+  --color-danger: #ff5d5d;
+  --color-ok: #3ecf8e;
+
+  /* текст поверх обложки истории: обложка всегда тёмная, поэтому белый с прозрачностью */
+  --color-on-cover: #ffffff;
+  --color-on-cover-dim: rgba(255, 255, 255, 0.66);
+  --color-on-cover-faint: rgba(255, 255, 255, 0.42);
+
+  /* ритм: шаг 4px */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* скругления */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-bubble: 18px;
+  --radius-pill: 999px;
+
+  /* размер текста */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-md: 14px;
+  --text-base: 15px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 30px;
+  --text-3xl: 32px;
+
+  /* слои */
+  --layer-notice: 10;
+  --layer-sheet: 30;
+  --layer-overlay: 40;
+
+  /* движение */
+  --dur-fast: 0.22s;
+  --dur-base: 0.25s;
+
+  /* безопасные зоны телефона */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* шрифт как в настоящем мессенджере */
+  --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ширина «телефона» */
+  --phone-width: 440px;
+  --phone-height: 920px;
+
+  color-scheme: dark;
+}

@@ -1,0 +1,51 @@
+/*
+ * Блок screen — каркас экрана внутри phone.
+ * Важно: phone это колонка на flex, поэтому у блоков, которые не должны
+ * ужиматься, стоит flex: none. На этом уже обжигались — обложка сплющивалась.
+ */
+.screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.screen--scroll {
+  display: block;
+  overflow-y: auto;
+}
+
+.screen__header {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--safe-top) + var(--space-3)) var(--space-3) var(--space-3);
+}
+
+.screen__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.screen__title {
+  margin: var(--space-1) 0 var(--space-1) var(--space-2);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.screen__subtitle {
+  margin-left: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}
+
+.screen__footer {
+  flex: none;
+  margin-top: auto;
+  padding: var(--space-2) var(--space-5) calc(var(--safe-bottom) + var(--space-3));
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  text-align: center;
+}

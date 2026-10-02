@@ -1,0 +1,125 @@
+/* Блок message — одно сообщение в переписке. */
+.message {
+  display: flex;
+}
+
+.message--in {
+  justify-content: flex-start;
+}
+
+.message--out {
+  justify-content: flex-end;
+}
+
+/* подряд от одного человека: пузыри прижимаются друг к другу */
+.message--grouped {
+  margin-top: -3px;
+}
+
+.message__bubble {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  column-gap: var(--space-2);
+  max-width: 78%;
+  padding: var(--space-2) var(--space-3) 6px;
+  border-radius: var(--radius-bubble);
+  background: var(--color-incoming);
+  color: var(--color-fg);
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.message--out .message__bubble {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.message--in.message--grouped .message__bubble {
+  border-top-left-radius: 6px;
+}
+
+.message--out.message--grouped .message__bubble {
+  border-top-right-radius: 6px;
+}
+
+.message__time {
+  margin-left: auto;
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.55;
+}
+
+/* Блок system-line — серая строка по центру */
+.system-line {
+  align-self: center;
+  margin: var(--space-2) 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+/* Блок photo-message — фото с подписью (пока заглушка вместо картинки) */
+.photo-message {
+  max-width: 72%;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-incoming);
+}
+
+.photo-message__img {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  background: repeating-linear-gradient(135deg, #1b1f27 0 12px, #20242d 12px 24px);
+  color: var(--color-muted);
+}
+
+.photo-message__caption {
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}
+
+/* Блок typing-dots — «печатает…» */
+.typing-dots {
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-3);
+}
+
+.typing-dots__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-muted);
+  animation: blink 1.2s infinite;
+}
+
+.typing-dots__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-dots__dot {
+    animation: none;
+    opacity: 0.7;
+  }
+}

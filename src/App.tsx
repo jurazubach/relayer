@@ -1,153 +1,136 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Engine, compileInk, type Msg } from './engine/engine';
-import { STORIES } from './stories';
-import { ContactsScreen } from './ui/ContactsScreen';
+import { useCallback, useState } from 'react';
+import { useGame, useLibrary, useRouter, type Story } from './engine';
+import { HomeScreen } from './ui/HomeScreen';
+import { StoryScreen } from './ui/StoryScreen';
+import { ChatsScreen } from './ui/ChatsScreen';
 import { ChatScreen } from './ui/ChatScreen';
 import { DebugSheet } from './ui/DebugSheet';
-import { Toast } from './ui/Toast';
+import { ErrorScreen } from './ui/ErrorScreen';
+import { Notice } from './ui/Notice';
 
-const CUSTOM_KEY = 'relay:custom-source';
-const ACTIVE_KEY = 'relay:active-story';
-
-function readLocal(key: string): string | null {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-function writeLocal(key: string, value: string | null) {
-  try {
-    if (value === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, value);
-  } catch {
-    /* без хранилища */
-  }
-}
-
-interface Loaded {
-  engine: Engine | null;
-  errors: string[];
-}
-
-function loadStory(id: string, customSource: string | null): Loaded {
-  const entry = STORIES.find((s) => s.id === id);
-  const source = entry ? entry.source : id === 'custom' ? customSource : null;
-  if (!source) return loadStory(STORIES[0].id, null);
-  const result = compileInk(source);
-  if ('errors' in result) return { engine: null, errors: result.errors };
-  const engine = new Engine(id, result.json);
-  engine.restore();
-  return { engine, errors: [] };
-}
-
+/** Связывание: вся логика в engine, всё оформление в ui. Здесь только маршруты. */
 export function App() {
-  const [storyId, setStoryId] = useState(() => readLocal(ACTIVE_KEY) ?? STORIES[0].id);
-  const [customSource, setCustomSource] = useState(() => readLocal(CUSTOM_KEY));
-  const loaded = useMemo(() => loadStory(storyId, customSource), [storyId, customSource]);
-  const [open, setOpen] = useState<string | null>(null);
+  const { route, goHome, openStory, play } = useRouter();
+  const library = useLibrary(useCallback((story: Story) => openStory(story.id), [openStory]));
+
+  if (route.screen === 'home') {
+    return (
+      <div className="phone">
+        <HomeScreen
+          stories={library.stories}
+          progressOf={library.progress}
+          onOpen={openStory}
+          onUpload={library.add}
+        />
+      </div>
+    );
+  }
+
+  const story = library.find(route.id);
+  if (!story) {
+    return (
+      <div className="phone">
+        <ErrorScreen title={`История «${route.id}» не найдена`} onHome={goHome} />
+      </div>
+    );
+  }
+
+  if (route.screen === 'story') {
+    return (
+      <div className="phone">
+        <StoryScreen
+          story={story}
+          progress={library.progress(story.id)}
+          onPlay={() => play(story.id)}
+          onBack={goHome}
+          onReset={() => library.reset(story.id)}
+          onDelete={
+            story.origin === 'upload'
+              ? () => {
+                  library.remove(story.id);
+                  goHome();
+                }
+              : undefined
+          }
+        />
+      </div>
+    );
+  }
+
+  return (
+    <GameShell
+      key={story.id}
+      story={story}
+      stories={library.stories}
+      onBack={() => openStory(story.id)}
+      onHome={goHome}
+      onSelectStory={play}
+    />
+  );
+}
+
+/** Игра: чаты, уведомления и панель отладки поверх одной сессии движка. */
+function GameShell({
+  story,
+  stories,
+  onBack,
+  onHome,
+  onSelectStory,
+}: {
+  story: Story;
+  stories: Story[];
+  onBack: () => void;
+  onHome: () => void;
+  onSelectStory: (id: string) => void;
+}) {
+  const game = useGame(story);
   const [debug, setDebug] = useState(false);
-  const [toast, setToast] = useState<Msg | null>(null);
-  const openRef = useRef(open);
-  openRef.current = open;
-
-  useEffect(() => {
-    setOpen(null);
-    const engine = loaded.engine;
-    if (!engine) return;
-    const timer = window.setInterval(() => {
-      const fresh = engine.tick();
-      const incoming = fresh.filter((m) => m.kind !== 'out' && m.thread !== openRef.current);
-      if (incoming.length) setToast(incoming[incoming.length - 1]);
-    }, 250);
-    return () => window.clearInterval(timer);
-  }, [loaded]);
-
-  // открыли чат, о котором было уведомление: уведомление больше не нужно
-  useEffect(() => {
-    if (open) setToast((t) => (t && t.thread === open ? null : t));
-  }, [open]);
-
-  const selectStory = useCallback((id: string) => {
-    writeLocal(ACTIVE_KEY, id);
-    setStoryId(id);
-  }, []);
-
-  const uploadStory = useCallback((source: string) => {
-    writeLocal(CUSTOM_KEY, source);
-    writeLocal('relay:custom', null);
-    setCustomSource(source);
-    writeLocal(ACTIVE_KEY, 'custom');
-    setStoryId('custom');
-  }, []);
 
   return (
     <div className="phone">
-      {toast && loaded.engine && (
-        <Toast
-          msg={toast}
-          contact={loaded.engine.contact(toast.thread)}
-          onOpen={() => {
-            setOpen(toast.thread);
-            setToast(null);
-          }}
-          onDone={() => setToast(null)}
+      {game.notice && game.engine && (
+        <Notice
+          msg={game.notice}
+          contact={game.engine.contact(game.notice.thread)}
+          onOpen={game.openNotice}
+          onDone={game.hideNotice}
         />
       )}
-      {loaded.engine ? (
-        <Game
-          engine={loaded.engine}
-          open={open}
-          setOpen={setOpen}
-          onDebug={() => setDebug(true)}
-        />
+
+      {game.engine && game.view ? (
+        game.open ? (
+          <ChatScreen
+            engine={game.engine}
+            view={game.view}
+            thread={game.open}
+            onBack={() => game.openChat(null)}
+            onOpen={game.openChat}
+            onDebug={() => setDebug(true)}
+          />
+        ) : (
+          <ChatsScreen
+            engine={game.engine}
+            view={game.view}
+            onOpen={game.openChat}
+            backLabel={story.title}
+            onBack={onBack}
+            onDebug={() => setDebug(true)}
+          />
+        )
       ) : (
-        <div className="compile-error">
-          <h1>Сценарий не собрался</h1>
-          <ul>
-            {loaded.errors.map((e) => (
-              <li key={e}>{e}</li>
-            ))}
-          </ul>
-          <button className="btn" onClick={() => selectStory(STORIES[0].id)}>
-            Вернуться к «{STORIES[0].title}»
-          </button>
-        </div>
+        <ErrorScreen title="Сценарий не собрался" details={game.errors} onHome={onHome} />
       )}
+
       {debug && (
         <DebugSheet
-          engine={loaded.engine}
-          storyId={storyId}
-          hasCustom={!!customSource}
-          onSelectStory={selectStory}
-          onUpload={uploadStory}
+          engine={game.engine}
+          stories={stories}
+          storyId={story.id}
+          onSelectStory={onSelectStory}
+          onHome={onHome}
           onClose={() => setDebug(false)}
         />
       )}
     </div>
-  );
-}
-
-function Game({
-  engine,
-  open,
-  setOpen,
-  onDebug,
-}: {
-  engine: Engine;
-  open: string | null;
-  setOpen: (id: string | null) => void;
-  onDebug: () => void;
-}) {
-  const version = useSyncExternalStore(
-    useCallback((fn: () => void) => engine.subscribe(fn), [engine]),
-    () => engine.version,
-  );
-  const view = useMemo(() => engine.view(), [engine, version]);
-
-  return open ? (
-    <ChatScreen engine={engine} view={view} thread={open} onBack={() => setOpen(null)} onDebug={onDebug} onOpen={setOpen} />
-  ) : (
-    <ContactsScreen engine={engine} view={view} onOpen={setOpen} onDebug={onDebug} />
   );
 }

@@ -1,4 +1,4 @@
-import type { Contact } from '../engine/engine';
+import type { Contact } from '../engine';
 
 export function Avatar({ contact, size = 44 }: { contact: Contact; size?: number }) {
   const letter = contact.name.trim().charAt(0).toUpperCase() || '?';

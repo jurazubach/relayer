@@ -1,0 +1,95 @@
+/* Мелкие органы управления: поля, переключатели, чипы. Используются в шторке отладки. */
+.select {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-raise);
+  color: var(--color-fg);
+  font: inherit;
+}
+
+/* Блок segmented — переключатель из нескольких равных кнопок */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--color-raise);
+}
+
+.segmented__btn {
+  padding: 9px var(--space-1);
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}
+
+.segmented__btn[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+/* Блок toggle — двухпозиционный переключатель */
+.toggle {
+  min-width: 70px;
+  padding: 6px var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-raise);
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}
+
+.toggle--on {
+  border-color: var(--color-ok);
+  color: var(--color-ok);
+}
+
+/* Блок chip — узлы сценария, переходы */
+.chip {
+  padding: 7px var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: var(--color-raise);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+/* Блок var-list — переменные сценария */
+.var-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.var-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.var-list__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+}
+
+/* Блок stepper — число с кнопками «больше-меньше» */
+.stepper {
+  display: inline-flex;
+  gap: var(--space-3);
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper__btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-raise);
+}

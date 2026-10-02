@@ -1,0 +1,99 @@
+/* Блок chat-list — список чатов внутри истории. */
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-list__empty {
+  padding: 40px var(--space-5);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* Блок chat-row — одна строка списка */
+.chat-row {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  width: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5);
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.chat-row:active {
+  background: var(--color-surface);
+}
+
+.chat-row__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.chat-row__top,
+.chat-row__bottom {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.chat-row__name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.chat-row__time {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.chat-row__preview {
+  flex: 1;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--text-base);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.chat-row__preview--typing {
+  color: var(--color-accent);
+}
+
+/* Блок badge — счётчик непрочитанных и метка «ждёт ответа» */
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.badge--wait {
+  border: 1px solid var(--color-accent);
+  background: transparent;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* Блок avatar — кружок с буквой */
+.avatar {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--color-bg);
+  font-weight: 700;
+}

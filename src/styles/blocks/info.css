@@ -1,0 +1,150 @@
+/* Разделы описания: заголовок-метка и содержимое. Используются на экране истории. */
+.info {
+  padding-top: var(--space-5);
+}
+
+.info--separated {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+}
+
+.info__title {
+  margin-bottom: var(--space-2);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.info__text {
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+.info__text--muted {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+}
+
+/* Блок feature-list — «как это играется» */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.feature-list__item {
+  position: relative;
+  padding-left: 18px;
+  font-size: var(--text-base);
+  line-height: 1.4;
+}
+
+.feature-list__item::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Блок people — герои истории */
+.people {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.people__item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.people__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.people__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.people__name {
+  font-weight: 600;
+}
+
+.people__role {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.people__about {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+  line-height: 1.4;
+}
+
+/* Блок chapters — главы истории */
+.chapters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.chapters__item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.chapters__no {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--color-line);
+  border-radius: 50%;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapters__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chapters__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.chapters__title {
+  font-weight: 600;
+}
+
+.chapters__when {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.chapters__about {
+  color: var(--color-muted);
+  font-size: var(--text-md);
+  line-height: 1.4;
+}
