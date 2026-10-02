@@ -11,6 +11,7 @@
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
+  container-type: inline-size;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-xl);
   background: linear-gradient(160deg, var(--cover-from, #27303f), var(--cover-to, #12151b));
@@ -114,6 +115,18 @@
 /* начатая история показывает ещё строку состояния — описанию оставляем одну */
 .story-tile--started .story-tile__tagline {
   -webkit-line-clamp: 1;
+}
+
+/* на узкой карточке (экран 360px) крупное название переносилось на две строки,
+   и описание обрезалось посередине строки */
+@container (max-width: 170px) {
+  .story-tile__title {
+    font-size: var(--text-lg);
+  }
+
+  .story-tile__tagline {
+    -webkit-line-clamp: 1;
+  }
 }
 
 /* плитка «загрузить историю» */

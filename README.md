@@ -49,9 +49,9 @@
 
 | Файл | Серия · название | Главы | ≈ минут |
 |---|---|---|---|
-| [`the-number.json`](src/stories/the-number.json) | THE NUMBER · Пилот | Доставлено → Код → Эвакуатор → Прачечная → Рэй | 25 |
+| [`the-number.json`](src/stories/the-number.json) | THE NUMBER | Доставлено → Код → Эвакуатор → Прачечная → Рэй | 25 |
 | [`chuzhoy-golos.json`](src/stories/chuzhoy-golos.json) | Векскомб · Чужой голос | Подработка → Свидетели → Город → Денни → Слушание | 40 |
-| [`slepoe-pyatno.json`](src/stories/slepoe-pyatno.json) | 01:42 · Пилот · Слепое пятно | Математика врёт → Отладчик → Тихие шесть недель → 01:42 → Рассвет | 40 |
+| [`slepoe-pyatno.json`](src/stories/slepoe-pyatno.json) | 01:42 · Слепое пятно | Математика врёт → Отладчик → Тихие шесть недель → 01:42 → Рассвет | 40 |
 
 Все истории и персонажи вымышлены. Пример-шаблон для своих —
 [`examples/demo.story.json`](examples/demo.story.json).
@@ -158,7 +158,7 @@ npm run check:story && npm run build && npm run test:e2e && npm run prompt -- --
 
 | Тег | Что делает |
 |---|---|
-| `# title: THE NUMBER · Пилот` | название сценария |
+| `# title: THE NUMBER` | название сценария |
 | `# contact: theo, Тео, blue` | завести контакт: id, имя, цвет |
 
 Цвета: `blue` `amber` `red` `grey` `green` `purple` `pink` `teal` `orange` `lime` `cyan` `indigo`.

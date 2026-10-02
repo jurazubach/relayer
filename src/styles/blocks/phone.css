@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  /* width обязателен: #root — flex-колонка, и с автоотступами по бокам блок
+     не растягивается, а ужимается под содержимое — ширина скакала от длины реплик */
+  width: 100%;
   max-width: var(--phone-width);
   margin-inline: auto;
   overflow: hidden;

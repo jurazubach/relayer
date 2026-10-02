@@ -260,7 +260,7 @@
       "tag": "chapter",
       "syntax": "#chapter",
       "what": "Строка отмечает начало главы, её текст становится названием.",
-      "looks": "Серая плашка в переписке и подпись внизу списка чатов: «THE NUMBER · Пилот · Глава 2 · Код». Она же на карточке на главном.",
+      "looks": "Серая плашка в переписке и подпись внизу списка чатов: «THE NUMBER · Глава 2 · Код». Она же на карточке на главном.",
       "example": "Глава 2 · Код #sys:nimbus #chapter"
     },
     {
@@ -270,10 +270,10 @@
       "status": "ready",
       "since": "0.1",
       "tag": "title",
-      "syntax": "# title: THE NUMBER · Пилот",
+      "syntax": "# title: THE NUMBER",
       "what": "Подпись истории внутри игры.",
       "looks": "Внизу списка чатов.",
-      "example": "# title: THE NUMBER · Пилот"
+      "example": "# title: THE NUMBER"
     },
     {
       "id": "storyfile",

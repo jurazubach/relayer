@@ -10,7 +10,7 @@ test('главный экран показывает карточку истор
   await expect(page.getByTestId('home')).toBeVisible();
   const tile = page.getByTestId('tile-the-number');
   await expect(tile).toContainText('THE NUMBER');
-  await expect(tile).toContainText('Пилот');
+  await expect(tile).toContainText('Новый номер');
   // карточка квадратная
   const box = await tile.boundingBox();
   expect(Math.abs(box!.width - box!.height)).toBeLessThan(2);
@@ -185,5 +185,19 @@ test('встроенная история не двоится с ранее за
   });
   await page.goto(fresh);
   await expect(page.getByTestId('tile-the-number')).toHaveCount(1);
-  await expect(page.getByTestId('tile-the-number')).toContainText('Пилот');
+  await expect(page.getByTestId('tile-the-number')).toContainText('THE NUMBER');
+});
+
+test('ширина экрана не зависит от длины сообщений', async ({ page }) => {
+  await page.goto('/?story=the-number&screen=game&fast=1&fresh=1');
+  await firstThread(page).click();
+  // первые реплики короткие — ровно тот случай, когда рамка ужималась
+  await expect(page.locator('.message').first()).toBeVisible();
+  // на телефоне «телефон» во всю ширину, на широком экране — фиксированная рамка;
+  // в обоих случаях он не должен ужиматься под короткие реплики
+  const width = await page.evaluate(() => {
+    const max = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--phone-width'));
+    return { phone: document.querySelector('.phone')!.getBoundingClientRect().width, expected: Math.min(innerWidth, max) };
+  });
+  expect(Math.abs(width.phone - width.expected)).toBeLessThanOrEqual(2);
 });
