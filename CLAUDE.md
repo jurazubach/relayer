@@ -45,12 +45,12 @@ npx playwright show-trace test-results/*/trace.zip
 
 | параметр | что делает |
 |---|---|
-| `?story=pilot` | сразу открыть историю (по умолчанию — сразу играть) |
+| `?story=the-number` | сразу открыть историю (по умолчанию — сразу играть) |
 | `?screen=home` \| `story` \| `game` | какой экран показать |
 | `?fresh=1` | стереть прогресс перед запуском |
 | `?fast=1` | без пауз сюжета, набор текста ×4 |
 
-Например: `http://localhost:5173/?story=pilot&fresh=1&fast=1`.
+Например: `http://localhost:5173/?story=the-number&fresh=1&fast=1`.
 
 ## Устройство
 
