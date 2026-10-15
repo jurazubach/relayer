@@ -5,6 +5,9 @@ import { join } from 'node:path';
 import { Compiler, CompilerOptions, Story } from 'inkjs/full';
 
 const RUNS = 400;
+// Редкие ветки (финалы, которые надо заработать) случайный бот может не встретить за 400 прогонов —
+// тогда добираем прогоны, пока не найдутся все узлы. Недостижимый узел так и останется недостижимым.
+const MAX_RUNS = 2000;
 
 // Список допустимых тегов берём из реестра возможностей — чтобы он был один на всё приложение.
 const caps = JSON.parse(readFileSync('docs/capabilities.json', 'utf8'));
@@ -57,7 +60,11 @@ for (const file of files) {
   const messagesPerRun = [];
   const finals = new Map(); // последняя сюжетная строка -> сколько раз
 
-  for (let run = 0; run < RUNS; run++) {
+  const all = [...new Story(json).mainContentContainer.namedContent.keys()].filter((k) => k !== 'global decl');
+  let runs = 0;
+  for (let run = 0; run < MAX_RUNS; run++) {
+    if (run >= RUNS && all.every((k) => knots.has(k))) break;
+    runs++;
     const story = new Story(json);
     let steps = 0;
     let delay = 0;
@@ -98,8 +105,7 @@ for (const file of files) {
   }
 
   console.log(`✓ ${file}`);
-  console.log(`   прохождений: ${RUNS}, дошли до конца: ${endings}, самое длинное: ${maxSteps} строк`);
-  const all = [...new Story(json).mainContentContainer.namedContent.keys()].filter((k) => k !== 'global decl');
+  console.log(`   прохождений: ${runs}, дошли до конца: ${endings}, самое длинное: ${maxSteps} строк`);
   const unvisited = all.filter((k) => !knots.has(k));
   durations.sort((a, b) => a - b);
   messagesPerRun.sort((a, b) => a - b);
@@ -115,7 +121,7 @@ for (const file of files) {
     console.log(`     ${String(seen).padStart(4)} / ${String(choiceTaken.get(text) ?? 0).padStart(4)}  ${text}`);
   }
   for (const p of problems) console.log('   ⚠ ' + p);
-  if (endings < RUNS || unvisited.length) failed = true;
+  if (endings < runs || unvisited.length) failed = true;
 }
 
 process.exit(failed ? 1 : 0);
