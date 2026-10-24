@@ -15,7 +15,13 @@
     "prompt": "node scripts/build-prompt.mjs",
     "kb:clean": "node scripts/kb/clean.mjs",
     "test:kb:clean": "node --test scripts/kb/clean.test.mjs",
-    "test:lib": "node scripts/lib/selftest.mjs"
+    "test:lib": "node scripts/lib/selftest.mjs",
+    "story:trace": "node scripts/story/trace.mjs",
+    "story:vars": "node scripts/story/vars.mjs",
+    "story:sessions": "node scripts/story/sessions.mjs",
+    "story:cast": "node scripts/story/cast.mjs",
+    "story:endings": "node scripts/story/endings.mjs",
+    "test:story-cmd": "node scripts/story/selftest.mjs"
   },
   "dependencies": {
     "inkjs": "^2.4.0",
