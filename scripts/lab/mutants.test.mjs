@@ -1,0 +1,141 @@
+// Самопроверка skills:test: сборка мутантов, ключ, вердикт линта, разбор ответа скилла.
+// Запуск: npm run test:lab:mutants
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { compile } from '../lib/compile.mjs';
+import { compileInput, storyFromJson } from '../lib/story.mjs';
+import { knownChecks } from '../lint/core.mjs';
+import { loadThresholds } from '../lint/thresholds.mjs';
+import {
+  applyEdits, buildKey, buildMutant, checkOwners, lintDiff, lintVerdict, matchFinding, neutralId,
+  parseFindings, skillsFromOwners, validateSpec, zoneSummary,
+} from './mutants-lib.mjs';
+import { MUTANTS } from './mutants-spec.mjs';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+const BASE = join(ROOT, 'docs/lab/mutants/_base');
+const base = { ink: readFileSync(join(BASE, 'story.ink'), 'utf8'), meta: JSON.parse(readFileSync(join(BASE, 'meta.json'), 'utf8')) };
+const owners = readFileSync(join(ROOT, 'docs/playbook/owners.md'), 'utf8');
+const T = loadThresholds();
+
+test('applyEdits: правка ровно в одном месте', () => {
+  assert.deepEqual(applyEdits('а б в', [['б', 'Б']]), { text: 'а Б в', errors: [] });
+  assert.match(applyEdits('а б б', [['б', 'Б']]).errors[0], /2 раз/);
+  assert.match(applyEdits('а б', [['я', 'Я']]).errors[0], /0 раз/);
+  assert.match(applyEdits('а б', [['б', 'б']]).errors[0], /не изменили/);
+  // $ в замене — текст, а не шаблон String.replace
+  assert.equal(applyEdits('x', [['x', '$&$&']]).text, '$&$&');
+});
+
+test('набор: размер, поля, зоны и проверки сходятся со сводом', () => {
+  const skills = skillsFromOwners(owners);
+  assert.ok(skills.has('story-time') && skills.has('chapter-write') && skills.size >= 20, `скиллы из owners.md: ${[...skills].join(', ')}`);
+  assert.deepEqual(validateSpec(MUTANTS, { count: T.value('lab.mutants.count'), skills, checks: knownChecks() }), []);
+  const few = validateSpec(MUTANTS.slice(0, 3), { count: T.value('lab.mutants.count') });
+  assert.match(few[0], /мутантов 3/);
+  const bad = validateSpec([{ ...MUTANTS[0], id: 'x', zone: 'story-nope', check: 'C-99' }], { count: { min: 1, max: 1 }, skills, checks: knownChecks() });
+  assert.ok(bad.some((e) => /id не вида/.test(e)) && bad.some((e) => /story-nope/.test(e)) && bad.some((e) => /C-99/.test(e)), bad.join('\n'));
+});
+
+test('набор: дефекты из задачи T-13 все на месте', () => {
+  const want = ['C-24', 'C-01', 'C-06', 'C-35', 'C-42', 'C-45', 'C-21', 'C-27', 'C-32', 'C-40', 'C-54', 'C-10', 'C-26', 'C-44', 'C-49', 'C-20', 'C-39'];
+  const have = new Set(MUTANTS.map((m) => m.check));
+  assert.deepEqual(want.filter((c) => !have.has(c)), []);
+  // три дефекта времени (утро, упрёк, напоминание) меряет одна C-32
+  assert.equal(MUTANTS.filter((m) => m.check === 'C-32').length, 3);
+});
+
+test('каждый мутант ложится на основу, компилируется и отличается от неё', () => {
+  const baseBuilt = compile(compileInput(storyFromJson({ ...base.meta, ink: base.ink })));
+  assert.ok(baseBuilt.ok, 'основа не компилируется');
+  for (const m of MUTANTS) {
+    const b = buildMutant(m, base);
+    assert.deepEqual(b.errors, [], m.id);
+    assert.notEqual(b.files['story.ink'], base.ink, m.id);
+    const meta = JSON.parse(b.files['meta.json']);
+    assert.equal(meta.id, m.id);
+    const c = compile(compileInput(storyFromJson({ ...meta, ink: b.files['story.ink'] })));
+    assert.ok(c.ok, `${m.id}: ${c.errors?.map((e) => e.message).join('; ')}`);
+  }
+});
+
+test('key.json на диске совпадает со сборкой из спецификации', () => {
+  const disk = JSON.parse(readFileSync(join(ROOT, 'docs/lab/mutants/key.json'), 'utf8'));
+  const fresh = buildKey(MUTANTS, disk._about);
+  assert.deepEqual(disk, fresh, 'npm run skills:test -- --build');
+  for (const e of disk.mutants) {
+    assert.equal(readFileSync(join(ROOT, e.path, 'story.ink'), 'utf8'), buildMutant(MUTANTS.find((m) => m.id === e.id), base).files['story.ink'], e.id);
+  }
+});
+
+test('lintDiff: новые находки — по проверке, ключу и узлу, без текста', () => {
+  const b = [{ check: 'C-26', key: 'C-26.share', node: null, message: '20 %' }];
+  const m = [{ check: 'C-26', key: 'C-26.share', node: null, message: '40 %' }, { check: 'C-01', key: 'C-01.dead', node: 'a', message: 'x' }];
+  assert.deepEqual(lintDiff(b, m).map((f) => f.check), ['C-01']);
+});
+
+test('lintVerdict: пойман, частично, не пойман, ждёт проверку', () => {
+  const impl = new Set(['C-01', 'C-11', 'C-40']);
+  const f = (check) => ({ check });
+  assert.equal(lintVerdict({ check: 'C-01', lint: ['C-01'] }, [f('C-01')], impl).status, 'caught');
+  assert.equal(lintVerdict({ check: 'C-01', lint: [] }, [f('C-01')], impl).status, 'caught', 'своя проверка ждётся без поля lint');
+  assert.equal(lintVerdict({ check: 'C-40', lint: ['C-11'] }, [f('C-11')], impl).status, 'partial');
+  assert.equal(lintVerdict({ check: 'C-01', lint: [] }, [f('C-11')], impl).status, 'missed');
+  const p = lintVerdict({ check: 'C-42', lint: [] }, [f('C-26')], impl);
+  assert.equal(p.status, 'pending');
+  assert.equal(p.waits, 'C-42');
+  assert.deepEqual(p.extra, ['C-26']);
+  // смежная проверка уже есть, своей ещё нет: пойман смежной и всё равно ждёт свою
+  const s = lintVerdict({ check: 'C-32', lint: ['C-11'] }, [f('C-11')], impl);
+  assert.equal(s.status, 'caught');
+  assert.equal(s.waits, 'C-32');
+});
+
+test('zoneSummary: полнота линта по измеренным, скилла — по прогонам', () => {
+  const e = (zone) => ({ zone });
+  const lint = zoneSummary([
+    { entry: e('a'), verdict: { status: 'caught' } }, { entry: e('a'), verdict: { status: 'missed' } }, { entry: e('a'), verdict: { status: 'pending' } },
+    { entry: e('b'), verdict: { status: 'pending' } },
+  ]);
+  assert.deepEqual(lint.map((z) => [z.zone, z.mutants, z.measured, z.caught, z.pending, z.recall]), [['a', 3, 2, 1, 1, 0.5], ['b', 1, 0, 0, 1, null]]);
+  const sk = zoneSummary([{ entry: e('a'), runs: [{ hit: true }, { hit: false }] }, { entry: e('a'), runs: [{ hit: true }, { hit: true }] }]);
+  assert.equal(sk[0].recall, 0.75);
+  assert.equal(sk[0].caught, 2);
+});
+
+test('parseFindings: последний блок json, иначе строки «P1 · …»', () => {
+  const text = 'черновик ```json\n{"findings": []}\n```\nитог:\n```json\n{"findings": [{"node": "ch3_radio", "check": "C-26", "summary": "прощание"}, {"node": null, "check": "нет", "summary": 5}]}\n```';
+  assert.deepEqual(parseFindings(text), [{ node: 'ch3_radio', check: 'C-26', summary: 'прощание' }, { node: null, check: null, summary: '5' }]);
+  const lines = 'P1 · скучно · `ch3_radio` · 15 реплик подряд · F-05 · C-35 · замер\n- P2 · непонятно · ch1 · что-то\nпросто строка C-01';
+  assert.deepEqual(parseFindings(lines, ['ch1', 'ch3_radio']), [
+    { node: 'ch3_radio', check: 'C-35', summary: 'P1 · скучно · `ch3_radio` · 15 реплик подряд · F-05 · C-35 · замер' },
+    { node: 'ch1', check: null, summary: '- P2 · непонятно · ch1 · что-то' },
+  ]);
+  assert.deepEqual(parseFindings('```json\nне json\n```'), []);
+  assert.deepEqual(parseFindings(null), []);
+});
+
+test('matchFinding: узел дефекта, его stitch или та же проверка', () => {
+  const entry = { node: 'ch3_radio', check: 'C-26' };
+  assert.ok(matchFinding(entry, [{ node: 'ch3_radio', check: null }]));
+  assert.ok(matchFinding(entry, [{ node: 'ch3_radio.wait', check: null }]));
+  assert.ok(matchFinding(entry, [{ node: 'ch1', check: 'C-26' }]));
+  assert.equal(matchFinding(entry, [{ node: 'ch3_radio_x', check: 'C-35' }]), null);
+  assert.ok(matchFinding({ node: null, check: 'C-31' }, [{ node: null, check: 'C-31' }]));
+});
+
+test('neutralId не выдаёт мутанта и стабилен', () => {
+  const a = neutralId('m15-pause-no-hook', '0');
+  assert.match(a, /^story-[0-9a-f]{6}$/);
+  assert.equal(a, neutralId('m15-pause-no-hook', '0'));
+  assert.notEqual(a, neutralId('m15-pause-no-hook', '1'));
+});
+
+test('владельцы проверок читаются из owners.md §3', () => {
+  const o = checkOwners(owners);
+  assert.equal(o.get('C-26'), 'story-pauses');
+  assert.equal(o.get('C-32'), 'story-time');
+});
