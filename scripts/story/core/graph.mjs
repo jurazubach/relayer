@@ -39,7 +39,7 @@ export function finalNodes(tree, g = nodeGraph(tree)) {
     }
   }
   // узел без кнопок, который разводит по двум финалам, по неподвижной точке тоже «финальный»,
-  // но это распределитель (в checks.md пример — ch5 «Слепого пятна»): из финалов его убираем
+  // но это распределитель (определение — checks.md «Общие данные»): из финалов его убираем
   const distributors = new Set();
   for (const [id, n] of g) {
     const to = [...n.exits].filter((t) => final.has(t));
