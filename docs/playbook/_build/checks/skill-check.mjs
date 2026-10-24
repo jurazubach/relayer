@@ -14,6 +14,11 @@ const minRefs = Number(opt('--min-refs', 8));
 const minScripts = Number(opt('--min-scripts', 2));
 const fixes = (opt('--fixes', '') || '').split(',').filter(Boolean);
 
+// пороги контракта — из thresholds.json, жёсткие границы приёмки чуть шире цели
+const TH = (() => { try { const t = JSON.parse(readFileSync('docs/playbook/thresholds.json', 'utf8')); return t.thresholds ?? t; } catch { return {}; } })();
+const thv = (k, d) => TH[k]?.value ?? d;
+const coreMin = thv('skill.core.min_lines', 60), coreMax = thv('skill.core.max_lines', 120);
+const descMax = thv('skill.description.max_chars', 300);
 const dir = join('.claude/skills', name);
 const errors = [], warns = [];
 const err = (m) => errors.push(m), warn = (m) => warns.push(m);
@@ -32,12 +37,13 @@ else {
   const desc = fm[1].match(/^description:\s*([\s\S]*?)(?=^\w[\w-]*:|$(?![\s\S]))/m);
   const d = desc ? desc[1].replace(/\s+/g, ' ').trim().replace(/^["']|["']$/g, '') : '';
   if (!d) err('frontmatter: нет description');
-  else if (d.length > 300) err(`description ${d.length} знаков (> 300)`);
+  else if (d.length > descMax) err(`description ${d.length} знаков (> ${descMax}, skill.description.max_chars)`);
 }
 const body = text.replace(/^---[\s\S]*?\n---\n/, '');
 const lines = body.split('\n').length;
-if (lines < 40 || lines > 160) err(`SKILL.md: ${lines} строк (допустимо 40–160, цель 60–120)`);
-else if (lines < 60 || lines > 120) warn(`SKILL.md: ${lines} строк (цель 60–120)`);
+const hardMin = thv('skill.core.hard_min_lines', Math.round(coreMin * 2 / 3)), hardMax = thv('skill.core.hard_max_lines', Math.round(coreMax * 4 / 3));
+if (lines < hardMin || lines > hardMax) err(`SKILL.md: ${lines} строк (допустимо ${hardMin}–${hardMax}, цель ${coreMin}–${coreMax}: skill.core.*)`);
+else if (lines < coreMin || lines > coreMax) warn(`SKILL.md: ${lines} строк (цель ${coreMin}–${coreMax}: skill.core.*)`);
 if (!/STATUS\.md/.test(body)) err('SKILL.md: первый шаг должен читать docs/stories/<id>/STATUS.md');
 if (!/references\//.test(body)) err('SKILL.md: не ссылается на references/');
 if (!/объясни/i.test(body)) warn('SKILL.md: нет режима «объясни»');
