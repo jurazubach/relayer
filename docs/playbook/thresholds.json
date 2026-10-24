@@ -757,5 +757,23 @@
     "sources": ["claude-code-format.md §3.3 [док]: больше — модель получит путь к файлу и превью"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9 (T-11)" }]
+  },
+  "skill.coverage.block_min_chars": {
+    "value": 240, "unit": "знаков", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["flow-review.md §C «Защита от формального закрытия», п. 1: блок длиннее N знаков"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-09", "change": "заведён: короче — блок не L2, а L1; около двух предложений — правило и «когда не работает»" }]
+  },
+  "skill.coverage.key_terms": {
+    "value": 6, "unit": "основ", "level": null, "basis": "our_estimate",
+    "sources": ["flow-review.md §C «Защита от формального закрытия», п. 1: термины из заголовка и «Сути»"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-09", "change": "заведён: столько самых редких по базе основ строки берётся в ключевые термины" }]
+  },
+  "skill.coverage.key_terms_min": {
+    "value": 2, "unit": "основ", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["flow-review.md §C «Защита от формального закрытия», п. 1: 2–3 ключевых термина оригинала"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-09", "change": "заведён: меньше ключевых терминов в блоке — блок не L2" }]
   }
 }
