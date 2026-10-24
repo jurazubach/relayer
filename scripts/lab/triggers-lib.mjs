@@ -5,17 +5,16 @@ import { join, basename } from 'node:path';
 
 export const NONE = 'none';
 
-// Пока T-03 не завёл docs/playbook/thresholds.json, числа живут здесь (просьба — reports/T-12/requests.md).
-// Ключи те же, что ждём в thresholds.json: как только файл появится, значения берутся оттуда.
+// Числа живут в docs/playbook/thresholds.json; здесь — запасные на случай, если ключа там нет.
 export const DEFAULTS = {
-  'lab.triggers.runs': 3, // временно, до thresholds.json
-  'lab.triggers.min_hit_rate': 0.8, // временно, до thresholds.json
-  'lab.triggers.max_false_rate': 0.1, // временно, до thresholds.json
+  'lab.triggers.runs_per_phrase': 5,
+  'lab.triggers.min_share': 0.8,
+  'lab.triggers.max_false': 0.2,
 };
 
 /**
  * Значение ключа из thresholds.json. Формат файла задаёт T-03, поэтому принимаем оба очевидных:
- * плоский `{"lab.triggers.runs": …}` и вложенный `{"lab": {"triggers": {"runs": …}}}`;
+ * плоский `{"lab.triggers.runs_per_phrase": …}` и вложенный `{"lab": {"triggers": {"runs_per_phrase": …}}}`;
  * значение — число или объект с полем `value`.
  */
 export function thresholdValue(thresholds, key) {

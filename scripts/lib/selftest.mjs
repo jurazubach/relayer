@@ -7,7 +7,10 @@ import { join } from 'node:path';
 import { allMarks, findEndings, nodeIds, parseInk, parseDelay, stripComments, tokenize, walk, resolveTarget } from './ink.mjs';
 import { compile, formatMessages } from './compile.mjs';
 import { play, seeded, strategies } from './bot.mjs';
-import { compileInput, listStories, loadStory, parseStory } from './story.mjs';
+import {
+  compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, parseStory, sameRuntime, splitInk,
+  storyFromJson, unpackStory,
+} from './story.mjs';
 
 const HELP = `npm run test:lib [-- --json] [-- --only <подстрока>]
 
@@ -307,6 +310,9 @@ test('bot: setup — старт с узла и заданными перемен
 
 // ───────── загрузка историй
 
+/** История из результата splitInk — как её вернул бы loadStory для папки. */
+const loadStoryLike = ({ main, files, order }) => ({ id: 'probe', path: 'probe', form: 'folder', meta: {}, main, files, order, ink: files[main] });
+
 test('story: одна история в формах .json, .ink и папкой с INCLUDE', () => {
   const dir = mkdtempSync(join(tmpdir(), 'relayer-lib-'));
   try {
@@ -344,6 +350,82 @@ test('story: одна история в формах .json, .ink и папкой
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('story: раскладка по главам обратима — склейка байт в байт, играется так же', () => {
+  const src = [
+    '# title: Проба',
+    '# contact: ann, Анна, teal',
+    'VAR luck = 0',
+    '-> ch1',
+    '',
+    '// общая функция до первой главы',
+    '=== function bump() ===',
+    '~ luck++',
+    '',
+    '=== ch1 ===',
+    'Глава 1 · Начало #from:ann #chapter',
+    '* [Да]',
+    '    ~ bump()',
+    '* [Нет]',
+    '- -> ch2',
+    '',
+    '// ============ ГЛАВА 2 ============',
+    '// финал: тишина',
+    '=== ch2 ===',
+    'Глава 2 · Конец #chapter',
+    '= tail',
+    'хвост {luck}',
+    '-> END',
+  ].join('\n');
+  const split = splitInk(src);
+  assert.deepEqual(split.order, ['story.ink', 'common.ink', 'ch01.ink', 'ch02.ink']);
+  assert.match(split.files['story.ink'], /^-> ch1\n\nINCLUDE common\.ink\nINCLUDE ch01\.ink\nINCLUDE ch02\.ink\n$/m);
+  assert.ok(!/^===/m.test(split.files['story.ink']), 'в главном файле нет узлов');
+  assert.ok(split.files['ch02.ink'].startsWith('// ============ ГЛАВА 2'), 'комментарии над узлом уехали с ним');
+  assert.ok(split.files['ch02.ink'].includes('= tail'), 'stitch не режет главу');
+  const story = { ...loadStoryLike(split), meta: { id: 'probe', title: 'Проба' } };
+  assert.equal(glueStory(story), src + '\n');
+  assert.deepEqual(layoutProblems(story), []);
+  const a = compile(src);
+  const b = compile(compileInput(story));
+  assert.equal(b.ok, true, formatMessages(b.errors));
+  assert.equal(sameRuntime(a.json, b.json), true);
+  assert.equal(findEndings(parseStory(story)).endings[0].name, 'тишина');
+  // без #chapter делить нечего
+  assert.deepEqual(splitInk('Привет\n-> END\n').order, ['story.ink']);
+});
+
+test('story: .json от story:pack читается как папка и раскладывается обратно', () => {
+  const folder = loadStoryLike(splitInk('VAR x = 1\n-> ch1\n=== ch1 ===\nГлава #chapter\nраз {x}\n-> ch2\n=== ch2 ===\nГлава #chapter\nдва\n-> END\n'));
+  folder.meta = { id: 'packed', title: 'Сборка', revision: 2, minutes: 5, days: 1.5 };
+  const packed = packStory(folder);
+  assert.equal(packed.format, 'relayer-story');
+  assert.deepEqual(Object.keys(packed.includes), ['ch01.ink', 'ch02.ink']);
+  const back = storyFromJson(JSON.parse(JSON.stringify(packed)), { name: 'packed.story.json' });
+  assert.equal(back.id, 'packed');
+  assert.deepEqual(back.order, folder.order);
+  assert.equal('includes' in back.meta, false);
+  assert.equal(compile(compileInput(back)).ok, true);
+  assert.deepEqual(unpackStory(back).files, folder.files);
+  const flat = packStory(folder, { flat: true });
+  assert.equal(flat.includes, undefined);
+  assert.equal(sameRuntime(compile(flat.ink).json, compile(compileInput(back)).json), true);
+});
+
+test('story: раскладка ловит узел в главном файле, текст до узла в главе и лишний INCLUDE', () => {
+  const bad = loadStoryLike({
+    main: 'story.ink',
+    order: ['story.ink', 'ch01.ink'],
+    files: {
+      'story.ink': '-> one\n=== zero ===\n-> END\nINCLUDE ch01.ink\n',
+      'ch01.ink': 'бродячая строка\nINCLUDE ch02.ink\n=== one ===\n-> END\n',
+    },
+  });
+  const p = layoutProblems(bad).join('\n');
+  assert.match(p, /story\.ink:2: узел в главном файле/);
+  assert.match(p, /ch01\.ink:1: текст до первого узла/);
+  assert.match(p, /ch01\.ink:2: INCLUDE не в главном файле/);
 });
 
 // ───────── три истории каталога

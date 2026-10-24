@@ -136,11 +136,11 @@ test('окружение: чужие, пропавшие, плагины, MCP', 
 });
 
 test('пороги: плоский и вложенный thresholds.json, объект с value', () => {
-  assert.equal(thresholdValue({ 'lab.triggers.runs': 5 }, 'lab.triggers.runs'), 5);
-  assert.equal(thresholdValue({ lab: { triggers: { runs: { value: 4, unit: 'прогонов' } } } }, 'lab.triggers.runs'), 4);
-  assert.equal(thresholdValue({ thresholds: { 'lab.triggers.min_hit_rate': { value: 0.7 } } }, 'lab.triggers.min_hit_rate'), 0.7);
-  assert.equal(thresholdValue({}, 'lab.triggers.runs'), undefined);
-  assert.deepEqual(Object.keys(DEFAULTS).sort(), ['lab.triggers.max_false_rate', 'lab.triggers.min_hit_rate', 'lab.triggers.runs']);
+  assert.equal(thresholdValue({ 'lab.triggers.runs_per_phrase': 5 }, 'lab.triggers.runs_per_phrase'), 5);
+  assert.equal(thresholdValue({ lab: { triggers: { runs_per_phrase: { value: 4, unit: 'прогонов' } } } }, 'lab.triggers.runs_per_phrase'), 4);
+  assert.equal(thresholdValue({ thresholds: { 'lab.triggers.min_share': { value: 0.7 } } }, 'lab.triggers.min_share'), 0.7);
+  assert.equal(thresholdValue({}, 'lab.triggers.runs_per_phrase'), undefined);
+  assert.deepEqual(Object.keys(DEFAULTS).sort(), ['lab.triggers.max_false', 'lab.triggers.min_share', 'lab.triggers.runs_per_phrase']);
 });
 
 test('файлы docs/lab/triggers разбираются, шаблон и пример валидны', () => {

@@ -35,10 +35,10 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
 Флаги:
   --skill <имя>       только фразы скилла, его соседей и маршруты к ним
   --file <путь>       прогнать один файл фраз (например, _example.json), даже если скилла нет в проекте
-  --runs <N>          прогонов на фразу (по умолчанию lab.triggers.runs)
+  --runs <N>          прогонов на фразу (по умолчанию lab.triggers.runs_per_phrase)
   --min [доля]        код выхода 1, если у какого-то скилла попаданий меньше доли (0.8 или 80%)
-                      или ложных больше lab.triggers.max_false_rate; без числа — lab.triggers.min_hit_rate
-  --max-false <доля>  допустимая доля ложных для --min вместо lab.triggers.max_false_rate
+                      или ложных больше lab.triggers.max_false; без числа — lab.triggers.min_share
+  --max-false <доля>  допустимая доля ложных для --min вместо lab.triggers.max_false
   --jobs <N>          одновременных запусков claude, 1–3 (по умолчанию 2)
   --model <имя>       модель (по умолчанию claude-opus-5-5)
   --max-turns <N>     обрыв прогона после N ходов (по умолчанию 3: нужен только первый вызов)
@@ -52,8 +52,8 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --quiet             без таблицы фраз, только итог по скиллам
   --help              эта справка
 
-Пороги — ключи lab.triggers.runs, lab.triggers.min_hit_rate, lab.triggers.max_false_rate
-в docs/playbook/thresholds.json; пока файла нет, действуют временные значения из scripts/lab/triggers-lib.mjs.
+Пороги — ключи lab.triggers.runs_per_phrase, lab.triggers.min_share, lab.triggers.max_false
+в docs/playbook/thresholds.json; если ключа нет, действуют запасные значения из scripts/lab/triggers-lib.mjs.
 
 Прогон ничего не пишет и не публикует: запись, артефакты, расписания и рассылки запрещены
 (--disallowedTools), всё, что спросило бы разрешения, отклоняется (--permission-prompts none). Если git status после прогона изменился — предупреждение.
@@ -195,12 +195,12 @@ async function main() {
     json: !!raw.json,
     quiet: !!raw.quiet,
     model: raw.model ?? 'claude-opus-5-5',
-    runs: raw.runs ? int(raw.runs, '--runs', 1, 20) : th.values['lab.triggers.runs'],
+    runs: raw.runs ? int(raw.runs, '--runs', 1, 20) : th.values['lab.triggers.runs_per_phrase'],
     jobs: raw.jobs ? int(raw.jobs, '--jobs', 1, 3) : 2,
     maxTurns: raw['max-turns'] ? int(raw['max-turns'], '--max-turns', 1, 10) : 3,
     timeout: raw.timeout ? int(raw.timeout, '--timeout', 10, 1800) : 240,
-    min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_hit_rate'] : share(raw.min, '--min'),
-    maxFalse: raw['max-false'] ? share(raw['max-false'], '--max-false') : th.values['lab.triggers.max_false_rate'],
+    min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_share'] : share(raw.min, '--min'),
+    maxFalse: raw['max-false'] ? share(raw['max-false'], '--max-false') : th.values['lab.triggers.max_false'],
   };
   const defaults = Object.entries(th.source).filter(([, s]) => s === 'default').map(([k]) => k);
 
@@ -297,7 +297,7 @@ async function main() {
     focus: raw.skill ?? null,
     file: raw.file ?? null,
     group: plan.group,
-    thresholds: { ...th.values, 'lab.triggers.max_false_rate': o.maxFalse, source: th.source },
+    thresholds: { ...th.values, 'lab.triggers.max_false': o.maxFalse, source: th.source },
     min: o.min,
     seconds: Math.round((Date.now() - started) / 1000),
     cost_usd: plan.phrases.flatMap((p) => p.runs).reduce((s, r) => s + (r.cost ?? 0), 0) || null,
@@ -357,8 +357,8 @@ function report(r, o) {
   if (r.summary.errors) console.log(`\n⚠ прогонов с ошибкой: ${r.summary.errors} (в доли не входят)`);
   console.log(`\nВсего: ${pct(r.summary.rate)} проверок прошло (${r.summary.passed}/${r.summary.checks}), ${r.seconds} с${r.cost_usd ? `, от $${r.cost_usd.toFixed(2)} (оборванные прогоны цену не сообщают)` : ''}`);
   if (r.min !== null) {
-    if (r.fails.length) console.log(`✗ пороги (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false_rate'])}):\n  ${r.fails.join('\n  ')}`);
-    else console.log(`✓ пороги пройдены (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false_rate'])})`);
+    if (r.fails.length) console.log(`✗ пороги (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false'])}):\n  ${r.fails.join('\n  ')}`);
+    else console.log(`✓ пороги пройдены (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false'])})`);
   }
   if (r.saved) console.log(`Записано: ${r.saved}`);
 }

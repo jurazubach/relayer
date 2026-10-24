@@ -1,7 +1,7 @@
 // Словарь упоминаний наших историй: алиасы, названия, имена героев и контактов, узлы и переменные ink.
-// Всё берётся из src/stories/*.json, чтобы новая или переписанная история попадала в словарь сама.
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+// Всё берётся из каталога src/stories (папки и одиночные .json — через scripts/lib/story.mjs),
+// чтобы новая или переписанная история попадала в словарь сама.
+import { glueStory, listStories, loadStory } from '../lib/story.mjs';
 
 // Имена контактов, которые ничего не говорят об истории: в базе они встречаются как общие слова.
 const GENERIC_NAME_WORDS = new Set([
@@ -71,17 +71,16 @@ function inkIdents(ink) {
 }
 
 export function loadStories(dir = 'src/stories') {
-  return readdirSync(dir)
-    .filter((f) => f.endsWith('.json'))
-    .sort()
-    .map((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')))
+  return listStories(dir)
+    .map((path) => loadStory(path))
     .map((s) => ({
-      id: s.id,
-      title: s.title,
-      series: s.series,
-      label: s.series ? `${s.series} · ${s.title}` : s.title,
-      characters: s.characters ?? [],
-      ink: s.ink ?? '',
+      id: s.meta.id ?? s.id,
+      title: s.meta.title,
+      series: s.meta.series,
+      label: s.meta.series ? `${s.meta.series} · ${s.meta.title}` : s.meta.title,
+      characters: s.meta.characters ?? [],
+      // главы склеены в один текст, как до раскладки по файлам
+      ink: glueStory(s),
     }));
 }
 

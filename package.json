@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/story-pack.mjs --quiet",
     "preview": "vite preview",
     "check:story": "node scripts/check-story.mjs",
     "graph": "node scripts/story-graph.mjs",
+    "story:pack": "node scripts/story-pack.mjs",
+    "story:unpack": "node scripts/story-pack.mjs --unpack",
     "test:e2e": "playwright test e2e/smoke.spec.ts",
     "test:e2e:ui": "playwright test --ui",
     "shots": "playwright test e2e/shots.spec.ts",
@@ -17,7 +20,15 @@
     "test:kb:clean": "node --test scripts/kb/clean.test.mjs",
     "test:lib": "node scripts/lib/selftest.mjs",
     "lab:triggers": "node scripts/lab/triggers.mjs",
-    "test:lab:triggers": "node --test scripts/lab/triggers.test.mjs"
+    "test:lab:triggers": "node --test scripts/lab/triggers.test.mjs",
+    "story:trace": "node scripts/story/trace.mjs",
+    "story:vars": "node scripts/story/vars.mjs",
+    "story:sessions": "node scripts/story/sessions.mjs",
+    "story:cast": "node scripts/story/cast.mjs",
+    "story:endings": "node scripts/story/endings.mjs",
+    "test:story-cmd": "node scripts/story/selftest.mjs",
+    "story:lint": "node scripts/lint/lint.mjs",
+    "test:lint": "node scripts/lint/selftest.mjs"
   },
   "dependencies": {
     "inkjs": "^2.4.0",
