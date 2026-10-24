@@ -12,6 +12,7 @@ npm run dev                 # дев-сервер, http://localhost:5173
 npm run build               # tsc -b && vite build → dist/
 npm run preview             # посмотреть собранное
 npm run check:story         # бот прогоняет сценарии 400 раз (редкие ветки добирает до 2000): тупики, финалы, длительность
+npm run graph               # карта сюжета: граф узлов, реплики и выборы → graph/index.html (-- --open)
 npm run test:e2e            # Playwright: smoke-тесты в настоящем браузере
 npm run shots               # скриншоты всех экранов в screenshots/<устройство>/
 npm run test:e2e:ui         # интерактивный режим Playwright
@@ -79,7 +80,10 @@ src/styles/                tokens.css, base.css, blocks/*.css
 src/stories/<алиас>.json   истории; новый файл = новая история, регистрировать не нужно
 examples/demo.story.json   пример истории одним файлом (фикстура теста загрузки)
 docs/capabilities.json     реестр возможностей чата
+docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
+docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
 scripts/check-story.mjs    бот-тестировщик (теги берёт из реестра)
+scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html
 e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки)
 ```
 

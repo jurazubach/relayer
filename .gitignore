@@ -1,6 +1,7 @@
 node_modules
 dist
 dist-single
+graph
 *.log
 .DS_Store
 *.tsbuildinfo
@@ -13,3 +14,7 @@ screenshots
 # локальное
 .idea
 chat-export
+
+# база знаний: логи агентов и присланные материалы
+docs/books/_pipeline/logs
+docs/books/_pipeline/inputs

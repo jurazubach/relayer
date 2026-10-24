@@ -1,0 +1,386 @@
+{
+  "sources": [
+    {
+      "alias": "ashwell-standard-patterns",
+      "priority": 1,
+      "kind": "статья",
+      "title": "Standard Patterns in Choice-Based Games",
+      "author": "Sam Kabo Ashwell",
+      "year": 2015,
+      "why": "Словарь структур ветвления. По карте сюжета видно, что наши истории — gauntlet с сортировкой в финале; нужно понимать, какие структуры есть и чем они платят за вариативность.",
+      "focus": "Все структуры (time cave, gauntlet, branch and bottleneck, quest, open map, sorting hat, floating modules, loop and grow, spoke and hub). Для каждой: как выглядит граф, сколько текста стоит, что чувствует игрок, где ломается. Как распознать структуру по нашей карте (npm run graph) и как перейти от одной к другой.",
+      "urls": [
+        "https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/",
+        "https://www.ifwiki.org/Standard_Patterns_in_Choice-Based_Games"
+      ]
+    },
+    {
+      "alias": "emshort-structures",
+      "priority": 1,
+      "kind": "статьи",
+      "title": "Small-Scale Structures in CYOA; Beyond Branching: Quality-Based, Salience-Based and Waypoint Narrative Structures",
+      "author": "Emily Short",
+      "year": 2016,
+      "why": "Мелкие приёмы внутри одной сцены (как делать выбор ощутимым без взрыва ветвления) и альтернативы дереву: qualities, storylets, salience, waypoints.",
+      "focus": "Приёмы малого масштаба: отложенные последствия, выбор тона, переменные-накопители, напоминания о выборе. Структуры за пределами дерева и когда они нужны. Что из этого ложится на ink (переменные, условия, функции, туннели).",
+      "urls": [
+        "https://emshort.blog/2016/11/05/small-scale-structures-in-cyoa/",
+        "https://emshort.blog/2016/04/12/beyond-branching-quality-based-and-salience-based-narrative-structures/"
+      ]
+    },
+    {
+      "alias": "narrative-testing",
+      "priority": 1,
+      "kind": "подборка",
+      "title": "Тестирование и ревью интерактивных сюжетов",
+      "author": "Emily Short; SFWA; GDC (Ubisoft); Choice of Games; PlaytestCloud",
+      "year": null,
+      "why": "Мы не умеем понимать, где история слабая и где игроку станет скучно. Нужны процедуры: что проверять, как собирать отзывы, какие метрики считать.",
+      "focus": "Как тестеры пишут транскрипты и отчёты; что проверяет нарративный QA (логика, голос персонажа, пропуски, нестыковки); как тестировать историю до готовности (бумажные прогоны, чтения вслух); вопросы анкеты после плейтеста; как отличить «скучно» от «непонятно» от «не верю». Что из этого можно автоматизировать ботом (check-story) и картой (story-graph).",
+      "urls": [
+        "https://emshort.blog/how-to-play/writing-if/my-articles/suggestions-for-testing/",
+        "https://www.ifwiki.org/Betatesting",
+        "https://sfwa.org/2024/10/01/qa-and-storytelling-in-video-games/",
+        "https://www.gdcvault.com/play/1022166",
+        "https://forum.choiceofgames.com/t/on-beta-testing/16584",
+        "https://help.playtestcloud.com/en/articles/6332176-survey-questions-for-assessing-your-game-s-narrative-in-a-playtest"
+      ]
+    },
+    {
+      "alias": "choiceofgames-design",
+      "priority": 1,
+      "kind": "статьи",
+      "title": "Choice of Games: принципы дизайна выборов",
+      "author": "Choice of Games (Dan Fabulich, Adam Strong-Morse и др.)",
+      "year": null,
+      "why": "Студия, которая двадцать лет делает чисто текстовые игры с выбором. У них сформулированы правила хорошего выбора и типичные ошибки.",
+      "focus": "Intentional choices; виды осмысленных выборов (характер, отношения, стратегия, мораль); delayed branching; как обращаться со статами; ошибки (ложный выбор, очевидно лучший вариант, наказание за любопытство). Найди в блоге Choice of Games и другие статьи о дизайне.",
+      "urls": [
+        "https://choiceofgames.com/2016/12/how-to-write-intentional-choices",
+        "https://www.choiceofgames.com/about-us/why-multiple-choice-games/",
+        "https://www.choiceofgames.com/blog/"
+      ]
+    },
+    {
+      "alias": "meaningful-choice",
+      "priority": 1,
+      "kind": "подборка",
+      "title": "Осмысленный выбор в играх",
+      "author": "Brice Morrison; Sid Meier («интересные решения»); Jesse Schell",
+      "year": null,
+      "why": "У нас 338 кнопок в «Чужом голосе», из них 126 ни на что не влияют. Нужны критерии, когда выбор ощущается, а когда это декорация.",
+      "focus": "Компоненты осмысленного выбора (осознанность, последствия, напоминание, необратимость); интересные решения по Сиду Мейеру; когда «косметический» выбор оправдан (выражение себя, ритм) и когда вредит. Числовые признаки, которые можно считать по графу и переменным ink.",
+      "urls": [
+        "https://gamedeveloper.com/design/meaningful-choice-in-games-practical-guide-case-studies"
+      ]
+    },
+    {
+      "alias": "inkle-ingold",
+      "priority": 1,
+      "kind": "доклады и документация",
+      "title": "inkle: Adventures in Text (GDC 2015), Narrative Sorcery (GDC 2017), Writing with ink",
+      "author": "Jon Ingold, inkle",
+      "year": 2017,
+      "why": "Авторы ink. Их опыт — ровно наш инструмент: как писать большой ветвящийся текст, держать связность и темп.",
+      "focus": "Как inkle делают выборы значимыми, «защитная логика» для связности, длина текста между выборами, темп и подталкивание игрока, приёмы weave (выборы и сборки) и переменные. Конкретные идиомы ink, которые стоит взять в наши истории и в генератор.",
+      "urls": [
+        "https://gdcvault.com/play/1021775/Adventures-in-Text-Innovating-in",
+        "https://accelerator.xsolla.com/blog/narrative-sorcery-coherent-storytelling-in-an-open-world",
+        "https://emshort.blog/2015/04/02/interactive-narrative-gdc-talks-part-1/",
+        "https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md",
+        "https://www.inklestudios.com/blog/"
+      ]
+    },
+    {
+      "alias": "messenger-genre",
+      "priority": 1,
+      "kind": "жанровый разбор",
+      "title": "Истории в мессенджере и в реальном времени",
+      "author": "Lifeline (Dave Justus, 3 Minute Games), Bury Me My Love (The Pixel Hunt), Mr. Robot:1.51exfiltrati0n, Emily is Away, Simulacra, Replica, Sara Is Missing и др.",
+      "year": null,
+      "why": "Ближайшие аналоги relayer. Что они нашли про паузы, длину сообщений, удержание между сессиями и финалы.",
+      "focus": "Для каждой игры: приём, который работает; приём, который ругали; как устроены паузы и возвращение игрока; сколько финалов и как к ним ведут; как начинается первая минута. Общие правила жанра для нашего формата (#delay, несколько чатов, главы).",
+      "urls": [
+        "https://en.wikipedia.org/wiki/Lifeline_(2015_video_game)",
+        "https://if50.substack.com/p/2015-lifeline",
+        "https://geekpeek.blog/its-time-to-be-a-lifeline-for-an-astronaut-on-your-phone-again/",
+        "https://kotaku.com/bury-me-my-love-tells-a-moving-story-with-text-message-1820228225",
+        "https://2018.award.amaze-berlin.de/games/bury-me-my-love"
+      ]
+    },
+    {
+      "alias": "video-three-things",
+      "priority": 1,
+      "kind": "видео (расшифровка)",
+      "title": "Три простые вещи вместо описания мира",
+      "author": "автор видео неизвестен (расшифровку прислал пользователь)",
+      "year": null,
+      "why": "Ответ на вопрос «непонятно, с чего начинается»: не перегружать начало мелкими фактами, дать 1–3 сильные вещи, которые игрок раскручивает сам.",
+      "focus": "Механизм «асимметричного результата»; почему россыпь фактов выключает внимание; как выбрать три вещи; как дальше показывать вариации и последствия этих вещей и не уходить в «говорящих лосей». Как проверить завязку наших трёх историй по этому принципу. Работай только с расшифровкой из файла и своими рассуждениями; других источников не нужно.",
+      "urls": [],
+      "input": "docs/books/_pipeline/inputs/video-three-things.txt"
+    },
+    {
+      "alias": "edgerton-hooked",
+      "priority": 1,
+      "kind": "книга",
+      "title": "Hooked: Write Fiction That Grabs Readers at Page One",
+      "author": "Les Edgerton",
+      "year": 2007,
+      "why": "Как начинать историю: первая сцена, крючок, что выкинуть из начала. Наша главная боль — начало непонятное.",
+      "focus": "Компоненты начала (инициирующее событие, проблема на поверхности и в глубине, предыстория), что убивает начало, как вводить героя и мир без экспозиции. Перевод в формат «первые 5 сообщений в мессенджере».",
+      "urls": []
+    },
+    {
+      "alias": "maass-fire-in-fiction",
+      "priority": 1,
+      "kind": "книга",
+      "title": "The Fire in Fiction (и Writing the Breakout Novel)",
+      "author": "Donald Maass",
+      "year": 2009,
+      "why": "Микронапряжение на каждой странице — ровно то, что держит игрока между сообщениями. Ответ на «где станет скучно».",
+      "focus": "Микронапряжение (внутренний конфликт в каждой реплике), ставки, неожиданные повороты персонажа, сцены, которые надо вырезать. Как это проверить построчно в переписке.",
+      "urls": []
+    },
+    {
+      "alias": "schell-art-of-game-design",
+      "priority": 1,
+      "kind": "книга",
+      "title": "The Art of Game Design: A Book of Lenses",
+      "author": "Jesse Schell",
+      "year": 2008,
+      "why": "Кривая интереса и «линзы» — готовые вопросы для ревью. Кривая интереса прямо отвечает, где игроку станет скучно.",
+      "focus": "Кривая интереса (форма, провалы, фрактальность), линзы про историю, выбор, интерес, удивление, напряжение, игрока. Как построить кривую интереса для нашей истории по данным бота (паузы, длина, выборы).",
+      "urls": []
+    },
+    {
+      "alias": "snyder-save-the-cat",
+      "priority": 1,
+      "kind": "книга",
+      "title": "Save the Cat!",
+      "author": "Blake Snyder",
+      "year": 2005,
+      "why": "Логлайн и раскадровка битов — инструмент, чтобы до написания понять, о чём история и где в ней провисания.",
+      "focus": "Логлайн, 15 битов, «спасти котика», жанровые типы, доска с карточками, типичные ошибки. Адаптация битов под 5 и 10 глав мессенджер-истории и под реальное время.",
+      "urls": []
+    },
+    {
+      "alias": "cron-wired-for-story",
+      "priority": 1,
+      "kind": "книга",
+      "title": "Wired for Story",
+      "author": "Lisa Cron",
+      "year": 2012,
+      "why": "Почему мозг держится за историю и отключается: связывается с видео про «три вещи» и с вопросом «где скучно».",
+      "focus": "Что читатель ищет с первой строки, внутренняя проблема героя, причинно-следственность, конкретика против абстракции, ожидание и обещание. Признаки текста, на котором внимание отключается.",
+      "urls": []
+    },
+    {
+      "alias": "mystery-fair-play",
+      "priority": 1,
+      "kind": "правила жанра",
+      "title": "Честная загадка: правила детектива и раскладка улик",
+      "author": "Ronald Knox (декалог, 1929), S. S. Van Dine (20 правил, 1928), практика жанра",
+      "year": 1929,
+      "why": "Все три наши истории — тайны с уликами. Нужны правила, чтобы разгадка была честной, а улики не терялись.",
+      "focus": "Правила честной игры с читателем, раскладка улик (правило трёх улик), ложные следы, момент разгадки, «я же это видел». Как проверить ботом и картой, что каждая улика, нужная для финала, достижима.",
+      "urls": [
+        "https://en.wikipedia.org/wiki/Ronald_Knox#Detective_fiction"
+      ]
+    },
+    {
+      "alias": "nicklin-writing-for-games",
+      "priority": 2,
+      "kind": "книга",
+      "title": "Writing for Games: Theory and Practice",
+      "author": "Hannah Nicklin",
+      "year": 2022,
+      "why": "Современная книга о письме для игр от драматурга: словарь и упражнения.",
+      "focus": "Её модель элементов игрового нарратива, практические упражнения, как писать персонажей и диалог для игр, этика. Упражнения, которые можно превратить в скилл.",
+      "urls": [
+        "https://www.routledge.com/Writing-for-Games-Theory-and-Practice/Nicklin/p/book/9781003182832"
+      ]
+    },
+    {
+      "alias": "skolnick-video-game-storytelling",
+      "priority": 2,
+      "kind": "книга",
+      "title": "Video Game Storytelling",
+      "author": "Evan Skolnick",
+      "year": 2014,
+      "why": "Практичная база: структура, конфликт, персонажи в контексте игр.",
+      "focus": "Трёхактная структура в играх, конфликт, путь героя, роль игрока, диалог, людонарративный диссонанс. Что применимо к истории в мессенджере.",
+      "urls": []
+    },
+    {
+      "alias": "truby-anatomy-of-story",
+      "priority": 2,
+      "kind": "книга",
+      "title": "The Anatomy of Story",
+      "author": "John Truby",
+      "year": 2007,
+      "why": "Строить историю от героя и его морального изъяна, а не от событий. Помогает, когда история — цепочка происшествий.",
+      "focus": "Посылка, 7 ключевых шагов, слабость и потребность героя, противник, мир истории, сеть персонажей, раскрытия. Как проверить нашу историю по 7 шагам.",
+      "urls": []
+    },
+    {
+      "alias": "yorke-into-the-woods",
+      "priority": 2,
+      "kind": "книга",
+      "title": "Into the Woods",
+      "author": "John Yorke",
+      "year": 2013,
+      "why": "Единая модель структуры сцены, эпизода и сериала — полезно для глав и сезона.",
+      "focus": "Пятиактная форма, симметрия, «в лес и обратно», структура сцены, сериальная структура и как держать интерес между эпизодами. Применение к главам и к паузам реального времени.",
+      "urls": []
+    },
+    {
+      "alias": "mckee-story",
+      "priority": 2,
+      "kind": "книга",
+      "title": "Story",
+      "author": "Robert McKee",
+      "year": 1997,
+      "why": "Фундамент: сцена как смена ценности, бит, разрыв ожидания.",
+      "focus": "Ценностный заряд сцены, бит, разрыв между ожиданием и результатом, прогрессия осложнений, экспозиция как оружие. Как проверить каждую главу: какая ценность сменилась.",
+      "urls": []
+    },
+    {
+      "alias": "failbetter-qbn",
+      "priority": 2,
+      "kind": "подход студии",
+      "title": "Failbetter: quality-based narrative и сторилеты",
+      "author": "Failbetter Games, Alexis Kennedy",
+      "year": null,
+      "why": "Альтернатива дереву: сцены открываются по состоянию. Может решить проблему линейности без взрыва текста.",
+      "focus": "Qualities, storylets, как они пишут контент, что это стоит, как сочетать с главами. Можно ли и нужно ли это нам на ink.",
+      "urls": [
+        "https://emshort.blog/2016/04/12/beyond-branching-quality-based-and-salience-based-narrative-structures/",
+        "https://en.wikipedia.org/wiki/Fallen_London",
+        "https://www.failbettergames.com/news"
+      ]
+    },
+    {
+      "alias": "sheldon-character-storytelling",
+      "priority": 2,
+      "kind": "книга",
+      "title": "Character Development and Storytelling for Games",
+      "author": "Lee Sheldon",
+      "year": 2004,
+      "why": "Персонажи и диалог в играх: у нас вся история — это голоса персонажей в чате.",
+      "focus": "Создание персонажа, голос, диалоговые деревья, нелинейные структуры, как персонаж реагирует на выбор игрока.",
+      "urls": []
+    },
+    {
+      "alias": "vogler-writers-journey",
+      "priority": 3,
+      "kind": "книга",
+      "title": "The Writer's Journey",
+      "author": "Christopher Vogler",
+      "year": 1992,
+      "why": "Путь героя и архетипы — шаблон, который часто просят у генератора.",
+      "focus": "12 стадий, архетипы как функции, когда шаблон вредит. Короткая адаптация к истории, где игрок — помощник героя, а не герой.",
+      "urls": []
+    },
+    {
+      "alias": "bateman-game-writing",
+      "priority": 3,
+      "kind": "книга",
+      "title": "Game Writing: Narrative Skills for Videogames",
+      "author": "под редакцией Chris Bateman",
+      "year": 2007,
+      "why": "Сборник практиков индустрии о ремесле игрового сценариста.",
+      "focus": "Нелинейность, диалог, юмор, работа в команде, документация сюжета. Только то, что применимо к текстовой игре.",
+      "urls": []
+    },
+    {
+      "alias": "dille-ultimate-guide",
+      "priority": 3,
+      "kind": "книга",
+      "title": "The Ultimate Guide to Video Game Writing and Design",
+      "author": "Flint Dille, John Zuur Platten",
+      "year": 2007,
+      "why": "Рабочие документы сценариста: питч, библия, поток.",
+      "focus": "Питч и концепт-документ, сюжетная библия, структура игры, работа с лицензией. Что из документации стоит завести для наших историй.",
+      "urls": []
+    },
+    {
+      "alias": "procedural-storytelling",
+      "priority": 3,
+      "kind": "книга",
+      "title": "Procedural Storytelling in Game Design",
+      "author": "под редакцией Tanya X. Short и Tarn Adams",
+      "year": 2019,
+      "why": "Если пойдём в генерацию историй и систем, где сюжет собирается из модулей.",
+      "focus": "Главы про персонажей (Emily Short), модульный контент, генеративный текст. Что применимо к генерации историй моделью.",
+      "urls": [
+        "https://www.routledge.com/Procedural-Storytelling-in-Game-Design-1st-Edition/Short-Adams/p/book/9781138595309"
+      ]
+    },
+    {
+      "alias": "chat-fiction-apps",
+      "priority": 1,
+      "kind": "рынок",
+      "title": "Чат-фикшн приложения: Hooked, Yarn, Tap и подобные",
+      "author": "Hooked (Telepathic), Yarn (Mammoth Media), Tap by Wattpad и др.",
+      "year": null,
+      "why": "Это прямо наш формат — история перепиской — на массовом рынке. Как они удерживали короткое внимание, что сработало, что нет, почему часть закрылась.",
+      "focus": "Длина эпизода и сообщения, темп «тапни, чтобы увидеть следующее», клиффхэнгеры, жанры, которые выстрелили (хоррор, драма), монетизация «подожди или заплати» и её цена для доверия, данные об удержании и дочитываниях из открытых источников, почему сервисы закрывались или меняли модель. Переложи на relayer: реальное время вместо тапа, первая сессия, крючок перед паузой.",
+      "urls": [
+        "https://en.wikipedia.org/wiki/Hooked_(app)"
+      ]
+    },
+    {
+      "alias": "mobile-interactive-stories",
+      "priority": 1,
+      "kind": "рынок",
+      "title": "Мобильные интерактивные истории: Choices, Episode, Chapters",
+      "author": "Pixelberry, Episode Interactive, Crazy Maple Studio",
+      "year": null,
+      "why": "Крупнейший рынок историй с выбором на телефоне. Их опыт про удержание, платные выборы, сериальность и жалобы игроков — то, что нам нужно, чтобы не делать слишком замудрённо.",
+      "focus": "Структура глав и сезонов, длина главы, где ставят выборы, «премиум-выборы» и почему игроки их ненавидят, какие ветвления реально делают (иллюзия выбора против настоящих веток), что пишут авторы и бывшие сотрудники, что известно из GDC и интервью о метриках. Уроки и антипримеры для нас.",
+      "urls": [
+        "https://en.wikipedia.org/wiki/Choices:_Stories_You_Play",
+        "https://en.wikipedia.org/wiki/Episode_(app)"
+      ]
+    },
+    {
+      "alias": "narrative-postmortems",
+      "priority": 1,
+      "kind": "постмортемы",
+      "title": "Постмортемы нарративных игр: что сломалось и что починили",
+      "author": "inkle (80 Days, Heaven's Vault), Mountains (Florence), Sam Barlow (Her Story), Nerial (Reigns), Telltale, Dontnod (Life is Strange) и др.",
+      "year": null,
+      "why": "Нужны уроки из факапов и переделок с результатом: что авторы выкинули, что упростили, что дало эффект.",
+      "focus": "Для каждой игры 1–3 урока: что было в первой версии, что показали тесты или релиз, что изменили, что получилось. Особенно — упрощения ради коротких сессий (Reigns, Florence), борьба со взрывом ветвления (80 Days, Telltale), вовлечение через минимальный интерфейс (Her Story). Только по докладам, статьям и интервью с источником.",
+      "urls": [
+        "https://www.gdcvault.com/",
+        "https://www.gamedeveloper.com/"
+      ]
+    },
+    {
+      "alias": "serial-hooks",
+      "priority": 1,
+      "kind": "ремесло",
+      "title": "Сериальные крючки: клиффхэнгеры, эпизоды, веб-сериалы",
+      "author": "практика сериалов, веб-романов и сериальных платформ (Kindle Vella, Radish, вебтуны)",
+      "year": null,
+      "why": "Реальное время у нас — это сериал: игрок уходит на час или на сутки. Нужно ремесло крючков перед паузой и возвращения после неё.",
+      "focus": "Типы клиффхэнгеров и их износ, открытая петля, «предыдущее в серии» для возвращения, длина эпизода в сериальной прозе, что известно о дочитываниях и уходах, почему Kindle Vella закрыли, ритм выпуска. Правила для `#delay` перед длинной паузой и для первой реплики после неё.",
+      "urls": []
+    },
+    {
+      "alias": "attention-today",
+      "priority": 1,
+      "kind": "исследования",
+      "title": "Внимание сегодняшнего игрока: что правда, а что миф",
+      "author": "исследования внимания и мобильных сессий; разборы мифа о «внимании золотой рыбки»",
+      "year": null,
+      "why": "Мы ориентируемся на людей, которые не могут долго концентрироваться. Нужно отделить мифы от данных и вывести рабочие пороги для сценария.",
+      "focus": "Что на самом деле известно о длине внимания (миф о 8 секундах и его происхождение), длина мобильных сессий и чтения с телефона, рабочая память и число новых сущностей, как уведомления влияют на возвращение и где начинается манипуляция. Итог — пороги для check-story с источниками и честной пометкой, где оценка наша.",
+      "urls": [
+        "https://www.bbc.com/news/health-38896790"
+      ]
+    }
+  ]
+}

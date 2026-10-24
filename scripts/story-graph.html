@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Карта сюжета</title>
+<style>
+  :root {
+    --bg: #1c1d22;
+    --grid: #25262c;
+    --border: #33353d;
+    --card: #2b2d34;
+    --card-hi: #353843;
+    --line: #444754;
+    --text: #e8e9ee;
+    --muted: #9a9daa;
+    --faint: #6b6f7d;
+    --accent: #f0a830;
+    --start: #3ecf8e;
+    --end: #f472b6;
+    --rare: #f0a830;
+    --dead: #ff5d5d;
+    --edge: #7b8091;
+    --edge-hi: #f0a830;
+    --panel: #23242a;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 var(--font); overflow: hidden; }
+  button, select, input { font: inherit; color: inherit; }
+
+  .bar { position: fixed; inset: 0 0 auto 0; height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 14px; background: rgba(28,29,34,.92); border-bottom: 1px solid var(--border); z-index: 10; backdrop-filter: blur(6px); }
+  .bar__title { font-weight: 600; white-space: nowrap; }
+  .bar__select, .bar__search { height: 30px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 0 8px; }
+  .bar__search { width: 240px; }
+  .bar__btn { height: 30px; padding: 0 10px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; white-space: nowrap; }
+  .bar__btn:hover { background: var(--card-hi); }
+  .bar__btn.is-on { border-color: var(--accent); color: var(--accent); }
+  .bar__stat { color: var(--muted); white-space: nowrap; }
+  .bar__spacer { flex: 1; }
+  .legend { display: flex; gap: 10px; color: var(--muted); white-space: nowrap; }
+  .legend__line { display: inline-block; width: 18px; height: 0; border-top: 2px solid; margin-right: 4px; vertical-align: 3px; }
+  .legend__box { display: inline-block; width: 12px; height: 9px; border: 2px solid var(--dead); border-radius: 2px; margin-right: 4px; vertical-align: 0; }
+  .legend__dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: 1px; }
+
+  .viewport { position: fixed; inset: 48px 0 0 0; cursor: grab; background-color: var(--bg); background-image: radial-gradient(var(--grid) 1px, transparent 1px); background-size: 22px 22px; }
+  .viewport.is-dragging { cursor: grabbing; }
+  .world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .edges { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+
+  .node { position: absolute; width: 280px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); transition: opacity .15s; }
+  .node:hover { background: var(--card-hi); }
+  .node--final { border: 2px solid var(--dead); box-shadow: 0 0 0 3px rgba(255,93,93,.18), 0 2px 6px rgba(0,0,0,.3); }
+  .node.is-selected { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .node.is-match { box-shadow: 0 0 0 3px #22d3ee; }
+  .node.is-dim { opacity: .25; }
+  .node__head { height: 26px; display: flex; align-items: center; gap: 6px; padding: 0 8px; border-bottom: 1px solid var(--line); border-radius: 5px 5px 0 0; background: #34363f; }
+  .node__head--rare { background: #4a3a18; }
+  .node__head--dead { background: #4f2228; }
+  .node__head--start { background: #1d4635; }
+  .node__head--final { background: #5a2226; }
+  .node__ch { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; background: rgba(255,255,255,.1); color: var(--muted); white-space: nowrap; }
+  .node__id { font-family: var(--mono); font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .node__pct { font-size: 11px; color: var(--muted); }
+  .node__badge { font-size: 10px; font-weight: 700; padding: 0 5px; border-radius: 3px; background: rgba(0,0,0,.35); color: var(--text); white-space: nowrap; }
+  .node__badge--final { background: var(--dead); color: #fff; }
+  .node__inner { font-size: 10px; color: #ffd38a; white-space: nowrap; }
+  .node__preview { height: 40px; padding: 4px 8px; color: var(--muted); font-size: 12px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .node__preview b { color: var(--text); font-weight: 600; }
+  .node__preview i { color: var(--faint); }
+  .node__sec { height: 18px; padding: 3px 8px 0; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid var(--line); }
+  .node__sec--choice { color: #d9a24a; background: rgba(240,168,48,.07); }
+  .node__sec--cond { color: #8ea3e8; background: rgba(110,140,230,.08); }
+  .node__port { position: relative; height: 22px; display: flex; align-items: center; gap: 5px; padding: 0 14px 0 8px; font-size: 12px; white-space: nowrap; }
+  .node__port span { overflow: hidden; text-overflow: ellipsis; }
+  .node__port::after { content: ""; position: absolute; right: -6px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--edge); border: 2px solid var(--card); }
+  .node__port--choice { color: #ffd38a; background: rgba(240,168,48,.07); }
+  .node__port--choice::after { background: #e0a040; }
+  .node__port--cond { color: #9fb4ff; background: rgba(110,140,230,.08); font-family: var(--mono); font-size: 11px; }
+  .node__port--cond::after { background: #7f95e0; }
+  .node__port--next { color: var(--muted); border-top: 1px solid var(--line); }
+  .node__port--end { color: #ff8a8a; font-weight: 600; border-top: 1px solid var(--line); }
+  .node__port--end::after { display: none; }
+  .node__port--tunnel { color: #7fe3d3; border-top: 1px solid var(--line); }
+  .node__port--tunnel::after { background: #7fe3d3; }
+  .node__in { position: absolute; left: 134px; top: -6px; width: 11px; height: 11px; border-radius: 50%; background: var(--edge); border: 2px solid var(--card); }
+
+  .edge { fill: none; stroke: var(--edge); stroke-width: 1.6; opacity: .7; }
+  .edge--choice { stroke: #e0a040; }
+  .edge--cond { stroke: #7f95e0; stroke-dasharray: 7 5; }
+  .edge--tunnel { stroke: #7fe3d3; stroke-dasharray: 3 4; }
+  .edge--back { opacity: .35; }
+  .edge.is-dim { opacity: .06; }
+  .edge.is-hi { stroke: var(--edge-hi); opacity: 1; stroke-width: 2.4; stroke-dasharray: none; }
+  .edge.is-in { stroke: #22d3ee; opacity: 1; stroke-width: 2.4; stroke-dasharray: none; }
+
+  .panel { position: fixed; top: 48px; right: 0; bottom: 0; width: min(480px, 100vw); background: var(--panel); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform .2s; z-index: 9; display: flex; flex-direction: column; }
+  .panel.is-open { transform: none; }
+  .panel__head { padding: 12px 16px; border-bottom: 1px solid var(--border); flex: none; }
+  .panel__title { display: flex; align-items: center; gap: 8px; font: 600 16px var(--mono); }
+  .panel__close { margin-left: auto; background: none; border: 0; font-size: 20px; cursor: pointer; color: var(--muted); }
+  .panel__meta { color: var(--muted); margin-top: 4px; }
+  .panel__links { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; color: var(--muted); }
+  .panel__body { padding: 12px 16px 40px; overflow: auto; flex: 1; }
+
+  .link { font-family: var(--mono); font-size: 12px; color: #22d3ee; background: rgba(34,211,238,.08); border: 0; border-radius: 4px; padding: 1px 6px; cursor: pointer; }
+  .link:hover { background: rgba(34,211,238,.2); }
+
+  .t-msg { margin: 3px 0; }
+  .t-who { font-size: 11px; font-weight: 600; margin: 10px 0 2px; }
+  .t-bubble { display: inline-block; max-width: 92%; background: #33363f; border-radius: 12px 12px 12px 4px; padding: 5px 10px; }
+  .t-me { text-align: right; margin: 3px 0; }
+  .t-me .t-bubble { background: #2e5aa8; border-radius: 12px 12px 4px 12px; text-align: left; }
+  .t-me .t-to { font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .t-sys { text-align: center; color: var(--muted); font-size: 12px; margin: 8px 0; }
+  .t-meta { font-size: 11px; color: var(--faint); margin-left: 6px; white-space: nowrap; }
+  .t-tag { display: inline-block; font-size: 10px; padding: 0 5px; border-radius: 3px; background: rgba(255,255,255,.08); color: var(--muted); margin: 2px 4px 2px 0; }
+  .t-tag--chapter { background: rgba(240,168,48,.18); color: var(--accent); }
+  .t-inline { color: #9fb4ff; font-family: var(--mono); font-size: 12px; }
+  .t-code { font: 12px var(--mono); color: var(--faint); margin: 2px 0; }
+  .t-code::before { content: "⚙ "; }
+  .t-gather { color: var(--faint); font-size: 11px; margin: 10px 0 6px; border-top: 1px dashed var(--line); padding-top: 4px; }
+  .t-choices { margin: 10px 0; }
+  .t-caption { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin: 12px 0 2px; }
+  .t-caption--choice { color: #d9a24a; }
+  .t-caption--cond { color: #8ea3e8; }
+  .t-caption small { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--faint); }
+  .t-choice { border-left: 2px solid #8a6a2a; margin: 6px 0; padding-left: 10px; }
+  .t-btn { display: inline-block; background: rgba(240,168,48,.12); border: 1px solid rgba(240,168,48,.45); color: #ffd38a; border-radius: 8px; padding: 4px 10px; }
+  .t-btn--silent { border-style: dashed; }
+  .t-cond { border-left: 2px solid #4a5a9a; margin: 6px 0; padding-left: 10px; }
+  .t-cond__head { font: 12px var(--mono); color: #9fb4ff; margin: 4px 0; }
+  .t-divert { margin: 6px 0; }
+  .t-end { color: var(--end); font-weight: 600; margin: 8px 0; }
+  .t-photo::before { content: "🖼 "; }
+
+  .hint { position: fixed; left: 14px; bottom: 12px; color: var(--faint); font-size: 12px; z-index: 5; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="bar__title">Карта сюжета</span>
+  <select class="bar__select" id="story"></select>
+  <input class="bar__search" id="search" type="search" placeholder="Поиск по репликам и кнопкам…">
+  <span class="bar__stat" id="found"></span>
+  <button class="bar__btn" id="fit" title="Показать всё (F)">Вписать</button>
+  <span class="bar__spacer"></span>
+  <span class="bar__stat" id="stat"></span>
+  <span class="legend">
+    <span title="Игрок нажимает кнопку"><i class="legend__line" style="border-color:#e0a040"></i>выбор игрока</span>
+    <span title="Движок сам проверяет переменные — игрок этого не видит"><i class="legend__line" style="border-color:#7f95e0;border-top-style:dashed"></i>скрытая проверка</span>
+    <span><i class="legend__line" style="border-color:var(--edge)"></i>дальше</span>
+    <span><i class="legend__box"></i>дальше пути нет</span>
+    <span><i class="legend__dot" style="background:var(--start)"></i>старт</span>
+    <span><i class="legend__dot" style="background:var(--rare)"></i>редко (&lt;10%)</span>
+  </span>
+</div>
+<div class="viewport" id="viewport">
+  <div class="world" id="world"></div>
+</div>
+<aside class="panel" id="panel">
+  <div class="panel__head" id="panelHead"></div>
+  <div class="panel__body" id="panelBody"></div>
+</aside>
+<div class="hint">Тащите фон — двигать · колесо/тачпад — листать · Ctrl/щипок — масштаб · клик по узлу — весь диалог</div>
+<script>
+const STORIES = /*__DATA__*/null;
+const COLORS = { blue: '#4f8cff', amber: '#f0a830', red: '#ff5d5d', grey: '#8b93a1', green: '#3ecf8e', purple: '#a78bfa', pink: '#f472b6', teal: '#2dd4bf', orange: '#fb923c', lime: '#a3e635', cyan: '#22d3ee', indigo: '#818cf8' };
+
+const W = 280, HEAD = 26, PREVIEW = 40, SEC = 18, PORT = 22, GAP_X = 50, GAP_Y = 90, PAD = 80;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const inline = (s) => esc(s).replace(/\{[^}]*\}/g, (m) => `<span class="t-inline">${m}</span>`);
+
+let S = null;          // текущая история
+let byId = {};         // id узла → узел
+let layout = {};       // id → {x, y, h, ports}
+let edgesEls = [];     // [{el, from, to}]
+let selected = null;
+let view = { x: 0, y: 0, k: 1 };
+
+// ───────────────────────── данные
+
+function who(story, id) {
+  if (!id) return { name: '?', color: COLORS.grey };
+  const c = story.contacts[id];
+  return { name: c ? c.name : id, color: COLORS[c?.color] ?? COLORS.grey };
+}
+
+/** Первая реплика узла — для превью на карточке. */
+function preview(knot) {
+  const find = (items) => {
+    for (const it of items) {
+      if (it.type === 'msg' || it.type === 'me' || it.type === 'sys') return it;
+      if (it.type === 'cond') for (const b of it.branches) { const r = find(b.items); if (r) return r; }
+      if (it.type === 'choice') return { type: 'choice', text: it.text };
+    }
+    return null;
+  };
+  return find(knot.items);
+}
+
+/** Выходы карточки: одна строка на каждую цель, подпись — ближайший выбор или условие. */
+function ports(knot) {
+  const map = new Map();
+  for (const e of knot.edges) {
+    const last = [...e.path].reverse().find((p) => p.choice || p.cond);
+    const kind = e.kind === 'end' ? 'end' : e.kind === 'tunnel' ? 'tunnel' : last?.choice ? 'choice' : last?.cond ? 'cond' : 'next';
+    let label = e.kind === 'end' ? 'конец истории' : last?.choice ? last.label || last.choice : last?.cond ? (last.cond === 'иначе' ? 'иначе' : `если ${last.cond}`) : 'дальше';
+    if (e.kind === 'tunnel') label = `заглянуть в ${e.to} и вернуться`;
+    const key = kind + '>' + e.to;
+    if (map.has(key)) { map.get(key).more++; continue; }
+    map.set(key, { to: e.to, kind, label, more: 0, locked: last?.choice && last.conds?.length ? last.conds.join(' и ') : '' });
+  }
+  return [...map.values()];
+}
+
+/** Карточка по строкам: секции «игрок выбирает» и «скрытая проверка», затем остальное. Возвращает строки с отступами. */
+const SECTIONS = [
+  ['choice', 'Игрок выбирает'],
+  ['cond', 'Скрытая проверка · игрок не видит'],
+  ['next'], ['tunnel'], ['end'],
+];
+function cardRows(knot) {
+  const ps = ports(knot);
+  const rows = [];
+  let y = HEAD + PREVIEW;
+  for (const [kind, title] of SECTIONS) {
+    const group = ps.filter((p) => p.kind === kind);
+    if (!group.length) continue;
+    if (title) { rows.push({ sec: kind, title, y }); y += SEC; }
+    for (const p of group) { rows.push({ port: p, y }); y += PORT; }
+  }
+  return { rows, h: y + 4 };
+}
+
+/** Тупик: дальше идти некуда — финал (-> END) или обрыв без переходов. Туннель с возвратом не тупик. */
+function hasReturn(items) {
+  return items.some((it) => (it.type === 'divert' && it.kind === 'return') || (it.items && hasReturn(it.items)) || (it.branches && it.branches.some((b) => hasReturn(b.items))));
+}
+const isEnding = (k) => k.edges.some((e) => e.kind === 'end');
+const isFinal = (k) => isEnding(k) || (!k.edges.length && !hasReturn(k.items));
+
+/** Выборы внутри узла: сколько всего и сколько из них меняют переменные. */
+function innerChoices(knot) {
+  let n = 0, vars = 0;
+  const has = (items, t) => items.some((x) => x.type === t || (x.items && has(x.items, t)) || (x.branches && x.branches.some((b) => has(b.items, t))));
+  const walk = (items) => items.forEach((it) => {
+    if (it.type === 'choice') { n++; if (has(it.items, 'code')) vars++; walk(it.items); }
+    if (it.type === 'cond') it.branches.forEach((b) => walk(b.items));
+  });
+  walk(knot.items);
+  return { n, vars };
+}
+
+// ───────────────────────── раскладка: дерево сверху вниз, слой = самый длинный путь от старта
+
+function computeLayout(story) {
+  const ids = story.knots.map((k) => k.id);
+  const succ = (id) => [...new Set(byId[id].edges.map((e) => e.to).filter((t) => byId[t] && t !== id))];
+  // обратные рёбра (циклы) убираем DFS-ом от старта, остальное — DAG
+  const state = {}, back = new Set();
+  const dfs = (id) => {
+    state[id] = 1;
+    for (const t of succ(id)) {
+      if (state[t] === 1) back.add(id + '>' + t);
+      else if (!state[t]) dfs(t);
+    }
+    state[id] = 2;
+  };
+  if (byId[story.start]) dfs(story.start);
+  for (const id of ids) if (!state[id]) dfs(id);
+  const fwd = (id) => succ(id).filter((t) => !back.has(id + '>' + t));
+
+  const order = [], seen = {};
+  const topo = (id) => { if (seen[id]) return; seen[id] = 1; for (const t of fwd(id)) topo(t); order.unshift(id); };
+  if (byId[story.start]) topo(story.start);
+  for (const id of ids) topo(id);
+  const rank = {};
+  for (const id of order) rank[id] ??= 0;
+  for (const id of order) for (const t of fwd(id)) rank[t] = Math.max(rank[t], rank[id] + 1);
+
+  const preds = {}, succs = {};
+  for (const id of ids) for (const t of fwd(id)) { (preds[t] ??= []).push(id); (succs[id] ??= []).push(t); }
+  const rows = [];
+  for (const id of ids) (rows[rank[id]] ??= []).push(id);
+
+  // порядок в ряду: барицентры соседей, проходы вниз и вверх
+  const pos = {};
+  rows.forEach((r) => r.forEach((id, i) => (pos[id] = i)));
+  const bary = (id, nb) => (nb?.length ? nb.reduce((s, q) => s + pos[q], 0) / nb.length : pos[id]);
+  for (let pass = 0; pass < 8; pass++) {
+    const down = pass % 2 === 0;
+    const seq = down ? rows : [...rows].reverse();
+    for (const r of seq) {
+      if (!r) continue;
+      const key = Object.fromEntries(r.map((id) => [id, bary(id, down ? preds[id] : succs[id])]));
+      r.sort((a, b) => key[a] - key[b]);
+      r.forEach((id, i) => (pos[id] = i));
+    }
+  }
+
+  // координаты: тянем узел под родителей, соседей в ряду раздвигаем
+  const x = {};
+  rows.forEach((r) => r?.forEach((id, i) => (x[id] = i * (W + GAP_X))));
+  const place = (r, want) => {
+    const xs = r.map((id) => want[id]);
+    for (let i = 1; i < xs.length; i++) xs[i] = Math.max(xs[i], xs[i - 1] + W + GAP_X);
+    const shift = r.reduce((s, id, i) => s + (xs[i] - want[id]), 0) / r.length;
+    r.forEach((id, i) => (x[id] = xs[i] - shift));
+  };
+  for (let pass = 0; pass < 6; pass++) {
+    const down = pass % 2 === 0;
+    const seq = down ? rows : [...rows].reverse();
+    for (const r of seq) {
+      if (!r) continue;
+      const want = {};
+      for (const id of r) {
+        const nb = down ? preds[id] : succs[id];
+        want[id] = nb?.length ? nb.reduce((s, q) => s + x[q], 0) / nb.length : x[id];
+      }
+      place(r, want);
+    }
+  }
+
+  const out = {};
+  const minX = Math.min(...ids.map((id) => x[id]));
+  let y = PAD;
+  for (const r of rows) {
+    if (!r) continue;
+    let rowH = 0;
+    for (const id of r) {
+      const card = cardRows(byId[id]);
+      out[id] = { x: x[id] - minX + PAD, y, h: card.h, rows: card.rows, rank: rank[id] };
+      rowH = Math.max(rowH, card.h);
+    }
+    y += rowH + GAP_Y;
+  }
+  const width = Math.max(...ids.map((id) => out[id].x)) + W + PAD;
+  return { nodes: out, width, height: y + PAD };
+}
+
+// ───────────────────────── отрисовка
+
+function render() {
+  const world = $('world');
+  world.innerHTML = '';
+  const L = computeLayout(S);
+  layout = L.nodes;
+  world.style.width = L.width + 'px';
+  world.style.height = L.height + 'px';
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'edges');
+  svg.setAttribute('width', L.width);
+  svg.setAttribute('height', L.height);
+  world.appendChild(svg);
+
+  edgesEls = [];
+  for (const k of S.knots) {
+    const a = layout[k.id];
+    for (const row of a.rows) {
+      const p = row.port;
+      if (!p || p.kind === 'end') continue;
+      const b = layout[p.to];
+      if (!b) continue;
+      const x1 = a.x + W, y1 = a.y + row.y + PORT / 2;
+      const x2 = b.x + W / 2, y2 = b.y;
+      const backward = b.rank <= a.rank;
+      let d;
+      if (backward) {
+        // назад по дереву: обходим справа и заходим в карточку сверху
+        const side = Math.max(x1, b.x + W) + 60;
+        d = `M${x1},${y1} C${side},${y1} ${side},${y2 - 70} ${x2},${y2 - 70} L${x2},${y2}`;
+      } else {
+        const dy = Math.max(40, (y2 - y1) / 2);
+        d = `M${x1},${y1} C${x1 + 50},${y1} ${x2},${y2 - dy} ${x2},${y2}`;
+      }
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('class', `edge edge--${p.kind}` + (backward ? ' edge--back' : ''));
+      svg.appendChild(path);
+      edgesEls.push({ el: path, from: k.id, to: p.to });
+    }
+  }
+
+  for (const k of S.knots) {
+    const a = layout[k.id];
+    const el = document.createElement('div');
+    const start = k.id === S.start;
+    const final = isFinal(k);
+    el.className = 'node' + (final ? ' node--final' : '');
+    el.dataset.id = k.id;
+    el.style.cssText = `left:${a.x}px;top:${a.y}px;height:${a.h}px`;
+    const head = final ? 'final' : start ? 'start' : k.visits === 0 ? 'dead' : k.visits < 10 ? 'rare' : '';
+    const pv = preview(k);
+    let pvHtml = '<i>реплик нет — только развилка</i>';
+    if (pv?.type === 'choice') pvHtml = `<b>▸</b> ${esc(pv.text)}`;
+    else if (pv) {
+      const w = pv.type === 'me' ? { name: 'Вы' } : who(S, pv.who);
+      pvHtml = pv.type === 'sys' ? `<i>${esc(pv.text)}</i>` : `<b style="color:${w.color ?? '#7fb0ff'}">${esc(w.name)}:</b> ${esc(pv.text)}`;
+    }
+    const inner = innerChoices(k);
+    const rowsHtml = a.rows.map((r) => r.sec
+      ? `<div class="node__sec node__sec--${r.sec}">${r.sec === 'choice' ? '🎮 ' : '⚙ '}${esc(r.title)}</div>`
+      : `<div class="node__port node__port--${r.port.kind}" title="${esc(r.port.label)}${r.port.locked ? ' (кнопка видна, если ' + esc(r.port.locked) + ')' : ''} → ${esc(r.port.to)}"><span>${r.port.kind === 'choice' ? (r.port.locked ? '🔒 ' : '▸ ') : r.port.kind === 'end' ? '■ ' : r.port.kind === 'tunnel' ? '↪ ' : '→ '}${esc(r.port.label)}${r.port.more ? ` (+${r.port.more})` : ''}</span></div>`).join('')
+      || (final ? '<div class="node__port node__port--end"><span>■ обрыв: переходов нет</span></div>' : '');
+    el.innerHTML = `
+      <i class="node__in"></i>
+      <div class="node__head ${head ? 'node__head--' + head : ''}">
+        <span class="node__ch" title="${esc(S.chapters.find((c) => c.n === k.chapter)?.title ?? 'до первой главы')}">${k.chapter ? 'Гл. ' + k.chapter : 'пролог'}</span>
+        <span class="node__id">${esc(k.id)}</span>
+        ${start ? '<span class="node__badge">старт</span>' : ''}
+        ${final ? `<span class="node__badge node__badge--final">${isEnding(k) ? 'ФИНАЛ' : 'ТУПИК'}</span>` : ''}
+        ${inner.n ? `<span class="node__inner" title="кнопок внутри узла: ${inner.n}, из них меняют переменные: ${inner.vars}">▸${inner.n}</span>` : ''}
+        <span class="node__pct" title="доля случайных прохождений, дошедших сюда">${k.visits}%</span>
+      </div>
+      <div class="node__preview">${pvHtml}</div>
+      ${rowsHtml}`;
+    el.addEventListener('click', (ev) => { ev.stopPropagation(); select(k.id); });
+    el.addEventListener('mouseenter', () => hover(k.id, true));
+    el.addEventListener('mouseleave', () => hover(k.id, false));
+    world.appendChild(el);
+  }
+  const forks = (kind) => S.knots.filter((k) => new Set(ports(k).filter((p) => p.kind === kind).map((p) => p.to)).size > 1).length;
+  $('stat').textContent = `${S.knots.length} узлов · ${countChoices(S.knots)} кнопок · развилок: ${forks('choice')} по выбору, ${forks('cond')} по переменным · ${S.knots.filter(isEnding).length} финалов`;
+}
+
+function countChoices(knots) {
+  let n = 0;
+  const walk = (items) => items.forEach((it) => {
+    if (it.type === 'choice') { n++; walk(it.items); }
+    if (it.type === 'cond') it.branches.forEach((b) => walk(b.items));
+  });
+  knots.forEach((k) => walk(k.items));
+  return n;
+}
+
+function hover(id, on) {
+  if (selected) return;
+  for (const e of edgesEls) e.el.classList.toggle('is-hi', on && (e.from === id));
+  for (const e of edgesEls) e.el.classList.toggle('is-in', on && (e.to === id));
+}
+
+function highlight() {
+  const near = new Set([selected]);
+  for (const e of edgesEls) {
+    const out = e.from === selected, inc = e.to === selected;
+    e.el.classList.toggle('is-hi', !!selected && out);
+    e.el.classList.toggle('is-in', !!selected && inc);
+    e.el.classList.toggle('is-dim', !!selected && !out && !inc);
+    if (out) near.add(e.to);
+    if (inc) near.add(e.from);
+  }
+  document.querySelectorAll('.node').forEach((n) => {
+    n.classList.toggle('is-selected', n.dataset.id === selected);
+    n.classList.toggle('is-dim', !!selected && !near.has(n.dataset.id));
+  });
+}
+
+// ───────────────────────── панель с диалогом
+
+function select(id, focus) {
+  selected = id;
+  highlight();
+  if (!id) { $('panel').classList.remove('is-open'); updateHash(); return; }
+  const k = byId[id];
+  const incoming = S.knots.filter((q) => q.edges.some((e) => e.to === id)).map((q) => q.id);
+  const outgoing = [...new Set(k.edges.map((e) => e.to))];
+  const chTitle = S.chapters.find((c) => c.n === k.chapter)?.title ?? 'Пролог';
+  $('panelHead').innerHTML = `
+    <div class="panel__title">${esc(k.id)} <button class="panel__close" id="close" title="Закрыть (Esc)">×</button></div>
+    <div class="panel__meta">${esc(chTitle)} · строка ${k.line} · бот заходит в ${k.visits}% прохождений</div>
+    <div class="panel__links">← ${incoming.length ? incoming.map(link).join('') : '<i>никто не ведёт сюда</i>'}</div>
+    <div class="panel__links">→ ${outgoing.length ? outgoing.map(link).join('') : '<i>дальше пути нет</i>'}</div>`;
+  $('close').onclick = () => select(null);
+  const body = $('panelBody');
+  body.innerHTML = renderItems(k.items, { last: null });
+  body.scrollTop = 0;
+  $('panel').classList.add('is-open');
+  if (focus) centerOn(id);
+  updateHash();
+}
+
+function link(id) {
+  if (id === 'END' || id === 'DONE') return '<span class="t-end">■ конец</span>';
+  return `<button class="link" data-go="${esc(id)}">${esc(id)}</button>`;
+}
+
+function tagBadges(tags, skip = []) {
+  const out = [];
+  for (const [k, v] of Object.entries(tags ?? {})) {
+    if (skip.includes(k)) continue;
+    if (k === 'delay') out.push(`<span class="t-tag">⏱ ${esc(v)}</span>`);
+    else if (k === 'chapter') out.push(`<span class="t-tag t-tag--chapter">глава</span>`);
+    else if (k === 'unlock') out.push(`<span class="t-tag">+ контакт ${esc(who(S, v).name)}</span>`);
+    else if (k === 'rename') out.push(`<span class="t-tag">✎ ${esc(v)}</span>`);
+    else if (!['from', 'me', 'sys', 'photo', 'to', 'silent', 'label'].includes(k)) out.push(`<span class="t-tag">#${esc(k)}${v ? ':' + esc(v) : ''}</span>`);
+  }
+  return out.join('');
+}
+
+function renderItems(items, ctx) {
+  let html = '';
+  let i = 0;
+  while (i < items.length) {
+    const it = items[i];
+    if (it.type === 'choice') {
+      // соседние выборы — одна развилка
+      let group = '';
+      while (i < items.length && items[i].type === 'choice') {
+        const c = items[i];
+        const to = c.tags.to ? who(S, c.tags.to).name : null;
+        const silent = 'silent' in c.tags;
+        group += `<div class="t-choice">
+          ${c.conds.length ? `<div class="t-cond__head">🔒 кнопка видна, только если ${esc(c.conds.join(' и '))}</div>` : ''}
+          <span class="t-btn ${silent ? 't-btn--silent' : ''}">${c.tags.label ? `<b>${inline(c.tags.label)}</b><br>` : ''}${inline(c.text)}</span>
+          <span class="t-meta">${to ? '→ чат ' + esc(to) : ''}${silent ? ' · без сообщения' : ''}${c.sticky ? ' · повторяемый' : ''}</span>
+          ${renderItems(c.items, { last: null })}
+        </div>`;
+        i++;
+      }
+      html += `<div class="t-choices"><div class="t-caption t-caption--choice">🎮 Игрок выбирает</div>${group}</div>`;
+      ctx.last = null;
+      continue;
+    }
+    i++;
+    if (it.type === 'msg') {
+      const w = who(S, it.who);
+      if (ctx.last !== it.who) html += `<div class="t-who" style="color:${w.color}">${esc(w.name)}</div>`;
+      ctx.last = it.who;
+      html += `<div class="t-msg"><span class="t-bubble ${'photo' in it.tags ? 't-photo' : ''}">${inline(it.text)}</span>${tagBadges(it.tags)}</div>`;
+    } else if (it.type === 'me') {
+      html += `<div class="t-me"><div class="t-to">Вы → ${esc(who(S, it.who).name)}</div><span class="t-bubble">${inline(it.text)}</span>${tagBadges(it.tags)}</div>`;
+      ctx.last = null;
+    } else if (it.type === 'sys') {
+      html += `<div class="t-sys">${inline(it.text)} ${tagBadges(it.tags)}</div>`;
+    } else if (it.type === 'tags') {
+      const b = tagBadges(it.tags);
+      if (b) html += `<div>${b}</div>`;
+    } else if (it.type === 'code') {
+      html += `<div class="t-code" title="меняет переменную — игрок этого не видит">${esc(it.text)}</div>`;
+    } else if (it.type === 'gather') {
+      html += `<div class="t-gather">⤵ ветки сходятся${it.label ? ` (${esc(it.label)})` : ''}</div>`;
+      ctx.last = null;
+    } else if (it.type === 'cond') {
+      html += `<div class="t-caption t-caption--cond" title="Движок сам выбирает ветку по переменным, игрок видит только её текст">⚙ Скрытая проверка <small>— игрок не видит</small></div>`;
+      html += it.branches.map((b) => `<div class="t-cond"><div class="t-cond__head">${b.cond === 'else' ? 'иначе' : 'если ' + esc(it.head ? `${it.head} == ${b.cond}` : b.cond)}</div>${renderItems(b.items, { last: ctx.last })}</div>`).join('');
+      ctx.last = null;
+    } else if (it.type === 'divert') {
+      if (it.kind === 'return') html += `<div class="t-divert t-meta">↩ вернуться из туннеля</div>`;
+      else if (it.target === 'END' || it.target === 'DONE') html += `<div class="t-end">■ Конец истории</div>`;
+      else html += `<div class="t-divert">${it.kind === 'tunnel' ? '↪ ' : '→ '}${it.resolved ? link(it.resolved) : `<span class="t-inline">${esc(it.target)}</span>`}${it.kind === 'tunnel' ? ' <span class="t-meta">и обратно</span>' : ''}</div>`;
+    }
+  }
+  return html;
+}
+
+// ───────────────────────── камера
+
+const vp = $('viewport');
+function apply() { $('world').style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`; }
+function fit(all = true) {
+  const w = parseFloat($('world').style.width), h = parseFloat($('world').style.height);
+  const r = vp.getBoundingClientRect();
+  view.k = Math.min(r.width / w, all ? r.height / h : 1, 1);
+  view.x = (r.width - w * view.k) / 2;
+  view.y = 10;
+  apply();
+}
+function centerOn(id) {
+  const a = layout[id];
+  const r = vp.getBoundingClientRect();
+  const panelW = $('panel').classList.contains('is-open') ? $('panel').offsetWidth : 0;
+  view.k = Math.max(view.k, 0.8);
+  view.x = (r.width - panelW) / 2 - (a.x + W / 2) * view.k;
+  view.y = r.height / 2 - (a.y + a.h / 2) * view.k;
+  apply();
+}
+function zoomAt(f, cx, cy) {
+  const k = Math.min(2.5, Math.max(0.05, view.k * f));
+  view.x = cx - (cx - view.x) * (k / view.k);
+  view.y = cy - (cy - view.y) * (k / view.k);
+  view.k = k;
+  apply();
+}
+vp.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const r = vp.getBoundingClientRect();
+  if (e.ctrlKey || e.metaKey) zoomAt(Math.exp(-e.deltaY * 0.01), e.clientX - r.left, e.clientY - r.top);
+  else { view.x -= e.deltaX; view.y -= e.deltaY; apply(); }
+}, { passive: false });
+let drag = null;
+vp.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('.node')) return;
+  drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false };
+  vp.classList.add('is-dragging');
+});
+window.addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+  view.x = drag.vx + dx; view.y = drag.vy + dy; apply();
+});
+window.addEventListener('pointerup', () => {
+  if (drag && !drag.moved) select(null);
+  drag = null;
+  vp.classList.remove('is-dragging');
+});
+
+// ───────────────────────── поиск, переключатели, адрес
+
+let matches = [], matchAt = 0;
+function textOf(items) {
+  let s = '';
+  const walk = (arr) => arr.forEach((it) => {
+    if (it.text) s += ' ' + it.text;
+    if (it.tags?.label) s += ' ' + it.tags.label;
+    if (it.items) walk(it.items);
+    if (it.branches) it.branches.forEach((b) => walk(b.items));
+  });
+  walk(items);
+  return s.toLowerCase();
+}
+$('search').addEventListener('input', () => {
+  const q = $('search').value.trim().toLowerCase();
+  matches = q ? S.knots.filter((k) => k.id.toLowerCase().includes(q) || textOf(k.items).includes(q)).map((k) => k.id) : [];
+  matchAt = 0;
+  document.querySelectorAll('.node').forEach((n) => n.classList.toggle('is-match', matches.includes(n.dataset.id)));
+  $('found').textContent = q ? `найдено: ${matches.length}${matches.length ? ' · Enter — следующий' : ''}` : '';
+});
+$('search').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && matches.length) { select(matches[matchAt % matches.length], true); matchAt++; }
+});
+$('fit').onclick = fit;
+document.addEventListener('click', (e) => {
+  const go = e.target.closest('[data-go]');
+  if (go) select(go.dataset.go, true);
+});
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'Escape') select(null);
+  if (e.key === 'f' || e.key === 'F') fit();
+  if (e.key === '/') { e.preventDefault(); $('search').focus(); }
+});
+
+function updateHash() { history.replaceState(null, '', `#${S.id}${selected ? '/' + selected : ''}`); }
+
+function load(storyId, knotId) {
+  S = STORIES.find((s) => s.id === storyId) ?? STORIES[0];
+  byId = Object.fromEntries(S.knots.map((k) => [k.id, k]));
+  selected = null;
+  $('story').value = S.id;
+  $('panel').classList.remove('is-open');
+  $('search').value = '';
+  $('found').textContent = '';
+  document.title = `Карта сюжета · ${S.title}`;
+  render();
+  fit(false);
+  if (knotId && byId[knotId]) select(knotId, true);
+  else updateHash();
+}
+
+$('story').innerHTML = STORIES.map((s) => `<option value="${esc(s.id)}">${esc(s.series ? s.series + ' · ' : '')}${esc(s.title)}</option>`).join('');
+$('story').onchange = () => load($('story').value);
+function fromHash() {
+  const [hs, hk] = decodeURIComponent(location.hash.slice(1)).split('/');
+  if (S && hs === S.id) { if (hk !== (selected ?? undefined)) select(byId[hk] ? hk : null, true); return; }
+  load(hs || 'the-number', hk);
+}
+fromHash();
+window.addEventListener('hashchange', fromHash);
+window.addEventListener('resize', () => !selected && fit(false));
+</script>
+</body>
+</html>
