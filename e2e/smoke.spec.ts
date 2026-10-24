@@ -127,6 +127,34 @@ test('свой .json загружается с главного и сразу и
   if (BUILTIN) await expect(page.getByTestId(`tile-${BUILTIN.id}`)).toBeVisible();
 });
 
+test('встроенная история из папки собирает главы через INCLUDE прямо в браузере', async ({ page }) => {
+  test.skip(!BUILTIN?.chapterFiles, 'в src/stories нет истории с главами отдельными файлами');
+  await page.goto(`/?story=${BUILTIN!.id}&screen=game&fast=1&fresh=1`);
+  await expect(page.getByTestId('contacts')).toBeVisible();
+  await firstThread(page).click();
+  await expect(messages(page).first()).toBeVisible();
+});
+
+test('собранный .json с главами в "includes" загружается и играется', async ({ page }) => {
+  // так выглядит файл от npm run story:pack: главный файл в "ink", главы отдельно
+  const packed = {
+    format: 'relayer-story', version: 1, id: 'e2e-chapters', title: 'Главы файлами', tagline: 'проверка',
+    cover: { from: '#333', to: '#111', glyph: '?' },
+    ink: '# title: Главы файлами\n# contact: ann, Аня, teal\n\n-> start\nINCLUDE ch01.ink\n',
+    includes: { 'ch01.ink': '=== start ===\nэто пришло из второго файла #from:ann\n-> END\n' },
+  };
+  await page.goto(FRESH);
+  await page.getByTestId('upload-input').setInputFiles({
+    name: 'e2e-chapters.story.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(packed)),
+  });
+  await expect(page.getByTestId('story')).toContainText(packed.title);
+  await page.getByTestId('play').click();
+  await page.getByTestId('thread-ann').click();
+  await expect(page.getByTestId('chat')).toContainText('это пришло из второго файла');
+});
+
 test('пример для авторов по-прежнему загружается', async ({ page }) => {
   await page.goto(FRESH);
   await page.getByTestId('upload-input').setInputFiles(DEMO_PATH);

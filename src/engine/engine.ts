@@ -1,4 +1,4 @@
-import { Compiler, Story } from 'inkjs/full';
+import { Compiler, CompilerOptions, JsonFileHandler, Story } from 'inkjs/full';
 
 export type Kind = 'in' | 'out' | 'sys' | 'photo';
 
@@ -88,8 +88,9 @@ export const CONTACT_COLORS: Record<string, string> = {
   indigo: '#818cf8',
 };
 
-export function compileInk(source: string): { json: string } | { errors: string[] } {
-  const compiler = new Compiler(source);
+export function compileInk(source: string, includes: Record<string, string> = {}): { json: string } | { errors: string[] } {
+  // Главы приходят строками: файловой системы в браузере нет, INCLUDE читает их из словаря.
+  const compiler = new Compiler(source, new CompilerOptions(null, [], false, null, new JsonFileHandler(includes)));
   try {
     const story = compiler.Compile();
     return { json: story.ToJson() as string };

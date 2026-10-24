@@ -5,7 +5,7 @@
 
 | модуль | что даёт |
 |---|---|
-| `story.mjs` | `loadStory(id \| путь)` — `.json` с полем `ink`, папка `meta.json` + `story.ink` с `INCLUDE`, голый `.ink`; `listStories()`, `storyRefs(args)`, `parseStory(story)`, `compileInput(story)` |
+| `story.mjs` | `loadStory(id \| путь)` — папка `meta.json` + `story.ink` с `INCLUDE`, `.json` (с `includes` от `story:pack` или одним `ink`), голый `.ink`; `storyFromJson`, `listStories()`, `storyRefs(args)`, `parseStory(story)`, `compileInput(story)`. Раскладка и сборка: `splitInk`, `glueStory`, `packStory`, `unpackStory`, `writeFolder`, `layoutProblems`, `sameRuntime` |
 | `ink.mjs` | `parseInk(src \| файлы)` — дерево; `nodeIds`, `findEndings`, `allMarks`, `walk`, `stripComments`, `resolveTarget`, `splitTags`, `parseTag`, `parseDelay`, `tokenize` |
 | `compile.mjs` | `compile(src \| {main, files})` → `{ ok, json, errors, warnings, newStory() }`; ошибки `{ file, line, message, excerpt }`, `formatMessages()` |
 | `bot.mjs` | `play(json, { strategy, rng, nodes, maxSteps, log, trackVars, setup })` → журнал и итоги; `strategies` (random, first, last, scripted), `seeded(seed)` |
@@ -32,3 +32,15 @@
 `choice { options, picked, text }`, `var { name, value, prev }`, `end` или `stuck` (упёрлись в `maxSteps`).
 Стратегия выбора — функция `(choices, ctx) → индекс`; `ctx` даёт `rng, story, vars, events, knot, step, picks`.
 Персоны пишутся как такие функции.
+
+## Раскладка и сборка
+
+- `splitInk(ink)` режет сценарий одним текстом: `story.ink` — всё до первого узла и строки `INCLUDE`
+  в конце; `common.ink` — функции и узлы до первой главы; `ch01.ink`… — от узла с `#chapter` до следующего.
+  Комментарии над заголовком уезжают с узлом. Без `#chapter` история остаётся одним файлом.
+- `glueStory(story)` подставляет файлы на место `INCLUDE`; для результата `splitInk` это исходный
+  текст байт в байт.
+- `sameRuntime(a, b)` сравнивает два JSON от компилятора. INCLUDE добавляет `"\n"` сразу после перехода
+  (`-> ch1` перед строками INCLUDE); ход до него не доходит, поэтому сравнение его пропускает.
+- `layoutProblems(story)` — нарушения раскладки: узел в главном файле, текст до первого узла в главе,
+  `INCLUDE` не из главного файла, файл без `INCLUDE`.

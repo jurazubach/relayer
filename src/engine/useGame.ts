@@ -23,7 +23,7 @@ export interface Game {
  */
 export function useGame(story: Story, restoreThread?: string | null, onThreadChange?: (t: string | null) => void): Game {
   const loaded = useMemo(() => {
-    const result = compileInk(story.ink);
+    const result = compileInk(story.ink, story.includes);
     if ('errors' in result) return { engine: null as Engine | null, errors: result.errors };
     const engine = new Engine(story.id, result.json);
     engine.restore();
@@ -32,7 +32,7 @@ export function useGame(story: Story, restoreThread?: string | null, onThreadCha
       engine.fastTyping = true;
     }
     return { engine, errors: [] as string[] };
-  }, [story.id, story.ink]);
+  }, [story.id, story.ink, story.includes]);
 
   // чат восстанавливаем, только если история его уже открыла: файл мог измениться
   const [open, setOpen] = useState<string | null>(() => {
