@@ -18,3 +18,8 @@ chat-export
 # база знаний: логи агентов и присланные материалы
 docs/books/_pipeline/logs
 docs/books/_pipeline/inputs
+
+# конвейер сборки скиллов: worktree задач и рабочее состояние
+.worktrees
+docs/playbook/_build/runtime
+docs/books/_clean
