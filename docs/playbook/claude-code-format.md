@@ -269,7 +269,7 @@ claude -p "$PROMPT" \
 ### 4.2. Тест срабатывания: какой скилл вызван **[эксп]**
 
 ```bash
-claude -p "$PHRASE" --output-format stream-json --verbose \
+claude -p "$PHRASE" --model opus --output-format stream-json --verbose \
   --no-session-persistence --strict-mcp-config --max-turns 3 < /dev/null > run.jsonl
 ```
 
