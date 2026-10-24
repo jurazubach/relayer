@@ -107,7 +107,7 @@
 | R-42 | короткие главы | `story-plan` | `chapter-formula.md` | `story-pace` (C-38) |
 | R-43 | у каждой кнопки свой ответ | `story-choices` | `buttons.md` | `story-voice` |
 | R-44 | кнопка-окраска — только с реакцией | `story-choices` | `choice-types.md` | — |
-| R-45 | 2 кнопки для темпа, 3 в развилке | `story-choices` | `buttons.md` | — |
+| R-45 | число кнопок: темп против развилки | `story-choices` | `buttons.md` | — |
 | R-46 | длина кнопки | `story-choices` | `buttons.md` | `story-voice` |
 | R-47 | цена названа перед развилкой | `story-choices` | `cost.md` | `story-endings` (F-09) |
 | R-48 | нет очевидно лучшего варианта | `story-choices` | `cost.md` | — |
@@ -119,7 +119,7 @@
 | R-54 | в каждой главе условная кнопка и кнопка против совета | `story-choices` | `choice-types.md` | — |
 | R-55 | `#to` с фактом из другого чата | `story-continuity` | `cross-chat.md` | `story-choices/echo.md` |
 | R-56 | условием прячется только бонус | `story-choices` | `cost.md` | — |
-| R-57 | 1–2 кнопки, за которые стыдно | `story-choices` | `choice-types.md` | `story-voice` |
+| R-57 | кнопки, за которые стыдно | `story-choices` | `choice-types.md` | `story-voice` |
 | R-58 | разговор не анкета | `story-choices` | `choice-types.md` | `story-mystery` |
 | R-59 | одно сообщение — одна мысль | `story-voice` | `line-edit.md` | `chapter-write/messages.md`, `story-pace` |
 | R-60 | рваный ритм очередей | `story-pace` | `density.md` | `chapter-write` |
