@@ -12,7 +12,8 @@
     "test:e2e": "playwright test e2e/smoke.spec.ts",
     "test:e2e:ui": "playwright test --ui",
     "shots": "playwright test e2e/shots.spec.ts",
-    "prompt": "node scripts/build-prompt.mjs"
+    "prompt": "node scripts/build-prompt.mjs",
+    "test:lib": "node scripts/lib/selftest.mjs"
   },
   "dependencies": {
     "inkjs": "^2.4.0",
