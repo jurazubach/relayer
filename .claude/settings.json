@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "enabledPlugins": {
+    "1auth@pls-mngd-marketplace": false,
+    "engineer@pls-mngd-marketplace": false,
+    "logs-harness@pls-mngd-marketplace": false,
+    "teleport@pls-mngd-marketplace": false,
+    "brightdata-plugin@synced": false,
+    "cockroachdb@synced": false,
+    "engineering@synced": false
+  },
+  "disableClaudeAiConnectors": true,
+  "skillOverrides": {
+    "pls-mngd-cicd-troubleshooting": "off",
+    "pls-mngd-collect-github-rulesets": "off",
+    "pls-mngd-gitbook": "off",
+    "pls-mngd-github-template-with-rulesets": "off",
+    "pls-mngd-spdd": "off",
+    "travel-assistant": "off",
+    "anthropic-skills:built-in-browser": "off",
+    "anthropic-skills:chrome-browser": "off",
+    "anthropic-skills:computer-use": "off",
+    "anthropic-skills:deep-research": "off",
+    "anthropic-skills:docs": "off",
+    "anthropic-skills:docx": "off",
+    "anthropic-skills:google-workspace": "off",
+    "anthropic-skills:import-memory": "off",
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:pdf": "off",
+    "anthropic-skills:pptx": "off",
+    "anthropic-skills:xlsx": "off",
+    "claude-api": "name-only"
+  }
+}

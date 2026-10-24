@@ -41,7 +41,10 @@ else if (lines < 60 || lines > 120) warn(`SKILL.md: ${lines} строк (цел�
 if (!/STATUS\.md/.test(body)) err('SKILL.md: первый шаг должен читать docs/stories/<id>/STATUS.md');
 if (!/references\//.test(body)) err('SKILL.md: не ссылается на references/');
 if (!/объясни/i.test(body)) warn('SKILL.md: нет режима «объясни»');
-if (!/Версия:\s*\d/.test(body)) warn('SKILL.md: нет строки «Версия: N»');
+if (!/Версия:\s*\d/.test(body) && !/^metadata:[\s\S]*?version:\s*\d/m.test(fm?.[1] ?? '')) warn('SKILL.md: нет версии (metadata.version или «Версия: N»)');
+if (fm && /^when_to_use:/m.test(fm[1])) warn('frontmatter: when_to_use тратит бюджет листинга — симптомы в description (claude-code-format.md §1.2)');
+if (fm && /^disable-model-invocation:\s*true/m.test(fm[1])) err('frontmatter: disable-model-invocation запрещает вызов моделью — модулю нужен user-invocable: false');
+if (/\.claude\/skills\/[a-z0-9-]+\/scripts\//.test(body)) warn('SKILL.md: скрипты своего скилла — через ${CLAUDE_SKILL_DIR}/scripts/');
 
 // references
 const refs = walk(join(dir, 'references')).filter((f) => f.endsWith('.md'));
