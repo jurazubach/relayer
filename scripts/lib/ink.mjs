@@ -168,6 +168,11 @@ function parseFile(src, file, res, st) {
   const addMark = (owner, c) => {
     if (!c.mark) return;
     const m = { ...c.mark, line: c.line, ...(file ? { file } : {}) };
+    // шапка часто стоит прямо над первым === — она всё равно про историю, а не про этот узел
+    if (HEAD_KEYS.includes(m.kind) && !knots.length && !res.functions.length) {
+      if (!(m.kind in res.head)) res.head[m.kind] = m.value;
+      return;
+    }
     if (owner) {
       owner.marks.push(m);
       if (m.kind === 'финал' && owner.ending == null) owner.ending = m.value || owner.id;

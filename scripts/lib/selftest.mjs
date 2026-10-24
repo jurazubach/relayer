@@ -71,6 +71,10 @@ test('ink: комментарии — токены, ссылки в тексте
   assert.equal(t.comments.length, 6);
   assert.equal(stripComments(k.items).filter((i) => i.type === 'comment').length, 0);
   assert.equal(allMarks(t).length, 3);
+  // шапка прямо над первым узлом — всё равно шапка
+  const bare = parseInk('// ставка: долг\n// оси: доверие\n=== start ===\nx\n-> END');
+  assert.deepEqual(bare.head, { ставка: 'долг', оси: 'доверие' });
+  assert.equal(bare.knots[0].marks.length, 0);
 });
 
 test('ink: tokenize не путает // в строке после двоеточия', () => {
