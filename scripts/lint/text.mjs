@@ -74,3 +74,21 @@ export function plural(n, one, few, many) {
   const w = a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many;
   return `${n} ${w}`;
 }
+
+/** Число слов строки без подстановок {…}. */
+export const wordCount = (t) => String(t).replace(/\{[^{}]*\}/g, ' ').split(/\s+/).filter(Boolean).length;
+
+/** Корни значимых слов: первые n букв слов не короче n (C-24, C-28, C-39, C-49). */
+export function roots(text, n) {
+  const out = new Set();
+  for (const w of String(text).toLowerCase().match(/\p{L}+/gu) ?? []) if (w.length >= n) out.add(w.slice(0, n));
+  return out;
+}
+
+/** Имена героев и контактов: из meta.characters, # contact и #rename. Нижний регистр. */
+export function heroNames(ctx) {
+  const out = new Map(); // имя → id
+  for (const c of ctx.meta.characters ?? []) if (c.name && c.id) out.set(c.name.toLowerCase(), c.id);
+  for (const [id, c] of Object.entries(ctx.tree.contacts)) if (c.name) out.set(c.name.toLowerCase(), id);
+  return out;
+}

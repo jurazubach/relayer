@@ -40,12 +40,20 @@ export function buildStatic(tree) {
   // ── граф: переходы, кнопки
   const edges = new Map(); // id -> [{ to, kind }]
   const hasChoice = new Set();
+  const labels = new Map(); // id -> метки сборок узла: «-> loop» на свою метку — петля в узле (хаб)
+  for (const k of knots) {
+    const own = new Set();
+    walk(k.items, (it) => { if ((it.type === 'gather' || it.type === 'choice') && it.label) own.add(it.label); });
+    labels.set(k.id, own);
+  }
   for (const k of knots) {
     const out = [];
+    const own = labels.get(k.id);
     walk(k.items, (it) => {
       if (it.type === 'choice') hasChoice.add(k.id);
       if (it.type !== 'divert') return;
       if (it.kind === 'return') { out.push({ to: '->->', kind: 'return' }); return; }
+      if (own.has(it.target) || own.has(it.target.split('.').at(-1)) && it.target.startsWith(`${k.id}.`)) { out.push({ to: k.id, kind: it.kind, label: true }); return; }
       const to = it.target === 'END' || it.target === 'DONE' ? 'END' : resolveTarget(it.target, k.id, ids);
       if (to) out.push({ to, kind: it.kind });
     });
@@ -92,12 +100,37 @@ export function buildStatic(tree) {
     });
   }
 
+  // строки под условием или под кнопкой с условием: «знание на пути» (C-51) такие не проверяет
+  const condTexts = new Set();
+  for (const k of knots) {
+    walk(k.items, (it, path) => {
+      if ((it.type === 'msg' || it.type === 'me' || it.type === 'sys') && path.some((p) => p.type === 'cond' || (p.type === 'choice' && p.conds.length))) condTexts.add(`${k.id}|${it.text}`);
+    });
+  }
+  // кнопка по узлу и тексту: так точка выбора журнала находит свою кнопку в исходнике
+  const buttonByText = new Map();
+  for (const b of buttons.list) buttonByText.set(`${b.knot}|${cleanText(b.text)}`, b);
+  // первый узел каждой главы — по строке #chapter
+  const chapterStart = new Map(tree.chapters.map((c) => [c.n, c.knot]));
+
   return {
     ids, byId, varNames, textKnots, chapterOf, lastChapter, lastChoiceChapter, edges, hasChoice,
-    finals, distributors: new Set(distributors), endings, vars, buttons,
+    finals, distributors: new Set(distributors), endings, vars, buttons, labels, condTexts, chapterStart,
     endingMarks: endingMarks(tree),
+    /** Кнопка исходника для варианта точки выбора журнала (узел + текст) или null. */
+    button: (knot, text) => buttonByText.get(`${knot}|${cleanText(text)}`) ?? null,
+    /** Переменные, которые читает распределитель R, с одной ступенью производных (C-06, C-08, C-09). */
+    readsOf(R) {
+      const out = new Set();
+      for (const v of vars.index.values()) if (v.reads.some((r) => r.node === R)) out.add(v.name);
+      for (const y of [...out]) for (const x of vars.derive.get(y) ?? []) out.add(x);
+      return out;
+    },
   };
 }
+
+/** Текст кнопки для сравнения: без пробелов по краям и двойных пробелов. */
+export const cleanText = (t) => String(t ?? '').replace(/\s+/g, ' ').trim();
 
 /**
  * Индекс переменных (checks.md «Индекс переменных»): записи и чтения каждой VAR с узлом и главой.
@@ -120,7 +153,7 @@ function buildVarIndex(tree, varNames, chapterOf) {
         if (it.type === 'code') {
           const m = it.text.match(ASSIGN);
           if (m && !/^temp\s/.test(it.text) && index.has(m[1])) {
-            index.get(m[1]).writes.push({ node, chapter, choice: ctx.choice, fn });
+            index.get(m[1]).writes.push({ node, chapter, choice: ctx.choice, fn, op: m[2], rhs: m[3].trim(), conds: ctx.conds });
             for (const x of ctx.condVars) {
               if (x === m[1] || !index.has(x)) continue;
               if (!derive.has(m[1])) derive.set(m[1], new Set());
@@ -135,7 +168,7 @@ function buildVarIndex(tree, varNames, chapterOf) {
           const condNames = it.conds.flatMap(idents);
           read(condNames, true, 'choice', it.line);
           read(textReads(it.text), true, 'choice', it.line);
-          visit(it.items, { choice: it, condVars: [...ctx.condVars, ...condNames] });
+          visit(it.items, { choice: it, condVars: [...ctx.condVars, ...condNames], conds: [...ctx.conds, ...it.conds] });
         } else if (it.type === 'cond') {
           const headNames = idents(it.head);
           const anyOut = it.branches.some((b) => hasOutput(b.items));
@@ -143,12 +176,12 @@ function buildVarIndex(tree, varNames, chapterOf) {
           for (const b of it.branches) {
             const names = b.cond === 'else' ? [] : idents(b.cond);
             read(names, hasOutput(b.items), 'cond');
-            visit(b.items, { choice: ctx.choice, condVars: [...ctx.condVars, ...headNames, ...names] });
+            visit(b.items, { choice: ctx.choice, condVars: [...ctx.condVars, ...headNames, ...names], conds: [...ctx.conds, b.cond === 'else' ? `else ${it.head}` : [it.head, b.cond].filter(Boolean).join(' ')] });
           }
         }
       }
     };
-    visit(k.items, { choice: null, condVars: [] });
+    visit(k.items, { choice: null, condVars: [], conds: [] });
   }
   // производные: чтение y — чтение и его источника x
   for (const [y, xs] of derive) {

@@ -1,7 +1,7 @@
 // Журнал бота для проверок (checks.md «Журнал бота»): строки и точки выбора по порядку, как их видит игрок.
 // Правила повторяют engine.ts: строка без текста отдаёт #delay и #unlock следующей; время игрока — пауза,
 // зазор и набор по формуле движка (константы — engine.typing в thresholds.json).
-import { play, seeded } from '../lib/bot.mjs';
+import { play, seeded, strategies } from '../lib/bot.mjs';
 import { parseDelay, parseTag } from '../lib/ink.mjs';
 
 const tagMap = (raw) => {
@@ -32,6 +32,7 @@ export function lineTime(kind, text, afterPlayer, T) {
  * Одно прохождение → { seq, lines, choices, ended, delay, knots }.
  * Строка: { type:'line', i, knot, chapter, text, kind: in|me|sys|photo, who, delay, unlock[], isChapter, typing, gap, tags }.
  * Выбор:  { type:'choice', knot, chapter, n, texts, tos, silent[], picked, key }.
+ * vars — изменения переменных { name, value, at } (at — число строк к этому моменту), если бот их писал.
  */
 export function toJournal(events, st, T) {
   const seq = [];
@@ -42,8 +43,10 @@ export function toJournal(events, st, T) {
   let carryUnlock = [];
   let afterPlayer = false;
   let lastKnot = null;
+  const vars = [];
   for (const e of events) {
     if (e.type === 'knot') { knots.push(e.id); lastKnot = e.id; continue; }
+    if (e.type === 'var') { vars.push({ name: e.name, value: e.value, at: lines.length, knot: lastKnot }); continue; }
     if (e.type === 'line') {
       const tags = tagMap(e.tags);
       const delay = (tags.delay != null ? parseDelay(tags.delay) : 0) + carry;
@@ -78,6 +81,7 @@ export function toJournal(events, st, T) {
       const ch = {
         type: 'choice', i: choices.length, at: lines.length, knot, chapter: st.chapterOf(knot) ?? 1, n: opts.length,
         texts: opts.map((o) => o.text), tos: opts.map((o) => o.tags.to ?? null), silent: opts.map((o) => 'silent' in o.tags),
+        labels: opts.map((o) => o.tags.label ?? null),
         picked: e.picked, key: `${knot}|${opts.map((o) => o.text).join('|')}`,
       };
       choices.push(ch);
@@ -87,19 +91,32 @@ export function toJournal(events, st, T) {
   }
   const ended = events.some((e) => e.type === 'end');
   const delay = lines.reduce((s, l) => s + l.delay, 0);
-  return { seq, lines, choices, ended, delay, knots };
+  return { seq, lines, choices, ended, delay, knots, vars };
 }
 
-/** N прогонов случайного бота с seed: одинаковый seed — одинаковые находки (нужно story:diff). */
-export function runBot(json, st, T, { runs, seed = 1 }) {
+/**
+ * N прогонов бота с seed: одинаковый seed — одинаковые находки (нужно story:diff).
+ * trackVars — писать изменения переменных (C-15, C-52, C-54); strategy — персона вместо случайной.
+ */
+export function runBot(json, st, T, { runs, seed = 1, trackVars = false, strategy } = {}) {
   const rng = seeded(seed);
   const nodes = [...st.ids];
   const out = [];
   for (let r = 0; r < runs; r++) {
-    const res = play(json, { rng, nodes, maxSteps: T.value('lint.max_steps'), trackVars: false });
-    out.push(toJournal(res.events, st, T));
+    const res = play(json, { rng, nodes, maxSteps: T.value('lint.max_steps'), trackVars, log: true, strategy });
+    // узлы без реплик (распределители, развилки из одних условий) журнал по строкам не видит — берём счётчик inkjs
+    // счётчик посещений inkjs: возврат из туннеля — не новое посещение (петли C-52)
+    const visits = new Map((res.visited ?? []).map((id) => [id, res.story.state.VisitCountAtPathString(id)]));
+    out.push({ ...toJournal(res.events, st, T), visited: res.visited, visits });
   }
   return out;
+}
+
+/** Персона «тянется к позиции» (C-16): с вероятностью bias жмёт первую или последнюю кнопку, иначе случайную. */
+export function positionPersona(side, bias) {
+  const pick = side === 'first' ? strategies.first() : strategies.last();
+  const rand = strategies.random();
+  return (choices, ctx) => (ctx.rng() < bias ? pick(choices, ctx) : rand(choices, ctx));
 }
 
 /** Медиана массива чисел — как в check:story (элемент посередине отсортированного списка). */
@@ -113,3 +130,20 @@ export const median = (arr) => {
 export const norm = (text) => String(text).toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').trim();
 
 export const isIncoming = (l) => l.kind === 'in' || l.kind === 'photo';
+
+/** Доля прогонов, прошедших через каждый узел. */
+export function visitShare(runs) {
+  const n = new Map();
+  for (const r of runs) for (const k of new Set([...r.knots, ...(r.visited ?? [])])) n.set(k, (n.get(k) ?? 0) + 1);
+  return new Map([...n].map(([k, v]) => [k, v / (runs.length || 1)]));
+}
+
+/**
+ * Узел, в который прогон ушёл после точки выбора: первая строка другого узла до следующей точки выбора.
+ * Текст самой кнопки и реплики под ней ещё идут в узле развилки.
+ */
+export function knotAfter(run, c) {
+  const end = run.choices[c.i + 1]?.at ?? run.lines.length;
+  for (let i = c.at; i < end; i++) if (run.lines[i].knot !== c.knot) return run.lines[i].knot;
+  return run.choices[c.i + 1]?.knot ?? c.knot;
+}

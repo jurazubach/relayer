@@ -34,7 +34,9 @@ export function loadThresholds(source = THRESHOLDS_PATH) {
     const head = v == null ? key : [t.op && !/\s/.test(t.op) ? t.op : null, v, t.unit].filter(Boolean).join(' ');
     return `${head} (${basisText(t)})`;
   };
-  return { all, get, value, re, show, keys: () => Object.keys(all).filter((k) => !k.startsWith('_')) };
+  /** E-NN, если порог ждёт фичи движка: проверка его пропускает и пишет в skipped. */
+  const deferred = (key) => get(key).deferred ?? null;
+  return { all, get, value, re, show, deferred, keys: () => Object.keys(all).filter((k) => !k.startsWith('_')) };
 }
 
 function fmtNum(n) {
@@ -45,8 +47,14 @@ function fmtNum(n) {
 function basisText(t) {
   const src = (t.sources ?? []).slice(0, 2).join(', ');
   if (t.basis === 'our_estimate') return src ? `наша оценка; ${src}` : 'наша оценка';
+  if (t.basis === 'author_decision') return src ? `решение автора; ${src}` : 'решение автора';
   return src || 'источник';
 }
+
+export const BASES = ['source', 'our_estimate', 'author_decision'];
+// области общих ключей; attn.* — пороги нагрузки attention-merged.md §6 без своей проверки
+const AREAS = ['story', 'engine', 'lint', 'dict', 'lab', 'skill', 'style', 'bot', 'attn'];
+const NO_CHECKS = ['dict', 'lint', 'lab', 'skill', 'bot'];
 
 /** Схема файла: обязательные поля, уровни, опора. Возвращает список ошибок. */
 export function validateThresholds(all) {
@@ -55,13 +63,13 @@ export function validateThresholds(all) {
     if (key.startsWith('_')) continue;
     for (const f of REQUIRED_FIELDS) if (!(f in t)) errors.push(`${key}: нет поля ${f}`);
     if (t.level != null && !LEVELS.includes(t.level)) errors.push(`${key}: уровень «${t.level}» не из ${LEVELS.join(' / ')}`);
-    if (!['source', 'our_estimate'].includes(t.basis)) errors.push(`${key}: basis «${t.basis}» не source / our_estimate`);
+    if (!BASES.includes(t.basis)) errors.push(`${key}: basis «${t.basis}» не ${BASES.join(' / ')}`);
+    if (t.deferred != null && !/^E-\d\d$/.test(t.deferred)) errors.push(`${key}: deferred «${t.deferred}» — не E-NN`);
     if (!Array.isArray(t.sources)) errors.push(`${key}: sources — не список`);
     if (!Array.isArray(t.history) || !t.history.length) errors.push(`${key}: пустая history`);
-    if (!/^(C-\d\d|story|engine|lint|dict|lab|skill)\./.test(key)) errors.push(`${key}: ключ не C-NN.* и не из областей story / engine / lint / dict / lab / skill`);
-    if (!/^C-\d\d\./.test(key) && !key.startsWith('dict.') && !key.startsWith('lint.') && !key.startsWith('lab.') && !key.startsWith('skill.') && !Array.isArray(t.checks)) {
-      errors.push(`${key}: общий ключ без поля checks`);
-    }
+    const area = key.split('.')[0];
+    if (!/^C-\d\d$/.test(area) && !AREAS.includes(area)) errors.push(`${key}: ключ не C-NN.* и не из областей ${AREAS.join(' / ')}`);
+    if (!/^C-\d\d$/.test(area) && !NO_CHECKS.includes(area) && !Array.isArray(t.checks)) errors.push(`${key}: общий ключ без поля checks`);
   }
   return errors;
 }

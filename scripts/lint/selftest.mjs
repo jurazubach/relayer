@@ -8,15 +8,18 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listStories, loadStory } from '../lib/story.mjs';
-import { formatFinding, lintStory, loadChecks } from './core.mjs';
+import { formatFinding, formatSummary, lintStory, loadChecks } from './core.mjs';
+import { register as wave2 } from './selftest-wave2.mjs';
 import { loadThresholds, validateThresholds, THRESHOLDS_PATH } from './thresholds.mjs';
 
 const HELP = `npm run test:lint [-- --json] [-- --only <подстрока>]
 
-Самопроверка story:lint: на каждую проверку первой волны и C-53 — маленькая выдуманная история
-с дефектом (находка есть) и без него (находки нет); подавление «// намеренно:»; уровни из
-thresholds.json; схема thresholds.json и сверка engine.typing с engine.ts; ключи lab.* и skill.*
-в claude-code-format.md; флаги --json, --strict, --only, --partial, --plan, --changed --quick;
+Самопроверка story:lint: на каждую проверку C-01…C-54 — маленькая выдуманная история с дефектом
+(находка есть) и, где это имеет смысл, без него (находки нет); вторая волна — selftest-wave2.mjs.
+Подавление «// намеренно:»; уровни из thresholds.json; схема thresholds.json (опора, deferred:E-NN),
+сверка engine.typing с engine.ts; ключи вместо чисел в claude-code-format.md, attention-merged.md §6,
+style.md §14.4 и checks.md; владелец находки из owners.md; служебные контакты; финал без метки;
+флаги --json, --strict, --only, --partial, --plan, --changed --quick, --summary, --transcript;
 три истории каталога проходят без падения.
 
   --json         результаты одним JSON в stdout
@@ -62,7 +65,7 @@ test('thresholds.json: каждый ключ из кода проверок су
   const dir = fileURLToPath(new URL('./checks/', import.meta.url));
   for (const f of readdirSync(dir)) {
     const src = readFileSync(join(dir, f), 'utf8');
-    for (const m of src.matchAll(/'((?:C-\d\d|story|engine|lint|dict)\.[\w.]+)'/g)) {
+    for (const m of src.matchAll(/'((?:C-\d\d|story|engine|lint|dict|attn|style|bot)\.[\w.]+)'/g)) {
       assert.doesNotThrow(() => T.get(m[1]), `${f}: ключ ${m[1]}`);
       if (m[1].startsWith('C-')) assert.equal(m[1].slice(0, 4), f.slice(0, 4), `${f}: чужой ключ ${m[1]}`);
     }
@@ -451,6 +454,20 @@ test('CLI: --strict даёт код 1 при ошибке, без него — 0
   assert.equal(cli('--help').status, 0);
 });
 
+test('CLI: --summary и --transcript N', () => {
+  const file = join(tmp, 'tr.ink');
+  writeFileSync(file, '-> a\n=== a ===\nпривет #from:ann\n* [да] -> END\n* [нет] -> END');
+  const sum = cli(file, '--runs', '10', '--summary');
+  assert.equal(sum.status, 0, sum.stderr);
+  assert.match(sum.stdout, /по проверкам:/);
+  const out = join(tmp, 'tr');
+  const tr = cli(file, '--runs', '10', '--transcript', '2', '--out', out);
+  assert.equal(tr.status, 0, tr.stderr);
+  const files = readdirSync(join(out, 'tr'));
+  assert.equal(files.length, 2);
+  assert.match(readFileSync(join(out, 'tr', files[0]), 'utf8'), /\*\*ann:\*\* привет/);
+});
+
 test('CLI: --plan путь, --changed --quick', () => {
   const sk = join(tmp, 'skeleton.ink');
   writeFileSync(sk, '-> a\n=== a ===\nсцена 1 #from:ann\n* [да] -> END\n* [нет] -> END');
@@ -468,6 +485,35 @@ test('три истории каталога проходят без паден�
     assert.ok(!res.findings.some((f) => f.check === 'compile'), `${p}: не скомпилировалась`);
     for (const f of res.findings) assert.ok(f.threshold && f.key, `${p}: находка без порога: ${f.message}`);
   }
+});
+
+wave2(test, { has, hasNot, lint, keys });
+
+test('thresholds.json: author_decision и deferred:E-NN проходят схему, кривые — нет', () => {
+  const ok = { value: 1, unit: 'ч', level: 'warning', basis: 'author_decision', sources: ['superseded.md A-05'], checks: ['C-31'], calibrated_on: null, history: [{ date: '2026-10-25', task: 'T', change: 'x' }], deferred: 'E-02' };
+  assert.deepEqual(validateThresholds({ 'story.x': ok }), []);
+  assert.equal(validateThresholds({ 'story.x': { ...ok, deferred: 'E2' } }).length, 1);
+  assert.equal(validateThresholds({ 'story.x': { ...ok, basis: 'гадание' } }).length, 1);
+  for (const k of ['story.pause.max_h', 'story.length.target_h', 'story.length.max_h', 'story.tail.max_delay_min', 'story.reading.per_day_min']) assert.equal(T.get(k).basis, 'author_decision', k);
+  assert.equal(T.deferred('story.reminders.max'), 'E-02');
+});
+
+test('у каждой проверки C-01…C-54 из checks.md есть модуль и хотя бы один ключ', () => {
+  const ids = [...readFileSync(join(ROOT, 'docs/playbook/checks.md'), 'utf8').matchAll(/^### (C-\d\d)\./gm)].map((m) => m[1]);
+  const have = new Set(checks.map((c) => c.id));
+  for (const id of ids) {
+    assert.ok(have.has(id), `нет модуля ${id}`);
+    assert.ok(T.keys().some((k) => k.startsWith(`${id}.`) || (T.get(k).checks ?? []).includes(id)), `нет ключа у ${id}`);
+  }
+});
+
+test('--summary: счётчики по проверкам, не длиннее skill.hook.max_output_chars', async () => {
+  const res = await lintStory(loadStory(listStories(join(ROOT, 'src/stories'))[0]), T, { checks, runs: 20 });
+  const text = formatSummary([res], T);
+  assert.ok(text.length <= T.value('skill.hook.max_output_chars'));
+  assert.match(text, /по проверкам: C-\d\d/);
+  const tiny = loadThresholds({ ...T.all, 'skill.hook.max_output_chars': { ...T.get('skill.hook.max_output_chars'), value: 300 } });
+  assert.ok(formatSummary([res], tiny).length <= 300, 'сводка обрезается по лимиту');
 });
 
 // ───────── прогон
