@@ -1,0 +1,761 @@
+{
+  "_about": {
+    "what": "Единственное место чисел и порогов relayer: проверки story:lint (C-NN), общие пределы истории (story.*), движок (engine.*), линт (lint.*), словари проверок (dict.*), лаборатория (lab.*) и контракт скиллов (skill.*). В остальных файлах — только ключ.",
+    "fields": {
+      "value": "число, строка (регулярка словаря) или объект",
+      "unit": "единица значения",
+      "op": "условие срабатывания: значение замера op value → находка (необязательное)",
+      "level": "error | warning | hint — уровень находки; null — определение, словарь или настройка",
+      "basis": "source — опора в источнике; our_estimate — наша оценка",
+      "sources": "алиас:ID разборов, правила rules.md, файлы",
+      "checks": "проверки, которые читают ключ, если ключ не привязан к одной проверке",
+      "calibrated_on": "на чём откалиброван порог или null",
+      "history": "правки: дата, задача, что было"
+    },
+    "keys": "C-NN.<имя> — порог одной проверки; <область>.<имя> — общий порог с полем checks",
+    "levels": "ошибка — код выхода 1 у story:lint --strict; предупреждение; подсказка",
+    "calibration": "Ни один порог не проверен на живых игроках. Прогон первой волны — checks.md, «Прогон первой волны по трём историям»."
+  },
+
+  "story.pause.long_s": {
+    "value": 3600, "unit": "с", "op": "≥", "level": null, "basis": "source",
+    "sources": ["checks.md «Общие данные»: длинная пауза", "cron-wired-for-story:A8", "serial-hooks:S1"],
+    "checks": ["C-21", "C-26", "C-28", "C-30"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: короче часа — ещё одна сессия" }]
+  },
+  "story.pause.session_s": {
+    "value": 1800, "unit": "с", "op": "≥", "level": null, "basis": "source",
+    "sources": ["checks.md «Общие данные»: сессия", "attention-today/attention.md"],
+    "checks": ["C-30", "C-32", "C-33"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: пауза 10–30 мин не уводит игрока из чата (не проверено)" }]
+  },
+  "story.length.target_h": {
+    "value": 48, "unit": "ч", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-67", "superseded.md A-05", "serial-hooks:LESSON-04", "inkle-ingold"],
+    "checks": ["C-31"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 176 ч, slepoe-pyatno 1,8 ч, the-number 24 ч",
+    "history": [
+      { "date": "2026-10-24", "task": "T-05", "change": "решение автора A-05: 48 ч — цель, а не единственный предел; часы игрока не учитываются (R-67)" },
+      { "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом вместо числа в тексте R-67 и C-31" }
+    ]
+  },
+  "story.length.max_h": {
+    "value": 72, "unit": "ч", "op": ">", "level": "error", "basis": "source",
+    "sources": ["rules.md R-67", "superseded.md A-05", "yorke-into-the-woods", "skolnick-video-game-storytelling"],
+    "checks": ["C-31"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 176 ч — выше потолка",
+    "history": [
+      { "date": "2026-10-24", "task": "T-05", "change": "добавлен потолок «около трёх дней» по решению автора A-05 (было только > 48 ч — предупреждение)" },
+      { "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом" }
+    ]
+  },
+  "story.pause.max_h": {
+    "value": 24, "unit": "ч", "op": ">", "level": "error", "basis": "source",
+    "sources": ["rules.md R-67", "superseded.md A-05", "serial-hooks:S10"],
+    "checks": ["C-31"],
+    "calibrated_on": "2026-10-24: самая длинная пауза — 11 ч (chuzhoy-golos)",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05 (пауза не больше суток)" }]
+  },
+  "story.tail.max_delay_min": {
+    "value": 15, "unit": "мин", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-67", "rules.md R-110", "messenger-genre:P-16"],
+    "checks": ["C-42"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05; проверка C-42 — вторая волна (T-03b)" }]
+  },
+  "story.reminders.max": {
+    "value": 2, "unit": "напоминаний", "op": ">", "level": "error", "basis": "source",
+    "sources": ["rules.md R-120", "superseded.md A-03", "inkle-ingold:PAT-07"],
+    "checks": ["C-32"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05; C-32 п. 6 включится, когда синтаксис E-02 станет ready" }]
+  },
+  "story.sleep_morning.min_h": {
+    "value": 5, "unit": "ч", "op": "<", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-67", "rules.md R-121", "messenger-genre:P-12 (в силе: «доброе утро» не после 30 минут)"],
+    "checks": ["C-32"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05; C-32 — вторая волна" }]
+  },
+  "story.card.mismatch_ratio": {
+    "value": 1.5, "unit": "раз", "op": ">", "level": "warning", "basis": "our_estimate",
+    "sources": ["rules.md R-11", "rules.md R-122", "messenger-genre:RED-12"],
+    "checks": ["C-31"],
+    "calibrated_on": "2026-10-24: the-number — 24 ч при карточке 25 мин",
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "было «в описании нет срока в днях» по слову «дн» в synopsis; теперь сравниваются minutes и days карточки" }]
+  },
+  "engine.click.time_jump_label": {
+    "value": 1, "unit": "ч", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["rules.md R-122", "superseded.md A-04"],
+    "checks": ["C-32"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "решение королевы: скачок мира от часа без метки читается как мгновенный ответ, короче — естественная заминка переписки. Движок (E-01) берёт порог отсюда" }]
+  },
+  "engine.typing": {
+    "value": { "base_s": 0.6, "per_char_s": 0.05, "min_s": 1.1, "max_s": 5, "photo_s": 2.6, "gap_min_s": 0.35, "gap_spread_s": 0.6, "after_player_s": 1.2, "gap_sys_s": 0.7, "gap_me_s": 0.9 },
+    "unit": "с", "level": null, "basis": "source",
+    "sources": ["src/engine/engine.ts typingTime, gapTime", "chat-fiction-apps:§2", "skolnick-video-game-storytelling:§2"],
+    "checks": ["C-20", "C-31"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "копия констант движка для «времени игрока»; test:lint сверяет их с engine.ts" }]
+  },
+
+  "lint.runs.full": {
+    "value": 400, "unit": "прогонов", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md «Общие данные»: одно место на 400 прогонах — одно срабатывание", "scripts/check-story.mjs"],
+    "calibrated_on": "2026-10-24: числа стабильны в пределах ±2 % между запусками",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "lint.runs.quick": {
+    "value": 60, "unit": "прогонов", "level": null, "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-11: быстрый режим хука"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: --quick для хука после правки, около секунды на историю" }]
+  },
+  "lint.max_steps": {
+    "value": 2000, "unit": "строк", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/check-story.mjs"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "как в check:story" }]
+  },
+  "lint.examples": {
+    "value": 5, "unit": "примеров", "level": null, "basis": "source",
+    "sources": ["checks.md «Общие данные»: до 5 примеров"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+
+  "C-01.dead": {
+    "value": 0, "unit": "чтений", "op": "=", "level": "error", "basis": "source",
+    "sources": ["ashwell-standard-patterns:RED-04", "meaningful-choice:RED-02", "inkle-ingold:RED-06", "emshort-structures:RED-01", "ещё 11 разборов — checks.md C-01"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 1, the-number 5",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "checks.md предлагал предупреждение до правки историй; оставлена ошибка, а код выхода у текущих историй держит флаг --strict" }]
+  },
+  "C-03.invisible": {
+    "value": 0, "unit": "переменных", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["emshort-structures:RED-02", "failbetter-qbn:RED-01", "meaningful-choice:RED-08", "narrative-postmortems:RED-07"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 3, slepoe-pyatno 7, the-number 3",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-06.min_vars": {
+    "value": 2, "unit": "переменных", "op": "<", "level": "warning", "basis": "source",
+    "sources": ["choiceofgames-design:§2 п. 11"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos ch10_route, slepoe-pyatno ch5",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-06.early_share": {
+    "value": 0.5, "unit": "доля глав", "op": "нет записи в первых ⌈N·v⌉ главах", "level": "warning", "basis": "source",
+    "sources": ["edgerton-hooked:A6", "bateman-game-writing:§7"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos — из глав 1–5 только одна переменная",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-06.short_story_chapters": {
+    "value": 3, "unit": "глав", "op": "≤", "level": null, "basis": "source",
+    "sources": ["checks.md C-06: в истории до трёх глав ранняя запись — в главе 1"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-06.no_last_choice": {
+    "value": 0, "unit": "переменных последней главы с кнопками", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["ashwell-standard-patterns:A8"],
+    "calibrated_on": "2026-10-24: slepoe-pyatno ch5 — финал выбирает скрытая проверка",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-10.bodyless_story": {
+    "value": 0.1, "unit": "доля кнопок истории", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["meaningful-choice/attention.md", "inkle-ingold:§2"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 10 %, the-number 9 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-10.bodyless_chapter": {
+    "value": 0.2, "unit": "доля кнопок главы", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["meaningful-choice/attention.md", "inkle-ingold:§2"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos глава 2 — 36 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-10.cosmetic_chapter": {
+    "value": 0.5, "unit": "доля кнопок главы", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["meaningful-choice", "emshort-structures (35 %)", "schell-art-of-game-design (40 %)", "narrative-testing (60 %)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos глава 2 — 64 %, the-number глава 4 — 60 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: середина разброса источников" }]
+  },
+  "C-10.group_bodyless": {
+    "value": 0, "unit": "кнопок с телом в группе", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["meaningful-choice:RED-01", "emshort-structures:RED-11"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 11 групп, the-number 2",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-10.cosmetic_streak": {
+    "value": 3, "unit": "развилок подряд", "op": "≥", "level": "warning", "basis": "source",
+    "sources": ["ashwell-standard-patterns:A5", "procedural-storytelling:A4"],
+    "calibrated_on": "2026-10-24: the-number delivered — 3",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-11.silent_unnoticed_share": {
+    "value": 0.3334, "unit": "доля #silent", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["inkle-ingold:§2"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 37 %, the-number 33 % (ровно треть — на пороге, не срабатывает)",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: «больше трети», треть округлена вверх, чтобы 3 из 9 не срабатывало; список мест — всегда, ниже порога подсказкой" }]
+  },
+  "C-11.silent_unnoticed": {
+    "value": 0, "unit": "мест", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["inkle-ingold:RED-03"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "список мест ниже порога доли" }]
+  },
+  "C-11.silent_noticed_delay_s": {
+    "value": 300, "unit": "с", "op": "≥", "level": null, "basis": "source",
+    "sources": ["checks.md C-11 (а): #delay от 5 мин до сборки — молчание замечено"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-11.refusal_hops": {
+    "value": 2, "unit": "перехода", "op": "≤", "level": "warning", "basis": "source",
+    "sources": ["choiceofgames-design:RED-04", "snyder-save-the-cat:RED-08", "vogler-writers-journey:RED-05"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: отказ без ~, который за столько переходов сходится с согласием" }]
+  },
+  "C-11.silent_punished": {
+    "value": 0, "unit": "развилок", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["attention-today/attention.md §5", "meaningful-choice:P-11 (исключение — финальная дилемма)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos ch10_door — ложное, исключено правилом",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-12.wide": {
+    "value": 5, "unit": "кнопок", "op": "≥", "level": "warning", "basis": "source",
+    "sources": ["meaningful-choice:§2 п. 10", "meaningful-choice:P-13 (потолок 4)"],
+    "calibrated_on": "2026-10-24: the-number inbox — хаб адресатов, #silent не считается",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён; #silent при подсчёте адресатов не учитывается" }]
+  },
+  "C-12.hub_max": {
+    "value": 6, "unit": "кнопок", "op": "≤", "level": "hint", "basis": "source",
+    "sources": ["choiceofgames-design/attention.md (5 — ошибка, но без хаба адресатов)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "хаб «кому написать»: до стольких кнопок с разными #to — подсказка" }]
+  },
+  "C-12.four_share": {
+    "value": 0.1, "unit": "доля развилок", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["emshort-structures/attention.md"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 11 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-12.four": {
+    "value": 4, "unit": "кнопок", "op": "=", "level": null, "basis": "source",
+    "sources": ["meaningful-choice:P-13"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "какая развилка считается широкой для доли" }]
+  },
+  "C-12.single": {
+    "value": 1, "unit": "кнопка", "op": "=", "level": "hint", "basis": "source",
+    "sources": ["narrative-testing:RED-27"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 14 мест",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-12.single_streak": {
+    "value": 3, "unit": "одиночных подряд", "op": "≥", "level": "warning", "basis": "source",
+    "sources": ["narrative-testing:RED-27"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-20.start_msgs": {
+    "value": 6, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["edgerton-hooked", "cron-wired-for-story", "vogler-writers-journey (цель 3–5)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 5, slepoe-pyatno 3, the-number 7",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-20.start_msgs_target": {
+    "value": 5, "unit": "входящих", "op": "≤", "level": null, "basis": "source",
+    "sources": ["edgerton-hooked", "cron-wired-for-story", "vogler-writers-journey"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "цель, печатается рядом с находкой" }]
+  },
+  "C-20.start_time_s": {
+    "value": 60, "unit": "с", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["attention-today", "skolnick-video-game-storytelling", "narrative-testing", "sheldon-character-storytelling"],
+    "calibrated_on": "2026-10-24: the-number ≈ 60 с с набором",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: время считается с набором" }]
+  },
+  "C-20.start_time_target_s": {
+    "value": 30, "unit": "с", "op": "≤", "level": null, "basis": "source",
+    "sources": ["attention-today:P-07", "messenger-genre:P-04", "video-three-things"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "цель, печатается рядом с находкой" }]
+  },
+  "C-20.chapter_msgs": {
+    "value": 12, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-61", "checks.md C-35"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: общий потолок серии" }]
+  },
+  "C-20.chapter_empty_s": {
+    "value": 600, "unit": "с", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["chat-fiction-apps:§2"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "Σ #delay от #chapter до первой кнопки без паузы самой строки #chapter" }]
+  },
+  "C-21.from_before_first": {
+    "value": 1, "unit": "собеседник", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-18", "edgerton-hooked:A5 (> 2 до второй развилки)", "choiceofgames-design:§7 п. 22"],
+    "calibrated_on": "2026-10-24: the-number 2",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-21.new_ch1": {
+    "value": 3, "unit": "новых контакта", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["dille-ultimate-guide/attention.md", "edgerton-hooked:P-08"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 8, the-number 5",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: источники дают от 2 до 5" }]
+  },
+  "C-21.new_other": {
+    "value": 2, "unit": "новых контакта", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["checks.md C-21", "serial-hooks:RED-18"],
+    "calibrated_on": "2026-10-24: slepoe-pyatno глава 2 — 4, the-number глава 2 — 3",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-21.unlock_scene": {
+    "value": 1, "unit": "#unlock между кнопками", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["attention-today:A10"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-21.unlock_after_pause_lines": {
+    "value": 2, "unit": "строки", "op": "≤", "level": "hint", "basis": "source",
+    "sources": ["video-three-things:§6"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "#unlock в первых строках после длинной паузы" }]
+  },
+  "C-26.window_lines": {
+    "value": 3, "unit": "строки", "op": "≤", "level": null, "basis": "source",
+    "sources": ["serial-hooks:S1′"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "сколько строк до паузы ищем крючок" }]
+  },
+  "C-26.closing": {
+    "value": 0, "unit": "крючков", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-64", "serial-hooks:RED-01", "cron-wired-for-story:RED-04"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos — 6 прощаний прямо перед паузой",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "закрывающая реплика без крючка — находка по месту" }]
+  },
+  "C-26.closing_max_words": {
+    "value": 3, "unit": "слова", "op": "≤", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md «Общие данные»: словарь закрывающих реплик"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "закрывающая реплика — начинается словом словаря и не длиннее стольких слов; иначе «ладно, но бокс 114 уже вскрыт» сошло бы за прощание" }]
+  },
+  "C-26.share": {
+    "value": 0.3, "unit": "доля пауз", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["cron-wired-for-story:A8", "mobile-interactive-stories (20 %)", "procedural-storytelling:A10 (50 %)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 72 %, the-number 63 %",
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "слова времени возвращения больше не крючок (R-63, A-01)" }]
+  },
+  "C-28.pack": {
+    "value": 5, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-72", "inkle-ingold", "attention-today (6)", "edgerton-hooked (3 для пауз от 2 ч)"],
+    "calibrated_on": "2026-10-24: the-number медиана пачки 8",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-28.pack_long_pause_s": {
+    "value": 21600, "unit": "с", "op": "≥", "level": null, "basis": "source",
+    "sources": ["rules.md R-72"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "после паузы от 6 ч — строгий порог пачки" }]
+  },
+  "C-28.pack_long": {
+    "value": 3, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-72", "edgerton-hooked"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-28.greeting": {
+    "value": 0, "unit": "событий в первой строке", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["messenger-genre:RED-03", "serial-hooks:RED-05"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 11 приветствий первой строкой",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "приветствие, одно слово или закрывающая реплика первой строкой" }]
+  },
+  "C-28.link": {
+    "value": 0, "unit": "общих корней", "op": "=", "level": "hint", "basis": "source",
+    "sources": ["attention-today:A6"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 110 из 190 без связки — грубый признак",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-28.link_window": {
+    "value": { "before": 3, "after": 2, "root": 5, "min_word": 5 }, "unit": "строки / буквы", "level": null, "basis": "source",
+    "sources": ["checks.md C-28 п. 3: корень — первые 5 букв слов длиннее 4"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-28.first_line_chars": {
+    "value": 80, "unit": "знаков", "op": ">", "level": "hint", "basis": "our_estimate",
+    "sources": ["edgerton-hooked:A11 (превью уведомления)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-30.streak_warning": {
+    "value": 2, "unit": "паузы подряд без кнопки", "op": "=", "level": "warning", "basis": "our_estimate",
+    "sources": ["attention-today/attention.md §4"],
+    "calibrated_on": "2026-10-24: the-number 3 места",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-30.streak_error": {
+    "value": 3, "unit": "паузы подряд без кнопки", "op": "≥", "level": "error", "basis": "our_estimate",
+    "sources": ["attention-today/attention.md §4"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 12 мест",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-30.micro_lines": {
+    "value": 3, "unit": "строки", "op": "≤", "level": null, "basis": "source",
+    "sources": ["chat-fiction-apps:§2"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "микросессия: столько строк и 0 кнопок" }]
+  },
+  "C-30.micro_share": {
+    "value": 0.1, "unit": "доля возвращений", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["chat-fiction-apps:§2"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 20 %, the-number 13 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-31.pause_hint_h": {
+    "value": 12, "unit": "ч", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["checks.md C-31", "serial-hooks:S10"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-31.card_missing": {
+    "value": 0, "unit": "полей", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-11", "superseded.md A-05"],
+    "calibrated_on": "2026-10-24: у трёх историй нет days (поле заводит T-02)",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "нет minutes или days на карточке" }]
+  },
+  "C-31.click_delay_max_s": {
+    "value": 10, "unit": "с", "op": "≤", "level": null, "basis": "source",
+    "sources": ["checks.md C-31: набор и паузы до 10 с — это режим «по клику»"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-34.line_error": {
+    "value": 160, "unit": "знаков", "op": ">", "level": "error", "basis": "source",
+    "sources": ["narrative-testing:§2а", "attention-today:P-02"],
+    "calibrated_on": "2026-10-24: вне #photo — 0 строк у трёх историй",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-34.line_warning": {
+    "value": 140, "unit": "знаков", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["scripts/check-story.mjs", "attention-today:P-02"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 6 строк, все #photo",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "#photo не меряется длиной (C-22)" }]
+  },
+  "C-34.long_chars": {
+    "value": 90, "unit": "знаков", "op": ">", "level": null, "basis": "our_estimate",
+    "sources": ["attention-today/attention.md §4"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "нижняя граница одного взгляда на телефон" }]
+  },
+  "C-34.long_share": {
+    "value": 0.05, "unit": "доля строк главы", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["attention-today:A1", "chat-fiction-apps", "mobile-interactive-stories"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 2 %, the-number 1 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-34.median": {
+    "value": 40, "unit": "знаков", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["checks.md C-34"],
+    "calibrated_on": "2026-10-24: медиана 27 / 34 / 27",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-34.opening": {
+    "value": { "lines": 5, "chars": 80 }, "unit": "входящих / знаков", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["edgerton-hooked/attention.md"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.series_ch1": {
+    "value": 8, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["video-three-things", "rules.md R-61", "cron-wired-for-story (6)", "attention-today (12)"],
+    "calibrated_on": "2026-10-24: slepoe-pyatno ch1_bonus 13, the-number night 16; первая глава chuzhoy-golos в норме",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.series": {
+    "value": 12, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["inkle-ingold", "mobile-interactive-stories", "narrative-testing", "rules.md R-61"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos 14 мест",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.words": {
+    "value": 150, "unit": "слов", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["choiceofgames-design/attention.md", "inkle-ingold/attention.md"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.series_error": {
+    "value": 25, "unit": "входящих", "op": ">", "level": "error", "basis": "source",
+    "sources": ["rules.md R-61", "inkle-ingold", "narrative-testing"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos fin_truth 27–28",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.words_error": {
+    "value": 300, "unit": "слов", "op": ">", "level": "error", "basis": "source",
+    "sources": ["choiceofgames-design/attention.md (400 — стена)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-35.monologue": {
+    "value": 5, "unit": "реплик одного #from подряд", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["rules.md R-61", "yorke-into-the-woods", "snyder-save-the-cat:B10 (таймер)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos ch10_full 17",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-40.dominant_share": {
+    "value": 0.5, "unit": "доля прогонов", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["failbetter-qbn:RED-02", "narrative-testing:RED-12", "все источники C-40"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos fin_revenge 62–67 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-40.min_endings": {
+    "value": 3, "unit": "финала", "op": "≥", "level": null, "basis": "source",
+    "sources": ["checks.md C-40"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "доминирование считается при стольких финалах" }]
+  },
+  "C-40.rare_share": {
+    "value": 0.02, "unit": "доля прогонов", "op": "<", "level": "hint", "basis": "source",
+    "sources": ["failbetter-qbn", "choiceofgames-design", "messenger-genre (1 %)", "emshort-structures (5 %)"],
+    "calibrated_on": "2026-10-24: chuzhoy-golos fin_puppet 0,5–1 %",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: случайный бот недооценивает финалы, которые надо заработать" }]
+  },
+  "C-40.unmarked_run": {
+    "value": 0, "unit": "прогонов", "op": ">", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-103", "build-plan.md §9"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "прогон дошёл до END, не пройдя ни одной // финал:" }]
+  },
+  "C-53.header_lines": {
+    "value": 4, "unit": "строки", "op": "≠", "level": "warning", "basis": "source",
+    "sources": ["build-plan.md §9", "superseded.md A-06"],
+    "calibrated_on": "2026-10-24: шапки нет ни у одной истории",
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "шапка из 4 строк вместо 10+ полей D-01" }]
+  },
+  "C-53.unknown_mark": {
+    "value": 0, "unit": "меток", "op": ">", "level": "hint", "basis": "source",
+    "sources": ["build-plan.md §9", "checks.md C-53"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-53.axis_var": {
+    "value": 0, "unit": "VAR", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["checks.md C-53: переменные из // оси: существуют"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-53.axis_use": {
+    "value": 0, "unit": "записей кнопками / чтений распределителем", "op": "=", "level": "hint", "basis": "source",
+    "sources": ["checks.md C-53: пишутся кнопками и читаются распределителем финала (C-06)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён подсказкой: в истории без распределителя ось может читаться в финале" }]
+  },
+  "C-53.reveal_var": {
+    "value": 0, "unit": "VAR", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-92", "checks.md C-54"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "// reveal: на переменную, которой нет" }]
+  },
+  "C-53.intent": {
+    "value": 0, "unit": "ID или причин", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["checks.md C-53"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "// намеренно: без ID проверки, с неизвестным ID или без причины" }]
+  },
+  "C-53.unmarked_end": {
+    "value": 0, "unit": "меток // финал:", "op": "=", "level": "warning", "basis": "source",
+    "sources": ["rules.md R-103", "checks.md C-40"],
+    "calibrated_on": "2026-10-24: финалы не размечены ни у одной истории",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+  },
+  "C-53.marks": {
+    "value": {
+      "head": ["логлайн", "вопрос", "ставка", "оси"],
+      "marks": ["reveal", "намеренно", "финал"],
+      "replaced": {
+        "событие": "номер входящего с регуляркой срока C-24 или первым #unlock / #photo",
+        "середина": "story:sessions: окно 40–60 % пути",
+        "кризис": "story:sessions: последняя треть пути",
+        "крючок": "аудитор story-pauses по трём строкам до паузы",
+        "promise": "слова пунктов features в тексте (C-49) и холодный читатель",
+        "payoff": "слова пунктов features в тексте (C-49) и холодный читатель",
+        "term": "редкие слова и шапка (C-22)",
+        "ядро": "шапка (C-22) и docs/stories/<id>/ (story-core)",
+        "хорошие финалы": "не нужна: финалы не делятся на хорошие и плохие (R-111)",
+        "финал читает": "индекс переменных и C-06 (story:vars, story:endings)",
+        "рамка": "story:endings: первое входящее рядом с концом финала",
+        "роль": "ядро истории (story-core)",
+        "герой": "ядро истории (story-core)",
+        "противник": "ядро истории (story-core)",
+        "role": "characters в meta.json",
+        "truth": "docs/stories/<id>/facts.md",
+        "culprit": "docs/stories/<id>/facts.md",
+        "anchor": "docs/stories/<id>/facts.md",
+        "места": "docs/stories/<id>/facts.md",
+        "lie": "// намеренно: C-49 ложь",
+        "сезон": "// намеренно: C-43 крючок сезона",
+        "key-fact": "шапка // ставка: (C-24)",
+        "flow": "// намеренно: C-38 передышка",
+        "contact_voice": "characters в meta.json (R-75, R-76)"
+      }
+    },
+    "unit": "метки", "level": null, "basis": "source",
+    "sources": ["build-plan.md §9", "checks.md C-53", "superseded.md A-06"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "таблица C-53: что читается и чем заменены прежние метки" }]
+  },
+
+  "dict.closing": {
+    "value": "^(спокойной ночи|ладно|ок|спасибо|пока|удачи|до завтра|до связи|понятно|понял|хорошо|ага|попробую)(\\s|$)",
+    "unit": "regex по нормализованной строке", "level": null, "basis": "source",
+    "sources": ["serial-hooks:S1", "narrative-testing:§2", "messenger-genre:§2"],
+    "checks": ["C-26", "C-28"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "перенесён из «Общих данных» checks.md" }]
+  },
+  "dict.greeting": {
+    "value": "^(привет|здравствуй|доброе утро|добрый|ты тут|ау|ну что|эм|слушай)",
+    "unit": "regex по нормализованной строке", "level": null, "basis": "source",
+    "sources": ["serial-hooks:S1", "messenger-genre:§2"],
+    "checks": ["C-28"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "перенесён из «Общих данных» checks.md" }]
+  },
+  "dict.pause_reason": {
+    "value": "сплю|спать|еду|дорог|смен|работ|встреч|батаре|заряд|стуч|пришл|не в сети",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["serial-hooks:S10 (часть «причина»)", "rules.md R-63"],
+    "checks": ["C-27"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "слова времени возвращения убраны из причин (A-01)" }]
+  },
+  "dict.return_deadline": {
+    "value": {
+      "verb": "(напишу|отпишу|вернусь|отвечу|позвоню|буду на связи|выйду на связь)",
+      "term": "(через \\S+ (мин|час)|через (час|пару|полчаса)|утром|вечером|завтра|ночью|в \\d{1,2}(:\\d\\d)?|до \\d{1,2}|после обеда)",
+      "window": "(до|после) (утра|вечера|обеда|\\d{1,2})",
+      "window_subject": "(^|[^\\p{L}])(я|буду)([^\\p{L}]|$)"
+    },
+    "unit": "regex: глагол и срок в одной строке в любом порядке; окно — в строке с «я» или «буду»", "level": null, "basis": "source",
+    "sources": ["rules.md R-63", "rules.md R-122", "superseded.md A-01"],
+    "checks": ["C-26", "C-27"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "новый словарь: срок возвращения — находка, а не крючок" }]
+  },
+  "dict.absence_reproach": {
+    "value": "ты (где )?(пропал|пропала|исчез|долго|не отвечал|не отвечала)|сколько можно|где ты был|наконец-то",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["rules.md R-74", "rules.md R-120", "superseded.md A-03"],
+    "checks": ["C-32", "C-47"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "новый словарь по решению автора A-03" }]
+  },
+  "dict.lived_wait": {
+    "value": "наконец-то|ты долго|уже утро|всю ночь ждал|столько ждал|опять молчишь",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["rules.md R-122", "superseded.md A-04"],
+    "checks": ["C-47"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "новый словарь: в режиме «по клику» ожидания не было" }]
+  },
+  "dict.player_time": {
+    "value": "ты (наверное |уже )?спишь|у тебя (сейчас |там )?(ночь|утро|вечер|день)|ложись спать|не разбудил",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["rules.md R-121", "superseded.md A-02"],
+    "checks": ["C-47"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "новый словарь: часы игрока не угадываем" }]
+  },
+  "dict.content_promise": {
+    "value": "скажу|расскажу|покажу|узнаешь|потом",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["chat-fiction-apps:§2", "mobile-interactive-stories:§2", "procedural-storytelling:A10", "yorke-into-the-woods:Y3"],
+    "checks": ["C-26", "C-39"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "признак крючка из «Общих данных» checks.md" }]
+  },
+  "dict.world_deadline": {
+    "value": "через \\d+ (дн|час|мин)|\\d+ (дн|час|мин|недел)|завтра|сегодня|до (утра|вечера)|дедлайн|(£|\\$|₽)\\s?\\d+|\\d{1,2}:\\d\\d",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["checks.md C-24", "cron-wired-for-story:A1", "rules.md R-17", "rules.md R-64"],
+    "checks": ["C-24", "C-26", "C-38"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "срок события в мире — крючок, если в строке нет срока возвращения" }]
+  },
+  "dict.threat": {
+    "value": "угрож|угроз|убь|убит|опасн|найдут|следят|слежк|придут за|полици|кровь|нож|пистолет|оруж|страшно|боюсь|помоги|спрячь|беги|в опасности|шантаж|исчез",
+    "unit": "regex", "level": null, "basis": "our_estimate",
+    "sources": ["rules.md R-28", "checks.md C-38"],
+    "checks": ["C-38"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по просьбе T-05: передышка — глава без срока и угрозы в первых 10 входящих; C-38 — вторая волна" }]
+  },
+  "dict.refusal": {
+    "value": "^(нет|не буду|не стану|пас|я пас|не для меня|не лезу|откаж|не хочу)",
+    "unit": "regex по тексту кнопки в нижнем регистре", "level": null, "basis": "source",
+    "sources": ["checks.md C-11", "choiceofgames-design:RED-04"],
+    "checks": ["C-11"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "перенесён из checks.md C-11" }]
+  },
+  "dict.timer": {
+    "value": "\\d+\\s*(мин|час|%)",
+    "unit": "regex", "level": null, "basis": "source",
+    "sources": ["snyder-save-the-cat:B10"],
+    "checks": ["C-35"], "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "таймер гасит подсказку о монологе" }]
+  },
+
+  "lab.triggers.runs_per_phrase": {
+    "value": 5, "unit": "прогонов", "level": null, "basis": "our_estimate",
+    "sources": ["claude-code-format.md §4.2: результат недетерминирован"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо «3–5 прогонов» в claude-code-format.md §4.2" }]
+  },
+  "lab.triggers.runs_per_phrase_min": {
+    "value": 3, "unit": "прогонов", "level": null, "basis": "our_estimate",
+    "sources": ["claude-code-format.md §4.2"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "нижняя граница для быстрого прогона" }]
+  },
+  "lab.triggers.min_share": {
+    "value": 0.8, "unit": "доля прогонов", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-12: результат — доля, а не «да / нет»"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "фраза считается сработавшей, если нужный скилл вызван в такой доле прогонов (4 из 5)" }]
+  },
+  "lab.triggers.max_false": {
+    "value": 0.2, "unit": "доля прогонов", "op": ">", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-12", "claude-code-format.md §6 (ложные срабатывания claude-api)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "на фразе «ничего» или чужой фразе допускается не больше такой доли вызовов скилла" }]
+  },
+  "lab.fidelity.sample": {
+    "value": 20, "unit": "строк", "level": null, "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-16"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: выборка ревью верности" }]
+  },
+  "lab.fidelity.min_share": {
+    "value": 0.9, "unit": "доля строк выборки", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-09, T-16"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "ревью верности: столько строк выборки пересказаны без искажения" }]
+  },
+  "skill.description.max_chars": {
+    "value": 300, "unit": "знаков", "op": ">", "level": "error", "basis": "our_estimate",
+    "sources": ["claude-code-format.md §1.4, §9: лимит строки листинга 1536, свободно около 22 000"],
+    "calibrated_on": "2026-10-24: замер листинга после чистки (claude-code-format.md §1.4)",
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9" }]
+  },
+  "skill.core.min_lines": {
+    "value": 60, "unit": "строк", "op": "<", "level": "warning", "basis": "our_estimate",
+    "sources": ["build-plan.md §4", "claude-code-format.md §9"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9" }]
+  },
+  "skill.core.max_lines": {
+    "value": 120, "unit": "строк", "op": ">", "level": "warning", "basis": "our_estimate",
+    "sources": ["build-plan.md §4", "claude-code-format.md §9 (документация советует до 500)"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9" }]
+  },
+  "skill.hook.max_output_chars": {
+    "value": 10000, "unit": "знаков", "op": ">", "level": "error", "basis": "source",
+    "sources": ["claude-code-format.md §3.3 [док]: больше — модель получит путь к файлу и превью"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9 (T-11)" }]
+  }
+}

@@ -13,7 +13,9 @@
     "test:e2e:ui": "playwright test --ui",
     "shots": "playwright test e2e/shots.spec.ts",
     "prompt": "node scripts/build-prompt.mjs",
-    "test:lib": "node scripts/lib/selftest.mjs"
+    "test:lib": "node scripts/lib/selftest.mjs",
+    "story:lint": "node scripts/lint/lint.mjs",
+    "test:lint": "node scripts/lint/selftest.mjs"
   },
   "dependencies": {
     "inkjs": "^2.4.0",
