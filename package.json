@@ -35,6 +35,7 @@
     "test:story-cmd": "node scripts/story/selftest.mjs",
     "story:lint": "node scripts/lint/lint.mjs",
     "test:lint": "node scripts/lint/selftest.mjs",
+    "test:hooks": "node scripts/hooks/selftest.mjs",
     "story:coverage": "node scripts/kb/coverage.mjs",
     "test:coverage": "node --test scripts/kb/coverage.test.mjs"
   },
