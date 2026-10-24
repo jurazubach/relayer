@@ -6,6 +6,7 @@ import { BETA_STOP, parseValue, prepare, readSave, runOnce } from './core/run.mj
 import { fmtDuration, fmtMoment } from './core/timeline.mjs';
 import { threshold } from './core/thresholds.mjs';
 import { REPROACH } from './core/lexicon.mjs';
+import { cutAt, visibleText } from './core/visible.mjs';
 
 const HELP = `npm run story:trace -- [--story <id>] [--persona <имя>|all] [--runs N] [--seed N]
                        [--mode click|realtime] [--visible] [--partial] [--until <узел>]
@@ -48,34 +49,6 @@ const fmtT = (sec) => {
   return `${h}:${String(m).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 };
 const show = (v) => (typeof v === 'string' ? JSON.stringify(v) : String(v));
-
-function cutAt(items, until) {
-  if (!until) return items;
-  const i = items.findIndex((x) => x.knot === until);
-  return i < 0 ? items : items.slice(0, i);
-}
-
-/** Видимая переписка: то, что на экране у игрока. */
-function visibleText(items, mode) {
-  const out = [];
-  let thread = null;
-  for (const it of items) {
-    if (it.type === 'line') {
-      if (mode === 'realtime' && it.delay >= threshold('sessions.gap')) out.push(`        … тишина ${fmtDuration(it.delay)} …`);
-      if (mode === 'click' && it.jump) out.push(`        · спустя ${fmtDuration(it.delay)} ·`);
-      if (it.thread !== thread) { out.push(`— чат: ${it.name}`); thread = it.thread; }
-      if (it.kind === 'sys') out.push(`   · ${it.text}`);
-      else if (it.kind === 'me') out.push(`   Вы: ${it.text}`);
-      else out.push(`   ${it.whoName ?? it.name}: ${it.kind === 'photo' ? '[фото] ' : ''}${it.text}`);
-    } else if (it.type === 'choice') {
-      out.push(`   [ ${it.options.map((o) => o.text).join(' | ')} ]`);
-      if (it.thread !== thread) { out.push(`— чат: ${it.name}`); thread = it.thread; }
-      out.push(it.silent ? '   (вы промолчали)' : `   Вы: ${it.text}`);
-    } else if (it.type === 'end') out.push('— конец —');
-    else if (it.type === 'stuck') out.push('— прохождение оборвалось: предел строк —');
-  }
-  return out.join('\n');
-}
 
 /** Полный журнал: время, глава, узел, теги, переменные, кнопки с номерами. */
 function fullText(r, items, mode) {

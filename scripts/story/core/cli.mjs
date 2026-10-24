@@ -4,6 +4,7 @@ import { listStories } from '../../lib/story.mjs';
 /**
  * argv → { has(name), get(name), all(name), refs }. Флаги из `bool` значения не берут.
  * `--story a,b`, `--story a --story b` и голые аргументы — одно и то же: список историй.
+ * Голые аргументы отдельно — в positional: story:rule и story:diff читают их как ID и ревизии.
  */
 export function parseArgs(argv, { bool = [] } = {}) {
   const flags = new Map();
@@ -22,7 +23,7 @@ export function parseArgs(argv, { bool = [] } = {}) {
   const all = (name) => flags.get(name) ?? [];
   const get = (name, dflt = null) => (flags.has(name) ? flags.get(name).at(-1) : dflt);
   const stories = [...all('story').flatMap((s) => String(s).split(',')), ...positional].filter(Boolean);
-  return { has: (n) => flags.has(n), get, all, refs: stories.length ? stories : listStories(), flags };
+  return { has: (n) => flags.has(n), get, all, refs: stories.length ? stories : listStories(), flags, positional };
 }
 
 /** Целое из флага; неправильное — ошибка, а не тихий ноль. */
