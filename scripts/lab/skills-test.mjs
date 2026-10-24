@@ -28,6 +28,8 @@ const DENY = [
   'Write', 'Edit', 'NotebookEdit', 'Artifact', 'ArtifactComments', 'ArtifactData', 'DesignSync',
   'CronCreate', 'CronDelete', 'RemoteTrigger', 'ScheduleWakeup', 'PushNotification', 'SendMessage',
   'EnterWorktree', 'Workflow', 'Read(./docs/lab/mutants/**)', 'Read(./scripts/lab/**)', 'Read(./docs/lab/runs/**)',
+  // node scripts/* разрешён ради линта и бота, но skills-test.mjs --json печатает ключ целиком
+  'Bash(node scripts/lab/*)',
 ];
 const ALLOW = ['Read', 'Grep', 'Glob', 'Skill', 'Bash(npm run story:*)', 'Bash(npm run -s story:*)', 'Bash(node scripts/*)', 'Bash(node .claude/skills/*)'];
 
