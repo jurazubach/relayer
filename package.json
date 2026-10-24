@@ -19,6 +19,8 @@
     "kb:clean": "node scripts/kb/clean.mjs",
     "test:kb:clean": "node --test scripts/kb/clean.test.mjs",
     "test:lib": "node scripts/lib/selftest.mjs",
+    "lab:triggers": "node scripts/lab/triggers.mjs",
+    "test:lab:triggers": "node --test scripts/lab/triggers.test.mjs",
     "story:trace": "node scripts/story/trace.mjs",
     "story:vars": "node scripts/story/vars.mjs",
     "story:sessions": "node scripts/story/sessions.mjs",

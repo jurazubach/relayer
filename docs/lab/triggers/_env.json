@@ -1,0 +1,33 @@
+{
+  "_": "Скиллы, которые могут стоять в листинге рядом с проектными и не считаются чужими: встроенные Claude Code и оставленные в claude-code-format.md §6. Всё остальное в init.skills — предупреждение перед прогоном.",
+  "allowed": [
+    "skill-budget-audit",
+    "deep-research",
+    "design",
+    "slides",
+    "design-sync",
+    "dataviz",
+    "artifact-design",
+    "artifact-diagramming",
+    "artifact-capabilities",
+    "update-config",
+    "keybindings-help",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "workflow-authoring",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring",
+    "init",
+    "security-review",
+    "anthropic-skills:skill-creator"
+  ]
+}
