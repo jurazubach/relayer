@@ -12,10 +12,11 @@ import { MODES, checkIsolation, compose, nextLines, readProtocol } from './core/
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PROTOCOL = join(HERE, 'cold-reader-protocol.md');
+// Модель не настраивается: Opus для всех агентов — решение автора (INTENT.md), совет flow-review о второй модели им перекрыт.
 const MODEL = 'claude-opus-5-5';
 
 const HELP = `npm run story:cold-read -- --story <id> --until <узел> [--mode opening|return|click|guess|voices]
-                          [--persona <имя>] [--seed N] [--route 0,2,1] [--ask] [--model <id>]
+                          [--persona <имя>] [--seed N] [--route 0,2,1] [--ask]
                           [--protocol <файл>] [--json]
 
 Выгружает то, что игрок видел на экране до первого входа в узел: чаты, реплики, свои ответы, тишину.
@@ -41,7 +42,6 @@ scripts/story/cold-reader-protocol.md, заглушка до протокола 
   --seed N          seed прохождения (по умолчанию 1)
   --route 0,2,1     номера кнопок по порядку развилок, дальше — персона
   --ask             спросить холодного читателя (claude -p)
-  --model <id>      модель читателя (по умолчанию ${MODEL})
   --protocol <файл> другой протокол с теми же разделами
   --json            переписка, ключ, вопросы и (с --ask) ответ и проверка изоляции данными
   --help            эта справка`;
@@ -114,7 +114,7 @@ runCli(HELP, async (args) => {
   const protocol = readProtocol(resolve(args.get('protocol') ?? PROTOCOL));
   const questions = protocol.mode(mode);
   if (!protocol.role || !questions || !protocol.control) throw new Error(`в протоколе нет разделов «Роль», «Режим: ${mode}» или «Контроль»`);
-  const model = args.get('model', MODEL);
+  const model = MODEL;
   const prompt = [
     'Вот переписка, которую ты видишь на экране телефона.', '', '<переписка>', transcript, '</переписка>', '',
     questions, '', protocol.control, ...(protocol.format ? ['', protocol.format] : []),
