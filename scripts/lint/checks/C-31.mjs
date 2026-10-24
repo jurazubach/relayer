@@ -23,16 +23,16 @@ export default {
     }
     for (const p of long.values()) {
       const key = p.delay > T.value('story.pause.max_h') * 3600 ? 'story.pause.max_h' : 'C-31.pause_hint_h';
-      find(key, { node: p.knot, chapter: st.chapterOf(p.knot), message: `пауза ${fmtDur(p.delay)} в ${p.knot}${key === 'story.pause.max_h' ? ' больше суток' : ''}` });
+      find(key, { node: p.knot, chapter: st.chapterOf(p.knot), message: `пауза ${fmtDur(p.delay)} в ${p.knot}${key === 'story.pause.max_h' ? ' дольше предела паузы' : ''}` });
     }
     // в части глав длина и карточка описывают всю историю — сверять не с чем
     if (ctx.partial) return;
     const h = median(real) / 3600;
     const m = median(click) / 60;
     if (h > T.value('story.length.max_h')) {
-      find('story.length.max_h', { message: `история идёт ${Math.round(h)} ч реального времени — больше трёх дней`, data: { hours: h } });
+      find('story.length.max_h', { message: `история идёт ${Math.round(h)} ч реального времени — дольше потолка`, data: { hours: h } });
     } else if (h > T.value('story.length.target_h')) {
-      find('story.length.target_h', { message: `история идёт ${Math.round(h)} ч реального времени — дольше двух дней`, data: { hours: h } });
+      find('story.length.target_h', { message: `история идёт ${Math.round(h)} ч реального времени — дольше цели`, data: { hours: h } });
     }
     const missing = ['minutes', 'days'].filter((f) => typeof meta[f] !== 'number');
     if (missing.length) {
