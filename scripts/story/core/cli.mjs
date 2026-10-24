@@ -42,6 +42,10 @@ export async function runCli(help, main, opts) {
   try {
     const args = parseArgs(process.argv.slice(2), opts);
     if (args.has('help')) { console.log(help); return; }
+    // Известные флаги берём из справки: опечатка во флаге иначе молча даёт прогон по умолчанию.
+    const known = new Set(['help', 'json', ...[...help.matchAll(/--([a-z][a-z-]*)/g)].map((m) => m[1])]);
+    const unknown = [...args.flags.keys()].filter((n) => !known.has(n));
+    if (unknown.length) throw new Error(`неизвестный флаг ${unknown.map((n) => `--${n}`).join(', ')} (см. --help)`);
     process.exitCode = (await main(args)) ?? 0;
   } catch (e) {
     console.error(`ошибка: ${e.message}`);
