@@ -1,20 +1,23 @@
 import { test, type Page } from '@playwright/test';
+import { DEMO_PATH, FIXTURE, fixtureOnHome } from './fixture';
 
 /**
  * Не проверка, а съёмка: кладёт скриншоты в screenshots/<устройство>/,
  * чтобы посмотреть глазами, как игра выглядит в настоящем браузере.
  *   npm run shots                      все устройства
  *   npm run shots -- --project=phone   только телефон
+ * Снимает фикстуру examples/e2e.story.json: каталог историй переписывается,
+ * а вёрстку нужно видеть на одних и тех же текстах.
  */
 const shot = (page: Page, name: string) =>
   page.screenshot({ path: `screenshots/${test.info().project.name}/${name}.png` });
 
 test('снимки экранов', async ({ page }) => {
-  await page.goto('/?screen=home&fast=1&fresh=1');
+  await fixtureOnHome(page);
   await page.waitForTimeout(400);
   await shot(page, '1-home');
 
-  await page.getByTestId('tile-the-number').click();
+  await page.getByTestId(`tile-${FIXTURE.id}`).click();
   await page.waitForTimeout(400);
   await shot(page, '2-story');
   await page
@@ -48,8 +51,8 @@ test('снимки экранов', async ({ page }) => {
   await page.getByTestId('story-back').click();
   await page.waitForTimeout(400);
 
-  // своя история рядом со встроенной
-  await page.getByTestId('upload-input').setInputFiles('examples/demo.story.json');
+  // ещё одна своя история рядом с остальными
+  await page.getByTestId('upload-input').setInputFiles(DEMO_PATH);
   await page.getByTestId('story').waitFor();
   await page.getByTestId('story-back').click();
   await page.waitForTimeout(400);

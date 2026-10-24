@@ -78,13 +78,14 @@ src/ui/                    HomeScreen, StoryTile, StoryScreen, ChatsScreen, Chat
                            DebugSheet, Notice, ErrorScreen, Avatar, Icons
 src/styles/                tokens.css, base.css, blocks/*.css
 src/stories/<алиас>.json   истории; новый файл = новая история, регистрировать не нужно
-examples/demo.story.json   пример истории одним файлом (фикстура теста загрузки)
+examples/demo.story.json   пример истории одним файлом (шаблон для авторов)
+examples/e2e.story.json    фикстура e2e: тесты и снимки идут на ней, а не на историях каталога
 docs/capabilities.json     реестр возможностей чата
 docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
 docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
 scripts/check-story.mjs    бот-тестировщик (теги берёт из реестра)
 scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html
-e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки)
+e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки), fixture.ts (загрузка фикстуры)
 ```
 
 Ключи в `localStorage`: `relay:<storyId>` — прогресс истории, `relay:route` — где игрок был
@@ -106,7 +107,7 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 | `src/stories/chuzhoy-golos.json` | Векскомб · Чужой голос | 90 |
 
 Над названием мелко — `series`, крупно — `title`; в сценарии `# title:` повторяет их через « · ».
-Тесты и флаги по умолчанию опираются на `the-number`. Всё в историях вымышлено: никаких
+Флаги в примерах опираются на `the-number`, e2e — на фикстуру `examples/e2e.story.json`. Всё в историях вымышлено: никаких
 реальных компаний, людей и точных цифр из настоящих инцидентов.
 
 ## Как добавить историю
