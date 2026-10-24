@@ -13,6 +13,8 @@
     "test:e2e:ui": "playwright test --ui",
     "shots": "playwright test e2e/shots.spec.ts",
     "prompt": "node scripts/build-prompt.mjs",
+    "kb:clean": "node scripts/kb/clean.mjs",
+    "test:kb:clean": "node --test scripts/kb/clean.test.mjs",
     "test:lib": "node scripts/lib/selftest.mjs"
   },
   "dependencies": {
