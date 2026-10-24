@@ -21,11 +21,17 @@ const GENERIC_IDENT_RE = /^(?:ch|c)\d+$/;
 
 // Формы, которые совпадают с обычными словами («Бета» — не родительный от «Бет»).
 const BAD_FORMS = new Set(['Бета', 'Бете', 'Бету', 'Бетом']);
+// Строчными имена пишут сами герои («там лили работала», «я ходила к оуэну»). Короткие имена
+// и эти строчными не ищем: «том», «кай», «марш», «вела» — обычные слова.
+const LOWER_MIN = 4;
+const LOWER_BAD = new Set(['марш', 'марша', 'маршу', 'маршем', 'марше', 'маршом', 'вела', 'велы', 'веле', 'велу', 'велой', 'вели']);
 
 // Названия из текста сценария, которых нет ни в героях, ни в контактах, но база их упоминает.
 const EXTRA = {
   'slepoe-pyatno': ['Лунный экспресс', 'Лунного экспресса', 'Лунном экспрессе'],
-  'chuzhoy-golos': ['Денни', ...nameForms('Дэн'), '£12'],
+  // Лилиан и Слоун — имена из #rename: и реплик, в characters их нет.
+  'chuzhoy-golos': ['Денни', ...nameForms('Дэн'), '£12', ...nameForms('Лилиан'), 'Lily', 'Kind regards, J', 'Синяя калитка'],
+  'the-number': nameForms('Слоун'),
 };
 
 const LETTER = '\\p{L}\\p{N}_';
@@ -113,7 +119,13 @@ export function buildMatcher(stories) {
       const proper = words.filter((w) => !GENERIC_NAME_WORDS.has(w) && /^\p{Lu}/u.test(w));
       // Герои: каждое имя отдельно («Джудит», «Марш»). Сервисы: только целиком («Дентал Плюс»).
       if (words.length > 1 && !people.has(c.name) && proper.length === words.length) add(bare, name, s.id);
-      else for (const w of proper) for (const f of nameForms(w)) add(bare, f, s.id);
+      else
+        for (const w of proper)
+          for (const f of nameForms(w)) {
+            add(bare, f, s.id);
+            const low = f.toLowerCase();
+            if (w.length >= LOWER_MIN && !LOWER_BAD.has(low)) add(bare, low, s.id);
+          }
       if (!GENERIC_IDENTS.has(c.id)) add(ticked, c.id, s.id);
     }
 
