@@ -102,7 +102,7 @@ for (const ref of refs) {
     chapters: parsed.chapters,
     chapterMeta: meta.chapters ?? [],
     knots,
-    endings: endings.endings.map((e) => e.id),
+    endings: [...new Set(endings.endings.map((e) => e.id))],
   });
   const edgeCount = knots.reduce((s, k) => s + k.edges.length, 0);
   log(`✓ ${file}: узлов ${ids.length}, переходов ${edgeCount}, глав ${parsed.chapters.length}`);

@@ -202,6 +202,10 @@ test('ink: финалы — по меткам, без меток — по -> END
   assert.equal(e.source, 'mark');
   assert.deepEqual(e.endings.map((x) => [x.id, x.name]), [['good', 'свет'], ['bad', 'тьма']]);
   assert.deepEqual(e.unmarked, ['fin']);
+  // одно END, финалы различаются состоянием — по метке в каждой ветке
+  const shared = findEndings(parseInk('=== fin ===\n{ x:\n  // финал: свет\n  Свет.\n- else:\n  // финал: тьма\n  Тьма.\n}\n-> END\n'));
+  assert.deepEqual(shared.endings.map((x) => [x.id, x.name, x.line]), [['fin', 'свет', 3], ['fin', 'тьма', 6]]);
+  assert.deepEqual(shared.unmarked, []);
 });
 
 test('ink: несколько файлов — номера строк и главы по порядку', () => {

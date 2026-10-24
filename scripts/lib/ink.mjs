@@ -385,7 +385,7 @@ export function resolveTarget(target, fromId, ids) {
  * Финалы истории. Если в истории есть хоть одна метка `// финал: <имя>` — финалы только размеченные узлы
  * (у THE NUMBER одно END, а финалы различаются состоянием, поэтому по END их не посчитать).
  * Без меток — узлы, где встречается `-> END`.
- * @returns {{ source: 'mark' | 'end', endings: {id: string, name: string, line: number}[], unmarked: string[] }}
+ * @returns {{ source: 'mark' | 'end', endings: {id: string, name: string, line: number, file?: string}[], unmarked: string[] }}
  *   unmarked — узлы с `-> END` без метки, когда метки в истории уже есть
  */
 export function findEndings(tree) {
@@ -394,15 +394,21 @@ export function findEndings(tree) {
     walk(k.items, (it) => { if (it.type === 'divert' && it.target === 'END') found = true; });
     return found;
   };
-  const marked = tree.knots.filter((k) => k.ending != null);
+  // каждая метка — свой финал: в одном узле их может быть несколько, по веткам состояния
+  const marked = tree.knots.flatMap((k) => k.marks.filter((m) => m.kind === 'финал')
+    .map((m) => ({ id: k.id, name: m.value || k.id, line: m.line, ...(k.file ? { file: k.file } : {}) })));
   if (marked.length) {
     return {
       source: 'mark',
-      endings: marked.map((k) => ({ id: k.id, name: k.ending, line: k.line })),
+      endings: marked,
       unmarked: tree.knots.filter((k) => k.ending == null && hasEnd(k)).map((k) => k.id),
     };
   }
-  return { source: 'end', endings: tree.knots.filter(hasEnd).map((k) => ({ id: k.id, name: k.id, line: k.line })), unmarked: [] };
+  return {
+    source: 'end',
+    endings: tree.knots.filter(hasEnd).map((k) => ({ id: k.id, name: k.id, line: k.line, ...(k.file ? { file: k.file } : {}) })),
+    unmarked: [],
+  };
 }
 
 /** Все метки истории одним списком: { kind, value, line, knot }. */
