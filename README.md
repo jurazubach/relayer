@@ -285,7 +285,8 @@ src/
 │                        DebugSheet, Notice, ErrorScreen, Avatar, Icons
 ├── styles/              tokens.css, base.css, blocks/*.css
 └── stories/             <алиас>.json — истории каталога
-examples/demo.story.json пример истории (и фикстура теста загрузки)
+examples/demo.story.json пример истории
+examples/e2e.story.json  фикстура e2e-тестов и снимков
 docs/                    capabilities.json — реестр, PROMPT.md — собранный промпт
 scripts/                 check-story.mjs, build-prompt.mjs, story-graph.mjs (+ шаблон .html)
 e2e/                     smoke.spec.ts — проверки, shots.spec.ts — снимки
