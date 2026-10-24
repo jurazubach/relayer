@@ -278,7 +278,13 @@
 уровень: тема → владелец → файл. Колонка «опора» перечисляет ключевые ID; полный список строк кластера
 собирает матрица T-09. Строка базы, которой нет в «опоре», получает владельца по теме кластера.
 
-Если ID разбора попал в «опору» двух кластеров, его держит кластер с меньшим номером, а второй ссылается.
+У каждой строки базы в работе есть владелец: строки, которые матрица не могла отнести ни по «опоре», ни по
+кластеру, ни по ссылкам, дописаны в «опору» по смыслу (T-10b, `_build/reports/T-10b/build.md`). Нюанс идёт за
+своим P или PAT. Новая строка без владельца или ID в «опоре» двух скиллов роняют
+`npm run story:coverage -- --summary` (список — `--unowned`).
+
+Если ID разбора попал в «опору» двух кластеров одного скилла, его держит кластер с меньшим номером, а второй
+ссылается. Двух скиллов-владельцев у строки не бывает: ID остаётся в «опоре» одного, второй пишет его в «ссылаются».
 Так снят дубль `ashwell-standard-patterns:PAT-01…PAT-13` (у `story-plan/structures.md`, а не у
 `story-branch/patterns-branch.md`) и другие пересечения списков §C (§7).
 
@@ -291,32 +297,32 @@
 |---|---|---|---|---|---|
 | TH-01 | оси различия направлений, двухпроходная генерация | `story-brainstorm` | `diversity.md` | `procedural:P-04`; `video:PAT-02`, PAT-07; `edgerton:PAT-05` | — |
 | TH-02 | от сырой идеи к осям: роль, герой, ставка, противник, жанровое обещание | `story-brainstorm` | `decisions-direction.md` | `video:P-01`…`P-03`, `P-12`, PAT-01; `truby:P-02`; `snyder:P-02`, `P-18`; `vogler:P-03`, PAT-07; `messenger:P-05` | `story-core` |
-| TH-03 | премиса: три вещи, одно допущение, первобытное желание, жанровая карточка | `story-brainstorm` | `patterns-premise.md` | R-04, R-05; `video:P-05`…`P-09`; `snyder:P-04`, PAT-10 | `story-core/logline.md` |
+| TH-03 | премиса: три вещи, одно допущение, первобытное желание, жанровая карточка | `story-brainstorm` | `patterns-premise.md` | R-04, R-05; `video:P-05`…`P-09`; `snyder:P-04`, PAT-10; `video:RED-06` | `story-core/logline.md` |
 | TH-04 | повороты замысла: ложный союзник, смена противника, маска, драматическая ирония | `story-brainstorm` | `patterns-twists.md` | `truby:PAT-03`…`PAT-05`, PAT-08, PAT-09; `vogler:PAT-05`; `maass:P-11`, `P-12`, PAT-05; `mckee:PAT-08`, `P-16` | `story-branch/patterns-reveal.md` |
 | TH-05 | трейлер из пяти сообщений | `story-brainstorm` | `trailer.md` | `chat-fiction:P-07`, PAT-04; `edgerton:P-10`; `cron:PAT-01` | `story-opening` |
-| TH-06 | что держит в чат-историях и мобильных историях | `story-brainstorm` | `market.md` | `chat-fiction:P-05`, `P-08`…`P-12`, `P-14`, `P-15` (остальные — в других кластерах), LESSON-05…07; `mobile:P-01`, `P-03`…`P-05`, `P-07`, `P-08`, `P-10`…`P-12`, `P-14`, LESSON-01…04; `messenger:LESSON-01`, `LESSON-12`, `LESSON-13`; `skolnick:LESSON-12`; `yorke:LESSON-03` | `story-release/card.md` |
+| TH-06 | что держит в чат-историях и мобильных историях | `story-brainstorm` | `market.md` | `chat-fiction:P-05`, `P-08`…`P-12`, `P-14`, `P-15` (остальные — в других кластерах), LESSON-05…07; `mobile:P-01`, `P-03`…`P-05`, `P-07`, `P-08`, `P-10`…`P-12`, `P-14`, LESSON-01…04; `messenger:LESSON-01`, `LESSON-12`, `LESSON-13`; `skolnick:LESSON-12`; `yorke:LESSON-03`; `chat:LESSON-06`; `choiceofgames:LESSON-01`; `mobile:LESSON-11`; `edgerton:LESSON-02` | `story-release/card.md` |
 | TH-07 | вымысел и переосмысление книг без заимствования | `story-brainstorm` | `fiction.md` | R-117; `INTENT.md` «Чего нельзя» | `story-voice/names.md`, `story-release` |
 
 ### `story-core`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-08 | ставка: лицо, срок, подъём | `story-core` | `decisions-stakes.md` | R-03, R-08; `cron:P-08`, PAT-08; `maass:P-09`, `P-10`; `edgerton:P-02`…`P-04`, PAT-03, PAT-04; `dille:P-10`; `skolnick:P-08` | `story-opening/decisions-opening.md` |
+| TH-08 | ставка: лицо, срок, подъём | `story-core` | `decisions-stakes.md` | R-03, R-08; `cron:P-08`, PAT-08; `maass:P-09`, `P-10`; `edgerton:P-02`…`P-04`, PAT-03, PAT-04; `dille:P-10`; `skolnick:P-08`; `cron:PAT-06`, RED-18; `maass:PAT-06`; `skolnick:PAT-05`; `schell:PAT-08`; `sheldon:PAT-04`; `narrative-postmortems:RED-10` | `story-opening/decisions-opening.md` |
 | TH-09 | роль игрока, «почему тебе» | `story-core` | `player-role.md` | R-06; `vogler:LESSON-05`; `cron:P-07` | `story-opening` |
-| TH-10 | оси-переменные, противовес, растущие счётчики | `story-core` | `axes.md` | R-39, R-41; `choiceofgames:P-08`…`P-10`; `failbetter:P-02`, `P-03`, `P-05`; `emshort:P-14`; `sheldon:P-07`, PAT-01; `narrative-postmortems:P-02`; `cron:PAT-04` | `story-choices/echo.md`, `story-plan` |
+| TH-10 | оси-переменные, противовес, растущие счётчики | `story-core` | `axes.md` | R-39, R-41; `choiceofgames:P-08`…`P-10`; `failbetter:P-02`, `P-03`, `P-05`; `emshort:P-14`; `sheldon:P-07`, PAT-01; `narrative-postmortems:P-02`; `cron:PAT-04`; `emshort:LESSON-04`; `failbetter:PAT-05`, PAT-08, RED-12; `mobile:GREEN-03`; `narrative-postmortems:RED-04`; `nicklin:LESSON-02`; `skolnick:PAT-07` | `story-choices/echo.md`, `story-plan` |
 | TH-11 | противник с целью и контрпланом | `story-core` | `antagonist.md` | R-84; `truby:P-07`, `P-08`, `P-17`; `skolnick:P-10`, PAT-06; `yorke:P-11`; `snyder:P-11` | `story-cast` |
-| TH-12 | тема и ценности, вера героя | `story-core` | `theme.md` | R-07; `mckee:P-01`…`P-03`; `truby:P-01`; `meaningful:P-14`; `bateman:LESSON-08` | `story-review/lenses.md`, `story-cast/arcs.md` |
+| TH-12 | тема и ценности, вера героя | `story-core` | `theme.md` | R-07; `mckee:P-01`…`P-03`; `truby:P-01`; `meaningful:P-14`; `bateman:LESSON-08`; `truby:P-15` | `story-review/lenses.md`, `story-cast/arcs.md` |
 | TH-13 | календарь мира: сюжетные дни в двух режимах | `story-core` | `time-model.md` | A-02, A-04; число сюжетных дней и смена дня мира по главам (наше); база — через TH-47 | ссылается на `story-time/clock.md` (TH-47) |
-| TH-14 | логлайн | `story-core` | `logline.md` | R-02; `snyder:P-01`, PAT-01 | `story-brainstorm/patterns-premise.md` |
+| TH-14 | логлайн | `story-core` | `logline.md` | R-02; `snyder:P-01`, PAT-01; `snyder:SYS-1` | `story-brainstorm/patterns-premise.md` |
 
 ### `story-branch`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-15 | развилка, поворот, ложный след, отказ — что когда | `story-branch` | `decisions-branch.md` | R-32; `ashwell:P-01`…`P-05`, `P-07`; `emshort:P-01`…`P-04`; `failbetter:P-10`, `P-11` | `story-choices` |
-| TH-16 | локальные структуры ветвления в ink | `story-branch` | `patterns-branch.md` | R-38; `emshort:PAT-01`…`PAT-03`; `failbetter:PAT-03`, PAT-07; `choiceofgames:PAT-05`…`PAT-08`; `skolnick:PAT-04`; `vogler:PAT-02`, PAT-04; `snyder:PAT-05`; `serial:PAT-06`, PAT-10 | `story-choices/choice-types.md` |
-| TH-17 | цена ветки в тексте и видимости | `story-branch` | `costs.md` | R-37; `ashwell:P-02`, `P-09`, `P-10`, `LESSON-10`, `LESSON-11`; `meaningful:P-15`, `LESSON-10`; `narrative-postmortems:P-06`; `choiceofgames:P-22`; `narrative-testing:P-13` | `story-plan` |
-| TH-18 | бюджет дорогих веток | `story-branch` | `budget.md` (`branch-budget.mjs`) | R-26; `messenger:LESSON-02` | `story-plan` |
+| TH-15 | развилка, поворот, ложный след, отказ — что когда | `story-branch` | `decisions-branch.md` | R-32; `ashwell:P-01`…`P-05`, `P-07`; `emshort:P-01`…`P-04`; `failbetter:P-10`, `P-11`; `bateman:PAT-04`; `choiceofgames:P-19`, RED-14; `mobile:PAT-07`; `narrative-postmortems:PAT-08`, GREEN-05 | `story-choices` |
+| TH-16 | локальные структуры ветвления в ink | `story-branch` | `patterns-branch.md` | R-38; `emshort:PAT-01`…`PAT-03`; `failbetter:PAT-03`, PAT-07; `choiceofgames:PAT-05`…`PAT-08`; `skolnick:PAT-04`; `vogler:PAT-02`, PAT-04; `snyder:PAT-05`; `serial:PAT-10`; `vogler:P-08`, RED-08; `emshort:P-05`; `meaningful:PAT-05`; `choiceofgames:PAT-02` | `story-choices/choice-types.md` |
+| TH-17 | цена ветки в тексте и видимости | `story-branch` | `costs.md` | R-37; `ashwell:P-02`, `P-09`, `P-10`, `LESSON-10`, `LESSON-11`; `meaningful:P-15`, `LESSON-10`; `narrative-postmortems:P-06`; `choiceofgames:P-22`; `narrative-testing:P-13`; `ashwell:RED-09`; `inkle:RED-10`; `mckee:LESSON-09`; `narrative-postmortems:P-10`; `narrative-testing:RED-11`; `sheldon:LESSON-10`; `skolnick:RED-10` | `story-plan` |
+| TH-18 | бюджет дорогих веток | `story-branch` | `budget.md` (`branch-budget.mjs`) | R-26; `messenger:LESSON-02`; `emshort:RED-07` | `story-plan` |
 
 `story-branch/patterns-reveal.md` (§C) не владеет темой: повороты — TH-04, порядок раскрытий — TH-81.
 
@@ -324,11 +330,11 @@
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-19 | каталог глобальных структур с ценой и «когда нет» | `story-plan` | `structures.md` | R-25; `ashwell:PAT-01`…`PAT-13`; `dille:P-08`, PAT-02…`PAT-04`; `bateman:P-01`, `P-11`, `P-19`, PAT-01, PAT-02; `failbetter:P-06`, PAT-01, PAT-02; `emshort:PAT-04`…`PAT-12`; `mobile:PAT-01`; `messenger:PAT-10`; `nicklin:P-08`, `P-09`, PAT-03, PAT-04; `sheldon:P-11`, PAT-03 | `story-branch` |
-| TH-20 | глава как эпизод: опоры, формула, A/B/C | `story-plan` | `chapter-formula.md` | R-10, R-28, R-31, R-33, R-42; `yorke:P-02`, `P-04`, `P-06`, PAT-01, PAT-02, PAT-09, PAT-10; `snyder:PAT-02`, PAT-03, PAT-11; `skolnick:PAT-01`; `vogler:PAT-01`, PAT-11; `truby:PAT-01`; `nicklin:P-07` | `story-pace`, `chapter-write/chapter-checklist.md` |
-| TH-21 | процесс производства: порядок, суперкат, «финал первым», перепись ранних глав | `story-plan` | `process.md` | R-09; `inkle` SYS-5; `bateman:LESSON-13`; `choiceofgames:P-16`, `P-17`; `dille:LESSON-04`, `LESSON-05`; `yorke:P-10`; `narrative-postmortems:P-07`, `P-14`, `LESSON-12` | `story-desk/state-format.md` |
+| TH-19 | каталог глобальных структур с ценой и «когда нет» | `story-plan` | `structures.md` | R-25; `ashwell:PAT-01`…`PAT-13`; `dille:P-08`, PAT-02…`PAT-04`; `bateman:P-01`, `P-11`, `P-19`, PAT-01, PAT-02; `failbetter:P-06`, PAT-01, PAT-02; `emshort:PAT-04`…`PAT-12`; `mobile:PAT-01`; `messenger:PAT-10`; `nicklin:P-08`, `P-09`, PAT-03, PAT-04; `sheldon:P-11`, PAT-03; `ashwell:P-14`; `failbetter:PAT-09`, PAT-12, LESSON-06, LESSON-09, SYS-3; `narrative-postmortems:PAT-09`, LESSON-02, SYS-2, SYS-3; `procedural:SYS-5`; `schell:PAT-02`, LESSON-03 | `story-branch` |
+| TH-20 | глава как эпизод: опоры, формула, A/B/C | `story-plan` | `chapter-formula.md` | R-10, R-28, R-31, R-33, R-42; `yorke:P-02`, `P-04`, `P-06`, PAT-01, PAT-02, PAT-09, PAT-10; `snyder:PAT-02`, PAT-03, PAT-11; `skolnick:PAT-01`; `vogler:PAT-01`, PAT-11; `truby:PAT-01`; `nicklin:P-07`; `narrative-postmortems:RED-09`; `snyder:GREEN-09`; `vogler:LESSON-10` | `story-pace`, `chapter-write/chapter-checklist.md` |
+| TH-21 | процесс производства: порядок, суперкат, «финал первым» | `story-plan` | `process.md` | R-09; `inkle` SYS-5; `bateman:LESSON-13`; `choiceofgames:P-16`, `P-17`; `dille:LESSON-04`; `yorke:P-10`; `narrative-postmortems:P-14`, `LESSON-12`; `mystery:LESSON-08`; `skolnick:LESSON-14`; `bateman` SYS-3 | `story-desk/state-format.md`, `story-desk/staleness.md` (перепись ранних глав) |
 | TH-22 | тест до прозы: формат скелета, заглушки | `story-plan` | `skeleton-format.md` | `narrative-testing:P-01`, PAT-09 | `story-playtest/build.md` |
-| TH-23 | расписание пауз по главам в двух режимах | `story-plan` | `schedule.md` | `serial:P-06`, `P-07` | ссылается на `story-time/length.md`, `story-pauses/hooks.md` |
+| TH-23 | расписание пауз по главам в двух режимах | `story-plan` | `schedule.md` | `serial:P-06`, `P-07`; `snyder:GREEN-04`; `truby:LESSON-08` | ссылается на `story-time/length.md`, `story-pauses/hooks.md` |
 
 `story-plan/endings-plan.md` и `free-boundary.md` (§C) не владеют темой: распределитель — TH-60, граница — TH-97.
 
@@ -336,8 +342,8 @@
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-24 | ink-идиомы и наши теги | `chapter-write` | `ink-idioms.md` | R-27, R-118; `docs/capabilities.json`; `inkle:PAT-01`, PAT-02, PAT-08, SYS-1, раздел «Идиомы ink»; `bateman:P-17`, PAT-09; `emshort:P-11`; `procedural:PAT-01` | `story-voice/line-edit.md` (сшивка) |
-| TH-25 | сцена с «поэтому»: причинность при письме | `chapter-write` | `scene.md` | `cron:P-09`, PAT-09; `skolnick:P-01`; `snyder:P-16`; `maass:P-07`, `P-08` | ссылается на `story-pace/scene-turn.md` |
+| TH-24 | ink-идиомы и наши теги | `chapter-write` | `ink-idioms.md` | R-27, R-118; `docs/capabilities.json`; `inkle:PAT-01`, PAT-02, PAT-08, SYS-1, раздел «Идиомы ink»; `bateman:P-17`, PAT-09; `emshort:P-11`; `procedural:PAT-01`; `inkle:LESSON-13` | `story-voice/line-edit.md` (сшивка) |
+| TH-25 | сцена с «поэтому»: причинность при письме | `chapter-write` | `scene.md` | `cron:P-09`, PAT-09; `skolnick:P-01`; `snyder:P-16`; `maass:P-07`, `P-08`; `cron:PAT-03`, RED-21; `edgerton:P-11` | ссылается на `story-pace/scene-turn.md` |
 | TH-26 | якоря фактов для модели | `chapter-write` | `facts-anchor.md` | `procedural:LESSON-08`, `P-15`; `dille:P-04` | `story-continuity/timeline.md` |
 | TH-27 | сводный чек-лист «написать главу» | `chapter-write` | `chapter-checklist.md` | раздел «Как написать главу или сцену» в 30 `checklists.md` | `story-review` |
 
@@ -348,9 +354,9 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-28 | формат находки, уровни «замер / модель / человек» | `story-review` | `finding-format.md` | `build-plan.md` §4 | все диагносты |
-| TH-29 | приоритет: непонятное раньше скучного, конфликты правок | `story-review` | `priority.md` | `edgerton:LESSON-01`; `snyder:LESSON-05`; `narrative-testing:P-05`, `P-15` | `story-fix` |
-| TH-30 | линзы теорий как «упущенные возможности» | `story-review` | `lenses.md` | `meaningful` SYS-1…SYS-4; `schell:LESSON-12`; `vogler:P-01`, `LESSON-01`, `LESSON-02`; `snyder:LESSON-01`, `LESSON-04`; `yorke:P-15` | `story-plan` (F-15) |
+| TH-28 | формат находки, уровни «замер / модель / человек» | `story-review` | `finding-format.md` | `build-plan.md` §4; `narrative-testing:P-02`; `mckee:LESSON-12` | все диагносты |
+| TH-29 | приоритет: непонятное раньше скучного, конфликты правок | `story-review` | `priority.md` | `edgerton:LESSON-01`; `snyder:LESSON-05`; `narrative-testing:P-05`, `P-15`; `nicklin:LESSON-10` | `story-fix` |
+| TH-30 | линзы теорий как «упущенные возможности» | `story-review` | `lenses.md` | `meaningful` SYS-1…SYS-4; `schell:LESSON-12`; `vogler:P-01`, `LESSON-01`, `LESSON-02`; `snyder:LESSON-01`, `LESSON-04`; `yorke:P-15`; `snyder:LESSON-12` | `story-plan` (F-15) |
 | TH-31 | QA «шесть списков» | `story-review` | `qa-six.md` | `narrative-testing:P-14`, SYS-04, `checklists.md` §3 | `story-continuity/timeline.md` |
 | TH-32 | какие линзы при каких метриках | `story-review` | `routing.md` (`select-lenses.mjs`) | наше | — |
 
@@ -358,39 +364,39 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-33 | контрольные точки 30 с / 3 мин / глава 1 | `story-opening` | `decisions-opening.md` | `алиас:attention§2` ×30; R-13, R-15…R-17, R-20…R-24 | `story-playtest` |
-| TH-34 | первое сообщение и первая сцена | `story-opening` | `patterns-first-message.md` | R-12, R-14; `edgerton:P-01`, `P-13`…`P-15`, PAT-01; `cron:P-01`, `P-02`; `chat-fiction:P-06`; `skolnick:P-02`, PAT-08; `messenger:P-04`, `P-09`, PAT-04; `schell:P-02`; `mckee:P-09`; `snyder:P-05` | `story-pauses/return.md` |
-| TH-35 | нагрузка начала: имена, сущности, контакты | `story-opening` | `load.md` | R-18; `attention:P-03`, PAT-03; `video:P-04`; `edgerton:P-08` | `story-cast/unlock-schedule.md`, `story-voice/names.md` |
-| TH-36 | предыстория по запросу | `story-opening` | `backstory.md` | R-19; `edgerton:P-06`, PAT-02; `skolnick:P-04`, PAT-03; `cron:P-13`, PAT-07; `maass:P-13`; `snyder:P-17`, PAT-08 | `story-pace` |
+| TH-33 | контрольные точки 30 с / 3 мин / глава 1 | `story-opening` | `decisions-opening.md` | `алиас:attention§2` ×30; R-13, R-15…R-17, R-20…R-24; `failbetter:RED-13`; `mobile:GREEN-07`; `narrative-testing:GREEN-01`; `nicklin:RED-15`; `video:GREEN-02`, RED-05, RED-07 | `story-playtest` |
+| TH-34 | первое сообщение и первая сцена | `story-opening` | `patterns-first-message.md` | R-12, R-14; `edgerton:P-01`, `P-13`…`P-15`, PAT-01; `cron:P-01`, `P-02`; `chat-fiction:P-06`; `skolnick:P-02`, PAT-08; `messenger:P-04`, `P-09`, PAT-04; `schell:P-02`; `mckee:P-09`; `snyder:P-05`; `video:RED-01` | `story-pauses/return.md` |
+| TH-35 | нагрузка начала: имена, сущности, контакты | `story-opening` | `load.md` | R-18; `attention:P-03`, PAT-03; `video:P-04`; `edgerton:P-08`; `choiceofgames:RED-19`; `mobile:RED-10`; `narrative-testing:RED-21`; `video:PAT-05`, RED-03, RED-04; `yorke:RED-18` | `story-cast/unlock-schedule.md`, `story-voice/names.md` |
+| TH-36 | предыстория по запросу | `story-opening` | `backstory.md` | R-19; `edgerton:P-06`, PAT-02; `skolnick:P-04`, PAT-03; `cron:P-13`, PAT-07; `maass:P-13`; `snyder:P-17`, PAT-08; `mckee:PAT-03`; `skolnick:PAT-02` | `story-pace` |
 
 ### `story-pace`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-37 | плотность событий вместо «кривой интереса» | `story-pace` | `density.md` | R-60, R-61; `attention:P-12`, `LESSON-02`; `mckee:P-15`, PAT-07; `schell:P-03`, `P-15`, PAT-04 (без формулы); `yorke:LESSON-04`; `narrative-postmortems:LESSON-13` | `story-review` |
-| TH-38 | микронапряжение: два чувства, зазор, недомолвка | `story-pace` | `micro-tension.md` | R-80; `maass:P-01`…`P-03`, `P-14`, `P-15`, PAT-01; `mckee:P-04`, `P-05`, `P-14`; `cron:P-14`, `P-15` | `story-voice` |
-| TH-39 | поворот ценности в сцене | `story-pace` | `scene-turn.md` | R-29; `mckee:P-06`, PAT-01; `yorke:P-07`, PAT-03 | `chapter-write/scene.md` |
-| TH-40 | середина и провисание | `story-pace` | `middle.md` | R-30; `snyder:P-09`…`P-11`, `LESSON-08`; `yorke:P-03`, `P-05`, PAT-06; `skolnick:PAT-09`; `vogler:P-10`, `LESSON-03`, `LESSON-04` | `story-plan/chapter-formula.md` |
+| TH-37 | плотность событий вместо «кривой интереса» | `story-pace` | `density.md` | R-60, R-61; `attention:P-12`, `LESSON-02`; `mckee:P-15`, PAT-07; `schell:P-03`, `P-15`, PAT-04 (без формулы); `yorke:LESSON-04`; `narrative-postmortems:LESSON-13`; `bateman:P-09`; `choiceofgames:LESSON-13`; `narrative-postmortems:LESSON-09`; `narrative-testing:RED-06`; `nicklin:PAT-02`; `schell:P-01`, PAT-09, RED-01, LESSON-09 | `story-review` |
+| TH-38 | микронапряжение: два чувства, зазор, недомолвка | `story-pace` | `micro-tension.md` | R-80; `maass:P-01`…`P-03`, `P-14`, `P-15`, PAT-01; `mckee:P-04`, `P-05`, `P-14`; `cron:P-14`, `P-15`; `maass:PAT-07` | `story-voice` |
+| TH-39 | поворот ценности в сцене | `story-pace` | `scene-turn.md` | R-29; `mckee:P-06`, PAT-01; `yorke:P-07`, PAT-03; `maass:PAT-04`; `mckee:LESSON-07` | `chapter-write/scene.md` |
+| TH-40 | середина и провисание | `story-pace` | `middle.md` | R-30; `snyder:P-09`, `P-10`, `LESSON-08`; `yorke:P-03`, `P-05`, PAT-06; `skolnick:PAT-09`; `vogler:P-10`, `LESSON-03`, `LESSON-04`; `yorke:PAT-08` | `story-plan/chapter-formula.md` |
 
 ### `story-pauses`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-41 | крючок перед паузой: лестница, типы, чередование | `story-pauses` | `hooks.md` | R-64…R-66; `serial:P-01`…`P-04`, `P-11`, `P-14`, PAT-01, PAT-02, PAT-05…`PAT-08`; `maass:P-04`, PAT-09; `dille:P-13`; `yorke:P-09`, PAT-05; `chat-fiction:P-02`, `P-03`, PAT-02, PAT-06, PAT-08; `mobile:P-02`, `P-09`, PAT-05; `schell:PAT-03`; `edgerton:PAT-07`; `video:PAT-08`; `sheldon:PAT-09` | `chapter-write/pause-lines.md`, `story-plan` |
-| TH-42 | возвращение: первая реплика, рекап из состояния, пачка непрочитанного | `story-pauses` | `return.md` | R-68…R-73; `serial:P-08`…`P-10`, PAT-03, PAT-11, `LESSON-06`, `LESSON-09`; `attention:P-06`, PAT-01, `LESSON-04`, `LESSON-07`; `messenger:P-02`; `failbetter:P-14`, PAT-11, `LESSON-01`, `LESSON-02`; `bateman:P-07`, PAT-05, PAT-11; `mobile:P-15`; `yorke:PAT-12`, `LESSON-11`; `video:LESSON-10`; `edgerton:PAT-08`; `mystery:LESSON-07`, PAT-10; `schell:PAT-11` | `chapter-write/pause-lines.md` |
-| TH-43 | внешняя память игрока: заметки | `story-pauses` | `return.md` | R-100; `attention:P-05`, PAT-02; `inkle:PAT-09`; `cron:PAT-05` | `story-mystery` |
+| TH-41 | крючок перед паузой: лестница, типы, чередование | `story-pauses` | `hooks.md` | R-64…R-66; `serial:P-01`…`P-04`, `P-11`, `P-14`, PAT-01, PAT-02, PAT-05…`PAT-08`; `maass:P-04`, PAT-09; `dille:P-13`; `yorke:P-09`, PAT-05; `chat-fiction:P-02`, `P-03`, PAT-02, PAT-06, PAT-08; `mobile:P-02`, `P-09`, PAT-05; `schell:PAT-03`; `edgerton:PAT-07`; `video:PAT-08`; `sheldon:PAT-09`; `failbetter:GREEN-08`, RED-14; `mobile:GREEN-01`; `narrative-testing:GREEN-03`, RED-05; `serial:RED-18`; `snyder:GREEN-10`, RED-19 | `chapter-write/pause-lines.md`, `story-plan` |
+| TH-42 | возвращение: первая реплика, рекап из состояния, пачка непрочитанного | `story-pauses` | `return.md` | R-68…R-73; `serial:P-08`…`P-10`, PAT-03, PAT-11, `LESSON-06`, `LESSON-09`; `attention:P-06`, PAT-01, `LESSON-04`, `LESSON-07`; `messenger:P-02`; `failbetter:P-14`, PAT-11, `LESSON-01`, `LESSON-02`; `bateman:P-07`, PAT-05, PAT-11; `mobile:P-15`; `yorke:PAT-12`, `LESSON-11`; `video:LESSON-10`; `edgerton:PAT-08`; `mystery:LESSON-07`, PAT-10; `schell:PAT-11`; `bateman:PAT-03`, PAT-10, LESSON-02; `chat:RED-03`; `choiceofgames:RED-18`; `messenger:RED-03`; `narrative-testing:GREEN-11` | `chapter-write/pause-lines.md` |
+| TH-43 | внешняя память игрока: заметки | `story-pauses` | `return.md` | R-100; `attention:P-05`, PAT-02; `inkle:PAT-09`; `cron:PAT-05`; `choiceofgames:GREEN-11`; `inkle:LESSON-04` | `story-mystery` |
 | TH-44 | сессии и микросессии, сводка вместо капельницы | `story-pauses` | `sessions.md` | R-62; `attention:P-08`, `P-09`, PAT-06…`PAT-08`, `LESSON-05`, `LESSON-06`; `chat-fiction:P-01`, PAT-01, PAT-07; `failbetter:LESSON-13`; `narrative-postmortems:P-19`; `serial:PAT-09`; `mobile:LESSON-04` | `story-pace` |
 
 ### `story-time`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-45 | два равноценных режима; кнопка «пропустить» для тестов | `story-time` | `modes.md` (`click-transcript.mjs`) | A-04; R-122; `messenger:LESSON-10` (риск); `schell:LESSON-06`; E-01 | все пишущие, `story-playtest` |
+| TH-45 | два равноценных режима; кнопка «пропустить» для тестов | `story-time` | `modes.md` (`click-transcript.mjs`) | A-04; R-122; `messenger:LESSON-10` (риск); `schell:LESSON-06`; E-01; `choiceofgames:LESSON-10`; `maass:LESSON-06`; `narrative-postmortems:SYS-5` | все пишущие, `story-playtest` |
 | TH-46 | напоминания при молчании, ветка «не ответил» | `story-time` | `reminders.md` | A-03; R-120; `inkle:PAT-07`; `messenger` Система 1, шаг 4 | `story-choices/silence.md` |
-| TH-47 | часы сюжета против часов игрока | `story-time` | `clock.md` (`clock-scan.mjs`) | A-02; R-114, R-121; `messenger:P-12` (часть «в силе»), PAT-03 (устарел); `serial-hooks` Система 3 | `story-core/time-model.md`, `story-continuity/timeline.md` |
-| TH-48 | причина паузы без срока возвращения | `story-time` | `clock.md` (`promise-scan.mjs`) | A-01; R-63 | `story-pauses/hooks.md`, `chapter-write/pause-lines.md` |
-| TH-49 | длина истории и главы в реальном времени | `story-time` | `length.md` (`sessions-view.mjs`) | A-05; R-67; `inkle:P-18`, `LESSON-01`; `video:LESSON-11`; `yorke:LESSON-10`; `serial:LESSON-13`; `chat-fiction:P-13` | `story-release/two-durations.md`, `story-plan/schedule.md` |
-| TH-50 | повтор и быстрый режим | `story-time` | `replay.md` | `messenger:LESSON-04`; уроки о быстром режиме в части «в силе» (`superseded.md` A-04) | `story-release` |
+| TH-47 | часы сюжета против часов игрока | `story-time` | `clock.md` (`clock-scan.mjs`) | A-02; R-114, R-121; `messenger:P-12` (часть «в силе»), PAT-03 (устарел); `serial-hooks` Система 3; `narrative-testing:RED-33` | `story-core/time-model.md`, `story-continuity/timeline.md` |
+| TH-48 | причина паузы без срока возвращения | `story-time` | `clock.md` (`promise-scan.mjs`) | A-01; R-63; `chat:PAT-03`; `maass:LESSON-03`; `mckee:LESSON-10`; `narrative-postmortems:PAT-10`, RED-11, LESSON-01; `serial:GREEN-08`, RED-08 | `story-pauses/hooks.md`, `chapter-write/pause-lines.md` |
+| TH-49 | длина истории и главы в реальном времени | `story-time` | `length.md` (`sessions-view.mjs`) | A-05; R-67; `inkle:P-18`, `LESSON-01`; `video:LESSON-11`; `yorke:LESSON-10`; `serial:LESSON-13`; `chat-fiction:P-13`; `chat:PAT-05`; `narrative-postmortems:P-17`; `serial:RED-07` | `story-release/two-durations.md`, `story-plan/schedule.md` |
+| TH-50 | повтор и быстрый режим | `story-time` | `replay.md` | `messenger:LESSON-04`; уроки о быстром режиме в части «в силе» (`superseded.md` A-04); `narrative-postmortems:LESSON-15`; `sheldon:LESSON-11`; `skolnick:LESSON-06` | `story-release` |
 | TH-51 | упрёк только за `#silent`, никогда за отсутствие | `story-time` | `no-guilt.md` (`guilt-scan.mjs`) | R-74; `attention:P-10` (часть «в силе»), `LESSON-11`; `meaningful:attention§3`, `§5`; `messenger:attention§5` | `story-voice` (C-47), `story-release/ethics.md` |
 | TH-52 | давление и ложная срочность | `story-time` | `no-guilt.md` | C-37; `attention:RED-08`; `serial:RED-17`; `maass:RED-10` | `story-release/ethics.md` |
 
@@ -398,38 +404,38 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-53 | типы выбора и когда какой | `story-choices` | `choice-types.md` | R-44, R-50, R-51, R-54, R-57, R-58; `choiceofgames:P-20`, PAT-10; `meaningful:P-06`, `P-12`, PAT-08; `mckee:PAT-02`, PAT-10, `LESSON-01`; `maass:P-05`, PAT-08; `schell:P-12`; `nicklin:P-11`, PAT-06 | `story-branch` |
-| TH-54 | хабы и необязательное | `story-choices` | `choice-types.md` | R-34, R-36; C-19; `failbetter:P-17` | `story-pace` (F-06), `story-cast` |
-| TH-55 | текст кнопки, число вариантов, голос кнопок | `story-choices` | `buttons.md` | R-43, R-45, R-46; `meaningful:P-01`, `P-13`; `messenger:P-07`, `P-13`; `choiceofgames:P-24`; `failbetter:P-16`; `inkle:P-08`, `P-09`; `mystery:LESSON-11`; `sheldon:LESSON-08`; `nicklin:P-12`; `narrative-postmortems:LESSON-11` | `story-voice` |
-| TH-56 | мёртвая переменная, отклик, дальность, эхо | `story-choices` | `echo.md` | R-40; C-01…C-05; `meaningful:P-08`, `P-09`, PAT-01, PAT-03, `LESSON-01`; `emshort:P-09`, `P-15`, `P-16`, `LESSON-11`; `choiceofgames:P-07`, PAT-09; `narrative-testing:PAT-05`, PAT-06; `inkle:P-06`; `procedural:P-10`, PAT-05; `sheldon:P-06`, PAT-05, `LESSON-07`; `narrative-postmortems:P-03`, PAT-03, `LESSON-10`; `mobile:P-06`, PAT-02; `cron:LESSON-06`; `skolnick:LESSON-04` | `story-endings` |
-| TH-57 | молчание как ход; спор с CoG | `story-choices` | `silence.md` | R-52, R-53; `meaningful:P-11`, PAT-04, `LESSON-08`; `inkle:P-12`, PAT-05; `choiceofgames:P-04`; `sheldon:LESSON-09`; `vogler:PAT-06` | `story-time/reminders.md` |
-| TH-58 | цена, нет лучшего, мораль не очками | `story-choices` | `cost.md` | R-47, R-48, R-56, R-116; `meaningful:P-03`, `P-04`, PAT-02, `LESSON-02`…`LESSON-04`; `choiceofgames:P-03`; `schell:PAT-05`; `truby:LESSON-01`…`LESSON-03`; `narrative-postmortems:LESSON-05`; `skolnick:LESSON-02` | `story-endings` |
+| TH-53 | типы выбора и когда какой | `story-choices` | `choice-types.md` | R-44, R-50, R-51, R-54, R-57, R-58; `choiceofgames:P-20`, PAT-10; `meaningful:P-06`, `P-12`, PAT-08; `mckee:PAT-02`, PAT-10, `LESSON-01`; `maass:P-05`, PAT-08; `schell:P-12`; `nicklin:P-11`, PAT-06; `bateman:P-16`, PAT-07, GREEN-05; `emshort:RED-17`; `failbetter:PAT-10`; `meaningful:RED-11`; `narrative-postmortems:LESSON-07`; `schell:PAT-06` | `story-branch` |
+| TH-54 | хабы и необязательное | `story-choices` | `choice-types.md` | R-34, R-36; C-19; `failbetter:P-17`; `attention:GREEN-03`; `bateman:PAT-06`; `emshort:RED-05`, RED-09, RED-15; `failbetter:RED-08`; `inkle:PAT-06`, PAT-10, LESSON-14; `mobile:PAT-03`; `narrative-postmortems:PAT-01`, GREEN-02, RED-06; `narrative-testing:PAT-08`, RED-01, RED-17 | `story-pace` (F-06), `story-cast` |
+| TH-55 | текст кнопки, число вариантов, голос кнопок | `story-choices` | `buttons.md` | R-43, R-45, R-46; `meaningful:P-01`, `P-13`; `messenger:P-07`, `P-13`; `choiceofgames:P-24`; `failbetter:P-16`; `inkle:P-08`, `P-09`; `mystery:LESSON-11`; `sheldon:LESSON-08`; `nicklin:P-12`; `narrative-postmortems:LESSON-11`; `choiceofgames:GREEN-10`; `emshort:RED-13`; `narrative-testing:RED-26`, RED-27 | `story-voice` |
+| TH-56 | мёртвая переменная, отклик, дальность, эхо | `story-choices` | `echo.md` | R-40; C-01…C-05; `meaningful:P-08`, `P-09`, PAT-01, PAT-03, `LESSON-01`; `emshort:P-09`, `P-15`, `P-16`, `LESSON-11`; `choiceofgames:P-07`, PAT-09; `narrative-testing:PAT-05`, PAT-06; `inkle:P-06`; `procedural:P-10`, PAT-05; `sheldon:P-06`, PAT-05, `LESSON-07`; `narrative-postmortems:P-03`, PAT-03, `LESSON-10`; `mobile:P-06`, PAT-02; `cron:LESSON-06`; `skolnick:LESSON-04`; `ashwell:RED-05`, LESSON-01; `bateman:RED-04`, RED-18; `cron:RED-14`; `emshort:RED-03`; `inkle:RED-06`; `maass:RED-06`, RED-07, RED-08; `meaningful:GREEN-02`; `mobile:RED-09`; `narrative-postmortems:GREEN-01`, RED-03; `narrative-testing:GREEN-10`, RED-04, RED-24; `nicklin:RED-20` | `story-endings` |
+| TH-57 | молчание как ход; спор с CoG | `story-choices` | `silence.md` | R-52, R-53; `meaningful:P-11`, PAT-04, `LESSON-08`; `inkle:P-12`, PAT-05; `choiceofgames:P-04`; `sheldon:LESSON-09`; `vogler:PAT-06`; `narrative-testing:GREEN-08` | `story-time/reminders.md` |
+| TH-58 | цена, нет лучшего, мораль не очками | `story-choices` | `cost.md` | R-47, R-48, R-56, R-116; `meaningful:P-03`, `P-04`, PAT-02, `LESSON-02`…`LESSON-04`; `choiceofgames:P-03`; `schell:PAT-05`; `truby:LESSON-01`…`LESSON-03`; `narrative-postmortems:LESSON-05`; `skolnick:LESSON-02`; `bateman:LESSON-12`; `choiceofgames:RED-02`; `failbetter:PAT-06`; `mckee:RED-08`, RED-11; `meaningful:PAT-09`; `mobile:RED-02`; `truby:PAT-06`; `bateman:RED-12` | `story-endings` |
 | TH-59 | выбор между людьми: уравнять знакомство | `story-choices` | `people-choice.md` | R-49; C-17; `ashwell:LESSON-08`; `narrative-postmortems:P-05`, PAT-07; `skolnick:LESSON-01`; `sheldon:LESSON-05`; `choiceofgames:LESSON-11` | `story-cast` |
 
 ### `story-endings`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-60 | распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов | `story-endings` | `decisions-endings.md` (`threshold-visibility.mjs`) | R-102, R-104, R-112; `inkle:P-17`, PAT-11, SYS-3, `LESSON-02`; `ashwell:P-11`; `choiceofgames:P-11`, `P-12`; `meaningful:PAT-06`, PAT-07, `LESSON-05`; `schell:P-18`, PAT-10; `narrative-postmortems:P-16` | `story-plan/endings-plan.md` |
-| TH-61 | приёмы финала: зеркало, другой носитель, следы, финал из шагов | `story-endings` | `patterns-endings.md` | R-105…R-109; `snyder:P-14`, `P-15`, PAT-07, PAT-12; `yorke:PAT-04`; `video:PAT-06`; `messenger:P-14`, `P-15`; `meaningful:PAT-10`, `LESSON-07`; `cron:P-16`, `LESSON-05`; `truby:P-11`, `P-16`; `vogler:P-13`, `P-14`, PAT-08, PAT-09; `inkle:LESSON-11` | `story-cast/arcs.md` |
-| TH-62 | короткая развязка | `story-endings` | `resolution.md` | R-110, R-111, R-113; `messenger:P-16`; `schell:P-04`, PAT-07; `failbetter:LESSON-12`; `mobile:P-13` | `story-time/length.md` |
-| TH-63 | как объявлять финалы | `story-endings` | `declaring-endings.md` | R-103; `build-plan.md` §9 | `story-plan`, `story:lint` |
+| TH-60 | распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов | `story-endings` | `decisions-endings.md` (`threshold-visibility.mjs`) | R-102, R-104, R-112; `inkle:P-17`, PAT-11, SYS-3, `LESSON-02`; `ashwell:P-11`; `choiceofgames:P-11`, `P-12`; `meaningful:PAT-06`, PAT-07, `LESSON-05`; `schell:P-18`, PAT-10; `narrative-postmortems:P-16`; `ashwell:RED-07`; `bateman:RED-11`; `choiceofgames:RED-08`, RED-12; `messenger:RED-10`; `mobile:PAT-06`, RED-06; `narrative-postmortems:PAT-06`, GREEN-07, RED-07, RED-08; `narrative-testing:GREEN-06`, RED-12, RED-13, RED-25; `truby:RED-08` | `story-plan/endings-plan.md` |
+| TH-61 | приёмы финала: зеркало, другой носитель, следы, финал из шагов | `story-endings` | `patterns-endings.md` | R-105…R-109; `snyder:P-14`, `P-15`, PAT-07, PAT-12; `yorke:PAT-04`; `video:PAT-06`; `messenger:P-14`, `P-15`; `meaningful:PAT-10`, `LESSON-07`; `cron:P-16`, `LESSON-05`; `truby:P-11`, `P-16`; `vogler:P-13`, `P-14`, PAT-08, PAT-09; `inkle:LESSON-11`; `bateman:LESSON-09`; `mckee:PAT-06`; `narrative-testing:PAT-07` | `story-cast/arcs.md` |
+| TH-62 | короткая развязка | `story-endings` | `resolution.md` | R-110, R-111, R-113; `messenger:P-16`; `schell:P-04`, PAT-07; `failbetter:LESSON-12`; `mobile:P-13`; `mobile:GREEN-08` | `story-time/length.md` |
+| TH-63 | как объявлять финалы | `story-endings` | `declaring-endings.md` | R-103; `build-plan.md` §9; `narrative-testing:GREEN-07` | `story-plan`, `story:lint` |
 
 ### `story-cast`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-64 | уровни контактов, функции, шум | `story-cast` | `tiers.md` | R-77, R-79, R-88; C-21, C-45, C-50; `sheldon:P-04`; `dille:P-07`; `truby:P-13`, `LESSON-06`; `inkle:LESSON-12`; `messenger:P-11`, PAT-08 | `story-opening` |
-| TH-65 | карточка героя: функция → цель → секрет → голос | `story-cast` | `character-card.md` | R-76, R-90; `dille:P-05`, `P-06`; `nicklin:P-06`; `sheldon:P-01`…`P-03`; `procedural:P-05`, `P-06`; `edgerton:P-03` | `story-voice/voice-sheet.md` |
+| TH-64 | уровни контактов, функции, шум | `story-cast` | `tiers.md` | R-77, R-79, R-88; C-21, C-45, C-50; `sheldon:P-04`; `dille:P-07`; `truby:P-13`, `LESSON-06`; `inkle:LESSON-12`; `messenger:P-11`, PAT-08; `bateman:RED-17`; `video:GREEN-03` | `story-opening` |
+| TH-65 | карточка героя: функция → цель → секрет → голос | `story-cast` | `character-card.md` | R-76, R-90; `dille:P-05`, `P-06`; `nicklin:P-06`; `sheldon:P-01`…`P-03`; `procedural:P-05`, `P-06`; `narrative-postmortems:LESSON-16`; `procedural:LESSON-06` | `story-voice/voice-sheet.md` |
 | TH-66 | дуги персонажей | `story-cast` | `arcs.md` | R-83; `truby:P-03`…`P-06`, `P-12`; `vogler:P-15`; `yorke:P-13`, `P-14`, `LESSON-12`; `snyder:P-20`; `sheldon:P-12`; `procedural:P-09`, PAT-04; `skolnick:P-15`; `cron:P-06`, `LESSON-08` | `story-core/theme.md`, `story-endings` |
-| TH-67 | когда открывать контакты | `story-cast` | `unlock-schedule.md` | R-78; `video:P-11`, `LESSON-05` | `story-opening/load.md` |
+| TH-67 | когда открывать контакты | `story-cast` | `unlock-schedule.md` | R-78; `video:P-11`, `LESSON-05`; `video:GREEN-05` | `story-opening/load.md` |
 
 ### `story-voice`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-68 | лист голоса, проверяемые маркеры, смена голоса с отношением | `story-voice` | `voice-sheet.md` | R-75, R-82; C-44; `nicklin:P-02`, PAT-01; `sheldon:P-05`, `P-14`, PAT-02; `snyder:P-21` | `story-cast` |
-| TH-69 | редактура реплики: длина, одна мысль, род, сшивка, маркеры | `story-voice` | `line-edit.md` | R-59, R-81, R-89, R-119; C-14, C-34, C-46, C-47; `attention:P-02`, `P-14` (длина); `chat-fiction:P-16`; `nicklin:P-04`, `P-05`, `P-19`; `skolnick:P-13`; `cron:P-11` | `chapter-write/messages.md` |
+| TH-68 | лист голоса, проверяемые маркеры, смена голоса с отношением | `story-voice` | `voice-sheet.md` | R-75, R-82; C-44; `nicklin:P-02`, PAT-01; `sheldon:P-05`, `P-14`, PAT-02; `snyder:P-21`; `narrative-postmortems:PAT-02`, GREEN-04; `narrative-testing:RED-08` | `story-cast` |
+| TH-69 | редактура реплики: длина, одна мысль, род, сшивка, маркеры | `story-voice` | `line-edit.md` | R-59, R-81, R-89, R-119; C-14, C-34, C-46, C-47; `attention:P-02`, `P-14` (длина); `chat-fiction:P-16`; `nicklin:P-04`, `P-05`, `P-19`; `skolnick:P-13`; `cron:P-11`; `attention:PAT-04`; `bateman:RED-15`, LESSON-06; `mobile:RED-08`; `narrative-testing:RED-32` | `chapter-write/messages.md` |
 | TH-70 | одно имя, раскрытие имени, имя-улика | `story-voice` | `names.md` | R-86; C-48; `attention:P-04`, RED-06; `narrative-testing:RED-09` | `story-opening/load.md`, `story-mystery` |
 | TH-71 | юмор | `story-voice` | `humor.md` | R-87; `bateman:P-13`…`P-15`, PAT-08, `LESSON-07`; `nicklin:P-15` | `story-cast` |
 | TH-72 | стиль автора: как снимать и применять | `story-voice` | `author-style.md` (`style-diff.mjs`) | `build-plan.md` §8; `docs/style.md` | `chapter-write`, `story-desk/multi-author.md` |
@@ -439,8 +445,8 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-74 | кто что знает, защитная логика | `story-continuity` | `knowledge-flow.md` | R-85; C-51; `inkle:P-04`, `P-05`, PAT-03, PAT-04, SYS-2, SYS-4; `procedural:P-14`, PAT-07 | `chapter-write/ink-idioms.md` |
-| TH-75 | сведения между чатами | `story-continuity` | `cross-chat.md` | R-55; `messenger:P-10`, PAT-05; `mystery:P-07`; `ashwell:P-13` | `story-choices` |
+| TH-74 | кто что знает, защитная логика | `story-continuity` | `knowledge-flow.md` | R-85; C-51; `inkle:P-04`, `P-05`, PAT-03, PAT-04, SYS-2, SYS-4; `procedural:P-14`, PAT-07; `emshort:RED-10`; `narrative-postmortems:PAT-05` | `chapter-write/ink-idioms.md` |
+| TH-75 | сведения между чатами | `story-continuity` | `cross-chat.md` | R-55; `messenger:P-10`, PAT-05; `mystery:P-07`; `ashwell:P-13`; `nicklin:PAT-05` | `story-choices` |
 | TH-76 | защита слияния | `story-continuity` | `merge-guard.md` | R-35; F-13 | `story-fix`, `story-choices` |
 | TH-77 | хронология, таблица фактов, дубли текста | `story-continuity` | `timeline.md` (`timeline.mjs`, `facts.mjs`) | R-91; `narrative-testing:GREEN-05`, RED-10, RED-16 | `chapter-write/facts-anchor.md`, `story-release` (C-49 г) |
 | TH-78 | канон серии (на будущее, E-06) | `story-continuity` | `canon.md` | `dille:P-12`, PAT-05, PAT-07; `bateman:P-18`; `vogler:PAT-10`; `mobile:PAT-04` | `story-endings` (R-113); позже `story-world` |
@@ -449,11 +455,11 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-79 | честная игра | `story-mystery` | `fair-play.md` | R-95, R-97, R-98; C-54; `mystery:P-01`…`P-16` (кроме взятых ниже); `sheldon:P-09`, `P-10`; `messenger:P-06` | `story-opening` |
-| TH-80 | карта улик: три улики, каналы, ствол | `story-mystery` | `clue-map.md` (`clues.mjs`) | R-92, R-93, R-101; `mystery:PAT-01`, PAT-07, `P-06`, `P-08`, `LESSON-01`, `LESSON-04` | `story-core` (если есть скрытая правда), `story-continuity` |
-| TH-81 | порядок раскрытий | `story-mystery` | `reveals.md` | `truby:P-09`, PAT-02; `mystery:PAT-04`…`PAT-06`, PAT-09; `mckee:P-13`, PAT-04, PAT-09; `cron:PAT-10`; `maass:PAT-02` | `story-branch/patterns-reveal.md`, `story-brainstorm` |
+| TH-79 | честная игра | `story-mystery` | `fair-play.md` | R-95, R-97, R-98; C-54; `mystery:P-01`…`P-16` (кроме взятых ниже); `sheldon:P-09`, `P-10`; `messenger:P-06`; `nicklin:PAT-07` | `story-opening` |
+| TH-80 | карта улик: три улики, каналы, ствол | `story-mystery` | `clue-map.md` (`clues.mjs`) | R-92, R-93, R-101; `mystery:PAT-01`, PAT-07, `P-06`, `P-08`, `LESSON-01`, `LESSON-04`; `mystery:RED-08`, SYS-4, SYS-5; `narrative-postmortems:PAT-04`, GREEN-03, SYS-4 | `story-core` (если есть скрытая правда), `story-continuity` |
+| TH-81 | порядок раскрытий | `story-mystery` | `reveals.md` | `truby:P-09`, PAT-02; `mystery:PAT-04`…`PAT-06`, PAT-09; `mckee:P-13`, PAT-04, PAT-09; `cron:PAT-10`; `maass:PAT-02`; `mystery:LESSON-10`; `truby:SYS-5` | `story-branch/patterns-reveal.md`, `story-brainstorm` |
 | TH-82 | ложные следы | `story-mystery` | `red-herrings.md` | R-96; `mystery:P-09`, `P-15`, PAT-03, PAT-08, `LESSON-03`, `LESSON-12` | — |
-| TH-83 | ступенчатый вывод | `story-mystery` | `deduction-gates.md` (`guess.mjs`) | R-94, R-99; `mystery:PAT-02`, PAT-11, `LESSON-05`, `LESSON-09`, `LESSON-13`, `LESSON-15` | `story-choices` |
+| TH-83 | ступенчатый вывод | `story-mystery` | `deduction-gates.md` (`guess.mjs`) | R-94, R-99; `mystery:PAT-02`, PAT-11, `LESSON-05`, `LESSON-09`, `LESSON-13`, `LESSON-15`; `dille:PAT-06`; `meaningful:GREEN-08`; `messenger:PAT-06`; `mystery:GREEN-05`, RED-06; `video:PAT-04`, GREEN-04, RED-10 | `story-choices` |
 
 ### `story-fix`
 
@@ -469,38 +475,38 @@ TH-41, TH-42, TH-48.
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
 | TH-88 | протокол холодного читателя: режимы | `story-playtest` | `cold-reader.md` | `attention:RED-04`; `narrative-testing:PAT-10`, SYS-05; `maass:P-16` | агент `cold-reader`, `story-opening`, `story-review` |
-| TH-89 | персоны бота и профили холодных читателей | `story-playtest` | `personas.md` | `narrative-testing:P-07`, PAT-04, `LESSON-10`; `attention:LESSON-03`; профили из `INTENT.md` | `story-time` (неотвечающий) |
-| TH-90 | волны теста, расход свежих глаз | `story-playtest` | `waves.md` | `narrative-testing:P-08`, SYS-01, `LESSON-11`, `LESSON-12` | `story-release` (вторая волна) |
-| TH-91 | бриф и сборка: `.json`, `beta_stop`, входы `test_*` | `story-playtest` | `brief.md`, `build.md` (`playtest-kit.mjs`) | `narrative-testing:P-03`, PAT-02, PAT-03 | `story-plan/skeleton-format.md` |
-| TH-92 | анкета: 3 вопроса и пересказ | `story-playtest` | `survey.md` | `narrative-testing` `checklists.md` §4, `attention§1`; `meaningful` `checklists.md` §4 | — |
-| TH-93 | сводка: симптом, а не рецепт | `story-playtest` | `digest.md` (`digest.mjs`) | `narrative-testing:P-06`, `P-10`, RED-14, RED-15 | `story-review/priority.md` |
+| TH-89 | персоны бота и профили холодных читателей | `story-playtest` | `personas.md` | `narrative-testing:P-07`, PAT-04, `LESSON-10`; `attention:LESSON-03`; профили из `INTENT.md`; `choiceofgames:LESSON-09`; `messenger:LESSON-08`; `procedural:LESSON-10`; `schell:P-17` | `story-time` (неотвечающий) |
+| TH-90 | волны теста, расход свежих глаз | `story-playtest` | `waves.md` | `narrative-testing:P-08`, SYS-01, `LESSON-11`, `LESSON-12`; `choiceofgames:LESSON-06`, LESSON-14 | `story-release` (вторая волна) |
+| TH-91 | бриф и сборка: `.json`, `beta_stop`, входы `test_*` | `story-playtest` | `brief.md`, `build.md` (`playtest-kit.mjs`) | `narrative-testing:P-03`, `P-04`, PAT-02, PAT-03, `LESSON-01`; `narrative-postmortems:P-15` | `story-plan/skeleton-format.md` |
+| TH-92 | анкета: 3 вопроса и пересказ | `story-playtest` | `survey.md` | `narrative-testing` `checklists.md` §4, `attention§1`; `meaningful` `checklists.md` §4; `narrative-testing:RED-18` | — |
+| TH-93 | сводка: симптом, а не рецепт | `story-playtest` | `digest.md` (`digest.mjs`) | `narrative-testing:P-06`, `P-10`, RED-14, RED-15; `narrative-testing:GREEN-09`; `serial:LESSON-05` | `story-review/priority.md` |
 | TH-94 | регрессия маршрутов и эталоны | `story-playtest` | `build.md` (`route-replay.mjs`) | `narrative-testing:PAT-01`, SYS-02 | `story-fix/safety.md` |
 
 ### `story-release`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-95 | карточка: обещание, жанр, темы | `story-release` | `card.md` (`card-check.mjs`) | R-11; C-49; `choiceofgames:LESSON-05`; `edgerton:LESSON-06`, PAT-06; `video:P-10`; `schell:LESSON-10`; `messenger:RED-12`; `dille:P-02` | `story-brainstorm/market.md` |
-| TH-96 | этика и монетизация, тёмные паттерны | `story-release` | `ethics.md` | R-115; `attention` С-4; `алиас:attention§5` ×30; около 25 уроков в 15 разборах; `build-plan.md` §12 | `story-time`, `story-pauses`, `story-plan` |
+| TH-95 | карточка: обещание, жанр, темы | `story-release` | `card.md` (`card-check.mjs`) | R-11; C-49; `choiceofgames:LESSON-05`; `edgerton:LESSON-06`, PAT-06; `video:P-10`; `schell:LESSON-10`; `messenger:RED-12`; `dille:P-02`; `video:GREEN-01`, RED-08 | `story-brainstorm/market.md` |
+| TH-96 | этика и монетизация, тёмные паттерны | `story-release` | `ethics.md` | R-115; `attention` С-4; `алиас:attention§5` ×30; около 25 уроков в 15 разборах; `build-plan.md` §12; `ashwell:LESSON-13`; `dille:LESSON-10`; `failbetter:LESSON-11`; `maass:LESSON-08`; `messenger:LESSON-03`; `mobile:LESSON-09`; `narrative-postmortems:LESSON-04`; `schell:LESSON-04`; `serial:LESSON-14`; `sheldon:LESSON-04`; `skolnick:LESSON-09`; `truby:LESSON-09`; `yorke:LESSON-06` | `story-time`, `story-pauses`, `story-plan` |
 | TH-97 | платная граница: место и обещание | `story-release` | `free-boundary-gate.md` (`boundary-check.mjs`) | `choiceofgames:P-23`; `serial:P-12`; `mckee:LESSON-08`; `yorke:LESSON-01`, `LESSON-02`; `edgerton:LESSON-04`, `LESSON-05`; `mobile:LESSON-06`; `INTENT.md` «Платная граница» | `story-plan/free-boundary.md` |
 | TH-98 | две длительности на карточке | `story-release` | `two-durations.md` (`durations.mjs`) | A-05; фазы gap и typing в `engine.ts` | ссылается на `story-time/length.md` |
-| TH-99 | ревизия, журнал изменений, сохранения | `story-release` | `versioning.md` | E-04 | `story-desk` |
+| TH-99 | ревизия, журнал изменений, сохранения | `story-release` | `versioning.md` | E-04; `procedural:LESSON-04` | `story-desk` |
 
 ### `story-desk`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-100 | состояние истории: шаги, кто что пишет | `story-desk` | `state-format.md` (`story-status.mjs`) | `build-plan.md` §7 | все скиллы (первый шаг — `STATUS.md`) |
+| TH-100 | состояние истории: шаги, кто что пишет | `story-desk` | `state-format.md` (`story-status.mjs`) | `build-plan.md` §7; `dille:SYS-1`; `procedural:LESSON-07` | все скиллы (первый шаг — `STATUS.md`) |
 | TH-101 | журнал решений D-NN, отклонённые находки с хэшем узла | `story-desk` | `decisions-log.md` (`decision-add.mjs`) | `build-plan.md` §4, §7 | `story-review`, `story-fix` |
 | TH-102 | банк идей: парковать и доставать | `story-desk` | `ideas-bank.md` (`idea-park.mjs`) | `build-plan.md` §7 | `story-brainstorm` (`ideas-bank.mjs`) |
-| TH-103 | что устаревает при смене ядра или плана | `story-desk` | `staleness.md` (`stale-check.mjs`) | `build-plan.md` §6 (`core: D-NN`) | `story-core`, `story-plan` |
-| TH-104 | несколько авторов: владельцы глав, `INCLUDE` | `story-desk` | `multi-author.md` | `build-plan.md` §8 | `story-voice/author-style.md` |
+| TH-103 | что устаревает при смене ядра или плана; перепись ранних глав после поздних и после теста (Б-1, Б-5) | `story-desk` | `staleness.md` (`stale-check.mjs`) | `build-plan.md` §6 (`core: D-NN`); `narrative-postmortems:P-07`, RED-12, LESSON-14; `dille:LESSON-05`; `truby:LESSON-05` | `story-core`, `story-plan/process.md` |
+| TH-104 | несколько авторов: владельцы глав, `INCLUDE` | `story-desk` | `multi-author.md` | `build-plan.md` §8; `bateman:P-08`, LESSON-03, GREEN-06 | `story-voice/author-style.md` |
 
 ### `story-kb`
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-105 | указатель: алиас → темы → скилл-владелец | `story-kb` | `index.md` (генерируется из §5) | 30 разборов | — |
+| TH-105 | указатель: алиас → темы → скилл-владелец | `story-kb` | `index.md` (генерируется из §5) | 30 разборов; `cron:SYS-5` | — |
 | TH-106 | противоречия: спор → решение → на чём стоит | `story-kb` | `contradictions.md` (`kb-contradictions.mjs`) | около 255 строк «Согласия и противоречия» в `for-relayer.md`; `attention-merged.md#attn-contra` | `contradictions.md` владельцев тем |
 | TH-107 | наставник: разбор сцены автора, упражнения | `story-kb` | `mentor.md`, `exercises.md` | `nicklin:PAT-08`; переложение чужой сцены (`skills.md` §7) | `explain.md` владельцев |
 | TH-108 | отменённое решениями автора | `story-kb` | `superseded.md` (ссылка на общий реестр) | `docs/playbook/superseded.md` | все |
@@ -601,40 +607,22 @@ TH-41, TH-42, TH-48.
 `skolnick:PAT-09`, они в TH-40); из `story-pauses/return.md` — `inkle:PAT-09` и `attention:P-05`, PAT-02 ушли
 в отдельный кластер TH-43 того же файла; из `story-endings` — `ashwell:PAT-06` (в TH-19); из `story-plan/schedule.md`
 — `serial:P-12` (в TH-97); из `story-voice/line-edit.md` — `bateman:P-17`, PAT-09 (в TH-24) и `cron:P-15` (в TH-38).
+T-10b сняла три ID из «опоры» двух скиллов: `edgerton:P-03` — только TH-08 (из TH-65 убран), `snyder:P-11` —
+только TH-11 (из TH-40), `serial:PAT-06` «подвешенный выбор» — только TH-41 (из TH-16: это крючок перед паузой).
+Перепись ранних глав после поздних (Б-1) ушла из TH-21 `story-plan/process.md` в TH-103 `story-desk/staleness.md`
+вместе с `narrative-postmortems:P-07`, `dille:LESSON-05`: это вопрос «что устарело», `process.md` ссылается.
 
 ## 8. Проверка уникальности
 
 Каждый ID — `R-NN`, `C-NN`, `F-NN`, `TH-NN` и якорь `#attn-…` — встречается ровно один раз в колонке
 «владелец», и владелец входит в 21 скилл плана или равен `story:lint`. Полнота сверяется с источниками:
 все R из `rules.md`, все C из `checks.md`, все F из `skills.md` §6, все якоря с текстом из `attention-merged.md`.
+Список скиллов берётся из §1.
 
 ```bash
-node -e '
-const fs=require("fs"), p="docs/playbook/";
-const md=fs.readFileSync(p+"owners.md","utf8");
-const skills=new Set(["story-desk","story-brainstorm","story-core","story-branch","story-plan","chapter-write",
- "story-review","story-opening","story-pace","story-pauses","story-time","story-choices","story-endings",
- "story-cast","story-voice","story-continuity","story-mystery","story-fix","story-playtest","story-release",
- "story-kb","story:lint"]);
-const seen=new Map(), bad=[];
-for (const l of md.split("\n")) {
-  const c=l.split("|").map(s=>s.trim()); if (c.length<5) continue;
-  if (!/^((R|C|F)-\d+|TH-\d+|#attn-[a-z0-9-]+)$/.test(c[1])) continue;
-  const o=c[3].replace(/`/g,""); if (!skills.has(o)) bad.push(c[1]+" → "+o);
-  seen.set(c[1],(seen.get(c[1])||0)+1);
-}
-const ids=(f,re)=>[...new Set(fs.readFileSync(f,"utf8").match(re)||[])];
-const need=[...ids(p+"rules.md",/^\*\*R-\d+/gm).map(s=>s.slice(2)),
- ...ids(p+"checks.md",/^### C-\d+/gm).map(s=>s.slice(4)),
- ...ids(p+"skills.md",/^\| F-\d+/gm).map(s=>s.slice(2)),
- ...ids(p+"attention-merged.md",/\{#attn-[a-z0-9-]+\}/g).map(s=>s.slice(1,-1))
-   .filter(a=>!["#attn-toc","#attn-min","#attn-check","#attn-return","#attn-slicing"].includes(a))];
-const dup=[...seen].filter(([,n])=>n>1).map(([k])=>k), miss=need.filter(k=>!seen.has(k));
-const th=[...seen.keys()].filter(k=>k.startsWith("TH-")).length;
-console.log("строк:",seen.size,"· TH:",th,"· дубли:",dup.join(",")||"нет","· нет владельца:",miss.join(",")||"нет",
- "· чужой владелец:",bad.join(",")||"нет");
-process.exit(dup.length||miss.length||bad.length?1:0);'
+npm run story:coverage -- --owners-check   # единицы этого файла: дубли, полнота, чужой владелец
+npm run story:coverage -- --summary        # строки базы: без владельца и с двумя владельцами — код 1
 ```
 
-Результат на момент сборки: `строк: 329 · TH: 108 · дубли: нет · нет владельца: нет · чужой владелец: нет`
-(122 R + 54 C + 15 F + 108 TH + 30 якорей).
+Результат на момент сборки: `строк 329 · TH 108 · дубли: нет · нет владельца: нет · чужой владелец: нет`
+(122 R + 54 C + 15 F + 108 TH + 30 якорей); строки базы — `без владельца 0 · два владельца 0`.

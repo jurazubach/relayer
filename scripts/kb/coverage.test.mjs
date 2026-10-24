@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, record, clustersFileContent, PATHS } from './coverage.mjs';
+import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, record, clustersFileContent, ownerDups, PATHS } from './coverage.mjs';
 import { statusError } from './kb-status.mjs';
 import { parseOpora } from './kb-owners.mjs';
 import { aliasResolver } from './kb-rows.mjs';
@@ -351,7 +351,6 @@ test('--skill --min, --sources, --affected, --fidelity-sample, --record, merged-
     f.w('playbook/clusters.json', JSON.stringify(clustersFileContent(loadKnowledge(f.paths))));
     assert.equal(quiet(() => main(['--skill', 'story-alpha', '--min', 'L2'], f.paths)).code, 1, 'скилла нет — ниже L2');
     assert.equal(quiet(() => main(['--skill', 'story-alpha', '--min', 'L0'], f.paths)).code, 0);
-    assert.equal(quiet(() => main(['--summary'], f.paths)).code, 0);
     assert.equal(quiet(() => main(['--build-clusters', '--check'], f.paths)).code, 0);
 
     let { res } = run(f.paths);
@@ -391,6 +390,34 @@ test('--skill --min, --sources, --affected, --fidelity-sample, --record, merged-
   }
 });
 
+test('сводка падает, если строка без владельца или у неё два владельца', () => {
+  const f = fixture();
+  try {
+    const content = clustersFileContent(loadKnowledge(f.paths));
+    f.w('playbook/clusters.json', JSON.stringify(content));
+    let r = quiet(() => main(['--summary'], f.paths));
+    assert.equal(r.code, 1, 'строка без владельца — потеря знания');
+    assert.match(r.out, /без владельца [1-9]/);
+    const lost = run(f.paths).res.matrix.filter((x) => !x.owner_skill && x.status === 'used').map((x) => x.id);
+    assert.ok(lost.includes('alpha-ferry:SYS-1') && !lost.includes('beta-lamp:RED-01'), 'отменённое владельца не требует');
+
+    f.w('playbook/clusters.json', JSON.stringify({ ...content, manual: { th: Object.fromEntries(lost.map((id) => [id, 'TH-03'])) } }));
+    assert.equal(quiet(() => main(['--summary'], f.paths)).code, 0, 'у каждой строки владелец');
+
+    f.w('playbook/owners.md', PLAYBOOK['owners.md'].replace('GREEN-01 |', 'GREEN-01; `beta:P-02` |'));
+    r = quiet(() => main(['--summary'], f.paths));
+    assert.equal(r.code, 1, 'строка в «опоре» двух скиллов');
+    assert.match(r.out, /два владельца 1: beta-lamp:P-02 \(TH-01 story-alpha, TH-02 story-beta\)/);
+    assert.match(quiet(() => main(['--unowned'], f.paths)).out, /Два владельца: 1/);
+
+    f.w('playbook/owners.md', PLAYBOOK['owners.md']);
+    f.w('playbook/clusters.json', JSON.stringify({ ...content, manual: { th: { ...Object.fromEntries(lost.map((id) => [id, 'TH-03'])), 'alpha-ferry:P-01': 'TH-02' } } }));
+    assert.equal(quiet(() => main(['--summary'], f.paths)).code, 1, 'manual.th против «опоры» другого скилла');
+  } finally {
+    f.done();
+  }
+});
+
 test('опора: короткие алиасы, диапазоны, ×30, «кроме», системы', () => {
   const aliases = ['attention-today', 'inkle-ingold', 'mystery-fair-play', 'video-three-things'];
   const res = aliasResolver(aliases);
@@ -422,6 +449,11 @@ test('настоящая база: owners.md §8, clusters.json свежий, co
     const lost = res.matrix.filter((x) => x.kind === k && !x.owner_skill).map((x) => x.id);
     assert.deepEqual(lost, [], `у ${k} владелец по ID`);
   }
+  const lostBase = res.matrix.filter((x) => !x.owner_skill && x.status === 'used').map((x) => x.id);
+  assert.deepEqual(lostBase, [], 'у каждой строки базы владелец (npm run story:coverage -- --unowned)');
+  assert.deepEqual(ownerDups(res.kb), [], 'ни одной строки в «опоре» двух скиллов');
+  const desk = res.matrix.filter((x) => x.owner_skill === 'story-desk').length;
+  assert.ok(desk > 0, 'у story-desk есть строки базы (build-plan.md §5)');
   const ths = new Set(res.matrix.map((x) => x.th).filter(Boolean));
   for (const th of ths) assert.ok(res.kb.units.has(th), th);
   assert.ok(res.matrix.some((x) => x.status.startsWith('superseded:')), 'отменённое из superseded.md');
