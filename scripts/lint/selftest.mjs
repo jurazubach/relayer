@@ -498,6 +498,38 @@ test('thresholds.json: author_decision и deferred:E-NN проходят схе�
   assert.equal(T.deferred('story.reminders.max'), 'E-02');
 });
 
+// ключ в тексте; имена файлов (`style.md`, `story.ink`) — не ключи
+const KEY = /`((?:C-\d\d|story|engine|lint|dict|attn|style|bot|lab|skill)\.(?![\w.]*\.(?:md|json|mjs|ink|ts)`)(?!(?:md|json|mjs|ink|ts)`)[\w.]+)`/g;
+const doc = (f) => readFileSync(join(ROOT, f), 'utf8');
+const section = (text, from, to) => text.slice(text.indexOf(from), to ? text.indexOf(to, text.indexOf(from)) : undefined);
+
+test('attention-merged.md §6: 64 строки — ключи thresholds.json, в «решении» нет чисел', () => {
+  const s6 = section(doc('docs/playbook/attention-merged.md'), '## 6. Пороги нагрузки', '## 7.');
+  const rows = s6.split('\n').filter((l) => /^\| `/.test(l));
+  assert.equal(rows.length, 64);
+  for (const r of rows) {
+    const cells = r.split(' | ');
+    for (const m of cells[0].matchAll(KEY)) assert.doesNotThrow(() => T.get(m[1]), m[1]);
+    assert.ok(!/\d/.test(cells[3].replace(KEY, '').replace(/\b[ARCE]-\d\d\b/g, '')), `число в «решении»: ${cells[3]}`);
+  }
+  for (const m of doc('docs/playbook/attention-merged.md').matchAll(KEY)) assert.doesNotThrow(() => T.get(m[1]), m[1]);
+});
+
+test('style.md, checks.md, rules.md: каждый ключ в тексте существует; у каждой проверки строка «Ключи»', () => {
+  for (const f of ['docs/style.md', 'docs/playbook/checks.md', 'docs/playbook/rules.md']) {
+    for (const m of doc(f).matchAll(KEY)) assert.doesNotThrow(() => T.get(m[1]), `${f}: ${m[1]}`);
+  }
+  const s144 = section(doc('docs/style.md'), '### 14.4.', '### 14.5.');
+  assert.ok(!/заведёт T-03b/.test(s144), 'в §14.4 остался ключ «заведёт»');
+  const checksMd = doc('docs/playbook/checks.md');
+  for (const id of [...checksMd.matchAll(/^### (C-\d\d)\./gm)].map((m) => m[1])) {
+    const sec = section(checksMd, `### ${id}.`, '\n### ');
+    for (const k of T.keys().filter((x) => x.startsWith(`${id}.`))) assert.ok(sec.includes(`\`${k}\``), `${id}: ключа ${k} нет в строке «Ключи»`);
+  }
+  const rules = doc('docs/playbook/rules.md');
+  for (const k of ['story.length.target_h', 'story.length.max_h', 'story.pause.max_h', 'story.tail.max_delay_min', 'story.reminders.max', 'story.sleep_morning.min_h', 'engine.click.time_jump_label']) assert.ok(rules.includes(`\`${k}\``), `rules.md: ${k}`);
+});
+
 test('у каждой проверки C-01…C-54 из checks.md есть модуль и хотя бы один ключ', () => {
   const ids = [...readFileSync(join(ROOT, 'docs/playbook/checks.md'), 'utf8').matchAll(/^### (C-\d\d)\./gm)].map((m) => m[1]);
   const have = new Set(checks.map((c) => c.id));

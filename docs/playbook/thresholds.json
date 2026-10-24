@@ -977,6 +977,12 @@
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён (правило 2)" }]
   },
+  "C-29.formula_words": {
+    "value": 3, "unit": "слова в строке перед паузой", "op": "≤", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-29 п. 2: совпадение первым словом («стоп», «но»)"],
+    "calibrated_on": "2026-10-25: chuzhoy-golos — без предела 128 подсказок на местоимениях и именах",
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: первым словом сравниваются только короткие строки-формулы" }]
+  },
   "C-29.tease": {
     "value": 0, "unit": "анонсов", "op": ">", "level": "warning", "basis": "source",
     "sources": ["serial-hooks:RED-04", "maass-fire-in-fiction:RED-13"],

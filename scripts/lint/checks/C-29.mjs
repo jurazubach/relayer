@@ -27,8 +27,11 @@ export default {
         if (l.delay >= gap && i > 0) {
           add(opens, norm(l.text).split(' ').slice(0, nWords).join(' '), place);
           const last = norm(prev.text);
-          add(closes, last, place);
-          add(closes, `^${last.split(' ')[0]}`, place);
+          // место обрыва — сама строка перед паузой: одна строка на разных путях — одна формула, а не повтор
+          const at = `${prev.knot}|${prev.text}`;
+          add(closes, last, at);
+          // первым словом совпадает формула обрыва («стоп», «но…»), а не любая фраза с «она» или именем
+          if (last.split(' ').length <= T.value('C-29.formula_words')) add(closes, `^${last.split(' ')[0]}`, at);
           if (T.re('dict.empty_tease').test(prev.text.toLowerCase())) tease.add(place, () => ({ knot: prev.knot, text: prev.text, delay: l.delay }));
         }
         const back = run.lines.slice(i, i + after).find((x) => T.re('dict.false_alarm').test(x.text.toLowerCase()));
@@ -39,6 +42,8 @@ export default {
       if (key && ps.size > T.value('C-29.opening_repeat')) find('C-29.opening_repeat', { message: `возврат после паузы начинается одинаково ${ps.size} раз: «${key}…»` });
     }
     for (const [key, ps] of closes) {
+      // «прочитано» дословно и «прочитано…» первым словом — одна находка
+      if (key.startsWith('^') && closes.get(key.slice(1))?.size === ps.size) continue;
       if (key && key !== '^' && ps.size > T.value('C-29.closing_repeat')) find('C-29.closing_repeat', { message: `перед паузой ${ps.size} раз одна и та же ${key.startsWith('^') ? `первая фраза «${key.slice(1)}…»` : `строка «${short(key)}»`} — формула обрыва износилась` });
     }
     for (const p of tease.values()) find('C-29.tease', { node: p.knot, chapter: st.chapterOf(p.knot), message: `пауза ${fmtDur(p.delay)} в ${p.knot}: анонс вместо события — «${short(p.text)}»` });

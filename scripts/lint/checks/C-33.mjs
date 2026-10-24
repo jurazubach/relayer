@@ -40,16 +40,27 @@ export default {
       close();
       for (const [c, t] of reads) { if (!chapterRead.has(c)) chapterRead.set(c, []); chapterRead.get(c).push(t); }
     }
+    // долгие и бедные кнопками заходы — сводкой по главе: по одному на заход их сотни
+    const byChapter = new Map();
+    const note = (key, ch, text) => {
+      const k = `${key}|${ch}`;
+      if (!byChapter.has(k)) byChapter.set(k, { key, ch, list: [] });
+      byChapter.get(k).list.push(text);
+    };
     for (const p of all.values()) {
       const a = median(p.active) / 60;
       const m = median(p.msgs);
       const b = median(p.buttons);
       const at = { node: p.knot, chapter: st.chapterOf(p.knot) };
-      const msg = `заход у ${p.knot}: ${Math.round(a * 10) / 10} мин, ${m} сообщений, ${b} кнопок, кончается «${short(p.last, 30)}»`;
-      if (a > T.value('C-33.active_max_min')) find('C-33.active_max_min', { ...at, message: msg });
-      else if (b < T.value('C-33.min_buttons')) find('C-33.min_buttons', { ...at, message: msg });
-      if (m > T.value('C-33.max_msgs')) find('C-33.max_msgs', { ...at, message: msg });
+      const msg = `${p.knot}: ${String(Math.round(a * 10) / 10).replace('.', ',')} мин, ${m} сообщений, ${b} кнопок, кончается «${short(p.last, 30)}»`;
+      if (a > T.value('C-33.active_max_min')) note('C-33.active_max_min', at.chapter, msg);
+      else if (b < T.value('C-33.min_buttons')) note('C-33.min_buttons', at.chapter, msg);
+      if (m > T.value('C-33.max_msgs')) find('C-33.max_msgs', { ...at, message: `заход у ${msg}` });
       if (p.after && (m < T.value('C-33.return_min_msgs') || b === 0)) find('C-33.return_min_msgs', { ...at, message: `возврат после долгой паузы у ${p.knot}: ${m} сообщений, ${b} кнопок — заход не окупает ожидание` });
+    }
+    for (const g of byChapter.values()) {
+      const what = g.key === 'C-33.active_max_min' ? 'заходов дольше коридора' : 'заходов почти без кнопок';
+      find(g.key, { node: st.chapterStart.get(g.ch) ?? null, chapter: g.ch, message: `глава ${g.ch}: ${g.list.length} ${what} (${g.list.slice(0, 2).join('; ')})`, data: { sessions: g.list } });
     }
     for (const [c, ts] of chapterRead) {
       const t = median(ts) / 60;

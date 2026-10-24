@@ -26,9 +26,10 @@ const HELP = `npm run story:lint [-- <id | путь> …] [флаги]
   --json             результат одним JSON в stdout
   --strict           код выхода 1, если есть ошибки (без флага ошибки печатаются, выход 0)
   --partial          история из части глав с узлом beta_stop (набор для теста): без проверок,
-                     которым нужна вся история (C-01, C-03, C-06, C-40, длина и карточка в C-31)
-  --plan [путь]      скелет skeleton.ink: только проверки структуры (C-01, C-03, C-06, C-10, C-11,
-                     C-12, C-21, C-40, C-53); без пути — docs/stories/<id>/skeleton.ink или plans/skeleton.ink
+                     которым нужна вся история (partial: false в модуле: C-01, C-03, C-06, C-40…)
+  --plan [путь]      скелет skeleton.ink: только проверки структуры (plan: true в модуле: C-01…C-07, C-09…C-13,
+                     C-19, C-21, C-25, C-40, C-43, C-45, C-52, C-53); без пути — docs/stories/<id>/skeleton.ink
+                     или plans/skeleton.ink
   --changed          только истории, изменённые в рабочей копии git (src/stories)
   --quick            меньше прогонов бота (lint.runs.quick) — для хука после правки
   --summary          кратко: счётчики по проверкам и lint.summary.top находок на историю,

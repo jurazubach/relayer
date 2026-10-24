@@ -16,13 +16,15 @@ npm run graph               # карта сюжета: граф узлов, ре
 npm run story:pack          # папки историй → один .json для загрузки (dist/stories/); -- --check: без потерь
 npm run story:unpack        # история одним .json → папка src/stories/<id>/ с главами
 npm run test:lib            # самопроверка scripts/lib: синтетические примеры ink и три истории
+npm run story:lint          # проверки C-01…C-54 по checks.md (--strict, --summary, --changed --quick, --partial, --plan, --json)
+npm run test:lint           # самопроверка story:lint: дефект и чистый двойник на каждую проверку
 npm run test:e2e            # Playwright: smoke-тесты в настоящем браузере
 npm run shots               # скриншоты всех экранов в screenshots/<устройство>/
 npm run test:e2e:ui         # интерактивный режим Playwright
 npm run prompt              # пересобрать промпт для генерации историй из реестра возможностей
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet`.
 
 ### Playwright
 
@@ -91,6 +93,8 @@ scripts/lib/               общая библиотека разбора: ink.m
 scripts/check-story.mjs    бот-тестировщик (теги берёт из реестра)
 scripts/story-pack.mjs     story:pack / story:unpack: папка истории ⇄ один .json
 scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html
+scripts/lint/              story:lint: проверки checks/C-NN.mjs, журнал бота, подавление // намеренно:, владелец из owners.md
+docs/playbook/thresholds.json  единственное место чисел и порогов (проверки, словари, внимание, стиль, боты, скиллы)
 e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки), fixture.ts (загрузка фикстуры)
 ```
 
