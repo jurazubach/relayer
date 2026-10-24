@@ -32,7 +32,8 @@
     "story:cold-read": "node scripts/story/cold-read.mjs",
     "test:story-cmd": "node scripts/story/selftest.mjs",
     "story:lint": "node scripts/lint/lint.mjs",
-    "test:lint": "node scripts/lint/selftest.mjs"
+    "test:lint": "node scripts/lint/selftest.mjs",
+    "test:hooks": "node scripts/hooks/selftest.mjs"
   },
   "dependencies": {
     "inkjs": "^2.4.0",

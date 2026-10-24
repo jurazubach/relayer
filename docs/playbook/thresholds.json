@@ -757,5 +757,11 @@
     "sources": ["claude-code-format.md §3.3 [док]: больше — модель получит путь к файлу и превью"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён вместо числа в claude-code-format.md §9 (T-11)" }]
+  },
+  "skill.hook.max_findings": {
+    "value": 8, "unit": "находок", "level": null, "basis": "our_estimate",
+    "sources": ["claude-code-format.md §2.5: вывод хука ложится в контекст агента — держать коротким", "scripts/hooks/post-edit.mjs"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-11", "change": "заведён: сколько новых находок хук после правки перечисляет поимённо, остальные — числом" }]
   }
 }
