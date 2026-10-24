@@ -1,55 +1,56 @@
 // Проверка историй: компиляция сценария + бот-плейтестер (случайные прохождения).
-// Запуск: npm run check:story [-- путь/к/истории.json]
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
-import { Compiler, CompilerOptions, Story } from 'inkjs/full';
+// Запуск: npm run check:story [-- <id | путь> …] [--json] [--seed N]
+import { readFileSync } from 'node:fs';
+import { compile, formatMessages } from './lib/compile.mjs';
+import { nodeIds, parseTag } from './lib/ink.mjs';
+import { play, seeded } from './lib/bot.mjs';
+import { compileInput, loadStory, parseStory, storyRefs } from './lib/story.mjs';
+
+const HELP = `npm run check:story [-- <id | путь> …] [--json] [--seed N]
+
+Компилирует каждую историю и прогоняет бота: 400 случайных прохождений, редкие ветки
+добираются до 2000. Падает, если есть ошибки компиляции, тупики или недостижимые узлы.
+
+  <id | путь>  история по id (the-number), файл .json / .ink или папка; по умолчанию все в src/stories
+  --json       итоги одним JSON в stdout вместо текста
+  --seed N     повторяемые прохождения (иначе Math.random)
+  --help       эта справка`;
 
 const RUNS = 400;
 // Редкие ветки (финалы, которые надо заработать) случайный бот может не встретить за 400 прогонов —
 // тогда добираем прогоны, пока не найдутся все узлы. Недостижимый узел так и останется недостижимым.
 const MAX_RUNS = 2000;
 
+const argv = process.argv.slice(2);
+if (argv.includes('--help') || argv.includes('-h')) { console.log(HELP); process.exit(0); }
+const asJson = argv.includes('--json');
+const seedAt = argv.indexOf('--seed');
+const rng = seedAt >= 0 ? seeded(Number(argv[seedAt + 1])) : Math.random;
+const refs = storyRefs(argv.filter((a, i) => !a.startsWith('--') && !(seedAt >= 0 && i === seedAt + 1)));
+
 // Список допустимых тегов берём из реестра возможностей — чтобы он был один на всё приложение.
 const caps = JSON.parse(readFileSync('docs/capabilities.json', 'utf8'));
 const TAGS = caps.features.filter((f) => f.tag && f.status !== 'planned').map((f) => f.tag);
-const parseDelay = (v) => {
-  const m = String(v).trim().match(/^(\d+(?:\.\d+)?)\s*(s|m|h)?$/);
-  if (!m) return 0;
-  const n = parseFloat(m[1]);
-  return n * (m[2] === 'h' ? 3600 : m[2] === 'm' ? 60 : 1);
-};
 const fmt = (sec) => `${Math.floor(sec / 3600)} ч ${Math.round((sec % 3600) / 60)} мин`;
-const files = process.argv[2]
-  ? [process.argv[2]]
-  : readdirSync('src/stories')
-      .filter((f) => f.endsWith('.json'))
-      .map((f) => join('src/stories', f));
-
-/** История — один .json со сценарием внутри; отдельный .ink тоже принимаем. */
-function readInk(file) {
-  const raw = readFileSync(file, 'utf8');
-  if (!file.endsWith('.json')) return raw;
-  const story = JSON.parse(raw);
-  if (!story.ink) throw new Error(`в ${file} нет поля "ink"`);
-  return story.ink;
-}
+const out = asJson ? () => {} : console.log;
 
 let failed = false;
+const report = [];
 
-for (const file of files) {
-  const source = readInk(file);
-  const compiler = new Compiler(source, new CompilerOptions(null, [], true));
-  let json;
-  try {
-    json = compiler.Compile().ToJson();
-  } catch {
+for (const ref of refs) {
+  const story = loadStory(ref);
+  const file = story.path;
+  const built = compile(compileInput(story));
+  if (!built.ok) {
     console.error(`✗ ${file}: ошибка компиляции`);
-    for (const e of compiler.errors) console.error('   ' + e);
+    console.error(formatMessages(built.errors));
+    report.push({ file, id: story.id, ok: false, errors: built.errors });
     failed = true;
     continue;
   }
-  for (const w of compiler.warnings ?? []) console.warn('   предупреждение: ' + w);
+  if (!asJson && built.warnings.length) console.warn(formatMessages(built.warnings));
 
+  const all = nodeIds(parseStory(story));
   const knots = new Set();
   const choiceSeen = new Map(); // текст кнопки -> сколько раз показана
   const choiceTaken = new Map();
@@ -60,68 +61,67 @@ for (const file of files) {
   const messagesPerRun = [];
   const finals = new Map(); // последняя сюжетная строка -> сколько раз
 
-  const all = [...new Story(json).mainContentContainer.namedContent.keys()].filter((k) => k !== 'global decl');
   let runs = 0;
   for (let run = 0; run < MAX_RUNS; run++) {
     if (run >= RUNS && all.every((k) => knots.has(k))) break;
     runs++;
-    const story = new Story(json);
-    let steps = 0;
-    let delay = 0;
+    const r = play(built.json, { rng, nodes: all, maxSteps: 2000, trackVars: false });
     let lastLine = '';
-    while (steps < 2000) {
-      while (story.canContinue) {
-        const text = story.Continue().trim();
-        const tags = story.currentTags ?? [];
-        const path = story.state.currentPathString;
-        if (path) knots.add(path.split('.')[0]);
-        for (const t of tags) {
-          const [k, ...rest] = t.split(':');
-          if (!TAGS.includes(k.trim())) problems.add(`неизвестный тег «${t}»`);
-          if (k.trim() === 'delay') delay += parseDelay(rest.join(':'));
+    for (const e of r.events) {
+      if (e.type === 'line') {
+        for (const t of e.tags) {
+          if (!TAGS.includes(parseTag(t).key)) problems.add(`неизвестный тег «${t}»`);
         }
-        if (text && !text.startsWith('Конец')) lastLine = text;
-        if (text.length > 140) problems.add(`слишком длинное сообщение: «${text.slice(0, 40)}…»`);
-        steps++;
+        if (e.text && !e.text.startsWith('Конец')) lastLine = e.text;
+        if (e.text.length > 140) problems.add(`слишком длинное сообщение: «${e.text.slice(0, 40)}…»`);
+      } else if (e.type === 'choice') {
+        for (const c of e.options) {
+          choiceSeen.set(c.text, (choiceSeen.get(c.text) ?? 0) + 1);
+          for (const t of c.tags) if (!TAGS.includes(parseTag(t).key)) problems.add(`неизвестный тег на кнопке «${t}»`);
+        }
+        choiceTaken.set(e.text, (choiceTaken.get(e.text) ?? 0) + 1);
       }
-      const choices = story.currentChoices;
-      if (choices.length === 0) { endings++; finals.set(lastLine, (finals.get(lastLine) ?? 0) + 1); break; }
-      for (const c of choices) {
-        choiceSeen.set(c.text, (choiceSeen.get(c.text) ?? 0) + 1);
-        for (const t of c.tags ?? []) if (!TAGS.includes(t.split(':')[0].trim())) problems.add(`неизвестный тег на кнопке «${t}»`);
-      }
-      const pick = choices[Math.floor(Math.random() * choices.length)];
-      choiceTaken.set(pick.text, (choiceTaken.get(pick.text) ?? 0) + 1);
-      story.ChooseChoiceIndex(pick.index);
     }
-    // посещённые узлы по счётчикам ink: надёжнее, чем по текущему пути
-    for (const k of story.mainContentContainer.namedContent.keys()) {
-      if (k !== 'global decl' && story.state.VisitCountAtPathString(k) > 0) knots.add(k);
-    }
-    maxSteps = Math.max(maxSteps, steps);
-    durations.push(delay);
-    messagesPerRun.push(steps);
-    if (steps >= 2000) problems.add('прохождение не закончилось за 2000 шагов: возможен бесконечный цикл');
+    if (r.ended) { endings++; finals.set(lastLine, (finals.get(lastLine) ?? 0) + 1); }
+    for (const k of r.visited) knots.add(k);
+    maxSteps = Math.max(maxSteps, r.steps);
+    durations.push(r.delay);
+    messagesPerRun.push(r.steps);
+    if (r.steps >= 2000) problems.add('прохождение не закончилось за 2000 шагов: возможен бесконечный цикл');
   }
 
-  console.log(`✓ ${file}`);
-  console.log(`   прохождений: ${runs}, дошли до конца: ${endings}, самое длинное: ${maxSteps} строк`);
+  out(`✓ ${file}`);
+  out(`   прохождений: ${runs}, дошли до конца: ${endings}, самое длинное: ${maxSteps} строк`);
   const unvisited = all.filter((k) => !knots.has(k));
   durations.sort((a, b) => a - b);
   messagesPerRun.sort((a, b) => a - b);
   const mid = (arr) => arr[Math.floor(arr.length / 2)];
-  console.log(`   узлов посещено: ${knots.size} из ${all.length}${unvisited.length ? ` · не посещены: ${unvisited.join(', ')}` : ''}`);
-  console.log(`   строк за прохождение: от ${messagesPerRun[0]} до ${messagesPerRun.at(-1)}, медиана ${mid(messagesPerRun)}`);
-  console.log(`   реальное время пауз: от ${fmt(durations[0])} до ${fmt(durations.at(-1))}, медиана ${fmt(mid(durations))}`);
-  console.log('   финалы (последняя строка):');
-  for (const [line, n] of [...finals].sort((a, b) => b[1] - a[1])) console.log(`     ${String(n).padStart(4)}  ${line}`);
+  out(`   узлов посещено: ${knots.size} из ${all.length}${unvisited.length ? ` · не посещены: ${unvisited.join(', ')}` : ''}`);
+  out(`   строк за прохождение: от ${messagesPerRun[0]} до ${messagesPerRun.at(-1)}, медиана ${mid(messagesPerRun)}`);
+  out(`   реальное время пауз: от ${fmt(durations[0])} до ${fmt(durations.at(-1))}, медиана ${fmt(mid(durations))}`);
+  out('   финалы (последняя строка):');
+  const finalsSorted = [...finals].sort((a, b) => b[1] - a[1]);
+  for (const [line, n] of finalsSorted) out(`     ${String(n).padStart(4)}  ${line}`);
   if (unvisited.length) problems.add(`недостижимые узлы: ${unvisited.join(', ')}`);
-  console.log('   кнопки (показана / выбрана):');
-  for (const [text, seen] of [...choiceSeen].sort((a, b) => a[1] - b[1])) {
-    console.log(`     ${String(seen).padStart(4)} / ${String(choiceTaken.get(text) ?? 0).padStart(4)}  ${text}`);
+  out('   кнопки (показана / выбрана):');
+  const buttons = [...choiceSeen].sort((a, b) => a[1] - b[1]);
+  for (const [text, seen] of buttons) {
+    out(`     ${String(seen).padStart(4)} / ${String(choiceTaken.get(text) ?? 0).padStart(4)}  ${text}`);
   }
-  for (const p of problems) console.log('   ⚠ ' + p);
-  if (endings < runs || unvisited.length) failed = true;
+  for (const p of problems) out('   ⚠ ' + p);
+  const bad = endings < runs || unvisited.length > 0;
+  if (bad) failed = true;
+  report.push({
+    file, id: story.id, ok: !bad, runs, endings, maxLines: maxSteps,
+    nodes: { total: all.length, visited: knots.size, unvisited },
+    lines: { min: messagesPerRun[0], max: messagesPerRun.at(-1), median: mid(messagesPerRun) },
+    delaySec: { min: durations[0], max: durations.at(-1), median: mid(durations) },
+    finals: finalsSorted.map(([line, n]) => ({ line, n })),
+    buttons: buttons.map(([text, seen]) => ({ text, seen, taken: choiceTaken.get(text) ?? 0 })),
+    problems: [...problems],
+    warnings: built.warnings,
+  });
 }
 
+if (asJson) console.log(JSON.stringify({ ok: !failed, stories: report }, null, 2));
 process.exit(failed ? 1 : 0);

@@ -239,7 +239,8 @@ function cardRows(knot) {
 function hasReturn(items) {
   return items.some((it) => (it.type === 'divert' && it.kind === 'return') || (it.items && hasReturn(it.items)) || (it.branches && it.branches.some((b) => hasReturn(b.items))));
 }
-const isEnding = (k) => k.edges.some((e) => e.kind === 'end');
+// финалы считает scripts/lib (метки «// финал:», без них — узлы с -> END); старые данные без поля — по рёбрам
+const isEnding = (k) => (S.endings ? S.endings.includes(k.id) : k.edges.some((e) => e.kind === 'end'));
 const isFinal = (k) => isEnding(k) || (!k.edges.length && !hasReturn(k.items));
 
 /** Выборы внутри узла: сколько всего и сколько из них меняют переменные. */
@@ -473,7 +474,8 @@ function select(id, focus) {
     <div class="panel__title">${esc(k.id)} <button class="panel__close" id="close" title="Закрыть (Esc)">×</button></div>
     <div class="panel__meta">${esc(chTitle)} · строка ${k.line} · бот заходит в ${k.visits}% прохождений</div>
     <div class="panel__links">← ${incoming.length ? incoming.map(link).join('') : '<i>никто не ведёт сюда</i>'}</div>
-    <div class="panel__links">→ ${outgoing.length ? outgoing.map(link).join('') : '<i>дальше пути нет</i>'}</div>`;
+    <div class="panel__links">→ ${outgoing.length ? outgoing.map(link).join('') : '<i>дальше пути нет</i>'}</div>
+    ${(k.marks ?? []).map((m) => `<div class="panel__meta">// ${esc(m.kind)}: ${esc(m.value)}</div>`).join('')}`;
   $('close').onclick = () => select(null);
   const body = $('panelBody');
   body.innerHTML = renderItems(k.items, { last: null });
