@@ -6,23 +6,43 @@ import { readUploads, removeUpload, saveUpload } from './uploads';
 /**
  * Библиотека историй: всё, что приложение может открыть.
  *
- * Встроенные истории — просто файлы src/stories/<alias>.json. Положил файл в папку,
- * он сам оказался в приложении: ничего регистрировать не нужно.
- * Загруженные с устройства лежат в localStorage в том же формате.
+ * Встроенные истории — папки src/stories/<alias>/: meta.json с описанием, story.ink и главы,
+ * которые он подключает через INCLUDE. Положил папку — она сама оказалась в приложении:
+ * ничего регистрировать не нужно. Одиночный src/stories/<alias>.json тоже подхватывается,
+ * но если рядом есть папка с тем же alias, источник — папка, а .json — её копия от story:pack.
+ * Загруженные с устройства лежат в localStorage в том же формате, что .json.
  */
 
+type StoryMeta = Omit<StoryFile, 'ink' | 'includes'>;
+
+const metas = import.meta.glob<StoryMeta>('../stories/*/meta.json', { eager: true, import: 'default' });
+const inks = import.meta.glob<string>('../stories/*/**/*.ink', { eager: true, query: '?raw', import: 'default' });
 const files = import.meta.glob<StoryFile>('../stories/*.json', { eager: true, import: 'default' });
 
-/** alias файла (the-number.json → the-number) на случай, если в самом файле id забыли. */
-const aliasOf = (path: string) => path.split('/').pop()!.replace(/\.json$/, '');
+const MAIN = 'story.ink';
 
-export const BUILTIN: Story[] = Object.entries(files)
-  .map(([path, file]) => ({
-    ...(file as Story),
-    id: file.id || aliasOf(path),
+/** alias по пути: ../stories/the-number/meta.json и ../stories/the-number.json → the-number. */
+const aliasOf = (path: string) => path.replace(/^\.\.\/stories\//, '').split('/')[0].replace(/\.json$/, '');
+
+function fromFolder(alias: string, meta: StoryMeta): Story {
+  const prefix = `../stories/${alias}/`;
+  const own = Object.entries(inks).filter(([path]) => path.startsWith(prefix));
+  const includes = Object.fromEntries(own.map(([path, text]) => [path.slice(prefix.length), text]).filter(([name]) => name !== MAIN));
+  return {
+    ...(meta as Story),
+    id: meta.id || alias,
+    ink: own.find(([path]) => path === prefix + MAIN)?.[1] ?? '',
+    includes,
     origin: 'builtin' as const,
-  }))
-  .sort((a, b) => a.title.localeCompare(b.title, 'ru'));
+  };
+}
+
+const folders = Object.entries(metas).map(([path, meta]) => fromFolder(aliasOf(path), meta));
+const single = Object.entries(files)
+  .filter(([path]) => !(`../stories/${aliasOf(path)}/meta.json` in metas))
+  .map(([path, file]) => ({ ...(file as Story), id: file.id || aliasOf(path), origin: 'builtin' as const }));
+
+export const BUILTIN: Story[] = [...folders, ...single].sort((a, b) => a.title.localeCompare(b.title, 'ru'));
 
 export const isBuiltin = (id: string) => BUILTIN.some((s) => s.id === id);
 
@@ -72,10 +92,17 @@ export function plural(n: number, one: string, few: string, many: string): strin
   return many;
 }
 
-/** Подпись объёма истории: «5 глав · ~25 мин». */
-export function sizeLabel(chapters?: number, minutes?: number): string {
+/**
+ * Подпись объёма истории: «5 глав · ~25 мин», с днями — «5 глав · ~25 мин · ~2 дня».
+ * Минуты — режим «по клику», дни — реальное время; меньше суток показываем часами.
+ */
+export function sizeLabel(chapters?: number, minutes?: number, days?: number): string {
   const parts: string[] = [];
   if (chapters) parts.push(`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`);
   if (minutes) parts.push(`~${minutes} мин`);
+  if (days && days >= 1) {
+    const n = Math.round(days);
+    parts.push(`~${n} ${plural(n, 'день', 'дня', 'дней')}`);
+  } else if (days) parts.push(`~${Math.max(1, Math.round(days * 24))} ч`);
   return parts.join(' · ') || 'Новая история';
 }

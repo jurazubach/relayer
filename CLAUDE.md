@@ -9,17 +9,20 @@
 ```bash
 npm install                 # первый раз
 npm run dev                 # дев-сервер, http://localhost:5173
-npm run build               # tsc -b && vite build → dist/
+npm run build               # tsc -b && vite build → dist/ (+ dist/stories/*.story.json от story:pack)
 npm run preview             # посмотреть собранное
 npm run check:story         # бот прогоняет сценарии 400 раз (редкие ветки добирает до 2000): тупики, финалы, длительность
 npm run graph               # карта сюжета: граф узлов, реплики и выборы → graph/index.html (-- --open)
+npm run story:pack          # папки историй → один .json для загрузки (dist/stories/); -- --check: без потерь
+npm run story:unpack        # история одним .json → папка src/stories/<id>/ с главами
+npm run test:lib            # самопроверка scripts/lib: синтетические примеры ink и три истории
 npm run test:e2e            # Playwright: smoke-тесты в настоящем браузере
 npm run shots               # скриншоты всех экранов в screenshots/<устройство>/
 npm run test:e2e:ui         # интерактивный режим Playwright
 npm run prompt              # пересобрать промпт для генерации историй из реестра возможностей
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run build && npm run test:e2e && npm run prompt -- --quiet`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet`.
 
 ### Playwright
 
@@ -64,8 +67,8 @@ npx playwright show-trace test-results/*/trace.zip
 ```
 src/App.tsx                связывание: маршруты и передача данных в экраны
 src/engine/engine.ts       движок сценария: inkjs, разбор тегов, очередь сообщений, сохранение
-src/engine/story.ts        тип Story: описание, герои, главы и ink в одном объекте
-src/engine/library.ts      каталог: import.meta.glob по src/stories/*.json + загруженные
+src/engine/story.ts        тип Story: описание, герои, главы и ink (главный файл + includes) в одном объекте
+src/engine/library.ts      каталог: import.meta.glob по папкам src/stories/<алиас>/ + загруженные
 src/engine/bundle.ts       разбор и выгрузка файла истории, storyPalette
 src/engine/uploads.ts      загруженные истории в localStorage
 src/engine/progress.ts     прогресс без запуска движка
@@ -77,13 +80,16 @@ src/engine/index.ts        бочка: ui импортирует только о
 src/ui/                    HomeScreen, StoryTile, StoryScreen, ChatsScreen, ChatScreen,
                            DebugSheet, Notice, ErrorScreen, Avatar, Icons
 src/styles/                tokens.css, base.css, blocks/*.css
-src/stories/<алиас>.json   истории; новый файл = новая история, регистрировать не нужно
+src/stories/<алиас>/        истории: meta.json + story.ink + ch01.ink…; новая папка = новая история
 examples/demo.story.json   пример истории одним файлом (шаблон для авторов)
 examples/e2e.story.json    фикстура e2e: тесты и снимки идут на ней, а не на историях каталога
 docs/capabilities.json     реестр возможностей чата
 docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
 docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
+scripts/lib/               общая библиотека разбора: ink.mjs (дерево), compile.mjs, bot.mjs (прохождения
+                           с журналом), story.mjs (загрузка .json / папки / .ink, раскладка и сборка)
 scripts/check-story.mjs    бот-тестировщик (теги берёт из реестра)
+scripts/story-pack.mjs     story:pack / story:unpack: папка истории ⇄ один .json
 scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html
 e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки), fixture.ts (загрузка фикстуры)
 ```
@@ -97,14 +103,14 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 
 ## Истории в каталоге
 
-Три готовые истории: две по пять глав, «Чужой голос» — десять (пилот и сезон в одном файле;
+Три готовые истории: две по пять глав, «Чужой голос» — десять (пилот и сезон в одной истории;
 «Пилот» в названиях и заголовках не пишем):
 
-| файл | на карточке | ≈ минут |
+| папка | на карточке | ≈ минут |
 |---|---|---|
-| `src/stories/the-number.json` | THE NUMBER (без серии) | 25 |
-| `src/stories/slepoe-pyatno.json` | 01:42 · Слепое пятно | 40 |
-| `src/stories/chuzhoy-golos.json` | Векскомб · Чужой голос | 90 |
+| `src/stories/the-number/` | THE NUMBER (без серии) | 25 |
+| `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно | 40 |
+| `src/stories/chuzhoy-golos/` | Векскомб · Чужой голос | 90 |
 
 Над названием мелко — `series`, крупно — `title`; в сценарии `# title:` повторяет их через « · ».
 Флаги в примерах опираются на `the-number`, e2e — на фикстуру `examples/e2e.story.json`. Всё в историях вымышлено: никаких
@@ -112,12 +118,27 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 
 ## Как добавить историю
 
-В репозиторий: положить `src/stories/<алиас>.json` — каталог собирается `import.meta.glob`,
-регистрировать нигде не нужно. Без репозитория: «Загрузить историю» на главном принимает
-такой же `.json` (или просто `.ink`). Формат описан в README, пример — `examples/demo.story.json`.
+В репозиторий: папка `src/stories/<алиас>/` — `meta.json` (описание, `characters`, `chapters`, `cover`,
+`revision`, `minutes`, `days`, `free_chapters`) и `story.ink`, главы — `ch01.ink`… через `INCLUDE`.
+Каталог собирается `import.meta.glob`, регистрировать нигде не нужно. Готовый `.json` разложить —
+`npm run story:unpack -- путь.json`.
 
-Главное про формат: один объект содержит и описание, и `ink`. Загрузка истории с тем же `id`
-заменяет её — так автор правит файл и перезагружает, не теряя место в списке.
+Раскладка (иначе INCLUDE в inkjs ломается или съезжает нумерация глав):
+- в `story.ink` — только шапка (`# title:`, `# contact:`), `VAR`, начальный `-> ch1` и строки `INCLUDE`
+  в конце; узлов в главном файле нет;
+- в файле главы до первого `===` — только комментарии и `VAR`; `INCLUDE` — только из главного файла;
+- функции и общие узлы до первой главы — в `common.ink`.
+`npm run story:pack -- --check` это проверяет.
+
+Если рядом лежат папка и `.json` с одним id, источник — папка, а `.json` — копия от `story:pack`:
+так считают и сайт, и `check:story`, и `scripts/lib`.
+
+Без репозитория: «Загрузить историю» на главном принимает `.json` от `story:pack` (главный файл в `ink`,
+главы в `includes`), `.json` с одним `ink` или просто `.ink`. Формат описан в README, пример — `examples/demo.story.json`.
+Загрузка истории с тем же `id` заменяет её — так автор правит файл и перезагружает, не теряя место в списке.
+
+В `characters` поля `voice` (карточка голоса) и `arc` (функция по главам) — служебные: экран истории
+их не показывает, иначе «виновная с главы 8» станет спойлером.
 
 ## Реестр возможностей
 

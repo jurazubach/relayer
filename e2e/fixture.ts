@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { expect, type Page } from '@playwright/test';
 
 /**
@@ -27,16 +27,22 @@ export const DEMO = readStory(DEMO_PATH);
 
 /**
  * Любая встроенная история — для проверок, которым нужна именно встроенная
- * (вытеснение загруженной копии). Какая — неважно, тексты берём из её файла.
+ * (вытеснение загруженной копии, главы через INCLUDE). Какая — неважно, тексты берём из её файлов.
+ * Истории каталога — папки src/stories/<id>/ с meta.json; одиночный <id>.json тоже считается.
  */
-export const BUILTIN: StoryJson | undefined = readdirSync('src/stories')
-  .filter((f) => f.endsWith('.json'))
+export const BUILTIN: (StoryJson & { chapterFiles: number }) | undefined = readdirSync('src/stories')
   .sort()
-  .map((f) => {
-    const story = readStory(`src/stories/${f}`);
-    // как в library.ts: без id в файле история получает алиас по имени файла
-    return { ...story, id: story.id || f.replace(/\.json$/, '') };
-  })[0];
+  .flatMap((name) => {
+    const folder = `src/stories/${name}`;
+    const alias = name.replace(/\.json$/, '');
+    if (existsSync(`${folder}/meta.json`)) {
+      const inks = readdirSync(folder).filter((f) => f.endsWith('.ink')).length;
+      return [{ ...readStory(`${folder}/meta.json`), alias, chapterFiles: inks - 1 }];
+    }
+    return name.endsWith('.json') && !existsSync(`src/stories/${alias}`) ? [{ ...readStory(folder), alias, chapterFiles: 0 }] : [];
+  })
+  // как в library.ts: без id в файле история получает алиас по имени папки или файла
+  .map(({ alias, ...story }) => ({ ...story, id: story.id || alias }))[0];
 
 /** Без пауз сюжета и с чистого листа: иначе эпизод идёт настоящими минутами. */
 export const FRESH = '/?screen=home&fast=1&fresh=1';
