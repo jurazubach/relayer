@@ -26,7 +26,7 @@ export default {
     }
     const four = [...points.values()].filter((c) => c.n === T.value('C-12.four')).length / points.size;
     if (four > T.value('C-12.four_share')) {
-      find('C-12.four_share', { message: `${pct(four)} развилок на ${T.value('C-12.four')} кнопки — норма 2–3`, data: { share: four } });
+      find('C-12.four_share', { message: `${pct(four)} развилок на ${T.value('C-12.four')} кнопки — норма уже`, data: { share: four } });
     }
 
     // одиночки: кнопка без условия — подсказка по узлу; несколько подряд на пути — предупреждение
