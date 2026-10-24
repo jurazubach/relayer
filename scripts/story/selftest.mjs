@@ -13,12 +13,19 @@ import { sessions } from './core/sessions.mjs';
 import { gapTime, typingTime } from './core/timeline.mjs';
 import { threshold, thresholdEntry } from './core/thresholds.mjs';
 import { varIndex } from './core/vars-index.mjs';
+import { MODES, checkIsolation, readProtocol } from './core/cold.mjs';
+import { hunks, lineDiff, nodeDialogue } from './core/dialogue.mjs';
+import { lookupId, normalizeId } from './core/playbook.mjs';
+import { knownStep, parseDecisions, pickActive, readStates } from './core/state.mjs';
+import { loadStory, parseStory } from '../lib/story.mjs';
 
 const HELP = `npm run test:story-cmd [-- --json] [-- --only <подстрока>]
 
-Самопроверка story:trace, story:vars, story:sessions, story:cast, story:endings:
-синтетические истории scripts/story/fixtures/*.ink (каждая деталь там — под проверку)
-и три истории src/stories (персоны доходят до конца, финалы находятся, --json читается).
+Самопроверка story:trace, story:vars, story:sessions, story:cast, story:endings, story:rule,
+story:status, story:diff, story:cold-read: синтетические истории scripts/story/fixtures/*.ink
+(каждая деталь там — под проверку), состояние историй fixtures/stories/, три истории src/stories
+(персоны доходят до конца, финалы находятся, --json читается) и одна ревизия git для story:diff.
+cold-read --ask (вызов claude -p) здесь не запускается: проверяются переписка, протокол и разбор изоляции.
 
   --json         результаты одним JSON в stdout
   --only <текст> только тесты, в названии которых есть текст
@@ -348,6 +355,144 @@ test('cli: большой --json не обрезается в трубе', () =>
   assert.equal(r.code, 0);
   assert.ok(r.out.length > 1 << 17);
   assert.equal(JSON.parse(r.out).stories[0].runs.length, PERSONA_IDS.length);
+});
+
+// ───────── story:rule
+
+test('rule: R-61 — текст из rules.md, пороги C-35 по sources, проверки по нему', () => {
+  const e = lookupId('R-61');
+  assert.match(e.text, /^\*\*R-61\. /);
+  assert.match(e.text, /\nИсточники: /);
+  assert.ok(!/\*\*R-62/.test(e.text), 'захватил следующее правило');
+  const keys = e.thresholds.map((t) => t.key);
+  for (const k of ['C-35.series', 'C-35.series_ch1', 'C-35.series_error']) assert.ok(keys.includes(k), k);
+  assert.ok(e.related.includes('C-35'));
+  assert.equal(normalizeId('r061'), 'R-61');
+  assert.equal(normalizeId('c-35'), 'C-35');
+  assert.equal(normalizeId('всё'), null);
+});
+
+test('rule: проверка, решение автора, отмена; неизвестный ID — код 2', () => {
+  const c = lookupId('C-35');
+  assert.match(c.text, /^### C-35\. /);
+  assert.ok(!/### C-36/.test(c.text));
+  assert.ok(c.thresholds.some((t) => t.key === 'C-35.series' && t.via === 'ключ'));
+  assert.ok(lookupId('R-63').superseded.some((s) => s['решение'] === 'A-01'), 'R-63 изменено A-01');
+  assert.match(lookupId('A-01').text, /Персонаж не называет/);
+  const ok = cmd('rule', ['R-61']);
+  assert.equal(ok.code, 0, ok.err);
+  assert.match(ok.out, /C-35\.series {2}> 12/);
+  const j = cmdJson('rule', ['R-61,C-35']);
+  assert.deepEqual(j.ids.map((x) => x.id), ['R-61', 'C-35']);
+  const bad = cmd('rule', ['R-9999']);
+  assert.equal(bad.code, 2);
+  assert.match(bad.err, /R-9999/);
+});
+
+// ───────── story:status
+
+const STATES = join(HERE, 'fixtures/stories');
+
+test('status: STATUS.md и decisions.md в трёх формах, активная по метке', () => {
+  const states = readStates(STATES);
+  assert.deepEqual(states.map((s) => s.id), ['mayak', 'parom', 'tishina']);
+  const [mayak, parom, tishina] = states;
+  assert.equal(mayak.status.step, 'chapters:1-2');
+  assert.equal(mayak.status.active, true);
+  assert.equal(mayak.status.core, 'D-02');
+  assert.equal(mayak.status.questions.length, 2);
+  assert.deepEqual(mayak.decisions.slice(0, 3).map((d) => d.id), ['D-04', 'D-03', 'D-02']);
+  assert.equal(mayak.decisions[0].who, 'автор');
+  assert.equal(mayak.decisions[0].date, '2026-10-20');
+  assert.equal(parom.status.plan, null);
+  assert.equal(parom.decisions[0].who, 'автор');
+  assert.match(parom.decisions[0].what, /паромщик/);
+  assert.equal(tishina.status, null);
+  assert.equal(pickActive(states, 'main').state.id, 'mayak');
+  const unmarked = states.map((s) => (s.status ? { ...s, status: { ...s.status, active: false } } : s));
+  assert.equal(pickActive(unmarked, 'story/parom').state.id, 'parom');
+  assert.ok(knownStep('chapters:3-N') && knownStep('playtest:wave3') && !knownStep('глава'));
+  const decisions = parseDecisions('- **D-07** · 2026-10-01 · королева — план v3\n');
+  assert.equal(decisions[0].what, 'план v3');
+});
+
+test('status: печать, --all, нет папки — не ошибка', () => {
+  const one = cmd('status', ['--dir', STATES]);
+  assert.equal(one.code, 0, one.err);
+  assert.match(one.out, /история: mayak/);
+  assert.match(one.out, /D-04 · 2026-10-20 · автор/);
+  assert.ok(!/D-01 ·/.test(one.out), 'решений больше трёх');
+  const all = cmd('status', ['--dir', STATES, '--all']);
+  assert.match(all.out, /▶ mayak/);
+  assert.match(all.out, /tishina +нет STATUS\.md/);
+  const none = cmd('status', ['--dir', join(HERE, 'fixtures/нет-такой'), '--all']);
+  assert.equal(none.code, 0);
+  assert.match(none.out, /нет: ни одна история/);
+  assert.equal(cmdJson('status', ['--dir', STATES]).active.id, 'mayak');
+});
+
+// ───────── story:diff
+
+test('diff: построчное сравнение и куски с контекстом', () => {
+  const d = lineDiff(['а', 'б', 'в', 'г', 'д'], ['а', 'б', 'В', 'г', 'д', 'е']);
+  assert.deepEqual(d.filter((x) => x.op !== ' ').map((x) => x.op + x.text), ['-в', '+В', '+е']);
+  const h = hunks(lineDiff(['1', '2', '3', '4', '5', '6'], ['1', '2', '3', '4', '5', '7']), 1);
+  assert.deepEqual(h[0], { op: '…', skipped: 4 });
+  const k = parseStory(loadStory(PROBE)).knots.find((x) => x.id === 'start');
+  const lines = nodeDialogue(k, { ann: { name: 'Анна' } });
+  assert.ok(lines.includes('Анна: привет, это анна'));
+  assert.ok(lines.some((l) => l.startsWith('[ Промолчать ] (молчание)')));
+  assert.ok(lines.every((l) => !/~|->|#/.test(l)), 'код, переходы и теги не видны');
+});
+
+test('diff: ревизии git — метрики и реплики до и после', () => {
+  const REV = ['0137060^', '0137060', '--story', 'chuzhoy-golos'];
+  const t = cmd('diff', [...REV, '--text', '--node', 'season_hook']);
+  assert.equal(t.code, 0, t.err);
+  assert.match(t.out, /@@ season_hook .* изменён · −1 \+0/);
+  const j = cmdJson('diff', [...REV, '--only', 'cast', '--runs', '0']);
+  const rows = j.stories[0].groups[0].rows;
+  assert.ok(rows.find((r) => r.name === 'контактов' && r.before === 12 && r.after === 14), JSON.stringify(rows.slice(0, 3)));
+  assert.ok(rows.find((r) => r.name === 'hart: реплик' && r.before === null));
+  const none = cmd('diff', ['HEAD', 'HEAD']);
+  assert.match(none.out, /не менялись/);
+  assert.equal(cmd('diff', ['нет-такой-ревизии']).code, 2);
+  assert.equal(cmd('diff', ['HEAD', '--only', 'всё']).code, 2);
+});
+
+// ───────── story:cold-read
+
+test('cold-read: видимая переписка до узла, без ink; ключ отдельно', () => {
+  const j = cmdJson('cold-read', ['--story', PROBE, '--until', 'ch2']);
+  assert.match(j.transcript, /Анна: привет, это анна/);
+  assert.ok(!/#from|VAR|->|~|title/.test(j.transcript), 'в переписке разметка ink');
+  assert.ok(!/Проба/.test(j.transcript), 'в переписке название истории');
+  assert.equal(j.key.until, 'ch2');
+  assert.ok(j.key.next.length > 0);
+  const plain = cmd('cold-read', ['--story', PROBE, '--until', 'ch2']);
+  assert.equal(plain.out.trim(), j.transcript.trim());
+  assert.match(plain.err, /--route /);
+  assert.equal(cmd('cold-read', ['--story', PROBE, '--until', 'нет_узла']).code, 2);
+  assert.equal(cmd('cold-read', ['--story', PROBE, '--until', 'ch2', '--mode', 'всё']).code, 2);
+  assert.equal(cmd('cold-read', ['--story', PROBE]).code, 2);
+});
+
+test('cold-read: режимы return и voices; протокол; проверка изоляции', () => {
+  const r = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0', '--mode', 'return']);
+  assert.match(r.transcript, /═══ вы отложили телефон/);
+  assert.ok(r.key.returnAfter.pause >= threshold('sessions.gap'));
+  const v = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0', '--mode', 'voices']);
+  assert.ok(!/^ {3}(Анна|Боб):/m.test(v.transcript), 'подпись с именем в голосах вслепую');
+  assert.ok(!/Анна не в сети/.test(v.transcript));
+  assert.deepEqual(Object.values(v.key.voices).sort(), ['Анна', 'Банк', 'Боб']);
+  const proto = readProtocol(join(HERE, 'cold-reader-protocol.md'));
+  assert.ok(proto.role && proto.control && proto.format);
+  for (const m of Object.keys(MODES)) assert.ok(proto.mode(m), `в протоколе нет режима ${m}`);
+  const p = prepare(PROBE);
+  const clean = checkIsolation('К1. Не знаю. К2. Не знаю.', p, v.transcript);
+  assert.equal(clean.ok, true);
+  const leak = checkIsolation('К1. finale. К3. вижу CLAUDE.md', p, v.transcript);
+  assert.deepEqual([leak.ok, leak.leaks, leak.traces], [false, ['finale'], ['CLAUDE.md']]);
 });
 
 // ───────── прогон

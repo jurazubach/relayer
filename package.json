@@ -26,6 +26,10 @@
     "story:sessions": "node scripts/story/sessions.mjs",
     "story:cast": "node scripts/story/cast.mjs",
     "story:endings": "node scripts/story/endings.mjs",
+    "story:diff": "node scripts/story/diff.mjs",
+    "story:rule": "node scripts/story/rule.mjs",
+    "story:status": "node scripts/story/status.mjs",
+    "story:cold-read": "node scripts/story/cold-read.mjs",
     "test:story-cmd": "node scripts/story/selftest.mjs",
     "story:lint": "node scripts/lint/lint.mjs",
     "test:lint": "node scripts/lint/selftest.mjs"
