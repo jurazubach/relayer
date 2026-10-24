@@ -933,7 +933,7 @@
     {
       "id": "K-R-33",
       "title": "В конце предпоследней главы поставь потерю. Сразу за ней — одна длинная пауза (от 2 часов), перед которой собеседник уходит или просит не писать, а у игрока…",
-      "th": "TH-16",
+      "th": "TH-20",
       "from": [
         "rules.md R-33",
         "serial-hooks/for-relayer.md:126",
@@ -2872,7 +2872,7 @@
     {
       "id": "K-ashwell-standard-patterns:P-14",
       "title": "структура по графу обманывает, смотреть на след в тексте P 14 inkle ingold:P 06,",
-      "th": "TH-44",
+      "th": "TH-19",
       "from": [
         "ashwell-standard-patterns/for-relayer.md:77",
         "schell-art-of-game-design/for-relayer.md:101",
@@ -2888,7 +2888,7 @@
     {
       "id": "K-bateman-game-writing:RED-11",
       "title": "Цена финала видна в сцене",
-      "th": "TH-42",
+      "th": "TH-58",
       "from": [
         "bateman-game-writing/for-relayer.md:105"
       ],
@@ -2942,7 +2942,7 @@
     {
       "id": "K-inkle-ingold:P-15",
       "title": "Тест с маршрутом",
-      "th": "TH-84",
+      "th": "TH-91",
       "from": [
         "inkle-ingold/for-relayer.md:112",
         "narrative-testing/for-relayer.md:97",
@@ -2986,7 +2986,7 @@
     {
       "id": "K-narrative-postmortems:LESSON-01",
       "title": "Пауза — дело персонажа",
-      "th": null,
+      "th": "TH-48",
       "from": [
         "narrative-postmortems/for-relayer.md:89"
       ],
@@ -3023,7 +3023,7 @@
     {
       "id": "K-narrative-testing:RED-06",
       "title": "Длина серии без кнопки (RED 06, RED 31) — inkle ingold:P 01 (80–100 слов), choic",
-      "th": "TH-41",
+      "th": "TH-37",
       "from": [
         "narrative-testing/for-relayer.md:99"
       ],
@@ -3091,7 +3091,7 @@
     {
       "id": "K-truby-anatomy-of-story:RED-08",
       "title": "Финал не решает одна скрытая проверка",
-      "th": "TH-12",
+      "th": "TH-58",
       "from": [
         "truby-anatomy-of-story/for-relayer.md:110"
       ],
@@ -3103,7 +3103,7 @@
     {
       "id": "K-bateman-game-writing:P-16",
       "title": "В главе есть хотя бы два типа диалога: дерево плюс хаб или событийная перебивка (P-16)",
-      "th": null,
+      "th": "TH-53",
       "from": [
         "ссылка на принцип"
       ],
@@ -3179,7 +3179,7 @@
     {
       "id": "K-choiceofgames-design:P-19",
       "title": "Игрок сам копит улики ( to:notes ), и они открывают варианты позже",
-      "th": "TH-16",
+      "th": "TH-15",
       "from": [
         "ссылка на принцип"
       ],
@@ -3228,7 +3228,7 @@
     {
       "id": "K-narrative-postmortems:P-07",
       "title": "Поздние главы используют теги и приёмы, которых нет в первых",
-      "th": "TH-21",
+      "th": "TH-103",
       "from": [
         "ссылка на принцип"
       ],

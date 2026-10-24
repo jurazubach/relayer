@@ -20,9 +20,11 @@ npm run test:e2e            # Playwright: smoke-тесты в настоящем
 npm run shots               # скриншоты всех экранов в screenshots/<устройство>/
 npm run test:e2e:ui         # интерактивный режим Playwright
 npm run prompt              # пересобрать промпт для генерации историй из реестра возможностей
+npm run story:coverage      # покрытие знаний скиллами: строки базы и свода, владельцы, L0–L3 (-- --help)
+npm run test:coverage       # самопроверка story:coverage
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary`.
 
 ### Playwright
 

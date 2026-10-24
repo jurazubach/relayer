@@ -6,7 +6,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { loadRows, aliasResolver, pad, KINDS, KIND_RU, BASE_KINDS } from './kb-rows.mjs';
-import { parseOwners, ownerSkills, oporaIndex, ownersCheck } from './kb-owners.mjs';
+import { parseOwners, ownerSkills, oporaIndex, ownersCheck, parseOpora } from './kb-owners.mjs';
 import { buildClusters, assignOwners, byId } from './kb-clusters.mjs';
 import { scanSkills, keyTerms, rowLevel, LEVELS, levelNum } from './kb-levels.mjs';
 import { statusError, supersededIndex, engineFeatures, STATUS_HELP, REJECT_REASONS } from './kb-status.mjs';
@@ -15,7 +15,8 @@ import { seeded } from '../lib/bot.mjs';
 
 const HELP = `Покрытие знаний: какие единицы базы и свода держат скиллы и на каком уровне.
 
-  npm run story:coverage -- --summary                  сводка: строки, кластеры, уровни, владельцы
+  npm run story:coverage -- --summary                  сводка: строки, кластеры, уровни, владельцы; код выхода 1 —
+                                                       строка без владельца, дубль владельца, ошибка coverage.json или §8
   npm run story:coverage -- --skill story-choices      часть матрицы для скилла
   npm run story:coverage -- --skill story-choices --min L2
                                                        код выхода 1, если кластер скилла ниже уровня
@@ -27,7 +28,7 @@ const HELP = `Покрытие знаний: какие единицы базы 
   npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…
                                                        записать ручной слой в coverage.json
   npm run story:coverage -- --owners-check             уникальность и полнота владельцев (owners.md §8)
-  npm run story:coverage -- --unowned                  строки без владельца — назначить в «опоре» owners.md
+  npm run story:coverage -- --unowned                  строки без владельца и с двумя владельцами — поправить «опору» owners.md
   npm run story:coverage -- --build-clusters [--check] пересобрать clusters.json (--check — только сверить)
 
 Флаги:
@@ -294,10 +295,35 @@ function clusterLevels(rows) {
   return m;
 }
 
+/**
+ * Строки с двумя владельцами: в явной «опоре» TH-NN разных скиллов или в manual.th против «опоры». Правило
+ * «держит меньший TH» (owners.md §5) снимает ничью молча, а сборщик читает «опору» обоих — и пересказывает дважды.
+ */
+export function ownerDups(kb) {
+  const rows = new Set(kb.rows.map((r) => r.id));
+  const by = new Map();
+  const add = (id, th) => {
+    if (!rows.has(id)) return;
+    if (!by.has(id)) by.set(id, []);
+    by.get(id).push({ th, owner: kb.units.get(th)?.owner ?? null });
+  };
+  for (const u of kb.units.values()) {
+    if (!u.id.startsWith('TH-') || !u.opora) continue;
+    for (const { id, weak } of parseOpora(u.opora, kb.resolveAlias, kb.aliases)) if (!weak && !/^[RCF]-/.test(id)) add(id, u.id);
+  }
+  for (const [id, th] of Object.entries(kb.clustersFile.manual?.th ?? {})) if (!id.startsWith('K-')) add(id, th);
+  return [...by]
+    .filter(([, l]) => new Set(l.map((x) => x.owner)).size > 1)
+    .map(([id, l]) => ({ id, owners: l.map((x) => `${x.th} ${x.owner ?? '—'}`) }));
+}
+
+/** Без владельца — только знание в работе: отменённое, влитое и отклонённое владельца не требует. */
+const unownedRows = (matrix) => matrix.filter((x) => !x.owner_skill && counted(x));
+
 export function summary(res) {
   const { matrix, kb, scan, problems, th } = res;
   const used = matrix.filter(counted);
-  const unowned = matrix.filter((x) => !x.owner_skill);
+  const unowned = unownedRows(matrix);
   const allClusters = new Set(matrix.filter((x) => BASE_KINDS.includes(x.kind) || x.kind === 'R').map((x) => x.cluster));
   const check = runOwnersCheck(res.paths);
   return {
@@ -312,6 +338,7 @@ export function summary(res) {
     skills: skillTable(matrix, kb.skills, scan, th),
     skills_present: [...scan.skills.values()].filter((s) => s.exists).length,
     owners_check: check,
+    owner_dups: ownerDups(kb),
     problems,
   };
 }
@@ -322,7 +349,7 @@ function printSummary(s) {
   lines.push(`  виды: ${KINDS.filter((k) => s.kinds[k]).map((k) => `${k} ${s.kinds[k]}`).join(' · ')}`);
   lines.push(`  уровни (used): ${LEVELS.map((l) => `${l} ${s.levels[l]}`).join(' · ')}   — L1 покрытием не считается`);
   lines.push(`  статусы: ${fmtCounts(new Map(Object.entries(s.statuses)))}${s.partial ? ` · частично отменено (берётся часть «в силе») ${s.partial}` : ''}`);
-  lines.push(`  владелец: ${fmtCounts(new Map(Object.entries(s.owner_via)))} · без владельца ${s.unowned.total} (${fmtCounts(new Map(Object.entries(s.unowned.kinds)))}) — --unowned`);
+  lines.push(`  владелец: ${fmtCounts(new Map(Object.entries(s.owner_via)))} · без владельца ${s.unowned.total}${s.unowned.total ? ` (${fmtCounts(new Map(Object.entries(s.unowned.kinds)))}) — --unowned` : ''}`);
   lines.push(`  скиллов с файлами: ${s.skills_present} из ${s.skills.length - 1}${s.skills_present ? '' : ' — скиллов ещё нет, всё в L0: это нормально'}`);
   lines.push('');
   lines.push('| скилл | файлы | строк | кластеров | L0 | L1 | L2 | L3 | верность |');
@@ -334,6 +361,7 @@ function printSummary(s) {
   const c = s.owners_check;
   lines.push('');
   lines.push(`owners.md §8: ${c.ok ? '✓' : '✗'} единиц ${c.units} · TH ${c.th} · дубли: ${c.dups.join(', ') || 'нет'} · нет владельца: ${c.miss.join(', ') || 'нет'} · чужой владелец: ${c.bad.join(', ') || 'нет'}`);
+  lines.push(`владельцы строк: ${s.unowned.total || s.owner_dups.length ? '✗' : '✓'} без владельца ${s.unowned.total} · два владельца ${s.owner_dups.length}${s.owner_dups.length ? `: ${s.owner_dups.map((d) => `${d.id} (${d.owners.join(', ')})`).join('; ')}` : ''}`);
   for (const p of s.problems) lines.push(`✗ ${p}`);
   return lines.join('\n');
 }
@@ -618,13 +646,23 @@ export function main(argv, paths = PATHS) {
     return 0;
   }
   if (a['--unowned']) {
-    const xs = res.matrix.filter((x) => !x.owner_skill);
-    say(xs.map((x) => ({ id: x.id, kind: x.kind, title: x.title, source: x.source, cluster: x.cluster })), [`Без владельца: ${xs.length}. Назначить — дописать ID в «опору» нужного TH-NN в owners.md §5 (или manual.th в clusters.json).`, ...xs.map((x) => `  ${x.id} — ${(x.title ?? '').slice(0, 80)} (${x.source})`)].join('\n'));
+    const xs = unownedRows(res.matrix);
+    const dups = ownerDups(kb);
+    say(
+      { unowned: xs.map((x) => ({ id: x.id, kind: x.kind, title: x.title, source: x.source, cluster: x.cluster })), dups },
+      [
+        `Без владельца: ${xs.length}. Назначить — дописать ID в «опору» нужного TH-NN в owners.md §5 (или manual.th в clusters.json), либо статус в coverage.json.`,
+        ...xs.map((x) => `  ${x.id} — ${(x.title ?? '').slice(0, 80)} (${x.source})`),
+        `Два владельца: ${dups.length}. Оставить ID в «опоре» одного TH-NN, второй — в «ссылаются».`,
+        ...dups.map((d) => `  ${d.id} — ${d.owners.join(', ')}`),
+      ].join('\n'),
+    );
     return 0;
   }
   const s = summary(res);
   say(s, printSummary(s));
-  return s.problems.some((p) => p.startsWith('coverage.json')) || !s.owners_check.ok ? 1 : 0;
+  // Строка без владельца или с двумя — потеря знания: приёмка W0 и F-final должны падать, а не предупреждать.
+  return s.problems.some((p) => p.startsWith('coverage.json')) || !s.owners_check.ok || s.unowned.total || s.owner_dups.length ? 1 : 0;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
