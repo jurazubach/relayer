@@ -1,0 +1,14 @@
+{
+  "_about": {
+    "what": "Ручной слой матрицы покрытия (npm run story:coverage). Строки, кластеры, владельцы и уровни считает команда; здесь — только то, что решает человек или ревьюер.",
+    "fields": {
+      "status": "used | merged-into:<ID> | rejected:<not-our-format | duplicate:<кластер> | contradicts:D-NN | obsolete:E-NN | needs-engine> | superseded:<A-NN | D-NN> | deferred:<E-NN>; без поля — used, отменённое из superseded.md — само",
+      "basis": "checked | secondary | model | our_estimate — если reference не пишет basis в блоке",
+      "verified_by": "ID мутанта, фраза из docs/lab/triggers.json, проверка C-NN — в дополнение к найденному командой",
+      "fidelity": "{ ok, date, by, note } — выборочная проверка верности ревьюером (--fidelity-sample, --record)",
+      "note": "пояснение к статусу"
+    },
+    "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
+  },
+  "rows": {}
+}
