@@ -21,6 +21,8 @@
     "test:lib": "node scripts/lib/selftest.mjs",
     "lab:triggers": "node scripts/lab/triggers.mjs",
     "test:lab:triggers": "node --test scripts/lab/triggers.test.mjs",
+    "skills:test": "node scripts/lab/skills-test.mjs",
+    "test:lab:mutants": "node --test scripts/lab/mutants.test.mjs",
     "story:trace": "node scripts/story/trace.mjs",
     "story:vars": "node scripts/story/vars.mjs",
     "story:sessions": "node scripts/story/sessions.mjs",

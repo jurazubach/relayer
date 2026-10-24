@@ -722,6 +722,42 @@
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "на фразе «ничего» или чужой фразе допускается не больше такой доли вызовов скилла" }]
   },
+  "lab.mutants.count": {
+    "value": { "min": 20, "max": 25 }, "unit": "мутантов", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-13: 20–25 дефектов в чистой копии истории"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: skills:test проверяет размер набора мутантов" }]
+  },
+  "lab.mutants.lint_min_recall": {
+    "value": 1, "unit": "доля мутантов", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §10 T-13", "build-plan.md §13 Э2: полнота по мутантам"],
+    "calibrated_on": "2026-10-25: 24 мутанта основы docs/lab/mutants/_base",
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: мутант, чья проверка уже есть в story:lint, обязан ловиться всегда — линт детерминирован (seed)" }]
+  },
+  "lab.mutants.skill_min_recall": {
+    "value": 0.8, "unit": "доля прогонов по мутантам зоны", "op": "<", "level": "error", "basis": "our_estimate",
+    "sources": ["build-plan.md §13 Э2: полнота по мутантам", "lab.triggers.min_share — та же доля для недетерминированной модели"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: skills:test --skill <имя> --min — скилл находит дефекты своей зоны в такой доле прогонов" }]
+  },
+  "lab.mutants.skill_runs": {
+    "value": 2, "unit": "прогонов на мутанта", "level": null, "basis": "our_estimate",
+    "sources": ["build-plan.md §13 Э2: устойчивость двух прогонов"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: два прогона дают и полноту, и устойчивость" }]
+  },
+  "lab.mutants.skill_timeout_s": {
+    "value": 900, "unit": "с", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/lab/skills-test.mjs: ревью скиллом с линтом и ботом на маленькой истории"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: предел одного прогона claude -p на мутанте" }]
+  },
+  "lab.mutants.skill_max_turns": {
+    "value": 60, "unit": "ходов", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/lab/skills-test.mjs"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-13", "change": "заведён: обрыв зациклившегося прогона" }]
+  },
   "lab.fidelity.sample": {
     "value": 20, "unit": "строк", "level": null, "basis": "our_estimate",
     "sources": ["build-plan.md §10 T-16"],
