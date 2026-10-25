@@ -1,0 +1,24 @@
+Фраз: 49 × 3 прогонов = 147 запусков claude, по 2 одновременно…
+⚠ git status изменился за время прогона: проверь, не писал ли что-то прогон
+
+скилл          попадания    ложные     обход  отказы  вместо него
+─────────────  ───────────  ─────────  ─────  ──────  ───────────
+*              —            0% (0/11)  1
+story-choices  87% (33/38)  0% (0/5)   1      1       none×5
+story-desk     40% (2/5)    0% (0/38)         2       none×3
+
+Мимо:
+  ждали story-choices · вышло story-choices, story-choices, none · «Я ставлю trust в первой главе, а вспоминаю о нём только в финале. Игрок вообще поймёт, что это из-за него?»
+  ждали story-choices · вышло отказ, none, story-choices · «Сколько кнопок ставить в развилке и какой длины их писать?»
+  ждали story-choices · вышло none, none, none · «Как сделать, чтобы история помнила, что игрок соврал в самом начале?»
+  ждали story-desk · вышло отказ, отказ, none · «Что сейчас с историей про маяк, на каком мы шаге?»
+  ждали story-desk · вышло story-desk, none, none · «Я неделю не открывал проект, напомни, где мы остановились»
+
+⚠ прогонов с ошибкой: 101 (в доли не входят)
+
+Отказов в правах: 3 (Bash ×3 (cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pauses; npm run -s story:rule -- R-46 C-12 C-13 2>&1 | head -80; node -e 'const t=require("./docs/playbook/thresholds.json");for(const k of Object.keys(t))if(/^C-1[23]\./.test(k)||k.startsWith("R-46"))console.log(k,JSON.stringify(t[k].value??t[k]).slice(0,120))'; git grep -il -e "маяк" -e "lighthouse" $(git for-each-ref --format='%(refname:short)' refs/heads) -- . 2>/dev/null | head; grep -ril -e "маяк" -e "lighthouse" docs examples 2>/dev/null | head; grep -n -i "lighthouse\|mayak" docs/playbook/_build/reports/T-04b/*.md | head; git log --all --oneline -i --grep="маяк" | head)); недействительных прогонов: 3 — в доли не входят; на Bash/Skill: Bash ×3 (cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pauses; npm run -s story:rule -- R-46 C-12 C-13 2>&1 | head -80; node -e 'const t=require("./docs/playbook/thresholds.json");for(const k of Object.keys(t))if(/^C-1[23]\./.test(k)||k.startsWith("R-46"))console.log(k,JSON.stringify(t[k].value??t[k]).slice(0,120))'; git grep -il -e "маяк" -e "lighthouse" $(git for-each-ref --format='%(refname:short)' refs/heads) -- . 2>/dev/null | head; grep -ril -e "маяк" -e "lighthouse" docs examples 2>/dev/null | head; grep -n -i "lighthouse\|mayak" docs/playbook/_build/reports/T-04b/*.md | head; git log --all --oneline -i --grep="маяк" | head)
+
+Всего: 81% проверок прошло (35/43), 193 с, от $1.72 (оборванные прогоны цену не сообщают)
+✓ пороги пройдены (--min —, ложных ≤ 20%)
+Записано: docs/lab/runs/S-pauses/triggers-1.json
+exit 0
