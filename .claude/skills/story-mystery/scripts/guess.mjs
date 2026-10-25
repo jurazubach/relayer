@@ -40,7 +40,12 @@ let story;
 try { story = loadStory(ref); } catch (e) { console.error(`нет данных: ${e.message}`); process.exit(2); }
 const tree = parseStory(story);
 const nodes = opt('--until') ? [opt('--until')] : tree.knots.filter((k) => k.marks.some((m) => m.kind === 'reveal')).map((k) => k.id);
-if (!nodes.length) { console.error('нет узлов «// reveal:» — укажи узел разгадки: --until <узел>'); process.exit(2); }
+if (!nodes.length) {
+  const msg = 'нет узлов «// reveal:» — укажи узел разгадки: --until <узел>';
+  if (args.includes('--json')) console.log(JSON.stringify({ story: story.id, nodes: [], error: msg }));
+  else console.error(msg);
+  process.exit(2);
+}
 const personas = (opt('--personas') ?? 'random,curious,distracted').split(',').map((s) => s.trim()).filter(Boolean);
 const seed = opt('--seed') ?? '1';
 const ask = args.includes('--ask');

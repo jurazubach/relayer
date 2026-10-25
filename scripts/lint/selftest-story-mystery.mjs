@@ -33,6 +33,7 @@ export function register(test, { has, hasNot, keys }) {
     const trunk = `${head}-> a\n=== a ===\nв столе записка #from:ann\n~ clue_a = true\nа в шкафу ключ #from:bob\n~ clue_b = true\n* [Ясно]\n* [И что?]\n${gate()}\n${reveal}`;
     await hasNot(trunk, 'C-54.sure_clue', only);
     await hasNot(trunk, 'C-54.min_clues', only);
+    await hasNot(trunk, 'C-54.gap_choice', only);
   });
 
   test('C-54.gap_choice: последняя улика в кнопке, которая сразу ведёт в раскрытие', async () => {

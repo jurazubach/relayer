@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "dille-ultimate-guide:GREEN-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "расширено на clue_* и пересылку; смысл тот же"
+      }
+    },
+    "dille-ultimate-guide:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "8–10 сообщений заменено C-35.series_target"
+      }
+    },
+    "dille-ultimate-guide:PAT-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено"
+      }
+    },
+    "dille-ultimate-guide:RED-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "порог 12 заменён C-35 у story-pace"
+      }
+    },
+    "mystery-fair-play:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, без цифр, как в источнике; «1–2 / 3–6» — в attn.mystery.suspects"
+      }
+    },
+    "mystery-fair-play:LESSON-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, цифры продаж справедливо опущены"
+      }
+    },
+    "mystery-fair-play:P-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; проверка — C-54.gap_choice и long_answer"
+      }
+    },
+    "mystery-fair-play:P-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "≤10 строк заменено ключами C-42.msgs_short / C-42.msgs"
+      }
+    },
+    "mystery-fair-play:P-16#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "масштаб 5/50 сохранён"
+      }
+    },
+    "mystery-fair-play:PAT-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«25 минут» без ключа — ревьюер заменил на attn.mystery.suspects short_min"
+      }
+    },
+    "mystery-fair-play:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условие, исключение и ловушка сохранены"
+      }
+    },
+    "mystery-fair-play:PAT-05#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; ссылка на story-pauses"
+      }
+    },
+    "mystery-fair-play:PAT-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено"
+      }
+    },
+    "mystery-fair-play:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условие и ловушка сохранены; // warn: заменён facts.md по A-06"
+      }
+    },
+    "mystery-fair-play:PAT-09#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; добавлено «один как на главу»"
+      }
+    },
+    "mystery-fair-play:RED-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; оговорка про #silent и уточняющие — модель"
+      }
+    },
+    "R-95": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«15 сообщений» и «10 сообщений» опущены (ключа нет), «пяти глав» → «длинной»; правило подтягивается по ID"
+      }
+    },
+    "truby-anatomy-of-story:P-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "уверенность «средняя» про середину была потеряна — дописал ревьюер"
+      }
+    },
+    "truby-anatomy-of-story:RED-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "30% пути заменено «не раньше главы 2» по R-97; без ключа, судит модель"
+      }
+    },
+    "video-three-things:PAT-04#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено"
+      }
+    }
+  }
+}
