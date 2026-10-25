@@ -24,7 +24,7 @@
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "пункты и ключи сохранены"
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "#attn-return-silence": {
@@ -69,6 +69,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "схема и ловушка сохранены, отменённый довод помечен A-03"
+      }
+    },
+    "attention-today:PAT-05#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "attention-today:RED-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "bateman-game-writing:contra-5": {
@@ -125,6 +141,14 @@
         "date": "2026-10-25",
         "by": "W1",
         "note": "условие и правка сохранены"
+      }
+    },
+    "C-31": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "choiceofgames-design:GREEN-10": {
@@ -355,6 +379,22 @@
         "note": "класс A, вывод сохранён"
       }
     },
+    "maass-fire-in-fiction:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "maass-fire-in-fiction:LESSON-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
     "maass-fire-in-fiction:LESSON-06": {
       "fidelity": {
         "ok": true,
@@ -369,6 +409,14 @@
         "date": "2026-10-25",
         "by": "W1",
         "note": "«ответ ≤ 2 слова» стал «короткий общий ответ» — признак группы без тел сохранён (C-10.group_bodyless)"
+      }
+    },
+    "maass-fire-in-fiction:RED-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "mckee-story:contra-1": {
@@ -404,7 +452,7 @@
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "сохранено; пометка «наша оценка» опущена"
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "meaningful-choice:contra-1": {
@@ -515,12 +563,36 @@
         "note": "отменён A-02, условная пауза по делу оставлена"
       }
     },
+    "messenger-genre:LESSON-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
     "messenger-genre:LESSON-06": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "потеряна проверка ботом «первые реплики ответов не совпадают» — она есть в C-10; класс C верен"
+      }
+    },
+    "messenger-genre:LESSON-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:P-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "messenger-genre:P-13#нюанс": {
@@ -544,7 +616,7 @@
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "сохранено, проверка отдана владельцу"
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "messenger-genre:RED-11": {
@@ -555,9 +627,25 @@
         "note": "флаг сохранён, владелец эха назван"
       }
     },
+    "messenger-genre:RED-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "narrative-postmortems:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
     },
     "narrative-postmortems:contra-2": {
       "status": "merged-into:bateman-game-writing:contra-5",
@@ -571,12 +659,28 @@
         "note": "спор и решение сохранены"
       }
     },
+    "narrative-postmortems:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
     "narrative-postmortems:LESSON-14": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
         "note": "перепись целиком vs правка, масштаб 5-10 реплик сохранён"
+      }
+    },
+    "narrative-postmortems:LESSON-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "narrative-postmortems:P-07": {
@@ -688,7 +792,7 @@
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "отменённая половина помечена A-02, нагрузка по суткам от старта сохранена"
+        "note": "ревью попытки 3, seed 7"
       }
     },
     "nicklin-writing-for-games:contra-1": {
@@ -807,6 +911,22 @@
         "note": "корреляционность и класс сохранены; «назначенная встреча» снята по A-01"
       }
     },
+    "serial-hooks:RED-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "serial-hooks:SYS-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -893,6 +1013,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
+      }
+    },
+    "yorke-into-the-woods:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
       }
     }
   }
