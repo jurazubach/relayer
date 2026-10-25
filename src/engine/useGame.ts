@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Engine, compileInk, type Msg, type View } from './engine';
+import { DEFAULT_MODE, Engine, compileInk, type Mode, type Msg, type View } from './engine';
 import { FLAGS } from './flags';
 import type { Story } from './story';
 
@@ -21,12 +21,19 @@ export interface Game {
  * Одна игровая сессия: компиляция сценария, восстановление прогресса,
  * тиканье времени и уведомления о сообщениях в других чатах.
  */
-export function useGame(story: Story, restoreThread?: string | null, onThreadChange?: (t: string | null) => void): Game {
+export function useGame(
+  story: Story,
+  restoreThread?: string | null,
+  onThreadChange?: (t: string | null) => void,
+  /** Режим новой игры; сохранённая продолжается в своём. */
+  mode?: Mode,
+): Game {
   const loaded = useMemo(() => {
     const result = compileInk(story.ink, story.includes);
     if ('errors' in result) return { engine: null as Engine | null, errors: result.errors };
     const engine = new Engine(story.id, result.json);
-    engine.restore();
+    // режим пишем в сохранение сразу: перезагрузка до первого сообщения не должна его потерять
+    if (!engine.restore()) engine.restart(mode ?? FLAGS.mode ?? DEFAULT_MODE);
     if (FLAGS.fast) {
       engine.speed = Infinity;
       engine.fastTyping = true;

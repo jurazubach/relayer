@@ -4,6 +4,7 @@
  *   ?screen=home|story|game   какой экран показать
  *   ?fresh=1              стереть прогресс перед запуском
  *   ?fast=1               без пауз сюжета и набор текста ×4
+ *   ?mode=click|realtime  режим новой игры, если она начинается не с экрана истории
  */
 const params = new URLSearchParams(typeof location === 'undefined' ? '' : location.search);
 
@@ -12,7 +13,8 @@ export const FLAGS = {
   screen: params.get('screen'),
   fresh: params.has('fresh'),
   fast: params.has('fast'),
-};
+  mode: params.get('mode') === 'click' ? 'click' : params.get('mode') === 'realtime' ? 'realtime' : null,
+} as const;
 
 export function readLocal(key: string): string | null {
   try {

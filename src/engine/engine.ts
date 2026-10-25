@@ -10,6 +10,23 @@ export interface Msg {
   at: number;
 }
 
+/**
+ * Режим игры выбирается в начале истории, сменить его можно только перезапуском (INTENT.md, A-04).
+ * realtime — паузы сюжета настоящие; click — пауз нет, скачок времени мира закрывает метка «спустя N».
+ */
+export type Mode = 'realtime' | 'click';
+
+export const MODES: readonly Mode[] = ['realtime', 'click'];
+
+export const DEFAULT_MODE: Mode = 'realtime';
+
+/**
+ * Порог метки «спустя N» в режиме «по клику», часы. Копия ключа engine.click.time_jump_label
+ * из docs/playbook/thresholds.json: файл весит сотни килобайт и в сборку не грузится,
+ * поэтому число здесь, а e2e (e2e/modes.ts) сверяет его с ключом.
+ */
+export const TIME_JUMP_LABEL_H = 1;
+
 export interface Contact {
   id: string;
   name: string;
@@ -36,6 +53,8 @@ interface Pending {
   unlock: string[];
   /** Тег #chapter: с этой строки начинается новая глава. */
   chapter?: string;
+  /** Метка «спустя N» перед этим сообщением уже показана (режим «по клику»). */
+  jumpShown?: boolean;
 }
 
 export type Phase = 'pause' | 'gap' | 'typing';
@@ -69,6 +88,8 @@ interface SaveData {
   savedAt: number;
   chapter?: string;
   renamed?: Record<string, string>;
+  /** Сохранения до режимов его не знают: они шли в реальном времени. */
+  mode?: Mode;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -150,11 +171,13 @@ export class Engine {
   private afterPlayer = false;
   private chapter = '';
   private renamed: Record<string, string> = {};
+  mode: Mode = DEFAULT_MODE;
   /** Отладка: набор текста в 4 раза быстрее. */
   fastTyping = false;
   private listeners = new Set<() => void>();
   private lastTick = Date.now();
-  speed: number = 60;
+  /** Отладка: ускорение пауз сюжета. Не сохраняется: реальное время — это ×1. */
+  speed: number = 1;
   /** Растёт при каждом изменении: удобно для React useSyncExternalStore. */
   version = 0;
 
@@ -208,6 +231,12 @@ export class Engine {
   reset() {
     this.init();
     this.emit();
+  }
+
+  /** Новая игра в выбранном режиме: режим меняется только так. */
+  restart(mode: Mode) {
+    this.mode = mode;
+    this.reset();
   }
 
   private init() {
@@ -339,10 +368,17 @@ export class Engine {
     let guard = 0;
     while (this.pending && guard++ < 1000) {
       const p = this.pending;
+      // по клику пауз нет, но скачок времени мира игрок должен увидеть
+      if (this.mode === 'click' && !p.jumpShown && p.delayMs >= TIME_JUMP_LABEL_H * 3_600_000) {
+        p.jumpShown = true;
+        const label: Pending = { ...p, kind: 'sys', text: jumpLabel(p.delayMs), unlock: [], chapter: undefined };
+        this.commit(label, Math.round(start + (dt - real / (this.fastTyping ? 4 : 1))));
+        fresh.push(this.messages[this.messages.length - 1]);
+      }
       // 1. пауза сюжета: ускоряется
       const delayLeft = p.delayMs - p.delayDone;
       if (delayLeft > 0) {
-        if (this.speed === Infinity) p.delayDone = p.delayMs;
+        if (this.speed === Infinity || this.mode === 'click') p.delayDone = p.delayMs;
         else {
           const k = this.speed / (this.fastTyping ? 4 : 1);
           const can = real * k;
@@ -402,9 +438,13 @@ export class Engine {
     this.emit();
   }
 
-  /** Пропускает паузу сюжета. Набор текста остаётся живым. */
-  skipWait() {
-    if (this.pending) this.pending.delayDone = this.pending.delayMs;
+  /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора. */
+  skipNext() {
+    const p = this.pending;
+    if (!p) return;
+    p.delayDone = p.delayMs;
+    p.gapDone = p.gapMs;
+    p.typingDone = p.typingMs;
     this.tick();
   }
 
@@ -461,7 +501,7 @@ export class Engine {
         phase,
         typing: phase === 'typing' && p.typingMs > 0,
         pauseMs,
-        realMs: (this.speed === Infinity ? 0 : pauseMs / this.speed) + liveMs,
+        realMs: (this.speed === Infinity || this.mode === 'click' ? 0 : pauseMs / this.speed) + liveMs,
       };
     }
     return {
@@ -475,6 +515,7 @@ export class Engine {
       read: this.read,
       speed: this.speed,
       fastTyping: this.fastTyping,
+      mode: this.mode,
     };
   }
 
@@ -501,10 +542,10 @@ export class Engine {
       savedAt: this.lastTick,
       chapter: this.chapter,
       renamed: this.renamed,
+      mode: this.mode,
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
-      localStorage.setItem('relay:speed', String(this.speed));
       localStorage.setItem('relay:fast', this.fastTyping ? '1' : '0');
     } catch {
       /* хранилище недоступно: играем без сохранения */
@@ -514,8 +555,6 @@ export class Engine {
   /** Восстанавливает прогресс. Время, прошедшее офлайн, догоняется в tick(). */
   restore(): boolean {
     try {
-      const s = localStorage.getItem('relay:speed');
-      if (s) this.speed = s === 'Infinity' ? Infinity : Number(s) || 60;
       this.fastTyping = localStorage.getItem('relay:fast') === '1';
       const raw = localStorage.getItem(this.storageKey());
       if (!raw) return false;
@@ -535,6 +574,7 @@ export class Engine {
       this.carryDelay = d.carryDelay;
       this.chapter = d.chapter ?? '';
       this.renamed = d.renamed ?? {};
+      this.mode = d.mode ?? DEFAULT_MODE;
       for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();
       return true;
@@ -557,6 +597,23 @@ export function formatDuration(ms: number): string {
   const m = Math.floor(s / 60);
   if (m < 60) return `${m} мин ${s % 60} с`;
   return `${Math.floor(m / 60)} ч ${m % 60} мин`;
+}
+
+/** «спустя 3 часа», «спустя 2 дня» — без минут: метка про скачок мира, а не про точное время. */
+export function jumpLabel(ms: number): string {
+  const h = Math.max(1, Math.round(ms / 3_600_000));
+  if (h < 24) return `спустя ${h} ${plural(h, 'час', 'часа', 'часов')}`;
+  const d = Math.round(h / 24);
+  return `спустя ${d} ${plural(d, 'день', 'дня', 'дней')}`;
+}
+
+/** «1 глава», «2 главы», «5 глав». */
+export function plural(n: number, one: string, few: string, many: string): string {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
 }
 
 /** Старые сохранения (v1) хранили один общий прогресс. Приводим к фазам. */

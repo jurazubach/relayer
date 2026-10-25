@@ -403,6 +403,11 @@
         "date": "2026-10-25",
         "task": "T-03c",
         "change": "одно имя с click.jump_label команд story:* (было 3600 с в thresholds.default.json): метка «спустя …» по клику в story:trace и story:sessions"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "E-01",
+        "change": "движок ставит метку «спустя N» в режиме «по клику»: копия в src/engine/engine.ts TIME_JUMP_LABEL_H (файл в сборку не грузится), e2e/modes.ts сверяет её с этим ключом"
       }
     ]
   },

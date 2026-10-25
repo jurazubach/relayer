@@ -58,21 +58,27 @@ export function DebugSheet({
           <>
             <div className="sheet__group">
               <h3 className="sheet__label">Время</h3>
-              <div className="segmented" role="group" aria-label="Скорость времени">
-                {SPEEDS.map((s) => (
-                  <button
-                    key={String(s)}
-                    className="segmented__btn"
-                    aria-pressed={view.speed === s}
-                    onClick={() => {
-                      engine.setSpeed(s);
-                      refresh();
-                    }}
-                  >
-                    {s === Infinity ? 'без пауз' : `×${s}`}
-                  </button>
-                ))}
-              </div>
+              <p className="sheet__note">
+                Режим: {view.mode === 'click' ? 'по клику — пауз нет' : 'реальное время'}. Сменить — только перезапуском
+                с экрана истории.
+              </p>
+              {view.mode === 'realtime' && (
+                <div className="segmented" role="group" aria-label="Скорость пауз (отладка)">
+                  {SPEEDS.map((s) => (
+                    <button
+                      key={String(s)}
+                      className="segmented__btn"
+                      aria-pressed={view.speed === s}
+                      onClick={() => {
+                        engine.setSpeed(s);
+                        refresh();
+                      }}
+                    >
+                      {s === Infinity ? 'без пауз' : `×${s}`}
+                    </button>
+                  ))}
+                </div>
+              )}
               <button
                 className={view.fastTyping ? 'toggle toggle--on' : 'toggle'}
                 onClick={() => {
@@ -95,11 +101,12 @@ export function DebugSheet({
                 className="btn"
                 disabled={!view.status}
                 onClick={() => {
-                  engine.skipWait();
+                  engine.skipNext();
                   refresh();
                 }}
+                data-testid="skip-next"
               >
-                Пропустить ожидание
+                Пропустить до следующего
               </button>
             </div>
 

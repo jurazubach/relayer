@@ -1,5 +1,5 @@
 import type { Progress, Story } from '../engine';
-import { formatAgo, sizeLabel } from '../engine';
+import { formatAgo, sizeLines } from '../engine';
 
 /** Карточка истории на главном экране. Квадрат с обложкой и состоянием прохождения. */
 export function StoryTile({
@@ -11,8 +11,9 @@ export function StoryTile({
   progress: Progress | null;
   onOpen: () => void;
 }) {
+  // до начала — два числа строками: в одну строку на квадратной карточке второе обрезалось бы
   const state = !progress
-    ? sizeLabel(story.chapters?.length, story.minutes)
+    ? null
     : progress.ended
       ? 'Пройдено'
       : progress.chapter || `${progress.messages} сообщений`;
@@ -34,7 +35,15 @@ export function StoryTile({
         <span className="story-tile__title">{story.title}</span>
         <span className="story-tile__tagline">{story.tagline}</span>
         <span className="story-tile__foot">
-          <span className="story-tile__state">{state}</span>
+          {state === null ? (
+            sizeLines(story).map((line) => (
+              <span className="story-tile__state story-tile__state--size" key={line}>
+                {line}
+              </span>
+            ))
+          ) : (
+            <span className="story-tile__state">{state}</span>
+          )}
           {ago && <span className="story-tile__ago">{ago}</span>}
           <span className="story-tile__cta">{progress && !progress.ended ? 'Продолжить' : 'Открыть'} →</span>
         </span>
