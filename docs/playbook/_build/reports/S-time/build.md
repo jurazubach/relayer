@@ -48,7 +48,12 @@
 - `lab:triggers -- --skill story-time --runs 3 --min build` — ✓: story-time 92% (36/39), ложных 6% (6/96);
   story-choices 91%, story-desk 89%. Мимо: «Как протестировать паузы…» → none.
 - `skills:test -- --skill story-time` — ✓ 5/5 мутантов, 10/10 попаданий, отказов в правах 0.
-- `test:lint` — 91/91. Также зелёные: `skills:test --lint-only` (23/23, основа чистая), `test:story-cmd`,
+- Попытка 2 (после слияния `build/main` с T-18, скилл не менялся): `skill-check` ✓ 0 предупреждений,
+  `story:coverage --min L2` ✓, `--build-clusters` — `clusters.json` без изменений, `test:lint` 96/96,
+  `skills:test` (линт) 23/23, `lab:triggers --min build` повторно (`triggers-2.*`) — ✓ story-time 93% (39/42),
+  ложных 6% (6/98). `skills:test --skill story-time` не повторял: зона и скилл не менялись, `mutants-1.*` в силе.
+  Сбой попытки 1 — не в проверках: зависло фоновое ожидание лога мутантов; в этот раз всё на переднем плане.
+- `test:lint` — 91/91 (попытка 1). Также зелёные: `skills:test --lint-only` (23/23, основа чистая), `test:story-cmd`,
   `test:lib`, `test:coverage`, `test:lab:mutants`, `test:hooks`, `story:pack --check`, `prompt --quiet`, `build`.
   `check:story` и `test:e2e` не гонял целиком повторно: `src/` не менял.
 - Скрипты против команд на трёх историях (`docs/lab/runs/S-time/*.scripts.txt`): C-27 в `promise-scan` = `story:lint`
