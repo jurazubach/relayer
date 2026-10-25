@@ -2758,6 +2758,41 @@
       }
     ]
   },
+  "C-22.rare_chapters": {
+    "value": 2,
+    "unit": "глав",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "checks.md C-22 (редкое слово — кандидат в жаргон)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: редкое слово считается жаргоном, только если звучит хотя бы в двух главах; слова одной сцены и её вариантов («спустилась», «синяк», «запястье») давали ложные «новые термины» в главах 5–10"
+      }
+    ]
+  },
+  "C-22.everyday": {
+    "value": "^(sms|sim|ok|wi-?fi|gps|usb|pin|id|pdf|url|vip|tv|mp3|qr)$",
+    "unit": "regex",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "video-three-things:P-04#нюанс («ваучер», «SIM» — бытовое слово, не термин)"
+    ],
+    "calibrated_on": "the-number, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: бытовая латиница (SIM, SMS, PIN) не новая сущность; «SMS» давал предупреждение «термин хребта без пояснения»"
+      }
+    ]
+  },
   "C-22.root": {
     "value": 5,
     "unit": "букв корня",

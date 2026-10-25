@@ -30,6 +30,8 @@ function corpus(n) {
 const CAP = /(?<![.!?…:]\s)(?<=\s)(\p{Lu}\p{Ll}{2,})/gu;
 const LATIN = /[A-Za-z][A-Za-z0-9-]{2,}/g;
 const NUMBER = /(?<![£$₽\d:])\b\d{2,}\b(?!:\d)/g;
+// телефон «(555) 201-0147» — одно число для памяти игрока, а не три
+const PHONE = /\(?\d{2,}\)?(?:[ -]\d{2,})+/g;
 
 export default {
   id: 'C-22',
@@ -44,22 +46,42 @@ export default {
     for (const name of heroNames(ctx).keys()) known.add(name.slice(0, n));
     for (const k of ['логлайн', 'ставка']) for (const r of roots(tree.head[k] ?? '', n)) known.add(r);
     // редкие слова: ≥ C-22.rare_min раз в истории, но не в synopsis и не в первых входящих — кандидаты в жаргон
+    // жаргон возвращается из главы в главу; слово, которое звучит в одной сцене и её вариантах
+    // («спустилась», «синяк»), — лексика сцены, а не термин (калибровка S-opening на трёх историях)
     const freq = new Map();
-    for (const k of tree.knots) walk(k.items, (it) => { if (it.type === 'msg') for (const r of roots(it.text, n)) freq.set(r, (freq.get(r) ?? 0) + 1); });
+    const spread = new Map();
+    for (const k of tree.knots) {
+      const ch = st.chapterOf(k.id);
+      walk(k.items, (it) => {
+        if (it.type !== 'msg') return;
+        for (const r of roots(it.text, n)) {
+          freq.set(r, (freq.get(r) ?? 0) + 1);
+          if (!spread.has(r)) spread.set(r, new Set());
+          spread.get(r).add(ch);
+        }
+      });
+    }
     const synopsis = roots(`${meta.synopsis ?? ''} ${meta.tagline ?? ''}`, n);
     const first = ctx.runs[0]?.lines.filter(isIncoming).slice(0, T.value('C-22.known_lines')) ?? [];
     for (const l of first) for (const r of roots(l.text, n)) synopsis.add(r);
     const others = [...corpus(n)].filter(([id]) => id !== ctx.story.id).map(([, set]) => set);
     const common = (r) => !others.length || others.some((set) => set.has(r));
-    const rare = new Set([...freq].filter(([r, c]) => c >= T.value('C-22.rare_min') && !synopsis.has(r) && !known.has(r) && !common(r)).map(([r]) => r));
+    const rare = new Set([...freq].filter(([r, c]) => c >= T.value('C-22.rare_min') && spread.get(r).size >= T.value('C-22.rare_chapters') && !synopsis.has(r) && !known.has(r) && !common(r)).map(([r]) => r));
     // латиница и числа без «сумм» и ЧЧ:ММ
     // сущность → вид: name (заглавная, латиница) | number | rare; ключ — по корню, чтобы «Лилиан» и «лилиан» были одним
+    const everyday = T.re('C-22.everyday');
     const entities = (text) => {
       const out = new Map();
       const add = (w, kind) => { const r = w.toLowerCase().slice(0, n); if (!out.has(r)) out.set(r, { w, kind }); };
       for (const m of text.matchAll(CAP)) { if (!known.has(m[1].toLowerCase().slice(0, n))) add(m[1], 'name'); }
-      if (/[а-яё]/i.test(text)) for (const m of text.match(LATIN) ?? []) add(m, 'name');
-      for (const m of text.match(NUMBER) ?? []) add(m, 'number');
+      // «SIM-карта», «ci-бот»: дефис — склейка с русским словом, а не часть термина
+      if (/[а-яё]/i.test(text)) {
+        for (const m of text.match(LATIN) ?? []) {
+          const w = m.replace(/-+$/, '');
+          if (!everyday.test(w.toLowerCase())) add(w, 'name');
+        }
+      }
+      for (const m of text.replace(PHONE, (x) => x.replace(/\D/g, '')).match(NUMBER) ?? []) add(m, 'number');
       for (const w of text.toLowerCase().match(/\p{L}+/gu) ?? []) if (w.length >= n && rare.has(w.slice(0, n))) add(w, 'rare');
       return out;
     };
