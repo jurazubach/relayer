@@ -1,0 +1,3364 @@
+{
+  "_about": {
+    "what": "Кластеры тем матрицы покрытия (flow-review.md §C «Кластеры»). clusters собирает npm run story:coverage -- --build-clusters; руками правится только manual.",
+    "how": "Строка входит в первую группу, которая её назвала: правило rules.md с «Источниками», затем пункт согласий for-relayer.md, затем принцип, на который ссылается флаг, приём или урок. К чужому кластеру пункт пристраивается только своей первой ссылкой. Одиночки в файл не пишутся: такая строка — кластер сама себе.",
+    "manual": "move: { \"строка\": \"K-…\" } — перенести строку в кластер (\"\" — вынуть в одиночку); th: { \"строка или K-…\": \"TH-NN\" } — тема, если «опора» owners.md её не даёт; title: { \"K-…\": \"название\" }. Тему лучше дописать в «опору» owners.md, manual — когда нельзя.",
+    "owner": "Владелец кластера — owners.md: TH-NN большинства «опоры» среди строк кластера; R/C/F и якоря — по своему ID."
+  },
+  "manual": {},
+  "clusters": [
+    {
+      "id": "K-R-01",
+      "title": "Перед первой строкой ink запиши шапку из четырёх строк: // логлайн: (R-02), // вопрос: (R-03), // ставка: (что потеряет и к какому сроку, R-17), // оси: (2–3…",
+      "th": "TH-02",
+      "from": [
+        "rules.md R-01",
+        "ashwell-standard-patterns/for-relayer.md:74",
+        "cron-wired-for-story/for-relayer.md:100",
+        "cron-wired-for-story/for-relayer.md:106",
+        "dille-ultimate-guide/for-relayer.md:111",
+        "video-three-things/for-relayer.md:92",
+        "vogler-writers-journey/for-relayer.md:128",
+        "yorke-into-the-woods/for-relayer.md:137",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:P-01",
+        "choiceofgames-design:P-20",
+        "cron-wired-for-story:GREEN-05",
+        "cron-wired-for-story:LESSON-03",
+        "cron-wired-for-story:P-06",
+        "cron-wired-for-story:P-17",
+        "cron-wired-for-story:RED-08",
+        "cron-wired-for-story:RED-16",
+        "dille-ultimate-guide:GREEN-01",
+        "dille-ultimate-guide:LESSON-06",
+        "dille-ultimate-guide:LESSON-08",
+        "dille-ultimate-guide:P-01",
+        "dille-ultimate-guide:P-08",
+        "dille-ultimate-guide:PAT-07",
+        "dille-ultimate-guide:RED-01",
+        "R-01",
+        "schell-art-of-game-design:P-16",
+        "schell-art-of-game-design:RED-14",
+        "skolnick-video-game-storytelling:P-05",
+        "skolnick-video-game-storytelling:RED-03",
+        "snyder-save-the-cat:GREEN-01",
+        "snyder-save-the-cat:LESSON-03",
+        "snyder-save-the-cat:P-01",
+        "snyder-save-the-cat:P-09",
+        "snyder-save-the-cat:PAT-01",
+        "truby-anatomy-of-story:GREEN-01",
+        "truby-anatomy-of-story:P-01",
+        "truby-anatomy-of-story:P-04",
+        "truby-anatomy-of-story:PAT-09",
+        "truby-anatomy-of-story:RED-01",
+        "vogler-writers-journey:GREEN-01",
+        "vogler-writers-journey:LESSON-05",
+        "vogler-writers-journey:LESSON-08",
+        "vogler-writers-journey:P-03",
+        "vogler-writers-journey:PAT-07",
+        "vogler-writers-journey:RED-02",
+        "vogler-writers-journey:RED-13",
+        "yorke-into-the-woods:P-01",
+        "yorke-into-the-woods:P-10",
+        "yorke-into-the-woods:PAT-06",
+        "yorke-into-the-woods:RED-12"
+      ]
+    },
+    {
+      "id": "K-R-02",
+      "title": "Напиши логлайн одной фразой до 35 слов в форме «ты — X, тебе пишет Y, но Z». Z — ирония или вред кому-то третьему. Если в фразе нет «но», истории нет.",
+      "th": "TH-14",
+      "from": [
+        "rules.md R-02",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-02",
+        "skolnick-video-game-storytelling:LESSON-01",
+        "skolnick-video-game-storytelling:P-01"
+      ]
+    },
+    {
+      "id": "K-R-03",
+      "title": "Задай в главе 1 один главный вопрос, который игрок задаёт себе сам. Каждая глава добавляет к ответу факт или версию, каждый финал на него отвечает.",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-03",
+        "maass-fire-in-fiction/for-relayer.md:103",
+        "schell-art-of-game-design/for-relayer.md:96",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:LESSON-07",
+        "maass-fire-in-fiction:GREEN-04",
+        "maass-fire-in-fiction:LESSON-10",
+        "maass-fire-in-fiction:P-04",
+        "maass-fire-in-fiction:RED-02",
+        "maass-fire-in-fiction:RED-03",
+        "mobile-interactive-stories:P-03",
+        "R-03",
+        "schell-art-of-game-design:P-13",
+        "schell-art-of-game-design:RED-06",
+        "serial-hooks:P-11"
+      ]
+    },
+    {
+      "id": "K-R-04",
+      "title": "Сформулируй ядро: 1–3 простых правила мира, каждое не длиннее шести слов, и запиши их в ядро истории ( story-core ), а не в ink. Ядро — это правило («номер…",
+      "th": "TH-02",
+      "from": [
+        "rules.md R-04",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-04",
+        "video-three-things:LESSON-01",
+        "video-three-things:P-01",
+        "video-three-things:P-02",
+        "video-three-things:P-03",
+        "video-three-things:P-12"
+      ]
+    },
+    {
+      "id": "K-R-05",
+      "title": "Держи одно допущение на историю. Во второй половине не вводи новых правил мира, сил и жанров. Ставки поднимай внутри ядра: тот же номер затрагивает больше…",
+      "th": "TH-03",
+      "from": [
+        "rules.md R-05",
+        "video-three-things/for-relayer.md:93",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-18",
+        "mystery-fair-play:GREEN-07",
+        "mystery-fair-play:P-11",
+        "mystery-fair-play:RED-12",
+        "R-05",
+        "snyder-save-the-cat:P-18",
+        "snyder-save-the-cat:RED-12",
+        "video-three-things:P-07"
+      ]
+    },
+    {
+      "id": "K-R-06",
+      "title": "Сделай героем истории одного из собеседников, а не игрока. Игрок помогает: советует, связывает людей, хранит улики. У роли игрока одно маленькое своё желание…",
+      "th": "TH-09",
+      "from": [
+        "rules.md R-06",
+        "sheldon-character-storytelling/for-relayer.md:74",
+        "skolnick-video-game-storytelling/for-relayer.md:87",
+        "truby-anatomy-of-story/for-relayer.md:108",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:P-07",
+        "cron-wired-for-story:RED-09",
+        "R-06",
+        "sheldon-character-storytelling:GREEN-06",
+        "sheldon-character-storytelling:P-10",
+        "sheldon-character-storytelling:RED-08",
+        "skolnick-video-game-storytelling:P-15",
+        "truby-anatomy-of-story:LESSON-07",
+        "truby-anatomy-of-story:P-03",
+        "truby-anatomy-of-story:RED-02"
+      ]
+    },
+    {
+      "id": "K-R-07",
+      "title": "Дай герою одну веру, которая ему мешает, и запиши её в ядре истории рядом с именем героя. В каждой главе поставь одну кнопку, которая на эту веру давит.",
+      "th": "TH-66",
+      "from": [
+        "rules.md R-07",
+        "vogler-writers-journey/for-relayer.md:133",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "edgerton-hooked:GREEN-04",
+        "edgerton-hooked:P-03",
+        "edgerton-hooked:RED-07",
+        "R-07",
+        "truby-anatomy-of-story:P-06",
+        "vogler-writers-journey:LESSON-09",
+        "vogler-writers-journey:P-15"
+      ]
+    },
+    {
+      "id": "K-R-08",
+      "title": "Привяжи каждую большую ставку к лицу: к контакту в списке чатов, который скажет, что именно он потеряет. В истории до 25 минут достаточно одной личной ставки…",
+      "th": "TH-08",
+      "from": [
+        "rules.md R-08",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "maass-fire-in-fiction:P-10",
+        "maass-fire-in-fiction:RED-12",
+        "R-08",
+        "truby-anatomy-of-story:GREEN-02",
+        "truby-anatomy-of-story:LESSON-11",
+        "truby-anatomy-of-story:P-05",
+        "truby-anatomy-of-story:RED-03"
+      ]
+    },
+    {
+      "id": "K-R-09",
+      "title": "Работай в таком порядке: шапка → план одной строкой на главу (структура, какие переменные глава пишет и читает, три свойства и один запрет) → последние…",
+      "th": "TH-21",
+      "from": [
+        "rules.md R-09",
+        "choiceofgames-design/for-relayer.md:163",
+        "dille-ultimate-guide/for-relayer.md:117",
+        "edgerton-hooked/for-relayer.md:100",
+        "narrative-testing/for-relayer.md:96",
+        "procedural-storytelling/for-relayer.md:106",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-12",
+        "choiceofgames-design:LESSON-03",
+        "choiceofgames-design:LESSON-05",
+        "choiceofgames-design:P-16",
+        "choiceofgames-design:P-17",
+        "choiceofgames-design:RED-16",
+        "failbetter-qbn:P-01",
+        "inkle-ingold:P-10",
+        "narrative-testing:LESSON-09",
+        "narrative-testing:P-01",
+        "procedural-storytelling:LESSON-03",
+        "procedural-storytelling:P-17",
+        "R-09"
+      ]
+    },
+    {
+      "id": "K-R-10",
+      "title": "Выбери объём опор по длине истории. До 10 минут — четыре опоры (событие, середина, провал, финал) в одной главе. 15–25 минут — до трёх глав и три опоры (вызов,…",
+      "th": "TH-20",
+      "from": [
+        "rules.md R-10",
+        "chat-fiction-apps/for-relayer.md:116",
+        "nicklin-writing-for-games/for-relayer.md:123",
+        "skolnick-video-game-storytelling/for-relayer.md:83",
+        "vogler-writers-journey/for-relayer.md:127",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-15",
+        "procedural-storytelling:P-01",
+        "procedural-storytelling:RED-12",
+        "R-10",
+        "skolnick-video-game-storytelling:GREEN-07",
+        "skolnick-video-game-storytelling:P-09",
+        "vogler-writers-journey:LESSON-01",
+        "vogler-writers-journey:P-01",
+        "vogler-writers-journey:P-17",
+        "vogler-writers-journey:PAT-01",
+        "vogler-writers-journey:PAT-11",
+        "vogler-writers-journey:RED-01",
+        "yorke-into-the-woods:GREEN-01",
+        "yorke-into-the-woods:P-02",
+        "yorke-into-the-woods:P-15",
+        "yorke-into-the-woods:PAT-01"
+      ]
+    },
+    {
+      "id": "K-R-11",
+      "title": "Привяжи карточку к тексту. Каждый пункт features игрок делает или видит в тексте, хотя бы один — до конца главы 1: ключевое слово пункта звучит в реплике или…",
+      "th": "TH-95",
+      "from": [
+        "rules.md R-11",
+        "nicklin-writing-for-games/for-relayer.md:118",
+        "schell-art-of-game-design/for-relayer.md:91",
+        "video-three-things/for-relayer.md:90",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-13",
+        "chat-fiction-apps:RED-09",
+        "dille-ultimate-guide:P-02",
+        "dille-ultimate-guide:RED-02",
+        "nicklin-writing-for-games:P-16",
+        "nicklin-writing-for-games:RED-09",
+        "R-11",
+        "schell-art-of-game-design:GREEN-01",
+        "schell-art-of-game-design:LESSON-10",
+        "schell-art-of-game-design:P-02",
+        "video-three-things:LESSON-04",
+        "video-three-things:LESSON-08",
+        "video-three-things:P-10"
+      ]
+    },
+    {
+      "id": "K-R-12",
+      "title": "Начни с события или просьбы, которая понятна без продолжения: первое входящее — это превью уведомления. Без «привет», «доброе утро», дат и прошлого. До него…",
+      "th": "TH-34",
+      "from": [
+        "rules.md R-12",
+        "chat-fiction-apps/for-relayer.md:115",
+        "edgerton-hooked/for-relayer.md:92",
+        "edgerton-hooked/for-relayer.md:94",
+        "maass-fire-in-fiction/for-relayer.md:96",
+        "mckee-story/for-relayer.md:94",
+        "snyder-save-the-cat/for-relayer.md:123",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-07",
+        "chat-fiction-apps:P-09",
+        "edgerton-hooked:GREEN-01",
+        "edgerton-hooked:LESSON-10",
+        "edgerton-hooked:P-01",
+        "edgerton-hooked:P-10",
+        "edgerton-hooked:P-14",
+        "edgerton-hooked:PAT-02",
+        "edgerton-hooked:PAT-05",
+        "edgerton-hooked:RED-01",
+        "edgerton-hooked:RED-02",
+        "edgerton-hooked:RED-10",
+        "edgerton-hooked:RED-13",
+        "maass-fire-in-fiction:P-13",
+        "mckee-story:P-09",
+        "mckee-story:RED-01",
+        "R-12"
+      ]
+    },
+    {
+      "id": "K-R-13",
+      "title": "Дай первую кнопку не позже 5-го входящего и 30 секунд суммарного набора и delay . Больше 6 входящих или 60 секунд — уже нарушение.",
+      "th": "TH-34",
+      "from": [
+        "rules.md R-13",
+        "attention-today/for-relayer.md:66",
+        "messenger-genre/for-relayer.md:100",
+        "skolnick-video-game-storytelling/for-relayer.md:81",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:GREEN-01",
+        "attention-today:P-07",
+        "edgerton-hooked:GREEN-02",
+        "edgerton-hooked:GREEN-03",
+        "edgerton-hooked:P-02",
+        "maass-fire-in-fiction:LESSON-02",
+        "messenger-genre:LESSON-07",
+        "messenger-genre:P-04",
+        "messenger-genre:RED-01",
+        "narrative-testing:P-17",
+        "narrative-testing:PAT-09",
+        "R-13",
+        "skolnick-video-game-storytelling:GREEN-01",
+        "skolnick-video-game-storytelling:LESSON-10",
+        "skolnick-video-game-storytelling:P-02",
+        "skolnick-video-game-storytelling:RED-01",
+        "video-three-things:P-05"
+      ]
+    },
+    {
+      "id": "K-R-14",
+      "title": "Во 2–4-й реплике собеседник задаёт игроку прямой вопрос, и первая кнопка на него отвечает. Это реакция или разведка, а не решение с ценой и не анкета («как…",
+      "th": "TH-34",
+      "from": [
+        "rules.md R-14",
+        "dille-ultimate-guide/for-relayer.md:114",
+        "edgerton-hooked/for-relayer.md:95",
+        "edgerton-hooked/for-relayer.md:97",
+        "video-three-things/for-relayer.md:89",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:LESSON-04",
+        "bateman-game-writing:P-03",
+        "bateman-game-writing:P-04",
+        "bateman-game-writing:PAT-05",
+        "bateman-game-writing:RED-01",
+        "choiceofgames-design:GREEN-13",
+        "choiceofgames-design:P-23",
+        "cron-wired-for-story:GREEN-02",
+        "cron-wired-for-story:LESSON-01",
+        "cron-wired-for-story:P-02",
+        "cron-wired-for-story:RED-02",
+        "edgerton-hooked:LESSON-03",
+        "edgerton-hooked:LESSON-07",
+        "edgerton-hooked:P-09",
+        "edgerton-hooked:RED-06",
+        "edgerton-hooked:RED-08",
+        "mckee-story:P-08",
+        "mckee-story:PAT-05",
+        "R-14"
+      ]
+    },
+    {
+      "id": "K-R-15",
+      "title": "Пусть ответ на первую кнопку меняет следующую же реплику, а первый выбор с переменной меняет 3–5 следующих сообщений, а не только финал.",
+      "th": "TH-33",
+      "from": [
+        "rules.md R-15",
+        "choiceofgames-design/for-relayer.md:159",
+        "emshort-structures/for-relayer.md:104",
+        "meaningful-choice/for-relayer.md:98",
+        "skolnick-video-game-storytelling/for-relayer.md:86",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-06",
+        "choiceofgames-design:PAT-01",
+        "emshort-structures:GREEN-04",
+        "emshort-structures:P-07",
+        "emshort-structures:RED-06",
+        "meaningful-choice:LESSON-11",
+        "meaningful-choice:P-01",
+        "meaningful-choice:RED-05",
+        "R-15",
+        "skolnick-video-game-storytelling:GREEN-06",
+        "skolnick-video-game-storytelling:LESSON-02",
+        "skolnick-video-game-storytelling:LESSON-04",
+        "skolnick-video-game-storytelling:LESSON-13",
+        "skolnick-video-game-storytelling:P-14",
+        "skolnick-video-game-storytelling:RED-08"
+      ]
+    },
+    {
+      "id": "K-R-16",
+      "title": "До первой кнопки игрок узнаёт: кто пишет и откуда знает «тебя», чего хочет от тебя, что случилось. «Кто» — это отношение и желание, имя необязательно:…",
+      "th": "TH-34",
+      "from": [
+        "rules.md R-16",
+        "chat-fiction-apps/for-relayer.md:114",
+        "cron-wired-for-story/for-relayer.md:98",
+        "edgerton-hooked/for-relayer.md:93",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:GREEN-06",
+        "chat-fiction-apps:P-06",
+        "chat-fiction-apps:PAT-04",
+        "chat-fiction-apps:RED-05",
+        "cron-wired-for-story:GREEN-01",
+        "cron-wired-for-story:P-01",
+        "cron-wired-for-story:RED-01",
+        "edgerton-hooked:LESSON-08",
+        "edgerton-hooked:P-05",
+        "edgerton-hooked:PAT-01",
+        "edgerton-hooked:PAT-06",
+        "edgerton-hooked:RED-12",
+        "messenger-genre:GREEN-06",
+        "messenger-genre:P-05",
+        "messenger-genre:P-09",
+        "messenger-genre:RED-07",
+        "narrative-testing:LESSON-08",
+        "R-16",
+        "vogler-writers-journey:GREEN-02",
+        "vogler-writers-journey:LESSON-12",
+        "vogler-writers-journey:P-04",
+        "vogler-writers-journey:RED-03"
+      ]
+    },
+    {
+      "id": "K-R-17",
+      "title": "Назови ставку, цель и срок на общем стволе — на любом пути не позже 10-го входящего и до первой паузы от часа. Срок пиши цифрой или временем мира истории («до…",
+      "th": "TH-08",
+      "from": [
+        "rules.md R-17",
+        "cron-wired-for-story/for-relayer.md:101",
+        "dille-ultimate-guide/for-relayer.md:115",
+        "mystery-fair-play/for-relayer.md:96",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:P-08",
+        "ashwell-standard-patterns:RED-12",
+        "cron-wired-for-story:GREEN-07",
+        "cron-wired-for-story:P-08",
+        "cron-wired-for-story:RED-03",
+        "dille-ultimate-guide:P-10",
+        "dille-ultimate-guide:RED-09",
+        "inkle-ingold:P-16",
+        "mystery-fair-play:P-08",
+        "mystery-fair-play:PAT-01",
+        "mystery-fair-play:RED-01",
+        "R-17"
+      ]
+    },
+    {
+      "id": "K-R-18",
+      "title": "Ограничь входную нагрузку. До первой кнопки — один собеседник и не больше трёх новых имён, в одном сообщении — не больше двух. В первых 15 входящих — не больше…",
+      "th": "TH-35",
+      "from": [
+        "rules.md R-18",
+        "attention-today/for-relayer.md:67",
+        "attention-today/for-relayer.md:68",
+        "choiceofgames-design/for-relayer.md:162",
+        "edgerton-hooked/for-relayer.md:96",
+        "mobile-interactive-stories/for-relayer.md:92",
+        "skolnick-video-game-storytelling/for-relayer.md:82",
+        "video-three-things/for-relayer.md:88",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:P-03",
+        "attention-today:PAT-03",
+        "attention-today:RED-03",
+        "choiceofgames-design:P-13",
+        "edgerton-hooked:LESSON-09",
+        "edgerton-hooked:P-07",
+        "edgerton-hooked:P-08",
+        "edgerton-hooked:P-15",
+        "edgerton-hooked:RED-04",
+        "edgerton-hooked:RED-05",
+        "edgerton-hooked:RED-11",
+        "mobile-interactive-stories:LESSON-03",
+        "mobile-interactive-stories:LESSON-06",
+        "mobile-interactive-stories:P-10",
+        "mobile-interactive-stories:PAT-08",
+        "R-18",
+        "skolnick-video-game-storytelling:GREEN-03",
+        "skolnick-video-game-storytelling:P-04",
+        "skolnick-video-game-storytelling:RED-02",
+        "video-three-things:LESSON-02",
+        "video-three-things:P-04",
+        "video-three-things:RED-02"
+      ]
+    },
+    {
+      "id": "K-R-19",
+      "title": "До первой кнопки — ни одного сообщения о прошлом. Дальше прошлое приходит только в ответ на вопрос игрока или когда оно становится уликой: блоками не длиннее…",
+      "th": "TH-36",
+      "from": [
+        "rules.md R-19",
+        "cron-wired-for-story/for-relayer.md:104",
+        "mckee-story/for-relayer.md:95",
+        "snyder-save-the-cat/for-relayer.md:126",
+        "video-three-things/for-relayer.md:87",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:P-13",
+        "cron-wired-for-story:RED-12",
+        "edgerton-hooked:P-06",
+        "edgerton-hooked:RED-03",
+        "mckee-story:GREEN-03",
+        "mckee-story:LESSON-06",
+        "mckee-story:P-12",
+        "mckee-story:RED-04",
+        "R-19",
+        "snyder-save-the-cat:LESSON-06",
+        "snyder-save-the-cat:P-17",
+        "snyder-save-the-cat:PAT-08",
+        "video-three-things:LESSON-07",
+        "yorke-into-the-woods:LESSON-03",
+        "yorke-into-the-woods:P-12",
+        "yorke-into-the-woods:RED-11"
+      ]
+    },
+    {
+      "id": "K-R-20",
+      "title": "Проверь отметку 3 минуты: игрок нажал 3–5 кнопок, хотя бы на одну реакция другая по смыслу, одна переменная записана и уже отыграна деталью, появился второй…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-20",
+        "inkle-ingold/for-relayer.md:106",
+        "mobile-interactive-stories/for-relayer.md:89",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:GREEN-04",
+        "inkle-ingold:P-06",
+        "mobile-interactive-stories:P-05",
+        "mobile-interactive-stories:RED-04",
+        "R-20"
+      ]
+    },
+    {
+      "id": "K-R-21",
+      "title": "В первые 30 секунд не ставь пауз длиннее 10 секунд, в первые 3 минуты — длиннее минуты без названной причины (наша оценка). Первую длинную паузу (от 30 минут…",
+      "th": "TH-44",
+      "from": [
+        "rules.md R-21",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:GREEN-06",
+        "attention-today:LESSON-09",
+        "attention-today:P-09",
+        "attention-today:RED-05",
+        "bateman-game-writing:LESSON-05",
+        "bateman-game-writing:P-10",
+        "bateman-game-writing:RED-03",
+        "narrative-postmortems:P-19",
+        "narrative-postmortems:RED-13",
+        "R-21",
+        "serial-hooks:GREEN-07",
+        "serial-hooks:LESSON-07",
+        "serial-hooks:LESSON-11",
+        "serial-hooks:P-06",
+        "serial-hooks:P-12",
+        "serial-hooks:RED-09",
+        "serial-hooks:RED-10"
+      ]
+    },
+    {
+      "id": "K-R-22",
+      "title": "К концу главы 1 должно быть: событие, после которого жизнь героя не вернётся к прежней; необратимый шаг самого игрока (написал новому контакту, соврал под…",
+      "th": "TH-16",
+      "from": [
+        "rules.md R-22",
+        "mckee-story/for-relayer.md:98",
+        "schell-art-of-game-design/for-relayer.md:93",
+        "serial-hooks/for-relayer.md:125",
+        "snyder-save-the-cat/for-relayer.md:128",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:GREEN-02",
+        "attention-today:P-05",
+        "choiceofgames-design:GREEN-05",
+        "choiceofgames-design:P-07",
+        "mckee-story:LESSON-08",
+        "mckee-story:P-18",
+        "mckee-story:RED-14",
+        "mobile-interactive-stories:LESSON-04",
+        "mobile-interactive-stories:P-02",
+        "R-22",
+        "schell-art-of-game-design:P-03",
+        "schell-art-of-game-design:RED-07",
+        "snyder-save-the-cat:LESSON-11",
+        "snyder-save-the-cat:P-07",
+        "snyder-save-the-cat:RED-04",
+        "snyder-save-the-cat:RED-20",
+        "vogler-writers-journey:P-07",
+        "vogler-writers-journey:PAT-04"
+      ]
+    },
+    {
+      "id": "K-R-23",
+      "title": "Сделай главу 1 лёгкой: не больше четверти истории и не длиннее средней главы. Первый провал мягче поздних, неверный ход в главе 1 стоит не больше пары минут.…",
+      "th": "TH-33",
+      "from": [
+        "rules.md R-23",
+        "skolnick-video-game-storytelling/for-relayer.md:85",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-02",
+        "bateman-game-writing:P-06",
+        "failbetter-qbn:LESSON-05",
+        "failbetter-qbn:P-13",
+        "R-23",
+        "skolnick-video-game-storytelling:P-07",
+        "skolnick-video-game-storytelling:PAT-09",
+        "skolnick-video-game-storytelling:RED-05",
+        "skolnick-video-game-storytelling:RED-06"
+      ]
+    },
+    {
+      "id": "K-R-24",
+      "title": "Устрой холодный тест: человек или модель читает первые 25 входящих без карточки и отвечает — кто пишет, чего хочет, к какому сроку, кто мешает, что будет…",
+      "th": "TH-20",
+      "from": [
+        "rules.md R-24",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-testing:LESSON-06",
+        "narrative-testing:LESSON-07",
+        "narrative-testing:LESSON-11",
+        "narrative-testing:P-08",
+        "narrative-testing:P-15",
+        "R-24",
+        "snyder-save-the-cat:GREEN-02",
+        "snyder-save-the-cat:LESSON-05",
+        "snyder-save-the-cat:P-05",
+        "snyder-save-the-cat:PAT-02",
+        "snyder-save-the-cat:PAT-11"
+      ]
+    },
+    {
+      "id": "K-R-25",
+      "title": "Построй хребет: 5–10 событий (в короткой истории — 3), которые увидит каждый игрок. Все развилки сходятся обратно на хребет до конца своей главы, ветки…",
+      "th": "TH-19",
+      "from": [
+        "rules.md R-25",
+        "ashwell-standard-patterns/for-relayer.md:75",
+        "bateman-game-writing/for-relayer.md:103",
+        "emshort-structures/for-relayer.md:100",
+        "failbetter-qbn/for-relayer.md:128",
+        "inkle-ingold/for-relayer.md:105",
+        "mobile-interactive-stories/for-relayer.md:87",
+        "mobile-interactive-stories/for-relayer.md:88",
+        "nicklin-writing-for-games/for-relayer.md:115",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-01",
+        "ashwell-standard-patterns:GREEN-02",
+        "ashwell-standard-patterns:LESSON-09",
+        "ashwell-standard-patterns:P-02",
+        "ashwell-standard-patterns:P-03",
+        "ashwell-standard-patterns:P-04",
+        "ashwell-standard-patterns:PAT-11",
+        "ashwell-standard-patterns:RED-02",
+        "ashwell-standard-patterns:RED-03",
+        "bateman-game-writing:GREEN-01",
+        "bateman-game-writing:LESSON-13",
+        "bateman-game-writing:P-01",
+        "bateman-game-writing:PAT-01",
+        "emshort-structures:GREEN-05",
+        "emshort-structures:P-08",
+        "failbetter-qbn:GREEN-01",
+        "failbetter-qbn:LESSON-04",
+        "failbetter-qbn:P-06",
+        "failbetter-qbn:RED-02",
+        "inkle-ingold:P-17",
+        "messenger-genre:PAT-10",
+        "mobile-interactive-stories:GREEN-02",
+        "mobile-interactive-stories:LESSON-01",
+        "mobile-interactive-stories:LESSON-02",
+        "mobile-interactive-stories:P-04",
+        "nicklin-writing-for-games:GREEN-04",
+        "nicklin-writing-for-games:LESSON-01",
+        "nicklin-writing-for-games:LESSON-07",
+        "nicklin-writing-for-games:P-09",
+        "R-25"
+      ]
+    },
+    {
+      "id": "K-R-26",
+      "title": "Плати за вариативность состоянием, а не узлами: на главу 1–2 развилки в разные узлы, остальные выборы меняют переменную или реплику. Кульминация главы должна…",
+      "th": "TH-17",
+      "from": [
+        "rules.md R-26",
+        "ashwell-standard-patterns/for-relayer.md:81",
+        "dille-ultimate-guide/for-relayer.md:118",
+        "meaningful-choice/for-relayer.md:102",
+        "schell-art-of-game-design/for-relayer.md:97",
+        "schell-art-of-game-design/for-relayer.md:98",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-07",
+        "ashwell-standard-patterns:LESSON-11",
+        "ashwell-standard-patterns:P-10",
+        "ashwell-standard-patterns:RED-08",
+        "meaningful-choice:LESSON-10",
+        "meaningful-choice:P-15",
+        "meaningful-choice:RED-03",
+        "messenger-genre:LESSON-02",
+        "messenger-genre:P-08",
+        "R-26",
+        "schell-art-of-game-design:GREEN-07",
+        "schell-art-of-game-design:LESSON-08",
+        "schell-art-of-game-design:P-09",
+        "schell-art-of-game-design:PAT-11",
+        "schell-art-of-game-design:RED-09"
+      ]
+    },
+    {
+      "id": "K-R-27",
+      "title": "Начинай каждую главу одним узлом с chapter и входи в главу только через него. Всё прошлое передавай через VAR . Первые 1–3 строки главы зависят от выборов…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-27",
+        "cron-wired-for-story/for-relayer.md:102",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:GREEN-04",
+        "chat-fiction-apps:LESSON-05",
+        "chat-fiction-apps:P-12",
+        "cron-wired-for-story:GREEN-04",
+        "cron-wired-for-story:LESSON-06",
+        "cron-wired-for-story:P-09",
+        "cron-wired-for-story:RED-10",
+        "R-27",
+        "yorke-into-the-woods:P-16",
+        "yorke-into-the-woods:RED-13",
+        "yorke-into-the-woods:RED-19"
+      ]
+    },
+    {
+      "id": "K-R-28",
+      "title": "Строй главу по формуле: событие в первых 5 входящих; срок или угроза в первых 10; развилка с переменной; одно удивление; новый вопрос; со второй главы — ответ…",
+      "th": "TH-20",
+      "from": [
+        "rules.md R-28",
+        "snyder-save-the-cat/for-relayer.md:131",
+        "truby-anatomy-of-story/for-relayer.md:111",
+        "yorke-into-the-woods/for-relayer.md:131",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-28",
+        "schell-art-of-game-design:P-06",
+        "schell-art-of-game-design:P-14",
+        "schell-art-of-game-design:RED-04",
+        "schell-art-of-game-design:RED-05",
+        "serial-hooks:GREEN-06",
+        "serial-hooks:P-14",
+        "serial-hooks:RED-12",
+        "snyder-save-the-cat:LESSON-10",
+        "snyder-save-the-cat:PAT-03",
+        "truby-anatomy-of-story:GREEN-03",
+        "truby-anatomy-of-story:LESSON-10",
+        "truby-anatomy-of-story:P-09",
+        "truby-anatomy-of-story:RED-05",
+        "yorke-into-the-woods:LESSON-11",
+        "yorke-into-the-woods:P-06",
+        "yorke-into-the-woods:PAT-09",
+        "yorke-into-the-woods:RED-01",
+        "yorke-into-the-woods:RED-02"
+      ]
+    },
+    {
+      "id": "K-R-29",
+      "title": "В каждом узле что-то поворачивается: ценность сцены (доверие, безопасность, надежда) в конце узла с другим знаком, чем в начале. Если знак не сменился, слей…",
+      "th": "TH-25",
+      "from": [
+        "rules.md R-29",
+        "cron-wired-for-story/for-relayer.md:99",
+        "maass-fire-in-fiction/for-relayer.md:95",
+        "mckee-story/for-relayer.md:93",
+        "mckee-story/for-relayer.md:99",
+        "schell-art-of-game-design/for-relayer.md:94",
+        "snyder-save-the-cat/for-relayer.md:124",
+        "yorke-into-the-woods/for-relayer.md:132",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:LESSON-08",
+        "cron-wired-for-story:P-04",
+        "cron-wired-for-story:PAT-09",
+        "cron-wired-for-story:RED-05",
+        "maass-fire-in-fiction:P-07",
+        "maass-fire-in-fiction:RED-05",
+        "maass-fire-in-fiction:RED-14",
+        "maass-fire-in-fiction:RED-16",
+        "mckee-story:GREEN-01",
+        "mckee-story:GREEN-04",
+        "mckee-story:LESSON-04",
+        "mckee-story:P-01",
+        "mckee-story:P-15",
+        "mckee-story:RED-02",
+        "mckee-story:RED-07",
+        "R-29",
+        "schell-art-of-game-design:LESSON-11",
+        "schell-art-of-game-design:P-15",
+        "schell-art-of-game-design:RED-12",
+        "snyder-save-the-cat:P-16",
+        "snyder-save-the-cat:PAT-04",
+        "snyder-save-the-cat:RED-06",
+        "vogler-writers-journey:P-16",
+        "yorke-into-the-woods:P-07",
+        "yorke-into-the-woods:RED-05"
+      ]
+    },
+    {
+      "id": "K-R-30",
+      "title": "Поставь в середину (40–60% входящих на медианном пути — окно считает story:sessions ) один факт, который меняет цель с A на B, лучше как ложную победу или…",
+      "th": "TH-40",
+      "from": [
+        "rules.md R-30",
+        "snyder-save-the-cat/for-relayer.md:125",
+        "vogler-writers-journey/for-relayer.md:131",
+        "yorke-into-the-woods/for-relayer.md:134",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-30",
+        "snyder-save-the-cat:GREEN-03",
+        "snyder-save-the-cat:LESSON-01",
+        "snyder-save-the-cat:P-10",
+        "snyder-save-the-cat:RED-05",
+        "vogler-writers-journey:GREEN-06",
+        "vogler-writers-journey:LESSON-03",
+        "vogler-writers-journey:LESSON-06",
+        "vogler-writers-journey:P-10",
+        "vogler-writers-journey:PAT-06",
+        "vogler-writers-journey:RED-07",
+        "yorke-into-the-woods:GREEN-02",
+        "yorke-into-the-woods:GREEN-05",
+        "yorke-into-the-woods:P-03",
+        "yorke-into-the-woods:P-05",
+        "yorke-into-the-woods:RED-03",
+        "yorke-into-the-woods:RED-06"
+      ]
+    },
+    {
+      "id": "K-R-31",
+      "title": "В каждой главе после первой отнимай у игрока или союзника одну опору: союзника, доступ, время, улику. Лучше всего — сразу после выигрыша. Ступеней ухудшения…",
+      "th": "TH-08",
+      "from": [
+        "rules.md R-31",
+        "maass-fire-in-fiction/for-relayer.md:97",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:GREEN-06",
+        "cron-wired-for-story:P-12",
+        "cron-wired-for-story:RED-15",
+        "maass-fire-in-fiction:GREEN-05",
+        "maass-fire-in-fiction:P-09",
+        "mckee-story:LESSON-03",
+        "mckee-story:P-07",
+        "mckee-story:RED-05",
+        "R-31",
+        "skolnick-video-game-storytelling:GREEN-04",
+        "skolnick-video-game-storytelling:LESSON-03",
+        "skolnick-video-game-storytelling:LESSON-11",
+        "skolnick-video-game-storytelling:P-08",
+        "skolnick-video-game-storytelling:RED-11"
+      ]
+    },
+    {
+      "id": "K-R-32",
+      "title": "Плохой исход главы ведёт дальше, в изменённый мир. История кончается только в последней главе. Промах на единицу даёт частичный исход. Боковую ветку закрывай…",
+      "th": "TH-15",
+      "from": [
+        "rules.md R-32",
+        "choiceofgames-design/for-relayer.md:161",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-03",
+        "ashwell-standard-patterns:P-05",
+        "ashwell-standard-patterns:PAT-02",
+        "ashwell-standard-patterns:RED-11",
+        "choiceofgames-design:GREEN-04",
+        "choiceofgames-design:P-12",
+        "narrative-postmortems:LESSON-03",
+        "narrative-postmortems:P-13",
+        "R-32"
+      ]
+    },
+    {
+      "id": "K-R-33",
+      "title": "В конце предпоследней главы поставь потерю. Сразу за ней — одна длинная пауза (от 2 часов), перед которой собеседник уходит или просит не писать, а у игрока…",
+      "th": "TH-20",
+      "from": [
+        "rules.md R-33",
+        "serial-hooks/for-relayer.md:126",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-33",
+        "serial-hooks:GREEN-05",
+        "serial-hooks:P-07",
+        "serial-hooks:PAT-06",
+        "serial-hooks:RED-14",
+        "snyder-save-the-cat:P-12"
+      ]
+    },
+    {
+      "id": "K-R-34",
+      "title": "Открывай хаб «кому написать» не в главе 1 (для историй до 30 минут) и не раньше, чем названа ставка. Не больше одного хаба на главу и трёх адресатов. Один…",
+      "th": "TH-19",
+      "from": [
+        "rules.md R-34",
+        "failbetter-qbn/for-relayer.md:121",
+        "nicklin-writing-for-games/for-relayer.md:114",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-19",
+        "bateman-game-writing:RED-13",
+        "failbetter-qbn:LESSON-08",
+        "failbetter-qbn:P-17",
+        "failbetter-qbn:PAT-01",
+        "failbetter-qbn:RED-11",
+        "narrative-postmortems:P-09",
+        "nicklin-writing-for-games:GREEN-03",
+        "nicklin-writing-for-games:P-10",
+        "nicklin-writing-for-games:PAT-04",
+        "nicklin-writing-for-games:RED-05",
+        "R-34",
+        "sheldon-character-storytelling:P-11"
+      ]
+    },
+    {
+      "id": "K-R-35",
+      "title": "Сцены, которые игрок проходит в любом порядке, не ссылаются на факты друг друга без условия. В узел, куда ведут несколько путей, входи каскадом { - самое узкое…",
+      "th": "TH-74",
+      "from": [
+        "rules.md R-35",
+        "emshort-structures/for-relayer.md:98",
+        "inkle-ingold/for-relayer.md:104",
+        "procedural-storytelling/for-relayer.md:101",
+        "procedural-storytelling/for-relayer.md:103",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:GREEN-08",
+        "emshort-structures:LESSON-12",
+        "emshort-structures:P-11",
+        "inkle-ingold:GREEN-03",
+        "inkle-ingold:LESSON-07",
+        "inkle-ingold:LESSON-10",
+        "inkle-ingold:LESSON-12",
+        "inkle-ingold:P-04",
+        "inkle-ingold:RED-04",
+        "procedural-storytelling:GREEN-03",
+        "procedural-storytelling:GREEN-06",
+        "procedural-storytelling:P-12",
+        "procedural-storytelling:P-14",
+        "procedural-storytelling:PAT-02",
+        "procedural-storytelling:RED-04",
+        "procedural-storytelling:RED-05",
+        "procedural-storytelling:RED-06",
+        "R-35"
+      ]
+    },
+    {
+      "id": "K-R-36",
+      "title": "Награждай необязательное ходом: побочный чат или ветка дают unlock , факт или условную кнопку дальше. Ветка «не в сети и обратно в хаб» без следа запрещена.…",
+      "th": "TH-54",
+      "from": [
+        "rules.md R-36",
+        "dille-ultimate-guide/for-relayer.md:113",
+        "inkle-ingold/for-relayer.md:109",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "dille-ultimate-guide:GREEN-03",
+        "dille-ultimate-guide:P-09",
+        "dille-ultimate-guide:RED-07",
+        "inkle-ingold:GREEN-06",
+        "inkle-ingold:P-13",
+        "narrative-postmortems:P-01",
+        "R-36"
+      ]
+    },
+    {
+      "id": "K-R-37",
+      "title": "Держи главное на видном пути: сцену-пик главы ставь на основной линии. Одно прохождение должно показывать примерно 30–60% всего текста истории (наша оценка).",
+      "th": "TH-17",
+      "from": [
+        "rules.md R-37",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-22",
+        "choiceofgames-design:RED-20",
+        "narrative-testing:P-13",
+        "R-37",
+        "skolnick-video-game-storytelling:LESSON-08"
+      ]
+    },
+    {
+      "id": "K-R-38",
+      "title": "Петлю, которая возвращается в свой узел, строй на вариантах + с выходом по условию или счётчику. До порога — не больше трёх кругов, на втором заходе — новая…",
+      "th": "TH-16",
+      "from": [
+        "rules.md R-38",
+        "ashwell-standard-patterns/for-relayer.md:83",
+        "emshort-structures/for-relayer.md:101",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-08",
+        "ashwell-standard-patterns:P-12",
+        "emshort-structures:GREEN-07",
+        "emshort-structures:LESSON-13",
+        "emshort-structures:P-10",
+        "inkle-ingold:GREEN-07",
+        "inkle-ingold:P-11",
+        "procedural-storytelling:P-13",
+        "procedural-storytelling:RED-11",
+        "R-38"
+      ]
+    },
+    {
+      "id": "K-R-39",
+      "title": "Заводи мало переменных. В истории до 25 минут — прогресс, угроза и одно отношение. Сюжетных переменных 2–5, решающих финал — не больше шести, сквозных (пишутся…",
+      "th": "TH-10",
+      "from": [
+        "rules.md R-39",
+        "failbetter-qbn/for-relayer.md:122",
+        "video-three-things/for-relayer.md:94",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-06",
+        "bateman-game-writing:LESSON-03",
+        "bateman-game-writing:P-08",
+        "emshort-structures:LESSON-09",
+        "emshort-structures:P-14",
+        "failbetter-qbn:GREEN-02",
+        "failbetter-qbn:GREEN-03",
+        "failbetter-qbn:P-02",
+        "failbetter-qbn:P-03",
+        "failbetter-qbn:RED-04",
+        "narrative-postmortems:P-02",
+        "procedural-storytelling:P-03",
+        "procedural-storytelling:RED-02",
+        "R-39"
+      ]
+    },
+    {
+      "id": "K-R-40",
+      "title": "Читай каждую записанную переменную видимо: условной репликой или условной кнопкой, не позже следующей главы. Запись без чтения — ошибка. В каждой главе хотя бы…",
+      "th": "TH-56",
+      "from": [
+        "rules.md R-40",
+        "ashwell-standard-patterns/for-relayer.md:76",
+        "choiceofgames-design/for-relayer.md:160",
+        "dille-ultimate-guide/for-relayer.md:109",
+        "emshort-structures/for-relayer.md:96",
+        "meaningful-choice/for-relayer.md:100",
+        "narrative-postmortems/for-relayer.md:88",
+        "procedural-storytelling/for-relayer.md:104",
+        "sheldon-character-storytelling/for-relayer.md:68",
+        "snyder-save-the-cat/for-relayer.md:133",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:LESSON-10",
+        "ashwell-standard-patterns:P-06",
+        "ashwell-standard-patterns:RED-04",
+        "choiceofgames-design:P-10",
+        "choiceofgames-design:RED-06",
+        "dille-ultimate-guide:LESSON-07",
+        "dille-ultimate-guide:P-11",
+        "dille-ultimate-guide:RED-05",
+        "emshort-structures:P-15",
+        "emshort-structures:RED-01",
+        "failbetter-qbn:P-09",
+        "meaningful-choice:LESSON-01",
+        "meaningful-choice:P-09",
+        "meaningful-choice:PAT-01",
+        "mobile-interactive-stories:GREEN-04",
+        "mobile-interactive-stories:LESSON-08",
+        "mobile-interactive-stories:P-06",
+        "mobile-interactive-stories:PAT-01",
+        "narrative-postmortems:P-03",
+        "narrative-postmortems:RED-02",
+        "procedural-storytelling:GREEN-01",
+        "procedural-storytelling:LESSON-05",
+        "procedural-storytelling:P-10",
+        "procedural-storytelling:RED-01",
+        "procedural-storytelling:RED-10",
+        "R-40",
+        "sheldon-character-storytelling:GREEN-01",
+        "sheldon-character-storytelling:LESSON-03",
+        "sheldon-character-storytelling:P-06",
+        "sheldon-character-storytelling:PAT-05",
+        "sheldon-character-storytelling:RED-01",
+        "snyder-save-the-cat:RED-15"
+      ]
+    },
+    {
+      "id": "K-R-41",
+      "title": "Делай счётчики раздельными и растущими: прогресс и угроза — отдельные переменные от нуля вверх, знак допустим только у скрытой оси отношения. Одна переменная…",
+      "th": "TH-10",
+      "from": [
+        "rules.md R-41",
+        "emshort-structures/for-relayer.md:103",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-15",
+        "choiceofgames-design:P-21",
+        "choiceofgames-design:RED-15",
+        "choiceofgames-design:RED-17",
+        "emshort-structures:LESSON-07",
+        "emshort-structures:P-16",
+        "emshort-structures:PAT-11",
+        "emshort-structures:RED-11",
+        "failbetter-qbn:LESSON-03",
+        "failbetter-qbn:P-04",
+        "failbetter-qbn:P-05",
+        "failbetter-qbn:RED-03",
+        "failbetter-qbn:RED-05",
+        "R-41"
+      ]
+    },
+    {
+      "id": "K-R-42",
+      "title": "Держи главы короткими: 3–6 кнопок, не больше 120 строк (≈ 400–1200 слов, наша оценка), 1–3 захода. Главы после середины короче и с меньшими паузами, последняя…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-42",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mobile-interactive-stories:P-01",
+        "narrative-postmortems:LESSON-13",
+        "narrative-postmortems:P-16",
+        "R-42"
+      ]
+    },
+    {
+      "id": "K-R-43",
+      "title": "Дай каждой кнопке свой ответ, который отличается фактом, паузой, отправителем или чатом. Синонимы («ладно» / «хорошо») отличием не считаются. Если ответ…",
+      "th": "TH-56",
+      "from": [
+        "rules.md R-43",
+        "meaningful-choice/for-relayer.md:105",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-14",
+        "choiceofgames-design:PAT-05",
+        "inkle-ingold:GREEN-02",
+        "inkle-ingold:P-02",
+        "inkle-ingold:P-03",
+        "inkle-ingold:PAT-01",
+        "inkle-ingold:RED-02",
+        "meaningful-choice:GREEN-06",
+        "meaningful-choice:P-06",
+        "meaningful-choice:RED-10",
+        "narrative-postmortems:LESSON-10",
+        "narrative-postmortems:P-04",
+        "narrative-postmortems:PAT-03",
+        "narrative-postmortems:RED-01",
+        "procedural-storytelling:P-04",
+        "procedural-storytelling:RED-03",
+        "R-43"
+      ]
+    },
+    {
+      "id": "K-R-44",
+      "title": "Кнопку-окраску (без переменной и без перехода) ставь, только если собеседник отвечает на её тон. Не больше двух таких подряд, не перед долгой паузой и не с…",
+      "th": "TH-17",
+      "from": [
+        "rules.md R-44",
+        "ashwell-standard-patterns/for-relayer.md:82",
+        "bateman-game-writing/for-relayer.md:107",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:LESSON-02",
+        "ashwell-standard-patterns:P-09",
+        "bateman-game-writing:P-02",
+        "bateman-game-writing:RED-02",
+        "R-44"
+      ]
+    },
+    {
+      "id": "K-R-45",
+      "title": "Ставь 2 кнопки для реакций и темпа, 3 — в развилке с последствием (третья несёт свой мотив, а не «отказаться»). Видимых кнопок не больше четырёх. В хабе «кому…",
+      "th": "TH-55",
+      "from": [
+        "rules.md R-45",
+        "inkle-ingold/for-relayer.md:107",
+        "mckee-story/for-relayer.md:96",
+        "messenger-genre/for-relayer.md:104",
+        "sheldon-character-storytelling/for-relayer.md:80",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:LESSON-08",
+        "choiceofgames-design:P-05",
+        "emshort-structures:LESSON-03",
+        "failbetter-qbn:P-10",
+        "failbetter-qbn:RED-07",
+        "inkle-ingold:P-09",
+        "inkle-ingold:RED-07",
+        "mckee-story:GREEN-05",
+        "mckee-story:LESSON-05",
+        "mckee-story:P-10",
+        "mckee-story:RED-09",
+        "meaningful-choice:P-13",
+        "meaningful-choice:RED-09",
+        "messenger-genre:P-13",
+        "messenger-genre:RED-08",
+        "R-45",
+        "skolnick-video-game-storytelling:LESSON-07"
+      ]
+    },
+    {
+      "id": "K-R-46",
+      "title": "Пиши кнопку в 2–6 слов (до 40 символов): больше 8 слов — предупреждение, больше 12 — ошибка. label — намерение до 7 слов. Варианты одной развилки — одной…",
+      "th": "TH-55",
+      "from": [
+        "rules.md R-46",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:LESSON-01",
+        "attention-today:P-01",
+        "attention-today:RED-01",
+        "attention-today:RED-04",
+        "choiceofgames-design:P-24",
+        "failbetter-qbn:P-16",
+        "failbetter-qbn:RED-10",
+        "inkle-ingold:GREEN-08",
+        "inkle-ingold:P-08",
+        "narrative-postmortems:GREEN-08",
+        "narrative-postmortems:P-12",
+        "nicklin-writing-for-games:LESSON-04",
+        "nicklin-writing-for-games:P-12",
+        "nicklin-writing-for-games:P-19",
+        "nicklin-writing-for-games:RED-07",
+        "nicklin-writing-for-games:RED-21",
+        "R-46"
+      ]
+    },
+    {
+      "id": "K-R-47",
+      "title": "Перед развилкой, где можно что-то потерять, за 1–3 сообщения персонаж называет ставку «если…, то…» для каждого варианта и не подсказывает, какой лучше. Улика,…",
+      "th": "TH-53",
+      "from": [
+        "rules.md R-47",
+        "ashwell-standard-patterns/for-relayer.md:84",
+        "choiceofgames-design/for-relayer.md:157",
+        "messenger-genre/for-relayer.md:103",
+        "schell-art-of-game-design/for-relayer.md:100",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-06",
+        "ashwell-standard-patterns:LESSON-07",
+        "ashwell-standard-patterns:P-07",
+        "ashwell-standard-patterns:PAT-06",
+        "chat-fiction-apps:LESSON-04",
+        "choiceofgames-design:GREEN-01",
+        "choiceofgames-design:LESSON-02",
+        "choiceofgames-design:LESSON-07",
+        "choiceofgames-design:LESSON-15",
+        "choiceofgames-design:P-01",
+        "choiceofgames-design:P-02",
+        "choiceofgames-design:RED-01",
+        "failbetter-qbn:LESSON-07",
+        "failbetter-qbn:P-12",
+        "failbetter-qbn:RED-09",
+        "inkle-ingold:LESSON-08",
+        "mckee-story:LESSON-01",
+        "mckee-story:P-05",
+        "meaningful-choice:GREEN-03",
+        "meaningful-choice:LESSON-03",
+        "meaningful-choice:P-02",
+        "messenger-genre:LESSON-06",
+        "messenger-genre:P-06",
+        "messenger-genre:RED-05",
+        "R-47",
+        "schell-art-of-game-design:LESSON-07",
+        "schell-art-of-game-design:P-12"
+      ]
+    },
+    {
+      "id": "K-R-48",
+      "title": "Не давай очевидно лучшего варианта. Каждая кнопка решающего выбора что-то даёт одному контакту и отнимает у другого. Все варианты — то, что написал бы разумный…",
+      "th": "TH-58",
+      "from": [
+        "rules.md R-48",
+        "choiceofgames-design/for-relayer.md:158",
+        "maass-fire-in-fiction/for-relayer.md:98",
+        "mobile-interactive-stories/for-relayer.md:90",
+        "narrative-postmortems/for-relayer.md:91",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:LESSON-14",
+        "chat-fiction-apps:GREEN-05",
+        "chat-fiction-apps:P-11",
+        "chat-fiction-apps:RED-07",
+        "choiceofgames-design:GREEN-06",
+        "choiceofgames-design:LESSON-11",
+        "choiceofgames-design:LESSON-12",
+        "choiceofgames-design:P-03",
+        "choiceofgames-design:P-09",
+        "choiceofgames-design:RED-03",
+        "maass-fire-in-fiction:GREEN-07",
+        "maass-fire-in-fiction:LESSON-05",
+        "maass-fire-in-fiction:P-05",
+        "maass-fire-in-fiction:PAT-03",
+        "maass-fire-in-fiction:PAT-08",
+        "meaningful-choice:LESSON-02",
+        "meaningful-choice:LESSON-04",
+        "meaningful-choice:LESSON-12",
+        "meaningful-choice:P-03",
+        "meaningful-choice:P-04",
+        "meaningful-choice:RED-04",
+        "mobile-interactive-stories:LESSON-05",
+        "mobile-interactive-stories:P-07",
+        "mobile-interactive-stories:RED-01",
+        "mobile-interactive-stories:RED-11",
+        "narrative-postmortems:GREEN-06",
+        "narrative-postmortems:LESSON-05",
+        "narrative-postmortems:P-18",
+        "nicklin-writing-for-games:LESSON-09",
+        "R-48"
+      ]
+    },
+    {
+      "id": "K-R-49",
+      "title": "Строй решающую развилку как «двое, которым игрок симпатизирует, хотят противоположного», а не «вежливо или грубо». До неё у обоих сопоставимое число сообщений,…",
+      "th": "TH-59",
+      "from": [
+        "rules.md R-49",
+        "maass-fire-in-fiction/for-relayer.md:100",
+        "truby-anatomy-of-story/for-relayer.md:109",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "maass-fire-in-fiction:P-06",
+        "narrative-postmortems:LESSON-06",
+        "narrative-postmortems:P-05",
+        "R-49",
+        "sheldon-character-storytelling:P-07",
+        "truby-anatomy-of-story:GREEN-07",
+        "truby-anatomy-of-story:LESSON-01",
+        "truby-anatomy-of-story:P-11"
+      ]
+    },
+    {
+      "id": "K-R-50",
+      "title": "Поворотный выбор готовь отдельным узлом: 4–8 реплик, где растёт вопрос «что ты сделаешь» и названа цена каждого пути. Потом узел с 2–3 кнопками и label , а…",
+      "th": "TH-53",
+      "from": [
+        "rules.md R-50",
+        "meaningful-choice/for-relayer.md:101",
+        "schell-art-of-game-design/for-relayer.md:99",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "failbetter-qbn:GREEN-05",
+        "failbetter-qbn:P-11",
+        "meaningful-choice:P-12",
+        "meaningful-choice:PAT-08",
+        "meaningful-choice:RED-01",
+        "R-50",
+        "schell-art-of-game-design:P-11",
+        "schell-art-of-game-design:RED-08"
+      ]
+    },
+    {
+      "id": "K-R-51",
+      "title": "Рискованный вариант растягивай на два такта «настоять / отступить», и в каждом такте называй новую деталь опасности. Между тактами нет пауз длиннее 2 минут.…",
+      "th": "TH-15",
+      "from": [
+        "rules.md R-51",
+        "emshort-structures/for-relayer.md:102",
+        "mckee-story/for-relayer.md:97",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:GREEN-01",
+        "emshort-structures:LESSON-01",
+        "emshort-structures:LESSON-02",
+        "emshort-structures:P-01",
+        "emshort-structures:P-02",
+        "emshort-structures:P-04",
+        "emshort-structures:PAT-01",
+        "emshort-structures:RED-04",
+        "mckee-story:GREEN-07",
+        "mckee-story:LESSON-02",
+        "mckee-story:P-11",
+        "mckee-story:RED-10",
+        "meaningful-choice:P-10",
+        "meaningful-choice:RED-06",
+        "meaningful-choice:RED-12",
+        "R-51"
+      ]
+    },
+    {
+      "id": "K-R-52",
+      "title": "Считай silent полноценным ходом: на него есть своя реакция (персонаж переспрашивает с новой информацией, обижается, пишет другому) или переменная, которую…",
+      "th": "TH-57",
+      "from": [
+        "rules.md R-52",
+        "attention-today/for-relayer.md:71",
+        "attention-today/for-relayer.md:72",
+        "nicklin-writing-for-games/for-relayer.md:120",
+        "serial-hooks/for-relayer.md:127",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:LESSON-11",
+        "attention-today:P-10",
+        "attention-today:RED-07",
+        "choiceofgames-design:P-04",
+        "choiceofgames-design:PAT-07",
+        "choiceofgames-design:RED-04",
+        "inkle-ingold:P-07",
+        "inkle-ingold:RED-03",
+        "meaningful-choice:GREEN-05",
+        "meaningful-choice:LESSON-08",
+        "meaningful-choice:P-11",
+        "nicklin-writing-for-games:P-11",
+        "nicklin-writing-for-games:RED-06",
+        "R-52",
+        "serial-hooks:PAT-10",
+        "serial-hooks:RED-17"
+      ]
+    },
+    {
+      "id": "K-R-53",
+      "title": "В первой развилке после события дай отказаться или промолчать. Отказ стоит реплики или паузы, пишет переменную и вспоминается в следующей главе или в финале.…",
+      "th": "TH-16",
+      "from": [
+        "rules.md R-53",
+        "inkle-ingold/for-relayer.md:108",
+        "snyder-save-the-cat/for-relayer.md:127",
+        "vogler-writers-journey/for-relayer.md:129",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:GREEN-05",
+        "inkle-ingold:P-12",
+        "inkle-ingold:RED-08",
+        "R-53",
+        "skolnick-video-game-storytelling:P-06",
+        "skolnick-video-game-storytelling:PAT-04",
+        "skolnick-video-game-storytelling:RED-04",
+        "snyder-save-the-cat:P-06",
+        "snyder-save-the-cat:PAT-05",
+        "vogler-writers-journey:GREEN-03",
+        "vogler-writers-journey:LESSON-11",
+        "vogler-writers-journey:P-05",
+        "vogler-writers-journey:PAT-02",
+        "vogler-writers-journey:RED-05"
+      ]
+    },
+    {
+      "id": "K-R-54",
+      "title": "В каждой главе поставь: одну условную кнопку (со второй главы), которой нет у другого игрока; одну кнопку против совета или запрета персонажа, за которую игрок…",
+      "th": "TH-53",
+      "from": [
+        "rules.md R-54",
+        "cron-wired-for-story/for-relayer.md:103",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:GREEN-03",
+        "cron-wired-for-story:P-10",
+        "cron-wired-for-story:RED-07",
+        "inkle-ingold:P-05",
+        "meaningful-choice:P-05",
+        "R-54",
+        "schell-art-of-game-design:GREEN-04",
+        "schell-art-of-game-design:P-10"
+      ]
+    },
+    {
+      "id": "K-R-55",
+      "title": "Раз в главу дай кнопку to в один чат с фактом, который игрок узнал в другом ( {knows …} ). Получатель реагирует, эхо возвращается в первый чат. Хотя бы раз за…",
+      "th": "TH-75",
+      "from": [
+        "rules.md R-55",
+        "messenger-genre/for-relayer.md:105",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:P-13",
+        "mckee-story:GREEN-06",
+        "mckee-story:P-16",
+        "messenger-genre:GREEN-03",
+        "messenger-genre:P-10",
+        "mystery-fair-play:LESSON-01",
+        "mystery-fair-play:P-07",
+        "R-55"
+      ]
+    },
+    {
+      "id": "K-R-56",
+      "title": "Прячь условием только бонус: сцену, тепло, лишнюю деталь. Вариант, который уводит от плохого исхода, видят все, а ограничивает его видимая цена. Не отменяй…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-56",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mobile-interactive-stories:GREEN-05",
+        "mobile-interactive-stories:P-08",
+        "R-56"
+      ]
+    },
+    {
+      "id": "K-R-57",
+      "title": "В средних главах дай 1–2 кнопки, за которые потом стыдно ( label:Соврать… , label:Надавить… ). Они служат желанию, которое игрок разделяет, и работают. Рядом…",
+      "th": "TH-53",
+      "from": [
+        "rules.md R-57",
+        "truby-anatomy-of-story/for-relayer.md:112",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-57",
+        "truby-anatomy-of-story:GREEN-06",
+        "truby-anatomy-of-story:LESSON-02",
+        "truby-anatomy-of-story:P-10",
+        "truby-anatomy-of-story:RED-10"
+      ]
+    },
+    {
+      "id": "K-R-58",
+      "title": "Не делай разговор анкетой. Если игрок расспрашивает свидетеля или противника, у вопросов есть цена (терпение, время, доверие), и все варианты пройти нельзя.…",
+      "th": "TH-53",
+      "from": [
+        "rules.md R-58",
+        "emshort-structures/for-relayer.md:99",
+        "video-three-things/for-relayer.md:95",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:GREEN-03",
+        "emshort-structures:LESSON-05",
+        "emshort-structures:P-06",
+        "R-58",
+        "sheldon-character-storytelling:GREEN-07",
+        "sheldon-character-storytelling:P-15",
+        "sheldon-character-storytelling:PAT-08",
+        "sheldon-character-storytelling:RED-09",
+        "video-three-things:PAT-03"
+      ]
+    },
+    {
+      "id": "K-R-59",
+      "title": "Одно сообщение — одна мысль, до 90 знаков (одна-две фразы, строку длиннее 15 слов разбей). Длинную мысль подавай 2–3 сообщениями подряд с паузой 3–10 секунд.…",
+      "th": "TH-69",
+      "from": [
+        "rules.md R-59",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:GREEN-05",
+        "attention-today:LESSON-03",
+        "attention-today:LESSON-10",
+        "attention-today:LESSON-12",
+        "attention-today:P-02",
+        "attention-today:P-14",
+        "attention-today:RED-10",
+        "chat-fiction-apps:P-16",
+        "R-59",
+        "schell-art-of-game-design:P-19",
+        "schell-art-of-game-design:RED-15"
+      ]
+    },
+    {
+      "id": "K-R-60",
+      "title": "Делай ритм рваным: очереди по 2–4 строки с паузами 3–8 секунд, между очередями иногда 1–5 минут. Не ставь одинаковую паузу на пять реплик подряд. Каждые 3–5…",
+      "th": "TH-37",
+      "from": [
+        "rules.md R-60",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:LESSON-02",
+        "attention-today:P-12",
+        "messenger-genre:P-03",
+        "messenger-genre:PAT-01",
+        "messenger-genre:RED-04",
+        "messenger-genre:RED-15",
+        "R-60"
+      ]
+    },
+    {
+      "id": "K-R-61",
+      "title": "Без кнопки — не больше 8 входящих подряд в главе 1 и после паузы, 12 — общий потолок, 25 — ошибка. От одного контакта больше пяти подряд не пиши. Длинный…",
+      "th": "TH-37",
+      "from": [
+        "rules.md R-61",
+        "attention-today/for-relayer.md:73",
+        "attention-today/for-relayer.md:74",
+        "inkle-ingold/for-relayer.md:103",
+        "meaningful-choice/for-relayer.md:106",
+        "sheldon-character-storytelling/for-relayer.md:76",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:P-08",
+        "attention-today:RED-02",
+        "inkle-ingold:GREEN-01",
+        "inkle-ingold:P-01",
+        "inkle-ingold:RED-01",
+        "R-61",
+        "sheldon-character-storytelling:P-13",
+        "sheldon-character-storytelling:RED-06"
+      ]
+    },
+    {
+      "id": "K-R-62",
+      "title": "Между двумя паузами от 30 минут дай 2–6 минут чтения: не меньше 6 сообщений и двух кнопок (после паузы от 5 часов — не меньше 12 сообщений), но не больше 30.…",
+      "th": "TH-44",
+      "from": [
+        "rules.md R-62",
+        "schell-art-of-game-design/for-relayer.md:92",
+        "schell-art-of-game-design/for-relayer.md:95",
+        "serial-hooks/for-relayer.md:124",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-20",
+        "bateman-game-writing:RED-14",
+        "chat-fiction-apps:GREEN-01",
+        "chat-fiction-apps:P-01",
+        "R-62",
+        "schell-art-of-game-design:GREEN-02",
+        "schell-art-of-game-design:GREEN-03",
+        "schell-art-of-game-design:GREEN-08",
+        "schell-art-of-game-design:LESSON-01",
+        "schell-art-of-game-design:P-05",
+        "schell-art-of-game-design:PAT-01",
+        "schell-art-of-game-design:RED-02",
+        "serial-hooks:LESSON-12",
+        "serial-hooks:P-08",
+        "serial-hooks:PAT-09",
+        "serial-hooks:RED-05"
+      ]
+    },
+    {
+      "id": "K-R-63",
+      "title": "Объявляй каждую паузу от 15 минут словами персонажа: причина без срока (смена, дорога, сон, батарея, кто-то пришёл), затем sys «… не в сети», затем строка с…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-63",
+        "chat-fiction-apps/for-relayer.md:113",
+        "failbetter-qbn/for-relayer.md:125",
+        "narrative-testing/for-relayer.md:104",
+        "serial-hooks/for-relayer.md:122",
+        "sheldon-character-storytelling/for-relayer.md:71",
+        "snyder-save-the-cat/for-relayer.md:132",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:LESSON-05",
+        "chat-fiction-apps:GREEN-03",
+        "chat-fiction-apps:LESSON-01",
+        "chat-fiction-apps:LESSON-03",
+        "chat-fiction-apps:P-04",
+        "chat-fiction-apps:P-05",
+        "chat-fiction-apps:PAT-08",
+        "failbetter-qbn:P-08",
+        "failbetter-qbn:RED-06",
+        "messenger-genre:GREEN-01",
+        "messenger-genre:P-01",
+        "narrative-testing:LESSON-02",
+        "narrative-testing:LESSON-05",
+        "narrative-testing:P-02",
+        "nicklin-writing-for-games:LESSON-08",
+        "R-63",
+        "schell-art-of-game-design:LESSON-02",
+        "serial-hooks:GREEN-02",
+        "serial-hooks:LESSON-01",
+        "serial-hooks:LESSON-02",
+        "serial-hooks:LESSON-03",
+        "serial-hooks:LESSON-10",
+        "serial-hooks:P-05",
+        "serial-hooks:P-13",
+        "serial-hooks:PAT-04",
+        "serial-hooks:RED-06",
+        "sheldon-character-storytelling:GREEN-03",
+        "sheldon-character-storytelling:P-03",
+        "sheldon-character-storytelling:PAT-07",
+        "sheldon-character-storytelling:RED-02",
+        "skolnick-video-game-storytelling:LESSON-05",
+        "snyder-save-the-cat:PAT-06",
+        "video-three-things:LESSON-03",
+        "video-three-things:PAT-08"
+      ]
+    },
+    {
+      "id": "K-R-64",
+      "title": "Последние 1–3 строки перед паузой от часа — вопрос без ответа, угроза, новый конкретный факт, срок события в мире («в шесть они меняют замок»), фото или новый…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-64",
+        "chat-fiction-apps/for-relayer.md:112",
+        "serial-hooks/for-relayer.md:121",
+        "yorke-into-the-woods/for-relayer.md:135",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:GREEN-02",
+        "chat-fiction-apps:LESSON-02",
+        "chat-fiction-apps:P-02",
+        "chat-fiction-apps:P-03",
+        "chat-fiction-apps:RED-04",
+        "cron-wired-for-story:LESSON-02",
+        "cron-wired-for-story:LESSON-04",
+        "cron-wired-for-story:P-03",
+        "cron-wired-for-story:RED-04",
+        "dille-ultimate-guide:GREEN-05",
+        "dille-ultimate-guide:LESSON-05",
+        "dille-ultimate-guide:P-13",
+        "edgerton-hooked:GREEN-05",
+        "edgerton-hooked:LESSON-05",
+        "edgerton-hooked:P-04",
+        "edgerton-hooked:RED-09",
+        "R-64",
+        "serial-hooks:GREEN-01",
+        "serial-hooks:LESSON-08",
+        "serial-hooks:P-01",
+        "serial-hooks:RED-01",
+        "yorke-into-the-woods:GREEN-04",
+        "yorke-into-the-woods:LESSON-01",
+        "yorke-into-the-woods:LESSON-07",
+        "yorke-into-the-woods:P-09",
+        "yorke-into-the-woods:RED-04"
+      ]
+    },
+    {
+      "id": "K-R-65",
+      "title": "Ставь паузу после события, а не перед ним: не пиши «надо кое-что сказать» и delay на часы. Самое сильное событие главы игрок видит до паузы. Длинную паузу…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-65",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:P-13",
+        "attention-today:RED-09",
+        "R-65",
+        "serial-hooks:P-03",
+        "serial-hooks:PAT-01",
+        "serial-hooks:RED-02"
+      ]
+    },
+    {
+      "id": "K-R-66",
+      "title": "Жёсткий клиффхэнгер ставь на chapter и у самой длинной паузы главы. Внутри главы хватит срока или отношений. Тип крючка меняй (опасность или новость, время,…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-66",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:LESSON-07",
+        "R-66",
+        "serial-hooks:GREEN-04",
+        "serial-hooks:P-04",
+        "serial-hooks:PAT-08",
+        "serial-hooks:RED-04"
+      ]
+    },
+    {
+      "id": "K-R-67",
+      "title": "Длина пауз в реальном времени. Вся история — до 48 часов реального времени, потолок около трёх дней, если автор не задал иное. Ни одна пауза не длиннее суток.…",
+      "th": "TH-49",
+      "from": [
+        "rules.md R-67",
+        "inkle-ingold/for-relayer.md:111",
+        "messenger-genre/for-relayer.md:108",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:P-18",
+        "maass-fire-in-fiction:PAT-09",
+        "messenger-genre:P-16",
+        "messenger-genre:PAT-02",
+        "messenger-genre:PAT-07",
+        "messenger-genre:RED-09",
+        "messenger-genre:RED-13",
+        "R-67",
+        "schell-art-of-game-design:PAT-07",
+        "schell-art-of-game-design:RED-03",
+        "serial-hooks:LESSON-04"
+      ]
+    },
+    {
+      "id": "K-R-68",
+      "title": "Первая реплика после паузы от часа — событие, и оно же уведомление: новость, находка, ход противника за время паузы или результат дела, которое персонаж…",
+      "th": "TH-42",
+      "from": [
+        "rules.md R-68",
+        "edgerton-hooked/for-relayer.md:99",
+        "procedural-storytelling/for-relayer.md:108",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "edgerton-hooked:PAT-08",
+        "edgerton-hooked:RED-14",
+        "failbetter-qbn:P-15",
+        "messenger-genre:LESSON-05",
+        "messenger-genre:LESSON-11",
+        "messenger-genre:P-02",
+        "narrative-testing:RED-29",
+        "procedural-storytelling:LESSON-09",
+        "procedural-storytelling:P-16",
+        "R-68",
+        "truby-anatomy-of-story:GREEN-09",
+        "truby-anatomy-of-story:P-17",
+        "truby-anatomy-of-story:RED-13"
+      ]
+    },
+    {
+      "id": "K-R-69",
+      "title": "Обещанное перед паузой приходит в первых трёх репликах после неё. Не отменяй крючок словами «показалось», «шучу», «ложная тревога». Результат начатого действия…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-69",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-69",
+        "serial-hooks:P-02",
+        "serial-hooks:RED-03"
+      ]
+    },
+    {
+      "id": "K-R-70",
+      "title": "Напоминай по длине паузы (наша оценка). До 2 часов — продолжение темы, без напоминания. От 2 до 6 часов — в первой-второй строке имя, предмет или место из…",
+      "th": "TH-42",
+      "from": [
+        "rules.md R-70",
+        "attention-today/for-relayer.md:69",
+        "attention-today/for-relayer.md:70",
+        "failbetter-qbn/for-relayer.md:126",
+        "messenger-genre/for-relayer.md:107",
+        "mobile-interactive-stories/for-relayer.md:95",
+        "serial-hooks/for-relayer.md:123",
+        "skolnick-video-game-storytelling/for-relayer.md:84",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:GREEN-04",
+        "attention-today:LESSON-04",
+        "attention-today:P-06",
+        "attention-today:PAT-01",
+        "cron-wired-for-story:P-11",
+        "cron-wired-for-story:RED-11",
+        "failbetter-qbn:LESSON-01",
+        "failbetter-qbn:LESSON-02",
+        "failbetter-qbn:P-14",
+        "failbetter-qbn:PAT-11",
+        "mobile-interactive-stories:P-15",
+        "R-70",
+        "serial-hooks:GREEN-03",
+        "serial-hooks:P-09",
+        "serial-hooks:P-10",
+        "serial-hooks:PAT-03",
+        "serial-hooks:PAT-11",
+        "serial-hooks:RED-13",
+        "skolnick-video-game-storytelling:GREEN-02",
+        "skolnick-video-game-storytelling:LESSON-12",
+        "skolnick-video-game-storytelling:P-03",
+        "skolnick-video-game-storytelling:RED-09"
+      ]
+    },
+    {
+      "id": "K-R-71",
+      "title": "В 1–3 сообщениях после паузы от часа поставь условную реплику по решению, принятому до паузы: узкое условие первым, else последним. Персонаж пересказывает…",
+      "th": "TH-56",
+      "from": [
+        "rules.md R-71",
+        "emshort-structures/for-relayer.md:97",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:GREEN-06",
+        "emshort-structures:LESSON-11",
+        "emshort-structures:P-09",
+        "emshort-structures:PAT-06",
+        "emshort-structures:RED-02",
+        "R-71"
+      ]
+    },
+    {
+      "id": "K-R-72",
+      "title": "После паузы от часа дай кнопку не позже 5-го входящего, после паузы от 6 часов — не позже 3-го. Не открывай главу кнопкой: сначала 1–2 реплики. В первых 5…",
+      "th": "TH-03",
+      "from": [
+        "rules.md R-72",
+        "sheldon-character-storytelling/for-relayer.md:77",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "edgerton-hooked:P-13",
+        "R-72",
+        "sheldon-character-storytelling:LESSON-05",
+        "sheldon-character-storytelling:P-14",
+        "video-three-things:P-08"
+      ]
+    },
+    {
+      "id": "K-R-73",
+      "title": "В историях от 60 минут после паузы от 6 часов дай в начале главы условную кнопку «Напомни» — в заметках или у главного собеседника. Ответ — 2–3 реплики голосом…",
+      "th": "TH-42",
+      "from": [
+        "rules.md R-73",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-04",
+        "bateman-game-writing:P-07",
+        "bateman-game-writing:RED-05",
+        "R-73"
+      ]
+    },
+    {
+      "id": "K-R-74",
+      "title": "Не упрекай игрока за долгий ответ и за то, что он пропал: ни за паузу, которую поставила сама история, ни за молчание у кнопки. Обида — только на нажатый…",
+      "th": "TH-51",
+      "from": [
+        "rules.md R-74",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "messenger-genre:P-07",
+        "messenger-genre:PAT-09",
+        "messenger-genre:RED-06",
+        "R-74",
+        "snyder-save-the-cat:RED-21"
+      ]
+    },
+    {
+      "id": "K-R-75",
+      "title": "До первой реплики каждого контакта заполни его карточку голоса в characters файла meta.json — длина реплики в словах, регистр и точки, эмодзи, словечко, «ты»…",
+      "th": "TH-68",
+      "from": [
+        "rules.md R-75",
+        "narrative-testing/for-relayer.md:100",
+        "nicklin-writing-for-games/for-relayer.md:113",
+        "sheldon-character-storytelling/for-relayer.md:69",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-testing:P-14",
+        "nicklin-writing-for-games:GREEN-01",
+        "nicklin-writing-for-games:P-02",
+        "nicklin-writing-for-games:P-03",
+        "nicklin-writing-for-games:PAT-01",
+        "nicklin-writing-for-games:RED-01",
+        "procedural-storytelling:P-06",
+        "procedural-storytelling:PAT-03",
+        "procedural-storytelling:RED-08",
+        "R-75",
+        "sheldon-character-storytelling:GREEN-02",
+        "sheldon-character-storytelling:P-05",
+        "sheldon-character-storytelling:PAT-02",
+        "sheldon-character-storytelling:RED-05",
+        "snyder-save-the-cat:P-21",
+        "snyder-save-the-cat:RED-16"
+      ]
+    },
+    {
+      "id": "K-R-76",
+      "title": "В role пиши функцию в сюжете (даёт улики, давит, проверяет легенду, открывает других), а не профессию. У главных контактов функции не повторяются, но могут…",
+      "th": "TH-65",
+      "from": [
+        "rules.md R-76",
+        "sheldon-character-storytelling/for-relayer.md:70",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "dille-ultimate-guide:LESSON-02",
+        "dille-ultimate-guide:P-05",
+        "dille-ultimate-guide:P-06",
+        "dille-ultimate-guide:PAT-01",
+        "dille-ultimate-guide:RED-06",
+        "maass-fire-in-fiction:P-12",
+        "procedural-storytelling:P-05",
+        "R-76",
+        "sheldon-character-storytelling:P-01",
+        "sheldon-character-storytelling:P-04",
+        "sheldon-character-storytelling:RED-03",
+        "vogler-writers-journey:GREEN-05",
+        "vogler-writers-journey:P-02",
+        "vogler-writers-journey:PAT-05",
+        "vogler-writers-journey:PAT-10",
+        "vogler-writers-journey:RED-06"
+      ]
+    },
+    {
+      "id": "K-R-77",
+      "title": "Не заводи контакт, у которого меньше трёх реплик (кроме служебных: банк, заметки). В главе 1 — не больше трёх новых контактов, в каждой следующей — не больше…",
+      "th": "TH-64",
+      "from": [
+        "rules.md R-77",
+        "nicklin-writing-for-games/for-relayer.md:116",
+        "truby-anatomy-of-story/for-relayer.md:115",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "nicklin-writing-for-games:LESSON-05",
+        "nicklin-writing-for-games:P-08",
+        "nicklin-writing-for-games:RED-14",
+        "R-77",
+        "truby-anatomy-of-story:LESSON-06",
+        "truby-anatomy-of-story:P-13",
+        "truby-anatomy-of-story:PAT-07",
+        "video-three-things:LESSON-05",
+        "video-three-things:P-11"
+      ]
+    },
+    {
+      "id": "K-R-78",
+      "title": "В первых 2–3 сообщениях нового контакта покажи его голос и то, чего он хочет от игрока. Деталь, которая не сходится с типажом, — в первой главе, слом типажа —…",
+      "th": "TH-67",
+      "from": [
+        "rules.md R-78",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "nicklin-writing-for-games:P-14",
+        "nicklin-writing-for-games:RED-13",
+        "nicklin-writing-for-games:RED-16",
+        "R-78"
+      ]
+    },
+    {
+      "id": "K-R-79",
+      "title": "В каждой главе каждый основной персонаж хотя бы раз пишет первым — по своей причине, а не в ответ на кнопку. Персонаж с тайной целью ведёт разговор к ней:…",
+      "th": "TH-64",
+      "from": [
+        "rules.md R-79"
+      ],
+      "members": [
+        "emshort-structures:P-13",
+        "R-79"
+      ]
+    },
+    {
+      "id": "K-R-80",
+      "title": "В каждой очереди сообщений между двумя кнопками хотя бы одна реплика сталкивает два несовместимых чувства (благодарность и подозрение, браваду и страх), не…",
+      "th": "TH-38",
+      "from": [
+        "rules.md R-80",
+        "maass-fire-in-fiction/for-relayer.md:94",
+        "maass-fire-in-fiction/for-relayer.md:99",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:P-05",
+        "cron-wired-for-story:P-15",
+        "cron-wired-for-story:RED-06",
+        "cron-wired-for-story:RED-13",
+        "maass-fire-in-fiction:GREEN-01",
+        "maass-fire-in-fiction:GREEN-02",
+        "maass-fire-in-fiction:LESSON-01",
+        "maass-fire-in-fiction:LESSON-09",
+        "maass-fire-in-fiction:P-01",
+        "maass-fire-in-fiction:P-02",
+        "maass-fire-in-fiction:P-03",
+        "maass-fire-in-fiction:RED-01",
+        "maass-fire-in-fiction:RED-04",
+        "mckee-story:P-14",
+        "mckee-story:RED-13",
+        "R-80",
+        "yorke-into-the-woods:P-13"
+      ]
+    },
+    {
+      "id": "K-R-81",
+      "title": "В sys и photo описывай поведение (прочитано, печатает, вышел, удалил сообщение), а не чувства: не больше 6 слов, без «я», «ты», «?» и «!». Запись в заметках —…",
+      "th": "TH-69",
+      "from": [
+        "rules.md R-81",
+        "nicklin-writing-for-games/for-relayer.md:119",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mckee-story:P-06",
+        "nicklin-writing-for-games:GREEN-05",
+        "nicklin-writing-for-games:P-05",
+        "nicklin-writing-for-games:P-18",
+        "nicklin-writing-for-games:RED-04",
+        "procedural-storytelling:P-07",
+        "procedural-storytelling:RED-07",
+        "R-81",
+        "schell-art-of-game-design:GREEN-05",
+        "schell-art-of-game-design:P-07"
+      ]
+    },
+    {
+      "id": "K-R-82",
+      "title": "Меняй голос вместе с отношением. В ссоре — точки и полные предложения вместо строчных обрывков, пропадают смайлики. У каждого главного персонажа одно…",
+      "th": "TH-38",
+      "from": [
+        "rules.md R-82",
+        "maass-fire-in-fiction/for-relayer.md:102",
+        "sheldon-character-storytelling/for-relayer.md:75",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "maass-fire-in-fiction:GREEN-03",
+        "maass-fire-in-fiction:P-15",
+        "maass-fire-in-fiction:PAT-01",
+        "maass-fire-in-fiction:RED-11",
+        "narrative-postmortems:P-11",
+        "procedural-storytelling:GREEN-04",
+        "procedural-storytelling:P-09",
+        "R-82",
+        "sheldon-character-storytelling:GREEN-04",
+        "sheldon-character-storytelling:P-12",
+        "vogler-writers-journey:P-09"
+      ]
+    },
+    {
+      "id": "K-R-83",
+      "title": "Неожиданный поступок персонажа готовь двумя намёками в разных главах (один — чужими устами) и разыгрывай последствием хотя бы в одной сцене. В about у…",
+      "th": "TH-04",
+      "from": [
+        "rules.md R-83",
+        "maass-fire-in-fiction/for-relayer.md:101",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "maass-fire-in-fiction:GREEN-06",
+        "maass-fire-in-fiction:LESSON-07",
+        "maass-fire-in-fiction:P-11",
+        "maass-fire-in-fiction:PAT-05",
+        "maass-fire-in-fiction:RED-09",
+        "mckee-story:P-17",
+        "mckee-story:PAT-04",
+        "R-83"
+      ]
+    },
+    {
+      "id": "K-R-84",
+      "title": "Сделай противника соперником за ту же вещь, что нужна герою: запись, ключ, правду, человека. Он пишет игроку сам — не реже раза в две главы, во второй половине…",
+      "th": "TH-11",
+      "from": [
+        "rules.md R-84",
+        "truby-anatomy-of-story/for-relayer.md:107",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-84",
+        "skolnick-video-game-storytelling:GREEN-05",
+        "skolnick-video-game-storytelling:P-10",
+        "snyder-save-the-cat:GREEN-08",
+        "snyder-save-the-cat:P-11",
+        "snyder-save-the-cat:RED-11",
+        "truby-anatomy-of-story:GREEN-04",
+        "truby-anatomy-of-story:P-07",
+        "truby-anatomy-of-story:RED-04",
+        "truby-anatomy-of-story:RED-06",
+        "vogler-writers-journey:P-12",
+        "yorke-into-the-woods:P-11",
+        "yorke-into-the-woods:RED-10"
+      ]
+    },
+    {
+      "id": "K-R-85",
+      "title": "Персонаж знает только то, что ему написали в его чат или могли переслать. Упрекает игрока («ты соврал», «ты молчал») только под условием на его выбор. Закрытый…",
+      "th": "TH-26",
+      "from": [
+        "rules.md R-85",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "procedural-storytelling:GREEN-05",
+        "procedural-storytelling:LESSON-08",
+        "procedural-storytelling:P-15",
+        "R-85",
+        "schell-art-of-game-design:GREEN-06",
+        "schell-art-of-game-design:P-08",
+        "schell-art-of-game-design:RED-13",
+        "skolnick-video-game-storytelling:P-12"
+      ]
+    },
+    {
+      "id": "K-R-86",
+      "title": "Одного человека все называют одинаково: другая форма имени — только после строки, которая их прямо связывает, или у другого говорящего намеренно. Незнакомец…",
+      "th": "TH-70",
+      "from": [
+        "rules.md R-86",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:P-04",
+        "attention-today:RED-06",
+        "R-86"
+      ]
+    },
+    {
+      "id": "K-R-87",
+      "title": "В стволе главы 1 главный NPC делает добро третьему человеку или просит игрока об этом (не сделка с игроком). В триллере дай хотя бы одну тёплую или смешную…",
+      "th": "TH-71",
+      "from": [
+        "rules.md R-87",
+        "nicklin-writing-for-games/for-relayer.md:117",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-13",
+        "bateman-game-writing:P-14",
+        "bateman-game-writing:RED-07",
+        "bateman-game-writing:RED-08",
+        "maass-fire-in-fiction:P-14",
+        "maass-fire-in-fiction:RED-10",
+        "nicklin-writing-for-games:P-15",
+        "nicklin-writing-for-games:RED-08",
+        "R-87",
+        "snyder-save-the-cat:LESSON-04",
+        "snyder-save-the-cat:LESSON-07",
+        "snyder-save-the-cat:P-03",
+        "snyder-save-the-cat:P-19",
+        "snyder-save-the-cat:PAT-09",
+        "snyder-save-the-cat:RED-13",
+        "snyder-save-the-cat:RED-17"
+      ]
+    },
+    {
+      "id": "K-R-88",
+      "title": "Каждый блок реплик одного контакта делает работу: двигает сюжет, сообщает новое, даёт улику или раскрывает характер. Фон, который держит мир живым, допустим…",
+      "th": "TH-64",
+      "from": [
+        "rules.md R-88",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "messenger-genre:P-11",
+        "messenger-genre:RED-14",
+        "nicklin-writing-for-games:GREEN-02",
+        "nicklin-writing-for-games:LESSON-06",
+        "nicklin-writing-for-games:P-01",
+        "nicklin-writing-for-games:P-17",
+        "nicklin-writing-for-games:RED-02",
+        "nicklin-writing-for-games:RED-03",
+        "nicklin-writing-for-games:RED-10",
+        "R-88",
+        "skolnick-video-game-storytelling:P-13",
+        "video-three-things:LESSON-09"
+      ]
+    },
+    {
+      "id": "K-R-89",
+      "title": "Пиши реплики игрока без указания пола: настоящее время и безличные формы («я в деле», а не «я готов»). Герои не говорят игроку «ты был», «ты обещал». Чувства в…",
+      "th": "TH-38",
+      "from": [
+        "rules.md R-89",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:RED-10",
+        "cron-wired-for-story:LESSON-07",
+        "cron-wired-for-story:P-14",
+        "R-89"
+      ]
+    },
+    {
+      "id": "K-R-90",
+      "title": "Дай каждому контакту с 20+ репликами свою позицию по // вопрос: , двух одинаковых не бывает. Вопрос звучит хотя бы раз в каждой второй главе разными голосами.…",
+      "th": "TH-65",
+      "from": [
+        "rules.md R-90",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "nicklin-writing-for-games:GREEN-06",
+        "nicklin-writing-for-games:P-13",
+        "procedural-storytelling:GREEN-02",
+        "procedural-storytelling:P-08",
+        "R-90"
+      ]
+    },
+    {
+      "id": "K-R-91",
+      "title": "До сюжета запиши правду — хронологию «время мира → событие», что на самом деле сделал противник, по шагам — в docs/stories/<id /facts.md , а не в ink. Любое…",
+      "th": "TH-26",
+      "from": [
+        "rules.md R-91",
+        "mystery-fair-play/for-relayer.md:99",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "dille-ultimate-guide:LESSON-01",
+        "dille-ultimate-guide:LESSON-09",
+        "dille-ultimate-guide:P-04",
+        "dille-ultimate-guide:RED-04",
+        "mystery-fair-play:P-01",
+        "mystery-fair-play:RED-03",
+        "R-91"
+      ]
+    },
+    {
+      "id": "K-R-92",
+      "title": "Над каждым узлом раскрытия поставь // reveal: clue a, clue b, clue c — улики, без которых нет разгадки или хорошего финала; узел раскрытия — тот, над которым…",
+      "th": "TH-80",
+      "from": [
+        "rules.md R-92",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:LESSON-03",
+        "mystery-fair-play:GREEN-01",
+        "mystery-fair-play:P-06",
+        "narrative-postmortems:P-08",
+        "R-92"
+      ]
+    },
+    {
+      "id": "K-R-94",
+      "title": "Ключевую улику главы игрок получает своим действием: кнопкой-вопросом, пересылкой или сохранением в заметки ( to:notes ). Вывод он делает сам кнопкой-версией…",
+      "th": "TH-83",
+      "from": [
+        "rules.md R-94",
+        "dille-ultimate-guide/for-relayer.md:110",
+        "mystery-fair-play/for-relayer.md:97",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "dille-ultimate-guide:GREEN-02",
+        "dille-ultimate-guide:P-03",
+        "dille-ultimate-guide:RED-03",
+        "mystery-fair-play:GREEN-02",
+        "mystery-fair-play:LESSON-06",
+        "mystery-fair-play:P-05",
+        "mystery-fair-play:RED-02",
+        "R-94"
+      ]
+    },
+    {
+      "id": "K-R-95",
+      "title": "Назови загадку рано: в первых 15 сообщениях — аномалия с цифрой и нормой рядом («312 игроков на одной строке, в норме 1 к 1»). Виновника или его след введи в…",
+      "th": "TH-79",
+      "from": [
+        "rules.md R-95",
+        "truby-anatomy-of-story/for-relayer.md:114",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mystery-fair-play:GREEN-04",
+        "mystery-fair-play:P-02",
+        "mystery-fair-play:PAT-09",
+        "mystery-fair-play:RED-04",
+        "R-95",
+        "truby-anatomy-of-story:GREEN-05",
+        "truby-anatomy-of-story:P-08",
+        "truby-anatomy-of-story:RED-07"
+      ]
+    },
+    {
+      "id": "K-R-96",
+      "title": "Каждый ложный след опровергай явно — в реплике, которую получат все, кто по нему пошёл. Неверная версия получает опровержение уликой и цену (время, доверие,…",
+      "th": "TH-82",
+      "from": [
+        "rules.md R-96",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mystery-fair-play:GREEN-03",
+        "mystery-fair-play:LESSON-14",
+        "mystery-fair-play:P-03",
+        "mystery-fair-play:P-09",
+        "mystery-fair-play:P-10",
+        "mystery-fair-play:RED-05",
+        "mystery-fair-play:RED-09",
+        "R-96"
+      ]
+    },
+    {
+      "id": "K-R-97",
+      "title": "Придерживать можно вывод, а не улики. Конфликт и ставка открыты с первого экрана, спрятаны ответ и его механизм. Откладывай ответ на «почему» (прошлое, мотив),…",
+      "th": "TH-79",
+      "from": [
+        "rules.md R-97",
+        "video-three-things/for-relayer.md:91",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mckee-story:P-13",
+        "mckee-story:RED-12",
+        "mystery-fair-play:P-16",
+        "R-97",
+        "truby-anatomy-of-story:P-14",
+        "truby-anatomy-of-story:RED-12"
+      ]
+    },
+    {
+      "id": "K-R-98",
+      "title": "Технический механизм объясни бытовой аналогией (не больше двух реплик) минимум за главу до того, как от него зависит вывод. Реплика разгадки ссылается на две…",
+      "th": "TH-79",
+      "from": [
+        "rules.md R-98",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mystery-fair-play:GREEN-06",
+        "mystery-fair-play:LESSON-12",
+        "mystery-fair-play:P-04",
+        "mystery-fair-play:P-14",
+        "narrative-testing:LESSON-10",
+        "R-98"
+      ]
+    },
+    {
+      "id": "K-R-99",
+      "title": "Перед разгадкой задай прямой вопрос игроку («как думаешь?»): все улики уже выданы, анонса «я знаю, кто это, скажу потом» нет. Пауза-раздумье — 10–30 секунд в…",
+      "th": "TH-79",
+      "from": [
+        "rules.md R-99"
+      ],
+      "members": [
+        "mystery-fair-play:P-13",
+        "R-99"
+      ]
+    },
+    {
+      "id": "K-R-101",
+      "title": "Каждая названная деталь вернётся: сервисное сообщение, фото или кличка главы 1 выстреливают позже — то же слово звучит снова в более поздней главе, это видно…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-101",
+        "sheldon-character-storytelling/for-relayer.md:73",
+        "vogler-writers-journey/for-relayer.md:130",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-08",
+        "chat-fiction-apps:RED-08",
+        "edgerton-hooked:GREEN-06",
+        "edgerton-hooked:P-12",
+        "R-101",
+        "sheldon-character-storytelling:P-09",
+        "sheldon-character-storytelling:RED-07",
+        "skolnick-video-game-storytelling:P-11",
+        "skolnick-video-game-storytelling:RED-07",
+        "vogler-writers-journey:GREEN-04",
+        "vogler-writers-journey:LESSON-02",
+        "vogler-writers-journey:LESSON-07",
+        "vogler-writers-journey:P-06",
+        "vogler-writers-journey:P-11",
+        "vogler-writers-journey:PAT-03",
+        "vogler-writers-journey:RED-04",
+        "vogler-writers-journey:RED-09"
+      ]
+    },
+    {
+      "id": "K-R-102",
+      "title": "В последней главе финал выбирает игрок кнопкой-ценностью: две ценности, которые защищают разные знакомые ему люди, а варианты уходят в разные чаты ( to ).…",
+      "th": "TH-60",
+      "from": [
+        "rules.md R-102",
+        "ashwell-standard-patterns/for-relayer.md:80",
+        "mystery-fair-play/for-relayer.md:95",
+        "snyder-save-the-cat/for-relayer.md:129",
+        "yorke-into-the-woods/for-relayer.md:133",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:GREEN-05",
+        "ashwell-standard-patterns:LESSON-12",
+        "ashwell-standard-patterns:P-11",
+        "ashwell-standard-patterns:PAT-12",
+        "ashwell-standard-patterns:RED-06",
+        "mobile-interactive-stories:GREEN-06",
+        "mobile-interactive-stories:P-13",
+        "mystery-fair-play:LESSON-13",
+        "mystery-fair-play:LESSON-15",
+        "mystery-fair-play:P-12",
+        "mystery-fair-play:RED-07",
+        "R-102",
+        "schell-art-of-game-design:P-18",
+        "schell-art-of-game-design:PAT-10",
+        "schell-art-of-game-design:RED-10",
+        "schell-art-of-game-design:RED-11",
+        "snyder-save-the-cat:PAT-12",
+        "vogler-writers-journey:GREEN-07",
+        "vogler-writers-journey:P-13",
+        "vogler-writers-journey:PAT-08",
+        "vogler-writers-journey:RED-10",
+        "vogler-writers-journey:RED-11",
+        "yorke-into-the-woods:LESSON-08",
+        "yorke-into-the-woods:P-08",
+        "yorke-into-the-woods:RED-08",
+        "yorke-into-the-woods:RED-09"
+      ]
+    },
+    {
+      "id": "K-R-103",
+      "title": "Делай 2–4 финала, которые различаются событием, и над узлом каждого ставь // финал: <имя — без метки бот не отличит финалы, которые сходятся в один END .…",
+      "th": "TH-63",
+      "from": [
+        "rules.md R-103",
+        "narrative-testing/for-relayer.md:95",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:LESSON-08",
+        "narrative-testing:LESSON-03",
+        "narrative-testing:LESSON-04",
+        "narrative-testing:P-11",
+        "narrative-testing:P-12",
+        "R-103"
+      ]
+    },
+    {
+      "id": "K-R-104",
+      "title": "Каждую переменную, которая решает финал, записывай выбором раньше последней главы; какие переменные читает распределитель финала, считает story:endings (C-06),…",
+      "th": "TH-60",
+      "from": [
+        "rules.md R-104",
+        "failbetter-qbn/for-relayer.md:124",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "failbetter-qbn:GREEN-06",
+        "failbetter-qbn:P-07",
+        "failbetter-qbn:PAT-04",
+        "failbetter-qbn:RED-01",
+        "R-104"
+      ]
+    },
+    {
+      "id": "K-R-105",
+      "title": "Перед финальной кнопкой персонаж или заметки перечисляют всё, что учитывает условие финала: что у игрока есть, чего нет и хватит ли этого для шага, который он…",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-105",
+        "meaningful-choice/for-relayer.md:99",
+        "mobile-interactive-stories/for-relayer.md:93",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "meaningful-choice:GREEN-01",
+        "meaningful-choice:GREEN-04",
+        "meaningful-choice:LESSON-06",
+        "meaningful-choice:P-07",
+        "meaningful-choice:P-08",
+        "meaningful-choice:RED-02",
+        "mobile-interactive-stories:P-12",
+        "mobile-interactive-stories:RED-05",
+        "R-105"
+      ]
+    },
+    {
+      "id": "K-R-106",
+      "title": "Строй последнюю главу шагами: план, удача, ловушка, смена плана по ранним переменным, итог (в короткой истории хватит ловушки и смены плана). Ловушка не…",
+      "th": "TH-61",
+      "from": [
+        "rules.md R-106",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-106",
+        "snyder-save-the-cat:LESSON-09",
+        "snyder-save-the-cat:P-14",
+        "snyder-save-the-cat:RED-09"
+      ]
+    },
+    {
+      "id": "K-R-107",
+      "title": "В финале герой решает сам: не кончай историю его вопросом «что мне делать?», на который игрок отвечает за него. Самораскрытие — поступок NPC или вопрос к…",
+      "th": "TH-61",
+      "from": [
+        "rules.md R-107",
+        "cron-wired-for-story/for-relayer.md:105",
+        "snyder-save-the-cat/for-relayer.md:130",
+        "vogler-writers-journey/for-relayer.md:132",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "cron-wired-for-story:LESSON-05",
+        "cron-wired-for-story:P-16",
+        "cron-wired-for-story:PAT-04",
+        "R-107",
+        "snyder-save-the-cat:GREEN-06",
+        "snyder-save-the-cat:P-08",
+        "truby-anatomy-of-story:LESSON-12",
+        "truby-anatomy-of-story:P-12",
+        "truby-anatomy-of-story:RED-09",
+        "vogler-writers-journey:GREEN-08",
+        "vogler-writers-journey:P-14",
+        "vogler-writers-journey:PAT-09",
+        "vogler-writers-journey:RED-12"
+      ]
+    },
+    {
+      "id": "K-R-108",
+      "title": "В каждом финале 1–3 строки называют конкретные решения игрока из разных глав — с ключевым словом кнопки и именем того, кому он отвечал. Ответ игрока на кризис…",
+      "th": "TH-56",
+      "from": [
+        "rules.md R-108",
+        "sheldon-character-storytelling/for-relayer.md:72",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "R-108",
+        "sheldon-character-storytelling:GREEN-05",
+        "sheldon-character-storytelling:LESSON-07",
+        "sheldon-character-storytelling:P-08",
+        "sheldon-character-storytelling:RED-04"
+      ]
+    },
+    {
+      "id": "K-R-109",
+      "title": "Последняя строка повторяет форму первого входящего (тот же отправитель, тип вложения, сумма или фраза), но с перевёрнутым смыслом. Пару не размечай:…",
+      "th": "TH-61",
+      "from": [
+        "rules.md R-109",
+        "truby-anatomy-of-story/for-relayer.md:117",
+        "video-three-things/for-relayer.md:96",
+        "yorke-into-the-woods/for-relayer.md:136",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "messenger-genre:GREEN-04",
+        "messenger-genre:P-14",
+        "R-109",
+        "snyder-save-the-cat:GREEN-07",
+        "snyder-save-the-cat:P-15",
+        "truby-anatomy-of-story:GREEN-08",
+        "truby-anatomy-of-story:P-16",
+        "video-three-things:P-06",
+        "video-three-things:PAT-06",
+        "yorke-into-the-woods:GREEN-03",
+        "yorke-into-the-woods:P-04"
+      ]
+    },
+    {
+      "id": "K-R-110",
+      "title": "Держи развязку короткой: после последней значимой кнопки — не больше 10 сообщений (в истории до 25 минут — 5) и не больше 15 минут delay суммарно. Скачки…",
+      "th": "TH-62",
+      "from": [
+        "rules.md R-110",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mystery-fair-play:P-15",
+        "mystery-fair-play:RED-10",
+        "R-110",
+        "schell-art-of-game-design:P-04"
+      ]
+    },
+    {
+      "id": "K-R-111",
+      "title": "Не называй финалы хорошими или плохими ни в тексте, ни в synopsis . Объясняй причины («счёт мы так и не нашли»), а не оценку. Моральную кнопку не помечай…",
+      "th": "TH-61",
+      "from": [
+        "rules.md R-111"
+      ],
+      "members": [
+        "messenger-genre:P-15",
+        "R-111"
+      ]
+    },
+    {
+      "id": "K-R-113",
+      "title": "Финал сезона кончается сообщением от контакта, которое открывает следующую линию, а не системной строкой и не незакрытым главным вопросом. Над таким финалом…",
+      "th": "TH-62",
+      "from": [
+        "rules.md R-113",
+        "dille-ultimate-guide/for-relayer.md:116",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "dille-ultimate-guide:GREEN-04",
+        "dille-ultimate-guide:LESSON-03",
+        "dille-ultimate-guide:P-12",
+        "dille-ultimate-guide:RED-08",
+        "R-113"
+      ]
+    },
+    {
+      "id": "K-R-114",
+      "title": "Не ставь сроков в реальном времени игрока («у тебя 10 минут»): исход не зависит от того, как быстро игрок ответил, а срок — только событие в мире истории.…",
+      "th": "TH-47",
+      "from": [
+        "rules.md R-114",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "attention-today:LESSON-08",
+        "attention-today:P-11",
+        "attention-today:PAT-05",
+        "attention-today:RED-08",
+        "R-114"
+      ]
+    },
+    {
+      "id": "K-R-115",
+      "title": "Не наказывай отсутствие и не продавай паузы. Никаких «вы давно не заходили» и «у вас 3 непрочитанных», если их нет: уведомление — только настоящая следующая…",
+      "th": "TH-41",
+      "from": [
+        "rules.md R-115",
+        "mobile-interactive-stories/for-relayer.md:91",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mobile-interactive-stories:LESSON-10",
+        "mobile-interactive-stories:P-09",
+        "R-115"
+      ]
+    },
+    {
+      "id": "K-R-116",
+      "title": "Не показывай отношения числом. Прогресс к цели называй словами персонажа («3 из 6 номеров»), а цифру ставь, только если её знает сам герой («Улик: 3 из 5» в…",
+      "th": "TH-58",
+      "from": [
+        "rules.md R-116"
+      ],
+      "members": [
+        "inkle-ingold:P-14",
+        "R-116"
+      ]
+    },
+    {
+      "id": "K-R-117",
+      "title": "Не используй реальные компании, людей, бренды и точные цифры из настоящих инцидентов. Каждое имя собственное в репликах — это контакт, rename или вымышленное…",
+      "th": "TH-07",
+      "from": [
+        "rules.md R-117",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "procedural-storytelling:P-18",
+        "procedural-storytelling:RED-13",
+        "R-117"
+      ]
+    },
+    {
+      "id": "K-R-118",
+      "title": "Не строй сюжет на картинке и на функциях, которых движок не умеет: photo — заглушка с подписью, а список «Чего движок пока НЕ умеет» из промпта не используй.",
+      "th": "TH-06",
+      "from": [
+        "rules.md R-118",
+        "mobile-interactive-stories/for-relayer.md:94",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-14",
+        "chat-fiction-apps:RED-10",
+        "mobile-interactive-stories:LESSON-07",
+        "mobile-interactive-stories:P-14",
+        "narrative-postmortems:P-06",
+        "R-118"
+      ]
+    },
+    {
+      "id": "K-R-119",
+      "title": "Не сшивай реплики из кусков. Если вариант фразы меняет род, число или падеж соседних слов, пиши фразу целиком под условием. Внутри предложения пиши {cond:текст…",
+      "th": "TH-24",
+      "from": [
+        "rules.md R-119",
+        "procedural-storytelling/for-relayer.md:105",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-17",
+        "bateman-game-writing:RED-09",
+        "procedural-storytelling:LESSON-01",
+        "procedural-storytelling:P-11",
+        "procedural-storytelling:PAT-06",
+        "procedural-storytelling:RED-09",
+        "R-119"
+      ]
+    },
+    {
+      "id": "K-R-120",
+      "title": "Если игрок молчит у кнопки в реальном времени, персонаж напоминает 1–2 раза, а потом история идёт дальше без ответа и запоминает это. Напоминание — реплика…",
+      "th": "TH-46",
+      "from": [
+        "rules.md R-120",
+        "mystery-fair-play/for-relayer.md:98"
+      ],
+      "members": [
+        "inkle-ingold:PAT-07",
+        "mystery-fair-play:PAT-05",
+        "R-120"
+      ]
+    },
+    {
+      "id": "K-R-121",
+      "title": "Время суток в истории — время мира, а не часы игрока. «Доброе утро», «в два ночи», «письмо ушло в 9:14» — события у персонажа, их время берётся из хронологии…",
+      "th": "TH-47",
+      "from": [
+        "rules.md R-121",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:LESSON-01",
+        "messenger-genre:P-12",
+        "R-121"
+      ]
+    },
+    {
+      "id": "K-R-122",
+      "title": "Пиши так, чтобы текст читался в обоих режимах. Режим выбирают в начале истории, сменить его можно только перезапуском; режимы равноценны. Сюжет, выборы и…",
+      "th": "TH-45",
+      "from": [
+        "rules.md R-122",
+        "messenger-genre/for-relayer.md:110"
+      ],
+      "members": [
+        "messenger-genre:LESSON-10",
+        "R-122",
+        "schell-art-of-game-design:LESSON-06"
+      ]
+    },
+    {
+      "id": "K-ashwell-standard-patterns:P-14",
+      "title": "структура по графу обманывает, смотреть на след в тексте P 14 inkle ingold:P 06,",
+      "th": "TH-19",
+      "from": [
+        "ashwell-standard-patterns/for-relayer.md:77",
+        "schell-art-of-game-design/for-relayer.md:101",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "ashwell-standard-patterns:LESSON-01",
+        "ashwell-standard-patterns:P-14",
+        "schell-art-of-game-design:LESSON-09",
+        "schell-art-of-game-design:P-17"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:RED-11",
+      "title": "Цена финала видна в сцене",
+      "th": "TH-58",
+      "from": [
+        "bateman-game-writing/for-relayer.md:105"
+      ],
+      "members": [
+        "bateman-game-writing:LESSON-09",
+        "bateman-game-writing:RED-11",
+        "bateman-game-writing:RED-12"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:P-05",
+      "title": "Крошка перед паузой",
+      "th": "TH-42",
+      "from": [
+        "bateman-game-writing/for-relayer.md:106",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-03",
+        "bateman-game-writing:LESSON-01",
+        "bateman-game-writing:P-05",
+        "bateman-game-writing:PAT-11"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:PAT-08",
+      "title": "Разрядка",
+      "th": "TH-71",
+      "from": [
+        "bateman-game-writing/for-relayer.md:110"
+      ],
+      "members": [
+        "bateman-game-writing:LESSON-07",
+        "bateman-game-writing:PAT-08"
+      ]
+    },
+    {
+      "id": "K-meaningful-choice:P-14",
+      "title": "Глубинная проблема проверяется финалом",
+      "th": "TH-08",
+      "from": [
+        "edgerton-hooked/for-relayer.md:98",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "edgerton-hooked:PAT-04",
+        "meaningful-choice:GREEN-07",
+        "meaningful-choice:P-14"
+      ]
+    },
+    {
+      "id": "K-inkle-ingold:P-15",
+      "title": "Тест с маршрутом",
+      "th": "TH-91",
+      "from": [
+        "inkle-ingold/for-relayer.md:112",
+        "narrative-testing/for-relayer.md:97",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "inkle-ingold:LESSON-06",
+        "inkle-ingold:P-15",
+        "narrative-testing:LESSON-01",
+        "narrative-testing:LESSON-12",
+        "narrative-testing:P-04",
+        "narrative-testing:P-16",
+        "narrative-testing:PAT-01",
+        "narrative-testing:RED-19"
+      ]
+    },
+    {
+      "id": "K-meaningful-choice:RED-08",
+      "title": "RED 08, PAT 07 schell art of game design:P 18 Не прячь финал за проверкой, котор",
+      "th": "TH-60",
+      "from": [
+        "meaningful-choice/for-relayer.md:103"
+      ],
+      "members": [
+        "meaningful-choice:PAT-07",
+        "meaningful-choice:RED-08"
+      ]
+    },
+    {
+      "id": "K-messenger-genre:RED-11",
+      "title": "Каждую переменную прочитать",
+      "th": "TH-49",
+      "from": [
+        "messenger-genre/for-relayer.md:102"
+      ],
+      "members": [
+        "messenger-genre:LESSON-09",
+        "messenger-genre:RED-11"
+      ]
+    },
+    {
+      "id": "K-narrative-postmortems:LESSON-01",
+      "title": "Пауза — дело персонажа",
+      "th": "TH-48",
+      "from": [
+        "narrative-postmortems/for-relayer.md:89"
+      ],
+      "members": [
+        "narrative-postmortems:LESSON-01",
+        "narrative-postmortems:PAT-10"
+      ]
+    },
+    {
+      "id": "K-narrative-postmortems:P-14",
+      "title": "Прототип до объёма",
+      "th": "TH-21",
+      "from": [
+        "narrative-postmortems/for-relayer.md:93",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-postmortems:LESSON-12",
+        "narrative-postmortems:P-14"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:RED-03",
+      "title": "Мёртвая или поздно прочитанная переменная (RED 03, RED 04) — то же, что emshort",
+      "th": "TH-56",
+      "from": [
+        "narrative-testing/for-relayer.md:94"
+      ],
+      "members": [
+        "narrative-testing:RED-03",
+        "narrative-testing:RED-04"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:RED-06",
+      "title": "Длина серии без кнопки (RED 06, RED 31) — inkle ingold:P 01 (80–100 слов), choic",
+      "th": "TH-37",
+      "from": [
+        "narrative-testing/for-relayer.md:99"
+      ],
+      "members": [
+        "narrative-testing:RED-06",
+        "narrative-testing:RED-31"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:GREEN-05",
+      "title": "Таблица фактов (GREEN 05, RED 10) — dille ultimate guide:P 04 (библия правды), p",
+      "th": "TH-77",
+      "from": [
+        "narrative-testing/for-relayer.md:101"
+      ],
+      "members": [
+        "narrative-testing:GREEN-05",
+        "narrative-testing:RED-10"
+      ]
+    },
+    {
+      "id": "K-nicklin-writing-for-games:P-06",
+      "title": "Форма служит теме",
+      "th": "TH-02",
+      "from": [
+        "nicklin-writing-for-games/for-relayer.md:121",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "nicklin-writing-for-games:LESSON-03",
+        "nicklin-writing-for-games:P-06",
+        "nicklin-writing-for-games:RED-12",
+        "truby-anatomy-of-story:LESSON-04",
+        "truby-anatomy-of-story:P-02"
+      ]
+    },
+    {
+      "id": "K-procedural-storytelling:LESSON-11",
+      "title": "Каскад не ведёт сюжет",
+      "th": "TH-19",
+      "from": [
+        "procedural-storytelling/for-relayer.md:102",
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:LESSON-14",
+        "emshort-structures:P-12",
+        "emshort-structures:PAT-08",
+        "emshort-structures:RED-08",
+        "procedural-storytelling:LESSON-11"
+      ]
+    },
+    {
+      "id": "K-sheldon-character-storytelling:LESSON-01",
+      "title": "LESSON 01 , PAT 09 пауза с причиной messenger genre:P 01 долгую паузу объявляет",
+      "th": "TH-41",
+      "from": [
+        "sheldon-character-storytelling/for-relayer.md:78"
+      ],
+      "members": [
+        "sheldon-character-storytelling:LESSON-01",
+        "sheldon-character-storytelling:PAT-09"
+      ]
+    },
+    {
+      "id": "K-truby-anatomy-of-story:RED-08",
+      "title": "Финал не решает одна скрытая проверка",
+      "th": "TH-58",
+      "from": [
+        "truby-anatomy-of-story/for-relayer.md:110"
+      ],
+      "members": [
+        "truby-anatomy-of-story:PAT-06",
+        "truby-anatomy-of-story:RED-08"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:P-16",
+      "title": "В главе есть хотя бы два типа диалога: дерево плюс хаб или событийная перебивка (P-16)",
+      "th": "TH-53",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-05",
+        "bateman-game-writing:P-16"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:P-15",
+      "title": "В шапке есть строка // юмор: с именами тех, кто шутит, и манерой (P-15)",
+      "th": "TH-71",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:GREEN-07",
+        "bateman-game-writing:P-15"
+      ]
+    },
+    {
+      "id": "K-bateman-game-writing:P-11",
+      "title": "Переход - в середину чужой главы, мимо её узла с chapter (P-11)",
+      "th": "TH-19",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "bateman-game-writing:P-11",
+        "bateman-game-writing:RED-10"
+      ]
+    },
+    {
+      "id": "K-chat-fiction-apps:P-10",
+      "title": "Отрезок 15 строк без кнопки (вне финала)",
+      "th": "TH-06",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "chat-fiction-apps:P-10",
+        "chat-fiction-apps:RED-06"
+      ]
+    },
+    {
+      "id": "K-choiceofgames-design:P-11",
+      "title": "Рука и пальцы (arm and fingers)",
+      "th": "TH-16",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-11",
+        "choiceofgames-design:PAT-03",
+        "choiceofgames-design:PAT-06",
+        "choiceofgames-design:RED-09"
+      ]
+    },
+    {
+      "id": "K-choiceofgames-design:P-18",
+      "title": "Машина ChoiceScript: установить → проверить → кульминация (ChoiceScript Machine)",
+      "th": "TH-16",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:P-18",
+        "choiceofgames-design:PAT-04",
+        "choiceofgames-design:PAT-08",
+        "choiceofgames-design:RED-13"
+      ]
+    },
+    {
+      "id": "K-choiceofgames-design:P-19",
+      "title": "Игрок сам копит улики ( to:notes ), и они открывают варианты позже",
+      "th": "TH-15",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:GREEN-11",
+        "choiceofgames-design:P-19"
+      ]
+    },
+    {
+      "id": "K-choiceofgames-design:P-08",
+      "title": "Не заводи переменных больше, чем игрок способен различить",
+      "th": "TH-10",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "choiceofgames-design:LESSON-04",
+        "choiceofgames-design:P-08"
+      ]
+    },
+    {
+      "id": "K-emshort-structures:P-03",
+      "title": "Счётчик характера ( reckless , flips , trust ) читается в другом узле позже записи",
+      "th": "TH-15",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "emshort-structures:GREEN-02",
+        "emshort-structures:P-03"
+      ]
+    },
+    {
+      "id": "K-mckee-story:P-04",
+      "title": "Первая реплика после кнопки-решения не совпадает с тем, что обещала кнопка",
+      "th": "TH-38",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "mckee-story:GREEN-02",
+        "mckee-story:P-04",
+        "mckee-story:RED-03"
+      ]
+    },
+    {
+      "id": "K-narrative-postmortems:P-07",
+      "title": "Поздние главы используют теги и приёмы, которых нет в первых",
+      "th": "TH-103",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-postmortems:P-07",
+        "narrative-postmortems:RED-12"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:P-05",
+      "title": "Волны тестеров (staged beta — «бета волнами»)",
+      "th": "TH-29",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-testing:P-05",
+        "narrative-testing:PAT-02"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:P-09",
+      "title": "Отзыв без места («в середине было скучно»)",
+      "th": "TH-93",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-testing:P-09",
+        "narrative-testing:RED-14"
+      ]
+    },
+    {
+      "id": "K-narrative-testing:P-06",
+      "title": "Одинаковая жалоба у ≥2 тестеров без решения",
+      "th": "TH-93",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "narrative-testing:P-06",
+        "narrative-testing:RED-15"
+      ]
+    },
+    {
+      "id": "K-nicklin-writing-for-games:P-07",
+      "title": "У главы есть узнаваемый формат",
+      "th": "TH-20",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "nicklin-writing-for-games:GREEN-07",
+        "nicklin-writing-for-games:P-07"
+      ]
+    },
+    {
+      "id": "K-sheldon-character-storytelling:P-02",
+      "title": "Тон, который накапливается в развилке «только реплика»",
+      "th": "TH-65",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "sheldon-character-storytelling:LESSON-02",
+        "sheldon-character-storytelling:P-02",
+        "sheldon-character-storytelling:PAT-06"
+      ]
+    },
+    {
+      "id": "K-snyder-save-the-cat:P-13",
+      "title": "Синтез A и B в условии финала (Break into Three)",
+      "th": "TH-61",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "snyder-save-the-cat:GREEN-05",
+        "snyder-save-the-cat:P-13",
+        "snyder-save-the-cat:PAT-07"
+      ]
+    },
+    {
+      "id": "K-snyder-save-the-cat:P-02",
+      "title": "Карточка жанра: три элемента как задания на первые главы (genre)",
+      "th": "TH-02",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "snyder-save-the-cat:P-02",
+        "snyder-save-the-cat:PAT-10"
+      ]
+    },
+    {
+      "id": "K-snyder-save-the-cat:P-20",
+      "title": "Главный NPC в первой и последней главе хочет того же и говорит так же",
+      "th": "TH-66",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "snyder-save-the-cat:P-20",
+        "snyder-save-the-cat:RED-14"
+      ]
+    },
+    {
+      "id": "K-vogler-writers-journey:P-08",
+      "title": "Каждый новый контакт сначала отказывает говорить",
+      "th": "TH-16",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "vogler-writers-journey:P-08",
+        "vogler-writers-journey:RED-08"
+      ]
+    },
+    {
+      "id": "K-yorke-into-the-woods:P-14",
+      "title": "У каждого гостя главы линия закрыта решением внутри главы",
+      "th": "TH-66",
+      "from": [
+        "ссылка на принцип"
+      ],
+      "members": [
+        "yorke-into-the-woods:GREEN-06",
+        "yorke-into-the-woods:LESSON-12",
+        "yorke-into-the-woods:P-14"
+      ]
+    }
+  ]
+}

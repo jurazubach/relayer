@@ -30,5 +30,31 @@
     "anthropic-skills:pptx": "off",
     "anthropic-skills:xlsx": "off",
     "claude-api": "name-only"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/scripts/hooks/session-start.mjs",
+            "timeout": 20
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/scripts/hooks/post-edit.mjs",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
   }
 }
