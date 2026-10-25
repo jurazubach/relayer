@@ -6188,7 +6188,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "inkle-ingold:RED-04",
+      "inkle-ingold:RED-05",
       "procedural-storytelling:RED-06",
       "mystery-fair-play:RED-08"
     ],
@@ -6198,6 +6198,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён (а): факт — имя героя или ЧЧ:ММ (реестр facts.md — когда появится)"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "факт — ещё слово реестра docs/stories/<id>/facts.md; ЧЧ:ММ — только в кнопках и репликах игрока (входящая время вводит); фото не опирается на факт — четыре ложные находки на историях каталога ушли; опора inkle-ingold:RED-05 (кнопка про факт, которого игрок не слышал) вместо RED-04 — они были перепутаны с met_twice"
       }
     ]
   },
@@ -6208,7 +6213,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "inkle-ingold:RED-05",
+      "inkle-ingold:RED-04",
       "serial-hooks:RED-16"
     ],
     "calibrated_on": null,
@@ -6217,6 +6222,105 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён (б)"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "знание на входе — по первому входу за прогон (возврат из туннеля не вход); реплики контакта под условием или со вставкой {x: …|…} — защищены; две ложные находки на историях каталога ушли; опора inkle-ingold:RED-04 (говорит как при первой встрече) вместо RED-05"
+      }
+    ]
+  },
+  "C-51.cascade_branches": {
+    "value": 3,
+    "unit": "веток каскада на входе до else",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "rules.md R-35",
+      "procedural-storytelling:P-12",
+      "inkle-ingold:PAT-03"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: merges.mjs скилла story-continuity отмечает каскад шире; больше веток — делить сцену (R-35, inkle-ingold:PAT-03 «ловушки»)"
+      }
+    ]
+  },
+  "C-51.world_states": {
+    "value": 3,
+    "unit": "состояний мира, которые читают следующие главы",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; больше — свести в одно сводное состояние (mobile-interactive-stories:PAT-04)"
+      }
+    ]
+  },
+  "C-51.diverging_forks": {
+    "value": 4,
+    "unit": "расходящихся по смыслу развилок на главу",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; согласованность глав ломается комбинаторикой"
+      }
+    ]
+  },
+  "C-51.clock_drift_min": {
+    "value": 30,
+    "unit": "минут расхождения часов мира с паузами",
+    "op": ">",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "dille-ultimate-guide:P-04",
+      "narrative-testing:RED-10"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: timeline.mjs скилла story-continuity — две реплики «сейчас ЧЧ:ММ» на одном пути расходятся с суммой #delay между ними больше чем на столько"
+      }
+    ]
+  },
+  "dict.clock_now": {
+    "value": "(?:сейчас|уже|на часах|время|тут|у нас|ровно|почти)\\s+(?:почти\\s+|уже\\s+|ровно\\s+)?(\\d{1,2}:\\d\\d)",
+    "unit": "regex; группа 1 — время",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "rules.md R-91",
+      "rules.md R-121"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: реплика называет текущее время мира («сейчас 02:14», «у нас уже 03:00») — для timeline.mjs скилла story-continuity"
       }
     ]
   },
