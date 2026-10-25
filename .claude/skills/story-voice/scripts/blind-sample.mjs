@@ -111,7 +111,7 @@ function ask(text) {
   delete env.CLAUDECODE;
   delete env.CLAUDE_PROJECT_DIR;
   try {
-    const r = spawnSync('claude', ['-p', '--model', opt('--model') ?? 'claude-opus-5-5', '--tools', '', '--strict-mcp-config', '--setting-sources', '',
+    const r = spawnSync('claude', ['-p', '--model', 'claude-opus-5-5', '--tools', '', '--strict-mcp-config', '--setting-sources', '',
       '--disable-slash-commands', '--settings', '{"autoMemoryEnabled":false}', '--no-session-persistence', '--output-format', 'json'],
     { cwd: dir, env, input: text, encoding: 'utf8', maxBuffer: 1 << 24, timeout: 10 * 60 * 1000 });
     if (r.error) throw new Error(`claude -p не запустился: ${r.error.message}`);
