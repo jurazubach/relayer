@@ -8,12 +8,38 @@ import { places, plural } from '../text.mjs';
 const words = (t) => t.split(/\s+/).filter(Boolean).length;
 
 /** Узел, где у отрезка больше всего строк; при равенстве — первый по ходу. */
-function heaviest(seg) {
+export function heaviest(seg) {
   const n = new Map();
   for (const l of seg) n.set(l.knot, (n.get(l.knot) ?? 0) + 1);
   let best = seg[0];
   for (const l of seg) if (n.get(l.knot) > n.get(best.knot)) best = l;
   return { knot: best.knot, chapter: best.chapter, lines: n.get(best.knot), knots: n.size };
+}
+
+/**
+ * Монолог отрезка: самая длинная цепочка одного #from подряд или null, если она законна. «?» гасит монолог, только
+ * если на вопрос и правда отвечает кнопка: он последний перед ней. Риторический вопрос посреди рассказа игроку
+ * слова не даёт (мутант m04: «?», а за ним рассказ идёт дальше без кнопки). Таймер («5 мин») гасит всегда.
+ */
+export function monologueOf(seg, T, raw = seg) {
+  let best = [];
+  let cur = [];
+  // пауза сессии рвёт монолог: по обе стороны «не в сети» на ночь — два разных захода игрока (мутант m04, ch1_end).
+  // Паузу часто несёт строка #sys главы, а не реплика, поэтому складываем паузы всех строк между входящими.
+  const session = T.seconds('story.pause.session_s');
+  const gap = new Map();
+  let acc = 0;
+  for (const l of raw) {
+    acc += l.delay ?? 0;
+    if (isIncoming(l)) { gap.set(l, acc); acc = 0; }
+  }
+  for (const l of seg) {
+    if (cur.length && cur[0].who === l.who && (gap.get(l) ?? 0) < session) cur.push(l);
+    else cur = [l];
+    if (cur.length > best.length) best = [...cur];
+  }
+  const answered = best.at(-1) === seg.at(-1) && best.at(-1).text.includes('?');
+  return answered || best.some((l) => T.re('dict.timer').test(l.text)) ? null : best;
 }
 
 const from = (p) => (p.start !== p.knot ? `, начало в ${p.start}, узлов ${p.knots}` : '');
@@ -25,13 +51,13 @@ export default {
   partial: true,
   run(ctx, find) {
     const { T } = ctx;
-    const timer = T.re('dict.timer');
     const series = places();
     const mono = places();
     for (const run of ctx.runs) {
       let at = 0;
       for (const c of run.choices) {
-        const seg = run.lines.slice(at, c.at).filter(isIncoming);
+        const raw = run.lines.slice(at, c.at);
+        const seg = raw.filter(isIncoming);
         at = c.at;
         if (!seg.length) continue;
         const h = heaviest(seg);
@@ -39,15 +65,8 @@ export default {
         const w = seg.reduce((s, l) => s + words(l.text), 0);
         if (seg.length > p.max) Object.assign(p, { max: seg.length, start: seg[0].knot, knots: h.knots });
         if (w > p.words) p.words = w;
-        // монолог: самая длинная цепочка одного #from подряд
-        let best = [];
-        let cur = [];
-        for (const l of seg) {
-          if (cur.length && cur[0].who === l.who) cur.push(l);
-          else cur = [l];
-          if (cur.length > best.length) best = [...cur];
-        }
-        if (best.length > T.value('C-35.monologue') && !best.some((l) => l.text.includes('?') || timer.test(l.text))) {
+        const best = monologueOf(seg, T, raw);
+        if (best && best.length > T.value('C-35.monologue')) {
           const b = heaviest(best);
           const m = mono.add(b.knot, () => ({ knot: b.knot, chapter: b.chapter, who: best[0].who, max: 0, start: best[0].knot, knots: 1 }));
           if (best.length > m.max) Object.assign(m, { max: best.length, start: best[0].knot, knots: b.knots });

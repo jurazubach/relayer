@@ -25,6 +25,18 @@ export function register(test, { has, hasNot, lint }) {
     assert.equal(series[0].node, 'tale');
   });
 
+  test('C-35: риторический «?» в монологе его не гасит; вопрос, на который отвечает кнопка, — гасит', async () => {
+    const tale = `${many(7, 'рассказ')}\nчто он хочет без свидетелей? #from:ann`;
+    await has(`-> a\n=== a ===\n${tale}\nладно. потом расскажу #from:ann\n* [ну] -> END\n* [и?] -> END`, 'C-35.monologue', { only: ['C-35'] });
+    await hasNot(`-> a\n=== a ===\n${tale}\n* [не знаю] -> END\n* [спроси его] -> END`, 'C-35.monologue', { only: ['C-35'] });
+  });
+
+  test('C-35: пауза сессии на строке главы рвёт монолог — по обе стороны два захода, а не один рассказ', async () => {
+    const src = (d) => `-> ch1\n=== ch1 ===\n${many(4, 'вечер')}\nАня не в сети #sys:ann\n-> ch2\n=== ch2 ===\nГлава 2 #sys:ann #chapter #delay:${d}\n${many(4, 'утро')}\n* [ну] -> END\n* [и?] -> END`;
+    await hasNot(src('2h'), 'C-35.monologue', { only: ['C-35'] });
+    await has(src('20s'), 'C-35.monologue', { only: ['C-35'] });
+  });
+
   test('C-35: короткий вход и короткий рассказ — без находки', async () => {
     await hasNot(`-> door\n=== door ===\nоткрыла #from:ann\n-> story\n=== story ===\n${many(5, 'рассказ')}\n* [и что?] -> END\n* [дальше] -> END`, 'C-35.series_ch1', { only: ['C-35'] });
   });

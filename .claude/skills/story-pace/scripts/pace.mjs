@@ -3,6 +3,7 @@
 // совпадают с находками C-35 и C-36, а доли глав и ровные паузы — с C-38 (медианный путь).
 import { analyze } from '../../../../scripts/lint/core.mjs';
 import { isCalm } from '../../../../scripts/lint/checks/C-38.mjs';
+import { heaviest, monologueOf } from '../../../../scripts/lint/checks/C-35.mjs';
 import { isIncoming, median } from '../../../../scripts/lint/journal.mjs';
 import { firstLines, heroNames } from '../../../../scripts/lint/text.mjs';
 import { loadStory, storyRefs } from '../../../../scripts/lib/story.mjs';
@@ -42,15 +43,6 @@ const runsN = Number(opt('--runs') ?? T.value('lint.runs.full'));
 const seed = Number(opt('--seed') ?? 1);
 const words = (t) => t.split(/\s+/).filter(Boolean).length;
 
-/** Узел, где у отрезка больше всего строк — так же, как у C-35. */
-function heaviest(seg) {
-  const n = new Map();
-  for (const l of seg) n.set(l.knot, (n.get(l.knot) ?? 0) + 1);
-  let best = seg[0];
-  for (const l of seg) if (n.get(l.knot) > n.get(best.knot)) best = l;
-  return { knot: best.knot, chapter: best.chapter, knots: n.size };
-}
-
 function profile(ref) {
   const story = loadStory(ref);
   const ctx = analyze(story, T, { runs: runsN, seed });
@@ -60,14 +52,14 @@ function profile(ref) {
   const by = Array.from({ length: N }, (_, i) => ({ chapter: i + 1, series: null, mono: null, lull: null, vague: null }));
   const bump = (slot, c, cand) => { const s = by[(c ?? 1) - 1]; if (s && (!s[slot] || cand.n > s[slot].n)) s[slot] = cand; };
   const allSeries = new Map();
-  const timer = T.re('dict.timer');
   const names = [...heroNames(ctx).keys()].map((n) => n.slice(0, 4));
   const concrete = (l) => /\d/.test(l.text) || /[«»"]/.test(l.text) || l.kind === 'photo' || names.some((n) => l.text.toLowerCase().includes(n));
 
   for (const run of ctx.runs) {
     let at = 0;
     for (const c of run.choices) {
-      const seg = run.lines.slice(at, c.at).filter(isIncoming);
+      const raw = run.lines.slice(at, c.at);
+      const seg = raw.filter(isIncoming);
       at = c.at;
       if (!seg.length) continue;
       const h = heaviest(seg);
@@ -76,13 +68,9 @@ function profile(ref) {
       bump('series', h.chapter, cand);
       const prev = allSeries.get(h.knot);
       if (!prev || cand.n > prev.n) allSeries.set(h.knot, { ...cand, chapter: h.chapter });
-      let best = [];
-      let cur = [];
-      for (const l of seg) {
-        if (cur.length && cur[0].who === l.who) cur.push(l); else cur = [l];
-        if (cur.length > best.length) best = [...cur];
-      }
-      if (!best.some((l) => l.text.includes('?') || timer.test(l.text))) {
+      // монолог — то же правило, что у C-35 (вопрос, на который отвечает кнопка, и таймер его гасят)
+      const best = monologueOf(seg, T, raw);
+      if (best) {
         const b = heaviest(best);
         bump('mono', b.chapter, { n: best.length, who: best[0].who, knot: b.knot });
       }
@@ -96,7 +84,7 @@ function profile(ref) {
       const reset = item.type === 'choice' || item.kind === 'photo' || item.unlock?.length || item.text?.includes('?') || (item.who && firstOf.get(item.who) === item.i);
       if (item.type === 'line' && isIncoming(item)) {
         if (reset) lull = []; else lull.push(item);
-        if (pos < tailFrom && lull.length) bump('lull', lull[0].chapter, { n: lull.length, knot: lull[0].knot });
+        if (pos < tailFrom && lull.length) { const h = heaviest(lull); bump('lull', h.chapter, { n: lull.length, knot: h.knot }); }
         if (concrete(item)) vague = []; else vague.push(item);
         if (vague.length) bump('vague', vague[0].chapter, { n: vague.length, knot: vague[0].knot });
       } else if (reset) { lull = []; vague = []; }

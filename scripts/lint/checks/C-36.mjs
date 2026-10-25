@@ -5,6 +5,7 @@
 import { walk } from '../../lib/ink.mjs';
 import { firstLines } from '../text.mjs';
 import { heroNames, pct, places, plural } from '../text.mjs';
+import { heaviest } from './C-35.mjs';
 
 export default {
   id: 'C-36',
@@ -20,22 +21,26 @@ export default {
     const concrete = (l) => /\d/.test(l.text) || /[«»"]/.test(l.text) || l.kind === 'photo' || names.some((n) => l.text.toLowerCase().includes(n));
     for (const run of ctx.runs) {
       const firstOf = firstLines(run);
-      let n = 0;
-      let start = null;
+      let quiet = [];
       let streak = [];
       const tailFrom = run.seq.findLastIndex((x) => x.type === 'choice');
       for (const [pos, item] of run.seq.entries()) {
         const reset = item.type === 'choice' || item.kind === 'photo' || item.unlock?.length || item.text?.includes('?') || (item.who && firstOf.get(item.who) === item.i);
         if (item.type === 'line' && (item.kind === 'in' || item.kind === 'photo')) {
-          if (reset) { n = 0; start = null; } else { n++; start ??= item; }
-          if (n > T.value('C-36.lull') && pos < tailFrom) { const p = lull.add(start.knot, () => ({ knot: start.knot, chapter: start.chapter, max: 0 })); p.max = Math.max(p.max, n); }
+          if (reset) quiet = []; else quiet.push(item);
+          // как у C-35: находка на узле, где у затишья больше всего строк, — там его и чинить
+          if (quiet.length > T.value('C-36.lull') && pos < tailFrom) {
+            const h = heaviest(quiet);
+            const p = lull.add(h.knot, () => ({ knot: h.knot, chapter: h.chapter, max: 0 }));
+            p.max = Math.max(p.max, quiet.length);
+          }
           if (concrete(item)) streak = []; else streak.push(item);
           if (streak.length === T.value('C-36.vague')) {
             const s = streak[0];
             if (!vague.has(s.chapter)) vague.set(s.chapter, new Set());
             vague.get(s.chapter).add(s.knot);
           }
-        } else if (reset) { n = 0; start = null; streak = []; }
+        } else if (reset) { quiet = []; streak = []; }
       }
     }
     for (const p of lull.values()) find('C-36.lull', { node: p.knot, chapter: p.chapter, message: `${p.knot}: ${plural(p.max, 'сообщение', 'сообщения', 'сообщений')} подряд ничего не происходит — ни вопроса, ни фото, ни нового лица` });
