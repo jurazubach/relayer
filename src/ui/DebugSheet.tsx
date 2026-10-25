@@ -1,8 +1,19 @@
 import { useState } from 'react';
-import type { Engine, Story } from '../engine';
-import { SPEEDS, formatDuration, storyLabel } from '../engine';
+import type { Engine, LogEntry, Story } from '../engine';
+import { SPEEDS, downloadChoiceLog, formatDuration, formatTime, storyLabel } from '../engine';
 
-/** Шторка отладки: время, переменные, прыжки по сценарию, переключение историй. */
+/** Сколько последних записей журнала видно в шторке: остальное — в выгрузке. */
+const LOG_SHOWN = 5;
+
+function logWhat(e: LogEntry): string {
+  if (e.kind === 'choice') return `«${e.text}»`;
+  if (e.kind === 'noanswer') return e.reminders ? `не ответил после напоминаний: ${e.reminders}` : 'не ответил';
+  if (e.kind === 'remind') return `напоминание: «${e.text}»`;
+  if (e.kind === 'jump') return `отладка: переход к «${e.text}»`;
+  return `отладка: ${e.text}`;
+}
+
+/** Шторка отладки: время, переменные, журнал выборов, прыжки по сценарию, переключение историй. */
 export function DebugSheet({
   engine,
   stories,
@@ -22,6 +33,8 @@ export function DebugSheet({
   const [confirmReset, setConfirmReset] = useState(false);
   const refresh = () => force((n) => n + 1);
   const view = engine?.view();
+  const log = engine?.journal() ?? [];
+  const story = stories.find((s) => s.id === storyId);
 
   return (
     <div className="sheet-backdrop" onClick={onClose}>
@@ -167,6 +180,42 @@ export function DebugSheet({
                   );
                 })}
               </ul>
+            </div>
+
+            <div className="sheet__group">
+              <h3 className="sheet__label">Журнал выборов</h3>
+              <p className="sheet__note">
+                {log.length
+                  ? `Записей: ${log.length}. Выгрузка — файл для автора: маршрут повторяет npm run story:trace -- --from-save.`
+                  : 'Выборов пока не было.'}
+              </p>
+              {log.length > 0 && (
+                <ol className="choice-log" data-testid="choice-log">
+                  {log
+                    .map((e, i) => ({ e, n: i + 1 }))
+                    .slice(-LOG_SHOWN)
+                    .reverse()
+                    .map(({ e, n }) => (
+                      <li className="choice-log__item" key={n}>
+                        <span className="choice-log__where">
+                          {n} · {e.knot ?? 'до первого узла'} · {formatTime(e.at)}
+                          {e.kind === 'choice' || e.kind === 'noanswer' ? ` · ждал ${formatDuration(e.waitMs)}` : ''}
+                        </span>
+                        <span className={e.kind === 'choice' ? 'choice-log__what' : 'choice-log__what choice-log__what--quiet'}>
+                          {logWhat(e)}
+                        </span>
+                      </li>
+                    ))}
+                </ol>
+              )}
+              <button
+                className="btn"
+                disabled={!log.length}
+                onClick={() => downloadChoiceLog(engine, story ?? { id: storyId, title: engine.title })}
+                data-testid="choice-log-export"
+              >
+                Скачать журнал
+              </button>
             </div>
 
             <div className="sheet__group">

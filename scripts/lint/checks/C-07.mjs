@@ -14,9 +14,17 @@ export default {
   run(ctx, find) {
     const { st, T } = ctx;
     const byButtons = new Set([...st.vars.index.values()].filter((v) => v.writes.some((w) => w.choice)).map((v) => v.name));
-    for (const id of endingNodes(st)) {
-      // финал и туннели, которые он вызывает
-      const nodes = [id, ...(st.edges.get(id) ?? []).filter((e) => e.kind === 'tunnel').map((e) => e.to)];
+    const finals = new Set(endingNodes(st));
+    for (const id of finals) {
+      // финал, туннели, которые он вызывает, и общий эпилог после него: финальные узлы без кнопок, куда он
+      // ведёт (разбор после всех исходов цитирует путь за все финалы сразу — это тоже цитата)
+      const nodes = [id];
+      for (let i = 0; i < nodes.length; i++) {
+        for (const e of st.edges.get(nodes[i]) ?? []) {
+          if (nodes.includes(e.to) || finals.has(e.to)) continue;
+          if (e.kind === 'tunnel' || st.finals.has(e.to)) nodes.push(e.to);
+        }
+      }
       const used = new Set();
       let n = 0;
       for (const nid of nodes) {

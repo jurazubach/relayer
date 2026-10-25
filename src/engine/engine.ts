@@ -84,6 +84,41 @@ interface Silence {
   key: string;
 }
 
+/**
+ * Запись журнала выборов (E-03): что игрок сделал у развилки. Журнал выгружается тестером из отладки
+ * и воспроизводится ботом (story:trace --from-save), поэтому номер кнопки считается как у бота:
+ * среди показанных кнопок, с нуля; «не ответил» — −1.
+ */
+export interface LogEntry {
+  /** choice — нажал кнопку; noanswer — молчал, история пошла веткой «не ответил»; remind — персонаж напомнил;
+   *  jump и set — вмешательство из отладки: после них маршрут воспроизводится уже не точно. */
+  kind: 'choice' | 'noanswer' | 'remind' | 'jump' | 'set';
+  at: number;
+  /** Узел развилки (knot или knot.stitch); null — кнопки стоят до первого узла. */
+  knot: string | null;
+  chapter: string;
+  /** Чат, где стояли кнопки. */
+  thread: string;
+  /** Номер нажатой кнопки среди показанных; −1 — «не ответил»; null — не выбор. */
+  picked: number | null;
+  /** Текст кнопки, реплики напоминания, узла перехода или «имя = значение». */
+  text: string;
+  options: string[];
+  /** Сколько кнопки ждали игрока, мс настоящего времени: с первого появления развилки, напоминания не сбрасывают. */
+  waitMs: number;
+  /** Сколько напоминаний было у развилки до этой записи. */
+  reminders: number;
+  /** Переменные в момент решения, до последствий выбора. */
+  vars: Record<string, string | number | boolean>;
+}
+
+/** Развилка, у которой стоит игрок: для журнала. */
+interface Fork {
+  at: number;
+  knot: string | null;
+  reminders: number;
+}
+
 interface SaveData {
   v: 1 | 2;
   storyId: string;
@@ -108,6 +143,10 @@ interface SaveData {
   silence?: Silence | null;
   waitDone?: number;
   lastRemind?: { ms: number; key: string } | null;
+  /** Сохранения до журнала выборов его не знают: журнал начинается с места, где игрок сейчас. */
+  log?: LogEntry[];
+  fork?: Fork | null;
+  startedAt?: number;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -204,6 +243,10 @@ export class Engine {
   private waitDone = 0;
   /** Последнее напоминание: столько же ждём перед веткой «не ответил» той же развилки, если сценарий не сказал иначе. */
   private lastRemind: { ms: number; key: string } | null = null;
+  private log: LogEntry[] = [];
+  private fork: Fork | null = null;
+  /** Когда началась игра: в выгрузке журнала. */
+  startedAt = Date.now();
   mode: Mode = DEFAULT_MODE;
   /** Отладка: набор текста в 4 раза быстрее. */
   fastTyping = false;
@@ -289,6 +332,9 @@ export class Engine {
     this.silence = null;
     this.waitDone = 0;
     this.lastRemind = null;
+    this.log = [];
+    this.fork = null;
+    this.startedAt = Date.now();
     for (const id of Object.keys(this.renamed)) {
       const original = this.originalNames.get(id);
       if (original) this.contact(id).name = original;
@@ -402,6 +448,11 @@ export class Engine {
       }
       if (!silence.target && silentIndex >= 0) silence.target = { index: silentIndex, ms: null };
       silence.key = sources.join('|');
+      // напоминание вернуло к той же развилке: игрок всё ещё думает над ней
+      const same = this.fork && this.lastRemind?.key === silence.key;
+      this.fork = this.choices.length
+        ? { at: same ? this.fork!.at : Date.now(), knot: this.knotOf(sources[0]), reminders: same ? this.fork!.reminders : 0 }
+        : null;
       this.silence = this.choices.length && (silence.reminders.length || silence.target) ? silence : null;
       this.waitDone = 0;
       this.choiceThread = this.choices.length ? fallback : null;
@@ -425,6 +476,9 @@ export class Engine {
 
   /** Игрок промолчал до срока: персонаж напоминает или история идёт веткой «не ответил». Исходящего сообщения нет. */
   private fireSilence(step: { index: number; ms: number; remind: boolean }) {
+    const hidden = this.story.currentChoices.find((c) => c.index === step.index);
+    this.record(step.remind ? 'remind' : 'noanswer', step.remind ? null : -1, hidden?.text ?? '');
+    if (step.remind && this.fork) this.fork.reminders++;
     this.lastRemind = step.remind && this.silence ? { ms: step.ms, key: this.silence.key } : null;
     this.lastThread = this.choiceThread ?? this.lastThread;
     this.afterPlayer = false;
@@ -531,6 +585,7 @@ export class Engine {
     const choice = this.choices.find((c) => c.index === index);
     if (!choice) return;
     const thread = choice.thread ?? this.choiceThread ?? this.speaker;
+    this.record('choice', this.choices.indexOf(choice), choice.text);
     if (!choice.silent) {
       this.messages.push({ id: this.nextId++, thread, kind: 'out', text: choice.text, at: Date.now() });
       this.unlocked = [thread, ...this.unlocked.filter((t) => t !== thread)];
@@ -578,6 +633,7 @@ export class Engine {
   }
 
   jump(knot: string) {
+    this.record('jump', null, knot);
     this.story.ChoosePathString(knot);
     this.pending = null;
     this.choices = [];
@@ -587,9 +643,54 @@ export class Engine {
     this.silence = null;
     this.waitDone = 0;
     this.lastRemind = null;
+    this.fork = null;
     this.messages.push({ id: this.nextId++, thread: this.lastThread || this.speaker || 'unknown', kind: 'sys', text: `переход к «${knot}»`, at: Date.now() });
     this.advance();
     this.emit();
+  }
+
+  /** Развилка, у которой стоит игрок; null — кнопок нет. */
+  currentKnot(): string | null {
+    return this.fork?.knot ?? null;
+  }
+
+  /** Журнал выборов с начала игры, по порядку. */
+  journal(): readonly LogEntry[] {
+    return this.log;
+  }
+
+  private record(kind: LogEntry['kind'], picked: number | null, text: string) {
+    const at = Date.now();
+    const vars: LogEntry['vars'] = {};
+    for (const name of this.varNames) {
+      const v = this.getVar(name);
+      // списки ink — объекты: в журнал идёт их текст, иначе файл не прочитать без inkjs
+      vars[name] = typeof v === 'number' || typeof v === 'boolean' || typeof v === 'string' ? v : String(v);
+    }
+    const fork = this.fork;
+    this.log.push({
+      kind,
+      at,
+      knot: fork?.knot ?? null,
+      chapter: this.chapter,
+      thread: this.choiceThread ?? this.lastThread,
+      picked,
+      text,
+      options: this.choices.map((c) => c.text),
+      waitMs: fork ? Math.max(0, at - fork.at) : 0,
+      reminders: fork?.reminders ?? 0,
+      vars,
+    });
+  }
+
+  /** Узел развилки по пути варианта в ink («shore.0.c-1», «ch2.night.0.3»): как узлы бота — knot или knot.stitch. */
+  private knotOf(path: string | undefined): string | null {
+    if (!path) return null;
+    const [knot, sub] = path.split('.');
+    const named = (this.story.mainContentContainer as unknown as { namedContent: Map<string, { namedContent: Map<string, unknown> }> }).namedContent;
+    const container = named.get(knot);
+    if (!container || !this.knots.includes(knot)) return null;
+    return sub && container.namedContent.has(sub) ? `${knot}.${sub}` : knot;
   }
 
   getVar(name: string): unknown {
@@ -597,6 +698,7 @@ export class Engine {
   }
 
   setVar(name: string, value: unknown) {
+    this.record('set', null, `${name} = ${String(value)}`);
     this.story.variablesState[name] = value;
     this.emit();
   }
@@ -675,6 +777,9 @@ export class Engine {
       silence: this.silence,
       waitDone: this.waitDone,
       lastRemind: this.lastRemind,
+      log: this.log,
+      fork: this.fork,
+      startedAt: this.startedAt,
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
@@ -710,6 +815,9 @@ export class Engine {
       this.silence = d.silence ?? null;
       this.waitDone = d.waitDone ?? 0;
       this.lastRemind = d.lastRemind ?? null;
+      this.log = d.log ?? [];
+      this.fork = d.fork ?? null;
+      this.startedAt = d.startedAt ?? this.startedAt;
       for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();
       return true;

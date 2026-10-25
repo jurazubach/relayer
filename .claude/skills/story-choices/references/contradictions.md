@@ -2,7 +2,7 @@
 
 Где разборы спорят, здесь спор → решение → на чём стоит. Решения автора (`docs/playbook/_build/INTENT.md`,
 `docs/playbook/superseded.md`) выше любого источника. Один блок держит один спор; повторы того же спора из
-других разборов влиты в него (статус `merged-into` в `docs/playbook/coverage.json`) и названы в теле.
+других разборов влиты в него (статус `merged-into` в `docs/playbook/coverage/story-choices.json`) и названы в теле.
 Общий индекс противоречий — у `story-kb` (`#attn-contra`).
 
 ## Сколько откликаться

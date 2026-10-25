@@ -8,3 +8,4 @@ export * from './flags';
 export * from './useRouter';
 export * from './useLibrary';
 export * from './useGame';
+export * from './choiceLog';
