@@ -39,6 +39,12 @@ export function register(test, { has, hasNot }) {
     await hasNot(opening(`за мной следят #from:ann\n${flat}`), 'attn.opening.incident.msg', { only: ['C-23'] });
   });
 
+  test('C-24: ставка в стволе, но только на двенадцатом входящем — подсказка; на третьем — нет', async () => {
+    const filler = (n) => Array.from({ length: n }, (_, i) => `реплика ${i + 1} #from:ann`).join('\n');
+    await has(opening(`${filler(11)}\nдо утра надо успеть #from:ann`), 'C-24.by_msg', { only: ['C-24'] });
+    await hasNot(opening(`${filler(2)}\nдо утра надо успеть #from:ann`), 'C-24.by_msg', { only: ['C-24'] });
+  });
+
   test('C-20: первая кнопка на четвёртом входящем — норма, на восьмом — находка', async () => {
     const start = (n) => opening(Array.from({ length: n }, (_, i) => `реплика ${i + 1} #from:ann`).join('\n'));
     await hasNot(start(4), 'C-20.start_msgs', { only: ['C-20'] });

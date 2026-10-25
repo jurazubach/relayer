@@ -3003,6 +3003,42 @@
       }
     ]
   },
+  "C-24.by_msg": {
+    "value": 10,
+    "unit": "номер входящего",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "rules.md R-17 («на любом пути не позже 10-го входящего»)",
+      "truby-anatomy-of-story:attention§2 («≤ 10-го входящего»)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: C-24 мерил только «есть ли ставка до первой паузы от часа»; ставка на 17-м входящем проходила как норма. Медиана по прогонам, где ставка есть"
+      }
+    ]
+  },
+  "C-24.routes_max": {
+    "value": 2000,
+    "unit": "маршрутов главы 1",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "narrative-testing:/first-minutes («маршрутов главы 1 мало, полный перебор»)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: предел перебора first-minutes.mjs; хаб с липкими кнопками в главе 1 даёт тысячи маршрутов, дальше итог помечается «частично»"
+      }
+    ]
+  },
   "C-25.cosmetic_start": {
     "value": 2,
     "unit": "первые развилки",
