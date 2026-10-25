@@ -7,7 +7,10 @@ import { loadThresholds as loadAll } from '../lib/thresholds.mjs';
 export const NONE = 'none';
 
 // Ключи теста срабатывания; числа — только в docs/playbook/thresholds.json, общий загрузчик scripts/lib/thresholds.mjs.
-export const TRIGGER_KEYS = ['lab.triggers.runs_per_phrase', 'lab.triggers.min_share', 'lab.triggers.max_false'];
+export const TRIGGER_KEYS = [
+  'lab.triggers.runs_per_phrase', 'lab.triggers.min_share', 'lab.triggers.max_false',
+  'lab.triggers.jobs', 'lab.triggers.max_turns', 'lab.triggers.timeout_s',
+];
 
 /** Пороги теста срабатывания: { values, source }. Ключа нет — исключение загрузчика, а не запасное число. */
 export function loadThresholds(path) {

@@ -1,6 +1,6 @@
 // C-27. Пауза без причины и срок возвращения (A-01): персонаж называет причину ухода, но не срок.
 // Срок перед паузой — будильник в реальном времени и ложь в «по клику»: «утром» приходит через секунду.
-import { fmtDur, places, returnDeadline, short } from '../text.mjs';
+import { fmtDur, isClosing, places, returnDeadline, short } from '../text.mjs';
 
 export default {
   id: 'C-27',
@@ -22,7 +22,7 @@ export default {
         const last = before.at(-1);
         const p = all.add(`${l.knot}|${l.text}`, () => ({ knot: last.knot, delay: l.delay, last: last.text, bare: 0, deadline: null, mid: 0 }));
         const why = before.some((x) => reason.test(x.text.toLowerCase()) || (x.kind === 'sys' && /не в сети/i.test(x.text)));
-        if (!why) p.bare++;
+        if (!why && !explained(l, last, before, long, T)) p.bare++;
         const d = before.find((x) => returnDeadline(x.text, T));
         if (d) p.deadline = d.text;
         if (midlist.test(last.text.trim())) p.mid++;
@@ -39,3 +39,18 @@ export default {
     }
   },
 };
+
+/**
+ * Пауза, которой причина не нужна, хотя слова причины нет (калибровка T-03d, checks.md C-27):
+ * - исключение R-63: последняя строка — прощание, а после паузы пишет другой контакт;
+ * - короткая пауза (до C-27.long_h) между разговорами: после неё пишет другой контакт — прежний разговор
+ *   не оборвался, история идёт дальше в другом чате;
+ * - короткая пауза на стыке глав: стык меряют C-39 и C-32 п. 4.
+ * Долгая пауза без прощания требует причины всегда: часы тишины игрок примет за поломку.
+ */
+function explained(l, last, before, long, T) {
+  const other = l.who !== last.who;
+  if (other && isClosing(last.text, T)) return true;
+  if (l.delay >= long) return false;
+  return other || l.isChapter || before.some((x) => x.isChapter);
+}

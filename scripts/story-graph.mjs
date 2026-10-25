@@ -7,6 +7,7 @@ import { compile, formatMessages } from './lib/compile.mjs';
 import { findEndings, nodeIds, resolveTarget, stripComments } from './lib/ink.mjs';
 import { play, seeded } from './lib/bot.mjs';
 import { compileInput, loadStory, parseStory, storyRefs } from './lib/story.mjs';
+import { threshold } from './lib/thresholds.mjs';
 
 const HELP = `npm run graph [-- <id | путь> …] [--open] [--json] [--seed N]
 
@@ -19,7 +20,8 @@ const HELP = `npm run graph [-- <id | путь> …] [--open] [--json] [--seed N
   --seed N     повторяемые прохождения бота (иначе Math.random)
   --help       эта справка`;
 
-const RUNS = 400;
+const RUNS = threshold('bot.graph_runs');
+const MAX_LINES = threshold('bot.graph_max_lines');
 const OUT = 'graph/index.html';
 
 const args = process.argv.slice(2);
@@ -59,7 +61,7 @@ function collectEdges(knot, knotIds) {
 function playtest(json, ids) {
   const visits = Object.fromEntries(ids.map((id) => [id, 0]));
   for (let run = 0; run < RUNS; run++) {
-    const { visited } = play(json, { rng, nodes: ids, maxSteps: 3000, log: false });
+    const { visited } = play(json, { rng, nodes: ids, maxSteps: MAX_LINES, log: false });
     for (const id of visited) visits[id]++;
   }
   return Object.fromEntries(Object.entries(visits).map(([k, v]) => [k, Math.round((v / RUNS) * 1000) / 10]));

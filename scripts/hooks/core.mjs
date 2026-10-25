@@ -7,7 +7,7 @@ import { closeSync, existsSync, mkdirSync, mkdtempSync, openSync, readFileSync, 
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadThresholds } from '../lint/thresholds.mjs';
+import { loadThresholds } from '../lib/thresholds.mjs';
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const STORIES = 'src/stories';
@@ -75,7 +75,7 @@ export function sessionState(sessionId) {
 }
 
 function runJson(script, args) {
-  // stdout в файл, а не в трубу: команды зовут process.exit сразу после вывода, и из трубы доходят только первые 64 КБ
+  // stdout в файл, а не в трубу: из трубы доходят только первые 64 КБ, если команда выйдет раньше, чем допишет вывод
   const dir = mkdtempSync(join(tmpdir(), 'relayer-hook-'));
   const out = join(dir, 'out.json');
   const fd = openSync(out, 'w');
@@ -119,9 +119,10 @@ export function checkStory(id, { quick = true } = {}) {
   for (const p of s.problems ?? []) findings.push({ level: 'warning', check: 'check:story', where: 'история', message: p });
 
   const lintScript = join(ROOT, 'scripts/lint/lint.mjs');
-  let lint = runJson(lintScript, quick ? [id, '--changed', '--quick'] : [id]);
+  // быстрый режим — story:lint --changed --quick --summary: сводка не длиннее skill.hook.max_output_chars
+  let lint = runJson(lintScript, quick ? [id, '--changed', '--quick', '--summary'] : [id]);
   // правку откатили к версии из git — --changed историю не видит, а прежние находки нельзя счесть исправленными
-  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [id, '--quick']);
+  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [id, '--quick', '--summary']);
   if (!lint.json) {
     findings.push({ level: 'error', check: 'story:lint', where: 'история', message: firstLines(lint.stderr) || 'story:lint не запустился' });
   }
@@ -131,7 +132,9 @@ export function checkStory(id, { quick = true } = {}) {
       findings.push({ level: f.level, check: f.check, where, message: f.message, threshold: f.threshold });
     }
   }
-  return { id, compiled: true, findings, stats: { runs: s.runs, nodes: s.nodes.total } };
+  // из сводки — только счётчики по проверкам: находки хук отбирает сам (новые поимённо, прежние числом)
+  const byCheck = lint.json?.summary?.split('\n').find((l) => l.startsWith('  по проверкам:'))?.trim() ?? null;
+  return { id, compiled: true, findings, byCheck, stats: { runs: s.runs, nodes: s.nodes.total } };
 }
 
 export const fingerprint = (f) => `${f.check}|${f.where}|${f.message}`;

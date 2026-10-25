@@ -10,7 +10,7 @@ import { parseOwners, ownerSkills, oporaIndex, ownersCheck, parseOpora } from '.
 import { buildClusters, assignOwners, byId } from './kb-clusters.mjs';
 import { scanSkills, keyTerms, rowLevel, LEVELS, levelNum } from './kb-levels.mjs';
 import { statusError, supersededIndex, engineFeatures, STATUS_HELP, REJECT_REASONS } from './kb-status.mjs';
-import { loadThresholds } from '../lint/thresholds.mjs';
+import { loadThresholds } from '../lib/thresholds.mjs';
 import { seeded } from '../lib/bot.mjs';
 
 const HELP = `Покрытие знаний: какие единицы базы и свода держат скиллы и на каком уровне.

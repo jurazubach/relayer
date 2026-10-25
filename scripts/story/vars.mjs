@@ -24,9 +24,10 @@ const HELP = `npm run story:vars -- [--story <id>] [--only <метка>] [--var 
   только финал  пишется до последней главы, а читается лишь в финалах, распределителях
                 или последней главе (C-03)
   не пишется    только начальное значение: флаг, который никто не ставит
+  молчит        между записью и первым чтением после неё больше vars.silent_chapters глав (K-02)
 
   --story <id>  история или несколько через запятую; по умолчанию все из src/stories
-  --only <метка> только переменные с меткой (мёртвая, невидимая, «только финал», «не пишется»)
+  --only <метка> только переменные с меткой (мёртвая, невидимая, «только финал», «не пишется», молчит)
   --var <имя>   подробно по одной переменной: каждая запись и каждое чтение
   --json        всё данными
   --help        эта справка`;
@@ -52,7 +53,7 @@ runCli(HELP, async (args) => {
       list = list.filter((v) => v.name === one);
       if (!list.length) throw new Error(`${p.story.path}: нет переменной «${one}»`);
     }
-    const counts = Object.fromEntries(['мёртвая', 'невидимая', 'только финал', 'не пишется'].map((f) => [f, idx.vars.filter((v) => v.flags.includes(f)).length]));
+    const counts = Object.fromEntries(['мёртвая', 'невидимая', 'только финал', 'не пишется', 'молчит'].map((f) => [f, idx.vars.filter((v) => v.flags.includes(f)).length]));
     report.push({
       id: p.story.id, path: p.story.path, chapters: idx.lastChapter,
       final: [...idx.final], distributors: [...idx.distributors], counts, vars: list,
@@ -77,7 +78,7 @@ runCli(HELP, async (args) => {
     ]);
     console.log('');
     console.log(table(rows, ['VAR', 'пиш.', 'видно/скрыто', 'главы', 'финал', 'метки', 'где пишется → где читается']).replace(/^/gm, '   '));
-    console.log(`\n   мёртвых ${counts['мёртвая']} · невидимых ${counts['невидимая']} · только в финале ${counts['только финал']} · не пишутся ${counts['не пишется']}\n`);
+    console.log(`\n   мёртвых ${counts['мёртвая']} · невидимых ${counts['невидимая']} · только в финале ${counts['только финал']} · не пишутся ${counts['не пишется']} · молчат ${counts['молчит']}\n`);
   }
   if (json) console.log(JSON.stringify({ stories: report }, null, 1));
 });

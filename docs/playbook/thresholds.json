@@ -108,13 +108,6 @@
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: короткая история — свои пороги кнопок, контактов главы 1 и хвоста" }]
   },
-  "story.stake.min_roots": {
-    "value": 2, "unit": "корня шапки // ставка: в одной реплике", "op": "≥", "level": null, "basis": "our_estimate",
-    "sources": ["checks.md C-24: значимое слово шапки // ставка:", "reports/T-13/requests.md: мутант m01"],
-    "checks": ["C-24"],
-    "calibrated_on": "2026-10-25: основа мутантов — ставка «к 06:00 семена из камеры три погибнут», «камеру» звучит в каждой ветке главы 1",
-    "history": [{ "date": "2026-10-25", "task": "T-03c", "change": "заведён: одно общее слово со ставкой («камера») находилось на всех путях, и ставка за кнопкой (m01) проходила C-24; у трёх историй шапки // ставка: нет — на них не влияет. Строку в checks.md C-24 «Ключи» — просьба T-03c" }]
-  },
   "story.reading.per_day_min": {
     "value": { "min": 10, "max": 15 }, "unit": "мин чтения за день реального времени", "level": null, "basis": "author_decision",
     "sources": ["superseded.md A-05", "build-plan.md §3", "chat-fiction-apps:attention§4"],
@@ -172,31 +165,31 @@
     "value": 400, "unit": "прохождений", "level": null, "basis": "our_estimate",
     "sources": ["scripts/check-story.mjs"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: число прогонов check:story; код читает его отсюда — просьба T-03b п. 3" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:sessions и story:cast; запасной thresholds.default.json удалён" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: число прогонов check:story; код читает его отсюда — просьба T-03b п. 3" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:sessions и story:cast; запасной thresholds.default.json удалён" }, { "date": "2026-10-25", "task": "T-03d", "change": "scripts/check-story.mjs читает ключ через scripts/lib/thresholds.mjs (было константой в коде); вывод check:story --seed 1 до и после совпадает побайтно" }]
   },
   "bot.max_runs": {
     "value": 2000, "unit": "прохождений", "level": null, "basis": "our_estimate",
     "sources": ["scripts/check-story.mjs: редкие ветки добираются до 2000"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }, { "date": "2026-10-25", "task": "T-03d", "change": "scripts/check-story.mjs читает ключ через scripts/lib/thresholds.mjs (было константой в коде); вывод check:story --seed 1 до и после совпадает побайтно" }]
   },
   "bot.max_lines": {
     "value": 2000, "unit": "строк за прохождение", "level": null, "basis": "our_estimate",
     "sources": ["scripts/lib/bot.mjs (maxSteps)", "scripts/check-story.mjs"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:trace и все story:* через core/run.mjs; запасной thresholds.default.json удалён" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:trace и все story:* через core/run.mjs; запасной thresholds.default.json удалён" }, { "date": "2026-10-25", "task": "T-03d", "change": "scripts/check-story.mjs читает ключ через scripts/lib/thresholds.mjs (было константой в коде); вывод check:story --seed 1 до и после совпадает побайтно" }]
   },
   "bot.graph_runs": {
     "value": 400, "unit": "прохождений", "level": null, "basis": "our_estimate",
     "sources": ["scripts/story-graph.mjs (RUNS)"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: посещаемость узлов на карте" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: посещаемость узлов на карте" }, { "date": "2026-10-25", "task": "T-03d", "change": "scripts/story-graph.mjs читает ключ через scripts/lib/thresholds.mjs (было константой в коде); graph --seed 1 --json до и после совпадает" }]
   },
   "bot.graph_max_lines": {
     "value": 3000, "unit": "строк за прохождение", "level": null, "basis": "our_estimate",
     "sources": ["scripts/story-graph.mjs"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }, { "date": "2026-10-25", "task": "T-03d", "change": "scripts/story-graph.mjs читает ключ через scripts/lib/thresholds.mjs (было константой в коде); graph --seed 1 --json до и после совпадает" }]
   },
 
   "trace.runs": {
@@ -245,7 +238,7 @@
     "value": 2, "unit": "глав", "op": ">", "level": null, "basis": "source",
     "sources": ["skills.md K-02: молчит больше 2 глав", "emshort-structures:RED-03"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json для story:vars (переменная молчит между записью и чтением)" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json; story:vars его пока не читает — метки по нему нет" }]
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json для story:vars (переменная молчит между записью и чтением)" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json; story:vars его пока не читает — метки по нему нет" }, { "date": "2026-10-25", "task": "T-03d", "change": "story:vars ставит метку «молчит»: между первой записью и первым чтением после неё больше N глав (skills.md K-02)" }]
   },
 
   "C-01.dead": {
@@ -641,8 +634,15 @@
   "C-17.ratio": {
     "value": 2, "unit": "раз", "op": ">", "level": "warning", "basis": "our_estimate",
     "sources": ["narrative-postmortems:RED-05", "ashwell-standard-patterns:LESSON-08"],
-    "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: 2 : 1" }]
+    "calibrated_on": "2026-10-25: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов; мутанты docs/lab/mutants",
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: 2 : 1" }, { "date": "2026-10-25", "task": "T-03d", "change": "калибровка: входящие считаются в главе точки выбора, а не с начала истории; спица хаба (возврат в свой узел) — не кандидат; пол C-17.min_msgs. Было 15 / 5 / 13 предупреждений (chuzhoy-golos / slepoe-pyatno / the-number; у chuzhoy-golos все — «от ellie больше ста»), стало 6 / 7 / 3; в slepoe-pyatno окно главы открыло ch2_rotate и ch4_moves, ушли ch3 и ch3_ghost" }]
+  },
+  "C-17.min_msgs": {
+    "value": 5, "unit": "входящих у знакомого в главе до выбора", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-17", "ashwell-standard-patterns:LESSON-08"],
+    "checks": ["C-17"],
+    "calibrated_on": "2026-10-25: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов",
+    "history": [{ "date": "2026-10-25", "task": "T-03d", "change": "заведён: «3 сообщения против 0» в окне главы — не знакомство; без пола C-17 ловил развилки, где один из двух едва успел появиться (slepoe-pyatno ch3_ghost)" }]
   },
   "C-18.share": {
     "value": 0.3, "unit": "доля нажатий", "op": ">", "level": "warning", "basis": "source",
@@ -708,7 +708,7 @@
     "value": 6, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
     "sources": ["edgerton-hooked", "cron-wired-for-story", "vogler-writers-journey (цель 3–5)"],
     "calibrated_on": "2026-10-24: chuzhoy-golos 5, slepoe-pyatno 3, the-number 7",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-20.start_msgs_target": {
     "value": 5, "unit": "входящих", "op": "≤", "level": null, "basis": "source",
@@ -744,7 +744,7 @@
     "value": 1, "unit": "собеседник", "op": ">", "level": "warning", "basis": "source",
     "sources": ["rules.md R-18", "edgerton-hooked:A5 (> 2 до второй развилки)", "choiceofgames-design:§7 п. 22"],
     "calibrated_on": "2026-10-24: the-number 2",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-21.new_ch1": {
     "value": 3, "unit": "новых контакта", "op": ">", "level": "warning", "basis": "source",
@@ -780,7 +780,7 @@
     "value": 3, "unit": "новых имён и терминов", "op": ">", "level": "hint", "basis": "source",
     "sources": ["attention-today:RED-03", "rules.md R-18"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-22.first15": {
     "value": 7, "unit": "новых сущностей", "op": ">", "level": "hint", "basis": "source",
@@ -884,6 +884,13 @@
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }]
   },
+  "C-24.min_roots": {
+    "value": 2, "unit": "корня шапки // ставка: в одной реплике", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-24: значимое слово шапки // ставка:", "reports/T-13/requests.md: мутант m01"],
+    "checks": ["C-24"],
+    "calibrated_on": "2026-10-25: основа мутантов — ставка «к 06:00 семена из камеры три погибнут», «камеру» звучит в каждой ветке главы 1",
+    "history": [{ "date": "2026-10-25", "task": "T-03c", "change": "заведён: одно общее слово со ставкой («камера») находилось на всех путях, и ставка за кнопкой (m01) проходила C-24; у трёх историй шапки // ставка: нет — на них не влияет. Строку в checks.md C-24 «Ключи» — просьба T-03c" }, { "date": "2026-10-25", "task": "T-03d", "change": "переименован из story.stake.min_roots: порог проверки — C-NN.*, story.* — только общие определения истории. Сверка: при 1 корне m01 не ловится (C-24 молчит, «камера» на всех путях), при 2 — ловится; основа мутантов и три истории (без шапки // ставка:) — без находок C-24 в обоих случаях" }]
+  },
   "C-25.cosmetic_start": {
     "value": 2, "unit": "первые развилки", "op": "=", "level": "hint", "basis": "source",
     "sources": ["emshort-structures:RED-16", "ashwell-standard-patterns:RED-03"],
@@ -953,14 +960,14 @@
   "C-27.long_h": {
     "value": 3, "unit": "ч", "op": "≥", "level": "warning", "basis": "source",
     "sources": ["serial-hooks:S10 (часть «причина»)", "messenger-genre:RED-02"],
-    "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: правка T-05 — без сверки обещанного срока" }]
+    "calibrated_on": "2026-10-25: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов; мутанты docs/lab/mutants",
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: правка T-05 — без сверки обещанного срока" }, { "date": "2026-10-25", "task": "T-03d", "change": "калибровка: у паузы от C-27.long_h причина нужна и при смене собеседника, без неё — только после прощания (R-63). Было 28 / 0 / 2 предупреждения, стало 22 / 0 / 2" }]
   },
   "C-27.unexplained": {
     "value": 0, "unit": "причин в 3 строках до паузы", "op": "=", "level": "hint", "basis": "source",
     "sources": ["rules.md R-63", "failbetter-qbn:RED-06"],
-    "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: пауза от story.pause.notice_min до C-27.long_h" }]
+    "calibrated_on": "2026-10-25: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов; мутанты docs/lab/mutants",
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: пауза от story.pause.notice_min до C-27.long_h" }, { "date": "2026-10-25", "task": "T-03d", "change": "калибровка: короткая пауза перед репликой другого контакта (разговор не оборван) и на стыке глав (C-39, C-32 п. 4) причины не требует; исключение R-63 — прощание и другой отправитель. Было 121 / 3 / 13 подсказок (chuzhoy-golos / slepoe-pyatno / the-number), стало 33 / 0 / 4 — остались молчания посреди своего разговора; m08 ловится" }]
   },
   "C-27.deadline": {
     "value": 0, "unit": "сроков возвращения", "op": ">", "level": "warning", "basis": "source",
@@ -978,7 +985,7 @@
     "value": 5, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
     "sources": ["rules.md R-72", "inkle-ingold", "attention-today (6)", "edgerton-hooked (3 для пауз от 2 ч)"],
     "calibrated_on": "2026-10-24: the-number медиана пачки 8",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-28.pack_long_pause_s": {
     "value": 21600, "unit": "с", "op": "≥", "level": null, "basis": "source",
@@ -990,7 +997,7 @@
     "value": 3, "unit": "входящих", "op": ">", "level": "warning", "basis": "source",
     "sources": ["rules.md R-72", "edgerton-hooked"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-28.greeting": {
     "value": 0, "unit": "событий в первой строке", "op": "=", "level": "warning", "basis": "source",
@@ -1165,7 +1172,7 @@
     "value": 6, "unit": "мин активного чтения", "op": ">", "level": "hint", "basis": "source",
     "sources": ["rules.md R-62", "narrative-postmortems:§2"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-33.min_buttons": {
     "value": 2, "unit": "кнопки за сессию", "op": "<", "level": "hint", "basis": "source",
@@ -1231,7 +1238,7 @@
     "value": 40, "unit": "знаков", "op": ">", "level": "hint", "basis": "source",
     "sources": ["checks.md C-34"],
     "calibrated_on": "2026-10-24: медиана 27 / 34 / 27",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-34.opening": {
     "value": { "lines": 5, "chars": 80 }, "unit": "входящих / знаков", "op": ">", "level": "hint", "basis": "source",
@@ -1255,7 +1262,7 @@
     "value": 150, "unit": "слов", "op": ">", "level": "warning", "basis": "source",
     "sources": ["choiceofgames-design/attention.md", "inkle-ingold/attention.md"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-35.series_error": {
     "value": 25, "unit": "входящих", "op": ">", "level": "error", "basis": "source",
@@ -1478,7 +1485,7 @@
     "value": 5, "unit": "сообщений после последней кнопки", "op": ">", "level": "hint", "basis": "source",
     "sources": ["schell-art-of-game-design", "mystery-fair-play:P-15"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: в истории до story.short_min" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: в истории до story.short_min" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-42.thin": {
     "value": 3, "unit": "входящих", "op": "<", "level": "hint", "basis": "source",
@@ -1682,7 +1689,7 @@
     "value": 4, "unit": "входящих подряд", "op": "≥", "level": "hint", "basis": "our_estimate",
     "sources": ["vogler-writers-journey:RED-11", "edgerton-hooked"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03d", "change": "расхождение с кандидатом T-08: оставлено значение проверки, решение королевы (откалибровано на трёх историях; attention-merged.md §6 ссылается на этот ключ, reports/T-03b/build.md — таблица)" }]
   },
   "C-47.ask_share": {
     "value": 0.6, "unit": "доля развилок главы", "op": ">", "level": "hint", "basis": "our_estimate",
@@ -1964,11 +1971,11 @@
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "перенесён из «Общих данных» checks.md" }]
   },
   "dict.pause_reason": {
-    "value": "сплю|спать|еду|дорог|смен|работ|встреч|батаре|заряд|стуч|пришл|не в сети",
+    "value": "сплю|спать|еду|дорог|смен|работ|встреч|батаре|заряд|стуч|пришл|не в сети|иду|пойду|выйду|выхож|захож|ухож|уйду|школ|урок|автобус|поезд|у двери|открыва",
     "unit": "regex", "level": null, "basis": "source",
     "sources": ["serial-hooks:S10 (часть «причина»)", "rules.md R-63"],
-    "checks": ["C-27"], "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "слова времени возвращения убраны из причин (A-01)" }]
+    "checks": ["C-27"], "calibrated_on": "2026-10-25: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов; мутанты docs/lab/mutants",
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "слова времени возвращения убраны из причин (A-01)" }, { "date": "2026-10-25", "task": "T-03d", "change": "добавлено дело в процессе (иду, пойду, выйду, захожу, ухожу, школа, урок, автобус, поезд, у двери, открываю): R-63 называет дорогу и «кто-то пришёл», а словарь их не знал — «я иду туда сама» перед часом тишины считалось паузой без причины" }]
   },
   "dict.return_deadline": {
     "value": {
@@ -2510,6 +2517,24 @@
     "sources": ["build-plan.md §10 T-12", "claude-code-format.md §6 (ложные срабатывания claude-api)"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "на фразе «ничего» или чужой фразе допускается не больше такой доли вызовов скилла" }]
+  },
+  "lab.triggers.jobs": {
+    "value": 2, "unit": "одновременных запусков claude", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/lab/triggers.mjs: --jobs 1–3"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03d", "change": "заведён вместо числа в scripts/lab/triggers.mjs: умолчание --jobs" }]
+  },
+  "lab.triggers.max_turns": {
+    "value": 3, "unit": "ходов прогона", "level": null, "basis": "our_estimate",
+    "sources": ["claude-code-format.md §4.2: срабатывание — первый вызов Skill"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03d", "change": "заведён вместо числа в scripts/lab/triggers.mjs: умолчание --max-turns, нужен только первый вызов" }]
+  },
+  "lab.triggers.timeout_s": {
+    "value": 240, "unit": "с на прогон", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/lab/triggers.mjs: --timeout"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03d", "change": "заведён вместо числа в scripts/lab/triggers.mjs: умолчание --timeout" }]
   },
   "lab.mutants.count": {
     "value": { "min": 20, "max": 25 }, "unit": "мутантов", "level": "error", "basis": "our_estimate",

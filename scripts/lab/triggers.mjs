@@ -39,10 +39,11 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --min [доля]        код выхода 1, если у какого-то скилла попаданий меньше доли (0.8 или 80%)
                       или ложных больше lab.triggers.max_false; без числа — lab.triggers.min_share
   --max-false <доля>  допустимая доля ложных для --min вместо lab.triggers.max_false
-  --jobs <N>          одновременных запусков claude, 1–3 (по умолчанию 2)
+  --jobs <N>          одновременных запусков claude, 1–3 (по умолчанию lab.triggers.jobs)
   --model <имя>       модель (по умолчанию claude-opus-5-5)
-  --max-turns <N>     обрыв прогона после N ходов (по умолчанию 3: нужен только первый вызов)
-  --timeout <сек>     предел на один прогон (по умолчанию 240)
+  --max-turns <N>     обрыв прогона после N ходов (по умолчанию lab.triggers.max_turns: нужен только
+                      первый вызов)
+  --timeout <сек>     предел на один прогон (по умолчанию lab.triggers.timeout_s)
   --strict-env        не запускать, если в листинге чужие скиллы, плагины или MCP
   --check-env         только сверка окружения
   --dry-run           только план: какие фразы и сколько прогонов
@@ -52,8 +53,8 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --quiet             без таблицы фраз, только итог по скиллам
   --help              эта справка
 
-Пороги — ключи lab.triggers.runs_per_phrase, lab.triggers.min_share, lab.triggers.max_false
-в docs/playbook/thresholds.json; если ключа нет, действуют запасные значения из scripts/lab/triggers-lib.mjs.
+Пороги и умолчания — ключи lab.triggers.* (runs_per_phrase, min_share, max_false, jobs, max_turns,
+timeout_s) в docs/playbook/thresholds.json; ключа нет — ошибка загрузки, запасных чисел в коде нет.
 
 Прогон ничего не пишет и не публикует: запись, артефакты, расписания и рассылки запрещены
 (--disallowedTools), всё, что спросило бы разрешения, отклоняется (--permission-prompts none). Если git status после прогона изменился — предупреждение.
@@ -196,9 +197,9 @@ async function main() {
     quiet: !!raw.quiet,
     model: raw.model ?? 'claude-opus-5-5',
     runs: raw.runs ? int(raw.runs, '--runs', 1, 20) : th.values['lab.triggers.runs_per_phrase'],
-    jobs: raw.jobs ? int(raw.jobs, '--jobs', 1, 3) : 2,
-    maxTurns: raw['max-turns'] ? int(raw['max-turns'], '--max-turns', 1, 10) : 3,
-    timeout: raw.timeout ? int(raw.timeout, '--timeout', 10, 1800) : 240,
+    jobs: raw.jobs ? int(raw.jobs, '--jobs', 1, 3) : th.values['lab.triggers.jobs'],
+    maxTurns: raw['max-turns'] ? int(raw['max-turns'], '--max-turns', 1, 10) : th.values['lab.triggers.max_turns'],
+    timeout: raw.timeout ? int(raw.timeout, '--timeout', 10, 1800) : th.values['lab.triggers.timeout_s'],
     min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_share'] : share(raw.min, '--min'),
     maxFalse: raw['max-false'] ? share(raw['max-false'], '--max-false') : th.values['lab.triggers.max_false'],
   };

@@ -18,7 +18,7 @@ function groups(rows, agree) {
   for (const a of agree) {
     const members = refsIn(a.text, a.alias).map((x) => `${x.alias}:${x.id}`);
     if (!members.length) continue;
-    const title = a.text.match(/(?:\*\*|\*|_)([^*_]{3,}?)[.:]?(?:\*\*|\*|_)/)?.[1] ?? a.text.replace(/[|`*_-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80);
+    const title = a.text.match(/(?:\*\*|\*|_)([^*_]{3,}?)[.:]?(?:\*\*|\*|_)/)?.[1] ?? a.text.replace(/[|`*-]|(?<![\p{L}\p{N}])_|_(?![\p{L}\p{N}])/gu, ' ').replace(/\s+/g, ' ').trim().slice(0, 80);
     out.push({ head: members[0], title: title.trim(), from: `${a.alias}/for-relayer.md:${a.line}`, members });
   }
   // Флаг, приём и урок обычно называют свой принцип («почему хорошо (P-01)»): тогда они в его кластере.

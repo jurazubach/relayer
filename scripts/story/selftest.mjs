@@ -19,6 +19,7 @@ import { lookupId, normalizeId } from './core/playbook.mjs';
 import { knownStep, parseDecisions, pickActive, readStates } from './core/state.mjs';
 import { glueStory, loadStory, parseStory } from '../lib/story.mjs';
 import { strategies } from '../lib/bot.mjs';
+import { parseInk } from '../lib/ink.mjs';
 import { thresholds } from '../lib/thresholds.mjs';
 import { runBot } from '../lint/journal.mjs';
 import { buildStatic } from '../lint/static.mjs';
@@ -258,6 +259,16 @@ test('vars: the-number сходится с подсчётом по исходн�
     assert.equal(v.writes.length, (ink.match(re) ?? []).length, v.name);
   }
   assert.ok(idx.byName.get('theo_trust').flags.includes('только финал'));
+});
+
+test('vars: «молчит» — между записью и чтением больше vars.silent_chapters глав', () => {
+  const n = threshold('vars.silent_chapters');
+  const ch = (i, body) => `=== c${i}\nГлава ${i} #chapter\n${body}\n-> ${i < n + 2 ? `c${i + 1}` : 'END'}\n`;
+  const ink = `VAR far = 0\nVAR near = 0\n-> c1\n${ch(1, '~ far = 1\n~ near = 1')}${ch(2, '{near: Ты помнишь. #from:a}')}`
+    + Array.from({ length: n - 1 }, (_, i) => ch(i + 3, 'Тишина. #from:a')).join('') + ch(n + 2, '{far: Ты тогда решил. #from:a}');
+  const idx = varIndex(parseInk(ink));
+  assert.ok(idx.byName.get('far').flags.includes('молчит'), JSON.stringify(idx.byName.get('far').flags));
+  assert.ok(!idx.byName.get('near').flags.includes('молчит'));
 });
 
 test('vars: однострочное «{x: -> a}» — скрытая проверка, а не текст', () => {

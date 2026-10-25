@@ -90,6 +90,8 @@ const tests = [
   ['post-edit: Edit чистой истории — зелёная строка', () => {
     const text = context(hook('post-edit.mjs', { session_id: SESSION, tool_name: 'Edit', tool_input: { file_path: INK } }));
     assert.match(text, new RegExp(`✓ ${ID}: компилируется`));
+    assert.match(text, /story:lint --summary, по проверкам: C-\d\d/);
+    assert.ok(text.length <= MAX_CHARS);
   }],
   ['post-edit: Bash сломал переход — ошибка компиляции видна', () => {
     appendFileSync(INK, '\n=== broken\n-> no_such_knot\n');
