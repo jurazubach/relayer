@@ -166,10 +166,10 @@
 | R-101 | названная деталь возвращается | `story-mystery` | `clue-map.md` | `story-continuity` |
 | R-102 | финал выбирает кнопка-ценность | `story-endings` | `decisions-endings.md` | `story-choices` |
 | R-103 | 2–4 финала с меткой `// финал:` | `story-endings` | `declaring-endings.md` | `story-plan/endings-plan.md` |
-| R-104 | переменные финала пишутся раньше | `story-endings` | `decisions-endings.md` | `story-choices` |
-| R-105 | перечень перед финальной кнопкой | `story-endings` | `patterns-endings.md` | — |
-| R-106 | последняя глава шагами | `story-endings` | `patterns-endings.md` | `story-plan` |
-| R-107 | в финале герой решает сам | `story-endings` | `patterns-endings.md` | `story-cast/arcs.md` |
+| R-104 | переменные финала пишутся раньше | `story-endings` | `decisions-threshold.md` | `story-choices` |
+| R-105 | перечень перед финальной кнопкой | `story-endings` | `decisions-threshold.md` | — |
+| R-106 | последняя глава шагами | `story-endings` | `patterns-finale.md` | `story-plan` |
+| R-107 | в финале герой решает сам | `story-endings` | `patterns-finale.md` | `story-cast/arcs.md` |
 | R-108 | финал называет решения игрока | `story-endings` | `patterns-endings.md` | — |
 | R-109 | последняя строка зеркалит первую | `story-endings` | `patterns-endings.md` | — |
 | R-110 | короткая развязка | `story-endings` | `resolution.md` | `story-time/length.md` |
