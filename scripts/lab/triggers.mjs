@@ -38,6 +38,7 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --runs <N>          прогонов на фразу (по умолчанию lab.triggers.runs_per_phrase)
   --min [доля]        код выхода 1, если у какого-то скилла попаданий меньше доли (0.8 или 80%)
                       или ложных больше lab.triggers.max_false; без числа — lab.triggers.min_share
+                      (--min build — мягкий порог сборки скилла, lab.triggers.min_share_build)
   --max-false <доля>  допустимая доля ложных для --min вместо lab.triggers.max_false
   --jobs <N>          одновременных запусков claude, 1–3 (по умолчанию lab.triggers.jobs)
   --model <имя>       модель (по умолчанию claude-opus-5-5)
@@ -200,7 +201,7 @@ async function main() {
     jobs: raw.jobs ? int(raw.jobs, '--jobs', 1, 3) : th.values['lab.triggers.jobs'],
     maxTurns: raw['max-turns'] ? int(raw['max-turns'], '--max-turns', 1, 10) : th.values['lab.triggers.max_turns'],
     timeout: raw.timeout ? int(raw.timeout, '--timeout', 10, 1800) : th.values['lab.triggers.timeout_s'],
-    min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_share'] : share(raw.min, '--min'),
+    min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_share'] : raw.min === 'build' ? th.values['lab.triggers.min_share_build'] : share(raw.min, '--min'),
     maxFalse: raw['max-false'] ? share(raw['max-false'], '--max-false') : th.values['lab.triggers.max_false'],
   };
   const defaults = Object.entries(th.source).filter(([, s]) => s === 'default').map(([k]) => k);

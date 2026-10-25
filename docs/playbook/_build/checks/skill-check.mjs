@@ -66,7 +66,8 @@ const STORY = /the-number|slepoe-pyatno|chuzhoy-golos|Чужой голос|Сл
 for (const f of refs) {
   const t = readFileSync(f, 'utf8');
   const n = t.split('\n').length;
-  if (n > 350) err(`${f}: ${n} строк (> 300)`); else if (n > 300) warn(`${f}: ${n} строк (> 300)`);
+  const refMax = thv('skill.reference.max_lines', 300);
+  if (n > Math.round(refMax * 7 / 6)) err(`${f}: ${n} строк (> ${refMax}, skill.reference.max_lines)`); else if (n > refMax) warn(`${f}: ${n} строк (> ${refMax}, skill.reference.max_lines)`);
   if (!f.endsWith('sources.md') && !/^#+\s*Источники/m.test(t)) warn(`${f}: нет раздела «Источники»`);
   if (STORY.test(t)) err(`${f}: упоминает наши истории — примеры в скиллах должны быть придуманными`);
   if (/^-\s|^\|/m.test(t) && f.includes('decisions-') && !/[Кк]огда не работает/.test(t)) warn(`${f}: в развилках нет «когда не работает»`);
