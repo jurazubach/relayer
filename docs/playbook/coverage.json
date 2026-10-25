@@ -135,12 +135,60 @@
         "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
       }
     },
+    "choiceofgames-design:RED-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "cron-wired-for-story:contra-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "cron-wired-for-story:contra-6": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "cron-wired-for-story:LESSON-06": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
+      }
+    },
+    "cron-wired-for-story:P-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«1–3 сообщения» → «несколько»; реакция «для тебя» опущена — не существенно"
+      }
+    },
+    "cron-wired-for-story:P-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "cron-wired-for-story:RED-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "dille-ultimate-guide:contra-3": {
@@ -291,6 +339,22 @@
         "note": ""
       }
     },
+    "maass-fire-in-fiction:contra-1": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "maass-fire-in-fiction:contra-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "maass-fire-in-fiction:RED-06": {
       "fidelity": {
         "ok": true,
@@ -310,6 +374,14 @@
     "mckee-story:contra-2": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "mckee-story:GREEN-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "доля согласий < 5 % заменена на «исключение» без ключа"
+      }
     },
     "mckee-story:P-10": {
       "fidelity": {
@@ -433,6 +505,14 @@
         "date": "2026-10-25",
         "by": "W1",
         "note": "потеряна проверка ботом «первые реплики ответов не совпадают» — она есть в C-10; класс C верен"
+      }
+    },
+    "messenger-genre:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "messenger-genre:P-13#нюанс": {
@@ -627,6 +707,14 @@
         "note": "правило целиком, пример заменён выдуманным"
       }
     },
+    "R-61": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "schell-art-of-game-design:contra-4": {
       "fidelity": {
         "ok": true,
@@ -638,6 +726,22 @@
     "schell-art-of-game-design:LESSON-07": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "schell-art-of-game-design:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "schell-art-of-game-design:PAT-04": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "нюанс перевернул «не работает, если передышка до реакции игрока» в условие; исправлено ревью"
+      }
     },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -691,6 +795,30 @@
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
     },
+    "skolnick-video-game-storytelling:PAT-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "пометка «требование кнопки — наше» потеряна, смысл сохранён"
+      }
+    },
+    "snyder-save-the-cat:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "snyder-save-the-cat:SYS-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«≤ 10 карточек на ряд» и проверка // todo опущены (разметка отменена A-06)"
+      }
+    },
     "truby-anatomy-of-story:LESSON-02": {
       "status": "merged-into:meaningful-choice:LESSON-04",
       "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:LESSON-04 (story-choices)"
@@ -711,12 +839,44 @@
         "note": "схема, ловушки, basis secondary"
       }
     },
+    "vogler-writers-journey:GREEN-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "vogler-writers-journey:PAT-06": {
       "fidelity": {
         "ok": false,
         "date": "2026-10-25",
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
+      }
+    },
+    "yorke-into-the-woods:GREEN-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«≥ 2 разных #to» смягчено до «разные #to, один новый» — смысл тот же"
+      }
+    },
+    "yorke-into-the-woods:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "yorke-into-the-woods:P-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "уверенность «средняя» не перенесена (basis: model)"
       }
     }
   }

@@ -3,6 +3,19 @@
 import { isIncoming, median } from '../journal.mjs';
 import { pct } from '../text.mjs';
 
+/**
+ * Начало главы без срока мира и угрозы — передышка. Срок прописью («через десять минут») регулярка
+ * dict.world_deadline не видит (она общая с C-08, C-23, C-24, C-26 и ждёт цифр), поэтому здесь его добирает
+ * dict.numerals; ложная передышка на такой главе — находка T-15 по трём историям каталога.
+ */
+export function isCalm(first, T) {
+  const spelled = new RegExp(`через (?:${T.value('dict.numerals')})\\p{L}* (?:сек|мин|час|дн|сут)`, 'iu');
+  return first.length > 0 && !first.some((l) => {
+    const t = l.text.toLowerCase();
+    return T.re('dict.world_deadline').test(t) || spelled.test(t) || T.re('dict.threat').test(t);
+  });
+}
+
 export default {
   id: 'C-38',
   title: 'Темп и пропорции глав',
@@ -52,8 +65,7 @@ export default {
     const breathers = [];
     for (let c = 1; c <= N; c++) {
       const first = run.lines.filter((l) => l.chapter === c && isIncoming(l)).slice(0, T.value('C-38.breather_lines'));
-      const calm = first.length && !first.some((l) => T.re('dict.world_deadline').test(l.text.toLowerCase()) || T.re('dict.threat').test(l.text.toLowerCase()));
-      breathers.push(calm && !intended.has(st.chapterStart.get(c)));
+      breathers.push(isCalm(first, T) && !intended.has(st.chapterStart.get(c)));
     }
     // серия передышек: находка на каждой главе, где серия не короче порога
     let streak = 0;

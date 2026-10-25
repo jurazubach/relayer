@@ -1,0 +1,1689 @@
+{
+  "date": "2026-10-25T17:21:07.657Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.310",
+  "runs": 3,
+  "focus": "story-pace",
+  "file": null,
+  "group": [
+    "story-pace",
+    "story-opening",
+    "story-pauses",
+    "story-time",
+    "story-voice",
+    "story-endings",
+    "story-choices",
+    "story-review"
+  ],
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "seconds": 336,
+  "cost_usd": 2.4653066,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-desk",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "story-choices",
+      "story-desk",
+      "story-pace"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 96,
+    "passed": 92,
+    "rate": 0.9583333333333334,
+    "errors": 0,
+    "denied": 6,
+    "failed_runs": 6
+  },
+  "skills": [
+    {
+      "skill": "*",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 17,
+      "false": 0,
+      "bypass": 1,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 43,
+      "hits": 39,
+      "foreign": 53,
+      "false": 0,
+      "bypass": 0,
+      "denied": 2,
+      "missed_to": {
+        "none": 4
+      },
+      "false_from": [],
+      "hit_rate": 0.9069767441860465,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 96,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Где мы с этой историей и что делать дальше?"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.03125
+    },
+    {
+      "skill": "story-pace",
+      "expected": 42,
+      "hits": 42,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 1,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Тестер сказал, что выбор не ощущается. Что не так с развилками?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Кнопки в третьей главе ничего не меняют: на любой вариант Лиза отвечает одно и то же",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Игрок жмёт «Промолчать», а персонаж будто не заметил — так и должно быть?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я ставлю trust в первой главе, а вспоминаю о нём только в финале. Игрок вообще поймёт, что это из-за него?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "В развилке сразу видно, какая кнопка правильная, все жмут одну и ту же",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу, чтобы выбор между братом и подругой был мучительным, а сейчас все спасают подругу",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сколько кнопок ставить в развилке и какой длины их писать?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; python3 - <<'E'\nimport json\nt=json.load(open('docs/playbook/thresholds.json'))\nfor k,v in t.items():\n    if not isinstance(v,dict): continue\n    s=json.dumps(v,ensure_ascii=False)\n    if any(w in s for w in ['кноп','символ','длин']) and ('choice' in k.lower() or 'кноп' in v.get('unit','') or 'символ' in v.get('unit','')):\n        print(k, {x:v.get(x) for x in ['value','unit','what','meaning','note'] if x in v})\nE",
+              "id": "toolu_019vxtAMAazJU3GivSy4deEg",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; python3 - <<'E'\nimport json\nt=json.load(open('docs/playbook/thresholds.json'))\nfor k,v in t.items():\n    if not isinstance(v,dict): continue\n    s=json.dumps(v,ensure_ascii=False)\n    if any(w in s for w in ['кноп','символ','длин']) and ('choice' in k.lower() or 'кноп' in v.get('unit','') or 'символ' in v.get('unit','')):\n        print(k, {x:v.get(x) for x in ['value','unit','what','meaning','note'] if x in v})\nE)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; grep -rniE \"кнопк[аи]?.{0,40}(длин|символ|слов|штук|не больше|больше)|(два|три|2|3).{0,15}(кнопк|вариант)\" docs/playbook docs/style.md docs/PROMPT.md 2>/dev/null | head -50; grep -niE \"choice|button|кноп\" docs/playbook/thresholds.json | head -30",
+              "id": "toolu_01LatSzA6R95je38wM1WJbhT",
+              "reason": "asyncAgent"
+            },
+            {
+              "tool": "Bash",
+              "command": "grep -rnhiE \"(R-[0-9]+|C-[0-9]+).{0,200}(кнопк|вариант).{0,80}(символ|слов|длин|от двух|два|три|четыре|2–|3–|не больше)\" /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/rules.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/checks.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/style.md | cut -c1-500 | head -40",
+              "id": "toolu_01GBmKsBBn8zStqo2y6YTdk7",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×2 (cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; grep -rniE \"кнопк[аи]?.{0,40}(длин|символ|слов|штук|не больше|больше)|(два|три|2|3).{0,15}(кнопк|вариант)\" docs/playbook docs/style.md docs/PROMPT.md 2>/dev/null | head -50; grep -niE \"choice|button|кноп\" docs/playbook/thresholds.json | head -30; grep -rnhiE \"(R-[0-9]+|C-[0-9]+).{0,200}(кнопк|вариант).{0,80}(символ|слов|длин|от двух|два|три|четыре|2–|3–|не больше)\" /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/rules.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/checks.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/style.md | cut -c1-500 | head -40)"
+        }
+      ]
+    },
+    {
+      "text": "Допрос свидетеля превратился в анкету: игрок просто перебирает все вопросы подряд",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как сделать, чтобы история помнила, что игрок соврал в самом начале?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "отказ ни на что не влияет — герой всё равно соглашается через две реплики",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь развилки во второй главе, кажется там пустые кнопки",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Персонаж обиделся на игрока, а через сцену пишет как ни в чём не бывало",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Спросил одного персонажа, а ответил другой — это нормально?",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "positive",
+          "file": "story-choices.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Середина третьей главы тянется, всё время одно и то же",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Вторая половина истории ощущается как повтор первой, ничего не меняется",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Смотритель маяка рассказывает про шторм двадцать сообщений подряд, игрок просто листает",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "В четвёртой главе длинные куски без кнопок, игрок только читает",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Бабушка героини пишет монологом, игроку даже слова не вставить — это плохо?",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сцена с курьером вялая: вроде всё происходит, а не цепляет",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "сообщения приходят с одинаковыми паузами, ритм ровный как у робота",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Глава тянется, хотя событий вроде много. Где резать?",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Первая глава занимает почти половину истории, а последняя совсем короткая — так нормально?",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Три сцены подряд одна и та же тревога, на третьей уже не страшно",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Посередине истории ничего не происходит, герои просто собирают факты",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь ритм пятой главы: где провисает и где игрок заскучает?",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Подруга героя пересказывает прошлое лекцией на полэкрана, как это оживить?",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "positive",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Кнопки в развилке ничего не меняют: на любой вариант один и тот же ответ",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Почини падающий e2e-тест на экране чатов",
+      "checks": [
+        {
+          "expect": "none",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60",
+              "id": "toolu_01MMEMh2VhMvJPiBiAEXefcm",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Bash",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60",
+              "id": "toolu_019bzfuG6WRhh4GMVSFy9VGc",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01Ks2LCDz4LjwRx4vtVEEcmV",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60)"
+        }
+      ]
+    },
+    {
+      "text": "Игрок вернулся после ночной паузы и не помнит, о чём шла речь",
+      "checks": [
+        {
+          "expect": "!story-pace",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [
+            "*",
+            "story-pace"
+          ],
+          "tools": [
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Персонаж пишет «напишу через час» перед паузой — так можно?",
+      "checks": [
+        {
+          "expect": "!story-pace",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 2
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 2
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 2
+        }
+      ]
+    },
+    {
+      "text": "Все контакты пишут одинаково, голоса не различить",
+      "checks": [
+        {
+          "expect": "!story-pace",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "*"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "f=$(ls docs/playbook/skills*.md | head -1); echo $f; sed -n '567,600p' $f; npm run story:cast -- the-number 2>&1 | tail -40; ls src/stories/the-number; grep -n \"voice\" src/stories/the-number/meta.json | head",
+              "id": "toolu_01EoqAWsNVHWd5EbSLspDeQF",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (f=$(ls docs/playbook/skills*.md | head -1); echo $f; sed -n '567,600p' $f; npm run story:cast -- the-number 2>&1 | tail -40; ls src/stories/the-number; grep -n \"voice\" src/stories/the-number/meta.json | head)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Где мы с этой историей и что делать дальше?",
+      "checks": [
+        {
+          "expect": "!story-pace",
+          "kind": "negative",
+          "file": "story-pace.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Кнопки ничего не меняют, выбор не ощущается",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Середина провисает, всё время одно и то же",
+      "checks": [
+        {
+          "expect": "story-pace",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pace",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [
+    {
+      "phrase": "Сколько кнопок ставить в развилке и какой длины их писать?",
+      "run": 1,
+      "tool": "Bash",
+      "command": "cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; python3 - <<'E'\nimport json\nt=json.load(open('docs/playbook/thresholds.json'))\nfor k,v in t.items():\n    if not isinstance(v,dict): continue\n    s=json.dumps(v,ensure_ascii=False)\n    if any(w in s for w in ['кноп','символ','длин']) and ('choice' in k.lower() or 'кноп' in v.get('unit','') or 'символ' in v.get('unit','')):\n        print(k, {x:v.get(x) for x in ['value','unit','what','meaning','note'] if x in v})\nE",
+      "blocking": true
+    },
+    {
+      "phrase": "Сколько кнопок ставить в развилке и какой длины их писать?",
+      "run": 3,
+      "tool": "Bash",
+      "command": "cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace; grep -rniE \"кнопк[аи]?.{0,40}(длин|символ|слов|штук|не больше|больше)|(два|три|2|3).{0,15}(кнопк|вариант)\" docs/playbook docs/style.md docs/PROMPT.md 2>/dev/null | head -50; grep -niE \"choice|button|кноп\" docs/playbook/thresholds.json | head -30",
+      "blocking": true
+    },
+    {
+      "phrase": "Сколько кнопок ставить в развилке и какой длины их писать?",
+      "run": 3,
+      "tool": "Bash",
+      "command": "grep -rnhiE \"(R-[0-9]+|C-[0-9]+).{0,200}(кнопк|вариант).{0,80}(символ|слов|длин|от двух|два|три|четыре|2–|3–|не больше)\" /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/rules.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/playbook/checks.md /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-pace/docs/style.md | cut -c1-500 | head -40",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 1,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 2,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 3,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Все контакты пишут одинаково, голоса не различить",
+      "run": 2,
+      "tool": "Bash",
+      "command": "f=$(ls docs/playbook/skills*.md | head -1); echo $f; sed -n '567,600p' $f; npm run story:cast -- the-number 2>&1 | tail -40; ls src/stories/the-number; grep -n \"voice\" src/stories/the-number/meta.json | head",
+      "blocking": true
+    }
+  ],
+  "skipped": [
+    {
+      "text": "Первые сообщения не цепляют, игрок закрывает чат через минуту",
+      "expect": "story-opening",
+      "reason": "скилла story-opening нет в .claude/skills"
+    },
+    {
+      "text": "Перед паузой глава обрывается на ровном месте, игроку незачем возвращаться",
+      "expect": "story-pauses",
+      "reason": "скилла story-pauses нет в .claude/skills"
+    },
+    {
+      "text": "Сколько дней должна длиться история в реальном времени?",
+      "expect": "story-time",
+      "reason": "скилла story-time нет в .claude/skills"
+    },
+    {
+      "text": "Одна реплика у персонажа на полэкрана — резать её на пузыри?",
+      "expect": "story-voice",
+      "reason": "скилла story-voice нет в .claude/skills"
+    },
+    {
+      "text": "После последней кнопки финал тянется ещё двадцать сообщений",
+      "expect": "story-endings",
+      "reason": "скилла story-endings нет в .claude/skills"
+    },
+    {
+      "text": "Проверь всю историю целиком, где слабые места?",
+      "expect": "story-review",
+      "reason": "скилла story-review нет в .claude/skills"
+    },
+    {
+      "text": "Где игроку станет скучно?",
+      "expect": "story-review",
+      "reason": "скилла story-review нет в .claude/skills"
+    },
+    {
+      "text": "Финал решается скрытой проверкой, игрок не понимает, почему так вышло",
+      "expect": "story-endings",
+      "reason": "скилла story-endings нет в .claude/skills"
+    },
+    {
+      "text": "Все персонажи пишут одинаково, голоса не различить",
+      "expect": "story-voice",
+      "reason": "скилла story-voice нет в .claude/skills"
+    },
+    {
+      "text": "Начало не цепляет",
+      "expect": "story-opening",
+      "reason": "скилла story-opening нет в .claude/skills"
+    },
+    {
+      "text": "Персонаж пишет «буду через два часа» — так можно?",
+      "expect": "story-time",
+      "reason": "скилла story-time нет в .claude/skills"
+    },
+    {
+      "text": "Перед перерывом глава обрывается на ровном месте, игроку незачем возвращаться",
+      "expect": "story-pauses",
+      "reason": "скилла story-pauses нет в .claude/skills"
+    },
+    {
+      "text": "Игрок вернулся после паузы и не помнит, что было, — как напомнить?",
+      "expect": "story-pauses",
+      "reason": "скилла story-pauses нет в .claude/skills"
+    }
+  ],
+  "fails": [],
+  "ok": true
+}
