@@ -1,0 +1,4 @@
+src/stories/the-number · неотвечающий против #silent · realtime
+  seed 1: развилок 49, с #silent 7, без #silent 42
+   ✓ во всех 7 развилках с #silent исходы и следующие варианты совпадают (до E-02 «не ответил» и есть #silent, поэтому совпадение ожидаемо)
+   ℹ «не ответил» некуда вести (нет #silent, напоминаний до E-02 нет): delivered, sleepless, theo_told, plan ×2, gate, lock ×2, opened ×3, hiding и ещё 20

@@ -1,0 +1,144 @@
+{
+ "stories": [
+  {
+   "id": "the-number",
+   "path": "src/stories/the-number",
+   "source": "end",
+   "final": [
+    "new_client"
+   ],
+   "distributors": [],
+   "unmarked": [],
+   "runs": 1602,
+   "personas": {
+    "random": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "silent": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "first": {
+     "runs": 1,
+     "counts": {
+      "new_client": 1
+     }
+    },
+    "last": {
+     "runs": 1,
+     "counts": {
+      "new_client": 1
+     }
+    },
+    "refuse": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "curious": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "trusting": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "suspicious": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "distracted": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    },
+    "unresponsive": {
+     "runs": 200,
+     "counts": {
+      "new_client": 200
+     }
+    }
+   },
+   "endings": [
+    {
+     "name": "new_client",
+     "node": "new_client",
+     "declared": true,
+     "line": 215,
+     "runs": 1602,
+     "share": 1,
+     "chapters": [
+      5
+     ],
+     "byPersona": {
+      "random": 200,
+      "silent": 200,
+      "first": 1,
+      "last": 1,
+      "refuse": 200,
+      "curious": 200,
+      "trusting": 200,
+      "suspicious": 200,
+      "distracted": 200,
+      "unresponsive": 200
+     },
+     "staticVars": [],
+     "derivedVars": [],
+     "decidedIn": [],
+     "endingVar": [
+      {
+       "value": "locked",
+       "n": 781
+      },
+      {
+       "value": "ran",
+       "n": 411
+      },
+      {
+       "value": "gave",
+       "n": 410
+      }
+     ]
+    }
+   ],
+   "deciders": [],
+   "hints": [],
+   "thresholds": [
+    {
+     "key": "C-40.dominant_share",
+     "value": 0.5,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "C-40.rare_share",
+     "value": 0.02,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "endings.top_vars",
+     "value": 5,
+     "unit": "переменных",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "our_estimate"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,677 @@
+{
+  "the-number": {
+    "card": {
+      "minutes": 25,
+      "days": 1
+    },
+    "lint": {
+      "total": 331,
+      "error": 5,
+      "warning": 76,
+      "hint": 250,
+      "suppressed": 0,
+      "skipped": [
+        "story.reminders.max",
+        "C-32.no_answer"
+      ],
+      "checks": {
+        "C-01": 5,
+        "C-02": 2,
+        "C-03": 3,
+        "C-04": 3,
+        "C-07": 1,
+        "C-09": 2,
+        "C-10": 3,
+        "C-11": 3,
+        "C-12": 16,
+        "C-13": 67,
+        "C-14": 5,
+        "C-17": 3,
+        "C-19": 29,
+        "C-20": 1,
+        "C-21": 5,
+        "C-22": 23,
+        "C-23": 1,
+        "C-25": 2,
+        "C-26": 1,
+        "C-27": 6,
+        "C-28": 10,
+        "C-29": 1,
+        "C-30": 3,
+        "C-32": 2,
+        "C-33": 18,
+        "C-35": 35,
+        "C-36": 11,
+        "C-38": 5,
+        "C-39": 7,
+        "C-40": 1,
+        "C-42": 2,
+        "C-43": 2,
+        "C-44": 3,
+        "C-45": 13,
+        "C-46": 9,
+        "C-47": 1,
+        "C-48": 5,
+        "C-49": 4,
+        "C-50": 14,
+        "C-51": 1,
+        "C-53": 3
+      }
+    },
+    "sessions": {
+      "random": {
+        "real_h": 24.5,
+        "real_min_h": 23,
+        "real_max_h": 25.6,
+        "click_min": 18,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.17
+      },
+      "silent": {
+        "real_h": 24.6,
+        "real_min_h": 24.6,
+        "real_max_h": 24.9,
+        "click_min": 17,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.17
+      },
+      "first": {
+        "real_h": 24,
+        "real_min_h": 24,
+        "real_max_h": 24,
+        "click_min": 19,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 13,
+        "micro_share": 0.18
+      },
+      "last": {
+        "real_h": 25.5,
+        "real_min_h": 25.5,
+        "real_max_h": 25.5,
+        "click_min": 17,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 15,
+        "micro_share": 0.15
+      },
+      "refuse": {
+        "real_h": 24.9,
+        "real_min_h": 24.4,
+        "real_max_h": 25.5,
+        "click_min": 16,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.16
+      },
+      "curious": {
+        "real_h": 24.1,
+        "real_min_h": 23.1,
+        "real_max_h": 24.6,
+        "click_min": 19,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 13,
+        "micro_share": 0.17
+      },
+      "trusting": {
+        "real_h": 24.3,
+        "real_min_h": 23.1,
+        "real_max_h": 25.1,
+        "click_min": 18,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 13,
+        "micro_share": 0.18
+      },
+      "suspicious": {
+        "real_h": 24.6,
+        "real_min_h": 23.8,
+        "real_max_h": 25.6,
+        "click_min": 17,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.17
+      },
+      "distracted": {
+        "real_h": 24.5,
+        "real_min_h": 23,
+        "real_max_h": 25.6,
+        "click_min": 18,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.17
+      },
+      "unresponsive": {
+        "real_h": 24.7,
+        "real_min_h": 23.7,
+        "real_max_h": 25.2,
+        "click_min": 17,
+        "max_pause_h": 6,
+        "max_pause_knot": "ch2",
+        "tail_min": 61,
+        "sessions": 14,
+        "micro_share": 0.17
+      }
+    },
+    "cast": {
+      "contacts": 11,
+      "levels": {
+        "ось": 3,
+        "эпизодический": 8
+      }
+    },
+    "vars": {
+      "total": 30,
+      "counts": {
+        "мёртвая": 5,
+        "невидимая": 3,
+        "только финал": 3,
+        "не пишется": 0,
+        "молчит": 3
+      }
+    },
+    "endings": {
+      "count": 1,
+      "finals": [
+        "new_client"
+      ],
+      "distributors": [],
+      "shares": {
+        "new_client": 100
+      },
+      "random": {
+        "new_client": 100
+      }
+    },
+    "distracted": {
+      "runs": 50,
+      "returns_per_run": 9.7,
+      "lines_median": 8,
+      "lines_p90": 13,
+      "lines_max": 16,
+      "notices_median": 3,
+      "notices_max": 8
+    }
+  },
+  "slepoe-pyatno": {
+    "card": {
+      "minutes": 40,
+      "days": 0.1
+    },
+    "lint": {
+      "total": 156,
+      "error": 0,
+      "warning": 61,
+      "hint": 95,
+      "suppressed": 0,
+      "skipped": [
+        "story.reminders.max",
+        "C-32.no_answer"
+      ],
+      "checks": {
+        "C-02": 2,
+        "C-03": 8,
+        "C-04": 5,
+        "C-07": 7,
+        "C-08": 4,
+        "C-09": 4,
+        "C-12": 1,
+        "C-13": 21,
+        "C-14": 2,
+        "C-16": 1,
+        "C-17": 7,
+        "C-19": 1,
+        "C-21": 1,
+        "C-22": 20,
+        "C-23": 1,
+        "C-25": 1,
+        "C-31": 1,
+        "C-32": 1,
+        "C-33": 2,
+        "C-35": 13,
+        "C-36": 11,
+        "C-38": 2,
+        "C-39": 6,
+        "C-40": 1,
+        "C-41": 1,
+        "C-42": 14,
+        "C-43": 1,
+        "C-44": 1,
+        "C-45": 4,
+        "C-46": 2,
+        "C-47": 1,
+        "C-49": 1,
+        "C-50": 6,
+        "C-53": 2
+      }
+    },
+    "sessions": {
+      "random": {
+        "real_h": 2,
+        "real_min_h": 1.6,
+        "real_max_h": 2.8,
+        "click_min": 17,
+        "max_pause_h": 0.7,
+        "max_pause_knot": "end_backdoor",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "silent": {
+        "real_h": 1.9,
+        "real_min_h": 1.9,
+        "real_max_h": 1.9,
+        "click_min": 16,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 16,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "first": {
+        "real_h": 2.1,
+        "real_min_h": 2.1,
+        "real_max_h": 2.1,
+        "click_min": 19,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "last": {
+        "real_h": 1.9,
+        "real_min_h": 1.9,
+        "real_max_h": 1.9,
+        "click_min": 16,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 16,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "refuse": {
+        "real_h": 1.9,
+        "real_min_h": 1.6,
+        "real_max_h": 2.8,
+        "click_min": 16,
+        "max_pause_h": 0.7,
+        "max_pause_knot": "end_backdoor",
+        "tail_min": 16,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "curious": {
+        "real_h": 1.9,
+        "real_min_h": 1.8,
+        "real_max_h": 2.1,
+        "click_min": 18,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "trusting": {
+        "real_h": 2,
+        "real_min_h": 1.7,
+        "real_max_h": 2.2,
+        "click_min": 17,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "suspicious": {
+        "real_h": 1.6,
+        "real_min_h": 1.6,
+        "real_max_h": 1.7,
+        "click_min": 13,
+        "max_pause_h": 0.4,
+        "max_pause_knot": "ch4",
+        "tail_min": 16,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "distracted": {
+        "real_h": 2,
+        "real_min_h": 1.6,
+        "real_max_h": 2.8,
+        "click_min": 17,
+        "max_pause_h": 0.7,
+        "max_pause_knot": "end_backdoor",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      },
+      "unresponsive": {
+        "real_h": 2.2,
+        "real_min_h": 1.6,
+        "real_max_h": 2.8,
+        "click_min": 17,
+        "max_pause_h": 0.7,
+        "max_pause_knot": "end_backdoor",
+        "tail_min": 26,
+        "sessions": 1,
+        "micro_share": 0
+      }
+    },
+    "cast": {
+      "contacts": 10,
+      "levels": {
+        "ось": 5,
+        "фон": 3,
+        "эпизодический": 2
+      }
+    },
+    "vars": {
+      "total": 22,
+      "counts": {
+        "мёртвая": 0,
+        "невидимая": 0,
+        "только финал": 8,
+        "не пишется": 0,
+        "молчит": 2
+      }
+    },
+    "endings": {
+      "count": 7,
+      "finals": [
+        "debrief",
+        "end_locked",
+        "end_contained",
+        "end_backdoor",
+        "end_burned",
+        "end_quiet",
+        "end_complicit",
+        "end_phished"
+      ],
+      "distributors": [
+        "ch5"
+      ],
+      "shares": {
+        "end_contained": 2,
+        "end_burned": 17,
+        "end_locked": 24,
+        "end_backdoor": 15,
+        "end_complicit": 2,
+        "end_phished": 20,
+        "end_quiet": 20
+      },
+      "random": {
+        "end_contained": 3,
+        "end_burned": 17,
+        "end_locked": 15,
+        "end_backdoor": 20,
+        "end_complicit": 8,
+        "end_phished": 30,
+        "end_quiet": 8
+      }
+    },
+    "distracted": {
+      "runs": 50,
+      "returns_per_run": 0.2,
+      "lines_median": 17,
+      "lines_p90": 17,
+      "lines_max": 17,
+      "notices_median": 15,
+      "notices_max": 15
+    }
+  },
+  "chuzhoy-golos": {
+    "card": {
+      "minutes": 90,
+      "days": 7.3
+    },
+    "lint": {
+      "total": 754,
+      "error": 21,
+      "warning": 241,
+      "hint": 492,
+      "suppressed": 0,
+      "skipped": [
+        "story.reminders.max",
+        "C-32.no_answer"
+      ],
+      "checks": {
+        "C-01": 1,
+        "C-02": 3,
+        "C-03": 2,
+        "C-04": 17,
+        "C-08": 5,
+        "C-09": 9,
+        "C-10": 15,
+        "C-11": 4,
+        "C-12": 10,
+        "C-13": 70,
+        "C-14": 1,
+        "C-15": 7,
+        "C-16": 1,
+        "C-17": 6,
+        "C-18": 1,
+        "C-20": 6,
+        "C-21": 1,
+        "C-22": 30,
+        "C-23": 1,
+        "C-25": 1,
+        "C-26": 6,
+        "C-27": 55,
+        "C-28": 132,
+        "C-29": 22,
+        "C-30": 33,
+        "C-31": 2,
+        "C-32": 4,
+        "C-33": 80,
+        "C-35": 61,
+        "C-36": 21,
+        "C-37": 2,
+        "C-38": 4,
+        "C-39": 16,
+        "C-40": 3,
+        "C-41": 4,
+        "C-42": 13,
+        "C-43": 1,
+        "C-44": 11,
+        "C-45": 15,
+        "C-46": 30,
+        "C-48": 14,
+        "C-49": 3,
+        "C-50": 17,
+        "C-51": 5,
+        "C-52": 1,
+        "C-53": 8
+      }
+    },
+    "sessions": {
+      "random": {
+        "real_h": 176.1,
+        "real_min_h": 167.8,
+        "real_max_h": 188.1,
+        "click_min": 28,
+        "max_pause_h": 11,
+        "max_pause_knot": "ch6_ellie",
+        "tail_min": 549,
+        "sessions": 71,
+        "micro_share": 0.17
+      },
+      "silent": {
+        "real_h": 180.7,
+        "real_min_h": 180.5,
+        "real_max_h": 180.8,
+        "click_min": 24,
+        "max_pause_h": 9,
+        "max_pause_knot": "ch6",
+        "tail_min": 549,
+        "sessions": 76,
+        "micro_share": 0.21
+      },
+      "first": {
+        "real_h": 171.4,
+        "real_min_h": 171.4,
+        "real_max_h": 171.4,
+        "click_min": 32,
+        "max_pause_h": 11,
+        "max_pause_knot": "ch6_ellie",
+        "tail_min": 243,
+        "sessions": 69,
+        "micro_share": 0.17
+      },
+      "last": {
+        "real_h": 180.6,
+        "real_min_h": 180.6,
+        "real_max_h": 180.6,
+        "click_min": 24,
+        "max_pause_h": 9,
+        "max_pause_knot": "ch6",
+        "tail_min": 549,
+        "sessions": 76,
+        "micro_share": 0.23
+      },
+      "refuse": {
+        "real_h": 181.9,
+        "real_min_h": 176.6,
+        "real_max_h": 186,
+        "click_min": 26,
+        "max_pause_h": 9,
+        "max_pause_knot": "ch6",
+        "tail_min": 549,
+        "sessions": 76,
+        "micro_share": 0.21
+      },
+      "curious": {
+        "real_h": 174.5,
+        "real_min_h": 163.8,
+        "real_max_h": 182.5,
+        "click_min": 30,
+        "max_pause_h": 9,
+        "max_pause_knot": "ch4_please",
+        "tail_min": 619,
+        "sessions": 71,
+        "micro_share": 0.14
+      },
+      "trusting": {
+        "real_h": 176.3,
+        "real_min_h": 166.9,
+        "real_max_h": 190.2,
+        "click_min": 28,
+        "max_pause_h": 11,
+        "max_pause_knot": "ch6_ellie",
+        "tail_min": 608,
+        "sessions": 70,
+        "micro_share": 0.16
+      },
+      "suspicious": {
+        "real_h": 176,
+        "real_min_h": 166.5,
+        "real_max_h": 186.6,
+        "click_min": 28,
+        "max_pause_h": 11,
+        "max_pause_knot": "ch6_ellie",
+        "tail_min": 549,
+        "sessions": 72,
+        "micro_share": 0.18
+      },
+      "distracted": {
+        "real_h": 176.1,
+        "real_min_h": 167.8,
+        "real_max_h": 188.1,
+        "click_min": 28,
+        "max_pause_h": 11,
+        "max_pause_knot": "ch6_ellie",
+        "tail_min": 549,
+        "sessions": 71,
+        "micro_share": 0.17
+      },
+      "unresponsive": {
+        "real_h": 182.7,
+        "real_min_h": 177,
+        "real_max_h": 187.2,
+        "click_min": 26,
+        "max_pause_h": 9,
+        "max_pause_knot": "ch6",
+        "tail_min": 549,
+        "sessions": 77,
+        "micro_share": 0.22
+      }
+    },
+    "cast": {
+      "contacts": 14,
+      "levels": {
+        "ось": 6,
+        "сторона": 1,
+        "источник": 2,
+        "эпизодический": 4,
+        "фон": 1
+      }
+    },
+    "vars": {
+      "total": 80,
+      "counts": {
+        "мёртвая": 1,
+        "невидимая": 9,
+        "только финал": 2,
+        "не пишется": 0,
+        "молчит": 10
+      }
+    },
+    "endings": {
+      "count": 7,
+      "finals": [
+        "fin_herself",
+        "fin_unproven",
+        "fin_scapegoat",
+        "fin_puppet",
+        "fin_revenge",
+        "fin_silence"
+      ],
+      "distributors": [
+        "ch10_route"
+      ],
+      "shares": {
+        "fin_revenge": 75,
+        "fin_scapegoat": 10,
+        "fin_silence": 2,
+        "fin_unproven": 8,
+        "fin_herself": 2,
+        "fin_truth": 3,
+        "fin_puppet": 0
+      },
+      "random": {
+        "fin_revenge": 64,
+        "fin_scapegoat": 8,
+        "fin_silence": 5,
+        "fin_unproven": 14,
+        "fin_herself": 3,
+        "fin_truth": 7,
+        "fin_puppet": 1
+      }
+    },
+    "distracted": {
+      "runs": 50,
+      "returns_per_run": 46.6,
+      "lines_median": 4,
+      "lines_p90": 11,
+      "lines_max": 27,
+      "notices_median": 3,
+      "notices_max": 27
+    }
+  }
+}

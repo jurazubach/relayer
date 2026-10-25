@@ -1,0 +1,2673 @@
+{
+ "stories": [
+  {
+   "id": "slepoe-pyatno",
+   "path": "src/stories/slepoe-pyatno",
+   "chapters": 5,
+   "final": [
+    "debrief",
+    "end_locked",
+    "end_contained",
+    "end_backdoor",
+    "end_burned",
+    "end_quiet",
+    "end_complicit",
+    "end_phished"
+   ],
+   "distributors": [
+    "ch5"
+   ],
+   "counts": {
+    "мёртвая": 0,
+    "невидимая": 0,
+    "только финал": 8,
+    "не пишется": 0,
+    "молчит": 2
+   },
+   "vars": [
+    {
+     "name": "matbug",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_reading",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_notes",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "pods_seen",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_bonus",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "snapshot",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_vera",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_rita",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_kill",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch2_rotate_push",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch2_rotate_push",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "rotate_full"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 4,
+     "hiddenReads": 6,
+     "firstWrite": 2,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "rotate_full"
+     ],
+     "flags": []
+    },
+    {
+     "name": "games_pulled_early",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_rita",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_notes",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 2,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "rotate_full",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_rotate_push",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 7,
+     "visibleReads": 8,
+     "hiddenReads": 12,
+     "firstWrite": 2,
+     "firstRead": 3,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [
+      "trust_sec",
+      "snapshot",
+      "rotate_pushed"
+     ],
+     "feeds": [
+      "ending"
+     ],
+     "flags": []
+    },
+    {
+     "name": "rotate_pushed",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch2_rotate",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "rotate_full"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 3,
+     "hiddenReads": 6,
+     "firstWrite": 2,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "rotate_full"
+     ],
+     "flags": []
+    },
+    {
+     "name": "shift_alert",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3_alert",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_node",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch4_after",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 4,
+     "visibleReads": 10,
+     "hiddenReads": 7,
+     "firstWrite": 3,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": true,
+     "derivedFrom": [
+      "trust_lead",
+      "knows_prep"
+     ],
+     "feeds": [
+      "ending"
+     ],
+     "flags": []
+    },
+    {
+     "name": "note_defense",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_notes",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch4_node",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 4,
+     "visibleReads": 10,
+     "hiddenReads": 7,
+     "firstWrite": 2,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": []
+    },
+    {
+     "name": "knows_prep",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_alert",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch4_node",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      },
+      {
+       "node": "ch4_after",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "shift_alert"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 4,
+     "hiddenReads": 1,
+     "firstWrite": 3,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "shift_alert"
+     ],
+     "flags": []
+    },
+    {
+     "name": "blamed_rid",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 7,
+     "hiddenReads": 7,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "replace_nodes",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_locked",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "end_backdoor",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 8,
+     "hiddenReads": 7,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "cloudtrail",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_locked",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "end_backdoor",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_backdoor",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 9,
+     "hiddenReads": 7,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "first_move",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_after",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 8,
+     "hiddenReads": 7,
+     "firstWrite": 4,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": true,
+     "derivedFrom": [
+      "moves"
+     ],
+     "feeds": [
+      "ending"
+     ],
+     "flags": []
+    },
+    {
+     "name": "moves",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4_after",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика",
+       "via": "first_move"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "first_move"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "skill"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "skill"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 3,
+     "hiddenReads": 4,
+     "firstWrite": 4,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "first_move",
+      "skill"
+     ],
+     "flags": []
+    },
+    {
+     "name": "trust_lead",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_reading",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch2_vera",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_alert",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch4_node",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      },
+      {
+       "node": "ch4_after",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "shift_alert"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "shift_alert"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 5,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "shift_alert"
+     ],
+     "flags": []
+    },
+    {
+     "name": "trust_sec",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch2_vera",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_rita",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_kill",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_notes",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch4_oidc",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_oidc",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_fake",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_locked",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_rotate_push",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch3_token",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "rotate_full"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "rotate_full"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 3,
+     "hiddenReads": 6,
+     "firstWrite": 2,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "rotate_full"
+     ],
+     "flags": []
+    },
+    {
+     "name": "leaked",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch4_fake",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 7,
+     "hiddenReads": 7,
+     "firstWrite": 3,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "phished",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_fake",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 8,
+     "hiddenReads": 7,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "checked_fake",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_fake",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "obeyed_manager",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_rita",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ending"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 7,
+     "hiddenReads": 7,
+     "firstWrite": 2,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ending"
+     ],
+     "flags": [
+      "только финал",
+      "молчит"
+     ]
+    },
+    {
+     "name": "skill",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_reading",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_reading",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_bonus",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch2",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_vera",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_rita",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_kill",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_rotate",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_notes",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_alert",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_ghost",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_oidc",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_oidc",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_fake",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_moves",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_cleanup",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_locked",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [
+      "moves"
+     ],
+     "feeds": [],
+     "flags": [
+      "только финал",
+      "молчит"
+     ]
+    },
+    {
+     "name": "ending",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 30,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 31,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 32,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 33,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 34,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": 35,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 150,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 151,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 152,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 153,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 154,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 155,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "debrief",
+       "chapter": 5,
+       "line": 156,
+       "file": "ch05.ink",
+       "kind": "текст"
+      }
+     ],
+     "ownReads": 13,
+     "visibleReads": 7,
+     "hiddenReads": 6,
+     "firstWrite": 5,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [
+      "phished",
+      "leaked",
+      "note_defense",
+      "rotate_full",
+      "blamed_rid",
+      "replace_nodes",
+      "cloudtrail",
+      "first_move",
+      "obeyed_manager",
+      "shift_alert"
+     ],
+     "feeds": [],
+     "flags": []
+    }
+   ]
+  }
+ ]
+}
