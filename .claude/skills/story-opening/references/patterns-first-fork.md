@@ -98,19 +98,19 @@ basis: secondary.
 ```ink
 # contact: marat, Марат, red
 VAR asked = false
-ты уже выехал?? #from:marat
-он сказал, ты везёшь документы #delay:4s
-* [Кто сказал? #to:marat]
+ты где? торт уже несут #from:marat
+мама думает, что ты прячешься за дверью #delay:4s
+* [Какой торт? #to:marat]
     ~ asked = true
-* [Еду. Что случилось? #to:marat]
-- нотариус #from:marat #delay:6s
-номер твой. фамилия твоя #delay:4s
+* [Иду. Что случилось? #to:marat]
+- юбилей. ей шестьдесят #from:marat #delay:6s
+в списке гостей твой номер. рядом «сын» #delay:4s
 {asked:
     подожди. ты вообще кто #delay:8s
 - else:
-    так ты везёшь или нет #delay:8s
+    так ты идёшь или нет #delay:8s
 }
-я Марат. сижу в приёмной сорок минут #delay:8s
+я Марат. её сосед. стою с тортом в коридоре #delay:8s
 -> END
 ```
 
@@ -148,18 +148,18 @@ VAR asked = false
 ```ink
 # contact: fedya, Федя, cyan
 VAR risk = 0
-дверь в котельную заперта #from:fedya
-* [Постучи #to:fedya]
-    стучу. тишина #from:fedya #delay:1m
-- сбоку окно. пролезу #from:fedya #delay:2m
+вахтёр не пускает в архив #from:fedya
+* [Попроси по-хорошему #to:fedya]
+    попросил. говорит, приказ #from:fedya #delay:1m
+- есть служебный вход. камера там не горит #from:fedya #delay:2m
 * [Не надо. Уходи #to:fedya]
-    поздно. на лестнице кто-то есть #from:fedya #delay:40s
-    лезу #delay:1m
-* [Лезь #to:fedya]
+    поздно. вахтёр идёт сюда #from:fedya #delay:40s
+    захожу #delay:1m
+* [Заходи #to:fedya]
     ~ risk += 1
-    залез. рукав в клочья #from:fedya #delay:2m
-- тут чей-то телефон на зарядке #from:fedya #delay:1m
-звонит. на экране твоё имя #delay:20s
+    зашёл. дверь захлопнулась сама #from:fedya #delay:2m
+- на полке папка с моей фамилией #from:fedya #delay:1m
+и вчерашней датой #delay:20s
 -> END
 ```
 
@@ -202,18 +202,18 @@ VAR risk = 0
 # contact: ulya, Уля, teal
 # contact: stas, Стас, amber
 VAR covered_ulya = false
-у кого запасной ключ от студии? #from:stas
-* [Без понятия #to:stas]
+кто брал фотоаппарат из кружка? #from:stas
+* [Не знаю #to:stas]
     ~ covered_ulya = true
-* [У Ули #to:stas]
-- ок #from:stas #delay:30s
+* [Уля брала #to:stas]
+- понял #from:stas #delay:30s
 -> day3
 === day3 ===
-охрана спрашивает, кто был в студии ночью #from:ulya #delay:2h
+в аппарате нашли карту памяти. завуч спрашивает чья #from:ulya #delay:2h
 {covered_ulya:
-    стас так и не узнал про ключ. спасибо #delay:20s
+    стас до сих пор думает, что никто не знает. спасибо #delay:20s
 - else:
-    стас сказал им, что ключ у меня. от тебя узнал? #delay:20s
+    стас назвал меня. ты ему сказал? #delay:20s
 }
 -> END
 ```

@@ -29,14 +29,14 @@ basis: secondary · опора: `skolnick-video-game-storytelling:SYS-3`.
 # contact: oleg, Олег, orange
 # contact: notes, Заметки, green
 VAR saved = false
-скинь номер машины под твоим окном #from:oleg
-* [Серый фургон, цифры 4 и 7 #to:notes #label:Сохранить в заметки]
+в постамате моя посылка. код пришёл тебе в смс #from:oleg
+* [Код 4471, ячейка 12 #to:notes #label:Сохранить в заметки]
     ~ saved = true
-* [Не вижу номера #to:oleg]
+* [Не вижу смс #to:oleg]
 - {saved:
-    записал? хорошо. сверю #from:oleg #delay:1m
+    записал? отлично. продиктуешь, когда дойду #from:oleg #delay:1m
 - else:
-    жаль. он уезжает #from:oleg #delay:1m
+    жаль. через час посылка уедет обратно #from:oleg #delay:1m
 }
 -> END
 ```
