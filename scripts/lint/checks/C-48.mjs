@@ -8,11 +8,16 @@ import { heroNames, short } from '../text.mjs';
 // заглавная посреди фразы: перед пробелом буква, цифра или запятая
 const CAP = /(?<=[\p{L}\p{N},;]\s)(\p{Lu}\p{Ll}{2,})/gu;
 
-/** Основа слова без падежного окончания и конечных «й», «ь»: «Дине» и «Дина» → «дин», «Рэю» и «Рэй» → «рэ». */
-export function nameStem(word, T) {
+/**
+ * Основа слова без падежного окончания, конечных «й», «ь» и мягкого знака: «Дине» и «Дина» → «дин», «Рэю» и «Рэй» → «рэ».
+ * fleeting — ещё и без беглой гласной в последнем слоге имени: «Павел» → «павл» (как «Павла»), «Лев» → «лв» (как «Льва»).
+ */
+export function nameStem(word, T, { fleeting = false } = {}) {
   const low = word.toLowerCase().replace(/ё/g, 'е');
-  const s = low.replace(T.re('dict.case_endings'), '').replace(/[йь]$/u, '');
-  return s.length >= 2 ? s : low;
+  let s = low.replace(T.re('dict.case_endings'), '').replace(/[йь]$/u, '');
+  if (s.length < 2) s = low;
+  if (fleeting) s = s.replace(/([^аеиоуыэюя])[ео]([^аеиоуыэюяйь])$/u, '$1$2');
+  return s.replace(/ь/g, '');
 }
 
 export default {
@@ -32,7 +37,7 @@ export default {
     const known = [...(card.match(/\p{Lu}\p{Ll}{2,}/gu) ?? [])];
     for (const n of names.keys()) known.push(...n.split(/\s+/).filter(Boolean));
     const white = new Set(known.map((w) => w.toLowerCase().slice(0, 4)));
-    const stems = new Set(known.map((w) => nameStem(w, T)));
+    const stems = new Set(known.flatMap((w) => [nameStem(w, T), nameStem(w, T, { fleeting: true })]));
     const renames = new Set();
     for (const k of tree.knots) walk(k.items, (it) => { if (it.tags?.rename) { const nm = it.tags.rename.split(',').slice(1).join(',').trim(); if (nm) for (const w of nm.split(/\s+/)) { renames.add(w.toLowerCase().slice(0, 4)); stems.add(nameStem(w, T)); } } });
 

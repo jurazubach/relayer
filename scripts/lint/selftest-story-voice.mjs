@@ -32,6 +32,9 @@ export function register(test, { has, hasNot, lint, keys }) {
     await hasNot(two('отдай ключ Дине, а потом напиши Рэю #from:ann'), 'C-48.unknown', { only: ['C-48'], meta });
     await hasNot(two('спроси у Колдуэлла и Ани #from:ann'), 'C-48.unknown', { only: ['C-48'], meta });
     await has(two('отдай ключ Зорину #from:ann'), 'C-48.unknown', { only: ['C-48'], meta });
+    // беглая гласная: Павел → Павла, Пётр → Петру
+    const pm = { characters: [{ id: 'pav', name: 'Павел' }, { id: 'pet', name: 'Пётр' }] };
+    await hasNot(two('спроси у Павла, потом напиши Петру #from:ann'), 'C-48.unknown', { only: ['C-48'], meta: pm });
   });
 
   test('C-44: реплики против карточки голоса; совпадают — нет; мало реплик — нет', async () => {
@@ -47,6 +50,14 @@ export function register(test, { has, hasNot, lint, keys }) {
     await has(two(['ну 😭', 'да 😅', 'ага 🙂'].map((l) => `${l} #from:lev`).join('\n')), 'C-44.card_share', { only: ['C-44'], meta: meta('строчные, ни одного эмодзи') });
     // без карточки — сверять не с чем
     await hasNot(low, 'C-44.card_share', { only: ['C-44'] });
+  });
+
+  test('C-47: упрёк в узле, куда ведёт только кнопка, — по выбору; в общем стволе — без основания', async () => {
+    const viaButton = '-> a\n=== a ===\nтебе пришло? #from:ann\n* [Ничего #to:ann] -> caught\n* [Пришло #to:ann] -> END\n=== caught ===\nты сказал «ничего» #from:ann\n-> END';
+    await hasNot(viaButton, 'C-47.blame', { only: ['C-47'] });
+    const viaCond = 'VAR lied = false\n-> a\n=== a ===\nтебе пришло? #from:ann\n* [Ничего #to:ann]\n  ~ lied = true\n* [Пришло #to:ann]\n- { lied: -> caught }\n-> END\n=== caught ===\nты сказал «ничего» #from:ann\n-> END';
+    await hasNot(viaCond, 'C-47.blame', { only: ['C-47'] });
+    await has('-> a\n=== a ===\nты сказал, что придёшь #from:ann\n* [да] -> END\n* [нет] -> END', 'C-47.blame', { only: ['C-47'] });
   });
 
   test('C-46: служебный канал повторяет шаблон, рассылка в разные чаты — не повтор; тот же чат дважды — повтор', async () => {

@@ -14,6 +14,18 @@ export default {
     const { st, T, tree } = ctx;
     const re = (k) => T.re(k);
     const feelings = new Map();
+    // узел, куда ведут только переходы из веток кнопок или из условий ({lied: -> confront}), — сам ветка выбора или
+    // условия: упрёк в нём опирается на нажатое
+    const into = new Map();
+    for (const k of tree.knots) {
+      walk(k.items, (it, path) => {
+        if (it.type !== 'divert' || !it.target) return;
+        const e = into.get(it.target) ?? { choice: 0, other: 0 };
+        if (path.some((p) => p.type === 'choice' || p.type === 'cond' || p.type === 'branch')) e.choice++; else e.other++;
+        into.set(it.target, e);
+      });
+    }
+    const viaChoice = (id) => { const e = into.get(id) ?? into.get(id.split('.').at(-1)); return !!e && e.choice > 0 && e.other === 0; };
     for (const k of tree.knots) {
       const at = { node: k.id, chapter: st.chapterOf(k.id) };
       walk(k.items, (it, path) => {
@@ -29,7 +41,7 @@ export default {
             list.push({ ...at, text: it.text });
             feelings.set(key, list);
           }
-          if (re('dict.blame').test(t) && !inCond && !inChoice) find('C-47.blame', { ...at, message: `${k.id}: «${short(it.text)}» — упрёк без основания` });
+          if (re('dict.blame').test(t) && !inCond && !inChoice && !viaChoice(k.id)) find('C-47.blame', { ...at, message: `${k.id}: «${short(it.text)}» — упрёк без основания` });
           if (re('dict.absence_reproach').test(t) && !silentChoice && !inCond) find('C-47.absence', { ...at, message: `${k.id}: «${short(it.text)}» — упрёк за отсутствие: игрок мог просто отложить телефон (A-03)` });
           if (re('dict.player_time').test(t)) find('C-47.player_time', { ...at, message: `${k.id}: «${short(it.text)}» — угадывает время игрока; время суток — время мира (A-02)` });
           // упрёк в ветке else порога по доверию
