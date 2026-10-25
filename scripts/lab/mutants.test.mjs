@@ -142,11 +142,12 @@ test('parseFindings: последний блок json, иначе строки �
   assert.deepEqual(parseFindings(null), []);
 });
 
-test('matchFinding: узел дефекта, его stitch или та же проверка', () => {
+test('matchFinding: узел дефекта, его stitch или та же проверка без узла', () => {
   const entry = { node: 'ch3_radio', check: 'C-26' };
   assert.ok(matchFinding(entry, [{ node: 'ch3_radio', check: null }]));
   assert.ok(matchFinding(entry, [{ node: 'ch3_radio.wait', check: null }]));
-  assert.ok(matchFinding(entry, [{ node: 'ch1', check: 'C-26' }]));
+  assert.equal(matchFinding(entry, [{ node: 'ch1', check: 'C-26' }]), null);
+  assert.ok(matchFinding(entry, [{ node: null, check: 'C-26' }]));
   assert.equal(matchFinding(entry, [{ node: 'ch3_radio_x', check: 'C-35' }]), null);
   assert.ok(matchFinding({ node: null, check: 'C-31' }, [{ node: null, check: 'C-31' }]));
 });

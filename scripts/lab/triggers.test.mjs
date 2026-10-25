@@ -133,6 +133,8 @@ test('окружение: чужие, пропавшие, плагины, MCP', 
   assert.match(w[0], /cockroach:query/);
   assert.match(w[1], /tide-table/);
   assert.deepEqual(checkEnv({ skills: ['lamp-check'], plugins: [], mcp_servers: [] }, { project: ['lamp-check'], allowed: [] }), []);
+  // модуль с user-invocable: false в init.skills не попадает, но это не пропажа
+  assert.deepEqual(checkEnv({ skills: ['lamp-check'], plugins: [], mcp_servers: [] }, { project: ['lamp-check', 'tide-table'], allowed: [], hidden: ['tide-table'] }), []);
 });
 
 test('пороги: ключи lab.triggers.* из thresholds.json через общий загрузчик', () => {

@@ -6,7 +6,7 @@ import { join, dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   NONE, loadThresholds, projectSkills, loadPhraseDir, parseSkillFile, buildPlan,
-  createStreamParser, summarize, checkEnv, gate, pct, isHit,
+  createStreamParser, summarize, checkEnv, gate, pct, isHit, hiddenSkills,
 } from './triggers-lib.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -246,7 +246,7 @@ async function main() {
     // Сверка до прогона: init приходит раньше обращения к модели, так что запуск гасим на нём.
     const pre = await runOnce('ping', o, { untilInit: true });
     init = pre.init;
-    envWarnings = pre.error && !init ? [pre.error] : checkEnv(init, { project: present, allowed: env.allowed });
+    envWarnings = pre.error && !init ? [pre.error] : checkEnv(init, { project: present, allowed: env.allowed, hidden: hiddenSkills(SKILLS, present) });
     for (const w of envWarnings) warn(o, `⚠ ${w}`);
     if (raw['check-env']) {
       if (o.json) console.log(JSON.stringify({ ok: !envWarnings.length, warnings: envWarnings, skills: init?.skills ?? [], project: present }, null, 2));

@@ -22,6 +22,11 @@ export function loadThresholds(path) {
   };
 }
 
+/** Модули с `user-invocable: false`: в `init.skills` (меню `/`) их нет, хотя модель их видит и вызывает. */
+export function hiddenSkills(skillsDir, names) {
+  return names.filter((n) => /^user-invocable:\s*false\s*$/m.test((readFileSync(join(skillsDir, n, 'SKILL.md'), 'utf8').match(/^---\n([\s\S]*?)\n---/) ?? ['', ''])[1]));
+}
+
 /** Имена проектных скиллов: папки `.claude/skills/<имя>/` с `SKILL.md`. */
 export function projectSkills(skillsDir) {
   if (!existsSync(skillsDir)) return [];
@@ -278,14 +283,14 @@ export function summarize(phrases, { present = [] } = {}) {
 }
 
 /** Что не так с окружением: чужие скиллы в листинге, свои пропали, лишние плагины и MCP. */
-export function checkEnv(init, { project, allowed }) {
+export function checkEnv(init, { project, allowed, hidden = [] }) {
   const warnings = [];
   if (!init) return ['нет события init: не удалось узнать, какие скиллы загружены'];
   const listed = new Set(init.skills.map(bareName));
   const ok = new Set([...project, ...allowed.map(bareName)]);
   const foreign = init.skills.filter((s) => !ok.has(bareName(s)));
   if (foreign.length) warnings.push(`в листинге чужие скиллы (${foreign.length}): ${foreign.join(', ')} — они могут перехватить фразы; отключи в .claude/settings.local.json или добавь в docs/lab/triggers/_env.json`);
-  const missing = project.filter((s) => !listed.has(s));
+  const missing = project.filter((s) => !listed.has(s) && !hidden.includes(s));
   if (missing.length) warnings.push(`проектных скиллов нет в листинге: ${missing.join(', ')} (off, disable-model-invocation или битый frontmatter?)`);
   const plugins = init.plugins.filter((p) => !String(p.source ?? p.name).endsWith('@builtin'));
   if (plugins.length) warnings.push(`подключены плагины: ${plugins.map((p) => p.source ?? p.name).join(', ')}`);

@@ -262,6 +262,21 @@ test('C-10: пустые кнопки в главе, декоративная г
   await hasNot('VAR x = 0\n-> a\n=== a ===\nраз #from:ann\n* [да]\n  ~ x = 1\n* [нет]\n  -> b\n- {x: ага}\n-> END\n=== b ===\nб\n-> END', 'C-10.group_bodyless', { only: ['C-10'] });
 });
 
+test('C-11: отказ в начале фразы внутри кнопки; «паспорт» — не отказ', async () => {
+  const mid = `-> a
+=== a ===
+поможешь? #from:ann
+* [Это странно. Я пас]
+  -> b
+* [Помогу]
+  -> b
+=== b ===
+ну и вот
+-> END`;
+  await has(mid, 'C-11.refusal_hops', { only: ['C-11'] });
+  await hasNot(mid.replace('Это странно. Я пас', 'Паспорт у тебя?'), 'C-11.refusal_hops', { only: ['C-11'] });
+});
+
 test('C-11: незамеченное молчание, отказ без следа, наказанное молчание', async () => {
   const silent = `-> a
 === a ===

@@ -190,10 +190,14 @@ export function parseFindings(text, nodes = []) {
 const normCheck = (c) => (c && /^C-\d\d$/.test(String(c).trim()) ? String(c).trim() : null);
 
 /** Нашёл ли скилл дефект: находка в узле дефекта (или его stitch) или с той же проверкой. */
+// Та же проверка в чужом узле — промах: скилл на чистой основе даёт фоновые находки той же C-NN в других
+// узлах, и мягкое сопоставление засчитало бы мутанта без находки в узле дефекта (калибровка S-choices).
 export function matchFinding(entry, findings) {
   return findings.find((f) => {
-    if (entry.node && f.node && (f.node === entry.node || f.node.startsWith(`${entry.node}.`))) return true;
-    return !!entry.check && f.check === entry.check;
+    const inNode = entry.node && f.node && (f.node === entry.node || f.node.startsWith(`${entry.node}.`));
+    if (inNode) return true;
+    const nodeFree = !entry.node || !f.node;
+    return !!entry.check && f.check === entry.check && nodeFree;
   }) ?? null;
 }
 
