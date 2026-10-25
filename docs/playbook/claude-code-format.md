@@ -280,7 +280,10 @@ claude -p "$PHRASE" --model opus --output-format stream-json --verbose \
   **вызов скилла**. Ответ: `tool_result` «Launching skill: <имя>»;
 - события из агента несут `parent_tool_use_id` (вложенность), запуск агента — `system/task_started` с
   `subagent_type` и `spawn_depth`;
-- `{"type":"result","result":"…","usage":{…}}` — итог.
+- `{"type":"system","subtype":"permission_denied","tool_name":"Bash","tool_use_id":"…","decision_reason_type":…}` — отказ в правах по ходу: приходит после `tool_use` и до `tool_result` (`is_error: true`). Прогон, оборванный на вызове `Skill`, до `result` не доживает — отказ на сам `Skill` виден только здесь **[эксп, T-17]**;
+- `{"type":"result","result":"…","usage":{…},"permission_denials":[{tool_name, tool_use_id, tool_input}]}` — итог и все отказы прогона.
+
+**Одна команда на вызов Bash.** Составные команды (`;`, `&&`, `|` с переменной, `>`, `$?`, `for` с переменной) правило `Bash(npm run story*)` не покрывает целиком — отказ «multiple operations» или «variable can't be checked» **[эксп, W1]**. В `SKILL.md` команды пишутся по одной.
 
 Срабатывание = первый `tool_use` с `name == "Skill"` в событиях без `parent_tool_use_id`. Если ни одного —
 «ничего». Результат недетерминирован, поэтому на фразу — `lab.triggers.runs_per_phrase` прогонов (не меньше

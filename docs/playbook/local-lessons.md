@@ -37,7 +37,8 @@
   в `ALLOW` у `skills-test.mjs`, в шаблоне `prompts/type-skill.md` и в `claude-code-format.md` §9.
 - **Результат:** проверено в `claude -p`: старое правило даёт отказ, новое — ok, в том числе с `2>&1 | head`
   и в `allowed-tools` самого скилла без внешнего `--allowedTools` (`docs/lab/runs/X-E2mini/permissions.md`).
-  Класс A. Журнал: 2026-10-25 · X-E2mini.
+  Класс A. Журнал: 2026-10-25 · X-E2mini. Сделано: правило поправлено везде (W1), `skills:test` и `lab:triggers` считают
+  прогон с отказом на Bash/Skill недействительным, `--control` хранит находки основы (T-17); `skill-check` роняет `story:*`.
 
 ## LOCAL-04 · Модель повторяет ложные срабатывания замера, не сверив их с ink
 

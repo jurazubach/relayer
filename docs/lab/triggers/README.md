@@ -50,3 +50,7 @@
   `lab.triggers.max_false`.
 
 Результаты пишутся в `docs/lab/runs/triggers/<дата>.json`.
+
+## Отказы в правах
+
+В таблице — колонка «отказы». Прогон с отказом на инструмент из `lab.denials.blocking_tools` (Bash, Skill) недействителен: не попадание, не промах, не ложное. Доля недействительных выше `lab.denials.max_invalid_share` — код 1 даже без `--min` (T-17). `--json` отдаёт список `denials`.
