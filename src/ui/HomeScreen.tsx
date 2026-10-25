@@ -3,7 +3,7 @@ import type { Progress, Story } from '../engine';
 import { StoryTile } from './StoryTile';
 
 /**
- * Главный экран: истории карточками. Тап открывает описание истории.
+ * Главный экран: истории карточками на всю ширину, одна под другой. Тап открывает описание истории.
  * Плитка «Загрузить» принимает свой .json (или .ink) — он появляется в приложении сразу.
  */
 export function HomeScreen({
@@ -32,7 +32,7 @@ export function HomeScreen({
   };
 
   return (
-    <div className="screen" data-testid="home">
+    <div className="screen screen--scroll" data-testid="home">
       <header className="screen__header">
         <h1 className="screen__title">Истории</h1>
         <p className="screen__subtitle">Переписки в реальном времени или по клику</p>
@@ -43,18 +43,20 @@ export function HomeScreen({
           <StoryTile key={s.id} story={s} progress={progressOf(s.id)} onOpen={() => onOpen(s.id)} />
         ))}
 
-        <li className="story-tile story-tile--add">
+        <li className="upload-tile">
           <button
-            className="story-tile__open"
+            className="upload-tile__open"
             onClick={() => fileRef.current?.click()}
             data-testid="upload"
             disabled={busy}
           >
-            <span className="story-tile__glyph" aria-hidden="true">
+            <span className="upload-tile__plus" aria-hidden="true">
               +
             </span>
-            <span className="story-tile__title">{busy ? 'Читаю файл…' : 'Загрузить историю'}</span>
-            <span className="story-tile__tagline">.json со сценарием внутри или просто .ink</span>
+            <span className="upload-tile__body">
+              <span className="upload-tile__title">{busy ? 'Читаю файл…' : 'Загрузить историю'}</span>
+              <span className="upload-tile__hint">Файл .json или .ink со сценарием</span>
+            </span>
           </button>
         </li>
       </ul>

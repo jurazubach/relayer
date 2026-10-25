@@ -23,11 +23,57 @@ test('главный экран показывает карточку истор
   const card = page.getByTestId(tile);
   await expect(card).toContainText(FIXTURE.title);
   await expect(card).toContainText(FIXTURE.series!);
-  // метка загруженной истории висит на карточке рядом с кнопкой
+  await expect(card).toContainText(FIXTURE.tagline!);
+  // метка загруженной истории — на карточке
   await expect(card.locator('..')).toContainText('свой файл');
-  // карточка квадратная
-  const box = await card.boundingBox();
-  expect(Math.abs(box!.width - box!.height)).toBeLessThan(2);
+});
+
+test('карточка показывает затравки, главы и героев', async ({ page }) => {
+  await fixtureOnHome(page);
+  const teasers = page.getByTestId(`tile-teasers-${FIXTURE.id}`);
+  for (const t of FIXTURE.teasers!) await expect(teasers).toContainText(t);
+
+  const counts = page.getByTestId(`tile-counts-${FIXTURE.id}`);
+  // игрок (запись без id) и служебные контакты в число героев не входят
+  const people = FIXTURE.characters!.filter((c) => c.id && !c.service).length;
+  expect(people).toBeLessThan(FIXTURE.characters!.length);
+  await expect(counts).toContainText(new RegExp(`${FIXTURE.chapters!.length}\\s+глав`));
+  await expect(counts).toContainText(new RegExp(`${people}\\s+геро`));
+  await expect(page.getByTestId(tile)).toContainText('по клику');
+});
+
+test('карточка на всю ширину колонки, текст не обрезан', async ({ page }) => {
+  await fixtureOnHome(page);
+  const geo = await page.getByTestId(tile).evaluate((button) => {
+    const li = button.parentElement!;
+    const list = li.parentElement!;
+    const pad = parseFloat(getComputedStyle(list).paddingLeft) + parseFloat(getComputedStyle(list).paddingRight);
+    // всё, что могло бы срезать текст: обрезка по строкам или переполнение внутри блока
+    // знак обложки нарочно выходит за край, его не считаем
+    const clipped = [...button.querySelectorAll<HTMLElement>('*')]
+      .filter((el) => el.textContent?.trim() && !el.closest('[aria-hidden="true"]'))
+      .filter((el) => {
+        const css = getComputedStyle(el);
+        const clamp = css.getPropertyValue('-webkit-line-clamp');
+        return (clamp && clamp !== 'none') || el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+      })
+      .map((el) => el.textContent);
+    return {
+      card: li.getBoundingClientRect().width,
+      column: list.clientWidth - pad,
+      phone: document.querySelector('.phone')!.getBoundingClientRect().width,
+      // карточка не срезает собственное содержимое по высоте
+      overflow: button.offsetHeight - li.clientHeight,
+      clipped,
+      viewport: innerWidth,
+    };
+  });
+  expect(Math.abs(geo.card - geo.column)).toBeLessThanOrEqual(1);
+  // на телефоне колонка — весь экран без полей; на десктопе её держит рамка .phone
+  if (geo.viewport < 520) expect(geo.card).toBeGreaterThanOrEqual(geo.viewport - 40);
+  expect(geo.card).toBeLessThanOrEqual(geo.phone);
+  expect(geo.overflow).toBeLessThanOrEqual(0);
+  expect(geo.clipped).toEqual([]);
 });
 
 test('карточка открывает описание истории', async ({ page }) => {
@@ -84,6 +130,8 @@ test('назад: игра → описание → главный, прогре
   await page.getByTestId('story-back').click();
   await expect(page.getByTestId('home')).toBeVisible();
   await expect(page.getByTestId(tile)).toContainText('Продолжить');
+  // начатая карточка говорит, где игрок, а не зачем начинать
+  await expect(page.getByTestId(`tile-teasers-${FIXTURE.id}`)).toHaveCount(0);
 });
 
 test('«начать заново» стирает прогресс', async ({ page }) => {

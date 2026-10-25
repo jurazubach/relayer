@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4173;
+const PORT = Number(process.env.E2E_PORT) || 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 /** E2E_PREVIEW=1 — гонять тесты по продакшен-сборке, а не по дев-серверу. */

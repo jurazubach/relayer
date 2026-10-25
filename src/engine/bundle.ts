@@ -80,6 +80,9 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       chapters: file.chapters,
       characters: file.characters,
       features: file.features,
+      teasers: Array.isArray(file.teasers)
+        ? file.teasers.filter((t) => typeof t === 'string' && t.trim()).map((t) => t.trim())
+        : undefined,
       cover: file.cover ?? DEFAULT_COVER,
       ink,
       includes,

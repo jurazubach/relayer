@@ -49,7 +49,7 @@ npm run test:hooks          # самопроверка хуков .claude/settin
 
 Браузер один — chromium (`npx playwright install chromium`), мобильные экраны эмулируются вьюпортом.
 Проекты в `playwright.config.ts`: `phone` (390×844), `small` (360×640), `desktop` (1280×900).
-Сервер Playwright поднимает сам (`npm run dev` на порту 4173); `E2E_PREVIEW=1` гоняет по продакшен-сборке.
+Сервер Playwright поднимает сам (`npm run dev` на порту 4173, другой — `E2E_PORT=4273`); `E2E_PREVIEW=1` гоняет по продакшен-сборке.
 
 **Браузер по умолчанию видимый** (окно уезжает вправо, движения замедлены на 120 мс), чтобы
 пользователь мог подсмотреть, что происходит. `HEADLESS=1` — без окна, так быстрее;
@@ -150,7 +150,7 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 ## Как добавить историю
 
 В репозиторий: папка `src/stories/<алиас>/` — `meta.json` (описание, `characters`, `chapters`, `cover`,
-`revision`, `minutes`, `days`, `free_chapters`) и `story.ink`, главы — `ch01.ink`… через `INCLUDE`.
+`revision`, `minutes`, `days`, `free_chapters`, `teasers` — затравки для карточки) и `story.ink`, главы — `ch01.ink`… через `INCLUDE`.
 Каталог собирается `import.meta.glob`, регистрировать нигде не нужно. Готовый `.json` разложить —
 `npm run story:unpack -- путь.json`.
 
@@ -193,7 +193,7 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 - Стили по БЭМ: `block`, `block__element`, `block--modifier`, общие состояния через `is-`.
   Значения только из токенов `src/styles/tokens.css`; новый блок — новый файл в `blocks/`
   и строчка импорта в `src/styles/index.css`. Вложенные селекторы не использовать.
-- Селекторы для тестов — `data-testid`, не классы: `home`, `tile-<id>`, `upload`, `upload-input`,
+- Селекторы для тестов — `data-testid`, не классы: `home`, `tile-<id>`, `tile-teasers-<id>`, `tile-counts-<id>`, `upload`, `upload-input`,
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
   `thread-<id>`, `chat`, `notice`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `skip-next`.

@@ -111,11 +111,46 @@ export function sizeLabel(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): 
 
 /** То же по строкам — для узкой карточки, где одна строка не помещается. */
 export function sizeLines(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string[] {
-  const sizes = modeSizes(story);
-  const parts: string[] = [];
-  if (sizes.click) parts.push(`${sizes.click} по клику`);
-  if (sizes.realtime) parts.push(`${sizes.realtime} в реальном времени`);
+  const parts = timeLines(story);
   if (parts.length) return parts;
   const chapters = story.chapters?.length;
   return [chapters ? `${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}` : 'Новая история'];
 }
+
+/**
+ * Только время, без запасной подписи главами: карточка показывает главы отдельно.
+ * «в реальном времени» склеено неразрывными пробелами: на узкой карточке строка
+ * переносится целиком после числа, а не рвёт «реальном / времени».
+ */
+export function timeLines(story: Pick<Story, 'minutes' | 'days'>): string[] {
+  const sizes = modeSizes(story);
+  const parts: string[] = [];
+  if (sizes.click) parts.push(`${sizes.click} по клику`);
+  if (sizes.realtime) parts.push(`${sizes.realtime} в\u00A0реальном\u00A0времени`);
+  return parts;
+}
+
+/** Герои истории: служебные контакты (заметки, банк, сервис) пишут в чат, но героями не считаются. */
+export const storyPeople = (story: Pick<Story, 'characters'>) => (story.characters ?? []).filter((c) => !c.service);
+
+/**
+ * Числа в углу карточки: «5 глав», «5 героев». Чего в файле нет, того и на карточке нет.
+ * Герой здесь — тот, кто пишет в чат: запись без id — это сам игрок («Вы», «Ты»), его не считаем.
+ */
+export function storyCounts(story: Pick<Story, 'chapters' | 'characters'>): string[] {
+  const chapters = story.chapters?.length ?? 0;
+  const people = storyPeople(story).filter((c) => c.id).length;
+  return [
+    ...(chapters ? [`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`] : []),
+    ...(people ? [`${people} ${plural(people, 'герой', 'героя', 'героев')}`] : []),
+  ];
+}
+
+/**
+ * Однобуквенные и двухбуквенные слова («в», «с», «не») приклеиваем к следующему неразрывным пробелом:
+ * на узкой карточке висящее в конце строки «С» читается как опечатка.
+ */
+export const keepShortWords = (text: string): string => text.replace(/(?<=^|[\s\u00A0«„(])([а-яёa-z]{1,2})\s+/giu, '$1\u00A0');
+
+/** Затравки на карточке: не больше трёх, иначе карточка превращается в синопсис. */
+export const storyTeasers = (story: Pick<Story, 'teasers'>): string[] => (story.teasers ?? []).slice(0, 3).map(keepShortWords);
