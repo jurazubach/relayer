@@ -8458,5 +8458,49 @@
         "change": "заведён вместо числа в промпте сборщика и skill-check.mjs"
       }
     ]
+  },
+  "story.rewrite.early_chapters": {
+    "value": 2,
+    "unit": "главы",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-postmortems:P-07 («если тега нет в главах 1–2»)",
+      "narrative-postmortems:RED-12"
+    ],
+    "checks": [
+      "story-desk/scripts/stale-check.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-desk",
+        "change": "заведён: ранние главы, которые сверяются с поздними (Б-1)"
+      }
+    ]
+  },
+  "story.rewrite.late_chapters": {
+    "value": 3,
+    "unit": "глав",
+    "op": "≥",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "narrative-postmortems:P-07 («но он есть в трёх поздних»)",
+      "narrative-postmortems:RED-12"
+    ],
+    "checks": [
+      "story-desk/scripts/stale-check.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-desk",
+        "change": "заведён: приём есть в стольких поздних главах и нет в ранних — повод переписать ранние"
+      }
+    ]
   }
 }
