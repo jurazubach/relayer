@@ -29,7 +29,7 @@ export function StoryTile({
     ? null
     : progress.ended
       ? 'Пройдено'
-      : progress.locked
+      : progress.locked && free !== null
         ? 'Бесплатные главы пройдены'
         : progress.chapter || `${progress.messages} сообщений`;
   const ago = progress && !progress.ended && progress.savedAt ? formatAgo(progress.savedAt) : '';
