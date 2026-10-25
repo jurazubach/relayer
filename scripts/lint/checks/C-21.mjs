@@ -10,9 +10,9 @@ export default {
   partial: true,
   run(ctx, find) {
     const { st, T, tree } = ctx;
-    // контакты без единого #from (заметки) не считаем
+    // контакты без единого #from и служебные (dict.service_contacts, service: true в meta.json) не считаем
     const writers = new Set();
-    for (const k of tree.knots) walk(k.items, (it) => { if (it.tags?.from) writers.add(it.tags.from); });
+    for (const k of tree.knots) walk(k.items, (it) => { if (it.tags?.from && !ctx.service.has(it.tags.from)) writers.add(it.tags.from); });
 
     const before = [];
     const firstChapter = new Map(); // id -> [глава первого появления по прогонам]
@@ -22,7 +22,7 @@ export default {
     const afterPause = T.value('C-21.unlock_after_pause_lines');
     for (const run of ctx.runs) {
       const firstAt = run.choices[0]?.at ?? run.lines.length;
-      before.push(new Set(run.lines.slice(0, firstAt).filter((l) => isIncoming(l) && l.who).map((l) => l.who)).size);
+      before.push(new Set(run.lines.slice(0, firstAt).filter((l) => isIncoming(l) && l.who && !ctx.service.has(l.who)).map((l) => l.who)).size);
       const seen = new Map();
       const note = (id, chapter) => { if (writers.has(id) && !seen.has(id)) seen.set(id, chapter); };
       let ci = 0;
@@ -52,8 +52,9 @@ export default {
       if (!byChapter.has(ch)) byChapter.set(ch, []);
       byChapter.get(ch).push(id);
     }
+    const short = ctx.meta.minutes != null && ctx.meta.minutes <= T.value('story.short_min');
     for (const [k, ids] of [...byChapter].sort((a, b) => a[0] - b[0])) {
-      const key = k === 1 ? 'C-21.new_ch1' : 'C-21.new_other';
+      const key = k === 1 ? (short ? 'C-21.new_ch1_short' : 'C-21.new_ch1') : 'C-21.new_other';
       if (ids.length > T.value(key)) {
         find(key, { chapter: k, message: `в главе ${k} впервые появляются ${plural(ids.length, 'контакт', 'контакта', 'контактов')}: ${ids.join(', ')}`, data: { contacts: ids } });
       }

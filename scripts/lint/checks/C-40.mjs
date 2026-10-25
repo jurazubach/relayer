@@ -1,56 +1,11 @@
 // C-40. Распределение финалов: один финал забирает большинство прогонов, редкий финал почти недостижим.
-// Финал — последняя метка «// финал:», через которую прошёл прогон; без меток — последний узел с -> END.
+// Финал — последняя метка «// финал:», через которую прошёл прогон (решение королевы, T-03b). Прогон, дошедший
+// до конца истории без метки, — находка, даже если меток в истории нет совсем: END или DONE в функции и треде
+// историю не кончают, и бот такой прогон концом не считает. Без меток доли считаются по узлам — ориентировочно.
+import { endingCandidates, endingOf } from '../endings.mjs';
 import { pct } from '../text.mjs';
 
-/**
- * Кандидаты в финалы без меток: финальные узлы, в которые ведёт распределитель (end_* перед общим эпилогом),
- * и узлы с -> END, кроме эпилога после них. Иначе общий debrief съест все финалы в один.
- */
-export function endingCandidates(st) {
-  if (st.endingMarks.length) return { picked: null, names: [...new Set(st.endingMarks.map((m) => m.name))] };
-  const picked = new Set();
-  for (const R of st.distributors) {
-    for (const e of st.edges.get(R)) if (e.kind !== 'tunnel' && st.finals.has(e.to) && !st.distributors.has(e.to)) picked.add(e.to);
-  }
-  const after = new Set();
-  const queue = [...picked];
-  while (queue.length) {
-    for (const e of st.edges.get(queue.shift()) ?? []) if (e.to !== 'END' && !after.has(e.to)) { after.add(e.to); queue.push(e.to); }
-  }
-  const ends = st.endings.endings.map((e) => e.id).filter((id) => !after.has(id) && !picked.has(id));
-  return { picked, ends, names: [...picked, ...ends] };
-}
-
-/** Финал прогона: последняя пройденная метка (с подписью ветки) или, без меток, кандидат из endingCandidates. */
-export function endingOf(run, st, cand = endingCandidates(st)) {
-  const marks = st.endingMarks;
-  if (marks.length) {
-    let cur = null;
-    const byNode = new Map();
-    for (const m of marks) {
-      if (!byNode.has(m.node)) byNode.set(m.node, []);
-      byNode.get(m.node).push(m);
-    }
-    let lastKnot = null;
-    for (const l of run.lines) {
-      const list = byNode.get(l.knot);
-      if (list) {
-        if (l.knot !== lastKnot) {
-          const plain = list.find((m) => !m.signature);
-          if (plain) cur = plain.name;
-        }
-        const sig = list.find((m) => m.signature && l.text.startsWith(m.signature));
-        if (sig) cur = sig.name;
-      }
-      lastKnot = l.knot;
-    }
-    return cur;
-  }
-  const first = run.knots.find((k) => cand.picked.has(k));
-  if (first) return first;
-  const ends = new Set(cand.ends);
-  return [...run.knots].reverse().find((k) => ends.has(k)) ?? null;
-}
+export { endingCandidates, endingOf };
 
 export default {
   id: 'C-40',
@@ -76,8 +31,17 @@ export default {
       }
       return e;
     });
-    if (st.endingMarks.length && unmarked) {
-      find('C-40.unmarked_run', { message: `${unmarked} из ${runs.length} прогонов дошли до END, не пройдя ни одной // финал: — финал без метки` });
+    const unmarkedRuns = st.endingMarks.length ? unmarked : runs.length;
+    if (unmarkedRuns) {
+      // узлы, где кончились такие прогоны: их и размечать
+      const where = new Map();
+      runs.forEach((r, i) => {
+        if (st.endingMarks.length && perRun[i]) return;
+        const k = r.lines.at(-1)?.knot ?? '?';
+        where.set(k, (where.get(k) ?? 0) + 1);
+      });
+      const top = [...where].sort((a, b) => b[1] - a[1]).slice(0, T.value('lint.examples')).map(([k]) => k).join(', ');
+      find('C-40.unmarked_run', { message: `${unmarkedRuns} из ${runs.length} прогонов дошли до конца истории, не пройдя ни одной // финал: — финал без метки (кончаются в ${top})`, data: { unmarked: unmarkedRuns } });
     }
     const names = cand.names;
     if (names.length >= T.value('C-40.min_endings')) {
@@ -101,7 +65,7 @@ export default {
           const k = [...picks.values()].filter((p) => p.hit * 2 > p.n).length;
           where = ` — проверь ${key.split('|')[0]}: ${k} из ${m} кнопок ведут туда`;
         }
-        find('C-40.dominant_share', { node: key?.split('|')[0] ?? null, message: `финал «${name}» забирает ${pct(share)} прохождений${where}` });
+        find('C-40.dominant_share', { node: key?.split('|')[0] ?? null, message: `финал «${name}» забирает ${pct(share)} прохождений${where}${st.endingMarks.length ? '' : ' (финалы без меток — по узлам, ориентировочно)'}` });
       }
     }
     if (names.length > 1) {
