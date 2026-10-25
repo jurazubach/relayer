@@ -1,0 +1,42 @@
+/*
+ * Блок revision-notice — сохранение от прошлой ревизии сценария сброшено или будет сброшено.
+ * В игре встаёт в поток над экраном, как notice, и висит, пока игрок не закроет.
+ */
+.revision-notice {
+  display: flex;
+  flex: none;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  background: var(--color-raise);
+}
+
+.revision-notice--top {
+  margin: calc(var(--safe-top) + var(--space-2)) var(--space-3) 6px;
+}
+
+.revision-notice__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.revision-notice__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+
+.revision-notice__text {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.revision-notice__rev {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}

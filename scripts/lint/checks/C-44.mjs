@@ -1,11 +1,14 @@
 // C-44. Голоса: профиль каждого контакта по шести метрикам. Пары с близким профилем, голос, который не
-// меняется за историю, строки вне профиля. Метрики — кандидаты: решает слепой тест модели (style.blind_min).
+// меняется за историю, строки вне профиля, реплики против карточки голоса (R-75, ST-20). Метрики — кандидаты:
+// решает слепой тест модели (style.blind_min). measure, voiceLines и cardMarkers берёт скрипт voice-stats скилла
+// story-voice, чтобы его числа совпадали с проверкой.
 import { walk } from '../../lib/ink.mjs';
 import { plural, short } from '../text.mjs';
 
 const EMOJI = /\p{Extended_Pictographic}/gu;
-const METRICS = ['слов', 'со строчной', 'с точкой', '«!»', '«?»', 'эмодзи'];
-const measure = (t) => [
+const HAS_EMOJI = /\p{Extended_Pictographic}/u;
+export const METRICS = ['слов', 'со строчной', 'с точкой', '«!»', '«?»', 'эмодзи'];
+export const measure = (t) => [
   t.split(/\s+/).filter(Boolean).length,
   /^\p{Ll}/u.test(t) ? 1 : 0,
   /\.$/.test(t) && !/\.\.$/.test(t) ? 1 : 0,
@@ -15,6 +18,61 @@ const measure = (t) => [
 ];
 const mean = (rows, i) => rows.reduce((s, r) => s + r[i], 0) / (rows.length || 1);
 
+/** Реплики контактов по дереву: как в движке, без #sys, #me, #photo, служебных и подстановок {…}. */
+export function voiceLines(ctx) {
+  const by = new Map(); // id -> [{ m, text, chapter, knot }]
+  for (const k of ctx.tree.knots) {
+    walk(k.items, (it) => {
+      if (it.type !== 'msg' || !it.who || ctx.service.has(it.who) || 'photo' in it.tags) return;
+      const text = it.text.replace(/\{[^{}]*\}/g, '').trim();
+      if (!text) return;
+      if (!by.has(it.who)) by.set(it.who, []);
+      by.get(it.who).push({ m: measure(text), text, chapter: ctx.st.chapterOf(k.id), knot: k.id });
+    });
+  }
+  return by;
+}
+
+const YOU = /(^|[^\p{L}])(ты|тебя|тебе|тобой|твой|твоя|твоё|твое|твои|твоего|твоей)(?!\p{L})/iu;
+const VY = /(^|[^\p{L}])(вы|вас|вам|вами|ваш|ваша|ваше|ваши|вашего|вашей)(?!\p{L})/iu;
+
+/**
+ * Маркеры карточки голоса (characters[].voice — строка или поля): что карточка обещает о форме. Только то, что
+ * можно сверить с репликой: регистр первой буквы, точка в конце, «без эмодзи», «ты» / «Вы».
+ */
+export function cardMarkers(voice) {
+  if (!voice) return null;
+  const t = (typeof voice === 'string' ? voice : Object.values(voice).flat().join(' · ')).toLowerCase();
+  const out = {};
+  if (/строчн/.test(t)) out.case = 'lower';
+  else if (/заглавн|с большой/.test(t)) out.case = 'upper';
+  if (/без точ|точек нет|не ставит точ/.test(t)) out.period = false;
+  else if (/точк|точкой/.test(t)) out.period = true;
+  if (/без эмодзи|ни одного эмодзи|эмодзи нет|не ставит эмодзи|не шлёт эмодзи/.test(t)) out.emoji = false;
+  if (/на «?вы»?(?!\p{L})|«вы»/u.test(t)) out.address = 'вы';
+  else if (/на «?ты»?(?!\p{L})|«ты»/u.test(t)) out.address = 'ты';
+  return Object.keys(out).length ? out : null;
+}
+
+/** Расхождения реплик с маркерами: [{ marker, card, against, of }] — сколько реплик идут против карточки. */
+export function cardMismatches(markers, texts) {
+  const out = [];
+  const n = texts.length;
+  const count = (f) => texts.filter(f).length;
+  if (markers.case === 'lower') out.push({ marker: 'строчные', against: count((x) => /^\p{Lu}/u.test(x)), of: n, what: 'с заглавной' });
+  if (markers.case === 'upper') out.push({ marker: 'с заглавной', against: count((x) => /^\p{Ll}/u.test(x)), of: n, what: 'со строчной' });
+  if (markers.period === false) out.push({ marker: 'без точки', against: count((x) => /[^.]\.$|^\.$/.test(x)), of: n, what: 'с точкой в конце' });
+  if (markers.period === true) out.push({ marker: 'с точкой', against: count((x) => /[\p{L}\p{N}]$/u.test(x)), of: n, what: 'без знака в конце' });
+  if (markers.emoji === false) out.push({ marker: 'без эмодзи', against: count((x) => HAS_EMOJI.test(x)), of: n, what: 'с эмодзи' });
+  if (markers.address) {
+    const other = markers.address === 'вы' ? YOU : VY;
+    const own = markers.address === 'вы' ? VY : YOU;
+    const addressed = texts.filter((x) => other.test(x) || own.test(x));
+    out.push({ marker: `на «${markers.address === 'вы' ? 'Вы' : 'ты'}»`, against: addressed.filter((x) => other.test(x) && !own.test(x)).length, of: addressed.length, what: `на «${markers.address === 'вы' ? 'ты' : 'Вы'}»` });
+  }
+  return out;
+}
+
 export default {
   id: 'C-44',
   title: 'Голоса',
@@ -22,16 +80,18 @@ export default {
   partial: true,
   model: true,
   run(ctx, find) {
-    const { st, T, tree } = ctx;
-    const by = new Map(); // id -> [{ m, text, chapter, knot }]
-    for (const k of tree.knots) {
-      walk(k.items, (it) => {
-        if (it.type !== 'msg' || !it.who || ctx.service.has(it.who) || 'photo' in it.tags) return;
-        const text = it.text.replace(/\{[^{}]*\}/g, '').trim();
-        if (!text) return;
-        if (!by.has(it.who)) by.set(it.who, []);
-        by.get(it.who).push({ m: measure(text), text, chapter: st.chapterOf(k.id), knot: k.id });
-      });
+    const { T, meta } = ctx;
+    const by = voiceLines(ctx);
+    // карточка голоса против реплик — у любого контакта от C-44.card_min_lines: голос держит и эпизодический
+    for (const c of meta.characters ?? []) {
+      const markers = cardMarkers(c.voice);
+      const rows = by.get(c.id) ?? [];
+      if (!markers || rows.length < T.value('C-44.card_min_lines')) continue;
+      const bad = cardMismatches(markers, rows.map((r) => r.text)).filter((x) => x.of && x.against / x.of > T.value('C-44.card_share'));
+      if (bad.length) {
+        const first = rows.find((r) => cardMismatches(markers, [r.text]).some((x) => x.against));
+        find('C-44.card_share', { node: first?.knot, chapter: first?.chapter, message: `${c.id}: реплики против карточки голоса — ${bad.map((x) => `${x.marker} в карточке, а ${x.what} ${x.against} из ${x.of}`).join('; ')} (например, «${short(first?.text ?? '')}»)` });
+      }
     }
     const cast = [...by].filter(([, rows]) => rows.length >= T.value('C-44.min_lines'));
     if (cast.length < 1) return;

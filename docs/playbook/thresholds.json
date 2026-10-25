@@ -5569,6 +5569,45 @@
       }
     ]
   },
+  "C-44.card_share": {
+    "value": 0.5,
+    "unit": "доля реплик контакта против маркера карточки голоса",
+    "op": ">",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "R-75",
+      "docs/style.md ST-20",
+      "narrative-testing:RED-08 (строка выбивается из голоса)"
+    ],
+    "calibrated_on": "docs/lab/mutants: m16 (Лев пишет как Мира) — да, основа — нет; src/stories/* — карточек голоса нет",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-voice",
+        "change": "заведён: больше половины реплик идут против маркера карточки (регистр, точка, «без эмодзи», «ты» / «Вы») — голос не тот, что обещан"
+      }
+    ]
+  },
+  "C-44.card_min_lines": {
+    "value": 3,
+    "unit": "реплик контакта",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "R-75 (эпизодическому контакту хватит одной черты)",
+      "docs/style.md ST-23"
+    ],
+    "calibrated_on": "docs/lab/mutants: m16",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-voice",
+        "change": "заведён: с меньшего числа реплик доля против карточки — случайность"
+      }
+    ]
+  },
   "C-45.blocks": {
     "value": 3,
     "unit": "блоков #from",
@@ -6384,7 +6423,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "inkle-ingold:RED-04",
+      "inkle-ingold:RED-05",
       "procedural-storytelling:RED-06",
       "mystery-fair-play:RED-08"
     ],
@@ -6394,6 +6433,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён (а): факт — имя героя или ЧЧ:ММ (реестр facts.md — когда появится)"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "факт — ещё слово реестра docs/stories/<id>/facts.md; ЧЧ:ММ — только в кнопках и репликах игрока (входящая время вводит); фото не опирается на факт — четыре ложные находки на историях каталога ушли; опора inkle-ingold:RED-05 (кнопка про факт, которого игрок не слышал) вместо RED-04 — они были перепутаны с met_twice"
       }
     ]
   },
@@ -6404,7 +6448,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "inkle-ingold:RED-05",
+      "inkle-ingold:RED-04",
       "serial-hooks:RED-16"
     ],
     "calibrated_on": null,
@@ -6413,6 +6457,105 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён (б)"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "знание на входе — по первому входу за прогон (возврат из туннеля не вход); реплики контакта под условием или со вставкой {x: …|…} — защищены; две ложные находки на историях каталога ушли; опора inkle-ingold:RED-04 (говорит как при первой встрече) вместо RED-05"
+      }
+    ]
+  },
+  "C-51.cascade_branches": {
+    "value": 3,
+    "unit": "веток каскада на входе до else",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "rules.md R-35",
+      "procedural-storytelling:P-12",
+      "inkle-ingold:PAT-03"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: merges.mjs скилла story-continuity отмечает каскад шире; больше веток — делить сцену (R-35, inkle-ingold:PAT-03 «ловушки»)"
+      }
+    ]
+  },
+  "C-51.world_states": {
+    "value": 3,
+    "unit": "состояний мира, которые читают следующие главы",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; больше — свести в одно сводное состояние (mobile-interactive-stories:PAT-04)"
+      }
+    ]
+  },
+  "C-51.diverging_forks": {
+    "value": 4,
+    "unit": "расходящихся по смыслу развилок на главу",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; согласованность глав ломается комбинаторикой"
+      }
+    ]
+  },
+  "C-51.clock_drift_min": {
+    "value": 30,
+    "unit": "минут расхождения часов мира с паузами",
+    "op": ">",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "dille-ultimate-guide:P-04",
+      "narrative-testing:RED-10"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: timeline.mjs скилла story-continuity — две реплики «сейчас ЧЧ:ММ» на одном пути расходятся с суммой #delay между ними больше чем на столько"
+      }
+    ]
+  },
+  "dict.clock_now": {
+    "value": "(?:сейчас|уже|на часах|время|тут|у нас|ровно|почти)\\s+(?:почти\\s+|уже\\s+|ровно\\s+)?(\\d{1,2}:\\d\\d)",
+    "unit": "regex; группа 1 — время",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "rules.md R-91",
+      "rules.md R-121"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён: реплика называет текущее время мира («сейчас 02:14», «у нас уже 03:00») — для timeline.mjs скилла story-continuity"
       }
     ]
   },
@@ -6721,7 +6864,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "mystery-fair-play:RED-02"
+      "mystery-fair-play:RED-01"
     ],
     "calibrated_on": null,
     "history": [
@@ -6729,6 +6872,31 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора RED-02 (вывод делает NPC) → RED-01 (улика только в ветке)"
+      }
+    ]
+  },
+  "C-54.channels": {
+    "value": 2,
+    "unit": "разных контактов среди улик при входе в узел раскрытия",
+    "op": "<",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "mystery-fair-play:P-07",
+      "mystery-fair-play:GREEN-01",
+      "rules.md R-92 (в короткой истории — две улики от двух голосов)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "заведён: улики одного голоса — одна попытка заметить; предупреждение, если в большинстве прогонов меньше двух отправителей"
       }
     ]
   },
@@ -6739,6 +6907,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
+      "mystery-fair-play:RED-02",
       "mystery-fair-play:RED-03"
     ],
     "calibrated_on": null,
@@ -6747,6 +6916,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора дополнена RED-02: нет кнопки с выводом между последней уликой и раскрытием"
       }
     ]
   },
@@ -6788,6 +6962,27 @@
       }
     ]
   },
+  "C-54.guess_share": {
+    "value": {
+      "min": 0.3,
+      "max": 0.7
+    },
+    "unit": "доля холодных читателей, назвавших виновника до раскрытия",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "mystery-fair-play:P-16",
+      "mystery-fair-play checklists §4 (30–70 % угадавших)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "заведён для guess.mjs скилла story-mystery (холодный читатель в режиме guess); story:lint его не считает"
+      }
+    ]
+  },
   "C-54.long_answer": {
     "value": 1.5,
     "unit": "раза длиннее самой короткой кнопки",
@@ -6796,7 +6991,7 @@
     "basis": "source",
     "sources": [
       "mystery-fair-play:§2",
-      "mystery-fair-play:RED-11"
+      "mystery-fair-play:RED-06"
     ],
     "calibrated_on": null,
     "history": [
@@ -6804,6 +6999,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора RED-11 (двойник) → RED-06 (верная кнопка длиннее); сравнение — с самой короткой из остальных кнопок"
       }
     ]
   },
@@ -7224,6 +7424,31 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён: реплики к игроку"
+      }
+    ]
+  },
+  "dict.gender_role": {
+    "value": {
+      "self": "^(не )?(согласен|согласна|готов|готова|уверен|уверена|рад|рада|должен|должна)(?!\\p{L})|(^|[^\\p{L}])я,? (\\p{L}+, )?(студент|студентка|школьник|школьница|журналист|журналистка|друг|подруга|сосед|соседка|курьер|волонтёр|волонтерка|стажёр|стажерка|новичок|помощник|помощница|парень|девушка)(?!\\p{L})",
+      "you": "(^|[^\\p{L}])(ты|вы) (не |же |ведь |тот самый |та самая |теперь )?(прав|права|уверен|уверена|готов|готова|один|одна|должен|должна|рад|рада|согласен|согласна|студент|студентка|школьник|школьница|журналист|журналистка|друг|подруга|сосед|соседка|курьер|стажёр|новичок|помощник|помощница|парень|девушка)(?!\\p{L})"
+    },
+    "unit": "regex: self — в кнопках, #me и строке легенды, которую кнопка подставляет через {var}; you — в репликах героев к игроку",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "choiceofgames-design:RED-10",
+      "rules.md R-89",
+      "docs/style.md ST-35, AS-34"
+    ],
+    "checks": [
+      "C-14"
+    ],
+    "calibrated_on": "src/stories/*: легенда «студент» в кнопке-подстановке, «ты прав», «вы студент»; цитата «ты была ребёнком» не считается",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-voice",
+        "change": "заведён по просьбе T-15: легенда игрока, родовые существительные и краткие прилагательные («я …, студент», кнопка «Согласен», «ты уверен», «вы журналист»)"
       }
     ]
   },

@@ -21,6 +21,9 @@ export function DebugSheet({
   onSelectStory,
   onHome,
   onClose,
+  freeChapters,
+  chaptersOpen,
+  onChaptersOpen,
 }: {
   engine: Engine | null;
   stories: Story[];
@@ -28,6 +31,10 @@ export function DebugSheet({
   onSelectStory: (id: string) => void;
   onHome: () => void;
   onClose: () => void;
+  /** Сколько глав бесплатно; null — у истории нет платной границы. */
+  freeChapters: number | null;
+  chaptersOpen: boolean;
+  onChaptersOpen: (open: boolean) => void;
 }) {
   const [, force] = useState(0);
   const [confirmReset, setConfirmReset] = useState(false);
@@ -114,7 +121,9 @@ export function DebugSheet({
                   {view.silence.realMs === null ? ' (без пауз — только по кнопке ниже).' : ` (реально ${formatDuration(view.silence.realMs)}).`}
                 </p>
               ) : (
-                <p className="sheet__note">{view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}</p>
+                <p className="sheet__note">
+                  {view.locked ? 'История стоит на платной границе.' : view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}
+                </p>
               )}
               <button
                 className="btn"
@@ -128,6 +137,28 @@ export function DebugSheet({
                 Пропустить до следующего
               </button>
             </div>
+
+            {freeChapters !== null && (
+              <div className="sheet__group">
+                <h3 className="sheet__label">Платные главы</h3>
+                <p className="sheet__note">
+                  Бесплатно глав: {freeChapters}. Покупки пока нет: продолжение открывается здесь, для этой истории
+                  и до выключения — «начать заново» его не закрывает.
+                  {view.locked ? ' Сейчас история стоит на границе.' : ''}
+                </p>
+                <button
+                  className={chaptersOpen ? 'toggle toggle--on' : 'toggle'}
+                  aria-pressed={chaptersOpen}
+                  onClick={() => {
+                    onChaptersOpen(!chaptersOpen);
+                    refresh();
+                  }}
+                  data-testid="chapters-open"
+                >
+                  Все главы открыты: {chaptersOpen ? 'да' : 'нет'}
+                </button>
+              </div>
+            )}
 
             <div className="sheet__group">
               <h3 className="sheet__label">Переменные</h3>

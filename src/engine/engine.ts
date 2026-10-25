@@ -147,6 +147,20 @@ interface SaveData {
   log?: LogEntry[];
   fork?: Fork | null;
   startedAt?: number;
+  /** Ревизия сценария, под которую записано состояние. Сохранения до ревизий её не знают: это 1. */
+  revision?: number;
+  /** Сколько глав уже началось. Сохранения до границы глав его не знают: считаем по текущей главе. */
+  chapterNo?: number;
+  /** Игрок стоит на платной границе: для карточки и экрана истории, движок пересчитывает сам. */
+  locked?: boolean;
+}
+
+/** Сохранение от другой ревизии сценария: продолжить его нельзя, история началась заново. */
+export interface Outdated {
+  from: number;
+  to: number;
+  /** Режим сброшенной игры: игрок его уже выбирал, новая игра идёт в нём же. */
+  mode: Mode;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -215,6 +229,7 @@ function hiddenRole(tags: string[]): 'remind' | 'noanswer' | null {
 
 export class Engine {
   readonly storyId: string;
+  readonly revision: number;
   readonly title: string;
   readonly contacts: Map<string, Contact> = new Map();
   readonly knots: string[];
@@ -256,9 +271,19 @@ export class Engine {
   speed: number = 1;
   /** Растёт при каждом изменении: удобно для React useSyncExternalStore. */
   version = 0;
+  /** restore() нашёл сохранение от другой ревизии и не стал его загружать. */
+  outdated: Outdated | null = null;
+  /** Сколько первых глав бесплатно; null — бесплатно всё (paywall.ts). */
+  readonly freeChapters: number | null;
+  /** Продолжение открыто: пока из отладки, потом покупкой. Не сохраняется в прогрессе — его помнит paywall.ts. */
+  chaptersOpen = false;
+  /** Сколько строк #chapter уже пришло. */
+  private chapterNo = 0;
 
-  constructor(storyId: string, json: string) {
+  constructor(storyId: string, json: string, revision = 1, freeChapters: number | null = null) {
     this.storyId = storyId;
+    this.revision = revision;
+    this.freeChapters = freeChapters;
     this.json = json;
     const probe = new Story(json);
     let title = storyId;
@@ -329,6 +354,7 @@ export class Engine {
     this.nextId = 1;
     this.carryDelay = 0;
     this.chapter = '';
+    this.chapterNo = 0;
     this.silence = null;
     this.waitDone = 0;
     this.lastRemind = null;
@@ -493,11 +519,35 @@ export class Engine {
   private commit(p: Pending, at = Date.now()) {
     p.unlock.forEach((id) => this.unlock(id));
     this.unlock(p.thread);
-    if (p.chapter) this.chapter = p.chapter;
+    if (p.chapter) {
+      this.chapter = p.chapter;
+      this.chapterNo++;
+    }
     this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at });
     this.lastThread = p.thread;
     // поднять чат наверх списка
     this.unlocked = [p.thread, ...this.unlocked.filter((t) => t !== p.thread)];
+  }
+
+  /**
+   * Следующая строка открывает главу за бесплатной границей, а продолжение закрыто: история стоит.
+   * Стоит до паузы этой строки, а не после: игрок видит границу сразу, как кончилась бесплатная глава,
+   * и пауза между главами идёт уже после открытия.
+   */
+  private atPaywall(): boolean {
+    return (
+      !!this.pending?.chapter &&
+      this.freeChapters !== null &&
+      !this.chaptersOpen &&
+      this.chapterNo >= this.freeChapters
+    );
+  }
+
+  /** Открыть или снова закрыть продолжение. История, стоявшая на границе, идёт дальше. */
+  setChaptersOpen(open: boolean) {
+    this.tick();
+    this.chaptersOpen = open;
+    this.emit();
   }
 
   /** Вызывается по таймеру. Догоняет и время, прошедшее офлайн. Возвращает новые сообщения. */
@@ -527,6 +577,7 @@ export class Engine {
         fired = true;
         continue;
       }
+      if (this.atPaywall()) break;
       const p = this.pending;
       // по клику пауз нет, но скачок времени мира игрок должен увидеть
       if (this.mode === 'click' && !p.jumpShown && p.delayMs >= TIME_JUMP_LABEL_H * 3_600_000) {
@@ -576,7 +627,7 @@ export class Engine {
       this.advance();
     }
     if (fresh.length || fired) this.emit();
-    else if (this.pending || this.silence) this.notify();
+    else if ((this.pending && !this.atPaywall()) || this.silence) this.notify();
     return fresh;
   }
 
@@ -604,6 +655,7 @@ export class Engine {
 
   /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора; у кнопок — следующее напоминание. */
   skipNext() {
+    if (this.atPaywall()) return;
     const p = this.pending;
     if (!p) {
       this.tick();
@@ -635,6 +687,9 @@ export class Engine {
   jump(knot: string) {
     this.record('jump', null, knot);
     this.story.ChoosePathString(knot);
+    // переход к главе chN из отладки: граница считает её N-й, а не следующей по счёту
+    const no = knot.match(/^ch(\d+)$/);
+    if (no) this.chapterNo = Number(no[1]) - 1;
     this.pending = null;
     this.choices = [];
     this.choiceThread = null;
@@ -713,8 +768,9 @@ export class Engine {
 
   view() {
     const p = this.pending;
+    const paywall = this.atPaywall();
     let status: { thread: string; phase: Phase; typing: boolean; pauseMs: number; realMs: number } | null = null;
-    if (p) {
+    if (p && !paywall) {
       const pauseMs = Math.max(0, p.delayMs - p.delayDone);
       const liveMs = Math.max(0, p.gapMs - p.gapDone) + Math.max(0, p.typingMs - p.typingDone);
       const phase: Phase = pauseMs > 0 ? 'pause' : p.gapDone < p.gapMs ? 'gap' : 'typing';
@@ -741,6 +797,8 @@ export class Engine {
       choiceThreads: [...new Set(this.choices.map((c) => c.thread))],
       ended: this.ended,
       chapter: this.chapter,
+      /** История стоит на платной границе: номер закрытой главы, с 1. */
+      locked: paywall ? { chapter: this.chapterNo + 1, free: this.freeChapters! } : null,
       status,
       silence,
       read: this.read,
@@ -780,6 +838,9 @@ export class Engine {
       log: this.log,
       fork: this.fork,
       startedAt: this.startedAt,
+      revision: this.revision,
+      chapterNo: this.chapterNo,
+      locked: this.atPaywall(),
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
@@ -797,6 +858,12 @@ export class Engine {
       if (!raw) return false;
       const d = JSON.parse(raw) as SaveData;
       if ((d.v !== 1 && d.v !== 2) || d.storyId !== this.storyId) return false;
+      // состояние ink ссылается на узлы и счётчики своей ревизии: на другой оно молча собьётся
+      const saved = d.revision ?? 1;
+      if (saved !== this.revision) {
+        this.outdated = { from: saved, to: this.revision, mode: d.mode ?? DEFAULT_MODE };
+        return false;
+      }
       this.story.state.LoadJson(d.storyState);
       this.messages = d.messages;
       this.unlocked = d.unlocked;
@@ -810,6 +877,7 @@ export class Engine {
       this.nextId = d.nextId;
       this.carryDelay = d.carryDelay;
       this.chapter = d.chapter ?? '';
+      this.chapterNo = d.chapterNo ?? (this.chapter ? 1 : 0);
       this.renamed = d.renamed ?? {};
       this.mode = d.mode ?? DEFAULT_MODE;
       this.silence = d.silence ?? null;
