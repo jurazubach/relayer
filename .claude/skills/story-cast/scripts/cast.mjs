@@ -9,7 +9,7 @@ import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
 import { analyze } from '../../../../scripts/lint/core.mjs';
 import { isIncoming } from '../../../../scripts/lint/journal.mjs';
 
-const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/cast-map.mjs [--story <id|путь>,…] [--runs N] [--json]
+const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/cast.mjs [--story <id|путь>,…] [--runs N] [--json]
 
 Карта состава для скилла story-cast (tiers.md, character-card.md):
   уровень     ось / сторона / источник / фон / эпизодический — из npm run story:cast (правило там: --help)
