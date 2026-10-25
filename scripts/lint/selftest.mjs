@@ -11,13 +11,12 @@ import { parseInk, walk } from '../lib/ink.mjs';
 import { listStories, loadStory } from '../lib/story.mjs';
 import { buildStatic } from './static.mjs';
 import { formatFinding, formatSummary, lintStory, loadChecks } from './core.mjs';
-import { register as wave2 } from './selftest-wave2.mjs';
 import { loadThresholds, validateThresholds, THRESHOLDS_PATH } from '../lib/thresholds.mjs';
 
 const HELP = `npm run test:lint [-- --json] [-- --only <подстрока>]
 
 Самопроверка story:lint: на каждую проверку C-01…C-54 — маленькая выдуманная история с дефектом
-(находка есть) и, где это имеет смысл, без него (находки нет); вторая волна — selftest-wave2.mjs.
+(находка есть) и, где это имеет смысл, без него (находки нет); вторая волна и проверки скиллов — selftest-*.mjs (подключаются сами).
 Подавление «// намеренно:»; уровни из thresholds.json; схема thresholds.json (опора, deferred:E-NN),
 сверка engine.typing с engine.ts; ключи вместо чисел в claude-code-format.md, attention-merged.md §6,
 style.md §14.4 и checks.md; владелец находки из owners.md; служебные контакты; финал без метки;
@@ -528,7 +527,12 @@ test('три истории каталога проходят без паден�
   }
 });
 
-wave2(test, { has, hasNot, lint, keys });
+// Тесты скиллов и волн — в своих файлах selftest-*.mjs (у каждого register(test, helpers)): параллельные
+// задачи пишут свой файл и не сталкиваются в этом.
+for (const f of readdirSync(fileURLToPath(new URL('./', import.meta.url))).filter((n) => /^selftest-.+\.mjs$/.test(n)).sort()) {
+  const { register } = await import(new URL(`./${f}`, import.meta.url));
+  register(test, { has, hasNot, lint, keys });
+}
 
 // развилка с вопросом, кнопками, #silent и напоминаниями; rest — что стоит после напоминаний
 const remind = (reminders, rest = '') => [
