@@ -16,6 +16,7 @@
 @import './blocks/screen.css';
 @import './blocks/button.css';
 @import './blocks/story-tile.css';
+@import './blocks/upload-tile.css';
 @import './blocks/story.css';
 @import './blocks/mode-picker.css';
 @import './blocks/info.css';

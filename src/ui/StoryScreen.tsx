@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CONTACT_COLORS, DEFAULT_MODE, MODES, downloadStory, modeSizes, sizeLabel, storyPalette, formatAgo } from '../engine';
+import { CONTACT_COLORS, DEFAULT_MODE, MODES, downloadStory, modeSizes, sizeLabel, storyPalette, storyPeople, formatAgo } from '../engine';
 import type { Mode, Progress, Story } from '../engine';
 import { Avatar } from './Avatar';
 
@@ -35,8 +35,7 @@ export function StoryScreen({
   const mode = progress?.mode ?? picked;
   const sizes = modeSizes(story);
   const palette = storyPalette(story.ink);
-  // служебные контакты (заметки, банк, сервис) пишут в чат, но героями не считаются
-  const people = (story.characters ?? []).filter((c) => !c.service);
+  const people = storyPeople(story);
 
   const cta = !progress ? 'Начать' : progress.ended ? 'Пройти заново' : 'Продолжить';
   const where = progress

@@ -14,8 +14,9 @@ interface StoryJson {
   title: string;
   tagline?: string;
   minutes?: number;
+  teasers?: string[];
   chapters?: { title: string }[];
-  characters?: { id?: string; name: string }[];
+  characters?: { id?: string; name: string; service?: boolean }[];
 }
 
 const readStory = (path: string) => JSON.parse(readFileSync(path, 'utf8')) as StoryJson;

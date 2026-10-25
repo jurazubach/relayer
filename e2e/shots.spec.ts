@@ -16,6 +16,10 @@ test('снимки экранов', async ({ page }) => {
   await fixtureOnHome(page);
   await page.waitForTimeout(400);
   await shot(page, '1-home');
+  // карточки на всю ширину не помещаются в экран: конец списка — отдельным снимком
+  await page.getByTestId('upload').evaluate((el) => el.scrollIntoView({ block: 'end' }));
+  await page.waitForTimeout(300);
+  await shot(page, '1b-home-end');
 
   await page.getByTestId(`tile-${FIXTURE.id}`).click();
   await page.waitForTimeout(400);
@@ -57,4 +61,7 @@ test('снимки экранов', async ({ page }) => {
   await page.getByTestId('story-back').click();
   await page.waitForTimeout(400);
   await shot(page, '7-home-uploaded');
+  await page.getByTestId('upload').evaluate((el) => el.scrollIntoView({ block: 'end' }));
+  await page.waitForTimeout(300);
+  await shot(page, '7b-home-uploaded-end');
 });

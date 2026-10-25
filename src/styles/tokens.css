@@ -22,6 +22,12 @@
   --color-on-cover: #ffffff;
   --color-on-cover-dim: rgba(255, 255, 255, 0.66);
   --color-on-cover-faint: rgba(255, 255, 255, 0.42);
+  /* подложки поверх обложки: пузырь затравки, плашка, черта, нажатие */
+  --color-on-cover-bubble: rgba(255, 255, 255, 0.1);
+  --color-on-cover-chip: rgba(0, 0, 0, 0.3);
+  --color-on-cover-line: rgba(255, 255, 255, 0.12);
+  --color-on-cover-press: rgba(255, 255, 255, 0.06);
+  --color-on-cover-button: rgba(255, 255, 255, 0.16);
 
   /* ритм: шаг 4px */
   --space-1: 4px;
@@ -47,8 +53,12 @@
   --text-base: 15px;
   --text-lg: 16px;
   --text-xl: 20px;
+  --text-heading: 24px;
   --text-2xl: 30px;
   --text-3xl: 32px;
+
+  /* знак обложки на карточке: крупный, почти прозрачный */
+  --glyph-tile: 132px;
 
   /* слои */
   --layer-notice: 10;
