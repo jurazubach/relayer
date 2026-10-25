@@ -23,14 +23,14 @@
     "sources": ["checks.md «Общие данные»: длинная пауза", "cron-wired-for-story:A8", "serial-hooks:S1"],
     "checks": ["C-21", "C-26", "C-28", "C-30"],
     "calibrated_on": "2026-10-24: chuzhoy-golos, slepoe-pyatno, the-number — бот, 400 прогонов",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: короче часа — ещё одна сессия" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: короче часа — ещё одна сессия" }, { "date": "2026-10-25", "task": "T-03c", "change": "вместо sessions.long_pause из scripts/story/core/thresholds.default.json (удалён)" }]
   },
   "story.pause.session_s": {
     "value": 1800, "unit": "с", "op": "≥", "level": null, "basis": "source",
     "sources": ["checks.md «Общие данные»: сессия", "attention-today/attention.md"],
     "checks": ["C-30", "C-32", "C-33"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: пауза 10–30 мин не уводит игрока из чата (не проверено)" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён по checks.md: пауза 10–30 мин не уводит игрока из чата (не проверено)" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:sessions (граница сессии, было sessions.gap) и story:trace (отвлечённый уходит на такой паузе, было trace.distracted_away) — запасной scripts/story/core/thresholds.default.json удалён" }]
   },
   "story.length.target_h": {
     "value": 48, "unit": "ч", "op": ">", "level": "warning", "basis": "author_decision",
@@ -41,7 +41,7 @@
       { "date": "2026-10-24", "task": "T-05", "change": "решение автора A-05: 48 ч — цель, а не единственный предел; часы игрока не учитываются (R-67)" },
       { "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом вместо числа в тексте R-67 и C-31" },
       { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }
-    ]
+    , { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.story_target, 172800 с)" }]
   },
   "story.length.max_h": {
     "value": 72, "unit": "ч", "op": ">", "level": "error", "basis": "author_decision",
@@ -52,7 +52,7 @@
       { "date": "2026-10-24", "task": "T-05", "change": "добавлен потолок «около трёх дней» по решению автора A-05 (было только > 48 ч — предупреждение)" },
       { "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом" },
       { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }
-    ]
+    , { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.story_ceiling, 259200 с)" }]
   },
   "story.pause.max_h": {
     "value": 24, "unit": "ч", "op": ">", "level": "error", "basis": "author_decision",
@@ -60,7 +60,7 @@
     "checks": ["C-31"],
     "calibrated_on": "2026-10-24: самая длинная пауза — 11 ч (chuzhoy-golos)",
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05 (пауза не больше суток)" },
-      { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }]
+      { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.max_pause, 86400 с)" }]
   },
   "story.tail.max_delay_min": {
     "value": 15, "unit": "мин", "op": ">", "level": "warning", "basis": "author_decision",
@@ -68,7 +68,7 @@
     "checks": ["C-42"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05; проверка C-42 — вторая волна (T-03b)" },
-      { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }]
+      { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.tail_delay, 900 с)" }]
   },
   "story.reminders.max": {
     "value": 2, "unit": "напоминаний", "op": ">", "level": "error", "basis": "author_decision",
@@ -92,7 +92,7 @@
     "sources": ["rules.md R-11", "rules.md R-122", "messenger-genre:RED-12"],
     "checks": ["C-31"],
     "calibrated_on": "2026-10-24: the-number — 24 ч при карточке 25 мин",
-    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "было «в описании нет срока в днях» по слову «дн» в synopsis; теперь сравниваются minutes и days карточки" }]
+    "history": [{ "date": "2026-10-24", "task": "T-05", "change": "было «в описании нет срока в днях» по слову «дн» в synopsis; теперь сравниваются minutes и days карточки" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.card_ratio)" }]
   },
   "story.pause.notice_min": {
     "value": 15, "unit": "мин", "op": "≥", "level": null, "basis": "source",
@@ -108,6 +108,13 @@
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён: короткая история — свои пороги кнопок, контактов главы 1 и хвоста" }]
   },
+  "story.stake.min_roots": {
+    "value": 2, "unit": "корня шапки // ставка: в одной реплике", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-24: значимое слово шапки // ставка:", "reports/T-13/requests.md: мутант m01"],
+    "checks": ["C-24"],
+    "calibrated_on": "2026-10-25: основа мутантов — ставка «к 06:00 семена из камеры три погибнут», «камеру» звучит в каждой ветке главы 1",
+    "history": [{ "date": "2026-10-25", "task": "T-03c", "change": "заведён: одно общее слово со ставкой («камера») находилось на всех путях, и ставка за кнопкой (m01) проходила C-24; у трёх историй шапки // ставка: нет — на них не влияет. Строку в checks.md C-24 «Ключи» — просьба T-03c" }]
+  },
   "story.reading.per_day_min": {
     "value": { "min": 10, "max": 15 }, "unit": "мин чтения за день реального времени", "level": null, "basis": "author_decision",
     "sources": ["superseded.md A-05", "build-plan.md §3", "chat-fiction-apps:attention§4"],
@@ -120,7 +127,7 @@
     "sources": ["rules.md R-122", "superseded.md A-04"],
     "checks": ["C-32"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "решение королевы: скачок мира от часа без метки читается как мгновенный ответ, короче — естественная заминка переписки. Движок (E-01) берёт порог отсюда" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "решение королевы: скачок мира от часа без метки читается как мгновенный ответ, короче — естественная заминка переписки. Движок (E-01) берёт порог отсюда" }, { "date": "2026-10-25", "task": "T-03c", "change": "одно имя с click.jump_label команд story:* (было 3600 с в thresholds.default.json): метка «спустя …» по клику в story:trace и story:sessions" }]
   },
   "engine.typing": {
     "value": { "base_s": 0.6, "per_char_s": 0.05, "min_s": 1.1, "max_s": 5, "photo_s": 2.6, "gap_min_s": 0.35, "gap_spread_s": 0.6, "after_player_s": 1.2, "gap_sys_s": 0.7, "gap_me_s": 0.9 },
@@ -163,9 +170,9 @@
   },
   "bot.runs": {
     "value": 400, "unit": "прохождений", "level": null, "basis": "our_estimate",
-    "sources": ["scripts/check-story.mjs", "scripts/story/core/thresholds.default.json"],
+    "sources": ["scripts/check-story.mjs"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: число прогонов check:story; код читает его отсюда — просьба T-03b п. 3" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01: число прогонов check:story; код читает его отсюда — просьба T-03b п. 3" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:sessions и story:cast; запасной thresholds.default.json удалён" }]
   },
   "bot.max_runs": {
     "value": 2000, "unit": "прохождений", "level": null, "basis": "our_estimate",
@@ -177,7 +184,7 @@
     "value": 2000, "unit": "строк за прохождение", "level": null, "basis": "our_estimate",
     "sources": ["scripts/lib/bot.mjs (maxSteps)", "scripts/check-story.mjs"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }]
+    "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:trace и все story:* через core/run.mjs; запасной thresholds.default.json удалён" }]
   },
   "bot.graph_runs": {
     "value": 400, "unit": "прохождений", "level": null, "basis": "our_estimate",
@@ -190,6 +197,55 @@
     "sources": ["scripts/story-graph.mjs"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по итогам T-01" }]
+  },
+
+  "trace.runs": {
+    "value": 1, "unit": "прохождений", "level": null, "basis": "our_estimate",
+    "sources": ["skills.md K-01: одно прохождение"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в scripts/story/core/thresholds.default.json: story:trace по умолчанию показывает одно прохождение" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json, запасной файл удалён" }]
+  },
+  "cast.episodic_lines": {
+    "value": 10, "unit": "реплик", "op": "<", "level": null, "basis": "source",
+    "sources": ["rules.md R-75: эпизодический контакт — до 10 реплик"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: уровень «эпизодический» в story:cast" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "cast.main_lines": {
+    "value": 20, "unit": "реплик", "op": "≥", "level": null, "basis": "source",
+    "sources": ["skills.md S-12 п. 6", "procedural-storytelling:P-09"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: уровень «источник» в story:cast" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "cast.side_buttons": {
+    "value": 3, "unit": "кнопок", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-45 п. 2"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: уровни «ось» и «сторона» в story:cast" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "cast.side_presence": {
+    "value": 0.5, "unit": "доля глав", "op": "≥", "level": null, "basis": "our_estimate",
+    "sources": ["checks.md C-45 п. 3"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: уровень «сторона» в story:cast" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "endings.runs": {
+    "value": 200, "unit": "прохождений на персону", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/story/endings.mjs"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: доли финалов по персонам в story:endings" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "endings.top_vars": {
+    "value": 5, "unit": "переменных", "level": null, "basis": "our_estimate",
+    "sources": ["scripts/story/endings.mjs"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json: сколько переменных, предсказывающих финал, показывает story:endings" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json" }]
+  },
+  "vars.silent_chapters": {
+    "value": 2, "unit": "глав", "op": ">", "level": null, "basis": "source",
+    "sources": ["skills.md K-02: молчит больше 2 глав", "emshort-structures:RED-03"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-24", "task": "T-04a", "change": "заведён в thresholds.default.json для story:vars (переменная молчит между записью и чтением)" }, { "date": "2026-10-25", "task": "T-03c", "change": "перенесён в thresholds.json; story:vars его пока не читает — метки по нему нет" }]
   },
 
   "C-01.dead": {
@@ -1018,13 +1074,13 @@
     "value": 3, "unit": "строки", "op": "≤", "level": null, "basis": "source",
     "sources": ["chat-fiction-apps:§2"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "микросессия: столько строк и 0 кнопок" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "микросессия: столько строк и 0 кнопок" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions — метка «микро» (было sessions.micro_lines)" }]
   },
   "C-30.micro_share": {
     "value": 0.1, "unit": "доля возвращений", "op": ">", "level": "warning", "basis": "source",
     "sources": ["chat-fiction-apps:§2"],
     "calibrated_on": "2026-10-24: chuzhoy-golos 20 %, the-number 13 %",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:sessions (было sessions.micro_share)" }]
   },
   "C-31.pause_hint_h": {
     "value": 12, "unit": "ч", "op": ">", "level": "hint", "basis": "source",
@@ -1042,7 +1098,7 @@
     "value": 10, "unit": "с", "op": "≤", "level": null, "basis": "source",
     "sources": ["checks.md C-31: набор и паузы до 10 с — это режим «по клику»"],
     "calibrated_on": null,
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуются story:trace и story:sessions: короткие паузы, которые остаются по клику (было click.keep_delay)" }]
   },
   "C-32.returns_per_day": {
     "value": 6, "unit": "возвращений за 24 ч", "op": ">", "level": "hint", "basis": "source",
@@ -1367,7 +1423,7 @@
     "value": 0.5, "unit": "доля прогонов", "op": ">", "level": "warning", "basis": "source",
     "sources": ["failbetter-qbn:RED-02", "narrative-testing:RED-12", "все источники C-40"],
     "calibrated_on": "2026-10-24: chuzhoy-golos fin_revenge 62–67 %",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:endings (было endings.dominant)" }]
   },
   "C-40.min_endings": {
     "value": 3, "unit": "финала", "op": "≥", "level": null, "basis": "source",
@@ -1379,7 +1435,7 @@
     "value": 0.02, "unit": "доля прогонов", "op": "<", "level": "hint", "basis": "source",
     "sources": ["failbetter-qbn", "choiceofgames-design", "messenger-genre (1 %)", "emshort-structures (5 %)"],
     "calibrated_on": "2026-10-24: chuzhoy-golos fin_puppet 0,5–1 %",
-    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: случайный бот недооценивает финалы, которые надо заработать" }]
+    "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён: случайный бот недооценивает финалы, которые надо заработать" }, { "date": "2026-10-25", "task": "T-03c", "change": "им же пользуется story:endings (было endings.rare)" }]
   },
   "C-40.unmarked_run": {
     "value": 0, "unit": "прогонов", "op": ">", "level": "warning", "basis": "source",

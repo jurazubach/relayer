@@ -7,7 +7,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   createStreamParser, parseSkillFile, parseRouting, buildPlan, summarize, isHit, checkEnv, gate,
-  thresholdValue, loadPhraseDir, DEFAULTS,
+  loadThresholds, loadPhraseDir, TRIGGER_KEYS,
 } from './triggers-lib.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -135,12 +135,10 @@ test('окружение: чужие, пропавшие, плагины, MCP', 
   assert.deepEqual(checkEnv({ skills: ['lamp-check'], plugins: [], mcp_servers: [] }, { project: ['lamp-check'], allowed: [] }), []);
 });
 
-test('пороги: плоский и вложенный thresholds.json, объект с value', () => {
-  assert.equal(thresholdValue({ 'lab.triggers.runs_per_phrase': 5 }, 'lab.triggers.runs_per_phrase'), 5);
-  assert.equal(thresholdValue({ lab: { triggers: { runs_per_phrase: { value: 4, unit: 'прогонов' } } } }, 'lab.triggers.runs_per_phrase'), 4);
-  assert.equal(thresholdValue({ thresholds: { 'lab.triggers.min_share': { value: 0.7 } } }, 'lab.triggers.min_share'), 0.7);
-  assert.equal(thresholdValue({}, 'lab.triggers.runs_per_phrase'), undefined);
-  assert.deepEqual(Object.keys(DEFAULTS).sort(), ['lab.triggers.max_false', 'lab.triggers.min_share', 'lab.triggers.runs_per_phrase']);
+test('пороги: ключи lab.triggers.* из thresholds.json через общий загрузчик', () => {
+  const th = loadThresholds(join(ROOT, 'docs/playbook/thresholds.json'));
+  for (const k of TRIGGER_KEYS) assert.equal(typeof th.values[k], 'number', k);
+  assert.throws(() => loadThresholds(join(ROOT, 'docs/lab/triggers/_example.json')), /нет порога/);
 });
 
 test('файлы docs/lab/triggers разбираются, шаблон и пример валидны', () => {

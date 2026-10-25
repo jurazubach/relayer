@@ -4,8 +4,8 @@ import { runCli, intFlag } from './core/cli.mjs';
 import { PERSONAS, PERSONA_IDS, noAnswer, parsePersonas } from './core/personas.mjs';
 import { BETA_STOP, parseValue, prepare, readSave, runOnce } from './core/run.mjs';
 import { fmtDuration, fmtMoment } from './core/timeline.mjs';
-import { threshold } from './core/thresholds.mjs';
-import { REPROACH } from './core/lexicon.mjs';
+import { isReproach } from '../lib/lexicon.mjs';
+import { threshold } from '../lib/thresholds.mjs';
 import { cutAt, visibleText } from './core/visible.mjs';
 
 const HELP = `npm run story:trace -- [--story <id>] [--persona <имя>|all] [--runs N] [--seed N]
@@ -24,7 +24,7 @@ ${PERSONA_IDS.map((id) => `  ${id.padEnd(13)}${PERSONAS[id].name} — ${PERSONAS
   --runs N          прохождений на персону (порог trace.runs); прогон k идёт с seed + k
   --seed N          начальный seed (по умолчанию 1): один seed — одно и то же прохождение
   --mode            realtime — паузы настоящие (по умолчанию); click — пауз нет, остаются только
-                    короткие до click.keep_delay, на скачке от click.jump_label — метка «спустя …»
+                    короткие до C-31.click_delay_max_s, на скачке от engine.click.time_jump_label — метка «спустя …»
   --visible         только то, что видит игрок: чаты, реплики, кнопки, тишина; без узлов, тегов и переменных
   --partial         история из части глав: узел ${BETA_STOP} — законный конец, а не финал
   --until <узел>    печатать до первого входа в узел (прохождение идёт целиком)
@@ -117,7 +117,7 @@ function compareSilent(p, base) {
   let lastSilent = true;
   for (const it of u.timeline.items) {
     if (it.type === 'choice') lastSilent = it.silent;
-    else if (it.type === 'line' && (it.kind === 'in' || it.kind === 'photo') && REPROACH.test(it.text) && !lastSilent) {
+    else if (it.type === 'line' && (it.kind === 'in' || it.kind === 'photo') && isReproach(it.text) && !lastSilent) {
       reproach.push({ knot: it.knot, chapter: it.chapter, text: it.text });
     }
   }

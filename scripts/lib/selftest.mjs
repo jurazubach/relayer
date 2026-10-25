@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allMarks, findEndings, nodeIds, parseInk, parseDelay, stripComments, tokenize, walk, resolveTarget } from './ink.mjs';
 import { compile, formatMessages } from './compile.mjs';
-import { play, seeded, strategies } from './bot.mjs';
+import { noAnswer, play, seeded, strategies } from './bot.mjs';
 import {
   compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, parseStory, sameRuntime, splitInk,
   storyFromJson, unpackStory,
@@ -152,6 +152,35 @@ test('ink: условия — многострочные, switch, первая �
   assert.deepEqual(conds[2].branches.map((b) => b.cond), ['a && b']);
 });
 
+test('ink: однострочное условие с переходом — условная ветка, а не реплика', () => {
+  const src = [
+    '=== k ===',
+    '{x == 1: -> a}',
+    '{x: -> a | -> b}',
+    '* [Да] {y > 2: -> b}',
+    '* [Нет] -> a',
+    '- Привет, {x: друг|незнакомец}',
+    '{x: просто текст}',
+    '=== a ===',
+    '-> END',
+    '=== b ===',
+    '-> END',
+  ].join('\n');
+  const list = items(src, 'k');
+  assert.deepEqual(list[0], { type: 'cond', head: '', branches: [{ type: 'branch', cond: 'x == 1', items: [{ type: 'divert', target: 'a', kind: 'divert' }], speaker: null }], items: null, speaker: null, line: 2 });
+  assert.deepEqual(list[1].branches.map((b) => [b.cond, b.items.map((i) => i.target)]), [['x', ['a']], ['else', ['b']]]);
+  // под кнопкой — та же условная ветка; на верхнем уровне кнопки переходов без условия нет
+  const yes = list.find((i) => i.type === 'choice' && i.text === 'Да');
+  assert.deepEqual(yes.items.map((i) => i.type), ['cond']);
+  assert.equal(yes.items[0].branches[0].cond, 'y > 2');
+  // ни одной «реплики» из условия: строки «{x == 1: }» больше нет
+  assert.ok(!ofType(list, 'msg').some((m) => /^\{[^{}]*:\s*\}$/.test(m.text)));
+  // подстановка и условный текст без перехода остаются репликами
+  assert.deepEqual(ofType(list, 'msg').map((m) => m.text), ['Привет, {x: друг|незнакомец}', '{x: просто текст}']);
+  // переходы из веток видны обходу: граф и финалы их находят
+  assert.deepEqual(ofType(list, 'divert').map((d) => d.target).sort(), ['a', 'a', 'a', 'b', 'b']);
+});
+
 test('ink: переходы, туннели, возврат, ~, склейка', () => {
   const list = items('=== k ===\n~ seen = true\nРаз <> -> side -> back\n=== side ===\nВбок\n->->\n=== back ===\n-> END\n', 'k');
   assert.deepEqual(list[0], { type: 'code', text: 'seen = true' });
@@ -281,6 +310,66 @@ test('bot: журнал событий — узел, строка, говоря�
   assert.deepEqual([v.name, v.prev, v.value], ['trust', 0, 1]);
   assert.ok(r.events.some((e) => e.type === 'line' && e.text === 'Спасибо.'));
   assert.deepEqual(r.events.filter((e) => e.type === 'knot').map((e) => e.id), ['hello', 'wait']);
+});
+
+// развилка без реплик (хаб), последняя строка узла перед переходом, строка перед -> END после условия
+const NODES_INK = [
+  'VAR h = 1',
+  '-> start',
+  '=== start ===',
+  'Привет #from:ann',
+  'Последняя в start',
+  '-> hub',
+  '=== hub ===',
+  '* [Север] -> north',
+  '* [Юг] -> south',
+  '* [Запад] -> west',
+  '* [Промолчать #silent] -> north',
+  '=== north ===',
+  'Холодно -> END',
+  '=== south ===',
+  '{h > 0: -> cold}',
+  'Тепло',
+  '-> END',
+  '=== cold ===',
+  '#delay:5m',
+  'Понятно, {h} раз #from:ann',
+  '-> END',
+  '=== west ===',
+  '= a',
+  'Ветер',
+  '-> END',
+].join('\n');
+
+test('bot: узел строки — где выведен её текст, в том числе перед -> END', () => {
+  const { json } = compile(NODES_INK);
+  const nodes = ['start', 'hub', 'north', 'south', 'cold', 'west', 'west.a'];
+  const knotOfLine = (r, text) => r.events.find((e) => e.type === 'line' && e.text === text)?.knot;
+  const n = play(json, { strategy: strategies.first(), nodes });
+  // после последнего Continue() у inkjs пусты previousPointer и currentPathString — узел не теряется
+  assert.equal(knotOfLine(n, 'Холодно'), 'north');
+  // inkjs заглядывает вперёд за переходом: previousPointer уже в hub, а строка стоит в start
+  assert.equal(knotOfLine(n, 'Последняя в start'), 'start');
+  // развилка без реплик — узел точки выбора
+  assert.equal(n.events.find((e) => e.type === 'choice').knot, 'hub');
+  assert.deepEqual(n.events.filter((e) => e.type === 'knot').map((e) => e.id), ['start', 'hub', 'north']);
+  // распределитель без текста и финал входят за один Continue(): строка — в финале, тег #delay — её
+  const c = play(json, { strategy: strategies.scripted([1]), nodes });
+  assert.equal(knotOfLine(c, 'Понятно, 1 раз'), 'cold');
+  assert.equal(c.events.filter((e) => e.type === 'end')[0].knot, 'cold');
+  assert.equal(c.delay, 300);
+  // knot без текста проваливается в stitch: строка — в stitch
+  assert.equal(knotOfLine(play(json, { strategy: strategies.scripted([2]), nodes }), 'Ветер'), 'west.a');
+});
+
+test('bot: неотвечающий — #silent той же развилки, без него история стоит', () => {
+  const { json } = compile(NODES_INK);
+  assert.deepEqual(play(json, { strategy: strategies.unresponsive() }).choices, ['Промолчать']);
+  assert.equal(noAnswer([{ text: 'а', tags: [] }, { text: 'б', tags: ['silent'] }]), 1);
+  assert.equal(noAnswer([{ text: 'а', silent: false }, { text: 'б', silent: true }]), 1);
+  assert.equal(noAnswer([{ text: 'а', tags: ['to:ann'] }]), -1);
+  const stuck = strategies.unresponsive(() => 0);
+  assert.equal(stuck([{ text: 'а', tags: [] }, { text: 'б', tags: [] }], {}), 0);
 });
 
 test('bot: стратегии и повторяемость с seed', () => {
@@ -505,4 +594,4 @@ for (const t of tests) {
 const failed = results.filter((r) => !r.ok).length;
 if (asJson) console.log(JSON.stringify({ ok: failed === 0, passed: results.length - failed, failed, results }, null, 2));
 else console.log(`\n${results.length - failed} из ${results.length} прошли${failed ? `, упали: ${failed}` : ''}`);
-process.exit(failed ? 1 : 0);
+process.exitCode = failed ? 1 : 0;

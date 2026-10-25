@@ -23,11 +23,22 @@ export function buildMutant(m, base) {
   return { id: m.id, errors, files: { 'story.ink': text, 'meta.json': `${JSON.stringify(meta, null, 2)}\n` } };
 }
 
-export const KEY_FIELDS = ['id', 'zone', 'check', 'node', 'broken', 'lint'];
+export const KEY_FIELDS = ['id', 'zone', 'check', 'node', 'broken', 'lint', 'catches'];
+const RED_ID = /^[a-z0-9-]+:RED-\d\d$/;
 
-/** Запись ключа: то, что сверяют линт и скилл. Правки сюда не попадают — они в mutants-spec.mjs. */
+/**
+ * Запись ключа: то, что сверяют линт и скилл. Правки сюда не попадают — они в mutants-spec.mjs.
+ * catches — полные ID строк базы и проверки, которые мутант ловит: по ним story:coverage засчитывает RED на L3.
+ */
 export function keyEntry(m) {
-  return { id: m.id, zone: m.zone, check: m.check, node: m.node ?? null, broken: m.broken, lint: [...(m.lint ?? [])], path: `docs/lab/mutants/${m.id}` };
+  const entry = {
+    id: m.id, zone: m.zone, check: m.check, node: m.node ?? null, broken: m.broken, lint: [...(m.lint ?? [])],
+    lint_auto: m.lint_auto !== false,
+  };
+  if (m.lint_auto === false) entry.lint_why = m.lint_why;
+  entry.catches = [...new Set([...(m.catches ?? []), ...(m.check ? [m.check] : []), ...(m.lint ?? [])])];
+  entry.path = `docs/lab/mutants/${m.id}`;
+  return entry;
 }
 
 export function buildKey(mutants, about) {
@@ -56,6 +67,9 @@ export function validateSpec(mutants, o) {
       for (const c of m.lint ?? []) if (!o.checks.has(c)) errors.push(`${at}: lint ждёт ${c}, её нет в checks.md`);
     }
     if (!Array.isArray(m.edits) || !m.edits.length) errors.push(`${at}: нет правок`);
+    if (!Array.isArray(m.catches)) errors.push(`${at}: catches — не список строк базы (алиас:RED-NN)`);
+    for (const c of m.catches ?? []) if (!RED_ID.test(c)) errors.push(`${at}: catches «${c}» — не алиас:RED-NN`);
+    if (m.lint_auto === false && !(m.lint_why?.length >= 20)) errors.push(`${at}: lint_auto: false без причины lint_why`);
     if (!m.broken || m.broken.length < 20) errors.push(`${at}: «broken» пустой или слишком короткий для сверки`);
   }
   return errors;
@@ -83,17 +97,20 @@ export function lintDiff(baseFindings, mutFindings) {
 }
 
 /**
- * Поймал ли линт мутанта. Ждём все проверки из lint и саму check, если она уже есть в линте.
- * @returns {{ status: 'caught'|'partial'|'missed'|'pending', expected, caught, missing, extra, waits }}
+ * Поймал ли линт мутанта. Ждём все проверки из lint и саму check, если она уже есть в линте. lint_auto: false —
+ * своя check мутанта по определению не может его поймать (задача скилла): ждём только поле lint, а без него
+ * мутант — «skill» и в полноту линта не входит.
+ * @returns {{ status: 'caught'|'partial'|'missed'|'pending'|'skill', expected, caught, missing, extra, waits }}
  */
 export function lintVerdict(entry, diff, implemented) {
-  const expected = [...new Set([...(entry.lint ?? []), ...(entry.check && implemented.has(entry.check) ? [entry.check] : [])])];
+  const auto = entry.lint_auto !== false;
+  const expected = [...new Set([...(entry.lint ?? []), ...(auto && entry.check && implemented.has(entry.check) ? [entry.check] : [])])];
   const fired = new Set(diff.map((f) => f.check));
   const caught = expected.filter((c) => fired.has(c));
   const missing = expected.filter((c) => !fired.has(c));
   const extra = [...fired].filter((c) => !expected.includes(c));
-  const waits = entry.check && !implemented.has(entry.check) ? entry.check : null;
-  const status = !expected.length ? 'pending' : !missing.length ? 'caught' : caught.length ? 'partial' : 'missed';
+  const waits = auto && entry.check && !implemented.has(entry.check) ? entry.check : null;
+  const status = !expected.length ? (auto ? 'pending' : 'skill') : !missing.length ? 'caught' : caught.length ? 'partial' : 'missed';
   return { status, expected, caught, missing, extra, waits };
 }
 
@@ -101,10 +118,11 @@ export function lintVerdict(entry, diff, implemented) {
 export function zoneSummary(results) {
   const zones = new Map();
   for (const r of results) {
-    const z = zones.get(r.entry.zone) ?? { zone: r.entry.zone, mutants: 0, measured: 0, caught: 0, pending: 0, runs: 0, hits: 0 };
+    const z = zones.get(r.entry.zone) ?? { zone: r.entry.zone, mutants: 0, measured: 0, caught: 0, pending: 0, skill: 0, runs: 0, hits: 0 };
     z.mutants++;
     if (r.verdict) {
       if (r.verdict.status === 'pending') z.pending++;
+      else if (r.verdict.status === 'skill') z.skill++;
       else {
         z.measured++;
         if (r.verdict.status === 'caught') z.caught++;

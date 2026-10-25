@@ -11,11 +11,23 @@ export default {
     const { st, T } = ctx;
     const buttons = st.buttons.list;
 
-    // (а) #silent без тела: нет ~, нет реплики, нет паузы от порога до сборки
+    const landing = (b) => {
+      let to = null;
+      walk(b.choice.items, (it) => {
+        if (to || it.type !== 'divert' || it.kind !== 'divert') return;
+        to = it.target === 'END' || it.target === 'DONE' ? 'END' : resolveTarget(it.target, b.knot, st.ids) ?? it.target;
+      });
+      return to ?? `сборка ${b.knot}:${b.group.line}`;
+    };
+
+    // (а) #silent без следа: нет ~, нет реплики, нет паузы от порога до сборки — и либо сразу сборка,
+    // либо переход туда же, куда ведёт соседняя кнопка (молчание ничем не отличается от ответа)
     const silent = buttons.filter((b) => b.silent);
     const noticedDelay = T.value('C-11.silent_noticed_delay_s');
+    const says = (b) => { let yes = false; walk(b.choice.items, (it) => { if (['msg', 'me', 'sys'].includes(it.type)) yes = true; }); return yes; };
+    const sameAsNeighbour = (b) => b.cls === 'node' && !b.writes.length && !says(b) && b.group.buttons.some((o) => o !== b && landing(o) === landing(b));
     const unnoticed = silent.filter((b) => {
-      if (b.cls !== 'none') return false;
+      if (b.cls !== 'none' && !sameAsNeighbour(b)) return false;
       let delay = 0;
       walk(b.choice.items, (it) => { if (it.tags?.delay) delay += parseDelay(it.tags.delay); });
       return delay < noticedDelay;
@@ -34,14 +46,6 @@ export default {
     // (б) отказ без ~, который за ≤ N переходов сходится туда же, куда согласие
     const refusal = T.re('dict.refusal');
     const hops = T.value('C-11.refusal_hops');
-    const landing = (b) => {
-      let to = null;
-      walk(b.choice.items, (it) => {
-        if (to || it.type !== 'divert' || it.kind !== 'divert') return;
-        to = it.target === 'END' || it.target === 'DONE' ? 'END' : resolveTarget(it.target, b.knot, st.ids) ?? it.target;
-      });
-      return to ?? `сборка ${b.knot}:${b.group.line}`;
-    };
     const reach = (start) => {
       const seen = new Set([start]);
       let front = [start];

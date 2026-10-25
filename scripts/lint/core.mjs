@@ -7,7 +7,7 @@ import { compile, formatMessages } from '../lib/compile.mjs';
 import { compileInput, parseStory } from '../lib/story.mjs';
 import { buildStatic } from './static.mjs';
 import { positionPersona, runBot } from './journal.mjs';
-import { LEVEL_RU } from './thresholds.mjs';
+import { LEVEL_RU } from '../lib/thresholds.mjs';
 
 const CHECKS_DIR = fileURLToPath(new URL('./checks/', import.meta.url));
 const CHECKS_MD = fileURLToPath(new URL('../../docs/playbook/checks.md', import.meta.url));

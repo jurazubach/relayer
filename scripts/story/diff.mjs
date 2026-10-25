@@ -9,7 +9,7 @@ import { runCli, intFlag, table } from './core/cli.mjs';
 import { dialogueMap, hunks, lineDiff } from './core/dialogue.mjs';
 import { WORKTREE, changedStories, describeRef, isWorktree, storyAt } from './core/revisions.mjs';
 import { fmtDuration } from './core/timeline.mjs';
-import { threshold } from './core/thresholds.mjs';
+import { threshold } from '../lib/thresholds.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const GROUPS = ['lint', 'trace', 'sessions', 'cast', 'endings'];

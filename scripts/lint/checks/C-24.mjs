@@ -21,7 +21,9 @@ export default {
       for (const l of run.lines) {
         if (l.chapter > 1 || (l.delay >= long && l.i > 0)) break;
         const t = l.text.toLowerCase();
-        if (re.test(t) || [...roots(t, T.value('C-24.root'))].some((r) => stake.has(r))) { found = l; break; }
+        // одно общее слово со ставкой — ещё не ставка: «камера» звучит в любой ветке истории про камеру
+        const shared = [...roots(t, T.value('C-24.root'))].filter((r) => stake.has(r)).length;
+        if (re.test(t) || (shared && shared >= Math.min(T.value('story.stake.min_roots'), stake.size))) { found = l; break; }
       }
       if (found) { hit++; firstAt.set(found.knot, (firstAt.get(found.knot) ?? 0) + 1); }
     }

@@ -10,14 +10,18 @@ import { Story } from '../lib/compile.mjs';
 import { PERSONA_IDS } from './core/personas.mjs';
 import { prepare, readSave, runOnce } from './core/run.mjs';
 import { sessions } from './core/sessions.mjs';
-import { gapTime, typingTime } from './core/timeline.mjs';
-import { threshold, thresholdEntry } from './core/thresholds.mjs';
+import { gapTime, typingTime } from '../lib/playtime.mjs';
+import { threshold, thresholdEntry, thresholdSeconds } from '../lib/thresholds.mjs';
 import { varIndex } from './core/vars-index.mjs';
 import { MODES, checkIsolation, readProtocol } from './core/cold.mjs';
 import { hunks, lineDiff, nodeDialogue } from './core/dialogue.mjs';
 import { lookupId, normalizeId } from './core/playbook.mjs';
 import { knownStep, parseDecisions, pickActive, readStates } from './core/state.mjs';
-import { loadStory, parseStory } from '../lib/story.mjs';
+import { glueStory, loadStory, parseStory } from '../lib/story.mjs';
+import { strategies } from '../lib/bot.mjs';
+import { thresholds } from '../lib/thresholds.mjs';
+import { runBot } from '../lint/journal.mjs';
+import { buildStatic } from '../lint/static.mjs';
 
 const HELP = `npm run test:story-cmd [-- --json] [-- --only <подстрока>]
 
@@ -58,12 +62,12 @@ const lines = (r) => r.timeline.items.filter((i) => i.type === 'line');
 
 // ───────── пороги и формулы
 
-test('пороги: каждый ключ из кода есть в thresholds.json или запасном файле', () => {
+test('пороги: каждый ключ из кода есть в thresholds.json', () => {
   const keys = new Set();
   const walkDir = (d) => {
     for (const f of readdirSync(d, { withFileTypes: true })) {
       if (f.isDirectory()) walkDir(join(d, f.name));
-      else if (f.name.endsWith('.mjs') && f.name !== 'selftest.mjs') for (const m of readFileSync(join(d, f.name), 'utf8').matchAll(/threshold(?:Entry)?\('([^']+)'\)/g)) keys.add(m[1]);
+      else if (f.name.endsWith('.mjs') && f.name !== 'selftest.mjs') for (const m of readFileSync(join(d, f.name), 'utf8').matchAll(/threshold(?:Entry|Seconds)?\('([^']+)'\)/g)) keys.add(m[1]);
     }
   };
   walkDir(HERE);
@@ -72,7 +76,7 @@ test('пороги: каждый ключ из кода есть в thresholds.j
   assert.throws(() => threshold('нет.такого'), /нет порога/);
 });
 
-test('время: набор и зазор по формулам engine.ts', () => {
+test('время: набор и зазор по формулам engine.ts (scripts/lib/playtime.mjs)', () => {
   assert.equal(typingTime('sys', 'x'), 0);
   assert.equal(typingTime('me', 'длинный текст'), 0);
   assert.equal(typingTime('photo', ''), 2.6);
@@ -80,6 +84,18 @@ test('время: набор и зазор по формулам engine.ts', () 
   assert.equal(typingTime('in', 'x'.repeat(200)), 5);
   assert.equal(gapTime('sys', 'x', true), 0.7);
   assert.ok(gapTime('in', 'привет', true) - gapTime('in', 'привет', false) > 1.19);
+});
+
+test('время: story:trace и журнал story:lint считают одно время игрока на одном прохождении', () => {
+  const st = buildStatic(probe.tree);
+  for (const persona of ['first', 'silent']) {
+    const r = runOnce(probe, { persona, seed: 3 });
+    const route = strategies.scripted(r.route);
+    const [run] = runBot(probe.built.json, st, thresholds(), { runs: 1, strategy: route });
+    const mine = lines(r).map((l) => [l.text, l.knot, l.delay, l.gap, l.typing]);
+    const lint = run.lines.map((l) => [l.text, l.knot, l.delay, l.gap, l.typing]);
+    assert.deepEqual(lint, mine, persona);
+  }
 });
 
 // ───────── trace
@@ -235,7 +251,8 @@ test('vars: мёртвая, невидимая, не пишется, чтени�
 test('vars: the-number сходится с подсчётом по исходнику', () => {
   const p = prepare('the-number');
   const idx = varIndex(p.tree);
-  const ink = p.story.ink;
+  // главы лежат в INCLUDE-файлах: считаем по склеенному сценарию
+  const ink = glueStory(p.story);
   for (const v of idx.vars) {
     const re = new RegExp(`~\\s*${v.name}\\s*(\\+=|-=|=(?!=)|\\+\\+|--)`, 'g');
     assert.equal(v.writes.length, (ink.match(re) ?? []).length, v.name);
@@ -271,7 +288,7 @@ test('sessions: три истории — время по клику меньш�
     const j = cmdJson('sessions', ['--story', id, '--runs', '3']);
     const s = j.stories[0].personas[0];
     assert.ok(s.click.median < s.real.median, id);
-    // в «Слепом пятне» пауз от sessions.gap нет совсем: вся история — одна сессия
+    // в «Слепом пятне» пауз от story.pause.session_s нет совсем: вся история — одна сессия
     assert.ok(s.middle.sessions.length > (id === 'slepoe-pyatno' ? 0 : 1), id);
   }
   const txt = cmd('sessions', ['--story', 'the-number', '--runs', '2']).out;
@@ -480,7 +497,7 @@ test('cold-read: видимая переписка до узла, без ink; к
 test('cold-read: режимы return и voices; протокол; проверка изоляции', () => {
   const r = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0', '--mode', 'return']);
   assert.match(r.transcript, /═══ вы отложили телефон/);
-  assert.ok(r.key.returnAfter.pause >= threshold('sessions.gap'));
+  assert.ok(r.key.returnAfter.pause >= thresholdSeconds('story.pause.session_s'));
   const v = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0', '--mode', 'voices']);
   assert.ok(!/^ {3}(Анна|Боб):/m.test(v.transcript), 'подпись с именем в голосах вслепую');
   assert.ok(!/Анна не в сети/.test(v.transcript));

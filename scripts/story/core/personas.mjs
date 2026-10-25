@@ -1,6 +1,16 @@
 // Персоны story:trace. Каждая — фабрика стратегии bot.play: (choices, ctx) → индекс в choices.
 // Фабрика вызывается на каждое прохождение, поэтому память персоны (что уже спрашивал) не течёт между прогонами.
-import { ASK, LEAVE, REFUSE, SUSPECT, TRUST } from './lexicon.mjs';
+import { noAnswer, strategies } from '../../lib/bot.mjs';
+
+export { noAnswer };
+
+// Персоны выбирают кнопку по словам. Это не словари свода (те — dict.* в thresholds.json), а характер бота:
+// подбирались так, чтобы на кнопке-отказе и кнопке-согласии персоны расходились.
+const REFUSE = /(^|[^\p{L}])(нет|не буду|не стану|не могу|не надо|не хочу|откаж|отказ|пас|не дам|не скажу|не отправ|забудь|отстань|не лезь|хватит)/iu;
+const TRUST = /(^|[^\p{L}])(да|хорошо|ок|ладно|давай|конечно|верю|согласен|согласна|помогу|сделаю|отправ|держи|спасибо|понял|поняла|иду|еду|скину)/iu;
+const SUSPECT = /(кто ты|кто это|почему|зачем|откуда|докажи|не верю|врёшь|врешь|странно|проверю|проверить|подозр|а ты|с чего|правда\?)/iu;
+const ASK = /(\?|расскажи|что ты|кто|что это|покажи|объясни|подробн|а что|а кто|где)/iu;
+const LEAVE = /(^|[^\p{L}])(дальше|хватит|всё|все понятно|пока|потом|позже|ладно, иду|закончим|выйти)/iu;
 
 /** Теги кнопки из рантайма inkjs → { silent: '', to: 'dina', label: '…' }. */
 export function choiceTags(c) {
@@ -16,15 +26,6 @@ export function choiceTags(c) {
 // кнопка из рантайма inkjs (теги) или из хронологии (поле silent)
 const isSilent = (c) => c.silent === true || 'silent' in choiceTags(c);
 const said = (c) => `${choiceTags(c).label ?? ''} ${c.text}`;
-
-/**
- * Куда идёт история, если игрок не ответил. До E-02 напоминаний нет, и по решению свода (R-120)
- * «не ответил» по умолчанию — это #silent той же развилки. Без #silent идти некуда: −1, история стоит.
- * E-02 расширит bot.mjs синтаксисом напоминаний, и эта функция начнёт отдавать их ветку.
- */
-export function noAnswer(choices) {
-  return choices.findIndex(isSilent);
-}
 
 const pickBy = (choices, ctx, score) => {
   let best = -Infinity;
@@ -107,7 +108,7 @@ export const PERSONAS = {
   },
   distracted: {
     name: 'отвлечённый',
-    about: 'кнопки как у случайной, но уходит на каждой паузе от trace.distracted_away и возвращается, когда пачка сообщений дошла до кнопки',
+    about: 'кнопки как у случайной, но уходит на каждой паузе от story.pause.session_s и возвращается, когда пачка сообщений дошла до кнопки',
     away: true,
     make: random,
   },
@@ -115,10 +116,7 @@ export const PERSONAS = {
     name: 'неотвечающий',
     about: 'не отвечает: история идёт веткой «не ответил» (до E-02 — #silent); где #silent нет, история стоит — отмечается, дальше случайная кнопка',
     noAnswer: true,
-    make: () => (choices, ctx) => {
-      const i = noAnswer(choices);
-      return i >= 0 ? i : random()(choices, ctx);
-    },
+    make: () => strategies.unresponsive(random()),
   },
 };
 
