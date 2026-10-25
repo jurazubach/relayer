@@ -251,7 +251,8 @@ async function cli() {
   const report = [];
   for (const ref of refs) report.push(await scan(ref));
   if (args.includes('--json')) {
-    console.log(JSON.stringify({ stories: report }, null, 1));
+    // process.exit сразу после console.log обрезает вывод в трубу на 64 КБ — дожидаемся записи
+    await new Promise((done) => process.stdout.write(JSON.stringify({ stories: report }, null, 1) + '\n', done));
     process.exit(0);
   }
 

@@ -97,7 +97,8 @@ const runs = data.runs.map((r) => {
 const card = typeof meta.minutes === 'number' ? meta.minutes : null;
 
 if (args.includes('--json')) {
-  console.log(JSON.stringify({ id: data.id, path: data.path, card_minutes: card, runs: runs.map(({ items, ...r }) => ({ ...r, flags: r.flags.map((f) => ({ ...f, knot: items[f.at]?.knot ?? null })) })) }, null, 1));
+  // process.exit сразу после console.log обрезает вывод в трубу на 64 КБ — дожидаемся записи
+  await new Promise((done) => process.stdout.write(JSON.stringify({ id: data.id, path: data.path, card_minutes: card, runs: runs.map(({ items, ...r }) => ({ ...r, flags: r.flags.map((f) => ({ ...f, knot: items[f.at]?.knot ?? null })) })) }, null, 1) + '\n', done));
   process.exit(0);
 }
 
