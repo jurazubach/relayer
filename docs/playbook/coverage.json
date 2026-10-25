@@ -11,6 +11,14 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
+    "#attn-min-cast": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "текст правил без пересказа, источники вынесены"
+      }
+    },
     "ashwell-standard-patterns:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -79,12 +87,28 @@
         "note": "«больше 3 тем» ключом C-19.spokes_max"
       }
     },
+    "bateman-game-writing:RED-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "Navi, «глазами» и правка через PAT-10 сохранены"
+      }
+    },
     "C-03": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "условие и правка сохранены"
+      }
+    },
+    "C-50": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "развилки соответствуют «Как считать» C-50 (а)"
       }
     },
     "choiceofgames-design:GREEN-10": {
@@ -143,6 +167,14 @@
         "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
       }
     },
+    "dille-ultimate-guide:contra-2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "решение сохранено, arc/role по A-06"
+      }
+    },
     "dille-ultimate-guide:contra-3": {
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
@@ -161,6 +193,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "цепочка документов сохранена; потеряна пометка источника «уверенность средняя»"
+      }
+    },
+    "dille-ultimate-guide:SYS-2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "четыре шаблона и ошибки понимания сохранены, поля // заменены по A-06"
       }
     },
     "emshort-structures:RED-03": {
@@ -443,6 +483,14 @@
         "note": "аналог #label сохранён"
       }
     },
+    "messenger-genre:RED-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "признак, замер (C-50 б) и правка совпадают"
+      }
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
@@ -563,9 +611,33 @@
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
     },
+    "nicklin-writing-for-games:GREEN-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл сохранён, #to:notes → facts.md"
+      }
+    },
     "nicklin-writing-for-games:LESSON-09": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "nicklin-writing-for-games:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "проверяемая причина расхождения и масштаб сохранены"
+      }
+    },
+    "nicklin-writing-for-games:P-14#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "трещина до слома и масштаб сохранены"
+      }
     },
     "nicklin-writing-for-games:RED-20": {
       "fidelity": {
@@ -585,6 +657,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "оценка автора помечена как не замер"
+      }
+    },
+    "procedural-storytelling:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "потерян порог слепого теста «8 из 10» (есть style.blind_min) — не искажение"
+      }
+    },
+    "procedural-storytelling:P-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "триггер «1–3 сообщения» ослаблен до «пары», 20+ — cast.main_lines"
       }
     },
     "R-36": {
@@ -651,6 +739,22 @@
         "note": "сохранено"
       }
     },
+    "sheldon-character-storytelling:contra-7": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "решение сохранено, ≤10 — ключ cast.episodic_lines"
+      }
+    },
+    "sheldon-character-storytelling:LESSON-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, нет цифр — сохранено; крючок перед паузой отдан story-pauses"
+      }
+    },
     "sheldon-character-storytelling:LESSON-05": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
@@ -665,6 +769,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "класс C, вывод сохранён"
+      }
+    },
+    "sheldon-character-storytelling:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл и basis: model сохранены; добавлено A-01 без срока"
       }
     },
     "sheldon-character-storytelling:P-15#нюанс": {
@@ -703,6 +815,22 @@
         "note": "перепроверка глав целиком при смене каркаса сохранена"
       }
     },
+    "truby-anatomy-of-story:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл сохранён; порог 80 % бота отдан story-choices"
+      }
+    },
+    "truby-anatomy-of-story:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл и пример сохранены; маркеры want/need переведены в план"
+      }
+    },
     "truby-anatomy-of-story:PAT-06": {
       "fidelity": {
         "ok": true,
@@ -711,12 +839,44 @@
         "note": "схема, ловушки, basis secondary"
       }
     },
+    "video-three-things:contra-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«1–3 сообщения за главу» заменено на «немного» + C-50.noise_share"
+      }
+    },
+    "video-three-things:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл сохранён; проверка словом ядра стала суждением модели"
+      }
+    },
+    "video-three-things:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "вывод сохранён, класс B честный"
+      }
+    },
     "vogler-writers-journey:PAT-06": {
       "fidelity": {
         "ok": false,
         "date": "2026-10-25",
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
+      }
+    },
+    "yorke-into-the-woods:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "масштаб 5/50 сохранён"
       }
     }
   }
