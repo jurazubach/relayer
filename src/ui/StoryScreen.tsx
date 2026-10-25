@@ -1,7 +1,20 @@
 import { useState } from 'react';
-import { CONTACT_COLORS, DEFAULT_MODE, MODES, downloadStory, modeSizes, sizeLabel, storyPalette, storyPeople, formatAgo } from '../engine';
+import {
+  CONTACT_COLORS,
+  DEFAULT_MODE,
+  MODES,
+  downloadStory,
+  formatAgo,
+  isOutdated,
+  modeSizes,
+  revisionOf,
+  sizeLabel,
+  storyPalette,
+  storyPeople,
+} from '../engine';
 import type { Mode, Progress, Story } from '../engine';
 import { Avatar } from './Avatar';
+import { RevisionNotice } from './RevisionNotice';
 
 const MODE_TEXT: Record<Mode, { name: string; hint: string }> = {
   realtime: { name: 'Реальное время', hint: 'паузы настоящие, сообщения приходят сами' },
@@ -14,7 +27,7 @@ const MODE_TEXT: Record<Mode, { name: string; hint: string }> = {
  */
 export function StoryScreen({
   story,
-  progress,
+  progress: saved,
   onPlay,
   onBack,
   onReset,
@@ -29,8 +42,11 @@ export function StoryScreen({
   /** Есть только у загруженных историй: встроенную из репозитория не удалить. */
   onDelete?: () => void;
 }) {
+  // сохранение от другой ревизии не продолжить: экран ведёт себя как до начала игры и предупреждает
+  const outdated = isOutdated(saved, story);
+  const progress = outdated ? null : saved;
   const [confirm, setConfirm] = useState<null | 'reset' | 'delete' | Mode>(null);
-  const [picked, setPicked] = useState<Mode>(progress?.mode ?? DEFAULT_MODE);
+  const [picked, setPicked] = useState<Mode>(saved?.mode ?? DEFAULT_MODE);
   // начатая игра идёт в своём режиме: другой включается только перезапуском
   const mode = progress?.mode ?? picked;
   const sizes = modeSizes(story);
@@ -107,7 +123,15 @@ export function StoryScreen({
               </button>
             </div>
           ) : null}
-          <button className="btn btn--primary" onClick={() => onPlay(mode)} data-testid="play">
+          {outdated && saved && <RevisionNotice from={saved.revision} to={revisionOf(story)} done={false} />}
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              if (outdated) onReset();
+              onPlay(mode);
+            }}
+            data-testid="play"
+          >
             {cta} →
           </button>
           {progress &&

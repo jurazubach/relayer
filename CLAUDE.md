@@ -211,7 +211,7 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
   `thread-<id>`, `chat`, `notice`, `notices`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `choice-log`, `choice-log-export`,
-  `skip-next`.
+  `skip-next`, `revision-notice`, `revision-notice-ok`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).
   И `width: 100%` у `.phone` не убирать: с автоотступами в flex-колонке он ужимается

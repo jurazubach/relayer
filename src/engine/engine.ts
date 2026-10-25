@@ -147,6 +147,16 @@ interface SaveData {
   log?: LogEntry[];
   fork?: Fork | null;
   startedAt?: number;
+  /** Ревизия сценария, под которую записано состояние. Сохранения до ревизий её не знают: это 1. */
+  revision?: number;
+}
+
+/** Сохранение от другой ревизии сценария: продолжить его нельзя, история началась заново. */
+export interface Outdated {
+  from: number;
+  to: number;
+  /** Режим сброшенной игры: игрок его уже выбирал, новая игра идёт в нём же. */
+  mode: Mode;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -215,6 +225,7 @@ function hiddenRole(tags: string[]): 'remind' | 'noanswer' | null {
 
 export class Engine {
   readonly storyId: string;
+  readonly revision: number;
   readonly title: string;
   readonly contacts: Map<string, Contact> = new Map();
   readonly knots: string[];
@@ -256,9 +267,12 @@ export class Engine {
   speed: number = 1;
   /** Растёт при каждом изменении: удобно для React useSyncExternalStore. */
   version = 0;
+  /** restore() нашёл сохранение от другой ревизии и не стал его загружать. */
+  outdated: Outdated | null = null;
 
-  constructor(storyId: string, json: string) {
+  constructor(storyId: string, json: string, revision = 1) {
     this.storyId = storyId;
+    this.revision = revision;
     this.json = json;
     const probe = new Story(json);
     let title = storyId;
@@ -780,6 +794,7 @@ export class Engine {
       log: this.log,
       fork: this.fork,
       startedAt: this.startedAt,
+      revision: this.revision,
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
@@ -797,6 +812,12 @@ export class Engine {
       if (!raw) return false;
       const d = JSON.parse(raw) as SaveData;
       if ((d.v !== 1 && d.v !== 2) || d.storyId !== this.storyId) return false;
+      // состояние ink ссылается на узлы и счётчики своей ревизии: на другой оно молча собьётся
+      const saved = d.revision ?? 1;
+      if (saved !== this.revision) {
+        this.outdated = { from: saved, to: this.revision, mode: d.mode ?? DEFAULT_MODE };
+        return false;
+      }
       this.story.state.LoadJson(d.storyState);
       this.messages = d.messages;
       this.unlocked = d.unlocked;

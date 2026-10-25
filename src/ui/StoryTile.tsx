@@ -1,5 +1,5 @@
 import type { Progress, Story } from '../engine';
-import { formatAgo, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
+import { formatAgo, isOutdated, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
 
 /**
  * Карточка истории на главном экране: на всю ширину, обложкой.
@@ -9,13 +9,16 @@ import { formatAgo, keepShortWords, storyCounts, storyTeasers, timeLines } from 
  */
 export function StoryTile({
   story,
-  progress,
+  progress: saved,
   onOpen,
 }: {
   story: Story;
   progress: Progress | null;
   onOpen: () => void;
 }) {
+  // сохранение от прошлой ревизии сценария не продолжить: карточка как у новой истории
+  const outdated = isOutdated(saved, story);
+  const progress = outdated ? null : saved;
   const counts = storyCounts(story);
   const teasers = progress ? [] : storyTeasers(story);
   const time = timeLines(story);

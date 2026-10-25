@@ -7,6 +7,7 @@ import { ChatScreen } from './ui/ChatScreen';
 import { DebugSheet } from './ui/DebugSheet';
 import { ErrorScreen } from './ui/ErrorScreen';
 import { Notice } from './ui/Notice';
+import { RevisionNotice } from './ui/RevisionNotice';
 
 /** Связывание: вся логика в engine, всё оформление в ui. Здесь только маршруты. */
 export function App() {
@@ -103,6 +104,9 @@ function GameShell({
 
   return (
     <div className="phone">
+      {game.outdated && (
+        <RevisionNotice from={game.outdated.from} to={game.outdated.to} done onClose={game.hideOutdated} />
+      )}
       {game.notice && game.engine && (
         <Notice
           msg={game.notice}
