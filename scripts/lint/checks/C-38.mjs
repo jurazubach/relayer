@@ -55,8 +55,11 @@ export default {
       const calm = first.length && !first.some((l) => T.re('dict.world_deadline').test(l.text.toLowerCase()) || T.re('dict.threat').test(l.text.toLowerCase()));
       breathers.push(calm && !intended.has(st.chapterStart.get(c)));
     }
-    for (let c = 1; c < N; c++) {
-      if (breathers[c - 1] && breathers[c] && T.value('C-38.breathers') === 2) find('C-38.breathers', { node: st.chapterStart.get(c + 1) ?? null, chapter: c + 1, message: `главы ${c} и ${c + 1} — передышки подряд: в начале ни срока, ни угрозы` });
+    // серия передышек: находка на каждой главе, где серия не короче порога
+    let streak = 0;
+    for (let c = 1; c <= N; c++) {
+      streak = breathers[c - 1] ? streak + 1 : 0;
+      if (streak >= T.value('C-38.breathers')) find('C-38.breathers', { node: st.chapterStart.get(c) ?? null, chapter: c, message: `главы ${c - streak + 1}…${c} — передышки подряд: в начале ни срока, ни угрозы` });
     }
   },
 };
