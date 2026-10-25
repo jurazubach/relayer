@@ -121,6 +121,7 @@ runCli(HELP, async (args) => {
   if (json) { console.log(JSON.stringify(out, null, 1)); return 0; }
   console.log(`${args.has('dry-run') ? 'будет записано' : 'записано'} в ${file}:\n\n${entry}\n`);
   if (touched.length) console.log(`STATUS.md: ${touched.join(', ')}`);
-  if (args.has('set-core') || kind === 'ядро') console.log(`Ядро сменилось — что устарело: node \${CLAUDE_SKILL_DIR}/scripts/stale-check.mjs --story ${id}`);
+  if ((args.has('set-core') || kind === 'ядро') && replaces) console.log(`Ядро сменилось — что устарело: node \${CLAUDE_SKILL_DIR}/scripts/stale-check.mjs --story ${id}`);
+  else if (args.has('set-core') || kind === 'ядро') console.log('Первое ядро (без «заменяет:»): главы и планы не устаревают; сменить ядро — новое D-NN с --replaces');
   return 0;
 }, { bool: ['set-core', 'dry-run'] });

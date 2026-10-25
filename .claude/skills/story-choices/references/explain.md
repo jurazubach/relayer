@@ -68,4 +68,4 @@
 ## Источники
 
 - Свод: R-40, R-43, R-47, R-48, R-49, R-52; приёмы F-07, F-08, F-11, F-14; решения автора A-01, A-03, A-04.
-- Файлы скилла: `decisions-choices.md` (симптом → приём), `lessons.md`, `lessons-echo.md`.
+- Файлы скилла: `decisions-choices.md` (симптом → приём), `lessons.md`, `lessons-local.md`.

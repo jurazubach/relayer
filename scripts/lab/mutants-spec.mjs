@@ -395,4 +395,14 @@ export const MUTANTS = [
       '* [Дай, я напишу ей сама]\n    ~ asked_mira = true\n* [Не впутывай её пока]\n    ~ trust_lev += 1\n* [Промолчать #silent]\n- -> ch1_end\n',
     ]],
   },
+  {
+    id: 'm25-wrong-responder',
+    zone: 'story-choices',
+    check: 'C-10',
+    node: 'ch2_mira',
+    broken: 'на вопрос Мире «Кто знает про крючок?» отвечает Ника, а Мира молчит до следующей развилки — ответил не тот',
+    lint: ['C-10'],
+    catches: [],
+    edits: [['    да все!! лев сам велел вешать #from:mira\n', '    да все про него знают. лев сам велел вешать #from:nika\n']],
+  },
 ];

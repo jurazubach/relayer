@@ -288,6 +288,12 @@
 Так снят дубль `ashwell-standard-patterns:PAT-01…PAT-13` (у `story-plan/structures.md`, а не у
 `story-branch/patterns-branch.md`) и другие пересечения списков §C (§7).
 
+Строки, которые матрица отдала `story-choices` по кластеру или ссылкам, а по смыслу они чужие, перенесены в «опору»
+владельца (S-choices-v2, по ревью S-choices): причина паузы — TH-48, прерывание вместо «8 секунд» — TH-44, стена
+текста и коридор — TH-37, скрытый порог финала — TH-60, регистры письма — TH-68. В `story-choices` на них остались
+ссылки. «Лоза» и сведение веток (`sheldon:LESSON-03`, `skolnick:LESSON-07`) остались у `story-choices`: урок о том,
+что сведённые ветки должны помнить, — это эхо и F-11.
+
 Сокращения алиасов — как в `flow-review.md` §C: `video` = `video-three-things`, `attention` =
 `attention-today`, `mystery` = `mystery-fair-play` и т. д.
 
@@ -373,7 +379,7 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-37 | плотность событий вместо «кривой интереса» | `story-pace` | `density.md` | R-60, R-61; `attention:P-12`, `LESSON-02`; `mckee:P-15`, PAT-07; `schell:P-03`, `P-15`, PAT-04 (без формулы); `yorke:LESSON-04`; `narrative-postmortems:LESSON-13`; `bateman:P-09`; `choiceofgames:LESSON-13`; `narrative-postmortems:LESSON-09`; `narrative-testing:RED-06`; `nicklin:PAT-02`; `schell:P-01`, PAT-09, RED-01, LESSON-09 | `story-review` |
+| TH-37 | плотность событий вместо «кривой интереса» | `story-pace` | `density.md` | R-60, R-61; `attention:P-12`, `LESSON-02`; `mckee:P-15`, PAT-07; `schell:P-03`, `P-15`, PAT-04 (без формулы); `yorke:LESSON-04`; `narrative-postmortems:LESSON-13`; `bateman:P-09`; `choiceofgames:LESSON-13`; `narrative-postmortems:LESSON-09`; `narrative-testing:RED-06`; `nicklin:PAT-02`; `schell:P-01`, PAT-09, RED-01, LESSON-09; `choiceofgames:RED-11` (стена текста), `narrative-postmortems:RED-01` (коридор без кнопки) | `story-review` |
 | TH-38 | микронапряжение: два чувства, зазор, недомолвка | `story-pace` | `micro-tension.md` | R-80; `maass:P-01`…`P-03`, `P-14`, `P-15`, PAT-01; `mckee:P-04`, `P-05`, `P-14`; `cron:P-14`, `P-15`; `maass:PAT-07` | `story-voice` |
 | TH-39 | поворот ценности в сцене | `story-pace` | `scene-turn.md` | R-29; `mckee:P-06`, PAT-01; `yorke:P-07`, PAT-03; `maass:PAT-04`; `mckee:LESSON-07` | `chapter-write/scene.md` |
 | TH-40 | середина и провисание | `story-pace` | `middle.md` | R-30; `snyder:P-09`, `P-10`, `LESSON-08`; `yorke:P-03`, `P-05`, PAT-06; `skolnick:PAT-09`; `vogler:P-10`, `LESSON-03`, `LESSON-04`; `yorke:PAT-08` | `story-plan/chapter-formula.md` |
@@ -385,7 +391,7 @@ TH-41, TH-42, TH-48.
 | TH-41 | крючок перед паузой: лестница, типы, чередование | `story-pauses` | `hooks.md` | R-64…R-66; `serial:P-01`…`P-04`, `P-11`, `P-14`, PAT-01, PAT-02, PAT-05…`PAT-08`; `maass:P-04`, PAT-09; `dille:P-13`; `yorke:P-09`, PAT-05; `chat-fiction:P-02`, `P-03`, PAT-02, PAT-06, PAT-08; `mobile:P-02`, `P-09`, PAT-05; `schell:PAT-03`; `edgerton:PAT-07`; `video:PAT-08`; `sheldon:PAT-09`; `failbetter:GREEN-08`, RED-14; `mobile:GREEN-01`; `narrative-testing:GREEN-03`, RED-05; `serial:RED-18`; `snyder:GREEN-10`, RED-19 | `chapter-write/pause-lines.md`, `story-plan` |
 | TH-42 | возвращение: первая реплика, рекап из состояния, пачка непрочитанного | `story-pauses` | `return.md` | R-68…R-73; `serial:P-08`…`P-10`, PAT-03, PAT-11, `LESSON-06`, `LESSON-09`; `attention:P-06`, PAT-01, `LESSON-04`, `LESSON-07`; `messenger:P-02`; `failbetter:P-14`, PAT-11, `LESSON-01`, `LESSON-02`; `bateman:P-07`, PAT-05, PAT-11; `mobile:P-15`; `yorke:PAT-12`, `LESSON-11`; `video:LESSON-10`; `edgerton:PAT-08`; `mystery:LESSON-07`, PAT-10; `schell:PAT-11`; `bateman:PAT-03`, PAT-10, LESSON-02; `chat:RED-03`; `choiceofgames:RED-18`; `messenger:RED-03`; `narrative-testing:GREEN-11` | `chapter-write/pause-lines.md` |
 | TH-43 | внешняя память игрока: заметки | `story-pauses` | `return.md` | R-100; `attention:P-05`, PAT-02; `inkle:PAT-09`; `cron:PAT-05`; `choiceofgames:GREEN-11`; `inkle:LESSON-04` | `story-mystery` |
-| TH-44 | сессии и микросессии, сводка вместо капельницы | `story-pauses` | `sessions.md` | R-62; `attention:P-08`, `P-09`, PAT-06…`PAT-08`, `LESSON-05`, `LESSON-06`; `chat-fiction:P-01`, PAT-01, PAT-07; `failbetter:LESSON-13`; `narrative-postmortems:P-19`; `serial:PAT-09`; `mobile:LESSON-04` | `story-pace` |
+| TH-44 | сессии и микросессии, сводка вместо капельницы | `story-pauses` | `sessions.md` | R-62; `attention:P-08`, `P-09`, PAT-06…`PAT-08`, `LESSON-05`, `LESSON-06`; `chat-fiction:P-01`, PAT-01, PAT-07; `failbetter:LESSON-13`; `narrative-postmortems:P-19`; `serial:PAT-09`; `mobile:LESSON-04`; `attention:P-01`, RED-01, LESSON-01 (прерывание вместо «8 секунд») | `story-pace` |
 
 ### `story-time`
 
@@ -394,7 +400,7 @@ TH-41, TH-42, TH-48.
 | TH-45 | два равноценных режима; кнопка «пропустить» для тестов | `story-time` | `modes.md` (`click-transcript.mjs`) | A-04; R-122; `messenger:LESSON-10` (риск); `schell:LESSON-06`; E-01; `choiceofgames:LESSON-10`; `maass:LESSON-06`; `narrative-postmortems:SYS-5` | все пишущие, `story-playtest` |
 | TH-46 | напоминания при молчании, ветка «не ответил» | `story-time` | `reminders.md` | A-03; R-120; `inkle:PAT-07`; `messenger` Система 1, шаг 4 | `story-choices/silence.md` |
 | TH-47 | часы сюжета против часов игрока | `story-time` | `clock.md` (`clock-scan.mjs`) | A-02; R-114, R-121; `messenger:P-12` (часть «в силе»), PAT-03 (устарел); `serial-hooks` Система 3; `narrative-testing:RED-33` | `story-core/time-model.md`, `story-continuity/timeline.md` |
-| TH-48 | причина паузы без срока возвращения | `story-time` | `clock.md` (`promise-scan.mjs`) | A-01; R-63; `chat:PAT-03`; `maass:LESSON-03`; `mckee:LESSON-10`; `narrative-postmortems:PAT-10`, RED-11, LESSON-01; `serial:GREEN-08`, RED-08 | `story-pauses/hooks.md`, `chapter-write/pause-lines.md` |
+| TH-48 | причина паузы без срока возвращения | `story-time` | `clock.md` (`promise-scan.mjs`) | A-01; R-63; `chat:PAT-03`; `maass:LESSON-03`; `mckee:LESSON-10`; `narrative-postmortems:PAT-10`, RED-11, LESSON-01; `serial:GREEN-08`, RED-08; `choiceofgames:GREEN-12`, LESSON-02 (причина паузы) | `story-pauses/hooks.md`, `chapter-write/pause-lines.md` |
 | TH-49 | длина истории и главы в реальном времени | `story-time` | `length.md` (`sessions-view.mjs`) | A-05; R-67; `inkle:P-18`, `LESSON-01`; `video:LESSON-11`; `yorke:LESSON-10`; `serial:LESSON-13`; `chat-fiction:P-13`; `chat:PAT-05`; `narrative-postmortems:P-17`; `serial:RED-07` | `story-release/two-durations.md`, `story-plan/schedule.md` |
 | TH-50 | повтор и быстрый режим | `story-time` | `replay.md` | `messenger:LESSON-04`; уроки о быстром режиме в части «в силе» (`superseded.md` A-04); `narrative-postmortems:LESSON-15`; `sheldon:LESSON-11`; `skolnick:LESSON-06` | `story-release` |
 | TH-51 | упрёк только за `#silent`, никогда за отсутствие | `story-time` | `no-guilt.md` (`guilt-scan.mjs`) | R-74; `attention:P-10` (часть «в силе»), `LESSON-11`; `meaningful:attention§3`, `§5`; `messenger:attention§5` | `story-voice` (C-47), `story-release/ethics.md` |
@@ -416,7 +422,7 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-60 | распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов | `story-endings` | `decisions-endings.md` (`threshold-visibility.mjs`) | R-102, R-104, R-112; `inkle:P-17`, PAT-11, SYS-3, `LESSON-02`; `ashwell:P-11`; `choiceofgames:P-11`, `P-12`; `meaningful:PAT-06`, PAT-07, `LESSON-05`; `schell:P-18`, PAT-10; `narrative-postmortems:P-16`; `ashwell:RED-07`; `bateman:RED-11`; `choiceofgames:RED-08`, RED-12; `messenger:RED-10`; `mobile:PAT-06`, RED-06; `narrative-postmortems:PAT-06`, GREEN-07, RED-07, RED-08; `narrative-testing:GREEN-06`, RED-12, RED-13, RED-25; `truby:RED-08` | `story-plan/endings-plan.md` |
+| TH-60 | распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов | `story-endings` | `decisions-endings.md` (`threshold-visibility.mjs`) | R-102, R-104, R-112; `inkle:P-17`, PAT-11, SYS-3, `LESSON-02`; `ashwell:P-11`; `choiceofgames:P-11`, `P-12`; `meaningful:PAT-06`, PAT-07, `LESSON-05`; `schell:P-18`, PAT-10; `narrative-postmortems:P-16`; `ashwell:RED-07`; `bateman:RED-11`; `choiceofgames:RED-08`, RED-12; `messenger:RED-10`; `mobile:PAT-06`, RED-06; `narrative-postmortems:PAT-06`, GREEN-07, RED-07, RED-08; `narrative-testing:GREEN-06`, RED-12, RED-13, RED-25; `truby:RED-08`; `emshort:RED-02`; `procedural:RED-10`; `mobile:RED-11` (скрытый порог финала, вина за невидимый порог) | `story-plan/endings-plan.md` |
 | TH-61 | приёмы финала: зеркало, другой носитель, следы, финал из шагов | `story-endings` | `patterns-endings.md` | R-105…R-109; `snyder:P-14`, `P-15`, PAT-07, PAT-12; `yorke:PAT-04`; `video:PAT-06`; `messenger:P-14`, `P-15`; `meaningful:PAT-10`, `LESSON-07`; `cron:P-16`, `LESSON-05`; `truby:P-11`, `P-16`; `vogler:P-13`, `P-14`, PAT-08, PAT-09; `inkle:LESSON-11`; `bateman:LESSON-09`; `mckee:PAT-06`; `narrative-testing:PAT-07` | `story-cast/arcs.md` |
 | TH-62 | короткая развязка | `story-endings` | `resolution.md` | R-110, R-111, R-113; `messenger:P-16`; `schell:P-04`, PAT-07; `failbetter:LESSON-12`; `mobile:P-13`; `mobile:GREEN-08` | `story-time/length.md` |
 | TH-63 | как объявлять финалы | `story-endings` | `declaring-endings.md` | R-103; `build-plan.md` §9; `narrative-testing:GREEN-07` | `story-plan`, `story:lint` |
@@ -434,7 +440,7 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-68 | лист голоса, проверяемые маркеры, смена голоса с отношением | `story-voice` | `voice-sheet.md` | R-75, R-82; C-44; `nicklin:P-02`, PAT-01; `sheldon:P-05`, `P-14`, PAT-02; `snyder:P-21`; `narrative-postmortems:PAT-02`, GREEN-04; `narrative-testing:RED-08` | `story-cast` |
+| TH-68 | лист голоса, проверяемые маркеры, смена голоса с отношением | `story-voice` | `voice-sheet.md` | R-75, R-82; C-44; `nicklin:P-02`, PAT-01; `sheldon:P-05`, `P-14`, PAT-02; `snyder:P-21`; `narrative-postmortems:PAT-02`, GREEN-04; `narrative-testing:RED-08`; `nicklin:SYS-5`, RED-21 (регистры письма) | `story-cast` |
 | TH-69 | редактура реплики: длина, одна мысль, род, сшивка, маркеры | `story-voice` | `line-edit.md` | R-59, R-81, R-89, R-119; C-14, C-34, C-46, C-47; `attention:P-02`, `P-14` (длина); `chat-fiction:P-16`; `nicklin:P-04`, `P-05`, `P-19`; `skolnick:P-13`; `cron:P-11`; `attention:PAT-04`; `bateman:RED-15`, LESSON-06; `mobile:RED-08`; `narrative-testing:RED-32` | `chapter-write/messages.md` |
 | TH-70 | одно имя, раскрытие имени, имя-улика | `story-voice` | `names.md` | R-86; C-48; `attention:P-04`, RED-06; `narrative-testing:RED-09` | `story-opening/load.md`, `story-mystery` |
 | TH-71 | юмор | `story-voice` | `humor.md` | R-87; `bateman:P-13`…`P-15`, PAT-08, `LESSON-07`; `nicklin:P-15` | `story-cast` |

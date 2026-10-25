@@ -15,7 +15,7 @@ docs/stories/<id>/
   plans/plan-vN.md   версии плана; первая строка «core: D-NN» — на каком ядре построен
   plans/skeleton.ink скелет всей истории («// core: D-NN» в первых строках)
   facts.md           правда мира: кто что знает, хронология (ведёт story-continuity)
-  reviews/<дата>.md  отчёты ревью (story-review)
+  reviews/<дата>-<скилл>.md  отчёты ревью и диагностических скиллов (story-review, story-choices …)
   playtests/wave-N/  комплект и сводка волны теста (story-playtest)
 ```
 
@@ -33,6 +33,11 @@ Ink истории лежит отдельно, в `src/stories/<id>/` (глав
 | `plans/*` | `story-plan`, агент `story-architect` | `chapter-write`, `stale-check.mjs` | новая версия — новый файл, не правка старого |
 | `facts.md` | `story-continuity` | `chapter-write` (пакет главы), ревью | глава добавила факт — в том же коммите |
 | `reviews/`, `playtests/` | `story-review`, `story-playtest` | `story-fix`, `story-desk` (Б-1) | после каждого прогона |
+
+**Отчёт скилла в `reviews/`.** Файл `reviews/<дата>-<скилл>.md`: шапка (история, ревизия `meta.json`,
+коммит), находки строками общего формата, сверка (что ложное и почему), предложенные правки. В `STATUS.md` —
+одна строка в «Открытые вопросы»: «ревью <скилла> <дата>: P1 — N, P2 — M, главное — …, отчёт — reviews/…».
+Отчёт старше правок глав `stale-check.mjs` показывает в п. 4.
 
 Правило одного места: решение записывается один раз, в `decisions.md`, а в `STATUS.md` стоит только ссылка
 на его номер. Если ядро описано и в `STATUS.md`, и в решении, со временем они разойдутся.
