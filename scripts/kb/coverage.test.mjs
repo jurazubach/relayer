@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, record, clustersFileContent, ownerDups, PATHS } from './coverage.mjs';
+import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, record, clustersFileContent, ownerDups, loadManual, shardFile, PATHS } from './coverage.mjs';
 import { statusError } from './kb-status.mjs';
 import { parseOpora } from './kb-owners.mjs';
 import { aliasResolver, plain } from './kb-rows.mjs';
@@ -374,7 +374,7 @@ test('--skill --min, --sources, --affected, --fidelity-sample, --record, merged-
     record(res, 'alpha-ferry:P-02', ['fidelity=bad', 'note=потеряно условие', 'by=ревьюер'], f.paths);
     record(res, 'alpha-ferry:GREEN-01', ['status=merged-into:alpha-ferry:P-01'], f.paths);
     assert.throws(() => record(res, 'alpha-ferry:P-02', ['status=rejected:лень'], f.paths), /не из списка/);
-    const cov = JSON.parse(readFileSync(f.paths.coverage, 'utf8'));
+    const cov = JSON.parse(readFileSync(join(f.paths.playbook, 'coverage/story-alpha.json'), 'utf8'));
     assert.equal(cov.rows['alpha-ferry:P-02'].fidelity.ok, false);
 
     f.w('skills/story-alpha/references/hooks.md', `## Гудок \`alpha-ferry:P-01\`\nГудок парома держит переправу и расписание. ${LONG.repeat(3)} Не работает ночью.\n`);
@@ -385,6 +385,61 @@ test('--skill --min, --sources, --affected, --fidelity-sample, --record, merged-
 
     f.w('playbook/coverage.json', JSON.stringify({ rows: { 'alpha-ferry:P-01': { status: 'rejected:просто так' } } }));
     assert.equal(quiet(() => main(['--summary'], f.paths)).code, 1, 'неверный статус в coverage.json роняет сводку');
+  } finally {
+    f.done();
+  }
+});
+
+test('ручной слой: шарды по владельцу, строка в двух файлах — ошибка, --record переносит из общего', () => {
+  const f = fixture();
+  const shard = (name) => join(f.paths.playbook, 'coverage', name);
+  const json = (p) => JSON.parse(readFileSync(p, 'utf8'));
+  try {
+    f.w('playbook/clusters.json', JSON.stringify(clustersFileContent(loadKnowledge(f.paths))));
+    f.w('playbook/coverage.json', JSON.stringify({ _about: { what: 'описание' }, rows: { 'alpha-ferry:P-02': { status: 'merged-into:alpha-ferry:P-01', note: 'старая запись' } } }));
+    f.w('playbook/coverage/story-beta.json', JSON.stringify({ rows: { 'beta-lamp:P-02': { basis: 'model' } } }));
+    let { res, row } = run(f.paths);
+    assert.equal(row('beta-lamp:P-02').basis, 'model', 'шард читается');
+    assert.equal(row('alpha-ferry:P-02').status, 'merged-into:alpha-ferry:P-01', 'общий файл читается вместе с шардами');
+    assert.deepEqual(res.problems, []);
+    assert.equal(shardFile(f.paths, 'story:lint'), shard('story-lint.json'), 'двоеточие не попадает в имя файла');
+    assert.equal(shardFile(f.paths, null), shard('_common.json'));
+
+    // запись идёт в шард владельца, а строка уходит из общего coverage.json вместе со старыми полями
+    const m = record(res, 'alpha-ferry:P-02', ['fidelity=ok', 'by=ревьюер'], f.paths);
+    assert.equal(m.file, join('coverage', 'story-alpha.json'));
+    const common = json(f.paths.coverage);
+    assert.deepEqual(common.rows, {}, 'строка вынута из общего');
+    assert.deepEqual(common._about, { what: 'описание' }, 'описание общего файла на месте');
+    const alpha = json(shard('story-alpha.json')).rows['alpha-ferry:P-02'];
+    assert.equal(alpha.status, 'merged-into:alpha-ferry:P-01');
+    assert.equal(alpha.fidelity.ok, true);
+    assert.ok(readFileSync(shard('story-alpha.json'), 'utf8').endsWith('}\n'), 'перевод строки в конце');
+
+    // стабильный порядок: строки по ID, поля — status, basis, …, note, как бы их ни записали
+    f.w('playbook/coverage/story-beta.json', JSON.stringify({ rows: { 'beta-lamp:P-02': { note: 'н', basis: 'model' }, 'R-01': {} } }));
+    ({ res } = run(f.paths));
+    record(res, 'beta-lamp:P-02', ['status=used'], f.paths);
+    const beta = json(shard('story-beta.json')).rows;
+    assert.deepEqual(Object.keys(beta['beta-lamp:P-02']), ['status', 'basis', 'note']);
+    const before = readFileSync(shard('story-beta.json'), 'utf8');
+    ({ res } = run(f.paths));
+    record(res, 'beta-lamp:P-02', ['status=used'], f.paths);
+    assert.equal(readFileSync(shard('story-beta.json'), 'utf8'), before, 'повторная запись не двигает файл');
+
+    // одна строка в двух файлах — не тихая перезапись, а ошибка сводки
+    f.w('playbook/coverage/story-gamma.json', JSON.stringify({ rows: { 'beta-lamp:P-02': { basis: 'checked' } } }));
+    ({ res, row } = run(f.paths));
+    assert.ok(res.problems.some((p) => /coverage\/story-gamma\.json beta-lamp:P-02: строка уже записана в coverage\/story-beta\.json/.test(p)), res.problems.join('\n'));
+    assert.equal(row('beta-lamp:P-02').basis, 'model', 'первая запись не перезаписана');
+    assert.equal(loadManual(f.paths).problems.length, 1);
+    assert.equal(quiet(() => main(['--summary'], f.paths)).code, 1, 'дубль строки роняет сводку');
+
+    // --record снимает дубль: запись остаётся только в шарде владельца
+    quiet(() => main(['--record', 'beta-lamp:P-02', 'note=сведено'], f.paths));
+    assert.ok(!json(shard('story-gamma.json')).rows['beta-lamp:P-02'], 'из чужого шарда вынута');
+    assert.equal(json(shard('story-beta.json')).rows['beta-lamp:P-02'].note, 'сведено');
+    assert.deepEqual(run(f.paths).res.problems, []);
   } finally {
     f.done();
   }
@@ -464,7 +519,7 @@ test('опора: короткие алиасы, диапазоны, ×30, «к�
 
 // ——— настоящая база ———
 
-test('настоящая база: owners.md §8, clusters.json свежий, coverage.json без ошибок', () => {
+test('настоящая база: owners.md §8, clusters.json свежий, ручной слой без ошибок', () => {
   assert.equal(quiet(() => main(['--owners-check'])).code, 0, 'npm run story:coverage -- --owners-check');
   const { code, out } = quiet(() => main(['--build-clusters', '--check']));
   assert.equal(code, 0, out);
