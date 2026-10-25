@@ -23,6 +23,9 @@ engine.click.time_jump_label получает метку «спустя …» (�
 
 Сводка по прохождениям: медиана и разброс реального времени против days карточки и времени
 по клику против minutes; самая длинная пауза; доля микросессий; пауза после последней кнопки.
+У персоны distracted (уходит на каждой паузе от story.pause.session_s) — пачка непрочитанного при
+возвращении: сколько строк ждёт до кнопки (медиана, p90 по C-28.pack_percentile, наибольшая и где),
+против C-28.pack (story-pauses, R-72).
 Пороги — ключи story.* (длина, пауза, хвост, карточка), C-30, C-31 и engine.click.* из
 docs/playbook/thresholds.json — те же, что у story:lint.
 
@@ -36,6 +39,13 @@ docs/playbook/thresholds.json — те же, что у story:lint.
   --help        эта справка`;
 
 const TIME_UNITS = ['с', 'мин', 'ч'];
+/** Перцентиль по ближайшему рангу: p90 из десяти пачек — девятая по величине. */
+const percentile = (arr, p) => {
+  if (!arr.length) return 0;
+  const s = [...arr].sort((a, b) => a - b);
+  return s[Math.min(s.length - 1, Math.max(0, Math.ceil(p * s.length) - 1))];
+};
+
 const by = (key) => {
   const e = thresholdEntry(key);
   const v = TIME_UNITS.includes(e.unit) ? fmtDuration(thresholdSeconds(key)) : e.value;
@@ -59,6 +69,14 @@ function summarize(p, persona, runs, seed, partial) {
   const sorted = [...all].sort((a, b) => a.r.timeline.totals.real - b.r.timeline.totals.real);
   const mid = sorted[Math.floor(sorted.length / 2)];
   const jumps = mid.r.timeline.items.filter((i) => i.type === 'line' && i.jump);
+  // пачка отвлечённого: строки от ухода до кнопки, которые он прочтёт одной стеной (attention-merged.md #attn-return-batch)
+  const packs = all.flatMap((x) => x.r.timeline.batches);
+  const biggest = packs.reduce((m, b) => (b.lines > (m?.lines ?? -1) ? b : m), null);
+  const batches = packs.length ? {
+    count: packs.length, perRun: median(all.map((x) => x.r.timeline.batches.length)),
+    median: median(packs.map((b) => b.lines)), p90: percentile(packs.map((b) => b.lines), threshold('C-28.pack_percentile')),
+    max: biggest.lines, maxKnot: biggest.knot, maxChapter: biggest.chapter, notices: median(packs.map((b) => b.notices)),
+  } : null;
   const byChapter = new Map();
   for (const it of mid.r.timeline.items) {
     if (it.type !== 'line') continue;
@@ -75,6 +93,7 @@ function summarize(p, persona, runs, seed, partial) {
     maxPause: { median: median(maxPauses), max: longest.r.timeline.totals.maxPause, knot: longest.r.timeline.totals.maxPauseKnot },
     tail: { median: median(tails), max: Math.max(...tails) },
     sessions: { median: median(all.map((x) => x.s.length)), micro: micro.length, body: body.length, microShare: body.length ? micro.length / body.length : 0, microExample: micro[0] ?? null },
+    batches,
     middle: {
       seed: mid.r.seed, route: mid.r.route, ending: mid.r.ending.name,
       real: mid.r.timeline.totals.real, click: mid.r.timeline.totals.click,
@@ -96,6 +115,7 @@ function problems(sum, meta) {
     const ex = sum.sessions.microExample;
     out.push(`⚠ микросессий ${pct(sum.sessions.micro, sum.sessions.body)} (${by('C-30.micro_share')})${ex ? `, например ${ex.knot}: «${ex.last.slice(0, 50)}»` : ''}`);
   }
+  if (sum.batches && sum.batches.p90 > threshold('C-28.pack')) out.push(`⚠ пачка при возвращении: p${Math.round(threshold('C-28.pack_percentile') * 100)} — ${sum.batches.p90} строк до кнопки (${by('C-28.pack')}; наибольшая — ${sum.batches.max} в ${sum.batches.maxKnot})`);
   const ratio = threshold('story.card.mismatch_ratio');
   const off = (a, b) => a > b * ratio || b > a * ratio;
   if (meta.days == null) out.push('⚠ на карточке нет days (дни в реальном времени, план §3)');
@@ -128,6 +148,7 @@ runCli(HELP, async (args) => {
       console.log(`   самая длинная пауза: ${fmtDuration(s.maxPause.max)} в ${s.maxPause.knot} (медиана самых длинных ${fmtDuration(s.maxPause.median)})`);
       console.log(`   после последней кнопки: медиана ${fmtDuration(s.tail.median)} пауз, до ${fmtDuration(s.tail.max)}`);
       console.log(`   сессий за прохождение: медиана ${s.sessions.median}; микросессий ${pct(s.sessions.micro, s.sessions.body)}`);
+      if (s.batches) console.log(`   пачка при возвращении (отлучек ${s.batches.count}, медиана ${s.batches.perRun} за прохождение): медиана ${s.batches.median} строк, p${Math.round(threshold('C-28.pack_percentile') * 100)} ${s.batches.p90}, наибольшая ${s.batches.max} в ${s.batches.maxKnot} (гл. ${s.batches.maxChapter}); уведомлений в пачке — медиана ${s.batches.notices}`);
       for (const pr of probs[s.persona]) console.log(`   ${pr}`);
       const m = s.middle;
       console.log(`\n   срединное прохождение (seed ${m.seed}, финал ${m.ending}): ${fmtDuration(m.real)} в реальном времени, ${fmtDuration(m.click)} по клику`);

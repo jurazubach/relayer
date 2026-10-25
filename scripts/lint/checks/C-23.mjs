@@ -45,12 +45,18 @@ export default {
     const retract = lines.slice(1).find((l) => T.re('dict.retract').test(l.text.toLowerCase()));
     if (retract) find('C-23.retract', { node: retract.knot, chapter: 1, message: `тревога в начале тут же отменяется: «${short(retract.text)}»` });
 
-    // инцидент: первая входящая со сроком мира, #unlock или #photo
+    // инцидент: первая входящая со сроком мира, угрозой, #unlock, #photo или прямым вопросом игроку.
+    // Вопрос — это «проблема адресована игроку» (R-14): ошибочный адресат «рэй?» или «это у вас?» —
+    // уже событие, хотя срока в нём нет. Приветствие с вопросом («ты тут?») инцидентом не считается.
     const inc = run.lines.filter(isIncoming);
-    const idx = inc.findIndex((l) => l.kind === 'photo' || l.unlock.length || T.re('dict.world_deadline').test(l.text.toLowerCase()));
+    const isIncident = (l) => {
+      const t = l.text.toLowerCase();
+      return l.kind === 'photo' || l.unlock.length || T.re('dict.world_deadline').test(t) || T.re('dict.threat').test(t) || (t.includes('?') && !T.re('dict.greeting').test(norm(t)));
+    };
+    const idx = inc.findIndex(isIncident);
     const max = T.value('attn.opening.incident.msg').max;
     if (idx < 0 || idx + 1 > max) {
-      const where = idx < 0 ? 'нет ни срока, ни #unlock, ни #photo' : `только на ${idx + 1}-м входящем («${short(inc[idx].text, 30)}»)`;
+      const where = idx < 0 ? 'нет ни срока, ни угрозы, ни вопроса игроку, ни #unlock, ни #photo' : `только на ${idx + 1}-м входящем («${short(inc[idx].text, 30)}»)`;
       find('attn.opening.incident.msg', { ...at, message: `инцидент ${where} — первые сообщения без события` });
     }
   },

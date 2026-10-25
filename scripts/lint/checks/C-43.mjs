@@ -29,12 +29,18 @@ export default {
       const last = lines.at(-1);
       if (lines.length <= T.value('C-43.bare_end') && last?.type === 'sys' && /конец/i.test(last.text)) find('C-43.bare_end', { ...at, message: `финал ${id}: ${lines.length} строки и «${last.text}» — развязки нет` });
     }
-    // первый собеседник истории возвращается после последней #chapter
-    let first = null;
-    for (const k of tree.knots) { walk(k.items, (it) => { if (!first && it.type === 'msg' && it.who && !ctx.service.has(it.who)) first = it.who; }); if (first) break; }
+    // первый собеседник истории возвращается после последней #chapter. Собеседник — тот, кому игрок хоть раз
+    // отвечает: SMS оператора «SIM-карта активирована» в первой строке — не собеседник, хотя пишет первым.
+    // Возвращение — его сообщение или ответ игрока ему в последней главе (R-109).
+    const to = (it) => it.tags?.to ?? it.speaker ?? null;
+    const addressed = new Set();
+    for (const k of tree.knots) walk(k.items, (it) => { if (it.type === 'choice' && to(it)) addressed.add(to(it)); });
+    const senders = [];
+    for (const k of tree.knots) walk(k.items, (it) => { if (it.type === 'msg' && it.who && !ctx.service.has(it.who) && !senders.includes(it.who)) senders.push(it.who); });
+    const first = senders.find((w) => addressed.has(w)) ?? senders[0] ?? null;
     if (first && st.lastChapter > 1) {
       let back = false;
-      for (const k of tree.knots.filter((x) => st.chapterOf(x.id) === st.lastChapter)) walk(k.items, (it) => { if (it.type === 'msg' && it.who === first) back = true; });
+      for (const k of tree.knots.filter((x) => st.chapterOf(x.id) === st.lastChapter)) walk(k.items, (it) => { if ((it.type === 'msg' && it.who === first) || (it.type === 'choice' && to(it) === first)) back = true; });
       if (!back) find('C-43.first_absent', { chapter: st.lastChapter, message: `первый собеседник (${first}) не возвращается в последней главе` });
     }
   },
