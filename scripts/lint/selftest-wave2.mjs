@@ -77,10 +77,15 @@ export function register(test, { has, hasNot, lint, keys }) {
     await hasNot(src.replace('{x >= 5} [тайный]', '{x >= 0} [тайный]'), 'C-15.never', { only: ['C-15'] });
   });
 
-  test('C-16: финал угадывается по позиции кнопки; один финал — молчит', async () => {
-    const src = '-> a\n=== a ===\nвыбирай #from:ann\n* [первая] -> f1\n* [вторая] -> f2\n// финал: один\n=== f1 ===\nраз #from:ann\n-> END\n// финал: два\n=== f2 ===\nдва #from:ann\n-> END';
-    await has(src, 'C-16.persona_share', { only: ['C-16'], runs: 60 });
-    await hasNot(src.replace('-> f2\n//', '-> f1\n//'), 'C-16.persona_share', { only: ['C-16'], runs: 60 });
+  test('C-16: ранняя кнопка предрешает финал; финальная дилемма сама по себе — не перекос', async () => {
+    const tail = '// финал: один\n=== f1 ===\nраз #from:ann\n-> END\n// финал: два\n=== f2 ===\nдва #from:ann\n-> END';
+    const src = `VAR x = false\n-> a\n=== a ===\nначнём #from:ann\n* [первая]\n  ~ x = true\n  -> b\n* [вторая] -> b\n=== b ===\nвыбирай #from:ann\n* {x} [да] -> f1\n* {not x} [нет] -> f2\n${tail}`;
+    const res = await lint(src, { only: ['C-16'], runs: 60 });
+    assert.ok(keys(res).includes('C-16.persona_share'), keys(res).join(','));
+    assert.ok(keys(res).includes('C-16.button_share'), keys(res).join(','));
+    const dilemma = `-> a\n=== a ===\nвыбирай #from:ann\n* [первая] -> f1\n* [вторая] -> f2\n${tail}`;
+    const clean = await lint(dilemma, { only: ['C-16'], runs: 60 });
+    assert.deepEqual(keys(clean), [], keys(clean).join(','));
   });
 
   test('C-17: до выбора между людьми от одного пять сообщений, от другого одно', async () => {

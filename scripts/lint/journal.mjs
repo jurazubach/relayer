@@ -112,11 +112,14 @@ export function runBot(json, st, T, { runs, seed = 1, trackVars = false, strateg
   return out;
 }
 
-/** Персона «тянется к позиции» (C-16): с вероятностью bias жмёт первую или последнюю кнопку, иначе случайную. */
-export function positionPersona(side, bias) {
+/**
+ * Персона «тянется к позиции» (C-16): с вероятностью bias жмёт первую или последнюю кнопку, иначе случайную.
+ * В узлах random (финальная дилемма) — всегда случайную.
+ */
+export function positionPersona(side, bias, random = new Set()) {
   const pick = side === 'first' ? strategies.first() : strategies.last();
   const rand = strategies.random();
-  return (choices, ctx) => (ctx.rng() < bias ? pick(choices, ctx) : rand(choices, ctx));
+  return (choices, ctx) => (!random.has(ctx.knot) && ctx.rng() < bias ? pick(choices, ctx) : rand(choices, ctx));
 }
 
 /** Медиана массива чисел — как в check:story (элемент посередине отсортированного списка). */

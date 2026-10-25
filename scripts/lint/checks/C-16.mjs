@@ -1,5 +1,7 @@
 // C-16. Перекос выбора к финалу: одна кнопка развилки почти всегда ведёт в один финал, соседняя — почти
 // никогда; или финал угадывается по позиции кнопки. Финалы не делятся на хорошие и плохие (R-111).
+// Финальная дилемма — последняя кнопка, которая сама выбирает финал (C-06), — не перекос: её не считаем,
+// а персоны на ней жмут случайно, иначе «всегда первая» получала бы финал первой кнопки в любой истории.
 import { endingCandidates, endingOf } from '../endings.mjs';
 import { pct, short } from '../text.mjs';
 
@@ -17,6 +19,17 @@ export default {
     if (endings.size < 2) return;
     const chapters = new Set([...st.distributors].map((R) => st.chapterOf(R)));
     const min = T.value('C-16.min_samples');
+    // финальная дилемма: развилка, после которой в большинстве прогонов выборов больше нет
+    const last = new Map();
+    for (const r of runs) {
+      for (const c of r.choices) {
+        const p = last.get(c.knot) ?? { n: 0, last: 0 };
+        p.n++;
+        if (c === r.choices.at(-1)) p.last++;
+        last.set(c.knot, p);
+      }
+    }
+    const decisive = new Set([...last].filter(([, p]) => p.last * 2 > p.n).map(([k]) => k));
 
     // точка выбора → кнопка → финалы
     const points = new Map();
@@ -24,7 +37,7 @@ export default {
       const e = endOf.get(r);
       if (!e) continue;
       for (const c of r.choices) {
-        if (!chapters.has(c.chapter) || c.n < 2) continue;
+        if (!chapters.has(c.chapter) || c.n < 2 || decisive.has(c.knot)) continue;
         if (!points.has(c.key)) points.set(c.key, { c, opts: new Map() });
         const o = points.get(c.key).opts;
         const text = c.texts[c.picked];
@@ -46,7 +59,7 @@ export default {
     }
 
     for (const side of ['first', 'last']) {
-      const pr = ctx.persona(side).filter((r) => r.ended);
+      const pr = ctx.persona(side, decisive).filter((r) => r.ended);
       if (!pr.length) continue;
       const count = new Map();
       for (const r of pr) { const e = endingOf(r, st, cand); if (e) count.set(e, (count.get(e) ?? 0) + 1); }

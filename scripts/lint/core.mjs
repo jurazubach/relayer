@@ -65,11 +65,11 @@ export function analyze(story, T, o = {}) {
       if (!runs) runs = this.built.ok ? runBot(this.built.json, st, T, { runs: o.runs, seed: o.seed ?? 1, trackVars: true }) : [];
       return runs;
     },
-    /** Прогоны персоны C-16: first | last, тянется к позиции с вероятностью C-16.persona_bias. */
-    persona(side) {
+    /** Прогоны персоны C-16: first | last, тянется к позиции с вероятностью C-16.persona_bias; в random — случайно. */
+    persona(side, random) {
       if (!personas[side]) {
         const n = Math.min(o.runs ?? T.value('lint.runs.full'), T.value('C-16.persona_runs'));
-        personas[side] = this.built.ok ? runBot(this.built.json, st, T, { runs: n, seed: (o.seed ?? 1) + 1, strategy: positionPersona(side, T.value('C-16.persona_bias')) }) : [];
+        personas[side] = this.built.ok ? runBot(this.built.json, st, T, { runs: n, seed: (o.seed ?? 1) + 1, strategy: positionPersona(side, T.value('C-16.persona_bias'), random) }) : [];
       }
       return personas[side];
     },
