@@ -26,7 +26,7 @@
 сообщений; сводка — пара строк в заметках.
 
 **Проверка.** Шаг 3 ловят C-01, C-03, C-04; метки «запомню» без оплаты — ревьюер по регулярке «запомн»
-(`narrative-postmortems:LESSON-10`, `lessons-echo.md`).
+(`narrative-postmortems:LESSON-10`, `lessons.md`).
 
 ## Источники
 

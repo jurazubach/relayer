@@ -1968,6 +1968,42 @@
       }
     ]
   },
+  "C-15.rare_branch_share": {
+    "value": 0.1,
+    "unit": "доля игроков",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-36"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-choices-v2",
+        "change": "заведён: условие «редкой ветки» из R-36 ключом (выборка верности W1: в hubs.md условие пропало); C-15 пока не считает, читает story-choices/hubs.md"
+      }
+    ]
+  },
+  "C-15.rare_branch_msgs": {
+    "value": 15,
+    "unit": "сообщений в редкой ветке",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-36"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-choices-v2",
+        "change": "заведён: длина редкой ветки из R-36 ключом (выборка верности W1); C-15 пока не считает, читает story-choices/hubs.md"
+      }
+    ]
+  },
   "C-16.button_share": {
     "value": 0.8,
     "unit": "доля прогонов кнопки",
@@ -2304,6 +2340,24 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён (правило 7)"
+      }
+    ]
+  },
+  "C-19.spur_msgs": {
+    "value": 3,
+    "unit": "реплик в отростке",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-36"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-choices-v2",
+        "change": "заведён: «отросток длиннее трёх реплик ставит флаг» из R-36 ключом (выборка верности W1); C-19 пока не считает, читает story-choices/hubs.md"
       }
     ]
   },
