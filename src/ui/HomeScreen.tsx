@@ -9,11 +9,14 @@ import { StoryTile } from './StoryTile';
 export function HomeScreen({
   stories,
   progressOf,
+  paywallOf,
   onOpen,
   onUpload,
 }: {
   stories: Story[];
   progressOf: (id: string) => Progress | null;
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  paywallOf: (story: Story) => number | null;
   onOpen: (id: string) => void;
   /** Возвращает текст ошибки или null, если файл подошёл. */
   onUpload: (file: File) => Promise<string | null>;
@@ -40,7 +43,7 @@ export function HomeScreen({
 
       <ul className="tiles">
         {stories.map((s) => (
-          <StoryTile key={s.id} story={s} progress={progressOf(s.id)} onOpen={() => onOpen(s.id)} />
+          <StoryTile key={s.id} story={s} progress={progressOf(s.id)} free={paywallOf(s)} onOpen={() => onOpen(s.id)} />
         ))}
 
         <li className="upload-tile">

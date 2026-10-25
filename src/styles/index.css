@@ -26,6 +26,7 @@
 @import './blocks/choices.css';
 @import './blocks/notice.css';
 @import './blocks/revision-notice.css';
+@import './blocks/paywall.css';
 @import './blocks/sheet.css';
 @import './blocks/choice-log.css';
 @import './blocks/controls.css';

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { DEFAULT_MODE, Engine, compileInk, type Mode, type Msg, type Outdated, type View } from './engine';
 import { FLAGS, readLocal, writeLocal } from './flags';
+import { freeChapters, readChaptersOpen, writeChaptersOpen } from './paywall';
 import { revisionOf } from './progress';
 import type { Story } from './story';
 
@@ -22,6 +23,11 @@ export interface Game {
   /** Сохранение было от другой ревизии сценария и сброшено: предупреждаем, пока игрок не закроет. */
   outdated: Outdated | null;
   hideOutdated: () => void;
+  /** Сколько глав бесплатно; null — граница не действует. */
+  freeChapters: number | null;
+  /** Продолжение открыто (пока из отладки) — помнится для истории, «начать заново» его не закрывает. */
+  chaptersOpen: boolean;
+  setChaptersOpen: (open: boolean) => void;
 }
 
 /** Общая настройка всех историй: игрок выключил уведомления — значит, не хочет их нигде. */
@@ -41,7 +47,8 @@ export function useGame(
   const loaded = useMemo(() => {
     const result = compileInk(story.ink, story.includes);
     if ('errors' in result) return { engine: null as Engine | null, errors: result.errors };
-    const engine = new Engine(story.id, result.json, revisionOf(story));
+    const engine = new Engine(story.id, result.json, revisionOf(story), freeChapters(story));
+    engine.chaptersOpen = readChaptersOpen(story.id);
     // режим пишем в сохранение сразу: перезагрузка до первого сообщения не должна его потерять
     if (!engine.restore()) engine.restart(mode ?? engine.outdated?.mode ?? FLAGS.mode ?? DEFAULT_MODE);
     if (FLAGS.fast) {
@@ -49,7 +56,7 @@ export function useGame(
       engine.fastTyping = true;
     }
     return { engine, errors: [] as string[] };
-  }, [story.id, story.ink, story.includes, story.revision]);
+  }, [story.id, story.ink, story.includes, story.revision, story.free_chapters, story.chapters]);
 
   const [outdated, setOutdated] = useState<Outdated | null>(() => loaded.engine?.outdated ?? null);
 
@@ -118,5 +125,14 @@ export function useGame(
     }, []),
     outdated,
     hideOutdated: useCallback(() => setOutdated(null), []),
+    freeChapters: loaded.engine?.freeChapters ?? null,
+    chaptersOpen: !!loaded.engine?.chaptersOpen,
+    setChaptersOpen: useCallback(
+      (open: boolean) => {
+        writeChaptersOpen(story.id, open);
+        loaded.engine?.setChaptersOpen(open);
+      },
+      [loaded, story.id],
+    ),
   };
 }

@@ -8,6 +8,7 @@ import { DebugSheet } from './ui/DebugSheet';
 import { ErrorScreen } from './ui/ErrorScreen';
 import { Notice } from './ui/Notice';
 import { RevisionNotice } from './ui/RevisionNotice';
+import { Paywall } from './ui/Paywall';
 
 /** Связывание: вся логика в engine, всё оформление в ui. Здесь только маршруты. */
 export function App() {
@@ -20,6 +21,7 @@ export function App() {
         <HomeScreen
           stories={library.stories}
           progressOf={library.progress}
+          paywallOf={library.paywall}
           onOpen={openStory}
           onUpload={library.add}
         />
@@ -42,6 +44,7 @@ export function App() {
         <StoryScreen
           story={story}
           progress={library.progress(story.id)}
+          free={library.paywall(story)}
           onPlay={(mode) => play(story.id, mode)}
           onBack={goHome}
           onReset={() => library.reset(story.id)}
@@ -101,6 +104,9 @@ function GameShell({
   );
   const game = useGame(story, thread, remember, mode);
   const [debug, setDebug] = useState(false);
+  const locked = game.view?.locked;
+  const paywall = (inList: boolean) =>
+    locked ? <Paywall chapter={locked.chapter} title={story.chapters?.[locked.chapter - 1]?.title} inList={inList} /> : undefined;
 
   return (
     <div className="phone">
@@ -125,6 +131,7 @@ function GameShell({
             onBack={() => game.openChat(null)}
             onOpen={game.openChat}
             onDebug={() => setDebug(true)}
+            paywall={paywall(false)}
           />
         ) : (
           <ChatsScreen
@@ -136,6 +143,7 @@ function GameShell({
             onDebug={() => setDebug(true)}
             notices={game.notices}
             onNotices={game.setNotices}
+            paywall={paywall(true)}
           />
         )
       ) : (
@@ -150,6 +158,9 @@ function GameShell({
           onSelectStory={onSelectStory}
           onHome={onHome}
           onClose={() => setDebug(false)}
+          freeChapters={game.freeChapters}
+          chaptersOpen={game.chaptersOpen}
+          onChaptersOpen={game.setChaptersOpen}
         />
       )}
     </div>

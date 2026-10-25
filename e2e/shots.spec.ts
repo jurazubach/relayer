@@ -91,3 +91,27 @@ test('снимки сброса по ревизии', { tag: '@shots' }, async (
   await page.waitForTimeout(1500);
   await shot(page, '9-game-revision');
 });
+
+// платная граница: закрытые главы на экране истории, плашка в чате и над списком чатов
+test('снимки платной границы', { tag: '@shots' }, async ({ page }) => {
+  await fixtureOnHome(page);
+  await page.getByTestId(`tile-${FIXTURE.id}`).click();
+  await page
+    .getByRole('heading', { name: 'Файл истории', exact: true })
+    .evaluate((el) => el.scrollIntoView({ block: 'end' }));
+  await page.waitForTimeout(300);
+  await shot(page, '10-story-locked');
+
+  await page.getByTestId('mode-click').click();
+  await page.getByTestId('play').click();
+  await page.locator('[data-testid^="thread-"]').first().click();
+  await page.locator('.choice').first().click();
+  await page.getByTestId('paywall').waitFor();
+  await page.getByTestId('paywall-buy').click();
+  await page.waitForTimeout(400);
+  await shot(page, '11-chat-paywall');
+
+  await page.getByLabel('Назад к сообщениям').click();
+  await page.waitForTimeout(400);
+  await shot(page, '12-chats-paywall');
+});
