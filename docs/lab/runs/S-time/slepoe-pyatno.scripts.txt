@@ -1,0 +1,67 @@
+### slepoe-pyatno
+$ node .claude/skills/story-time/scripts/promise-scan.mjs --story slepoe-pyatno
+src/stories/slepoe-pyatno · прогонов бота 400 · пауз от 15 мин: 4 мест
+   C-27 (как в story:lint): ошибок 0, предупреждений 0, подсказок 0
+
+   объяснено 4: причина — 1, короткая, потом другой контакт — 2, стык глав после срока события в мире — 1 (все — --all)
+
+   сроки возвращения в тексте: 0 (перед паузой — 0, без паузы рядом — 0)
+
+$ npm run -s story:lint -- --story slepoe-pyatno --only C-27,C-31,C-32,C-37
+✓ src/stories/slepoe-pyatno — ошибок 0, предупреждений 1, подсказок 1
+   предупреждение · C-31 · история · по клику история читается 17 мин, на карточке 40 · > 1,5 раз (наша оценка; rules.md R-11, rules.md R-122) · чинит story-time
+   подсказка · C-32 · ch1 (гл. 1) · пауза 2 мин в первые минуты (ch1) — игрок ещё не втянулся · attn.pause.early_max (наша оценка; mobile-interactive-stories:attention§2, serial-hooks:attention§2) · чинит story-time
+
+итого: ошибок 0, предупреждений 1, подсказок 1 · прогонов бота на историю: 400 · без --strict код выхода 0
+$ node .claude/skills/story-time/scripts/guilt-scan.mjs --story slepoe-pyatno
+src/stories/slepoe-pyatno · путей по 20 прогонов: «неотвечающий» и случайный
+   как в story:lint: C-32.no_answer_reproach 0 · C-37.per_chapter 0 · C-37.false_deadline 0 · C-37.shout_share 0 · C-47.absence 1 · C-47.lived_wait 0
+
+   упрёки за отсутствие (dict.absence_reproach) в тексте: 1
+      · ch3 (гл. 3) — ответ на кнопку: «Спасибо. Наконец-то.»
+
+   на пути «неотвечающего»: 1 мест, запрещённых 0
+      ch3: «Спасибо. Наконец-то.» — · ответ на нажатую кнопку — сверь смысл ×4
+
+   на случайном пути: 1 мест, запрещённых 0
+      ch3: «Спасибо. Наконец-то.» — · ответ на нажатую кнопку — сверь смысл ×7
+
+   давление (C-37, без напоминаний): гл. 4 — 1, гл. 5 — 1 (предел C-37.per_chapter = 2); в напоминаниях не в счёт — 0
+
+   напоминания: реплик 0, развилок с ними на пути «неотвечающего» 0
+
+$ node .claude/skills/story-time/scripts/clock-scan.mjs --story slepoe-pyatno
+src/stories/slepoe-pyatno · прогонов бота 400
+   как в story:lint: story.sleep_morning.min_h 0 · C-32.returns_per_day 0 · C-47.player_time 0 · C-47.lived_wait 0
+
+   время игрока в тексте (dict.player_time, R-121): 0
+
+   метки времени мира в тексте: утро 0, сон 0, часы 8 — сверь с хронологией facts.md (R-91)
+      · ch1 (гл. 1) [часы] partner: «суббота, 23:52»
+      · ch2 (гл. 2) [часы] devops: «адрес не наш. начиная с 23:10»
+      · ch4 (гл. 4) [часы] argus: «01:42 UTC. коммит в master»
+      · ch4_node (гл. 4) [часы] argus: «[S1] повтор шифта: 31 игрок на одной строке. 02:24»
+      · ch4_cleanup (гл. 4) [часы] sec: «второй ключ доступа. на другом пользователе. создан в 01:58»
+      · ch4_locked (гл. 4) [часы] argus: «01:42 UTC»
+      · end_burned (гл. 5) [часы] devops: ««коммит от рида в 01:42». этого хватило»
+      · debrief (гл. 5) [часы] sec: «{ending == "locked": Он пришёл в 01:42. Дверь была заперта. #sys:argus}»
+
+   «сплю» → «утро» того же контакта (C-32 п. 5, story.sleep_morning.min_h): 0
+
+   прожитое ожидание после паузы (C-47.lived_wait, R-122): 0
+
+   свой #sys о времени у скачка (R-122, ST-65): дублируют метку 0, скачок дальше паузы 0
+
+   сутки от старта прохождения — нагрузка, не часы игрока (A-02): пик возвращений за сутки 0 (C-32.returns_per_day = 6)
+      сутки 1: возвращений 0, чтения 17 мин (story.reading.per_day_min 10–15)
+
+$ node .claude/skills/story-time/scripts/click-transcript.mjs --story slepoe-pyatno --flags
+== src/stories/slepoe-pyatno · по клику · random · seed 1 · маршрут 1,0,1,2,1,0,1,1,1,2,0,1,0,1,0,0,1,0,0,0,0,0
+
+   по клику 17 мин (реальное время 1 ч 55 мин); на карточке 40 мин · меток «спустя …» 0
+   пометки: ожидание 0, срок 0, утро 0, свой #sys 0; пауз без метки 3
+   финал: end_contained
+
+$ npm run -s story:trace -- --story slepoe-pyatno --mode click --runs 1 | head -2
+# src/stories/slepoe-pyatno · случайная (random) · seed 1 · по клику
+маршрут: --route 1,0,1,2,1,0,1,1,1,2,0,1,0,1,0,0,1,0,0,0,0,0

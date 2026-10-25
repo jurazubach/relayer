@@ -8,7 +8,7 @@ import { isReproach } from '../../lib/lexicon.mjs';
 import { fmtDur, places, plural, short } from '../text.mjs';
 
 /** Прогоны «неотвечающего»: журнал play() целиком — напоминаний и «не ответил» в журнале линта нет. */
-function silentRuns(ctx) {
+export function silentRuns(ctx) {
   const { T, st } = ctx;
   const n = Math.min(ctx.runs.length, T.value('C-32.no_answer_runs'));
   const rng = seeded(T.value('C-32.no_answer_runs'));
@@ -17,6 +17,83 @@ function silentRuns(ctx) {
   const runs = [];
   for (let r = 0; r < n; r++) runs.push(play(ctx.built.json, { rng, nodes, maxSteps, strategy: strategies.unresponsive(), log: true, trackVars: false }));
   return { runs, replay: (route, seed) => play(ctx.built.json, { rng: seeded(seed), nodes, maxSteps, strategy: strategies.scripted(route), trackVars: false }) };
+}
+
+/**
+ * Нагрузка по суткам от старта прохождения (п. 1): для каждого прогона — сутки 0, 1, 2… с числом возвращений
+ * (строк после паузы от story.pause.long_s) и активным временем: набор, зазоры и паузы не длиннее shortDelay
+ * (для чтения по клику — порог C-31, его передаёт вызывающий). Это реальные сутки игры, а не часы игрока (A-02):
+ * когда игрок начал, история не знает.
+ */
+export function dayLoad(ctx, { shortDelay = 0 } = {}) {
+  const { T } = ctx;
+  const long = T.value('story.pause.long_s');
+  const short = shortDelay;
+  return ctx.runs.map((run) => {
+    const days = [];
+    let t = 0;
+    for (const l of run.lines) {
+      t += l.delay;
+      const d = Math.floor(t / 86400);
+      while (days.length <= d) days.push({ day: days.length + 1, returns: 0, active_s: 0 });
+      if (l.delay >= long) days[d].returns++;
+      days[d].active_s += l.typing + l.gap + (l.delay <= short ? l.delay : 0);
+    }
+    return days;
+  });
+}
+
+/** П. 5: от «сплю» до «доброе утро» того же контакта — Σ #delay на каждом пути (время мира, R-121). */
+export function sleepMorning(ctx) {
+  const { T } = ctx;
+  const sleep = places();
+  for (const run of ctx.runs) {
+    for (let i = 0; i < run.lines.length; i++) {
+      const a = run.lines[i];
+      if (!isIncoming(a) || !T.re('dict.sleep').test(norm(a.text))) continue;
+      let sum = 0;
+      for (let j = i + 1; j < run.lines.length; j++) {
+        const b = run.lines[j];
+        sum += b.delay;
+        if (isIncoming(b) && b.who === a.who && T.re('dict.morning').test(norm(b.text))) {
+          const p = sleep.add(`${a.knot}|${a.text}`, () => ({ knot: a.knot, text: a.text, morning: b.text, morningKnot: b.knot, sums: [] }));
+          p.sums.push(sum);
+          break;
+        }
+      }
+    }
+  }
+  return sleep.values();
+}
+
+/**
+ * Упрёки за отсутствие (dict.absence_reproach) по журналу play() с тем, после чего пришла строка
+ * (R-74, R-120, решение королевы T-08):
+ *   silent   реакция на нажатый #silent до следующей паузы — разрешено, это ответ на выбор;
+ *   button   реакция на нажатую кнопку до паузы (и запасная кнопка там, где кнопка ждёт по замыслу) — та же
+ *            строка у любого игрока, от отсутствия она не зависит: её смысл судит C-47 и ревьюер;
+ *   remind   после напоминания; noanswer — в ветке «не ответил» (и когда ею стал #silent: игрок кнопку не жал);
+ *   fallback запасная кнопка после напоминаний, когда вести некуда;
+ *   pause    после паузы от story.pause.notice_min, которую поставила сама история, — что бы ни нажал игрок.
+ * Запрещены remind, noanswer, fallback и pause.
+ */
+export const FORBIDDEN = new Set(['remind', 'noanswer', 'fallback', 'pause']);
+export function reproachContexts(events, T) {
+  const notice = T.value('story.pause.notice_min') * 60;
+  const out = [];
+  let ctx = 'start';
+  let stall = null;
+  for (const e of events) {
+    if (e.type === 'choice') {
+      const silent = e.options[e.picked]?.tags.some((t) => t.trim() === 'silent');
+      ctx = e.noAnswer ? 'noanswer' : stall === 'no-target' ? 'fallback' : silent ? 'silent' : 'button';
+      stall = null;
+    } else if (e.type === 'remind') ctx = 'remind';
+    else if (e.type === 'stall') stall = e.reason;
+    else if (e.type === 'delay' && e.seconds >= notice) ctx = 'pause';
+    else if (e.type === 'line' && e.kind === 'msg' && e.text && isReproach(e.text, T)) out.push({ knot: e.knot, text: e.text, ctx });
+  }
+  return out;
 }
 
 const forks = (events) => events.filter((e) => e.type === 'choice');
@@ -30,28 +107,23 @@ export default {
   run(ctx, find) {
     const { st, T } = ctx;
     if (!ctx.runs.length) return;
-    const long = T.value('story.pause.long_s');
     const session = T.value('story.pause.session_s');
     const perDay = [];
     const firstPause = [];
     const early = [];
     const ch2 = [];
     const interChapter = [];
-    const sleep = places();
     const earlyPause = places();
     const ep = T.value('attn.pause.early_max');
-    for (const run of ctx.runs) {
+    const load = dayLoad(ctx);
+    for (const [r, run] of ctx.runs.entries()) {
       // 1. возвращения за каждые 24 ч от старта прогона
-      let t = 0;
-      const days = new Map();
+      perDay.push(Math.max(0, ...load[r].map((d) => d.returns)));
       let clock = 0;
       for (const l of run.lines) {
-        t += l.delay;
         clock += l.delay + l.typing + l.gap;
-        if (l.delay >= long) { const d = Math.floor(t / 86400); days.set(d, (days.get(d) ?? 0) + 1); }
         if (clock - l.delay <= ep.window_s && l.delay > ep.max_s && l.i > 0) earlyPause.add(`${l.knot}|${l.text}`, () => ({ knot: l.knot, delay: l.delay }));
       }
-      perDay.push(Math.max(0, ...days.values()));
       // 2. первая пауза ≥ сессии: выборы до неё и её длина
       const fp = run.lines.find((l) => l.delay >= session && l.i > 0);
       if (fp) firstPause.push({ choices: run.choices.filter((c) => c.at <= fp.i).length, delay: fp.delay, knot: fp.knot });
@@ -64,22 +136,9 @@ export default {
         interChapter.push(sum);
         if (l.chapter === 2) ch2.push({ sum, knot: l.knot });
       }
-      // 5. «сплю» → «доброе утро» того же контакта
-      for (let i = 0; i < run.lines.length; i++) {
-        const a = run.lines[i];
-        if (!isIncoming(a) || !T.re('dict.sleep').test(norm(a.text))) continue;
-        let sum = 0;
-        for (let j = i + 1; j < run.lines.length; j++) {
-          const b = run.lines[j];
-          sum += b.delay;
-          if (isIncoming(b) && b.who === a.who && T.re('dict.morning').test(norm(b.text))) {
-            const p = sleep.add(`${a.knot}|${a.text}`, () => ({ knot: a.knot, text: a.text, sums: [] }));
-            p.sums.push(sum);
-            break;
-          }
-        }
-      }
     }
+    // 5. «сплю» → «доброе утро» того же контакта
+    const sleep = sleepMorning(ctx);
     const mDay = median(perDay);
     if (mDay > T.value('C-32.returns_per_day')) find('C-32.returns_per_day', { message: `${mDay} возвращений за сутки от старта — игроку некогда жить` });
     if (firstPause.length) {
@@ -100,7 +159,7 @@ export default {
         find('C-32.ch2_pause_h', { node: ch2[0].knot, chapter: 2, message: `пауза перед главой 2 — ${fmtDur(s)} (медиана межглавных ${fmtDur(m)}): это самый опасный стык` });
       }
     }
-    for (const p of sleep.values()) {
+    for (const p of sleep) {
       const s = median(p.sums);
       if (s < T.value('story.sleep_morning.min_h') * 3600) find('story.sleep_morning.min_h', { node: p.knot, chapter: st.chapterOf(p.knot), message: `утро наступает через ${fmtDur(s)} после «${short(p.text)}» в ${p.knot}: в «по клику» без метки утро придёт через секунды` });
     }
@@ -145,15 +204,10 @@ function noAnswer(ctx, find) {
       const [ea, eb] = [endKnot(A), endKnot(B)];
       if (ea !== eb) find('C-32.no_answer', { ...at(f.knot), message: `${f.knot}: «не ответил» ведёт к финалу в ${ea}, а #silent той же развилки — в ${eb}: отсутствие не должно стоить дороже молчания` });
     });
-    // упрёк уместен только как ответ на нажатый #silent; «не ответил» и запасная кнопка — не нажатый #silent
-    let pressedSilent = true;
-    for (const e of r.events) {
-      if (e.type === 'choice') pressedSilent = !e.noAnswer && e.options[e.picked]?.tags.some((t) => t.trim() === 'silent');
-      else if (e.type === 'remind') pressedSilent = false;
-      else if (e.type === 'line' && e.kind === 'msg' && e.text && !pressedSilent && isReproach(e.text, T)) {
-        reproach.add(`${e.knot}|${e.text}`, () => ({ knot: e.knot, text: e.text }));
-      }
+    for (const x of reproachContexts(r.events, T)) {
+      if (FORBIDDEN.has(x.ctx)) reproach.add(`${x.knot}|${x.text}`, () => ({ knot: x.knot, text: x.text, ctx: x.ctx }));
     }
   });
-  for (const p of reproach.values()) find('C-32.no_answer_reproach', { ...at(p.knot), message: `упрёк за отсутствие на пути «неотвечающего» (${p.knot}): «${short(p.text)}» — игрок не нажимал #silent` });
+  const after = { remind: 'после напоминания', noanswer: 'в ветке «не ответил»', fallback: 'после напоминаний и запасной кнопки', pause: 'после паузы, которую поставила история' };
+  for (const p of reproach.values()) find('C-32.no_answer_reproach', { ...at(p.knot), message: `упрёк за отсутствие на пути «неотвечающего» (${p.knot}, ${after[p.ctx]}): «${short(p.text)}» — игрок не нажимал #silent` });
 }
