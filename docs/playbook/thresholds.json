@@ -2811,6 +2811,41 @@
       }
     ]
   },
+  "C-22.rare_chapters": {
+    "value": 2,
+    "unit": "глав",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "checks.md C-22 (редкое слово — кандидат в жаргон)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: редкое слово считается жаргоном, только если звучит хотя бы в двух главах; слова одной сцены и её вариантов («спустилась», «синяк», «запястье») давали ложные «новые термины» в главах 5–10"
+      }
+    ]
+  },
+  "C-22.everyday": {
+    "value": "^(sms|sim|ok|wi-?fi|gps|usb|pin|id|pdf|url|vip|tv|mp3|qr)$",
+    "unit": "regex",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "video-three-things:P-04#нюанс («ваучер», «SIM» — бытовое слово, не термин)"
+    ],
+    "calibrated_on": "the-number, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: бытовая латиница (SIM, SMS, PIN) не новая сущность; «SMS» давал предупреждение «термин хребта без пояснения»"
+      }
+    ]
+  },
   "C-22.root": {
     "value": 5,
     "unit": "букв корня",
@@ -3018,6 +3053,42 @@
         "date": "2026-10-25",
         "task": "T-03d",
         "change": "переименован из story.stake.min_roots: порог проверки — C-NN.*, story.* — только общие определения истории. Сверка: при 1 корне m01 не ловится (C-24 молчит, «камера» на всех путях), при 2 — ловится; основа мутантов и три истории (без шапки // ставка:) — без находок C-24 в обоих случаях"
+      }
+    ]
+  },
+  "C-24.by_msg": {
+    "value": 10,
+    "unit": "номер входящего",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "rules.md R-17 («на любом пути не позже 10-го входящего»)",
+      "truby-anatomy-of-story:attention§2 («≤ 10-го входящего»)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: C-24 мерил только «есть ли ставка до первой паузы от часа»; ставка на 17-м входящем проходила как норма. Медиана по прогонам, где ставка есть"
+      }
+    ]
+  },
+  "C-24.routes_max": {
+    "value": 2000,
+    "unit": "маршрутов главы 1",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "narrative-testing:/first-minutes («маршрутов главы 1 мало, полный перебор»)"
+    ],
+    "calibrated_on": "the-number, slepoe-pyatno, chuzhoy-golos (S-opening)",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "заведён: предел перебора first-minutes.mjs; хаб с липкими кнопками в главе 1 даёт тысячи маршрутов, дальше итог помечается «частично»"
       }
     ]
   },
@@ -7413,6 +7484,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён по просьбе T-08 (reports/T-08/requests.md п. 1): кандидат opening.incident.msg; инцидент — первая строка с регуляркой срока C-24 или первым #unlock / #photo (C-53: замена // событие). Детектор грубый — подсказка, а не предупреждение §6; своей проверки пока нет"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-opening",
+        "change": "детектор C-23: инцидент — ещё и угроза (dict.threat) и прямой вопрос игроку, кроме приветствия (dict.greeting); без этого на двух историях из трёх «инцидент только на 15-м входящем» при событии во втором-третьем. Значение не менялось"
       }
     ]
   },
