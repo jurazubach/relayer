@@ -27,6 +27,17 @@ export function register(test, { has, hasNot, lint, keys }) {
     await hasNot(mk(2), 'C-04.gap_warning', { only: ['C-04'] });
   });
 
+  test('C-04: условный переход в узел с текстом — отклик; переход в пустой узел — нет', async () => {
+    const mk4 = (target) => `VAR x = 0\n-> ch1\n${chapters(
+      `привет #from:ann\n${group('да', 'нет', '~ x = 1')}`,
+      `{x: -> ${target}}\nдва #from:ann`,
+      'три #from:ann',
+      '{x: помню} #from:ann',
+    )}\n=== scene ===\nты тогда сказал «да» #from:ann\n-> ch3\n=== hop ===\n-> ch3`;
+    await hasNot(mk4('scene'), 'C-04.gap_warning', { only: ['C-04'] });
+    await has(mk4('hop'), 'C-04.gap_warning', { only: ['C-04'] });
+  });
+
   test('C-05: в главе кнопки только окрашивают реплику', async () => {
     const src = `VAR x = 0\n-> ch1\n${chapters(`раз #from:ann\n${group('да', 'нет', '~ x = 1')}`, `два #from:ann\n* [ага]\n  ну ладно #from:ann\n* [угу]\n  хорошо #from:ann\n-\n{x: помню}`)}`;
     const res = await has(src, 'C-05.meaningful', { only: ['C-05'] });
@@ -310,6 +321,22 @@ export function register(test, { has, hasNot, lint, keys }) {
     const src = '-> a\n=== a ===\nпривет #from:ann\nзапись #from:notes\nпульс #from:ops\n* [да] -> END\n* [нет] -> END';
     await has(src, 'C-21.from_before_first', { only: ['C-21'] });
     await hasNot(src, 'C-21.from_before_first', { only: ['C-21'], meta: { characters: [{ id: 'ops', name: 'Пульт', role: 'система', service: true }] } });
+  });
+
+  test('C-10: вопрос Ане, а отвечает Боб — «ответил не тот»; ответ Ани, #sys и #silent — нет', async () => {
+    const head = '# contact: ann, Аня, teal\n# contact: bob, Боб, amber\n-> a\n=== a ===\nну что #from:ann\n';
+    const mk10 = (reply) => `${head}* [Аня, где ключ? #to:ann]\n  ${reply}\n* [Пока #to:ann]\n  пока #from:ann\n- -> END`;
+    await has(mk10('я видел его на столе #from:bob'), 'C-10.wrong_responder', { only: ['C-10'] });
+    await hasNot(mk10('на столе #from:ann'), 'C-10.wrong_responder', { only: ['C-10'] });
+    await hasNot(mk10('Аня не в сети #sys:ann\n  я видел его на столе #from:bob'), 'C-10.wrong_responder', { only: ['C-10'] });
+    await hasNot(mk10('я видел его на столе #from:bob\n  а, ты про ключ. на столе #from:ann'), 'C-10.wrong_responder', { only: ['C-10'] });
+    await hasNot(`${head}* [Ладно, спасибо #to:ann]\n  я тут #from:bob\n* [Промолчать #to:ann #silent]\n  я тут #from:bob\n- -> END`, 'C-10.wrong_responder', { only: ['C-10'] });
+  });
+
+  test('C-12: последний заход в хаб одноразовых кнопок — не одиночка; одна кнопка в узле — одиночка', async () => {
+    const hub = 'VAR n = 0\n-> h\n=== h ===\nчто сначала? #from:ann\n* [дверь]\n  ~ n += 1\n  закрыла #from:ann\n* [окно]\n  ~ n += 1\n  закрыла #from:ann\n- {n < 2: -> h}\n-> END';
+    await hasNot(hub, 'C-12.single', { only: ['C-12'] });
+    await has('-> a\n=== a ===\nидём? #from:ann\n* [идём]\n  ок #from:ann\n- -> END', 'C-12.single', { only: ['C-12'] });
   });
 
   test('находка несёт владельца из owners.md §3 и пометку модель', async () => {

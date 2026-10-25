@@ -15,6 +15,14 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
+    "ashwell-standard-patterns:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, оговорка о данных сохранена"
+      }
+    },
     "ashwell-standard-patterns:LESSON-07": {
       "status": "merged-into:maass-fire-in-fiction:LESSON-05",
       "note": "тот же спор/урок/нюанс; содержание влито в блок maass-fire-in-fiction:LESSON-05 (story-choices)"
@@ -63,12 +71,28 @@
         "note": "фон и биографии для команды сохранены"
       }
     },
+    "bateman-game-writing:PAT-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«больше 3 тем» ключом C-19.spokes_max"
+      }
+    },
     "C-03": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "условие и правка сохранены"
+      }
+    },
+    "choiceofgames-design:GREEN-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "словари C-14"
       }
     },
     "choiceofgames-design:LESSON-07": {
@@ -163,6 +187,22 @@
         "note": "«> 2 глав» передано ключом vars.silent_chapters"
       }
     },
+    "F-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "шаги и замеры сохранены"
+      }
+    },
+    "failbetter-qbn:PAT-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "4–8 реплик подводки стали «несколько», масштаб 5/50 есть"
+      }
+    },
     "inkle-ingold:contra-2": {
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
@@ -187,8 +227,8 @@
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
-        "by": "W1",
-        "note": "сохранено"
+        "by": "review",
+        "note": "исключение и #sys сохранены"
       }
     },
     "inkle-ingold:P-06": {
@@ -199,12 +239,36 @@
         "note": "без довода «знание о скрытой системе заставляет читать внимательнее» — не меняет правила"
       }
     },
+    "inkle-ingold:P-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условие, граница, масштаб"
+      }
+    },
     "inkle-ingold:P-09#нюанс": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "сохранено"
+      }
+    },
+    "inkle-ingold:P-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "низкая уверенность связи с докладом сохранена"
+      }
+    },
+    "inkle-ingold:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«< 20 % прогонов» стало «меньшинство», отсылка к C-15"
       }
     },
     "inkle-ingold:P-14#нюанс": {
@@ -255,6 +319,14 @@
         "note": "basis model и уверенность сохранены"
       }
     },
+    "mckee-story:SYS-2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "таблица и ошибки понимания сохранены"
+      }
+    },
     "meaningful-choice:contra-1": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
@@ -270,6 +342,14 @@
     "meaningful-choice:contra-8": {
       "status": "merged-into:schell-art-of-game-design:contra-6",
       "note": "тот же спор/урок/нюанс; содержание влито в блок schell-art-of-game-design:contra-6 (story-choices)"
+    },
+    "meaningful-choice:contra-9": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "доли решения (≥ 30 % обязателен, 5–30 % по желанию, < 5 % не пишется) потеряны: «заметной/средних/редких» без ключа thresholds.json"
+      }
     },
     "meaningful-choice:LESSON-04": {
       "fidelity": {
@@ -355,6 +435,14 @@
         "note": "потеряна проверка ботом «первые реплики ответов не совпадают» — она есть в C-10; класс C верен"
       }
     },
+    "messenger-genre:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "аналог #label сохранён"
+      }
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
@@ -362,6 +450,14 @@
     "narrative-postmortems:contra-2": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "narrative-postmortems:contra-6": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "спор и решение сохранены"
+      }
     },
     "narrative-postmortems:LESSON-14": {
       "fidelity": {
@@ -393,6 +489,14 @@
         "date": "2026-10-25",
         "by": "W1",
         "note": "сохранено"
+      }
+    },
+    "narrative-postmortems:RED-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«5+ строк» стало «по многу строк»; ключ C-05.writes"
       }
     },
     "narrative-postmortems:RED-05": {
@@ -427,6 +531,14 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
+    "narrative-testing:GREEN-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "проверка через C-11 (а)"
+      }
+    },
     "narrative-testing:PAT-08": {
       "fidelity": {
         "ok": true,
@@ -454,6 +566,14 @@
     "nicklin-writing-for-games:LESSON-09": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "nicklin-writing-for-games:RED-20": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "признак и починка сохранены"
+      }
     },
     "procedural-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -499,6 +619,14 @@
         "note": "окно 1–3 сообщения передано словами, без ключа"
       }
     },
+    "R-54": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "правило целиком, пример заменён выдуманным"
+      }
+    },
     "schell-art-of-game-design:contra-4": {
       "fidelity": {
         "ok": true,
@@ -531,12 +659,20 @@
       "status": "merged-into:narrative-postmortems:LESSON-10",
       "note": "тот же спор/урок/нюанс; содержание влито в блок narrative-postmortems:LESSON-10 (story-choices)"
     },
+    "sheldon-character-storytelling:LESSON-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, вывод сохранён"
+      }
+    },
     "sheldon-character-storytelling:P-15#нюанс": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": ""
+        "note": "условие и масштаб сохранены"
       }
     },
     "skolnick-video-game-storytelling:LESSON-01": {
@@ -565,6 +701,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "перепроверка глав целиком при смене каркаса сохранена"
+      }
+    },
+    "truby-anatomy-of-story:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "схема, ловушки, basis secondary"
       }
     },
     "vogler-writers-journey:PAT-06": {
