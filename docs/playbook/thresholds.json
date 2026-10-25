@@ -816,6 +816,25 @@
       }
     ]
   },
+  "endings.frame_lines": {
+    "value": 3,
+    "unit": "строк",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "scripts/story/endings.mjs",
+      "R-109",
+      "yorke-into-the-woods:PAT-04"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-endings",
+        "change": "заведён: сколько последних строк каждого финала story:endings кладёт рядом с первым входящим (рамка R-109)"
+      }
+    ]
+  },
   "vars.silent_chapters": {
     "value": 2,
     "unit": "глав",
