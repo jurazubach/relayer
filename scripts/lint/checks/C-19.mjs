@@ -25,9 +25,16 @@ export default {
         return self;
       };
       const exits = spokes.filter((b) => !back(b) && b.cls === 'node');
-      // 1. выйти можно, только перебрав все спицы
+      // 1. нет выхода по условию или «+». Видимый простой выход — другой случай, чем «уйти можно, только перебрав
+      // всё»: уйти можно сразу, ничего не спросив (inkle-ingold:PAT-06, ловушки). Ключ один, сообщение — по случаю.
       if (exits.filter((b) => b.choice.sticky || b.conds.length).length === T.value('C-19.no_exit')) {
-        find('C-19.no_exit', { ...at, message: `хаб ${id}: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты` });
+        const plain = exits.filter((b) => b.text.trim());
+        find('C-19.no_exit', {
+          ...at,
+          message: plain.length
+            ? `хаб ${id}: выход «${short(plain[0].text)}» доступен сразу и без условия — можно уйти, ничего не спросив; нет ни + , ни выхода по счётчику`
+            : `хаб ${id}: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты`,
+        });
       }
       // 2. число вариантов
       if (spokes.length < T.value('C-19.spokes_min') || spokes.length > T.value('C-19.spokes_max')) {

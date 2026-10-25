@@ -22,7 +22,7 @@
 VAR asked = 0
 -> hub
 === hub ===
-* (where) [Где ты был ночью? #to:lev]
+* (where) [А ночью ты где? #to:lev]
     ~ asked += 1
     дома. как обычно #from:lev #delay:30s
     -> hub
