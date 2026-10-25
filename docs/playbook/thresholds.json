@@ -71,13 +71,14 @@
       { "date": "2026-10-25", "task": "T-03b", "change": "опора — решение автора A-05 (просьба T-08: pause.max, story.realtime, tail.after_last_button)" }]
   },
   "story.reminders.max": {
-    "value": 2, "unit": "напоминаний", "op": ">", "level": "error", "basis": "source",
+    "value": 2, "unit": "напоминаний", "op": ">", "level": "error", "basis": "author_decision",
     "sources": ["rules.md R-120", "superseded.md A-03", "inkle-ingold:PAT-07"],
     "checks": ["C-32"],
     "deferred": "E-02",
     "calibrated_on": null,
     "history": [{ "date": "2026-10-24", "task": "T-03a", "change": "заведён ключом по просьбе T-05; C-32 п. 6 включится, когда синтаксис E-02 станет ready" },
-      { "date": "2026-10-25", "task": "T-03b", "change": "deferred:E-02: напоминаний в движке ещё нет, C-32 п. 6 пропускается до синтаксиса E-02 со статусом ready" }]
+      { "date": "2026-10-25", "task": "T-03b", "change": "deferred:E-02: напоминаний в движке ещё нет, C-32 п. 6 пропускается до синтаксиса E-02 со статусом ready" },
+      { "date": "2026-10-25", "task": "T-03b (сверка)", "change": "опора — решение автора A-03 («1–2 раза»), как у остальных пределов A-05" }]
   },
   "story.sleep_morning.min_h": {
     "value": 5, "unit": "ч", "op": "<", "level": "warning", "basis": "source",
@@ -2274,6 +2275,27 @@
     "checks": ["C-28", "C-33"],
     "calibrated_on": null,
     "history": [{ "date": "2026-10-25", "task": "T-03b", "change": "заведён по просьбе T-08 (reports/T-08/requests.md п. 1): кандидат return.dose; после часа — C-33.return_min_msgs; своей проверки пока нет" }]
+  },
+  "attn.recap.hook_h": {
+    "value": 1, "unit": "ч паузы, с которой первая реплика возвращения называет предмет крючка", "op": "≥", "level": "hint", "basis": "our_estimate",
+    "sources": ["serial-hooks:attention§3", "failbetter-qbn:attention§3", "messenger-genre:attention§3", "cron-wired-for-story:attention§3", "dille-ultimate-guide:attention§3"],
+    "checks": ["C-28"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03b (сверка)", "change": "заведён: лестница напоминания контекста attention-merged.md §5.4 и решение §8 п. 11 стояли числами; своей проверки пока нет" }]
+  },
+  "attn.recap.stake_h": {
+    "value": 3, "unit": "ч паузы, с которой в первых строках возвращения есть ставка или срок мира", "op": "≥", "level": "hint", "basis": "our_estimate",
+    "sources": ["serial-hooks:attention§3", "failbetter-qbn:attention§3", "messenger-genre:attention§3", "cron-wired-for-story:attention§3", "dille-ultimate-guide:attention§3"],
+    "checks": ["C-28"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03b (сверка)", "change": "заведён: лестница напоминания контекста attention-merged.md §5.4 и решение §8 п. 11 стояли числами; своей проверки пока нет" }]
+  },
+  "attn.recap.deed_h": {
+    "value": 12, "unit": "ч паузы, с которой возвращение напоминает поступок игрока", "op": "≥", "level": "hint", "basis": "our_estimate",
+    "sources": ["serial-hooks:attention§3", "failbetter-qbn:attention§3", "messenger-genre:attention§3", "cron-wired-for-story:attention§3", "dille-ultimate-guide:attention§3"],
+    "checks": ["C-28"],
+    "calibrated_on": null,
+    "history": [{ "date": "2026-10-25", "task": "T-03b (сверка)", "change": "заведён: лестница напоминания контекста attention-merged.md §5.4 и решение §8 п. 11 стояли числами; своей проверки пока нет" }]
   },
   "attn.pause.dialog_max_min": {
     "value": 10, "unit": "мин паузы посреди диалога без причины", "op": "≤", "level": "hint", "basis": "our_estimate",
