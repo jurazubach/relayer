@@ -11,6 +11,30 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
+    "#attn-player": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено, числа заменены словами без потери смысла"
+      }
+    },
+    "#attn-return-rhythm": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "пункты и ключи сохранены"
+      }
+    },
+    "#attn-return-silence": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "все пункты и ключи сохранены"
+      }
+    },
     "ashwell-standard-patterns:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -30,6 +54,22 @@
     "ashwell-standard-patterns:LESSON-14": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "attention-today:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; «выше двух» переведено на ключ C-37.per_chapter (ревью)"
+      }
+    },
+    "attention-today:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "схема и ловушка сохранены, отменённый довод помечен A-03"
+      }
     },
     "bateman-game-writing:contra-5": {
       "fidelity": {
@@ -279,6 +319,14 @@
         "note": "сохранено"
       }
     },
+    "inkle-ingold:P-18#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл и пример сохранены; пороги источника переведены на ключи (ревью)"
+      }
+    },
     "inkle-ingold:PAT-05#нюанс": {
       "status": "merged-into:inkle-ingold:P-12#нюанс",
       "note": "тот же спор/урок/нюанс; содержание влито в блок inkle-ingold:P-12#нюанс (story-choices)"
@@ -289,6 +337,30 @@
         "date": "2026-10-25",
         "by": "review",
         "note": ""
+      }
+    },
+    "inkle-ingold:PAT-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условия и масштаб сохранены, потолок ключом"
+      }
+    },
+    "LOCAL-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс A, вывод сохранён"
+      }
+    },
+    "maass-fire-in-fiction:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, вывод адаптирован под A-04 без потери"
       }
     },
     "maass-fire-in-fiction:RED-06": {
@@ -325,6 +397,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "таблица и ошибки понимания сохранены"
+      }
+    },
+    "meaningful-choice:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; пометка «наша оценка» опущена"
       }
     },
     "meaningful-choice:contra-1": {
@@ -427,6 +507,14 @@
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
     },
+    "messenger-genre:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "отменён A-02, условная пауза по делу оставлена"
+      }
+    },
     "messenger-genre:LESSON-06": {
       "fidelity": {
         "ok": true,
@@ -441,6 +529,30 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "аналог #label сохранён"
+      }
+    },
+    "messenger-genre:PAT-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "приём, ловушка и «когда нет» сохранены"
+      }
+    },
+    "messenger-genre:RED-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено, проверка отдана владельцу"
+      }
+    },
+    "messenger-genre:RED-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "флаг сохранён, владелец эха назван"
       }
     },
     "mobile-interactive-stories:LESSON-05": {
@@ -483,6 +595,14 @@
         "note": "80 Days, перепись как ожидаемая цена — сохранено"
       }
     },
+    "narrative-postmortems:P-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "суть и исключение сохранены; порог 70% источника в проверку не перенесён"
+      }
+    },
     "narrative-postmortems:PAT-03": {
       "fidelity": {
         "ok": true,
@@ -523,6 +643,14 @@
         "note": ""
       }
     },
+    "narrative-postmortems:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "шаги сохранены; «понятный срок» опущен по A-01"
+      }
+    },
     "narrative-testing:contra-2": {
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
@@ -553,6 +681,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "порог ключом C-10.cosmetic_chapter"
+      }
+    },
+    "narrative-testing:RED-33": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "отменённая половина помечена A-02, нагрузка по суткам от старта сохранена"
       }
     },
     "nicklin-writing-for-games:contra-1": {
@@ -627,6 +763,14 @@
         "note": "правило целиком, пример заменён выдуманным"
       }
     },
+    "R-122": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "все три пункта правила разложены в развилку по клику"
+      }
+    },
     "schell-art-of-game-design:contra-4": {
       "fidelity": {
         "ok": true,
@@ -635,9 +779,33 @@
         "note": "окно сообщений без чисел и без ключа"
       }
     },
+    "schell-art-of-game-design:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "обе проверки и класс C сохранены"
+      }
+    },
     "schell-art-of-game-design:LESSON-07": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "serial-hooks:GREEN-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; пометка «наш вывод» источника опущена"
+      }
+    },
+    "serial-hooks:LESSON-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "корреляционность и класс сохранены; «назначенная встреча» снята по A-01"
+      }
     },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -690,6 +858,14 @@
     "skolnick-video-game-storytelling:LESSON-07": {
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
+    },
+    "snyder-save-the-cat:RED-21": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "перенос на «не ответил» корректен, исключение сохранено"
+      }
     },
     "truby-anatomy-of-story:LESSON-02": {
       "status": "merged-into:meaningful-choice:LESSON-04",
