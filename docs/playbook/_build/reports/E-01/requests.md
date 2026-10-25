@@ -15,3 +15,4 @@
 4. **`scripts/story/core/thresholds.default.json` (T-03b п. 2)** — `click.jump_label` дублирует
    `engine.click.time_jump_label`; движок теперь сверяется с ключом `thresholds.json`, запаска — лишний
    третий источник.
+   *Сверка курса:* снято — файла уже нет (удалён в T-03c), движок и `story:*` берут ключ из `thresholds.json`.
