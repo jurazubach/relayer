@@ -8,6 +8,13 @@ import { heroNames, short } from '../text.mjs';
 // заглавная посреди фразы: перед пробелом буква, цифра или запятая
 const CAP = /(?<=[\p{L}\p{N},;]\s)(\p{Lu}\p{Ll}{2,})/gu;
 
+/** Основа слова без падежного окончания и конечных «й», «ь»: «Дине» и «Дина» → «дин», «Рэю» и «Рэй» → «рэ». */
+export function nameStem(word, T) {
+  const low = word.toLowerCase().replace(/ё/g, 'е');
+  const s = low.replace(T.re('dict.case_endings'), '').replace(/[йь]$/u, '');
+  return s.length >= 2 ? s : low;
+}
+
 export default {
   id: 'C-48',
   title: 'Имена',
@@ -20,10 +27,14 @@ export default {
     // белый список: имена собственные карточки, глав и facts.md
     const facts = join('docs/stories', story.id ?? '', 'facts.md');
     const card = [meta.title, meta.series, meta.tagline, meta.synopsis, ...(meta.features ?? []), ...(meta.chapters ?? []).flatMap((c) => [c.title, c.about]), ...(meta.characters ?? []).flatMap((c) => [c.name, c.role, c.about]), existsSync(facts) ? readFileSync(facts, 'utf8') : ''].join(' ');
-    const white = new Set((card.match(/\p{Lu}\p{Ll}{2,}/gu) ?? []).map((w) => w.toLowerCase().slice(0, 4)));
-    for (const n of names.keys()) for (const w of n.split(/\s+/)) white.add(w.slice(0, 4));
+    // белый список двух видов: первые 4 буквы («Лили» и «Лилиан» — одна основа для (б)) и основа без окончания —
+    // имя из characters в любом падеже не новое слово («Дине» — это Дина, «Рэю» — Рэй)
+    const known = [...(card.match(/\p{Lu}\p{Ll}{2,}/gu) ?? [])];
+    for (const n of names.keys()) known.push(...n.split(/\s+/).filter(Boolean));
+    const white = new Set(known.map((w) => w.toLowerCase().slice(0, 4)));
+    const stems = new Set(known.map((w) => nameStem(w, T)));
     const renames = new Set();
-    for (const k of tree.knots) walk(k.items, (it) => { if (it.tags?.rename) { const nm = it.tags.rename.split(',').slice(1).join(',').trim(); if (nm) for (const w of nm.split(/\s+/)) renames.add(w.toLowerCase().slice(0, 4)); } });
+    for (const k of tree.knots) walk(k.items, (it) => { if (it.tags?.rename) { const nm = it.tags.rename.split(',').slice(1).join(',').trim(); if (nm) for (const w of nm.split(/\s+/)) { renames.add(w.toLowerCase().slice(0, 4)); stems.add(nameStem(w, T)); } } });
 
     const forms = new Map(); // говорящий|имя → формы
     const unknown = new Map(); // глава → слова
@@ -49,7 +60,7 @@ export default {
           }
           // (б) не контакт и не из белого списка
           const r = low.slice(0, 4);
-          if (!white.has(r) && !renames.has(r)) {
+          if (!white.has(r) && !renames.has(r) && !stems.has(nameStem(w, T))) {
             if (!unknown.has(ch)) unknown.set(ch, new Map());
             if (!unknown.get(ch).has(r)) unknown.get(ch).set(r, { w, node: k.id });
           }
