@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "ashwell-standard-patterns:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условие анкеты и масштаб сохранены"
+      }
+    },
+    "C-51": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "развилки решений соответствуют (а)/(б) checks.md"
+      }
+    },
+    "dille-ultimate-guide:PAT-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "суперкат сохранён, привязан к story:trace"
+      }
+    },
+    "emshort-structures:GREEN-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условие и признак сохранены"
+      }
+    },
+    "inkle-ingold:P-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "уверенность (аннотация, запись в ink наша) сохранена"
+      }
+    },
+    "inkle-ingold:P-04#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "нужное/лишнее, масштаб 5/50 сохранены"
+      }
+    },
+    "inkle-ingold:P-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "цепочка знаний, проверка кнопки сохранены"
+      }
+    },
+    "inkle-ingold:PAT-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "когда нет, ловушка порядка LIST сохранены"
+      }
+    },
+    "inkle-ingold:PAT-04#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "факты из разных чатов; «фактов <5» — в основной записи PAT-04"
+      }
+    },
+    "inkle-ingold:SYS-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "четыре шага и последствия пропуска сохранены"
+      }
+    },
+    "messenger-genre:P-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "суть и проверка сохранены"
+      }
+    },
+    "messenger-genre:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "двое с разным знанием, шум — сохранено"
+      }
+    },
+    "messenger-genre:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "схема, цена, ловушка, когда нет — сохранены"
+      }
+    },
+    "mystery-fair-play:SYS-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "свёрнуто до следствия о независимости улик со ссылкой на story-mystery — честно"
+      }
+    },
+    "nicklin-writing-for-games:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "когда нет (первая глава), паузы минуты — сохранены"
+      }
+    },
+    "nicklin-writing-for-games:PAT-05#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "срыв плана и масштаб сохранены"
+      }
+    },
+    "procedural-storytelling:GREEN-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "признак сохранён"
+      }
+    },
+    "procedural-storytelling:P-12#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "не двигатель сюжета, 2/3 уровня сохранены"
+      }
+    },
+    "procedural-storytelling:PAT-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "1% источника заменён ключом C-15.rare_node (0.02) — допустимо, порог проекта"
+      }
+    },
+    "R-55": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "правило дословно, когда не работает добавлено"
+      }
+    }
+  }
+}
