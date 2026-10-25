@@ -8,7 +8,7 @@ import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
 import { norm, returnDeadline } from '../../../../scripts/lib/lexicon.mjs';
 import { loadStory } from '../../../../scripts/lib/story.mjs';
 
-const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/click-transcript.mjs --story <id|путь> [--persona <имя>] [--seed N] [--runs N] [--route 0,2,1] [--until <узел>] [--flags] [--json]
+const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/click-transcript.mjs <id> | --story <id|путь> [--persona <имя>] [--seed N] [--runs N] [--route 0,2,1] [--until <узел>] [--flags] [--json]
 
 Режим «по клику» глазами игрока (скилл story-time; R-122, R-63, ST-63, ST-65; решение A-04). Переписка
 идёт без пауз; на скачке времени мира от engine.click.time_jump_label движок ставит «· спустя N».
@@ -39,7 +39,7 @@ const args = process.argv.slice(2);
 if (args.includes('--help') || args.includes('-h')) { console.log(HELP); process.exit(0); }
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
 const T = thresholds();
-const ref = opt('--story');
+const ref = opt('--story') ?? args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1].startsWith('--') && args[i - 1] !== '--flags' && args[i - 1] !== '--json'));
 if (!ref) { console.error('нужен --story <id|путь>'); process.exit(1); }
 
 const TRACE = fileURLToPath(new URL('../../../../scripts/story/trace.mjs', import.meta.url));

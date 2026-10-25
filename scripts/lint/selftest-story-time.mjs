@@ -1,6 +1,8 @@
 // Самопроверка проверок скилла story-time (C-27, C-32, C-37): дефект и чистый двойник на каждую правку
 // S-time. Выдуманные истории; подключается из selftest.mjs: register(test, helpers).
 import assert from 'node:assert/strict';
+import { parseInk } from '../lib/ink.mjs';
+import { waitingForks } from '../../.claude/skills/story-time/scripts/guilt-scan.mjs';
 
 export function register(test, { has, hasNot, lint }) {
   // ───────── C-27: тишина-событие и срок события в мире на стыке глав
@@ -72,5 +74,37 @@ export function register(test, { has, hasNot, lint }) {
     await has(deadline, 'C-37.false_deadline', { only: ['C-37'] });
     const res = await lint(src(['срочно, тут дверь #from:savva']), { only: ['C-37'] });
     assert.equal(res.findings.length, 0);
+  });
+
+  // ───────── guilt-scan: развилка, где собеседник ждёт, а напоминаний нет (A-03, R-120, ST-66)
+  test('guilt-scan (S-time): собеседник ждёт без #remind — в списке; хаб, меню, #remind, #me и #sys — нет', () => {
+    const forks = (body) => waitingForks(parseInk(['-> a', '=== a ===', ...body].join('\n')), new Set(['bank']));
+    const asks = forks(['дверь открыть? #from:uma', '* [Открой] -> END', '* [Не надо #silent] -> END']);
+    assert.equal(asks.length, 1);
+    assert.deepEqual([asks[0].contact, asks[0].last_line, asks[0].has_silent, asks[0].has_noanswer, asks[0].question], ['uma', 'дверь открыть?', true, false, true]);
+    // со скрытыми напоминаниями перед сборкой — не ждёт молча
+    assert.equal(forks(['дверь открыть? #from:uma', '- (ask)', '* [Открой] -> END', '* [Не надо #silent] -> END', '* [#remind:40m] я у двери, открыть?', '  -> ask']).length, 0);
+    // #noanswer со сроком без напоминаний — всё равно в списке: напоминаний перед ним нет
+    const late = forks(['дверь открыть? #from:uma', '* [Открой] -> END', '* [#noanswer:30m] -> END']);
+    assert.equal(late.length, 1);
+    assert.equal(late[0].noanswer_after, '30m');
+    // хаб: кнопки ведут в чужие чаты — никто не ждёт; смешанная развилка, где одна кнопка — ответ Уме, — ждёт
+    assert.equal(forks(['ну что, кому пишем? #from:uma', '* [Уле #to:ulya] -> END', '* [Тиму #to:tim] -> END']).length, 0);
+    assert.equal(forks(['мысли? #from:uma', '* [есть идея #to:uma] -> END', '* [спрошу Тима #to:tim] -> END']).length, 1);
+    // меню: все кнопки «+», оно возвращается само
+    assert.equal(forks(['что посмотреть? #from:uma', '+ [Почту] -> END', '+ [Фото] -> END']).length, 0);
+    // перед кнопками — игрок, «Прочитано» или служебный контакт: собеседник не ждёт ответа
+    assert.equal(forks(['дверь? #from:uma', 'Вы: потом #me', '* [ок] -> END', '* [нет] -> END']).length, 0);
+    assert.equal(forks(['дверь? #from:uma', 'Прочитано #sys:uma', '* [ок] -> END', '* [нет] -> END']).length, 0);
+    assert.equal(forks(['Списание 300 #from:bank', '* [ок] -> END', '* [нет] -> END']).length, 0);
+    // говорящий перенесён из прошлого узла (без #from): кто ждёт — решает #to кнопок
+    const carried = forks(['ну? код?', '* [1234 #to:uma] -> END', '* [не знаю #to:uma] -> END']);
+    assert.equal(carried[0]?.contact, 'uma');
+    // кнопки в начале узла: реплики перед ними нет — развилка уходит в unresolved, её решит журнал бота
+    const top = forks(['* [да #to:uma] -> END', '* [нет #to:uma] -> END']);
+    assert.equal(top.length, 0);
+    assert.deepEqual(top.unresolved.map((g) => g.texts), [['да', 'нет']]);
+    // реплика в конце ветки условия перед кнопками — тоже ждёт
+    assert.equal(forks(['{x:', '  ты вернулся? #from:uma', '- else:', '  ну что? #from:uma', '}', '* [да] -> END', '* [нет] -> END']).length, 1);
   });
 }

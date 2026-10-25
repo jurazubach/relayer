@@ -10,7 +10,7 @@ import { walk } from '../../../../scripts/lib/ink.mjs';
 import { lintStory, loadChecks } from '../../../../scripts/lint/core.mjs';
 import { dayLoad, sleepMorning } from '../../../../scripts/lint/checks/C-32.mjs';
 
-const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/clock-scan.mjs [--story <id|путь>,…] [--node <узел>] [--runs N] [--seed N] [--json]
+const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/clock-scan.mjs [<id>] [--story <id|путь>,…] [--node <узел>] [--runs N] [--seed N] [--json]
 
 Время мира против часов игрока (скилл story-time; R-121, R-122, R-67; C-32 п. 1, 5; C-47; решение A-02):
   время игрока      реплики, которые угадывают часы игрока (dict.player_time: «ты, наверное, спишь») — ✗
@@ -40,7 +40,10 @@ const args = process.argv.slice(2);
 if (args.includes('--help') || args.includes('-h')) { console.log(HELP); process.exit(0); }
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
 const T = thresholds();
-const refs = storyRefs((opt('--story') ?? '').split(',').filter(Boolean));
+// id без ключа — тоже история: иначе вызов молча идёт по всему каталогу
+const VALUED = new Set(['--story', '--node', '--runs', '--seed']);
+const positional = args.filter((a, i) => !a.startsWith('--') && !VALUED.has(args[i - 1]));
+const refs = storyRefs([...(opt('--story') ?? '').split(','), ...positional].filter(Boolean));
 const onlyNode = opt('--node');
 const runs = Number(opt('--runs') ?? T.value('lint.runs.full'));
 const seed = Number(opt('--seed') ?? 1);

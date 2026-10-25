@@ -10,7 +10,7 @@ import { walk } from '../../../../scripts/lib/ink.mjs';
 import { lintStory } from '../../../../scripts/lint/core.mjs';
 import C27, { pausePlaces } from '../../../../scripts/lint/checks/C-27.mjs';
 
-const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/promise-scan.mjs [--story <id|путь>,…] [--node <узел>] [--all] [--runs N] [--seed N] [--partial] [--json]
+const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/promise-scan.mjs [<id>] [--story <id|путь>,…] [--node <узел>] [--all] [--runs N] [--seed N] [--partial] [--json]
 
 Паузы без причины и сроки возвращения (скилл story-time; проверка C-27; правила R-63, R-122; решение A-01).
 Для каждой паузы от story.pause.notice_min на прогонах бота — место, длина, окно C-27.window_lines строк до
@@ -37,7 +37,10 @@ const args = process.argv.slice(2);
 if (args.includes('--help') || args.includes('-h')) { console.log(HELP); process.exit(0); }
 const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
 const T = thresholds();
-const refs = storyRefs((opt('--story') ?? '').split(',').filter(Boolean));
+// id без ключа — тоже история: иначе вызов молча идёт по всему каталогу
+const VALUED = new Set(['--story', '--node', '--runs', '--seed']);
+const positional = args.filter((a, i) => !a.startsWith('--') && !VALUED.has(args[i - 1]));
+const refs = storyRefs([...(opt('--story') ?? '').split(','), ...positional].filter(Boolean));
 const onlyNode = opt('--node');
 const runs = Number(opt('--runs') ?? T.value('lint.runs.full'));
 const seed = Number(opt('--seed') ?? 1);
