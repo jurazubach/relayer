@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { Engine, View } from '../engine';
 import { formatTime } from '../engine';
 import { Avatar } from './Avatar';
@@ -13,6 +14,7 @@ export function ChatsScreen({
   onDebug,
   notices,
   onNotices,
+  paywall,
 }: {
   engine: Engine;
   view: View;
@@ -23,6 +25,8 @@ export function ChatsScreen({
   /** Уведомления о сообщениях в других чатах включены. */
   notices: boolean;
   onNotices: (on: boolean) => void;
+  /** Плашка платной границы над списком чатов. */
+  paywall?: ReactNode;
 }) {
   return (
     <div className="screen" data-testid="contacts">
@@ -50,6 +54,7 @@ export function ChatsScreen({
         <h1 className="screen__title">Сообщения</h1>
       </header>
 
+      {paywall}
       <ul className="chat-list">
         {view.threads.length === 0 && <li className="chat-list__empty">Пока тихо. Кто-то скоро напишет.</li>}
         {view.threads.map((id) => {

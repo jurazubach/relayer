@@ -5,6 +5,7 @@ import {
   MODES,
   downloadStory,
   formatAgo,
+  freeLine,
   isOutdated,
   modeSizes,
   revisionOf,
@@ -28,6 +29,7 @@ const MODE_TEXT: Record<Mode, { name: string; hint: string }> = {
 export function StoryScreen({
   story,
   progress: saved,
+  free,
   onPlay,
   onBack,
   onReset,
@@ -35,6 +37,8 @@ export function StoryScreen({
 }: {
   story: Story;
   progress: Progress | null;
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  free: number | null;
   /** Режим важен только новой игре: начатая продолжается в своём. */
   onPlay: (mode: Mode) => void;
   onBack: () => void;
@@ -57,7 +61,9 @@ export function StoryScreen({
   const where = progress
     ? progress.ended
       ? 'История пройдена'
-      : `${progress.chapter || `${progress.messages} сообщений`} · ${formatAgo(progress.savedAt)}`
+      : progress.locked && free !== null
+        ? `Бесплатные главы пройдены · ${formatAgo(progress.savedAt)}`
+        : `${progress.chapter || `${progress.messages} сообщений`} · ${formatAgo(progress.savedAt)}`
     : sizeLabel(story);
 
   return (
@@ -161,6 +167,11 @@ export function StoryScreen({
               </button>
             ))}
           <span className="story__where">{where}</span>
+          {free !== null && (
+            <span className="story__free" data-testid="free-chapters">
+              {freeLine(free, story.chapters?.length)}
+            </span>
+          )}
         </div>
 
         {story.synopsis && (
@@ -215,12 +226,17 @@ export function StoryScreen({
             <h2 className="info__title">Главы</h2>
             <ol className="chapters">
               {story.chapters.map((ch, i) => (
-                <li className="chapters__item" key={ch.title}>
+                <li
+                  className={free !== null && i >= free ? 'chapters__item chapters__item--locked' : 'chapters__item'}
+                  key={ch.title}
+                  data-testid={free !== null && i >= free ? 'chapter-locked' : undefined}
+                >
                   <span className="chapters__no">{i + 1}</span>
                   <span className="chapters__body">
                     <span className="chapters__top">
                       <span className="chapters__title">{ch.title}</span>
                       {ch.when && <span className="chapters__when">{ch.when}</span>}
+                      {free !== null && i >= free && <span className="chapters__lock">платно</span>}
                     </span>
                     {ch.about && <span className="chapters__about">{ch.about}</span>}
                   </span>

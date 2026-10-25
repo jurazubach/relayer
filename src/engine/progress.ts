@@ -18,6 +18,8 @@ export interface Progress {
   mode: Mode;
   /** Ревизия сценария, под которую записано сохранение. */
   revision: number;
+  /** Игрок прошёл бесплатные главы, и история стоит на платной границе. */
+  locked: boolean;
 }
 
 /** Нет поля revision в истории или в сохранении — это первая ревизия. */
@@ -40,6 +42,7 @@ export function readProgress(storyId: string): Progress | null {
       savedAt?: number;
       mode?: Mode;
       revision?: number;
+      locked?: boolean;
     };
     const messages = Array.isArray(d.messages) ? d.messages.length : 0;
     if (!messages) return null;
@@ -51,6 +54,7 @@ export function readProgress(storyId: string): Progress | null {
       savedAt: d.savedAt ?? 0,
       mode: d.mode ?? DEFAULT_MODE,
       revision: d.revision ?? 1,
+      locked: !!d.locked,
     };
   } catch {
     return null;

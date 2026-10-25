@@ -1,5 +1,5 @@
 import type { Progress, Story } from '../engine';
-import { formatAgo, isOutdated, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
+import { formatAgo, freeChip, isOutdated, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
 
 /**
  * Карточка истории на главном экране: на всю ширину, обложкой.
@@ -10,10 +10,13 @@ import { formatAgo, isOutdated, keepShortWords, storyCounts, storyTeasers, timeL
 export function StoryTile({
   story,
   progress: saved,
+  free,
   onOpen,
 }: {
   story: Story;
   progress: Progress | null;
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  free: number | null;
   onOpen: () => void;
 }) {
   // сохранение от прошлой ревизии сценария не продолжить: карточка как у новой истории
@@ -26,7 +29,9 @@ export function StoryTile({
     ? null
     : progress.ended
       ? 'Пройдено'
-      : progress.chapter || `${progress.messages} сообщений`;
+      : progress.locked && free !== null
+        ? 'Бесплатные главы пройдены'
+        : progress.chapter || `${progress.messages} сообщений`;
   const ago = progress && !progress.ended && progress.savedAt ? formatAgo(progress.savedAt) : '';
   const own = story.origin === 'upload';
   const going = !!progress && !progress.ended;
@@ -46,7 +51,7 @@ export function StoryTile({
 
         <span className="story-tile__head">
           <span className="story-tile__kicker">{story.series}</span>
-          {(counts.length > 0 || own) && (
+          {(counts.length > 0 || own || free !== null) && (
             <span className="story-tile__counts" data-testid={`tile-counts-${story.id}`}>
               {own && <span className="story-tile__chip story-tile__chip--own">свой файл</span>}
               {counts.map((c) => (
@@ -54,6 +59,11 @@ export function StoryTile({
                   {c}
                 </span>
               ))}
+              {free !== null && (
+                <span className="story-tile__chip" data-testid={`tile-free-${story.id}`}>
+                  {freeChip(free)}
+                </span>
+              )}
             </span>
           )}
         </span>
