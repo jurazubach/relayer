@@ -19,7 +19,11 @@ export default {
         const before = run.lines.slice(Math.max(0, l.i - T.value('C-39.end_window')), l.i);
         if (!hookIn(before, firstOf, T)) p.noHook++;
         const next = run.lines.slice(l.i).filter(isIncoming).slice(0, T.value('C-39.start_lines'));
-        const event = next.some((x) => x.kind === 'photo' || x.unlock.length || x.text.includes('?') || (x.who && firstOf.get(x.who) === x.i));
+        // кнопка в окне начала — игрока сразу ставят перед решением: это и есть вход с события (R-72), даже
+        // если новость сказана утверждением («на двери кто-то написал»), а не вопросом
+        const until = next.at(-1)?.i ?? l.i;
+        const asked = run.choices.some((c) => c.at > l.i && c.at <= until + 1);
+        const event = asked || next.some((x) => x.kind === 'photo' || x.unlock.length || x.text.includes('?') || (x.who && firstOf.get(x.who) === x.i));
         if (!event) p.noEvent++;
         const tail = new Set(before.slice(-2).flatMap((x) => [...roots(x.text, 5)]));
         const head = new Set(next.flatMap((x) => [...roots(x.text, 5)]));

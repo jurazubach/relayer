@@ -26,7 +26,11 @@ export default {
         const p = all.add(`${l.knot}|${l.text}`, () => ({ knot: l.knot, text: first.text, delay: l.delay, packs: [], greet: 0, unlinked: 0 }));
         p.packs.push(pack.length);
         const n = norm(first.text);
-        if (T.re('dict.greeting').test(n) || n.split(' ').length === 1 || isClosing(first.text, T)) p.greet++;
+        // одно слово — ещё не пустота: «посмотрела», «третий» — результат дела (schell-art-of-game-design:RED-02);
+        // пусто, если в строке нет ни одной буквы. Первое сообщение нового контакта — само событие: в
+        // уведомлении новое имя (serial-hooks:PAT-05), его «здравствуйте» — голос, а не пустая карточка
+        const arrival = first.who && !run.lines.slice(0, first.i).some((x) => x.who === first.who && isIncoming(x));
+        if (!arrival && (T.re('dict.greeting').test(n) || !n || isClosing(first.text, T))) p.greet++;
         const before = run.lines.slice(Math.max(0, l.i - w.before), l.i);
         const after = pack.slice(0, w.after);
         const rb = roots(before);
