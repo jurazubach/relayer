@@ -76,7 +76,9 @@
 
 .story-tile__counts {
   display: flex;
-  flex: none;
+  /* плашек бывает четыре («свой файл», главы, герои, бесплатные): на узкой карточке они переносятся, а не вылезают */
+  flex: 0 1 auto;
+  min-width: 0;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: var(--space-1);

@@ -128,7 +128,8 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 
 Ключи в `localStorage`: `relay:<storyId>` — прогресс истории, `relay:route` — где игрок был
 в прошлый раз (экран, история и открытый чат), `relay:uploads` — загруженные истории целиком,
-`relay:fast` — быстрый набор в отладке, `relay:notices` — `0`, если игрок выключил уведомления.
+`relay:fast` — быстрый набор в отладке, `relay:notices` — `0`, если игрок выключил уведомления,
+`relay:open:<storyId>` — `1`, если продолжение за бесплатной границей открыто (пока из отладки; «начать заново» его не закрывает).
 Режим игры (`realtime` / `click`), молчание у кнопки (напоминания `#remind`) и журнал выборов (выгрузка из отладки
 для `story:trace --from-save`) лежат в прогрессе истории.
 
@@ -211,7 +212,8 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
   `thread-<id>`, `chat`, `notice`, `notices`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `choice-log`, `choice-log-export`,
-  `skip-next`.
+  `skip-next`, `revision-notice`, `revision-notice-ok`, `tile-free-<id>`, `free-chapters`, `chapter-locked`,
+  `paywall`, `paywall-buy`, `paywall-stub`, `chapters-open`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).
   И `width: 100%` у `.phone` не убирать: с автоотступами в flex-колонке он ужимается
