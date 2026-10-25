@@ -2,6 +2,7 @@
   "format": "relayer-story",
   "version": 1,
   "id": "e2e-fixture",
+  "revision": 1,
   "series": "Фикстура",
   "title": "Пустой причал",
   "tagline": "История для e2e-тестов: тексты здесь стабильны, их проверяют тесты",

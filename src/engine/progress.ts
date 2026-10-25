@@ -3,6 +3,7 @@
  * сохранение движка лежит в localStorage готовым, читаем его напрямую.
  */
 import { DEFAULT_MODE, type Mode } from './engine';
+import type { Story } from './story';
 
 export interface Progress {
   /** Хотя бы одно сообщение пришло. */
@@ -15,7 +16,16 @@ export interface Progress {
   savedAt: number;
   /** В каком режиме идёт игра: сменить его можно только перезапуском. */
   mode: Mode;
+  /** Ревизия сценария, под которую записано сохранение. */
+  revision: number;
 }
+
+/** Нет поля revision в истории или в сохранении — это первая ревизия. */
+export const revisionOf = (story: Pick<Story, 'revision'>) => story.revision ?? 1;
+
+/** Сохранение от другой ревизии сценария: продолжить нельзя, история начнётся заново. */
+export const isOutdated = (progress: Progress | null, story: Pick<Story, 'revision'>) =>
+  !!progress && progress.revision !== revisionOf(story);
 
 const key = (storyId: string) => `relay:${storyId}`;
 
@@ -29,6 +39,7 @@ export function readProgress(storyId: string): Progress | null {
       chapter?: string;
       savedAt?: number;
       mode?: Mode;
+      revision?: number;
     };
     const messages = Array.isArray(d.messages) ? d.messages.length : 0;
     if (!messages) return null;
@@ -39,6 +50,7 @@ export function readProgress(storyId: string): Progress | null {
       messages,
       savedAt: d.savedAt ?? 0,
       mode: d.mode ?? DEFAULT_MODE,
+      revision: d.revision ?? 1,
     };
   } catch {
     return null;
