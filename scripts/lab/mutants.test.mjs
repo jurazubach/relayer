@@ -11,8 +11,9 @@ import { knownChecks } from '../lint/core.mjs';
 import { loadThresholds } from '../lib/thresholds.mjs';
 import {
   applyEdits, buildKey, buildMutant, checkOwners, keyEntry, lintDiff, lintVerdict, matchFinding, neutralId,
-  parseFindings, skillsFromOwners, validateSpec, zoneSummary,
+  parseFindings, SKILL_ALLOW, SKILL_DENY, skillRunSummary, skillsFromOwners, validateSpec, zoneSummary,
 } from './mutants-lib.mjs';
+import { createStreamParser, invalidReason } from './triggers-lib.mjs';
 import { MUTANTS } from './mutants-spec.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -163,4 +164,58 @@ test('владельцы проверок читаются из owners.md §3', 
   const o = checkOwners(owners);
   assert.equal(o.get('C-26'), 'story-pauses');
   assert.equal(o.get('C-32'), 'story-time');
+});
+
+// Отказы в правах на синтетическом потоке claude -p: недействительный прогон не попадание и не промах (LOCAL-03).
+const ev = (o) => JSON.stringify(o);
+const use = (id, name, input) => ev({ type: 'assistant', parent_tool_use_id: null, message: { content: [{ type: 'tool_use', id, name, input }] } });
+const deny = (id, name) => ev({ type: 'system', subtype: 'permission_denied', tool_name: name, tool_use_id: id });
+const done = (denials) => ev({ type: 'result', subtype: 'success', result: '```json\n{"findings": [{"node": "ch3_radio", "check": "C-26", "summary": "x"}]}\n```', permission_denials: denials });
+const opts = { tools: T.value('lab.denials.blocking_tools'), intended: SKILL_DENY };
+const parse = (...lines) => {
+  const p = createStreamParser();
+  p.feed(`${lines.join('\n')}\n`);
+  return p.end();
+};
+
+test('skills:test: отказ на Bash — прогон недействительный, даже если находки есть', () => {
+  const r = parse(use('s', 'Skill', { skill: 'story-pauses' }), use('b', 'Bash', { command: 'npm run -s story:lint -- /tmp/x --json' }), deny('b', 'Bash'),
+    done([{ tool_name: 'Bash', tool_use_id: 'b', tool_input: { command: 'npm run -s story:lint -- /tmp/x --json' } }]));
+  assert.match(invalidReason(r.denials, opts), /Bash ×1 \(npm run -s story:lint -- \/tmp\/x --json\)/);
+});
+
+test('skills:test: отказ на Write при чтении, чтение ключа и skills-test --json — прогон действительный', () => {
+  const r = parse(use('r', 'Read', { file_path: './docs/lab/mutants/key.json' }), deny('r', 'Read'),
+    use('w', 'Write', { file_path: '/tmp/x/notes.md' }), deny('w', 'Write'),
+    use('k', 'Bash', { command: 'node scripts/lab/skills-test.mjs --json' }), deny('k', 'Bash'), done([]));
+  assert.equal(r.denials.length, 3);
+  assert.equal(invalidReason(r.denials, opts), null);
+  assert.ok(SKILL_ALLOW.includes('Skill') && SKILL_ALLOW.includes('Bash(npm run story*)'), 'права шагов скилла — без хвоста :* (LOCAL-03)');
+});
+
+test('skillRunSummary: недействительные — в failed_runs и «отказы», не в полноту; основа целиком', () => {
+  const run = (o) => ({ hit: false, findings: [], error: null, invalid: null, denials: [], ...o });
+  const f = { node: 'ch3_radio', check: 'C-26', summary: 'шум' };
+  const results = [
+    { entry: { id: 'm01', zone: 'story-pauses' }, runs: [run({ hit: true }), run({ invalid: 'отказ в правах: Bash ×1', denials: [{ tool: 'Bash', command: 'npm run story:lint' }] })] },
+    { entry: { id: 'm02', zone: 'story-pauses' }, runs: [run({}), run({ error: 'не уложился' })] },
+    { entry: { id: '_base', zone: 'story-pauses' }, control: true, runs: [run({ findings: [f, f], answer: 'ответ' }), run({ invalid: 'отказ', denials: [{ tool: 'Skill', command: 'story-pauses' }] })] },
+  ];
+  const s = skillRunSummary(results, { ...opts, maxInvalid: T.value('lab.denials.max_invalid_share') });
+  assert.equal(s.recall, 1 / 2, 'отказ не промах: 1 попадание из 2 действительных');
+  assert.equal(s.denied, 1);
+  assert.equal(s.failed, 2);
+  assert.equal(s.zones[0].denied, 1);
+  assert.deepEqual(s.control.counts, [2, null]);
+  assert.deepEqual(s.control.runs[0].findings, [f, f], '--control хранит сами находки');
+  assert.equal(s.control.runs[0].answer, 'ответ');
+  assert.deepEqual(s.denials.map((d) => [d.mutant, d.run, d.tool, d.blocking]), [['m01', 2, 'Bash', true], ['_base', 2, 'Skill', true]]);
+  assert.match(s.denialFail, /недействительных/, '2 из 5 запущенных — выше порога');
+  const clean = skillRunSummary([{ entry: { id: 'm01', zone: 'z' }, runs: [run({ hit: true })] }], { ...opts, maxInvalid: T.value('lab.denials.max_invalid_share') });
+  assert.equal(clean.denialFail, null);
+  assert.equal(clean.failed, 0);
+  assert.equal(clean.control, null);
+  const lost = skillRunSummary([{ entry: { id: 'm01', zone: 'z' }, runs: [run({ invalid: 'отказ', denials: [{ tool: 'Bash', command: 'x' }] })] }], { ...opts, maxInvalid: T.value('lab.denials.max_invalid_share') });
+  assert.equal(lost.recall, null, 'все прогоны не в счёт — полнота не измерена, а не 0');
+  assert.equal(lost.zones[0].denied, 1);
 });

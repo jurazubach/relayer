@@ -1,6 +1,17 @@
 // Чистые функции skills:test: сборка мутантов из основы, сверка ключа, разница находок линта,
 // разбор ответа скилла и полнота по зонам. Процессы и файлы — в skills-test.mjs.
 import { createHash } from 'node:crypto';
+import { blockingDenials, denialGate } from './triggers-lib.mjs';
+
+// Прогон скилла ничего не пишет и не видит ключа: запись запрещена, ключ и спецификация мутантов закрыты от чтения.
+export const SKILL_DENY = [
+  'Write', 'Edit', 'NotebookEdit', 'Artifact', 'ArtifactComments', 'ArtifactData', 'DesignSync',
+  'CronCreate', 'CronDelete', 'RemoteTrigger', 'ScheduleWakeup', 'PushNotification', 'SendMessage',
+  'EnterWorktree', 'Workflow', 'Read(./docs/lab/mutants/**)', 'Read(./scripts/lab/**)', 'Read(./docs/lab/runs/**)',
+  // node scripts/* разрешён ради линта и бота, но skills-test.mjs --json печатает ключ целиком
+  'Bash(node scripts/lab/*)',
+];
+export const SKILL_ALLOW = ['Read', 'Grep', 'Glob', 'Skill', 'Bash(npm run story*)', 'Bash(npm run -s story*)', 'Bash(node scripts/*)', 'Bash(node .claude/skills/*)'];
 
 /** Правки основы: каждая «найти» ровно один раз, иначе мутант собран не из того места. */
 export function applyEdits(src, edits) {
@@ -128,17 +139,45 @@ export function zoneSummary(results) {
         if (r.verdict.status === 'caught') z.caught++;
       }
     }
-    if (r.runs) {
+    // мутант, у которого все прогоны не в счёт (отказ, сбой), не измерен: полнота «—», а не 0 %
+    if (r.runs?.length) {
       z.runs += r.runs.length;
       z.hits += r.runs.filter((x) => x.hit).length;
       z.measured++;
-      if (r.runs.length && r.runs.filter((x) => x.hit).length * 2 >= r.runs.length) z.caught++;
+      if (r.runs.filter((x) => x.hit).length * 2 >= r.runs.length) z.caught++;
     }
     zones.set(r.entry.zone, z);
   }
   const list = [...zones.values()].sort((a, b) => a.zone.localeCompare(b.zone));
   for (const z of list) z.recall = z.runs ? z.hits / z.runs : z.measured ? z.caught / z.measured : null;
   return list;
+}
+
+/**
+ * Итог прогона скилла. results: [{ entry, control?, runs: [{ hit, findings, error, invalid, denials, … }] }].
+ * Недействительный прогон (отказ на Bash/Skill) и ошибка запуска в полноту не входят: оба — failed_runs,
+ * недействительные отдельно — denied (колонка «отказы»). Основа (control) — целиком, с находками и ответом.
+ */
+export function skillRunSummary(results, { tools, intended = [], maxInvalid }) {
+  const measured = results.filter((r) => !r.control);
+  const valid = (x) => !x.error && !x.invalid;
+  const zones = zoneSummary(measured.map((r) => ({ ...r, runs: r.runs.filter(valid) })));
+  const every = results.flatMap((r) => r.runs);
+  const denied = measured.reduce((n, r) => n + r.runs.filter((x) => !x.error && x.invalid).length, 0);
+  const failed = measured.reduce((n, r) => n + r.runs.filter((x) => x.error).length, 0) + denied;
+  for (const z of zones) z.denied = measured.filter((r) => r.entry.zone === z.zone).reduce((n, r) => n + r.runs.filter((x) => !x.error && x.invalid).length, 0);
+  const c = results.find((r) => r.control);
+  const control = c ? {
+    counts: c.runs.map((x) => (valid(x) ? x.findings.length : null)),
+    runs: c.runs.map((x) => ({ skill_called: x.skill_called, findings: x.findings, error: x.error ?? null, invalid: x.invalid ?? null, denials: x.denials ?? [], turns: x.turns, cost: x.cost, answer: x.answer })),
+  } : null;
+  const denials = results.flatMap((r) => r.runs.flatMap((x, i) => (x.denials ?? []).map((d) => ({
+    mutant: r.entry.id, run: i + 1, tool: d.tool, command: d.command,
+    blocking: blockingDenials([d], { tools, intended }).length > 0,
+  }))));
+  const ran = every.filter((x) => !x.error);
+  const denialFail = denialGate({ invalid: ran.filter((x) => x.invalid).length, total: ran.length }, maxInvalid);
+  return { measured, zones, every, denied, failed, recall: zones[0]?.recall ?? null, control, denials, denialFail };
 }
 
 /** Нейтральный id копии для скилла: имя папки и meta.id не выдают дефект. */
