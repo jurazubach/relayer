@@ -1,7 +1,9 @@
-// C-19. Хабы: узел, который возвращается сам в себя (-> себя или -> своя метка сборки). Правила 1–7
+// C-19. Хабы: узел, который возвращается сам в себя (-> себя или -> своя метка сборки). Правила 1–8
 // по дереву; перебор порядков спиц заменён статикой: одинаковые строки в разных спицах.
-import { walk } from '../../lib/ink.mjs';
-import { short } from '../text.mjs';
+import { resolveTarget, walk } from '../../lib/ink.mjs';
+import { plural, short } from '../text.mjs';
+
+const IDENT = /[\p{L}_][\p{L}\p{N}_.]*/gu;
 
 const lineCount = (items) => { let n = 0; walk(items, (it) => { if (it.type === 'msg' || it.type === 'me' || it.type === 'sys') n++; }); return n; };
 
@@ -13,6 +15,17 @@ export default {
   run(ctx, find) {
     const { st, T } = ctx;
     const risk = T.re('dict.risk');
+    // имена в условиях и подстановках по главам: так читается счётчик посещений метки спицы «* (asked) […]»
+    const named = [];
+    for (const k of ctx.tree.knots) {
+      const ch = st.chapterOf(k.id);
+      const add = (expr) => { for (const m of String(expr).replace(/"[^"]*"/g, ' ').matchAll(IDENT)) named.push({ name: m[0], ch, node: k.id }); };
+      walk(k.items, (it) => {
+        if (it.type === 'choice') it.conds.forEach(add);
+        if (it.type === 'cond') [it.head, ...it.branches.map((b) => b.cond)].forEach(add);
+        if (it.type === 'msg' || it.type === 'me' || it.type === 'sys' || it.type === 'choice') for (const m of String(it.text).matchAll(/\{([^{}|]*)[:}]/g)) add(m[1]);
+      });
+    }
     for (const [id, edges] of st.edges) {
       if (!edges.some((e) => e.to === id && e.kind !== 'tunnel')) continue;
       const k = st.byId.get(id);
@@ -72,6 +85,31 @@ export default {
           }
         });
       });
+      // 8. длинный отросток без флага (R-36): спица, которая возвращается в хаб, длиннее порога реплик, но не
+      // пишет ничего, что прочтут в этой или следующей главе. Реплики туннеля из спицы — тоже её.
+      const ch = st.chapterOf(id);
+      const near = (c) => c == null || (c >= ch && c <= ch + 1); // функция без главы: где вызовут, неизвестно
+      for (const b of spokes.filter(back)) {
+        let n = lineCount(b.choice.items);
+        const writes = new Set(b.writes);
+        walk(b.choice.items, (it) => {
+          if (it.type !== 'divert' || it.kind !== 'tunnel') return;
+          const to = resolveTarget(it.target, id, st.ids);
+          if (!to || !st.byId.has(to)) return;
+          n += lineCount(st.byId.get(to).items);
+          for (const v of st.vars.index.values()) if (v.writes.some((w) => w.node === to)) writes.add(v.name);
+        });
+        if (n <= T.value('C-19.spur_msgs')) continue;
+        const read = [...writes].some((v) => st.vars.index.get(v)?.reads.some((r) => near(r.chapter)));
+        const label = b.choice.label && named.some((x) => near(x.ch) && (x.name === b.choice.label || x.name === `${id}.${b.choice.label}`));
+        if (read || label) continue;
+        find('C-19.spur_msgs', {
+          ...at,
+          message: writes.size
+            ? `хаб ${id}: «${short(b.text)}» — ${plural(n, 'реплика', 'реплики', 'реплик')} и обратно, ставит ${[...writes].join(', ')}, но не читают ни в главе ${ch}, ни в ${ch + 1}`
+            : `хаб ${id}: «${short(b.text)}» — ${plural(n, 'реплика', 'реплики', 'реплик')} и обратно без флага: отросток ничего не оставляет`,
+        });
+      }
     }
   },
 };
