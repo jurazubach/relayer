@@ -528,17 +528,7 @@ test('три истории каталога проходят без паден�
   }
 });
 
-// с E-02 напоминания не deferred: тест волны 2, который ждал этого, заменён тестами C-32 п. 6–7 ниже
-// (selftest-wave2.mjs правит его владелец — просьба в docs/playbook/_build/reports/E-02/requests.md)
-const REPLACED = new Set(['C-32: «сплю» → «доброе утро» через два часа; напоминания — deferred:E-02']);
-wave2((name, fn) => (REPLACED.has(name) ? undefined : test(name, fn)), { has, hasNot, lint, keys });
-
-test('C-32: «сплю» → «доброе утро» через два часа; напоминания больше не deferred', async () => {
-  const mk = (d) => `-> a\n=== a ===\nну #from:ann\n* [да]\n* [нет]\n- спокойной ночи #from:ann\nдоброе утро #from:ann #delay:${d}\n* [ок] -> END\n* [нет] -> END`;
-  const res = await has(mk('2h'), 'story.sleep_morning.min_h', { only: ['C-32'] });
-  assert.ok(!res.skipped.some((s) => s.check === 'C-32' && s.key), 'C-32 ничего не пропускает');
-  await hasNot(mk('7h'), 'story.sleep_morning.min_h', { only: ['C-32'] });
-});
+wave2(test, { has, hasNot, lint, keys });
 
 // развилка с вопросом, кнопками, #silent и напоминаниями; rest — что стоит после напоминаний
 const remind = (reminders, rest = '') => [
