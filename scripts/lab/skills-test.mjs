@@ -9,10 +9,11 @@ import { loadStory, parseStory } from '../lib/story.mjs';
 import { knownChecks, lintStory, loadChecks } from '../lint/core.mjs';
 import { buildStatic } from '../lint/static.mjs';
 import { loadThresholds } from '../lib/thresholds.mjs';
-import { createStreamParser, bareName } from './triggers-lib.mjs';
+import { createStreamParser, bareName, denialText, invalidReason } from './triggers-lib.mjs';
 import {
   buildKey, buildMutant, checkOwners, lintDiff, lintVerdict, matchFinding, neutralId, parseFindings,
-  pct, skillPrompt, skillsFromOwners, table, validateSpec, zoneSummary,
+  pct, SKILL_ALLOW, SKILL_DENY, skillPrompt, skillRunSummary, skillsFromOwners, table, validateSpec,
+  zoneSummary,
 } from './mutants-lib.mjs';
 import { MUTANTS } from './mutants-spec.mjs';
 
@@ -23,15 +24,8 @@ const KEY = join(DIR, 'key.json');
 const SKILLS = join(ROOT, '.claude/skills');
 const RUNS = join(ROOT, 'docs/lab/runs/mutants');
 
-// Прогон ничего не пишет и не видит ключа: запись запрещена, ключ и спецификация мутантов закрыты от чтения.
-const DENY = [
-  'Write', 'Edit', 'NotebookEdit', 'Artifact', 'ArtifactComments', 'ArtifactData', 'DesignSync',
-  'CronCreate', 'CronDelete', 'RemoteTrigger', 'ScheduleWakeup', 'PushNotification', 'SendMessage',
-  'EnterWorktree', 'Workflow', 'Read(./docs/lab/mutants/**)', 'Read(./scripts/lab/**)', 'Read(./docs/lab/runs/**)',
-  // node scripts/* разрешён ради линта и бота, но skills-test.mjs --json печатает ключ целиком
-  'Bash(node scripts/lab/*)',
-];
-const ALLOW = ['Read', 'Grep', 'Glob', 'Skill', 'Bash(npm run story*)', 'Bash(npm run -s story*)', 'Bash(node scripts/*)', 'Bash(node .claude/skills/*)'];
+const DENY = SKILL_DENY;
+const ALLOW = SKILL_ALLOW;
 
 const HELP = `npm run skills:test [-- флаги]
 
@@ -54,7 +48,8 @@ const HELP = `npm run skills:test [-- флаги]
   --skill <имя>      прогнать скилл .claude/skills/<имя> на мутантах его зоны
   --zone <скилл>     для --skill: мутанты другой зоны (по умолчанию зона = имя скилла)
   --mutant <id,…>    только эти мутанты
-  --control          для --skill: ещё прогон на основе — сколько находок скилл даёт на чистой истории
+  --control          для --skill: ещё прогон на основе — какие находки скилл даёт на чистой истории
+                     (в результат — сами находки и ответ, а не только их число)
   --runs <N>         прогонов на мутанта (по умолчанию lab.mutants.skill_runs)
   --min [доля]       для --skill: код 1, если полнота ниже доли; без числа — lab.mutants.skill_min_recall
   --jobs <N>         одновременных claude, 1–3 (по умолчанию 1)
@@ -66,8 +61,14 @@ const HELP = `npm run skills:test [-- флаги]
   --quiet            без строк по мутантам, только сводка по зонам
   --help             эта справка
 
-Пороги — lab.mutants.* в docs/playbook/thresholds.json. Коды выхода: 0 — прошло, 1 — полнота ниже
-порога или основа не чистая, 2 — ошибка набора (ключ устарел, правка не легла, скилла нет).`;
+Отказы в правах (system/permission_denied и permission_denials из result) сохраняются по каждому прогону:
+инструмент и команда. Отказ на инструменте из lab.denials.blocking_tools (Bash, Skill) делает прогон
+недействительным — скилл без своих команд деградирует в «модель» (LOCAL-03): он не попадание и не промах,
+а failed_runs и колонка «отказы». Отказ по нашему запрету (запись, чтение ключа) — замысел прогона.
+
+Пороги — lab.mutants.* и lab.denials.* в docs/playbook/thresholds.json. Коды выхода: 0 — прошло, 1 — полнота
+ниже порога, основа не чистая или недействительных прогонов больше lab.denials.max_invalid_share, 2 — ошибка
+набора (ключ устарел, правка не легла, скилла нет).`;
 
 const VALUED = ['--skill', '--zone', '--mutant', '--runs', '--jobs', '--model', '--out'];
 const FLAGS = ['--lint-only', '--build', '--control', '--dry-run', '--no-save', '--json', '--quiet', '--help', '-h'];
@@ -233,6 +234,8 @@ async function skillMode(all) {
     timeout: T.value('lab.mutants.skill_timeout_s'),
     maxTurns: T.value('lab.mutants.skill_max_turns'),
     min: args.min === undefined ? null : args.min === true ? T.value('lab.mutants.skill_min_recall') : share(args.min),
+    blocking: T.value('lab.denials.blocking_tools'),
+    maxInvalid: T.value('lab.denials.max_invalid_share'),
   };
   const targets = [...list.map((entry) => ({ entry, path: join(ROOT, entry.path) }))];
   if (args.control) targets.push({ entry: { id: '_base', zone, check: null, node: null, broken: 'основа без дефекта' }, path: BASE, control: true });
@@ -256,24 +259,23 @@ async function skillMode(all) {
         const nodes = [...buildStatic(parseStory(loadStory(dir))).ids];
         const run = await runClaude(skillPrompt(skill, dir), { ...o, dir: tmp });
         const findings = parseFindings(run.text, nodes);
-        const hit = !r.control && run.skill === skill ? matchFinding(r.entry, findings) : null;
-        r.runs.push({ skill_called: run.skill, hit: !!hit, matched: hit, findings, error: run.error ?? null, denied: run.denied ?? [], turns: run.turns, cost: run.cost, answer: run.text });
-        if (!args.json) process.stderr.write(`${hit ? '✓' : r.control ? '·' : '✗'} ${r.entry.id} #${k + 1}${run.error ? ` (${run.error})` : run.skill !== skill ? ` (вызван ${run.skill ?? 'никакой скилл'})` : ''}\n`);
+        const hit = !r.control && !run.error && !run.invalid && run.skill === skill ? matchFinding(r.entry, findings) : null;
+        r.runs.push({ skill_called: run.skill, hit: !!hit, matched: hit, findings, error: run.error ?? null, invalid: run.invalid ?? null, denials: run.denials ?? [], turns: run.turns, cost: run.cost, answer: run.text });
+        const why = run.error ?? run.invalid ?? (run.skill !== skill ? `вызван ${run.skill ?? 'никакой скилл'}` : null);
+        if (!args.json) process.stderr.write(`${hit ? '✓' : run.invalid ? '⊘' : r.control ? '·' : '✗'} ${r.entry.id} #${k + 1}${why ? ` (${why})` : ''}\n`);
       });
     }
   });
   await pool(tasks, o.jobs);
   rmSync(tmp, { recursive: true, force: true });
 
-  const measured = results.filter((r) => !r.control);
-  const zones = zoneSummary(measured.map((r) => ({ ...r, runs: r.runs.filter((x) => !x.error) })));
-  const failed = measured.reduce((n, r) => n + r.runs.filter((x) => x.error).length, 0);
-  const recall = zones[0]?.recall ?? null;
-  const control = results.find((r) => r.control);
-  const ok = o.min == null || (recall ?? 0) >= o.min;
+  const { measured, zones, every, denied, failed, recall, control, denials, denialFail } = skillRunSummary(results, { tools: o.blocking, intended: DENY, maxInvalid: o.maxInvalid });
+  const recallOk = o.min == null || (recall ?? 0) >= o.min;
+  const ok = recallOk && !denialFail;
   const out = {
-    ok, mode: 'skill', skill, zone, model: o.model, runs: o.runs, failed_runs: failed, recall, min_recall: o.min, zones,
-    control: control ? { findings: control.runs.map((x) => x.findings.length) } : null,
+    ok, mode: 'skill', skill, zone, model: o.model, runs: o.runs, failed_runs: failed, denied_runs: denied, recall, min_recall: o.min, zones,
+    control, denials,
+    ...(denialFail ? { denial_fail: denialFail } : {}),
     mutants: measured.map((r) => ({ ...r.entry, hits: r.runs.filter((x) => x.hit).length, runs: r.runs })),
   };
   if (!args['no-save']) {
@@ -287,14 +289,19 @@ async function skillMode(all) {
     if (!args.quiet) {
       for (const r of measured) {
         const hits = r.runs.filter((x) => x.hit).length;
-        say(`${hits * 2 >= r.runs.length ? '✓' : '✗'} ${r.entry.id.padEnd(28)} ${hits}/${r.runs.length}  ${r.entry.check ?? ''} ${r.entry.node ?? ''} — ${r.entry.broken}`);
+        const valid = r.runs.filter((x) => !x.error && !x.invalid).length;
+        const lost = r.runs.length - valid;
+        say(`${!valid ? '⊘' : hits * 2 >= valid ? '✓' : '✗'} ${r.entry.id.padEnd(28)} ${hits}/${valid}${lost ? ` (+${lost} не в счёт)` : ''}  ${r.entry.check ?? ''} ${r.entry.node ?? ''} — ${r.entry.broken}`);
       }
       say('');
     }
-    say(table(zones.map((z) => [z.zone, z.mutants, z.caught, `${z.hits}/${z.runs}`, pct(z.recall)]), ['зона', 'мутантов', 'найдены', 'попаданий', 'полнота скилла']));
-    if (failed) say(`\n⚠ прогонов не состоялось: ${failed} (ошибка запуска или отказ в правах) — в полноту не входят`);
-    if (control) say(`\nна чистой основе находок: ${control.runs.map((x) => x.findings.length).join(', ')} (шум скилла)`);
-    if (o.min != null) say(ok ? `✓ полнота ${pct(recall)} ≥ ${pct(o.min)}` : `✗ полнота ${pct(recall)} ниже ${pct(o.min)}`);
+    say(table(zones.map((z) => [z.zone, z.mutants, z.caught, `${z.hits}/${z.runs}`, z.denied || '', pct(z.recall)]), ['зона', 'мутантов', 'найдены', 'попаданий', 'отказы', 'полнота скилла']));
+    if (failed) say(`\n⚠ прогонов не в счёт: ${failed} (ошибка запуска ${failed - denied}, недействительных из-за отказа в правах ${denied}) — в полноту не входят`);
+    const allDenials = every.flatMap((x) => x.denials);
+    say(`отказов в правах: ${allDenials.length}${allDenials.length ? ` — ${denialText(allDenials)}` : ''}`);
+    if (control) say(`\nна чистой основе находок: ${control.runs.map((x) => (x.error ? 'ошибка' : x.invalid ? 'отказ' : x.findings.length)).join(', ')} (шум скилла; сами находки — control.runs в результате)`);
+    if (o.min != null) say(recallOk ? `✓ полнота ${pct(recall)} ≥ ${pct(o.min)}` : `✗ полнота ${pct(recall)} ниже ${pct(o.min)}`);
+    if (denialFail) say(`✗ ${denialFail}`);
   }
   process.exitCode = ok ? 0 : 1;
 }
@@ -303,7 +310,6 @@ function runClaude(prompt, o) {
   return new Promise((done) => {
     const parser = createStreamParser();
     let text = null;
-    let denied = [];
     let buf = '';
     const child = spawn('claude', [
       '-p', prompt, '--model', o.model, '--output-format', 'stream-json', '--verbose',
@@ -326,22 +332,22 @@ function runClaude(prompt, o) {
           const ev = JSON.parse(line);
           parser.push(ev);
           if (ev.type === 'result' && typeof ev.result === 'string') text = ev.result;
-          if (ev.type === 'result') denied = (ev.permission_denials ?? []).map((d) => d.tool_name ?? '?');
         } catch {
           // предупреждение CLI посреди потока
         }
       }
     });
     child.stderr.on('data', (d) => (stderr += d));
-    child.on('error', (e) => { clearTimeout(timer); done({ error: `не удалось запустить claude: ${e.message}`, skill: null, text: null }); });
+    child.on('error', (e) => { clearTimeout(timer); done({ error: `не удалось запустить claude: ${e.message}`, skill: null, text: null, denials: [] }); });
     child.on('close', (code) => {
       clearTimeout(timer);
       const r = parser.end();
-      const out = { skill: bareName(r.skill), text, denied, turns: r.result?.num_turns ?? null, cost: r.result?.cost ?? null };
+      const out = { skill: bareName(r.skill), text, denials: r.denials, turns: r.result?.num_turns ?? null, cost: r.result?.cost ?? null };
       if (timedOut) out.error = `не уложился в ${o.timeout} с`;
       else if (text == null) out.error = `claude вышел с кодом ${code}: ${stderr.trim().split('\n').slice(-2).join(' ') || 'без ответа'}`;
-      // отказ в правах без единой находки — прогон не состоялся, а не «скилл не нашёл»
-      else if (denied.length && !/"findings"\s*:\s*\[\s*\{/.test(text)) out.error = `отказано в правах: ${denied.join(', ')}`;
+      // Отказ на Bash/Skill — недействителен даже с находками: они от модели без замера, а не от скилла (LOCAL-03).
+      const invalid = invalidReason(r.denials, { tools: o.blocking, intended: DENY });
+      if (invalid) out.invalid = invalid;
       done(out);
     });
   });

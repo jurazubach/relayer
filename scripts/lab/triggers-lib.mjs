@@ -10,6 +10,7 @@ export const NONE = 'none';
 export const TRIGGER_KEYS = [
   'lab.triggers.runs_per_phrase', 'lab.triggers.min_share', 'lab.triggers.max_false',
   'lab.triggers.jobs', 'lab.triggers.max_turns', 'lab.triggers.timeout_s',
+  'lab.denials.blocking_tools', 'lab.denials.max_invalid_share',
 ];
 
 /** Пороги теста срабатывания: { values, source }. Ключа нет — исключение загрузчика, а не запасное число. */
@@ -163,28 +164,64 @@ export function buildPlan({ skills, routing }, { present, focus, explicit = fals
 
 const SKILL_MD = /(?:^|[/\\])skills[/\\]([^/\\\s'"]+)[/\\]SKILL\.md\b/;
 
+/** Что именно просил инструмент: команда Bash, имя скилла, путь файла — для отчёта об отказе. */
+export function describeInput(tool, input) {
+  if (!input || typeof input !== 'object') return '';
+  const v = input.command ?? input.skill ?? input.file_path ?? input.notebook_path ?? input.pattern ?? input.url ?? input.path;
+  return typeof v === 'string' ? v : JSON.stringify(input);
+}
+
 /**
  * Разбор потока stream-json одного прогона (claude-code-format.md §4.2).
  * Срабатывание — первый `tool_use` `Skill` в событии без `parent_tool_use_id`; события агентов не считаются.
  * Чтение `SKILL.md` через Read или Bash — «обход»: Claude Code сам называет его запрещённым, попаданием не считаем.
+ * Отказы в правах — из `system/permission_denied` по ходу и `result.permission_denials` в конце: прогон, который
+ * гасим на вызове скилла, до `result` не доживает, а отказ на сам `Skill` приходит раньше его `tool_result`.
  */
 export function createStreamParser() {
-  const state = { init: null, skill: null, bypass: [], tools: [], result: null, events: 0 };
+  const state = { init: null, skill: null, skill_id: null, skill_settled: false, bypass: [], tools: [], denials: [], result: null, events: 0 };
+  const inputs = new Map();
+  const deny = (id, tool, input, reason) => {
+    const prev = id ? state.denials.find((d) => d.id === id) : null;
+    if (prev) {
+      if (reason && !prev.reason) prev.reason = reason;
+      if (!prev.command && input) prev.command = describeInput(prev.tool, input);
+      return;
+    }
+    const known = inputs.get(id);
+    const name = tool ?? known?.name ?? '?';
+    state.denials.push({ tool: name, command: describeInput(name, input ?? known?.input), id: id ?? null, ...(reason ? { reason } : {}) });
+  };
   function push(ev) {
     state.events++;
     if (ev.type === 'system' && ev.subtype === 'init') {
       state.init = { skills: ev.skills ?? [], plugins: ev.plugins ?? [], mcp_servers: ev.mcp_servers ?? [], model: ev.model, version: ev.claude_code_version };
       return;
     }
-    if (ev.type === 'result') {
-      state.result = { subtype: ev.subtype, is_error: !!ev.is_error, num_turns: ev.num_turns, cost: ev.total_cost_usd };
+    if (ev.type === 'system' && ev.subtype === 'permission_denied') {
+      deny(ev.tool_use_id, ev.tool_name, null, ev.decision_reason_type);
+      if (ev.tool_use_id && ev.tool_use_id === state.skill_id) state.skill_settled = true;
       return;
     }
-    if (ev.type !== 'assistant' || ev.parent_tool_use_id) return;
+    if (ev.type === 'result') {
+      state.result = { subtype: ev.subtype, is_error: !!ev.is_error, num_turns: ev.num_turns, cost: ev.total_cost_usd };
+      for (const d of ev.permission_denials ?? []) deny(d.tool_use_id, d.tool_name, d.tool_input, null);
+      return;
+    }
+    if (ev.type === 'user') {
+      for (const c of ev.message?.content ?? []) if (c.type === 'tool_result' && c.tool_use_id && c.tool_use_id === state.skill_id) state.skill_settled = true;
+      return;
+    }
+    if (ev.type !== 'assistant') return;
+    for (const c of ev.message?.content ?? []) if (c.type === 'tool_use' && c.id) inputs.set(c.id, { name: c.name, input: c.input });
+    if (ev.parent_tool_use_id) return;
     for (const c of ev.message?.content ?? []) {
       if (c.type !== 'tool_use') continue;
       state.tools.push(c.name);
-      if (c.name === 'Skill' && !state.skill) state.skill = String(c.input?.skill ?? c.input?.name ?? '?');
+      if (c.name === 'Skill' && !state.skill) {
+        state.skill = String(c.input?.skill ?? c.input?.name ?? '?');
+        state.skill_id = c.id ?? null;
+      }
       const where = c.name === 'Read' ? c.input?.file_path : c.name === 'Bash' ? c.input?.command : null;
       const m = typeof where === 'string' && (where.match(SKILL_MD) ?? (/SKILL\.md/.test(where) ? [null, '?'] : null));
       if (m && !state.skill) state.bypass.push(m[1]);
@@ -209,7 +246,58 @@ export function createStreamParser() {
     const { _buf, ...out } = state;
     return out;
   }
-  return { feed, push, end, get skill() { return state.skill; }, get init() { return state.init; } };
+  return {
+    feed, push, end,
+    get skill() { return state.skill; },
+    get init() { return state.init; },
+    // Вызов скилла без id (старый формат потока) ждать не на чем: считаем его сразу состоявшимся.
+    get skillSettled() { return !!state.skill && (!state.skill_id || state.skill_settled); },
+  };
+}
+
+/** Подходит ли отказ под правило вида `Tool` или `Tool(префикс*)` / `Tool(точно)`. */
+export function matchesRule(rule, denial) {
+  const m = String(rule).match(/^([^(]+)(?:\((.*)\))?$/);
+  if (!m || m[1] !== denial.tool) return false;
+  if (m[2] === undefined) return true;
+  const pat = m[2].replace(/:\*$/, ' *');
+  const cmd = String(denial.command ?? '').replace(/^\.\//, '');
+  const want = pat.replace(/^\.\//, '');
+  return want.endsWith('*') ? cmd.startsWith(want.slice(0, -1).replace(/\*+$/, '')) : cmd === want;
+}
+
+/**
+ * Отказы, после которых прогон недействителен: на инструментах из `lab.denials.blocking_tools` (Bash, Skill —
+ * без них скилл молча деградирует в «модель», LOCAL-03). Отказ по нашему же запрету (`intended`, правила
+ * --disallowedTools: подглядеть ключ, записать файл) — замысел прогона, а не сбой.
+ */
+export function blockingDenials(denials, { tools, intended = [] }) {
+  return (denials ?? []).filter((d) => tools.includes(d.tool) && !intended.some((r) => matchesRule(r, d)));
+}
+
+/** Почему прогон недействителен (строка) или null: общий вердикт lab:triggers и skills:test. */
+export function invalidReason(denials, opts) {
+  const blocking = blockingDenials(denials, opts);
+  return blocking.length ? `отказ в правах: ${denialText(blocking)}` : null;
+}
+
+/** Отказы одной строкой для отчёта: «Bash ×2 (npm run story:lint, …), Skill ×1». */
+export function denialText(denials) {
+  const by = new Map();
+  for (const d of denials) {
+    const row = by.get(d.tool) ?? { n: 0, cmds: [] };
+    row.n++;
+    if (d.command && !row.cmds.includes(d.command)) row.cmds.push(d.command);
+    by.set(d.tool, row);
+  }
+  return [...by].map(([t, r]) => `${t} ×${r.n}${r.cmds.length ? ` (${r.cmds.join('; ')})` : ''}`).join(', ');
+}
+
+/** Доля недействительных прогонов против `lab.denials.max_invalid_share`: строка ошибки или null. */
+export function denialGate({ invalid, total }, max) {
+  if (!total || !invalid) return null;
+  const share = invalid / total;
+  return share > max ? `недействительных прогонов (отказ в правах) ${pct(share)} > ${pct(max)}: замер не про скилл, а про права — поправь allowed-tools / --allowedTools` : null;
 }
 
 /** Убирает префикс плагина: `plugin:skill` и `skill` — один и тот же для сравнения. */
@@ -227,12 +315,13 @@ export function isHit(expect, outcome) {
  * Сводка по прогонам. Для каждого скилла:
  * - hit_rate — доля прогонов, где фраза для него вызвала именно его;
  * - false_rate — доля прогонов чужих фраз (негативы, соседи, маршруты, none), где он сработал;
- * - bypass — сколько раз его SKILL.md прочитали в обход Skill.
+ * - bypass — сколько раз его SKILL.md прочитали в обход Skill;
+ * - denied — сколько прогонов его фраз недействительны: отказ в правах (`invalid`), ни попадание, ни промах.
  */
 export function summarize(phrases, { present = [] } = {}) {
   const per = new Map();
   const row = (s) => {
-    if (!per.has(s)) per.set(s, { skill: s, expected: 0, hits: 0, foreign: 0, false: 0, bypass: 0, missed_to: {}, false_from: [] });
+    if (!per.has(s)) per.set(s, { skill: s, expected: 0, hits: 0, foreign: 0, false: 0, bypass: 0, denied: 0, missed_to: {}, false_from: [] });
     return per.get(s);
   };
   const targetOf = (c) => (c.expect === NONE || c.expect.startsWith('!') ? null : bareName(c.expect));
@@ -240,17 +329,21 @@ export function summarize(phrases, { present = [] } = {}) {
   for (const s of present) row(s);
   for (const p of phrases) {
     for (const c of p.checks) if (targetOf(c)) row(targetOf(c));
-    for (const r of p.runs) if (!r.error && r.skill) row(bareName(r.skill));
+    for (const r of p.runs) if (!r.error && !r.invalid && r.skill) row(bareName(r.skill));
   }
   let checks = 0;
   let passed = 0;
   let errors = 0;
+  let denied = 0;
   for (const p of phrases) {
-    const ok = p.runs.filter((r) => !r.error);
-    errors += p.runs.length - ok.length;
+    const ok = p.runs.filter((r) => !r.error && !r.invalid);
+    const invalid = p.runs.filter((r) => !r.error && r.invalid).length;
+    errors += p.runs.filter((r) => r.error).length;
+    denied += invalid;
     for (const r of ok) for (const b of r.bypass) if (b !== '?') row(b).bypass++;
     for (const c of p.checks) {
       const target = targetOf(c);
+      if (target && invalid) row(target).denied += invalid;
       for (const r of ok) {
         checks++;
         const hit = isHit(c.expect, r.skill);
@@ -279,7 +372,7 @@ export function summarize(phrases, { present = [] } = {}) {
   const skills = [...per.values()]
     .map((t) => ({ ...t, hit_rate: t.expected ? t.hits / t.expected : null, false_rate: t.foreign ? t.false / t.foreign : null }))
     .sort((a, b) => a.skill.localeCompare(b.skill));
-  return { skills, checks, passed, rate: checks ? passed / checks : null, errors };
+  return { skills, checks, passed, rate: checks ? passed / checks : null, errors, denied, failed_runs: errors + denied };
 }
 
 /** Что не так с окружением: чужие скиллы в листинге, свои пропали, лишние плагины и MCP. */

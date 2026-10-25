@@ -8477,6 +8477,46 @@
       }
     ]
   },
+  "lab.denials.blocking_tools": {
+    "value": [
+      "Bash",
+      "Skill"
+    ],
+    "unit": "инструменты",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "local-lessons.md LOCAL-03: отказ на Bash/Skill — скилл деградирует в «модель» без замера",
+      "_build/reports/W1/checkpoint.md, «Правки» п. 4"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "T-17",
+        "change": "заведён: отказ в правах на этих инструментах делает прогон claude -p в lab:triggers и skills:test недействительным; отказ на Write и чтение ключа — замысел прогона"
+      }
+    ]
+  },
+  "lab.denials.max_invalid_share": {
+    "value": 0.2,
+    "unit": "доля прогонов",
+    "op": ">",
+    "level": "error",
+    "basis": "our_estimate",
+    "sources": [
+      "local-lessons.md LOCAL-03",
+      "lab.triggers.max_false — та же доля шума на недетерминированной модели"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "T-17",
+        "change": "заведён: больше такой доли недействительных прогонов (отказ на Bash/Skill) — замер мерит права, а не скилл; lab:triggers и skills:test выходят с кодом 1"
+      }
+    ]
+  },
   "skill.reference.max_lines": {
     "value": 300,
     "unit": "строк",

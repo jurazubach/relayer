@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import {
   NONE, loadThresholds, projectSkills, loadPhraseDir, parseSkillFile, buildPlan,
   createStreamParser, summarize, checkEnv, gate, pct, isHit, hiddenSkills,
+  blockingDenials, denialText, denialGate, invalidReason,
 } from './triggers-lib.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -31,6 +32,12 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
 Каждая фраза — N прогонов claude -p --model <модель> --output-format stream-json --verbose
 --no-session-persistence --strict-mcp-config из корня репозитория. Срабатывание — первый вызов Skill
 вне агентов (claude-code-format.md §4.2). Чтение SKILL.md через Read/Bash — колонка «обход», не попадание.
+Прогон гасится, когда на вызов Skill пришёл ответ: так видно, не отказали ли в правах на сам Skill.
+
+Отказы в правах (system/permission_denied и permission_denials из result) сохраняются по каждому прогону:
+инструмент и команда. Отказ на инструменте из lab.denials.blocking_tools (Bash, Skill) делает прогон
+недействительным: он не попадание и не промах, а колонка «отказы» и failed_runs (LOCAL-03). Если таких
+прогонов больше lab.denials.max_invalid_share — код 1 и без --min: замер мерит права, а не скилл.
 
 Флаги:
   --skill <имя>       только фразы скилла, его соседей и маршруты к ним
@@ -55,11 +62,12 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --help              эта справка
 
 Пороги и умолчания — ключи lab.triggers.* (runs_per_phrase, min_share, max_false, jobs, max_turns,
-timeout_s) в docs/playbook/thresholds.json; ключа нет — ошибка загрузки, запасных чисел в коде нет.
+timeout_s) и lab.denials.* (blocking_tools, max_invalid_share) в docs/playbook/thresholds.json; ключа нет — ошибка загрузки, запасных чисел в коде нет.
 
 Прогон ничего не пишет и не публикует: запись, артефакты, расписания и рассылки запрещены
 (--disallowedTools), всё, что спросило бы разрешения, отклоняется (--permission-prompts none). Если git status после прогона изменился — предупреждение.
-Код выхода: 0 — прошло, 1 — не прошли пороги --min, 2 — ошибка запуска или файлов фраз.`;
+Код выхода: 0 — прошло, 1 — не прошли пороги --min или недействительных прогонов больше
+lab.denials.max_invalid_share, 2 — ошибка запуска или файлов фраз.`;
 
 const FLAGS_WITH_VALUE = ['--skill', '--file', '--runs', '--max-false', '--jobs', '--model', '--max-turns', '--timeout', '--out'];
 const FLAGS = ['--min', '--strict-env', '--check-env', '--dry-run', '--no-save', '--json', '--quiet', '--help', '-h'];
@@ -112,7 +120,10 @@ function claudeArgs(prompt, o) {
   ];
 }
 
-/** Один прогон фразы. Как только найден вызов Skill, процесс гасим: дальше скилл начнёт работу, а она не нужна. */
+/**
+ * Один прогон фразы. Как только на вызов Skill пришёл ответ, процесс гасим: дальше скилл начнёт работу, а она
+ * не нужна. Гасить на самом tool_use рано — отказ в правах на Skill приходит после него.
+ */
 function runOnce(prompt, o, { untilInit = false } = {}) {
   return new Promise((done) => {
     const parser = createStreamParser();
@@ -130,17 +141,19 @@ function runOnce(prompt, o, { untilInit = false } = {}) {
     child.stdout.on('data', (chunk) => {
       parser.feed(chunk);
       if (untilInit && parser.init) stop('init');
-      else if (parser.skill) stop('skill');
+      else if (parser.skillSettled) stop('skill');
     });
     child.stderr.on('data', (d) => (stderr += d));
     child.on('error', (e) => {
       clearTimeout(timer);
-      done({ error: `не удалось запустить claude: ${e.message}`, skill: null, bypass: [] });
+      done({ error: `не удалось запустить claude: ${e.message}`, skill: null, bypass: [], denials: [] });
     });
     child.on('close', (code) => {
       clearTimeout(timer);
       const r = parser.end();
-      const out = { skill: r.skill, bypass: r.bypass, tools: r.tools, init: r.init, turns: r.result?.num_turns ?? null, cost: r.result?.cost ?? null, stopped };
+      const out = { skill: r.skill, bypass: r.bypass, tools: r.tools, denials: r.denials, init: r.init, turns: r.result?.num_turns ?? null, cost: r.result?.cost ?? null, stopped };
+      const invalid = invalidReason(r.denials, { tools: o.blocking, intended: DENY });
+      if (invalid) out.invalid = invalid;
       // --max-turns обрывает прогон с ошибкой (claude-code-format.md §4.2), это не сбой; сбой — если ответа не было вовсе.
       if (stopped === 'timeout' && !r.skill) out.error = `не уложился в ${o.timeout} с`;
       else if (!r.init && !untilInit) out.error = `claude вышел с кодом ${code}: ${stderr.trim().split('\n').slice(-3).join(' ') || 'без вывода'}`;
@@ -203,6 +216,8 @@ async function main() {
     timeout: raw.timeout ? int(raw.timeout, '--timeout', 10, 1800) : th.values['lab.triggers.timeout_s'],
     min: raw.min === undefined ? null : raw.min === true ? th.values['lab.triggers.min_share'] : raw.min === 'build' ? th.values['lab.triggers.min_share_build'] : share(raw.min, '--min'),
     maxFalse: raw['max-false'] ? share(raw['max-false'], '--max-false') : th.values['lab.triggers.max_false'],
+    blocking: th.values['lab.denials.blocking_tools'],
+    maxInvalid: th.values['lab.denials.max_invalid_share'],
   };
   const defaults = Object.entries(th.source).filter(([, s]) => s === 'default').map(([k]) => k);
 
@@ -289,6 +304,8 @@ async function main() {
 
   const summary = summarize(plan.phrases, { present });
   const fails = o.min === null ? [] : gate(summary, { min: o.min, maxFalse: o.maxFalse });
+  const denialFail = denialGate({ invalid: summary.denied, total: total - summary.errors }, o.maxInvalid);
+  if (denialFail) fails.push(denialFail);
   const allErrors = summary.errors === total;
   const date = new Date();
   const result = {
@@ -304,13 +321,15 @@ async function main() {
     seconds: Math.round((Date.now() - started) / 1000),
     cost_usd: plan.phrases.flatMap((p) => p.runs).reduce((s, r) => s + (r.cost ?? 0), 0) || null,
     env: { skills: init?.skills ?? [], project: present, warnings: envWarnings },
-    summary: { checks: summary.checks, passed: summary.passed, rate: summary.rate, errors: summary.errors },
+    summary: { checks: summary.checks, passed: summary.passed, rate: summary.rate, errors: summary.errors, denied: summary.denied, failed_runs: summary.failed_runs },
     skills: summary.skills,
     phrases: plan.phrases.map((p) => ({
       text: p.text,
       checks: p.checks.map((c) => ({ expect: c.expect, kind: c.kind, file: c.file })),
-      runs: p.runs.map((r) => ({ skill: r.skill, bypass: r.bypass, tools: r.tools, turns: r.turns, ...(r.error ? { error: r.error } : {}) })),
+      runs: p.runs.map((r) => ({ skill: r.skill, bypass: r.bypass, tools: r.tools, denials: r.denials, turns: r.turns, ...(r.invalid ? { invalid: r.invalid } : {}), ...(r.error ? { error: r.error } : {}) })),
     })),
+    // все отказы плоским списком: и недействительные прогоны, и отказы по нашему запрету
+    denials: plan.phrases.flatMap((p) => p.runs.flatMap((r, i) => (r.denials ?? []).map((d) => ({ phrase: p.text, run: i + 1, tool: d.tool, command: d.command, blocking: blockingDenials([d], { tools: o.blocking, intended: DENY }).length > 0 })))),
     skipped: plan.skipped.map((s) => ({ text: s.text, expect: s.expect, reason: s.reason })),
     fails,
     ok: !fails.length && !allErrors,
@@ -338,32 +357,35 @@ async function main() {
 
 function report(r, o) {
   const rows = r.skills
-    .filter((s) => s.expected || s.false || s.bypass)
+    .filter((s) => s.expected || s.false || s.bypass || s.denied)
     .map((s) => [
       s.skill,
       s.expected ? `${pct(s.hit_rate)} (${s.hits}/${s.expected})` : '—',
       s.foreign ? `${pct(s.false_rate)} (${s.false}/${s.foreign})` : '—',
       s.bypass || '',
+      s.denied || '',
       Object.entries(s.missed_to).map(([k, v]) => `${k}×${v}`).join(', '),
     ]);
   console.log('');
-  console.log(table(rows, ['скилл', 'попадания', 'ложные', 'обход', 'вместо него']));
+  console.log(table(rows, ['скилл', 'попадания', 'ложные', 'обход', 'отказы', 'вместо него']));
   if (!o.quiet) {
-    const bad = r.phrases.filter((p) => p.checks.some((c) => p.runs.some((x) => !x.error && !isHit(c.expect, x.skill))));
+    const bad = r.phrases.filter((p) => p.checks.some((c) => p.runs.some((x) => !x.error && !x.invalid && !isHit(c.expect, x.skill))));
     if (bad.length) {
       console.log('\nМимо:');
       for (const p of bad) {
-        const got = p.runs.map((x) => (x.error ? 'ошибка' : x.skill ?? NONE) + (x.bypass.length ? `+обход(${x.bypass.join(',')})` : '')).join(', ');
+        const got = p.runs.map((x) => (x.error ? 'ошибка' : x.invalid ? 'отказ' : x.skill ?? NONE) + (x.bypass.length ? `+обход(${x.bypass.join(',')})` : '')).join(', ');
         console.log(`  ждали ${p.checks.map((c) => c.expect).join(' / ')} · вышло ${got} · «${p.text}»`);
       }
     }
   }
   if (r.summary.errors) console.log(`\n⚠ прогонов с ошибкой: ${r.summary.errors} (в доли не входят)`);
+  const blocking = r.denials.filter((d) => d.blocking);
+  console.log(`\nОтказов в правах: ${r.denials.length}${r.denials.length ? ` (${denialText(r.denials)})` : ''}; недействительных прогонов: ${r.summary.denied}${r.summary.denied ? ` — в доли не входят; на ${o.blocking.join('/')}: ${denialText(blocking)}` : ''}`);
   console.log(`\nВсего: ${pct(r.summary.rate)} проверок прошло (${r.summary.passed}/${r.summary.checks}), ${r.seconds} с${r.cost_usd ? `, от $${r.cost_usd.toFixed(2)} (оборванные прогоны цену не сообщают)` : ''}`);
   if (r.min !== null) {
     if (r.fails.length) console.log(`✗ пороги (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false'])}):\n  ${r.fails.join('\n  ')}`);
     else console.log(`✓ пороги пройдены (--min ${pct(r.min)}, ложных ≤ ${pct(r.thresholds['lab.triggers.max_false'])})`);
-  }
+  } else if (r.fails.length) console.log(`✗ ${r.fails.join('\n✗ ')}`);
   if (r.saved) console.log(`Записано: ${r.saved}`);
 }
 
