@@ -1,25 +1,9 @@
 // Журнал бота → хронология, как её проживает игрок: чат, кто пишет, когда приходит строка в каждом режиме.
-// Время считается по формулам engine.ts (набор и зазор) — от старта прохождения, без часов игрока.
+// Время — общая формула scripts/lib/playtime.mjs (та же, что у story:lint), от старта прохождения, без часов игрока.
 import { parseTag } from '../../lib/ink.mjs';
+import { playerClock } from '../../lib/playtime.mjs';
+import { thresholds } from '../../lib/thresholds.mjs';
 import { choiceTags } from './personas.mjs';
-import { threshold } from './thresholds.mjs';
-
-/** engine.ts typingTime, в секундах. */
-export function typingTime(kind, text) {
-  if (kind === 'sys' || kind === 'me') return 0;
-  if (kind === 'photo') return 2.6;
-  return Math.min(5, Math.max(1.1, 0.6 + text.length * 0.05));
-}
-
-/** engine.ts gapTime, в секундах: «прочитал, подумал», детерминированно от текста. */
-export function gapTime(kind, text, afterPlayer) {
-  if (kind === 'sys') return 0.7;
-  if (kind === 'me') return 0.9;
-  let h = 0;
-  for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
-  const jitter = 0.35 + (h % 600) / 1000;
-  return afterPlayer ? jitter + 1.2 : jitter;
-}
 
 /**
  * @param {object[]} events журнал bot.play
@@ -30,26 +14,25 @@ export function gapTime(kind, text, afterPlayer) {
  *   items: line / choice / var по порядку; у строк и кнопок tReal и tClick — секунды от старта.
  */
 export function timeline(events, { tree, away = false } = {}) {
-  const keep = threshold('click.keep_delay');
-  const jumpAt = threshold('click.jump_label');
-  const awayAt = threshold('trace.distracted_away');
+  const T = thresholds();
+  const keep = T.seconds('C-31.click_delay_max_s');
+  const jumpAt = T.seconds('engine.click.time_jump_label');
+  const awayAt = T.seconds('story.pause.session_s');
+  const clock = playerClock(T);
   const chapterOf = new Map(tree.knots.map((k) => [k.id, k.chapter]));
   const names = Object.fromEntries(Object.entries(tree.contacts).map(([id, c]) => [id, c.name]));
   const items = [];
   const batches = [];
   let tReal = 0;
   let tClick = 0;
-  let carry = 0;
   let speaker = null;
   let lastThread = null;
-  let afterPlayer = false;
   let chapter = null;
   const seen = new Set();
   let batch = null;
   let pendingUnlock = [];
 
   for (const e of events) {
-    if (e.type === 'delay') { carry += e.seconds; continue; }
     if (e.type === 'var') { items.push({ type: 'var', name: e.name, value: e.value, prev: e.prev, tReal, tClick, chapter }); continue; }
     if (e.type === 'line') {
       // глава — по узлу (knot.chapter из parseInk), как в checks.md: не по счёту тегов #chapter на пути
@@ -66,17 +49,14 @@ export function timeline(events, { tree, away = false } = {}) {
       const isChapter = !!has('chapter');
       if (e.kind === 'msg' && has('from')) speaker = has('from').value || null;
       else if (e.kind === 'msg') speaker = e.who ?? speaker;
-      if (!e.text) { pendingUnlock.push(...unlock); continue; } // строка из одних тегов: пауза и открытия — следующей строке
-      const kind = e.kind === 'msg' ? (has('photo') ? 'photo' : 'in') : e.kind;
+      const tm = clock.line(e);
+      if (!tm) { pendingUnlock.push(...unlock); continue; } // строка из одних тегов: пауза и открытия — следующей строке
+      const { kind, delay, gap, typing } = tm;
       let thread;
       if (kind === 'in' || kind === 'photo') thread = speaker ?? 'unknown';
       else if (kind === 'me') thread = e.who || lastThread || speaker || 'unknown';
       else thread = (has('sys')?.value) || lastThread || speaker || 'unknown';
-      const delay = carry;
-      carry = 0;
       const clickDelay = delay <= keep ? delay : 0;
-      const gap = gapTime(kind, e.text, afterPlayer);
-      const typing = typingTime(kind, e.text);
       // пачка отвлечённого: ушёл на длинной паузе, вернётся, когда очередь дойдёт до кнопки;
       // пока он не вернулся, следующие паузы — лишь новые уведомления в той же пачке
       if (away && delay >= awayAt && !batch) {
@@ -97,7 +77,6 @@ export function timeline(events, { tree, away = false } = {}) {
       if (batch) { batch.lines++; if (delay > 0) batch.notices++; item.batch = batches.length - 1; }
       items.push(item);
       lastThread = thread;
-      afterPlayer = false;
       continue;
     }
     if (e.type === 'choice') {
@@ -110,7 +89,7 @@ export function timeline(events, { tree, away = false } = {}) {
       if (batch) { batch.returnAt = tReal; batch.span = tReal - batch.leftAt; batch = null; }
       items.push({ type: 'choice', options, picked: e.picked, text: pick.text, silent: pick.silent, thread, name: names[thread] ?? thread, knot: e.knot, chapter, tReal, tClick });
       lastThread = thread;
-      afterPlayer = !pick.silent;
+      clock.choice(pick.silent);
       continue;
     }
     if (e.type === 'end' || e.type === 'stuck') items.push({ type: e.type, knot: e.knot, chapter, tReal, tClick });

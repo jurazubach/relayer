@@ -6,7 +6,7 @@ import { join, resolve } from 'node:path';
 import { loadStory, storyRefs } from '../lib/story.mjs';
 import { analyze, countLevels, formatStory, formatSummary, lintStory, loadChecks } from './core.mjs';
 import { transcript } from './transcript.mjs';
-import { loadThresholds, validateThresholds } from './thresholds.mjs';
+import { loadThresholds, validateThresholds } from '../lib/thresholds.mjs';
 
 const HELP = `npm run story:lint [-- <id | путь> …] [флаги]
 
@@ -85,18 +85,17 @@ if (!(runs > 0)) fail('--runs: нужно положительное число'
 if (Number.isNaN(opts.transcript) || opts.transcript < 0) fail('--transcript: нужно число прохождений');
 
 let targets = [...refs, ...opts.stories];
+// --changed без изменённых историй — пустой прогон, а не «все истории» (так storyRefs читает пустой список)
+let nothingChanged = false;
 if (opts.changed) {
   const changed = changedStories();
   targets = targets.length ? targets.filter((t) => changed.includes(t)) : changed;
-  if (!targets.length) {
-    if (opts.json) console.log(JSON.stringify({ ok: true, strict: opts.strict, runs, stories: [] }));
-    else console.log('story:lint: изменённых историй нет');
-    process.exit(0);
-  }
+  nothingChanged = !targets.length;
 }
 
 const list = [];
-if (typeof opts.plan === 'string') list.push({ ref: opts.plan });
+if (nothingChanged) { /* проверять нечего */ }
+else if (typeof opts.plan === 'string') list.push({ ref: opts.plan });
 else if (opts.plan) {
   if (!targets.length) fail('--plan без пути: укажи историю (--story <id>) или путь к skeleton.ink');
   for (const id of targets) {
@@ -128,6 +127,8 @@ for (const { ref, id } of list) {
 const errors = results.reduce((s, r) => s + r.counts.error, 0);
 if (opts.json) {
   console.log(JSON.stringify({ ok: errors === 0, strict: opts.strict, runs, seed: opts.seed, stories: results }, null, 2));
+} else if (nothingChanged) {
+  console.log('story:lint: изменённых историй нет');
 } else if (opts.summary) {
   console.log(formatSummary(results, T));
 } else {

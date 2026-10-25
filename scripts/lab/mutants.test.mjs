@@ -2,15 +2,15 @@
 // Запуск: npm run test:lab:mutants
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compile } from '../lib/compile.mjs';
 import { compileInput, storyFromJson } from '../lib/story.mjs';
 import { knownChecks } from '../lint/core.mjs';
-import { loadThresholds } from '../lint/thresholds.mjs';
+import { loadThresholds } from '../lib/thresholds.mjs';
 import {
-  applyEdits, buildKey, buildMutant, checkOwners, lintDiff, lintVerdict, matchFinding, neutralId,
+  applyEdits, buildKey, buildMutant, checkOwners, keyEntry, lintDiff, lintVerdict, matchFinding, neutralId,
   parseFindings, skillsFromOwners, validateSpec, zoneSummary,
 } from './mutants-lib.mjs';
 import { MUTANTS } from './mutants-spec.mjs';
@@ -92,15 +92,38 @@ test('lintVerdict: пойман, частично, не пойман, ждёт �
   const s = lintVerdict({ check: 'C-32', lint: ['C-11'] }, [f('C-11')], impl);
   assert.equal(s.status, 'caught');
   assert.equal(s.waits, 'C-32');
+  // lint_auto: false — своя проверка мутанта его по определению не ловит: ждём только поле lint
+  const auto = (lint) => lintVerdict({ check: 'C-40', lint, lint_auto: false }, [f('C-11')], impl);
+  assert.equal(auto(['C-11']).status, 'caught');
+  assert.deepEqual(auto(['C-11']).expected, ['C-11']);
+  assert.equal(auto([]).status, 'skill');
+  assert.equal(auto([]).waits, null);
+});
+
+test('ключ: lint_auto с причиной, catches — полные ID строк базы, которые есть в docs/books', () => {
+  const bad = validateSpec([{ ...MUTANTS[0], lint_auto: false, catches: ['RED-01', 'C-24'] }], { count: { min: 1, max: 1 } });
+  assert.ok(bad.some((e) => /lint_why/.test(e)) && bad.some((e) => /«RED-01»/.test(e)) && bad.some((e) => /«C-24»/.test(e)), bad.join('\n'));
+  for (const m of MUTANTS) {
+    for (const id of m.catches) {
+      const [alias, red] = id.split(':');
+      const flags = join(ROOT, 'docs/books', alias, 'flags.md');
+      assert.ok(existsSync(flags) && readFileSync(flags, 'utf8').includes(`| ${red} |`), `${m.id}: ${id} нет в docs/books/${alias}/flags.md`);
+    }
+    const e = keyEntry(m);
+    assert.ok(e.catches.includes(m.check) && (m.lint ?? []).every((c) => e.catches.includes(c)), `${m.id}: в catches нет своих C-NN`);
+    assert.equal(e.lint_auto, m.lint_auto !== false);
+  }
+  // без поля lint и с lint_auto: false мутанта ловит только скилл
+  assert.deepEqual(MUTANTS.filter((m) => m.lint_auto === false && !m.lint.length).map((m) => m.id).sort(), ['m16-same-voices', 'm17-fact-mismatch']);
 });
 
 test('zoneSummary: полнота линта по измеренным, скилла — по прогонам', () => {
   const e = (zone) => ({ zone });
   const lint = zoneSummary([
     { entry: e('a'), verdict: { status: 'caught' } }, { entry: e('a'), verdict: { status: 'missed' } }, { entry: e('a'), verdict: { status: 'pending' } },
-    { entry: e('b'), verdict: { status: 'pending' } },
+    { entry: e('b'), verdict: { status: 'pending' } }, { entry: e('b'), verdict: { status: 'skill' } },
   ]);
-  assert.deepEqual(lint.map((z) => [z.zone, z.mutants, z.measured, z.caught, z.pending, z.recall]), [['a', 3, 2, 1, 1, 0.5], ['b', 1, 0, 0, 1, null]]);
+  assert.deepEqual(lint.map((z) => [z.zone, z.mutants, z.measured, z.caught, z.pending, z.skill, z.recall]), [['a', 3, 2, 1, 1, 0, 0.5], ['b', 2, 0, 0, 1, 1, null]]);
   const sk = zoneSummary([{ entry: e('a'), runs: [{ hit: true }, { hit: false }] }, { entry: e('a'), runs: [{ hit: true }, { hit: true }] }]);
   assert.equal(sk[0].recall, 0.75);
   assert.equal(sk[0].caught, 2);

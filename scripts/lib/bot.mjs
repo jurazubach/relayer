@@ -2,6 +2,7 @@
 // Выбор кнопки — стратегия: случайная, первая, последняя, по сценарию; персоны story:trace подключаются так же.
 import { Story } from 'inkjs/full';
 import { parseDelay, parseTag } from './ink.mjs';
+import { threshold } from './thresholds.mjs';
 
 /** Детерминированный генератор (mulberry32): одинаковый seed — одинаковые прохождения. */
 export function seeded(seed = 1) {
@@ -21,6 +22,14 @@ export function seeded(seed = 1) {
  */
 export const strategies = {
   random: () => (choices, ctx) => Math.floor(ctx.rng() * choices.length),
+  /**
+   * Неотвечающий: не жмёт ничего, история идёт веткой «не ответил» (noAnswer). До E-02 это #silent той же
+   * развилки; где его нет, история стоит — дальше fallback (по умолчанию случайная).
+   */
+  unresponsive: (fallback = strategies.random()) => (choices, ctx) => {
+    const i = noAnswer(choices);
+    return i >= 0 ? i : fallback(choices, ctx);
+  },
   first: () => () => 0,
   last: () => (choices) => choices.length - 1,
   /**
@@ -36,13 +45,47 @@ export const strategies = {
   },
 };
 
+// Где inkjs вывел текст строки: контейнеры кусков текста за текущий Continue() до первого перевода строки.
+// previousPointer после Continue() часто уже в следующем узле (inkjs заглядывает вперёд, нет ли склейки <>),
+// а после последнего Continue() перед -> END пусты и он, и currentPathString. Счётчики посещений
+// (VisitCountAtPathString) не говорят, какой из вошедших узлов вывел строку: распределитель без текста
+// и финал входят за один Continue(). Поэтому смотрим на сам вывод.
+let pieces = null;
+// текст кнопок считается в режиме строки (inStringEvaluation, сюда не доходит), текст тегов — между
+// BeginTag и EndTag: ни то, ни другое не реплика в чате
+function notePiece(obj, pointer) {
+  const cmd = obj?.constructor?.CommandType;
+  if (cmd && obj.commandType === cmd.BeginTag) pieces.tag = true;
+  else if (cmd && obj.commandType === cmd.EndTag) pieces.tag = false;
+  else if (!pieces.tag && typeof obj?.value === 'string') {
+    if (obj.value.includes('\n') && pieces.length) pieces.done = true;
+    else if (obj.value.trim() && !pointer.isNull) pieces.push(pointer.container.path.toString());
+  }
+}
+function trackOutput(story) {
+  const proto = Object.getPrototypeOf(story.state);
+  const orig = proto.PushToOutputStream;
+  if (typeof orig !== 'function' || orig.tracked) return;
+  const wrapped = function (obj) {
+    if (pieces && !pieces.done && !this.inStringEvaluation) notePiece(obj, this.currentPointer);
+    return orig.call(this, obj);
+  };
+  wrapped.tracked = true;
+  proto.PushToOutputStream = wrapped;
+}
+
+/** Куда идёт история, если игрок не ответил: кнопка #silent той же развилки или −1 («история стоит»). */
+export function noAnswer(choices) {
+  return choices.findIndex((c) => c.silent === true || (c.tags ?? []).some((t) => parseTag(t).key === 'silent'));
+}
+
 /**
  * Одно прохождение.
  * @param {string | object} json скомпилированная история (compile().json)
  * @param {object} [o]
  * @param {(choices, ctx) => number} [o.strategy] по умолчанию случайная
  * @param {() => number} [o.rng] по умолчанию Math.random
- * @param {number} [o.maxSteps] предел строк: проверяется на развилках, как в check:story
+ * @param {number} [o.maxSteps] предел строк (по умолчанию bot.max_lines): проверяется на развилках, как в check:story
  * @param {string[]} [o.nodes] id узлов (nodeIds): по ним считаются посещения и события «узел»
  * @param {boolean} [o.log] писать журнал событий (по умолчанию да)
  * @param {boolean} [o.trackVars] писать изменения переменных (по умолчанию как log)
@@ -51,9 +94,10 @@ export const strategies = {
  */
 export function play(json, o = {}) {
   const story = new Story(json);
+  trackOutput(story);
   const rng = o.rng ?? Math.random;
   const strategy = o.strategy ?? strategies.random();
-  const maxSteps = o.maxSteps ?? 2000;
+  const maxSteps = o.maxSteps ?? threshold('bot.max_lines');
   const log = o.log ?? true;
   const trackVars = o.trackVars ?? log;
   const nodes = o.nodes ?? null;
@@ -91,12 +135,16 @@ export function play(json, o = {}) {
   let ended = false;
   while (steps < maxSteps) {
     while (story.canContinue) {
+      pieces = [];
       const text = story.Continue().trim();
+      const at = pieces;
+      pieces = null;
       const raw = story.currentTags ?? [];
       const tags = raw.map(parseTag);
-      // после Continue currentPathString часто пуст (ждём выбора) — где была строка, помнит previousPointer
+      // узел строки — где выведен её текст; строка из одних тегов текста не выводит — тогда previousPointer
       const prev = story.state.previousPointer;
-      const k = knotOf(prev && !prev.isNull ? prev.path?.toString() : null) ?? knotOf(story.state.currentPathString);
+      const k = at.map(knotOf).find(Boolean)
+        ?? knotOf(prev && !prev.isNull ? prev.path?.toString() : null) ?? knotOf(story.state.currentPathString);
       if (k && k !== knot) { knot = k; emit({ type: 'knot', id: k, step: steps }); }
       let lineDelay = 0;
       let who = speaker;
@@ -113,6 +161,9 @@ export function play(json, o = {}) {
     }
     const options = story.currentChoices;
     if (options.length === 0) { ended = true; emit({ type: 'end', step: steps, knot }); break; }
+    // развилка — там, где стоят кнопки: узел без реплик (хаб) по строкам не увидеть
+    const at = knotOf(options[0].sourcePath);
+    if (at && at !== knot) { knot = at; emit({ type: 'knot', id: at, step: steps }); }
     const i = strategy(options, ctx);
     const pick = options[i] ?? options[0];
     emit({ type: 'choice', options: options.map((c) => ({ text: c.text, tags: c.tags ?? [] })), picked: options.indexOf(pick), text: pick.text, knot, step: steps });

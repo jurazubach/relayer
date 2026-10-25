@@ -10,6 +10,11 @@
 //   broken  что сломано, словами для отчёта и для сверки находок скилла
 //   lint    проверки story:lint, которые обязаны поймать мутанта уже сейчас (кроме самой check, если
 //           она есть в scripts/lint/checks — её ждём автоматически)
+//   lint_auto  false — своя check по определению не ловит мутанта (порог, реестр или фича движка, которых
+//           нет), это задача скилла; причина — lint_why. Тогда ждём только поле lint
+//   catches строки базы, которые мутант ловит, полными ID (алиас:RED-NN); в ключ к ним добавляются check
+//           и lint — по ним story:coverage засчитывает RED на L3 (просьба T-09). Пусто, если дефект — нарушение
+//           решения автора (superseded.md A-NN), а не строки базы
 //   edits   [найти, заменить]: каждая «найти» встречается в основе ровно один раз
 //   meta    правка meta.json (необязательно)
 
@@ -21,6 +26,7 @@ export const MUTANTS = [
     node: 'ch1_door',
     broken: 'ставка («к 06:00 семена погибнут») убрана из ствола главы 1 и звучит только за кнопкой «Стучи» — большинство игроков её не видят',
     lint: [],
+    catches: ['ashwell-standard-patterns:RED-12', 'narrative-postmortems:RED-10', 'edgerton-hooked:RED-06'],
     edits: [
       ['к 06:00 семена из камеры три погибнут\nя на смене одна', 'я на смене одна'],
       ['откуда он знает? он даже не смотрел', 'откуда он знает? он даже не смотрел\nк 06:00 семена из камеры три погибнут'],
@@ -33,6 +39,7 @@ export const MUTANTS = [
     node: 'ch1_panel',
     broken: 'кнопка «Сфоткай щиток» пишет checked_panel, но реплика-отклик убрана — переменную никто не читает',
     lint: ['C-01'],
+    catches: ['emshort-structures:RED-01', 'inkle-ingold:RED-06', 'meaningful-choice:RED-02'],
     edits: [['{checked_panel: рычаг был холодный. выключили давно}\n', '']],
   },
   {
@@ -42,6 +49,7 @@ export const MUTANTS = [
     node: 'ch4_choice',
     broken: 'последней кнопки нет: финал решает скрытый порог bold, которого игрок не видел; «что делаем?» остаётся без ответа',
     lint: ['C-06'],
+    catches: ['ashwell-standard-patterns:RED-06', 'truby-anatomy-of-story:RED-08', 'mckee-story:RED-10'],
     edits: [[
       '* {clue_badge} [Покажи пилоту журнал и следы]\n    -> end_expose\n* {trust_lev >= 1} [Отпусти его, но забери ящик]\n    -> end_deal\n* {bold >= 1 or not clue_badge} [Встань у вертолёта и не пускай]\n    -> end_stop',
       '{\n- bold >= 3: -> end_stop\n- bold >= 2: -> end_expose\n- else: -> end_deal\n}',
@@ -54,6 +62,7 @@ export const MUTANTS = [
     node: 'ch3_radio',
     broken: 'Ника пересказывает речь Льва монологом из 15 реплик подряд без вопроса и без кнопки',
     lint: ['C-35'],
+    catches: ['maass-fire-in-fiction:RED-02', 'snyder-save-the-cat:RED-07', 'mckee-story:RED-04'],
     edits: [[
       'он вызвал вертолёт с материка, будет днём\nсказал: «на всякий случай»\n',
       [
@@ -83,6 +92,7 @@ export const MUTANTS = [
     node: 'epilogue',
     broken: 'после последней кнопки — 12 сообщений эпилога, между ними часовые паузы: игрок ждёт полдня, ничего не решая',
     lint: [],
+    catches: ['messenger-genre:RED-09', 'schell-art-of-game-design:RED-03'],
     edits: [[
       'камера три держит минус восемнадцать. я тоже держусь\n',
       [
@@ -116,6 +126,7 @@ export const MUTANTS = [
     node: 'ch4',
     broken: 'новый контакт «Пилот» открывается в главе 4 ради одной реплики и больше не пишет',
     lint: [],
+    catches: ['nicklin-writing-for-games:RED-03'],
     edits: [
       ['# contact: lev, Лев Сомов, indigo', '# contact: lev, Лев Сомов, indigo\n# contact: pilot, Пилот, grey'],
       [
@@ -132,6 +143,7 @@ export const MUTANTS = [
     node: 'ch1_who',
     broken: 'в главе 1 появляются 7 контактов: к Нике и Мире добавлены пять служебных чатов станции',
     lint: ['C-21'],
+    catches: ['mobile-interactive-stories:RED-10', 'video-three-things:RED-04', 'nicklin-writing-for-games:RED-17'],
     edits: [
       [
         '# contact: lev, Лев Сомов, indigo',
@@ -162,6 +174,7 @@ export const MUTANTS = [
     node: 'ch3_radio',
     broken: 'перед паузой Ника называет срок возвращения («напишу через два часа») — в реальном времени это будильник, по клику обещание сбывается через секунду',
     lint: [],
+    catches: [], // решение автора или разметка §9, а не строка базы: RED нет
     edits: [['телефон тут отбирают, правила рубки\n', 'телефон тут отбирают, правила рубки\nнапишу через два часа, не раньше\n']],
   },
   {
@@ -171,6 +184,7 @@ export const MUTANTS = [
     node: 'ch2_sleep',
     broken: 'Ника ложится спать и через 10 секунд пишет «доброе утро»: время мира прыгает на ночь без паузы, по клику метки не будет',
     lint: [],
+    catches: ['messenger-genre:RED-13'],
     edits: [[
       'лягу в лаборатории, у камеры #from:nika\nесли загудит не так, услышу\n',
       'лягу в лаборатории, у камеры #from:nika\nвсё, сплю\n#delay:10s\nдоброе утро! уже светло\nесли загудит не так, услышу\n',
@@ -182,7 +196,10 @@ export const MUTANTS = [
     check: 'C-32',
     node: 'ch3',
     broken: 'после паузы, которую поставила сама история, Ника упрекает игрока за отсутствие («ты где пропала?»), без связи с #silent',
-    lint: [],
+    lint: ['C-47'],
+    lint_auto: false,
+    lint_why: 'упрёк на пути «неотвечающего» — п. 7 C-32, он ждёт E-02 (напоминания); сам упрёк ловит C-47',
+    catches: [], // решение автора или разметка §9, а не строка базы: RED нет
     edits: [[
       'камера три минус восемнадцать. успели #from:nika\n',
       'камера три минус восемнадцать. успели #from:nika\nты где пропала? сколько можно, я тут одна всё разгребаю\n',
@@ -195,6 +212,9 @@ export const MUTANTS = [
     node: 'ch3_after',
     broken: 'если игрок молчит у сделки, Ника дважды напоминает, а потом история стоит: продолжения после напоминаний нет',
     lint: ['C-11'],
+    lint_auto: false,
+    lint_why: 'напоминания без продолжения — п. 6 C-32, он ждёт синтаксис напоминаний E-02',
+    catches: [], // решение автора или разметка §9, а не строка базы: RED нет
     edits: [[
       '* [Скажи ему про следы]\n    ~ bold += 1\n    -> ch3_end\n',
       '* [Скажи ему про следы]\n    ~ bold += 1\n    -> ch3_end\n* [Промолчать #silent]\n    -> ch3_wait\n\n=== ch3_wait ===\n#delay:20m\nалё, ты тут? мне нужно да или нет #from:nika\n#delay:20m\nон ждёт у двери. ответь\n-> DONE\n',
@@ -206,7 +226,8 @@ export const MUTANTS = [
     check: 'C-40',
     node: 'end_deal',
     broken: 'у финала end_deal снята метка «// финал:» — прогоны через него не засчитываются ни в один финал',
-    lint: ['C-40'],
+    lint: ['C-40', 'C-53'],
+    catches: [], // решение автора или разметка §9, а не строка базы: RED нет
     edits: [['// финал: сделка\n', '']],
   },
   {
@@ -216,6 +237,7 @@ export const MUTANTS = [
     node: 'ch4_truth',
     broken: 'улика clue_frost (иней на ботинках) находится только в финале, после раскрытия в ch4_truth: разгадка опирается на то, чего игрок ещё не видел',
     lint: [],
+    catches: ['mystery-fair-play:RED-01'],
     edits: [
       ['* [Сравни с ботинками Льва]\n    ~ clue_frost = true\n', '* [Сравни с ботинками Льва]\n'],
       ['* [Спроси Миру, кто ходил ночью #to:mira]\n    ~ clue_frost = true\n', '* [Спроси Миру, кто ходил ночью #to:mira]\n'],
@@ -230,6 +252,7 @@ export const MUTANTS = [
     node: 'ch1_lev',
     broken: 'обе кнопки «Стучи» и «Иди к щитку» без своего ответа и последствий: дальше одна и та же реплика и один узел',
     lint: ['C-10'],
+    catches: ['inkle-ingold:RED-02', 'choiceofgames-design:RED-05', 'emshort-structures:RED-11'],
     edits: [[
       '* [Стучи. Пусть он решает]\n    ~ trust_lev += 1\n    -> ch1_door\n* [Иди к щитку, время дорого]\n    ~ bold += 1\n    -> ch1_panel\n',
       '* [Стучи. Пусть он решает]\n* [Иди к щитку, время дорого]\n- ладно. сначала щиток\n-> ch1_panel\n',
@@ -242,6 +265,7 @@ export const MUTANTS = [
     node: 'ch3_radio',
     broken: 'перед паузой 2 ч последняя реплика — прощание «ладно, пока»: открытого вопроса нет, возвращаться незачем',
     lint: ['C-26'],
+    catches: ['serial-hooks:RED-01', 'narrative-testing:RED-05', 'mobile-interactive-stories:RED-03'],
     edits: [['что он хочет сказать без свидетелей?\nНика не в сети #sys:nika\n-> ch3_after', 'ладно, пока\n-> ch3_after']],
   },
   {
@@ -251,6 +275,9 @@ export const MUTANTS = [
     node: 'ch2_lev',
     broken: 'Лев пишет как Мира: строчные, «!!», эмодзи, «честно» — голоса начальника и стажёра не различить',
     lint: [],
+    lint_auto: false,
+    lint_why: 'C-44 сравнивает голоса контактов от 20 реплик, а у Льва и Миры в основе меньше',
+    catches: ['procedural-storytelling:RED-08', 'sheldon-character-storytelling:RED-05', 'snyder-save-the-cat:RED-16'],
     edits: [
       [
         'Лев Сомов, начальник станции. Номер дала Ника.\nЖурнал вижу. Пропуск Миры, 02:10.\nОна вечно вешает его на крючок у лаборатории.\nУтром стажёр летит на материк. Вопрос закрыт.',
@@ -268,6 +295,9 @@ export const MUTANTS = [
     node: 'ch2_lev',
     broken: 'в ветке Льва камеру открыли пропуском Миры в 03:40, в стволе и у Миры — в 02:10: факт расходится между ветками',
     lint: [],
+    lint_auto: false,
+    lint_why: 'C-49 сверяет числа карточки с текстом; расхождение факта между ветками требует реестра facts.md',
+    catches: ['narrative-testing:RED-10'],
     edits: [['Журнал вижу. Пропуск Миры, 02:10.', 'Журнал вижу. Пропуск Миры, 03:40.']],
   },
   {
@@ -277,6 +307,7 @@ export const MUTANTS = [
     node: 'ch1',
     broken: 'до первой кнопки 11 входящих: Ника долго рассказывает про станцию, игрок только читает',
     lint: ['C-20'],
+    catches: ['messenger-genre:RED-01', 'skolnick-video-game-storytelling:RED-01', 'failbetter-qbn:RED-13'],
     edits: [[
       'в хранилище плюс два #from:nika\n',
       [
@@ -297,8 +328,9 @@ export const MUTANTS = [
     check: 'C-39',
     node: 'ch1_end',
     broken: 'бесплатная глава 1 (free_chapters: 1) кончается прощанием без крючка: на платной границе нечего хотеть дальше',
-    // C-26.closing смотрит на последнюю строку, а здесь это «не в сети» #sys — прощание за ней линт не видит
-    lint: [],
+    // прощание за строкой «не в сети» #sys ловит C-26.closing: он берёт последнюю входящую реплику
+    lint: ['C-26'],
+    catches: ['edgerton-hooked:RED-09', 'serial-hooks:RED-01', 'yorke-into-the-woods:RED-04'],
     edits: [[
       'ящик 14 открыт. я его вечером запирала. кто?\nНика не в сети #sys:nika',
       'вроде всё в порядке\nладно, спасибо\nспокойной ночи\nНика не в сети #sys:nika',
@@ -311,6 +343,7 @@ export const MUTANTS = [
     node: 'ch1_who',
     broken: 'шесть кнопок в одной развилке: на экране телефона это прокрутка',
     lint: ['C-12'],
+    catches: ['inkle-ingold:RED-07', 'failbetter-qbn:RED-07'],
     edits: [[
       '* [Промолчать #silent]\n',
       '* [Сама с ней поговори]\n    ~ bold += 1\n    -> ch1_end\n* [Спроси Льва про Миру]\n    ~ trust_lev += 1\n    -> ch1_end\n* [Проверь её пропуск]\n    ~ bold += 1\n    -> ch1_end\n* [Промолчать #silent]\n',
@@ -323,6 +356,7 @@ export const MUTANTS = [
     node: 'ch2_mira',
     broken: 'Мира пишет одним пузырём на 170+ знаков — стена текста',
     lint: ['C-34'],
+    catches: ['narrative-testing:RED-32', 'yorke-into-the-woods:RED-17'],
     edits: [[
       'в 02:10 я спала, честно 😭\n',
       'в 02:10 я спала, честно, у меня будильник на шесть, я легла в полночь, соседка подтвердит, она храпит, я слышала её всю ночь, и вообще я бы никогда не тронула рожь 😭\n',
@@ -335,6 +369,7 @@ export const MUTANTS = [
     node: 'ch3',
     broken: 'пауза перед главой 3 — 30 часов: дольше предела в сутки',
     lint: ['C-31'],
+    catches: ['serial-hooks:RED-07'],
     edits: [['#from:nika #delay:9h\nГлава 3', '#from:nika #delay:30h\nГлава 3']],
   },
   {
@@ -344,6 +379,7 @@ export const MUTANTS = [
     node: 'ch3',
     broken: 'после паузы 9 ч первая строка — «привет»: в уведомлении нет события, которое зовёт вернуться',
     lint: ['C-28'],
+    catches: ['choiceofgames-design:RED-18', 'narrative-testing:RED-29', 'maass-fire-in-fiction:RED-14'],
     edits: [['камера три минус восемнадцать. успели #from:nika\n', 'привет #from:nika\nкамера три минус восемнадцать. успели\n']],
   },
   {
@@ -353,6 +389,7 @@ export const MUTANTS = [
     node: 'ch1_who',
     broken: '«Промолчать» никто не замечает: ни реакции, ни переменной',
     lint: ['C-11'],
+    catches: ['choiceofgames-design:RED-04', 'inkle-ingold:RED-03', 'nicklin-writing-for-games:RED-06'],
     edits: [[
       '* [Дай, я напишу ей сама]\n    ~ asked_mira = true\n    -> ch1_end\n* [Не впутывай её пока]\n    ~ trust_lev += 1\n    -> ch1_end\n* [Промолчать #silent]\n    ~ silent_once = true\n    ок. решу сама #from:nika\n    -> ch1_end\n',
       '* [Дай, я напишу ей сама]\n    ~ asked_mira = true\n* [Не впутывай её пока]\n    ~ trust_lev += 1\n* [Промолчать #silent]\n- -> ch1_end\n',

@@ -4,7 +4,7 @@ import { PERSONAS, parsePersonas } from './core/personas.mjs';
 import { prepare, runOnce } from './core/run.mjs';
 import { sessions } from './core/sessions.mjs';
 import { fmtDuration, fmtMoment } from './core/timeline.mjs';
-import { threshold, thresholdEntry } from './core/thresholds.mjs';
+import { threshold, thresholdEntry, thresholdSeconds } from '../lib/thresholds.mjs';
 
 const HELP = `npm run story:sessions -- [--story <id>] [--persona <имя>|all] [--runs N] [--seed N]
                           [--partial] [--schedule] [--json]
@@ -13,17 +13,18 @@ const HELP = `npm run story:sessions -- [--story <id>] [--persona <имя>|all] 
 («день 2, +3 ч»), ночь и утро — только время мира.
 
 Реальное время: паузы #delay как есть, набор и зазоры — по формулам engine.ts.
-По клику: паузы пропадают, остаются только короткие (до click.keep_delay); скачок от
-click.jump_label получает метку «спустя …» (план §3, E-01).
+По клику: паузы пропадают, остаются только короткие (до C-31.click_delay_max_s); скачок от
+engine.click.time_jump_label получает метку «спустя …» (план §3, E-01).
 
-Сессия — кусок между паузами от sessions.gap. Метки сессии:
-  микро     не первая, до последней кнопки, строк ≤ sessions.micro_lines и ни одной кнопки (C-30)
+Сессия — кусок между паузами от story.pause.session_s. Метки сессии:
+  микро     не первая, до последней кнопки, строк ≤ C-30.micro_lines и ни одной кнопки (C-30)
   крючок    в 3 строках до паузы есть вопрос, фото, новый контакт или обещание (checks.md)
-  закрытая  последняя строка — закрывающая реплика («ладно», «спокойной ночи»…)
+  закрытая  последняя строка — закрывающая реплика (dict.closing, как в story:lint C-26)
 
 Сводка по прохождениям: медиана и разброс реального времени против days карточки и времени
 по клику против minutes; самая длинная пауза; доля микросессий; пауза после последней кнопки.
-Пороги — ключи sessions.* и click.* из docs/playbook/thresholds.json.
+Пороги — ключи story.* (длина, пауза, хвост, карточка), C-30, C-31 и engine.click.* из
+docs/playbook/thresholds.json — те же, что у story:lint.
 
   --story <id>  история или несколько через запятую; по умолчанию все из src/stories
   --persona     кто проходит (по умолчанию random); all — каждая персона отдельно
@@ -34,9 +35,10 @@ click.jump_label получает метку «спустя …» (план §3,
   --json        всё данными: сводка, расписание срединного прохождения в обоих режимах
   --help        эта справка`;
 
+const TIME_UNITS = ['с', 'мин', 'ч'];
 const by = (key) => {
   const e = thresholdEntry(key);
-  const v = key.startsWith('sessions.') && !/share|ratio|lines/.test(key) ? fmtDuration(e.value) : e.value;
+  const v = TIME_UNITS.includes(e.unit) ? fmtDuration(thresholdSeconds(key)) : e.value;
   return `${key} = ${v}${e.basis === 'our_estimate' ? ', наша оценка' : ''}`;
 };
 
@@ -86,20 +88,20 @@ function summarize(p, persona, runs, seed, partial) {
 function problems(sum, meta) {
   const out = [];
   const real = sum.real.median;
-  if (real > threshold('sessions.story_ceiling')) out.push(`✗ история идёт ${fmtDuration(real)} — больше потолка (${by('sessions.story_ceiling')})`);
-  else if (real > threshold('sessions.story_target')) out.push(`⚠ история идёт ${fmtDuration(real)} — больше цели (${by('sessions.story_target')})`);
-  if (sum.maxPause.max > threshold('sessions.max_pause')) out.push(`✗ пауза ${fmtDuration(sum.maxPause.max)} в ${sum.maxPause.knot} больше суток (${by('sessions.max_pause')})`);
-  if (sum.tail.median > threshold('sessions.tail_delay')) out.push(`⚠ после последней кнопки ждать ${fmtDuration(sum.tail.median)} (${by('sessions.tail_delay')})`);
-  if (sum.sessions.microShare > threshold('sessions.micro_share')) {
+  if (real > thresholdSeconds('story.length.max_h')) out.push(`✗ история идёт ${fmtDuration(real)} — больше потолка (${by('story.length.max_h')})`);
+  else if (real > thresholdSeconds('story.length.target_h')) out.push(`⚠ история идёт ${fmtDuration(real)} — больше цели (${by('story.length.target_h')})`);
+  if (sum.maxPause.max > thresholdSeconds('story.pause.max_h')) out.push(`✗ пауза ${fmtDuration(sum.maxPause.max)} в ${sum.maxPause.knot} больше суток (${by('story.pause.max_h')})`);
+  if (sum.tail.median > thresholdSeconds('story.tail.max_delay_min')) out.push(`⚠ после последней кнопки ждать ${fmtDuration(sum.tail.median)} (${by('story.tail.max_delay_min')})`);
+  if (sum.sessions.microShare > threshold('C-30.micro_share')) {
     const ex = sum.sessions.microExample;
-    out.push(`⚠ микросессий ${pct(sum.sessions.micro, sum.sessions.body)} (${by('sessions.micro_share')})${ex ? `, например ${ex.knot}: «${ex.last.slice(0, 50)}»` : ''}`);
+    out.push(`⚠ микросессий ${pct(sum.sessions.micro, sum.sessions.body)} (${by('C-30.micro_share')})${ex ? `, например ${ex.knot}: «${ex.last.slice(0, 50)}»` : ''}`);
   }
-  const ratio = threshold('sessions.card_ratio');
+  const ratio = threshold('story.card.mismatch_ratio');
   const off = (a, b) => a > b * ratio || b > a * ratio;
   if (meta.days == null) out.push('⚠ на карточке нет days (дни в реальном времени, план §3)');
-  else if (off(real, meta.days * 86400)) out.push(`⚠ реальное время ${fmtDuration(real)}, на карточке ${meta.days} дн (${by('sessions.card_ratio')})`);
+  else if (off(real, meta.days * 86400)) out.push(`⚠ реальное время ${fmtDuration(real)}, на карточке ${meta.days} дн (${by('story.card.mismatch_ratio')})`);
   if (meta.minutes == null) out.push('⚠ на карточке нет minutes');
-  else if (off(sum.click.median, meta.minutes * 60)) out.push(`⚠ по клику ${fmtDuration(sum.click.median)}, на карточке ${meta.minutes} мин (${by('sessions.card_ratio')})`);
+  else if (off(sum.click.median, meta.minutes * 60)) out.push(`⚠ по клику ${fmtDuration(sum.click.median)}, на карточке ${meta.minutes} мин (${by('story.card.mismatch_ratio')})`);
   return out;
 }
 

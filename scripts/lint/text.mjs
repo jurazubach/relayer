@@ -1,5 +1,7 @@
-// Общее для проверок: словари из thresholds.json, крючок перед паузой, форматы чисел.
-import { norm } from './journal.mjs';
+// Общее для проверок: крючок перед паузой, форматы чисел. Словари — scripts/lib/lexicon.mjs.
+import { isPromise, returnDeadline } from '../lib/lexicon.mjs';
+
+export { isClosing, returnDeadline } from '../lib/lexicon.mjs';
 
 /** «2 ч 30 мин», «40 мин», «12 с». */
 export function fmtDur(sec) {
@@ -14,19 +16,6 @@ export const pct = (x) => `${Math.round(x * 100)} %`;
 
 export const short = (text, n = 40) => (text.length > n ? `${text.slice(0, n)}…` : text);
 
-/** Срок возвращения (A-01): глагол возвращения и срок в одной строке или окно «до утра» у «я / буду». */
-export function returnDeadline(text, T) {
-  const t = String(text).toLowerCase();
-  if (T.re('dict.return_deadline', 'verb').test(t) && T.re('dict.return_deadline', 'term').test(t)) return true;
-  return T.re('dict.return_deadline', 'window').test(t) && T.re('dict.return_deadline', 'window_subject').test(t);
-}
-
-/** Закрывающая реплика: начинается словом словаря и коротка (C-26.closing_max_words). */
-export function isClosing(text, T) {
-  const n = norm(text);
-  return T.re('dict.closing').test(n) && n.split(' ').length <= T.value('C-26.closing_max_words');
-}
-
 /**
  * Признаки крючка (checks.md «Общие данные»): «?», #photo, #unlock, первое сообщение нового контакта,
  * обещание содержания, срок события в мире без срока возвращения в той же строке (R-63, R-64).
@@ -39,7 +28,7 @@ export function hookIn(lines, firstOf, T) {
     if (l.unlock.length) return '#unlock';
     if (l.who && (l.kind === 'in' || l.kind === 'photo') && firstOf.get(l.who) === l.i) return 'новый контакт';
     const t = l.text.toLowerCase();
-    if (T.re('dict.content_promise').test(t)) return 'обещание';
+    if (isPromise(t, T)) return 'обещание';
     if (T.re('dict.world_deadline').test(t) && !returnDeadline(t, T)) return 'срок в мире';
   }
   return null;

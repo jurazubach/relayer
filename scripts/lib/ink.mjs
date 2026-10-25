@@ -109,6 +109,9 @@ export function parseDelay(v) {
   return n * (m[2] === 'h' ? 3600 : m[2] === 'm' ? 60 : 1);
 }
 
+/** Целая строка «{x == 1: -> a}» или «{x: -> a | -> b}»: условие и тело (с переходом), без вложенных скобок. */
+const INLINE_COND_RE = /^\{([^{}|:]+):([^{}]*->[^{}]*)\}$/u;
+
 const DIVERT_RE = new RegExp(`->\\s*->|->\\s*([\\p{L}\\p{N}_.]+)(?=(\\s*->)?)`, 'gu');
 
 /** Переходы в строке: обычные, туннели (-> x ->) и возврат из туннеля (->->). */
@@ -302,6 +305,8 @@ function parseFile(src, file, res, st) {
       };
       parent.items.push(choice);
       stack.push(choice);
+      // «* [да] {x: -> a}» — условный переход под кнопкой, как и отдельной строкой
+      if (INLINE_COND_RE.test(splitTags(afterRaw).text)) { handleText(afterRaw, n); continue; }
       if (rest) handleText(rest, n);
       for (const d of diverts) push({ type: 'divert', ...d });
       continue;
@@ -324,6 +329,22 @@ function parseFile(src, file, res, st) {
 
   function handleText(line, n) {
     const { text: withDiverts, tags } = splitTags(line);
+    const inline = !Object.keys(tags).length && withDiverts.match(INLINE_COND_RE);
+    if (inline) {
+      // однострочное условие с переходом — условная ветка, а не реплика «{x == 1: }» плюс безусловный переход
+      const cond = { type: 'cond', head: '', branches: [], items: null, speaker: top().speaker, line: n };
+      push(cond);
+      stack.push(cond);
+      inline[2].split('|').forEach((body, i) => {
+        const branch = { type: 'branch', cond: i === 0 ? inline[1].trim() : 'else', items: [], speaker: cond.speaker };
+        cond.branches.push(branch);
+        stack.push(branch);
+        if (body.trim()) handleText(body.trim(), n);
+        stack.pop();
+      });
+      stack.pop();
+      return;
+    }
     const { diverts, rest } = findDiverts(withDiverts);
     const text = rest.replace(/<>/g, '').trim();
     const cur = top();

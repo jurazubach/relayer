@@ -3,8 +3,8 @@ import { walk, resolveTarget } from '../lib/ink.mjs';
 import { runCli, intFlag, pct, table } from './core/cli.mjs';
 import { PERSONAS, PERSONA_IDS, parsePersonas } from './core/personas.mjs';
 import { BETA_STOP, prepare, runOnce } from './core/run.mjs';
-import { threshold, thresholdEntry } from './core/thresholds.mjs';
-import { isInlineDivert, varIndex } from './core/vars-index.mjs';
+import { threshold, thresholdEntry } from '../lib/thresholds.mjs';
+import { varIndex } from './core/vars-index.mjs';
 
 const HELP = `npm run story:endings -- [--story <id>] [--persona <имя>|all] [--runs N] [--seed N]
                          [--partial] [--json]
@@ -26,8 +26,8 @@ first и last детерминированы и идут один раз). Ря�
                больше) и над переходами в финал;
   по прогонам — насколько конечное значение переменной предсказывает финал: прирост точности
                над «всегда самый частый финал», лучшие endings.top_vars.
-Подсказки C-40: один финал забирает больше endings.dominant при трёх финалах и больше;
-финал реже endings.rare; финал, в который не пришёл никто.
+Подсказки C-40: один финал забирает больше C-40.dominant_share при трёх финалах и больше;
+финал реже C-40.rare_share; финал, в который не пришёл никто.
 
   --story <id>  история или несколько через запятую; по умолчанию все из src/stories
   --persona     одна, несколько через запятую или all (по умолчанию all)
@@ -51,15 +51,11 @@ function staticDeciders(tree, endingNodes, idx) {
   const targets = new Set([...endingNodes, ...idx.final]);
   const out = new Map();
   for (const k of tree.knots) {
-    let inline = null; // условие однострочного «{x: -> a}» — переход идёт следом за остатком строки
     walk(k.items, (it, path) => {
-      if (['msg', 'me', 'sys'].includes(it.type)) { inline = isInlineDivert(it.text) ? it.text.trim().slice(1, -1).replace(/:\s*$/, '') : null; return; }
-      if (it.type !== 'divert' || it.kind === 'tunnel') { inline = null; return; }
-      const guard = inline;
-      inline = null;
+      if (it.type !== 'divert' || it.kind === 'tunnel') return;
       const to = resolveTarget(it.target, k.id, ids);
       if (!to || !targets.has(to) || to === k.id) return;
-      const exprs = guard ? [guard] : [];
+      const exprs = [];
       for (const c of path) {
         if (c.type === 'choice') exprs.push(...c.conds);
         else if (c.type === 'cond' && c.head) exprs.push(c.head);
@@ -157,10 +153,10 @@ runCli(HELP, async (args) => {
     const hints = [];
     const real = rows.filter((r) => r.declared);
     const top = [...real].sort((a, b) => b.runs - a.runs)[0];
-    if (real.length >= 3 && top && top.share > threshold('endings.dominant')) hints.push(`⚠ финал «${top.name}» забирает ${pct(top.runs, total)} прохождений (endings.dominant = ${threshold('endings.dominant')})`);
+    if (real.length >= 3 && top && top.share > threshold('C-40.dominant_share')) hints.push(`⚠ финал «${top.name}» забирает ${pct(top.runs, total)} прохождений (C-40.dominant_share = ${threshold('C-40.dominant_share')})`);
     for (const r of real) {
       if (!r.runs) hints.push(`ℹ финал «${r.name}» (${r.node}) не встретился ни разу — достижим ли он?`);
-      else if (r.share < threshold('endings.rare')) hints.push(`ℹ финал «${r.name}» выпал в ${pct(r.runs, total)} — достижим ли он целенаправленно? (endings.rare = ${threshold('endings.rare')})`);
+      else if (r.share < threshold('C-40.rare_share')) hints.push(`ℹ финал «${r.name}» выпал в ${pct(r.runs, total)} — достижим ли он целенаправленно? (C-40.rare_share = ${threshold('C-40.rare_share')})`);
     }
     for (const r of rows.filter((x) => !x.declared && x.runs && x.name !== `(${BETA_STOP})`)) hints.push(`⚠ ${r.name}: ${r.runs} прохождений закончились не в финале`);
     if (p.endings.unmarked.length) hints.push(`⚠ -> END без метки «// финал:»: ${p.endings.unmarked.join(', ')}`);
@@ -168,7 +164,7 @@ runCli(HELP, async (args) => {
     report.push({
       id: p.story.id, path: p.story.path, source: p.endings.source, final: [...idx.final], distributors: [...idx.distributors],
       unmarked: p.endings.unmarked, runs: total, personas: dist, endings: rows, deciders: dyn, hints,
-      thresholds: ['endings.dominant', 'endings.rare', 'endings.top_vars'].map(thresholdEntry),
+      thresholds: ['C-40.dominant_share', 'C-40.rare_share', 'endings.top_vars'].map(thresholdEntry),
     });
     if (json) continue;
     console.log(`${p.story.path} · финалов ${declared.length} (${p.endings.source === 'mark' ? 'по меткам «// финал:»' : 'по -> END, меток нет'}) · прохождений ${total}`);

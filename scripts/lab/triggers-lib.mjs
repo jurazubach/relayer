@@ -2,44 +2,21 @@
 // CLI и запуск процессов — в triggers.mjs; здесь ничего не ходит в сеть, поэтому всё покрыто тестом.
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, basename } from 'node:path';
+import { loadThresholds as loadAll } from '../lib/thresholds.mjs';
 
 export const NONE = 'none';
 
-// Числа живут в docs/playbook/thresholds.json; здесь — запасные на случай, если ключа там нет.
-export const DEFAULTS = {
-  'lab.triggers.runs_per_phrase': 5,
-  'lab.triggers.min_share': 0.8,
-  'lab.triggers.max_false': 0.2,
-};
+// Ключи теста срабатывания; числа — только в docs/playbook/thresholds.json, общий загрузчик scripts/lib/thresholds.mjs.
+export const TRIGGER_KEYS = ['lab.triggers.runs_per_phrase', 'lab.triggers.min_share', 'lab.triggers.max_false'];
 
-/**
- * Значение ключа из thresholds.json. Формат файла задаёт T-03, поэтому принимаем оба очевидных:
- * плоский `{"lab.triggers.runs_per_phrase": …}` и вложенный `{"lab": {"triggers": {"runs_per_phrase": …}}}`;
- * значение — число или объект с полем `value`.
- */
-export function thresholdValue(thresholds, key) {
-  if (!thresholds) return undefined;
-  const pools = [thresholds, thresholds.thresholds].filter((p) => p && typeof p === 'object');
-  for (const pool of pools) {
-    let v = pool[key];
-    if (v === undefined) v = key.split('.').reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), pool);
-    if (v && typeof v === 'object' && 'value' in v) v = v.value;
-    if (typeof v === 'number') return v;
-  }
-  return undefined;
-}
-
+/** Пороги теста срабатывания: { values, source }. Ключа нет — исключение загрузчика, а не запасное число. */
 export function loadThresholds(path) {
-  const values = {};
-  const source = {};
-  let data = null;
-  if (existsSync(path)) data = JSON.parse(readFileSync(path, 'utf8'));
-  for (const [key, def] of Object.entries(DEFAULTS)) {
-    const v = thresholdValue(data, key);
-    values[key] = v ?? def;
-    source[key] = v === undefined ? 'default' : 'thresholds.json';
-  }
-  return { values, source, found: !!data };
+  const T = loadAll(path);
+  return {
+    values: Object.fromEntries(TRIGGER_KEYS.map((k) => [k, T.value(k)])),
+    source: Object.fromEntries(TRIGGER_KEYS.map((k) => [k, 'thresholds.json'])),
+    found: true,
+  };
 }
 
 /** Имена проектных скиллов: папки `.claude/skills/<имя>/` с `SKILL.md`. */

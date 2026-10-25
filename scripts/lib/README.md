@@ -8,7 +8,10 @@
 | `story.mjs` | `loadStory(id \| путь)` — папка `meta.json` + `story.ink` с `INCLUDE`, `.json` (с `includes` от `story:pack` или одним `ink`), голый `.ink`; `storyFromJson`, `listStories()`, `storyRefs(args)`, `parseStory(story)`, `compileInput(story)`. Раскладка и сборка: `splitInk`, `glueStory`, `packStory`, `unpackStory`, `writeFolder`, `layoutProblems`, `sameRuntime` |
 | `ink.mjs` | `parseInk(src \| файлы)` — дерево; `nodeIds`, `findEndings`, `allMarks`, `walk`, `stripComments`, `resolveTarget`, `splitTags`, `parseTag`, `parseDelay`, `tokenize` |
 | `compile.mjs` | `compile(src \| {main, files})` → `{ ok, json, errors, warnings, newStory() }`; ошибки `{ file, line, message, excerpt }`, `formatMessages()` |
-| `bot.mjs` | `play(json, { strategy, rng, nodes, maxSteps, log, trackVars, setup })` → журнал и итоги; `strategies` (random, first, last, scripted), `seeded(seed)` |
+| `bot.mjs` | `play(json, { strategy, rng, nodes, maxSteps, log, trackVars, setup })` → журнал и итоги; `strategies` (random, first, last, scripted, unresponsive), `noAnswer(choices)`, `seeded(seed)` |
+| `thresholds.mjs` | `loadThresholds()` — пороги из `docs/playbook/thresholds.json` (`value`, `re`, `show`, `seconds` по единице, `entry`), `validateThresholds`; `threshold(key)`, `thresholdSeconds(key)` — общий экземпляр. Ключа нет — исключение |
+| `lexicon.mjs` | словари `dict.*` как их применяют все: `norm`, `dict`, `isClosing`, `isPromise`, `isReproach`, `returnDeadline` |
+| `playtime.mjs` | время игрока по `engine.typing`: `typingTime`, `gapTime`, `lineKind`, `playerClock()` — пауза `#delay`, зазор и набор строк журнала |
 
 ## Дерево
 
@@ -20,6 +23,8 @@
 - Элементы: `msg / me / sys` (`who, text, tags, line`), `tags`, `code` (`~`), `gather`, `divert`
   (`target, kind: divert | tunnel | return`), `choice` (`depth, label, conds, text, tags, sticky, items`),
   `cond` (`head, branches[{ cond, items }]`), `comment` (`kind: line | block, text, mark?`).
+- Однострочное условие с переходом `{x == 1: -> a}` (и `{x: -> a | -> b}`, и под кнопкой) — `cond` с веткой,
+  а не реплика «{x == 1: }» плюс безусловный переход. Условный текст без перехода (`{x: да|нет}`) — реплика.
 - **Комментарии — токены.** Метки `// reveal:`, `// намеренно: C-NN причина`, `// финал: <имя>` собираются в
   `knot.marks`; комментарии прямо над заголовком узла относятся к нему (`knot.lead`). Шапка до первого узла
   (`// ставка:`, `// вопрос:`, `// оси:`, `// логлайн:`) — в `tree.head`.
@@ -32,6 +37,11 @@
 `choice { options, picked, text }`, `var { name, value, prev }`, `end` или `stuck` (упёрлись в `maxSteps`).
 Стратегия выбора — функция `(choices, ctx) → индекс`; `ctx` даёт `rng, story, vars, events, knot, step, picks`.
 Персоны пишутся как такие функции.
+
+Узел строки — тот, где inkjs вывел её текст (первый кусок текста за `Continue()`, без текста тегов и кнопок).
+`previousPointer` для этого не годится: inkjs заглядывает за переход, нет ли склейки `<>`, и указатель уже в
+следующем узле, а после последнего `Continue()` перед `-> END` он пуст. Узел точки выбора — по `sourcePath`
+кнопки: хаб без реплик по строкам не увидеть. Строка из одних тегов текста не выводит — ей остаётся `previousPointer`.
 
 ## Раскладка и сборка
 

@@ -10,12 +10,6 @@ export const VISIBLE = new Set(['реплика', 'текст', 'кнопка'])
 
 const noStrings = (s) => s.replace(/"[^"]*"/g, '""');
 
-/**
- * «{x == 1: -> a}» на одной строке: parseInk выносит переход отдельно, а от строки остаётся «{x == 1: }»
- * как будто реплика. Это скрытая проверка, а не текст.
- */
-export const isInlineDivert = (text) => /^\{[^{}]*:\s*\}$/.test(String(text).trim());
-
 /** Имена из выражения: переменные (без скобки) и вызовы функций (со скобкой). */
 function names(expr, vars, fns) {
   const v = new Set();
@@ -68,12 +62,10 @@ export function varIndex(tree) {
             for (const x of f) emit.call(x, 'код');
           }
         } else if (['msg', 'me', 'sys'].includes(it.type)) {
-          const hidden = isInlineDivert(it.text);
           for (const b of braces(it.text)) {
-            const kind = hidden ? 'переход' : 'текст';
             const { v, f } = names(b.split(':')[0], vars, fns);
-            for (const x of v) emit.read(x, kind, it.line);
-            for (const x of f) emit.call(x, kind);
+            for (const x of v) emit.read(x, 'текст', it.line);
+            for (const x of f) emit.call(x, 'текст');
           }
         } else if (it.type === 'choice') {
           const guardVars = new Set();
@@ -90,12 +82,12 @@ export function varIndex(tree) {
         } else if (it.type === 'cond') {
           const any = it.branches.some((b) => speaks(b.items));
           const headVars = it.head ? names(it.head, vars, fns) : { v: new Set(), f: new Set() };
-          for (const x of headVars.v) emit.read(x, any ? 'реплика' : 'переход', null);
+          for (const x of headVars.v) emit.read(x, any ? 'реплика' : 'переход', it.line ?? null);
           for (const x of headVars.f) emit.call(x, any ? 'реплика' : 'переход');
           for (const b of it.branches) {
             const own = b.cond && b.cond !== 'else' ? names(b.cond, vars, fns) : { v: new Set(), f: new Set() };
             const kind = speaks(b.items) ? 'реплика' : 'переход';
-            for (const x of own.v) emit.read(x, kind, null);
+            for (const x of own.v) emit.read(x, kind, it.line ?? null);
             for (const x of own.f) emit.call(x, kind);
             visit(b.items, new Set([...(guard ?? []), ...headVars.v, ...own.v]));
           }

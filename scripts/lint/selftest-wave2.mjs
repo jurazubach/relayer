@@ -123,6 +123,10 @@ export function register(test, { has, hasNot, lint, keys }) {
   test('C-24: в главе 1 ни срока мира, ни ставки', async () => {
     await has('-> a\n=== a ===\nну как ты #from:ann\n* [да] -> END\n* [нет] -> END', 'C-24.share', { only: ['C-24'] });
     await hasNot('-> a\n=== a ===\nмне надо успеть до утра #from:ann\n* [да] -> END\n* [нет] -> END', 'C-24.share', { only: ['C-24'] });
+    // ставку из шапки засчитывают два её корня в одной реплике, а не одно общее слово
+    const stake = '// ставка: к утру образцы из камеры погибнут\n-> a\n=== a ===\nиду в камеру #from:ann\n* [да] -> END\n* [нет] -> END';
+    await has(stake, 'C-24.share', { only: ['C-24'] });
+    await hasNot(stake.replace('иду в камеру', 'образцы в камере погибнут'), 'C-24.share', { only: ['C-24'] });
   });
 
   test('C-25: во второй главе все развилки сходятся', async () => {

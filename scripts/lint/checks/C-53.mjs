@@ -83,6 +83,18 @@ export default {
       for (const id of st.endings.unmarked.filter((x) => x !== 'beta_stop' && !hasMarkedAncestor(x, st))) {
         find('C-53.unmarked_end', { node: id, chapter: st.chapterOf(id), message: `${id}: -> END без // финал: выше на пути` });
       }
+      // финал, который ведёт в общий эпилог, своего -> END не имеет: снятую с него метку видно по распределителю
+      const marked = new Set(st.endings.endings.map((e) => e.id));
+      const reported = new Set(st.endings.unmarked);
+      for (const R of st.distributors) {
+        for (const e of st.edges.get(R) ?? []) {
+          const id = e.to;
+          if (e.kind === 'tunnel' || !st.finals.has(id) || marked.has(id) || reported.has(id) || id === 'beta_stop' || st.distributors.has(id)) continue;
+          if ((st.edges.get(id) ?? []).some((x) => marked.has(x.to))) continue; // ступень к размеченным финалам
+          reported.add(id);
+          find('C-53.unmarked_end', { node: id, chapter: st.chapterOf(id), message: `${id}: распределитель ${R} ведёт сюда как в финал, а // финал: нет` });
+        }
+      }
     } else if (endNodes.length) {
       find('C-53.unmarked_end', { message: `финалы не размечены: ${plural(endNodes.length, 'узел', 'узла', 'узлов')} с -> END (${endNodes.slice(0, 5).map((k) => k.id).join(', ')}) без // финал:` });
     }

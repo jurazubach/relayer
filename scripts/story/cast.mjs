@@ -2,8 +2,8 @@
 import { walk } from '../lib/ink.mjs';
 import { runCli, intFlag, median, pct, table } from './core/cli.mjs';
 import { prepare, runOnce } from './core/run.mjs';
-import { threshold, thresholdEntry } from './core/thresholds.mjs';
-import { isInlineDivert, varIndex } from './core/vars-index.mjs';
+import { threshold, thresholdEntry } from '../lib/thresholds.mjs';
+import { varIndex } from './core/vars-index.mjs';
 
 const HELP = `npm run story:cast -- [--story <id>] [--runs N] [--seed N] [--json]
 
@@ -47,7 +47,7 @@ function castOf(p, { runs = 0, seed = 1 } = {}) {
   for (const c of chars) row(c.id);
   for (const k of tree.knots) {
     walk(k.items, (it) => {
-      if (it.type === 'msg' && it.who && !isInlineDivert(it.text)) {
+      if (it.type === 'msg' && it.who) {
         const r = row(it.who);
         r.lines++;
         if ('from' in it.tags) r.blocks++;

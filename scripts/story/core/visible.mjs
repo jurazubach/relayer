@@ -1,6 +1,6 @@
 // Видимая переписка: то, что на экране у игрока. Общая для story:trace --visible и story:cold-read.
 import { fmtDuration } from './timeline.mjs';
-import { threshold } from './thresholds.mjs';
+import { thresholdSeconds } from '../../lib/thresholds.mjs';
 
 /** Хронология до первого входа в узел (узел не включается); узла на пути нет — вся хронология. */
 export function cutAt(items, until) {
@@ -22,7 +22,7 @@ export function visibleText(items, mode, { who = (_, s) => s, chat = (_, s) => s
   let thread = null;
   for (const it of items) {
     if (it.type === 'line') {
-      if (mode === 'realtime' && it.delay >= threshold('sessions.gap')) out.push(`        … тишина ${fmtDuration(it.delay)} …`);
+      if (mode === 'realtime' && it.delay >= thresholdSeconds('story.pause.session_s')) out.push(`        … тишина ${fmtDuration(it.delay)} …`);
       if (mode === 'click' && it.jump) out.push(`        · спустя ${fmtDuration(it.delay)} ·`);
       if (it.thread !== thread) { out.push(`— чат: ${chat(it, it.name)}`); thread = it.thread; }
       if (it.kind === 'sys') out.push(`   · ${it.text}`);

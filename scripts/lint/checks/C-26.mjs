@@ -1,4 +1,5 @@
 // C-26. Пауза без крючка: перед долгой паузой нет открытого вопроса — игроку незачем возвращаться.
+import { isIncoming } from '../journal.mjs';
 import { firstLines, fmtDur, hookIn, isClosing, pct, places, short } from '../text.mjs';
 
 export default {
@@ -16,7 +17,8 @@ export default {
       for (const l of run.lines) {
         if (l.delay < long || l.i === 0) continue;
         const before = run.lines.slice(Math.max(0, l.i - win), l.i);
-        const last = before.at(-1);
+        // прощание — последняя входящая реплика: по стилю (ST-60) за ней почти всегда «… не в сети» #sys
+        const last = before.findLast(isIncoming) ?? before.at(-1);
         // место — узел и строка после паузы (checks.md C-26)
         const p = all.add(`${l.knot}|${l.text}`, () => ({ knot: last.knot, after: l.text, last: last.text, delay: l.delay, noHook: 0, closing: 0 }));
         const hook = hookIn(before, firstOf, T);

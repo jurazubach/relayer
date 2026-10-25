@@ -7,10 +7,12 @@ import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'n
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseInk, walk } from '../lib/ink.mjs';
 import { listStories, loadStory } from '../lib/story.mjs';
+import { buildStatic } from './static.mjs';
 import { formatFinding, formatSummary, lintStory, loadChecks } from './core.mjs';
 import { register as wave2 } from './selftest-wave2.mjs';
-import { loadThresholds, validateThresholds, THRESHOLDS_PATH } from './thresholds.mjs';
+import { loadThresholds, validateThresholds, THRESHOLDS_PATH } from '../lib/thresholds.mjs';
 
 const HELP = `npm run test:lint [-- --json] [-- --only <подстрока>]
 
@@ -197,6 +199,18 @@ test('C-06: распределитель читает одну переменн�
   await hasNot(distributor(true), 'C-06.no_last_choice', { only: ['C-06'] });
 });
 
+test('однострочное «{a > 0: -> end_one}» — скрытое чтение распределителя, а не реплика (C-02, C-03, C-06)', () => {
+  const st = buildStatic(parseInk(distributor(false)));
+  assert.ok(st.distributors.has('route'));
+  assert.deepEqual(st.edges.get('route').map((e) => e.to).sort(), ['end_one', 'end_two']);
+  const reads = st.vars.index.get('a').reads.filter((r) => r.node === 'route');
+  assert.equal(reads.length, 1);
+  assert.equal(reads[0].visible, false, 'условие перехода игрок не видит');
+  let fake = false;
+  walk(st.byId.get('route').items, (it) => { if (it.type === 'msg') fake = true; });
+  assert.ok(!fake, 'от строки условия не осталось реплики');
+});
+
 test('C-40: один финал забирает большинство, другой не выпадает; метки «финал:» и подпись ветки', async () => {
   const src = `-> a
 === a ===
@@ -278,6 +292,10 @@ test('C-11: незамеченное молчание, отказ без сле�
 * [ок] -> END
 * [ага] -> END`;
   await has(punished, 'C-11.silent_punished', { only: ['C-11'] });
+  // «Промолчать» с одним переходом туда же, куда соседняя кнопка, — тоже без следа (просьба T-13 п. 2)
+  const same = '-> a\n=== a ===\nты там? #from:ann\n* [Промолчать #silent]\n  -> b\n* [да]\n  -> b\n=== b ===\nну вот\n-> END';
+  await has(same, 'C-11.silent_unnoticed_share', { only: ['C-11'] });
+  await hasNot(same.replace('* [Промолчать #silent]\n  -> b', '* [Промолчать #silent]\n  -> c'), 'C-11.silent_unnoticed_share', { only: ['C-11'] });
 });
 
 test('C-12: пять кнопок к одному адресату, хаб адресатов, одиночки подряд', async () => {
@@ -318,6 +336,8 @@ test('C-26: прощание перед долгой паузой без крю�
   // срок возвращения — не крючок (A-01), а срок события в мире — крючок
   await has(bare.replace('ок\n', 'напишу утром\n'), 'C-26.share', { only: ['C-26'] });
   await hasNot(bare.replace('ок\n', 'суд в 10:30\n'), 'C-26.share', { only: ['C-26'] });
+  // за прощанием «… не в сети» #sys (ST-60): прощание всё равно видно (просьба T-13 п. 1)
+  await has(bare.replace('ок\n', 'ок\nАня не в сети #sys:ann\n'), 'C-26.closing', { only: ['C-26'] });
 });
 
 test('C-28: после паузы приветствие и стена сообщений до кнопки', async () => {
@@ -396,6 +416,12 @@ VAR trust = 0
   const bare = await lint('-> a\n=== a ===\n// Главы: заметка автора\nпривет\n-> END', { only: ['C-53'] });
   assert.ok(keys(bare).includes('C-53.header_lines'));
   assert.ok(!keys(bare).includes('C-53.unknown_mark'), '«Главы:» с заглавной — заметка, а не метка');
+  // финал перед общим эпилогом: своего -> END нет, снятую метку видно по распределителю (просьба T-13 п. 3)
+  const epi = (mark) => `-> a\n=== a ===\nкуда? #from:ann\n* [туда] -> fin_a\n* [сюда] -> fin_b\n// финал: А\n=== fin_a ===\nтам #from:ann\n-> epilogue\n${mark}=== fin_b ===\nтут #from:ann\n-> epilogue\n=== epilogue ===\nконец #from:ann\n-> END`;
+  const unmarked = await lint(epi(''), { only: ['C-53'] });
+  assert.ok(unmarked.findings.some((f) => f.key === 'C-53.unmarked_end' && f.node === 'fin_b'), 'fin_b без метки');
+  assert.ok(!unmarked.findings.some((f) => f.node === 'epilogue'), 'общий эпилог — не финал');
+  await hasNot(epi('// финал: Б\n'), 'C-53.unmarked_end', { only: ['C-53'] });
 });
 
 // ───────── подавление и режимы

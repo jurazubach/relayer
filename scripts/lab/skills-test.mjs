@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { loadStory, parseStory } from '../lib/story.mjs';
 import { knownChecks, lintStory, loadChecks } from '../lint/core.mjs';
 import { buildStatic } from '../lint/static.mjs';
-import { loadThresholds } from '../lint/thresholds.mjs';
+import { loadThresholds } from '../lib/thresholds.mjs';
 import { createStreamParser, bareName } from './triggers-lib.mjs';
 import {
   buildKey, buildMutant, checkOwners, lintDiff, lintVerdict, matchFinding, neutralId, parseFindings,
@@ -41,7 +41,9 @@ const HELP = `npm run skills:test [-- флаги]
 Без --skill (или с --lint-only) — story:lint на основе и каждом мутанте. Основа обязана быть чистой
 (без ошибок и предупреждений). Мутант пойман, если у него появились находки всех проверок из поля lint
 ключа и его собственной C-NN, когда она уже есть в scripts/lint/checks. Проверки, которой в линте ещё нет,
-мутант ждёт — он в отчёте, но не роняет прогон. Код 1, если полнота ниже lab.mutants.lint_min_recall.
+мутант ждёт — он в отчёте, но не роняет прогон. lint_auto: false в ключе — своя C-NN мутанта по определению
+его не ловит (причина — lint_why): ждём только поле lint, а без него мутант — задача скилла и в полноту линта
+не входит. Код 1, если полнота ниже lab.mutants.lint_min_recall.
 
 С --skill <имя> — скилл через claude -p на мутантах своей зоны: каждый мутант копируется во временную
 папку с нейтральным id (ключ и спецификация закрыты от чтения), скилл вызывается через Skill, находки
@@ -162,7 +164,8 @@ async function lintMode(list) {
     const lines = dirty.map((f) => `${f.check} · ${f.node ?? 'история'} · ${f.message}`);
     if (args.json) console.log(JSON.stringify({ ok: false, base: 'dirty', findings: dirty }, null, 2));
     else console.error(`✗ основа не чистая — мутанты сравнивать не с чем:\n  ${lines.join('\n  ')}`);
-    process.exit(1);
+    process.exitCode = 1;
+    return;
   }
 
   const results = [];
@@ -179,7 +182,7 @@ async function lintMode(list) {
   if (badNodes.length) fail(`ключ указывает на несуществующие узлы:\n  ${badNodes.join('\n  ')}`);
 
   const zones = zoneSummary(results);
-  const measured = results.filter((r) => r.verdict.status !== 'pending');
+  const measured = results.filter((r) => !['pending', 'skill'].includes(r.verdict.status));
   const recall = measured.length ? measured.filter((r) => r.verdict.status === 'caught').length / measured.length : null;
   const ok = recall == null || recall >= T.value('lab.mutants.lint_min_recall');
 
@@ -191,17 +194,18 @@ async function lintMode(list) {
   } else {
     say(`skills:test · story:lint на ${results.length} мутантах · основа чистая${baseRes.findings.length ? ` (подсказок ${baseRes.findings.length})` : ''}\n`);
     if (!args.quiet) {
-      const mark = { caught: '✓', partial: '◐', missed: '✗', pending: '·' };
+      const mark = { caught: '✓', partial: '◐', missed: '✗', pending: '·', skill: '○' };
+      const also = (r) => (r.diff.length ? `; попутно: ${[...new Set(r.diff.map((f) => f.check))].join(', ')}` : '');
       for (const r of results) {
         const v = r.verdict;
-        const what = v.status === 'pending'
-          ? `ждёт ${v.waits} в линте${r.diff.length ? `; попутно: ${[...new Set(r.diff.map((f) => f.check))].join(', ')}` : ''}`
+        const what = v.status === 'pending' ? `ждёт ${v.waits} в линте${also(r)}`
+          : v.status === 'skill' ? `задача скилла: ${r.entry.lint_why}${also(r)}`
           : `${v.status === 'caught' ? 'пойман' : v.status === 'partial' ? 'частично' : 'не пойман'}: ${v.caught.join(', ') || '—'}${v.missing.length ? `; нет ${v.missing.join(', ')}` : ''}${v.extra.length ? `; попутно ${v.extra.join(', ')}` : ''}`;
         say(`${mark[v.status]} ${r.entry.id.padEnd(28)} ${r.entry.zone.padEnd(17)} ${String(r.entry.check).padEnd(5)} ${what}`);
       }
       say('');
     }
-    say(table(zones.map((z) => [z.zone, z.mutants, z.measured, z.caught, z.pending, pct(z.recall)]), ['зона', 'мутантов', 'есть проверка', 'пойманы', 'ждут проверку', 'полнота линта']));
+    say(table(zones.map((z) => [z.zone, z.mutants, z.measured, z.caught, z.pending, z.skill, pct(z.recall)]), ['зона', 'мутантов', 'есть проверка', 'пойманы', 'ждут проверку', 'только скилл', 'полнота линта']));
     const pending = [...new Set(results.filter((r) => r.verdict.waits).map((r) => r.verdict.waits))].sort();
     say(`\nполнота линта: ${pct(recall)} (${measured.filter((r) => r.verdict.status === 'caught').length} из ${measured.length}), порог ${pct(T.value('lab.mutants.lint_min_recall'))}`);
     if (pending.length) say(`ждут проверок, которых в story:lint ещё нет: ${pending.join(', ')} — их мутантов найдёт только скилл (--skill <зона>)`);
@@ -210,7 +214,8 @@ async function lintMode(list) {
     if (zonesWithSkill.length) say(`скиллы зон уже есть: ${zonesWithSkill.join(', ')} — npm run skills:test -- --skill <имя>`);
     say(ok ? '✓ прошло' : '✗ полнота ниже порога');
   }
-  process.exit(ok ? 0 : 1);
+  // exitCode, а не exit(): большой --json в трубу иначе обрезается до того, как stdout допишется
+  process.exitCode = ok ? 0 : 1;
 }
 
 // ───────── скилл
@@ -291,7 +296,7 @@ async function skillMode(all) {
     if (control) say(`\nна чистой основе находок: ${control.runs.map((x) => x.findings.length).join(', ')} (шум скилла)`);
     if (o.min != null) say(ok ? `✓ полнота ${pct(recall)} ≥ ${pct(o.min)}` : `✗ полнота ${pct(recall)} ниже ${pct(o.min)}`);
   }
-  process.exit(ok ? 0 : 1);
+  process.exitCode = ok ? 0 : 1;
 }
 
 function runClaude(prompt, o) {

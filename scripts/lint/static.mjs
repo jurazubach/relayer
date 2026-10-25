@@ -89,17 +89,6 @@ export function buildStatic(tree) {
   const choiceChapters = buttons.list.map((b) => b.chapter).filter((c) => c != null);
   const lastChoiceChapter = choiceChapters.length ? Math.max(...choiceChapters) : lastChapter;
 
-  // текст реплики → узлы, где он стоит: поправка узла строки в журнале бота (см. journal.mjs)
-  const textKnots = new Map();
-  for (const k of knots) {
-    walk(k.items, (it) => {
-      if ((it.type === 'msg' || it.type === 'me' || it.type === 'sys') && !it.text.includes('{')) {
-        if (!textKnots.has(it.text)) textKnots.set(it.text, new Set());
-        textKnots.get(it.text).add(k.id);
-      }
-    });
-  }
-
   // строки под условием или под кнопкой с условием: «знание на пути» (C-51) такие не проверяет
   const condTexts = new Set();
   for (const k of knots) {
@@ -114,7 +103,7 @@ export function buildStatic(tree) {
   const chapterStart = new Map(tree.chapters.map((c) => [c.n, c.knot]));
 
   return {
-    ids, byId, varNames, textKnots, chapterOf, lastChapter, lastChoiceChapter, edges, hasChoice,
+    ids, byId, varNames, chapterOf, lastChapter, lastChoiceChapter, edges, hasChoice,
     finals, distributors: new Set(distributors), endings, vars, buttons, labels, condTexts, chapterStart,
     endingMarks: endingMarks(tree),
     /** Кнопка исходника для варианта точки выбора журнала (узел + текст) или null. */

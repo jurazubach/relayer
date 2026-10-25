@@ -18,6 +18,18 @@ npm run story:unpack        # история одним .json → папка src
 npm run test:lib            # самопроверка scripts/lib: синтетические примеры ink и три истории
 npm run story:lint          # проверки C-01…C-54 по checks.md (--strict, --summary, --changed --quick, --partial, --plan, --json)
 npm run test:lint           # самопроверка story:lint: дефект и чистый двойник на каждую проверку
+npm run story:trace         # прохождение персоной: переписка, маршрут, переменные, оба режима (--help)
+npm run story:vars          # переменные: где пишется → где читается, мёртвые и невидимые
+npm run story:sessions      # расписание без часов игрока: сессии, микросессии, длина против карточки
+npm run story:cast          # контакты и их уровень: ось / сторона / источник / фон / эпизодический
+npm run story:endings       # финалы, доли по персонам, что их решает
+npm run story:diff          # метрики и реплики истории до и после между ревизиями git
+npm run story:rule          # текст свода по ID: правило R-NN, проверка C-NN, решение автора A-NN
+npm run story:status        # где история в цикле: docs/stories/<id>/STATUS.md (--all)
+npm run story:cold-read     # холодное чтение: видимая переписка до узла для claude -p из пустого каталога
+npm run test:story-cmd      # самопроверка команд story:*
+npm run skills:test         # мутанты docs/lab/mutants: ловит ли story:lint (и скилл через --skill) дефекты своей зоны
+npm run test:lab:mutants    # самопроверка skills:test: сборка мутантов, ключ, вердикт
 npm run test:e2e            # Playwright: smoke-тесты в настоящем браузере
 npm run shots               # скриншоты всех экранов в screenshots/<устройство>/
 npm run test:e2e:ui         # интерактивный режим Playwright
@@ -26,7 +38,7 @@ npm run story:coverage      # покрытие знаний скиллами: с
 npm run test:coverage       # самопроверка story:coverage
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary`.
 
 ### Playwright
 
@@ -91,7 +103,9 @@ docs/capabilities.json     реестр возможностей чата
 docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
 docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
 scripts/lib/               общая библиотека разбора: ink.mjs (дерево), compile.mjs, bot.mjs (прохождения
-                           с журналом), story.mjs (загрузка .json / папки / .ink, раскладка и сборка)
+                           с журналом), story.mjs (загрузка .json / папки / .ink, раскладка и сборка);
+                           thresholds.mjs (пороги), lexicon.mjs (словари dict.*), playtime.mjs (время игрока)
+scripts/story/             команды story:* на scripts/lib (README внутри)
 scripts/check-story.mjs    бот-тестировщик (теги берёт из реестра)
 scripts/story-pack.mjs     story:pack / story:unpack: папка истории ⇄ один .json
 scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html

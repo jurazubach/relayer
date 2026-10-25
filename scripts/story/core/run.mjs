@@ -7,7 +7,7 @@ import { play, seeded, strategies } from '../../lib/bot.mjs';
 import { compileInput, loadStory, parseStory } from '../../lib/story.mjs';
 import { PERSONAS, noAnswer } from './personas.mjs';
 import { timeline } from './timeline.mjs';
-import { threshold } from './thresholds.mjs';
+import { threshold } from '../../lib/thresholds.mjs';
 
 export const BETA_STOP = 'beta_stop';
 
@@ -71,8 +71,8 @@ export function endingOf(items, idx, { partial = false, visited = null } = {}) {
   const lines = items.filter((i) => i.type === 'line');
   const last = items.at(-1);
   const seenKnots = new Set(items.map((i) => i.knot));
-  // bot.mjs не видит узел последней строки перед END (previousPointer уже пуст) — такой узел
-  // знают только счётчики посещений; он последний на пути, потому что после него конец
+  // узлы, через которые прогон прошёл без единой строки (финал-развилка, beta_stop из одних тегов):
+  // их знают только счётчики посещений
   const late = (visited ?? []).filter((id) => !seenKnots.has(id) && (idx.byNode.has(id) || id === BETA_STOP));
   if (partial && (seenKnots.has(BETA_STOP) || late.includes(BETA_STOP))) return { name: `(${BETA_STOP})`, node: BETA_STOP, kind: 'partial' };
   if (last?.type === 'stuck') return { name: '(не дошёл)', node: last.knot, kind: 'stuck' };
@@ -82,7 +82,7 @@ export function endingOf(items, idx, { partial = false, visited = null } = {}) {
     node = i.knot;
     if (idx.source === 'end') break; // первый вход в финальную часть, а не общий хвост
   }
-  if (late.length && last?.type === 'end' && !(idx.source === 'end' && node)) node = late.at(-1);
+  if (!node && late.length && last?.type === 'end') node = late.at(-1);
   if (!node) return { name: `(без метки: ${last?.knot ?? '—'})`, node: last?.knot ?? null, kind: 'unmarked' };
   const { marks, sigs } = idx.byNode.get(node);
   if (marks.length === 1 || !sigs.length) return { name: marks[0].name, node, kind: idx.source };

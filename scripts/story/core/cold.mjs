@@ -2,7 +2,7 @@
 // Отдельно от cold-read.mjs, чтобы самопроверка гоняла всё, кроме самого вызова claude -p.
 import { existsSync, readFileSync } from 'node:fs';
 import { fmtDuration } from './timeline.mjs';
-import { threshold } from './thresholds.mjs';
+import { thresholdSeconds } from '../../lib/thresholds.mjs';
 import { visibleText } from './visible.mjs';
 
 export const MODES = {
@@ -39,7 +39,7 @@ const LETTERS = 'АБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЭЮЯ';
 
 /** Переписка в режиме и ключ к ней. */
 export function compose(p, items, mode) {
-  const gap = threshold('sessions.gap');
+  const gap = thresholdSeconds('story.pause.session_s');
   const key = {};
   if (mode === 'voices') {
     const letter = new Map();

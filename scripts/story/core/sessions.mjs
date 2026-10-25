@@ -1,6 +1,6 @@
-// Сессии прохождения: куски хронологии между паузами от sessions.gap (checks.md, «Общие данные»).
-import { CLOSING, PROMISE } from './lexicon.mjs';
-import { threshold } from './thresholds.mjs';
+// Сессии прохождения: куски хронологии между паузами от story.pause.session_s (checks.md, «Общие данные»).
+import { isClosing, isPromise } from '../../lib/lexicon.mjs';
+import { threshold, thresholdSeconds } from '../../lib/thresholds.mjs';
 
 /** Признаки крючка в последних строках перед паузой (checks.md, «Признаки крючка»), без срока возвращения. */
 export function hookSigns(lines) {
@@ -10,7 +10,7 @@ export function hookSigns(lines) {
     if (l.kind === 'photo') signs.add('фото');
     if (l.unlock?.length) signs.add('новый контакт');
     if (l.newContact) signs.add('первое сообщение');
-    if (PROMISE.test(l.text) && l.kind !== 'me') signs.add('обещание');
+    if (isPromise(l.text) && l.kind !== 'me') signs.add('обещание');
   }
   return [...signs];
 }
@@ -18,11 +18,11 @@ export function hookSigns(lines) {
 /**
  * @param {object} t хронология timeline()
  * @returns {object[]} сессии: { n, at, pauseBefore, chapter, knot, lines, incoming, choices, active, last, label, hook, tail }
- *   active — набор, зазоры и паузы короче sessions.gap; tail — сессия после последней кнопки
+ *   active — набор, зазоры и паузы короче story.pause.session_s; tail — сессия после последней кнопки
  */
 export function sessions(t) {
-  const gap = threshold('sessions.gap');
-  const microLines = threshold('sessions.micro_lines');
+  const gap = thresholdSeconds('story.pause.session_s');
+  const microLines = threshold('C-30.micro_lines');
   const items = t.items.filter((i) => i.type === 'line' || i.type === 'choice');
   const lastChoice = items.map((i) => i.type).lastIndexOf('choice');
   const out = [];
@@ -45,7 +45,7 @@ export function sessions(t) {
     const last3 = lines.slice(-3);
     s.last = lines.at(-1)?.text ?? '';
     s.hook = hookSigns(last3);
-    s.closed = CLOSING.test(s.last);
+    s.closed = isClosing(s.last);
     s.label = s.n > 1 && s.lines <= microLines && s.choices === 0 && !s.tail ? 'микро' : s.hook.length ? 'крючок' : s.closed ? 'закрытая' : '';
     s.end = (s.items.at(-1)?.tReal ?? s.at);
     delete s.items;
