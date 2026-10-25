@@ -48,6 +48,9 @@ if (!/STATUS\.md/.test(body)) err('SKILL.md: первый шаг должен ч
 if (!/references\//.test(body)) err('SKILL.md: не ссылается на references/');
 if (!/объясни/i.test(body)) warn('SKILL.md: нет режима «объясни»');
 if (!/Версия:\s*\d/.test(body) && !/^metadata:[\s\S]*?version:\s*\d/m.test(fm?.[1] ?? '')) warn('SKILL.md: нет версии (metadata.version или «Версия: N»)');
+// `Bash(npm run story:*)` совпадает с `npm run story *` и не пропускает `npm run story:lint` (LOCAL-03)
+if (fm && /allowed-tools:[^\n]*npm run (?:-s )?story:\*/.test(fm[1])) err('allowed-tools: правило story:* не пропускает npm run story:lint — нужно Bash(npm run story*) (LOCAL-03)');
+if (fm && /npm run -s story/.test(text) && !/allowed-tools:[^\n]*npm run -s story\*/.test(fm[1])) err('allowed-tools: в SKILL.md есть npm run -s story…, нужно ещё Bash(npm run -s story*)');
 if (fm && /^when_to_use:/m.test(fm[1])) warn('frontmatter: when_to_use тратит бюджет листинга — симптомы в description (claude-code-format.md §1.2)');
 if (fm && /^disable-model-invocation:\s*true/m.test(fm[1])) err('frontmatter: disable-model-invocation запрещает вызов моделью — модулю нужен user-invocable: false');
 if (/\.claude\/skills\/[a-z0-9-]+\/scripts\//.test(body)) warn('SKILL.md: скрипты своего скилла — через ${CLAUDE_SKILL_DIR}/scripts/');
