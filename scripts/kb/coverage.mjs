@@ -1,8 +1,10 @@
 // story:coverage — матрица покрытия знаний базы и свода скиллами (flow-review.md §C «Устройство story:coverage»).
 // Строка — единица знания, кластер — тема, владелец и файл — из owners.md, уровень — из файлов скиллов.
-// Ручной слой — docs/playbook/coverage.json (статусы, basis, верность) и clusters.json (правки кластеров).
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+// Ручной слой — статусы, basis, верность: общий docs/playbook/coverage.json плюс шарды docs/playbook/coverage/<скилл>.json
+// по скиллу-владельцу строки (ревьюеры разных скиллов правят разные файлы — ветки сливаются без конфликтов);
+// правки кластеров — clusters.json.
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { join, dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { loadRows, aliasResolver, pad, KINDS, KIND_RU, BASE_KINDS } from './kb-rows.mjs';
@@ -16,7 +18,7 @@ import { seeded } from '../lib/bot.mjs';
 const HELP = `Покрытие знаний: какие единицы базы и свода держат скиллы и на каком уровне.
 
   npm run story:coverage -- --summary                  сводка: строки, кластеры, уровни, владельцы; код выхода 1 —
-                                                       строка без владельца, дубль владельца, ошибка coverage.json или §8
+                                                       строка без владельца, дубль владельца, ошибка ручного слоя или §8
   npm run story:coverage -- --skill story-choices      часть матрицы для скилла
   npm run story:coverage -- --skill story-choices --min L2
                                                        код выхода 1, если кластер скилла ниже уровня
@@ -27,7 +29,8 @@ const HELP = `Покрытие знаний: какие единицы базы 
   npm run story:coverage -- --fidelity-sample story-choices 20 [--seed N]
                                                        случайные пары «источник ↔ reference» для ревьюера
   npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…
-                                                       записать ручной слой в coverage.json
+                                                       записать ручной слой в шард coverage/<владелец>.json
+                                                       (строка из общего coverage.json переезжает в шард)
   npm run story:coverage -- --owners-check             уникальность и полнота владельцев (owners.md §8)
   npm run story:coverage -- --unowned                  строки без владельца и с двумя владельцами — поправить «опору» owners.md
   npm run story:coverage -- --build-clusters [--check] пересобрать clusters.json (--check — только сверить)
@@ -52,7 +55,11 @@ R-NN, C-NN, F-NN, #attn-… (attention-merged.md), LOCAL-NN. База берёт
 (docs/lab/mutants/). RED на L3 — только с мутантом. Кластер покрыт по лучшему блоку, если ID строки есть в
 sources.md; нюанс и противоречие — отдельные строки.
 
-Статусы (coverage.json):
+Ручной слой: docs/playbook/coverage.json (_about и старые записи) + docs/playbook/coverage/*.json — шард на
+скилл-владельца строки (story:lint — story-lint.json, без владельца — _common.json), формат тот же: { "rows": {…} }.
+Одна строка в двух файлах — ошибка сводки.
+
+Статусы (coverage.json и шарды):
 ${STATUS_HELP.map((s) => '  ' + s).join('\n')}
 Отменённое из superseded.md получает superseded:A-NN само; «в силе» — used с пометкой «частично».`;
 
@@ -72,6 +79,62 @@ export const PATHS = {
 
 const readJson = (p, fallback) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : fallback);
 const read = (p) => readFileSync(p, 'utf8');
+
+// Шарды — всегда рядом с общим файлом: buildMatrix подмешивает PATHS, и свой путь к шардам у фикстуры потёк бы в настоящую базу.
+const shardDir = (paths) => join(dirname(paths.coverage), 'coverage');
+const manualName = (paths, file) => relative(dirname(paths.coverage), file);
+
+/** Шард ручного слоя для владельца строки: двоеточие story:lint в имени файла не всем ОС по душе. */
+export function shardFile(paths, owner) {
+  return join(shardDir(paths), `${owner ? owner.replace(/[^a-z0-9-]/gi, '-') : '_common'}.json`);
+}
+
+/**
+ * Ручной слой целиком: общий coverage.json и шарды coverage/*.json. Строка в двух файлах — проблема, а не
+ * перезапись по порядку чтения: иначе запись ревьюера молча теряется после слияния веток.
+ */
+export function loadManual(paths = PATHS) {
+  const files = [paths.coverage];
+  const dir = shardDir(paths);
+  if (existsSync(dir)) files.push(...readdirSync(dir).filter((f) => f.endsWith('.json')).sort().map((f) => join(dir, f)));
+  const rows = {};
+  const from = {};
+  const problems = [];
+  for (const file of files) {
+    if (!existsSync(file)) continue;
+    const name = manualName(paths, file);
+    let data;
+    try {
+      data = JSON.parse(read(file));
+    } catch (e) {
+      throw new Error(`${name}: ${e.message}`);
+    }
+    for (const [id, m] of Object.entries(data.rows ?? {})) {
+      if (from[id]) {
+        problems.push(`${name} ${id}: строка уже записана в ${from[id]} — оставить одну запись`);
+        continue;
+      }
+      rows[id] = m;
+      from[id] = name;
+    }
+  }
+  return { rows, from, problems };
+}
+
+// Порядок полей — как в _about, а не по алфавиту: --json выдаёт записи так же, как до шардов.
+const FIELD_ORDER = ['status', 'basis', 'verified_by', 'fidelity', 'ok', 'date', 'by', 'note'];
+const fieldRank = (k) => (FIELD_ORDER.includes(k) ? FIELD_ORDER.indexOf(k) : FIELD_ORDER.length);
+const sortFields = (v) =>
+  v && typeof v === 'object' && !Array.isArray(v)
+    ? Object.fromEntries(Object.keys(v).sort((a, b) => fieldRank(a) - fieldRank(b) || a.localeCompare(b)).map((k) => [k, sortFields(v[k])]))
+    : v;
+
+/** Шард пишется с сортировкой строк и полей: две ветки, дописавшие разные строки, не спорят о порядке. */
+export function writeShard(file, rows) {
+  const sorted = Object.fromEntries(Object.keys(rows).sort(byId).map((id) => [id, sortFields(rows[id])]));
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, JSON.stringify({ rows: sorted }, null, 2) + '\n');
+}
 
 function ensureClean(paths, fresh) {
   if (!fresh && existsSync(paths.books)) return;
@@ -131,24 +194,25 @@ export function buildMatrix(opts = {}) {
     lintChecksDir: paths.lintChecks,
     mutantsDir: paths.mutants,
   });
-  const manual = readJson(paths.coverage, { rows: {} });
+  const manual = loadManual(paths);
   const rowsById = new Map(kb.rows.map((r) => [r.id, r]));
   const clusterIds = new Set(kb.clusters.map((c) => c.id));
   const features = existsSync(paths.plan) ? engineFeatures(read(paths.plan)) : new Set();
-  const problems = [];
+  const problems = [...manual.problems];
 
-  for (const [id, m] of Object.entries(manual.rows ?? {})) {
-    if (!rowsById.has(id)) problems.push(`coverage.json: нет строки «${id}»`);
+  for (const [id, m] of Object.entries(manual.rows)) {
+    const f = manual.from[id];
+    if (!rowsById.has(id)) problems.push(`${f}: нет строки «${id}»`);
     if (m.status) {
       const e = statusError(m.status, { rows: rowsById, clusters: clusterIds, features });
-      if (e) problems.push(`coverage.json ${id}: ${e}`);
+      if (e) problems.push(`${f} ${id}: ${e}`);
     }
-    if (m.basis && !['checked', 'secondary', 'model', 'our_estimate'].includes(m.basis)) problems.push(`coverage.json ${id}: basis «${m.basis}» не checked / secondary / model / our_estimate`);
+    if (m.basis && !['checked', 'secondary', 'model', 'our_estimate'].includes(m.basis)) problems.push(`${f} ${id}: basis «${m.basis}» не checked / secondary / model / our_estimate`);
   }
 
   const matrix = kb.rows.map((r) => {
     const o = kb.owners.get(r.id);
-    const m = manual.rows?.[r.id] ?? {};
+    const m = manual.rows[r.id] ?? {};
     const sup = kb.superseded.get(r.id) ?? (r.kind === 'nuance' ? kb.superseded.get(r.parent) : null);
     const status = m.status ?? (sup && !sup.partial ? `superseded:${sup.decision}` : 'used');
     const skill = o.owner_skill && o.owner_skill !== 'story:lint' ? scan.skills.get(o.owner_skill) : null;
@@ -560,13 +624,16 @@ function printFidelity(f) {
 
 const quote = (t) => t.split('\n').map((l) => `> ${l}`).join('\n');
 
-/** Запись ручного слоя: status, basis, verified_by, fidelity, note, by. */
+/**
+ * Запись ручного слоя: status, basis, verified_by, fidelity, note, by. Пишет в шард владельца строки; запись из
+ * общего coverage.json или чужого шарда (владелец сменился) переезжает туда же — общий файл рассыпается сам.
+ */
 export function record(res, id, pairs, paths = PATHS) {
   const row = res.matrix.find((x) => x.id === id);
   if (!row) throw new Error(`нет строки «${id}»`);
-  const file = readJson(paths.coverage, { rows: {} });
-  file.rows ??= {};
-  const m = file.rows[id] ?? {};
+  const target = shardFile(paths, row.owner_skill);
+  const manual = loadManual(paths);
+  const m = structuredClone(manual.rows[id] ?? {});
   const kv = Object.fromEntries(pairs.map((p) => {
     const i = p.indexOf('=');
     if (i < 0) throw new Error(`ожидалось ключ=значение: «${p}»`);
@@ -588,10 +655,19 @@ export function record(res, id, pairs, paths = PATHS) {
     } else if (!['note', 'by'].includes(k)) throw new Error(`неизвестный ключ «${k}»: status, basis, verified_by, fidelity, note, by`);
   }
   if (kv.note && !kv.fidelity) m.note = kv.note;
-  file.rows[id] = m;
-  file.rows = Object.fromEntries(Object.entries(file.rows).sort(([a], [b]) => byId(a, b)));
-  writeFileSync(paths.coverage, JSON.stringify(file, null, 2) + '\n');
-  return m;
+
+  const shard = readJson(target, { rows: {} });
+  writeShard(target, { ...shard.rows, [id]: m });
+  // Дубль в другом шарде тоже вынимаем: иначе после записи сводка упадёт на «строка в двух файлах».
+  for (const file of [paths.coverage, ...readdirSync(shardDir(paths)).map((f) => join(shardDir(paths), f))]) {
+    if (file === target || !file.endsWith('.json')) continue;
+    const data = readJson(file, null);
+    if (!data?.rows?.[id]) continue;
+    delete data.rows[id];
+    if (file === paths.coverage) writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
+    else writeShard(file, data.rows);
+  }
+  return { ...m, file: manualName(paths, target) };
 }
 
 // ——— CLI ———
@@ -682,8 +758,8 @@ export function main(argv, paths = PATHS) {
     return 0;
   }
   if (a['--record']) {
-    const m = record(res, a['--record'], a._, paths);
-    say({ id: a['--record'], ...m }, `✓ coverage.json ${a['--record']}: ${JSON.stringify(m)}`);
+    const { file, ...m } = record(res, a['--record'], a._, paths);
+    say({ id: a['--record'], file, ...m }, `✓ ${file} ${a['--record']}: ${JSON.stringify(m)}`);
     return 0;
   }
   if (a['--unowned']) {
@@ -692,7 +768,7 @@ export function main(argv, paths = PATHS) {
     say(
       { unowned: xs.map((x) => ({ id: x.id, kind: x.kind, title: x.title, source: x.source, cluster: x.cluster })), dups },
       [
-        `Без владельца: ${xs.length}. Назначить — дописать ID в «опору» нужного TH-NN в owners.md §5 (или manual.th в clusters.json), либо статус в coverage.json.`,
+        `Без владельца: ${xs.length}. Назначить — дописать ID в «опору» нужного TH-NN в owners.md §5 (или manual.th в clusters.json), либо статус в ручном слое (--record).`,
         ...xs.map((x) => `  ${x.id} — ${(x.title ?? '').slice(0, 80)} (${x.source})`),
         `Два владельца: ${dups.length}. Оставить ID в «опоре» одного TH-NN, второй — в «ссылаются».`,
         ...dups.map((d) => `  ${d.id} — ${d.owners.join(', ')}`),
@@ -703,7 +779,7 @@ export function main(argv, paths = PATHS) {
   const s = summary(res);
   say(s, printSummary(s));
   // Строка без владельца или с двумя — потеря знания: приёмка W0 и F-final должны падать, а не предупреждать.
-  return s.problems.some((p) => p.startsWith('coverage.json')) || !s.owners_check.ok || s.unowned.total || s.owner_dups.length ? 1 : 0;
+  return s.problems.some((p) => /^coverage[./]/.test(p)) || !s.owners_check.ok || s.unowned.total || s.owner_dups.length ? 1 : 0;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

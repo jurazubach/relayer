@@ -1,0 +1,308 @@
+{
+  "rows": {
+    "#attn-player": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено, числа заменены словами без потери смысла"
+      }
+    },
+    "#attn-return-rhythm": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "#attn-return-silence": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "все пункты и ключи сохранены"
+      }
+    },
+    "attention-today:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; «выше двух» переведено на ключ C-37.per_chapter (ревью)"
+      }
+    },
+    "attention-today:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "схема и ловушка сохранены, отменённый довод помечен A-03"
+      }
+    },
+    "attention-today:PAT-05#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "attention-today:RED-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "C-31": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "inkle-ingold:P-18#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл и пример сохранены; пороги источника переведены на ключи (ревью)"
+      }
+    },
+    "inkle-ingold:PAT-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "условия и масштаб сохранены, потолок ключом"
+      }
+    },
+    "LOCAL-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс A, вывод сохранён"
+      }
+    },
+    "maass-fire-in-fiction:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "maass-fire-in-fiction:LESSON-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "maass-fire-in-fiction:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C, вывод адаптирован под A-04 без потери"
+      }
+    },
+    "maass-fire-in-fiction:RED-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "meaningful-choice:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "отменён A-02, условная пауза по делу оставлена"
+      }
+    },
+    "messenger-genre:LESSON-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:LESSON-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:P-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:PAT-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "приём, ловушка и «когда нет» сохранены"
+      }
+    },
+    "messenger-genre:RED-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "messenger-genre:RED-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "флаг сохранён, владелец эха назван"
+      }
+    },
+    "messenger-genre:RED-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "narrative-postmortems:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "narrative-postmortems:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "narrative-postmortems:LESSON-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "narrative-postmortems:P-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "суть и исключение сохранены; порог 70% источника в проверку не перенесён"
+      }
+    },
+    "narrative-postmortems:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "шаги сохранены; «понятный срок» опущен по A-01"
+      }
+    },
+    "narrative-testing:RED-33": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "R-122": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "все три пункта правила разложены в развилку по клику"
+      }
+    },
+    "schell-art-of-game-design:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "обе проверки и класс C сохранены"
+      }
+    },
+    "serial-hooks:GREEN-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; пометка «наш вывод» источника опущена"
+      }
+    },
+    "serial-hooks:LESSON-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "корреляционность и класс сохранены; «назначенная встреча» снята по A-01"
+      }
+    },
+    "serial-hooks:RED-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "serial-hooks:SYS-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    },
+    "snyder-save-the-cat:RED-21": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "перенос на «не ответил» корректен, исключение сохранено"
+      }
+    },
+    "yorke-into-the-woods:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ревью попытки 3, seed 7"
+      }
+    }
+  }
+}
