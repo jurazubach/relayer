@@ -16,12 +16,15 @@ let group = null;
 const flush = () => {
   if (!group) return;
   out.push(`**${group.title}:**`);
-  let cur = '';
-  for (const id of group.ids) {
-    const piece = cur ? ` · ${id}` : id;
-    if ((cur + piece).length > 118) { out.push(cur); cur = id; } else cur += piece;
+  // строка со словом «нюанс» целиком читается как нюансы (kb-levels.mjs, headingIds): нюансы — отдельными строками
+  for (const part of [group.ids.filter((id) => !/нюанс/.test(id)), group.ids.filter((id) => /нюанс/.test(id))]) {
+    let cur = '';
+    for (const id of part) {
+      const piece = cur ? ` · ${id}` : id;
+      if ((cur + piece).length > 130) { out.push(cur); cur = id; } else cur += piece;
+    }
+    if (cur) out.push(cur);
   }
-  if (cur) out.push(cur);
   out.push('');
   group = null;
 };
