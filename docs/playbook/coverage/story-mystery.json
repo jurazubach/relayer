@@ -1,5 +1,13 @@
 {
   "rows": {
+    "C-54": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "dille-ultimate-guide:GREEN-02": {
       "fidelity": {
         "ok": true,
@@ -13,7 +21,15 @@
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "8–10 сообщений заменено C-35.series_target"
+        "note": "8–10 сообщений заменено C-35.series_target; порог 12 и проверка note_* опущены — это ритм, не загадка"
+      }
+    },
+    "dille-ultimate-guide:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "dille-ultimate-guide:PAT-06#нюанс": {
@@ -30,6 +46,54 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "порог 12 заменён C-35 у story-pace"
+      }
+    },
+    "mckee-story:PAT-04#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "mckee-story:PAT-09#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "messenger-genre:P-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; добавлено своё требование объявить беспомощность с главы 1"
+      }
+    },
+    "messenger-genre:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "mystery-fair-play:GREEN-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "mystery-fair-play:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "mystery-fair-play:LESSON-05": {
@@ -54,6 +118,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "сохранено; проверка — C-54.gap_choice и long_answer"
+      }
+    },
+    "mystery-fair-play:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "порог медианы ≥3 сведён к C-54.min_clues, это записано как «мягче цели»"
+      }
+    },
+    "mystery-fair-play:P-09#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "mystery-fair-play:P-15": {
@@ -96,6 +176,14 @@
         "note": "сохранено; ссылка на story-pauses"
       }
     },
+    "mystery-fair-play:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "mystery-fair-play:PAT-07#нюанс": {
       "fidelity": {
         "ok": true,
@@ -110,6 +198,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "условие и ловушка сохранены; // warn: заменён facts.md по A-06"
+      }
+    },
+    "mystery-fair-play:PAT-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "mystery-fair-play:PAT-09#нюанс": {
@@ -128,12 +224,60 @@
         "note": "сохранено; оговорка про #silent и уточняющие — модель"
       }
     },
+    "mystery-fair-play:RED-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "mystery-fair-play:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "narrative-postmortems:P-08#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "nicklin-writing-for-games:PAT-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
+    "R-92": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
+      }
+    },
     "R-95": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "«15 сообщений» и «10 сообщений» опущены (ключа нет), «пяти глав» → «длинной»; правило подтягивается по ID"
+        "note": "числа 15/10 сообщений опущены — ключа нет; условия и исключение сохранены"
+      }
+    },
+    "R-101": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, условия и исключения сохранены"
       }
     },
     "truby-anatomy-of-story:P-14": {
