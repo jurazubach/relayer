@@ -11,6 +11,10 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
+    "ashwell-standard-patterns:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
+    },
     "ashwell-standard-patterns:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -30,6 +34,18 @@
     "ashwell-standard-patterns:LESSON-14": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "attention-today:attention§3": {
+      "status": "merged-into:#attn-return-batch",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-batch в story-pauses/attention.md"
+    },
+    "attention-today:contra-4": {
+      "status": "merged-into:serial-hooks:contra-3",
+      "note": "тот же спор «пауза на размышление против паузы после события»; влито в блок serial-hooks:contra-3 (story-pauses/contradictions.md)"
+    },
+    "bateman-game-writing:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
     },
     "bateman-game-writing:contra-5": {
       "fidelity": {
@@ -71,6 +87,10 @@
         "note": "фон и биографии для команды сохранены"
       }
     },
+    "bateman-game-writing:P-20#нюанс": {
+      "status": "rejected:not-our-format",
+      "note": "служебная пометка о том, что новых открытых источников не найдено; знания не несёт"
+    },
     "bateman-game-writing:PAT-06#нюанс": {
       "fidelity": {
         "ok": true,
@@ -86,6 +106,18 @@
         "by": "W1",
         "note": "условие и правка сохранены"
       }
+    },
+    "chat-fiction-apps:attention§3": {
+      "status": "merged-into:#attn-return-hook",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
+    },
+    "chat-fiction-apps:P-03#нюанс": {
+      "status": "merged-into:chat-fiction-apps:P-02#нюанс",
+      "note": "тот же текст нюанса «К P-02 и P-03»; влито в блок chat-fiction-apps:P-02#нюанс (story-pauses/hooks.md)"
+    },
+    "choiceofgames-design:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
     },
     "choiceofgames-design:GREEN-10": {
       "fidelity": {
@@ -135,6 +167,10 @@
         "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
       }
     },
+    "cron-wired-for-story:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
+    },
     "cron-wired-for-story:LESSON-06": {
       "fidelity": {
         "ok": true,
@@ -142,6 +178,10 @@
         "by": "W1",
         "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
       }
+    },
+    "dille-ultimate-guide:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
     },
     "dille-ultimate-guide:contra-3": {
       "status": "merged-into:choiceofgames-design:contra-2",
@@ -155,6 +195,10 @@
         "note": "тон и ставки, эталон первой главы; срок паузы честно помечен отменённым A-01"
       }
     },
+    "dille-ultimate-guide:P-13#нюанс": {
+      "status": "superseded:A-01",
+      "note": "называть срок продолжения перед паузой от 6 ч — отменено A-01; крючок перед паузой в силе (hooks.md, R-64)"
+    },
     "dille-ultimate-guide:SYS-1": {
       "fidelity": {
         "ok": true,
@@ -162,6 +206,14 @@
         "by": "review",
         "note": "цепочка документов сохранена; потеряна пометка источника «уверенность средняя»"
       }
+    },
+    "edgerton-hooked:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
+    },
+    "emshort-structures:attention§3": {
+      "status": "merged-into:#attn-return-hook",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
     },
     "emshort-structures:RED-03": {
       "fidelity": {
@@ -195,6 +247,14 @@
         "note": "шаги и замеры сохранены"
       }
     },
+    "failbetter-qbn:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
+    },
+    "failbetter-qbn:P-08#нюанс": {
+      "status": "superseded:A-01",
+      "note": "срок паузы перед ощутимой паузой — отменено A-01; причина без срока — R-63 у story-time"
+    },
     "failbetter-qbn:PAT-10": {
       "fidelity": {
         "ok": true,
@@ -202,6 +262,10 @@
         "by": "review",
         "note": "4–8 реплик подводки стали «несколько», масштаб 5/50 есть"
       }
+    },
+    "inkle-ingold:attention§3": {
+      "status": "merged-into:#attn-return-dose",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-dose в story-pauses/attention.md"
     },
     "inkle-ingold:contra-2": {
       "status": "merged-into:choiceofgames-design:contra-2",
@@ -298,6 +362,14 @@
         "by": "W1",
         "note": "«ответ ≤ 2 слова» стал «короткий общий ответ» — признак группы без тел сохранён (C-10.group_bodyless)"
       }
+    },
+    "maass-fire-in-fiction:RED-13": {
+      "status": "rejected:duplicate:K-R-66",
+      "note": "одна и та же формула обрыва больше двух раз — правило R-66 и C-29 (story-pauses/hooks.md)"
+    },
+    "mckee-story:attention§3": {
+      "status": "merged-into:#attn-return-hook",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
     },
     "mckee-story:contra-1": {
       "fidelity": {
@@ -423,6 +495,10 @@
         "note": ""
       }
     },
+    "messenger-genre:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
+    },
     "messenger-genre:contra-5": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
@@ -443,9 +519,17 @@
         "note": "аналог #label сохранён"
       }
     },
+    "mobile-interactive-stories:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "mystery-fair-play:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
     },
     "narrative-postmortems:contra-2": {
       "status": "merged-into:bateman-game-writing:contra-5",
@@ -555,6 +639,10 @@
         "note": "порог ключом C-10.cosmetic_chapter"
       }
     },
+    "nicklin-writing-for-games:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
+    },
     "nicklin-writing-for-games:contra-1": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
@@ -574,6 +662,10 @@
         "by": "review",
         "note": "признак и починка сохранены"
       }
+    },
+    "procedural-storytelling:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
     },
     "procedural-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -627,6 +719,10 @@
         "note": "правило целиком, пример заменён выдуманным"
       }
     },
+    "schell-art-of-game-design:attention§3": {
+      "status": "merged-into:#attn-return-batch",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-batch в story-pauses/attention.md"
+    },
     "schell-art-of-game-design:contra-4": {
       "fidelity": {
         "ok": true,
@@ -638,6 +734,26 @@
     "schell-art-of-game-design:LESSON-07": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "serial-hooks:attention§3": {
+      "status": "merged-into:#attn-return-dose",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-dose в story-pauses/attention.md"
+    },
+    "serial-hooks:GREEN-09": {
+      "status": "superseded:A-04",
+      "note": "быстрый повтор после финала — заменён режимом «по клику» с начала (A-04, R-122); пояснение в flags.md"
+    },
+    "serial-hooks:P-13#нюанс": {
+      "status": "superseded:A-01",
+      "note": "«утром» как честный срок паузы — отменено A-01; время события мира в силе (R-64)"
+    },
+    "serial-hooks:PAT-11#нюанс": {
+      "status": "merged-into:serial-hooks:PAT-11",
+      "note": "нюанс повторяет сам приём PAT-11; влито в блок serial-hooks:PAT-11 (story-pauses/patterns-return.md)"
+    },
+    "sheldon-character-storytelling:attention§3": {
+      "status": "merged-into:#attn-return-first",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
     },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -675,6 +791,10 @@
         "note": "условие и масштаб сохранены"
       }
     },
+    "skolnick-video-game-storytelling:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
+    },
     "skolnick-video-game-storytelling:LESSON-01": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
@@ -690,6 +810,14 @@
     "skolnick-video-game-storytelling:LESSON-07": {
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
+    },
+    "snyder-save-the-cat:attention§3": {
+      "status": "merged-into:#attn-return-hook",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
+    },
+    "truby-anatomy-of-story:attention§3": {
+      "status": "merged-into:#attn-return-hook",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
     },
     "truby-anatomy-of-story:LESSON-02": {
       "status": "merged-into:meaningful-choice:LESSON-04",
@@ -711,6 +839,10 @@
         "note": "схема, ловушки, basis secondary"
       }
     },
+    "vogler-writers-journey:attention§3": {
+      "status": "merged-into:#attn-return-recap",
+      "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
+    },
     "vogler-writers-journey:PAT-06": {
       "fidelity": {
         "ok": false,
@@ -718,6 +850,10 @@
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
       }
+    },
+    "yorke-into-the-woods:contra-7": {
+      "status": "merged-into:yorke-into-the-woods:contra-6",
+      "note": "второй пункт того же спора о напоминании; влито в блок yorke-into-the-woods:contra-6 (story-pauses/contradictions.md)"
     }
   }
 }

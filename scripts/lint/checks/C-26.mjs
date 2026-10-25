@@ -14,8 +14,11 @@ export default {
     const all = places();
     for (const run of ctx.runs) {
       const firstOf = firstLines(run);
+      // пауза после последней кнопки — эпилог: крючок перед кодой вреден (yorke-into-the-woods:PAT-05#нюанс),
+      // хвост меряет C-42
+      const lastChoice = run.choices.at(-1)?.at ?? -1;
       for (const l of run.lines) {
-        if (l.delay < long || l.i === 0) continue;
+        if (l.delay < long || l.i === 0 || l.i >= lastChoice) continue;
         const before = run.lines.slice(Math.max(0, l.i - win), l.i);
         // прощание — последняя входящая реплика: по стилю (ST-60) за ней почти всегда «… не в сети» #sys
         const last = before.findLast(isIncoming) ?? before.at(-1);

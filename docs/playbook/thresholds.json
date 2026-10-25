@@ -3363,6 +3363,24 @@
       }
     ]
   },
+  "C-28.pack_percentile": {
+    "value": 0.9,
+    "unit": "доля пачек",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "rules.md R-72",
+      "просьба T-15: story:sessions --persona distracted — пачка при возвращении (медиана, p90, наибольшая)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-pauses",
+        "change": "заведён: какой перцентиль пачки отвлечённого story:sessions сравнивает с C-28.pack"
+      }
+    ]
+  },
   "C-28.link_window": {
     "value": {
       "before": 3,
