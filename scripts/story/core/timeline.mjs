@@ -11,7 +11,8 @@ import { choiceTags } from './personas.mjs';
  * @param {object} o.tree дерево parseStory: главы узлов, контакты
  * @param {boolean} [o.away] персона уходит на длинных паузах (отвлечённый)
  * @returns {{ items: object[], totals: object, batches: object[] }}
- *   items: line / choice / var по порядку; у строк и кнопок tReal и tClick — секунды от старта.
+ *   items: line / choice / remind / stall / var по порядку; у строк и кнопок tReal и tClick — секунды от старта.
+ *   remind — напоминание неотвечающему (wait — тишина перед ним); choice.noAnswer — ветка «не ответил».
  */
 export function timeline(events, { tree, away = false } = {}) {
   const T = thresholds();
@@ -79,17 +80,27 @@ export function timeline(events, { tree, away = false } = {}) {
       lastThread = thread;
       continue;
     }
+    if (e.type === 'remind') {
+      // игрок молчит у кнопок: в реальном времени это настоящее ожидание, по клику напоминаний нет
+      tReal += e.seconds;
+      items.push({ type: 'remind', n: e.n, wait: e.seconds, text: e.text, options: e.options.map((o) => o.text), knot: e.knot, chapter, tReal, tClick });
+      continue;
+    }
+    if (e.type === 'stall') { items.push({ type: 'stall', reminders: e.reminders, reason: e.reason, knot: e.knot, chapter, tReal, tClick }); continue; }
     if (e.type === 'choice') {
       const options = e.options.map((o) => {
         const t = choiceTags(o);
         return { text: o.text, silent: 'silent' in t, to: t.to ?? null, label: t.label ?? null };
       });
-      const pick = options[e.picked] ?? options[0];
+      // «не ответил»: исходящего нет, как у #silent; ветка — кнопка #silent или скрытая #noanswer
+      const na = e.noAnswer ?? null;
+      if (na) tReal += na.seconds;
+      const pick = na ? (options.find((o) => o.text === e.text && o.silent) ?? { text: e.text, silent: true, to: null }) : options[e.picked] ?? options[0];
       const thread = pick.to ?? lastThread ?? speaker ?? 'unknown';
       if (batch) { batch.returnAt = tReal; batch.span = tReal - batch.leftAt; batch = null; }
-      items.push({ type: 'choice', options, picked: e.picked, text: pick.text, silent: pick.silent, thread, name: names[thread] ?? thread, knot: e.knot, chapter, tReal, tClick });
+      items.push({ type: 'choice', options, picked: e.picked, text: pick.text, silent: na ? true : pick.silent, noAnswer: na, thread, name: names[thread] ?? thread, knot: e.knot, chapter, tReal, tClick });
       lastThread = thread;
-      clock.choice(pick.silent);
+      clock.choice(na ? true : pick.silent);
       continue;
     }
     if (e.type === 'end' || e.type === 'stuck') items.push({ type: e.type, knot: e.knot, chapter, tReal, tClick });

@@ -12,7 +12,9 @@ export function nodeDialogue(knot, contacts) {
       else if (it.type === 'sys') out.push(`${pad}· ${it.text}`);
       else if (it.type === 'choice') {
         const tags = it.tags ?? {};
-        out.push(`${pad}[ ${it.text || '…'} ]${'silent' in tags ? ' (молчание)' : ''}${it.conds?.length ? ` если ${it.conds.join(' и ')}` : ''}`);
+        if (it.role === 'remind') out.push(`${pad}(молчит ${tags.remind} → напоминание)`);
+        else if (it.role === 'noanswer') out.push(`${pad}(не ответил${tags.noanswer ? ` за ${tags.noanswer}` : ''})`);
+        else out.push(`${pad}[ ${it.text || '…'} ]${'silent' in tags ? ' (молчание)' : ''}${it.conds?.length ? ` если ${it.conds.join(' и ')}` : ''}`);
         visit(it.items, `${pad}  `);
       } else if (it.type === 'cond') {
         for (const b of it.branches) {

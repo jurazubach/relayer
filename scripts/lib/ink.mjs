@@ -95,6 +95,16 @@ export function splitTags(line) {
   return { text: line.slice(0, cut).trim(), tags };
 }
 
+/**
+ * Роль варианта (E-02, как в engine.ts): кнопка, напоминание (#remind) или скрытая ветка «не ответил»
+ * (#noanswer без #silent). Напоминание и скрытая ветка игроку кнопкой не показываются.
+ */
+export function choiceRoleOf(tags) {
+  if ('remind' in tags) return 'remind';
+  if ('noanswer' in tags && !('silent' in tags)) return 'noanswer';
+  return 'button';
+}
+
 /** Тег из рантайма inkjs («delay: 12m») → { key, value }. */
 export function parseTag(tag) {
   const i = tag.indexOf(':');
@@ -133,7 +143,7 @@ export function findDiverts(text) {
  * Узел — это knot или stitch (id «knot.stitch»). Функции ink (`=== function f ===`) узлами не считаются:
  * они лежат в `functions`. Это единственное определение узла — его берут все инструменты.
  *
- * Элементы узла: msg / me / sys / tags / code / gather / divert / choice (с items) / cond (с branches → items)
+ * Элементы узла: msg / me / sys / tags / code / gather / divert / choice (с items и role: button | remind | noanswer) / cond (с branches → items)
  * и comment. Комментарии не выбрасываются: метки `// финал:`, `// reveal:`, `// намеренно:` собираются
  * в `knot.marks`, шапка `// ставка:` … `// логлайн:` до первого узла — в `head`.
  * Комментарии над заголовком узла (до него нет кода) относятся к этому узлу: лежат в `knot.lead`.
@@ -300,7 +310,7 @@ function parseFile(src, file, res, st) {
       const { diverts, rest } = findDiverts(afterRaw);
       const parent = top();
       const choice = {
-        type: 'choice', depth, label, conds, text: buttonText, tags,
+        type: 'choice', depth, label, conds, text: buttonText, tags, role: choiceRoleOf(tags),
         sticky: line.trimStart().startsWith('+'), items: [], line: n, speaker: parent.speaker,
       };
       parent.items.push(choice);

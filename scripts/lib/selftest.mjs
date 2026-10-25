@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allMarks, findEndings, nodeIds, parseInk, parseDelay, stripComments, tokenize, walk, resolveTarget } from './ink.mjs';
 import { compile, formatMessages } from './compile.mjs';
-import { noAnswer, play, seeded, strategies } from './bot.mjs';
+import { NO_ANSWER, choiceRole, noAnswer, play, reminderSeries, seeded, strategies } from './bot.mjs';
 import {
   compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, parseStory, sameRuntime, splitInk,
   storyFromJson, unpackStory,
@@ -362,14 +362,84 @@ test('bot: узел строки — где выведен её текст, в �
   assert.equal(knotOfLine(play(json, { strategy: strategies.scripted([2]), nodes }), 'Ветер'), 'west.a');
 });
 
-test('bot: неотвечающий — #silent той же развилки, без него история стоит', () => {
-  const { json } = compile(NODES_INK);
-  assert.deepEqual(play(json, { strategy: strategies.unresponsive() }).choices, ['Промолчать']);
+// E-02: два напоминания у развилки с #silent, скрытая ветка #noanswer со сроком, напоминание без продолжения
+const REMIND_INK = [
+  'VAR quiet = false',
+  'VAR ignored = false',
+  '-> a',
+  '=== a ===',
+  'звонить? #from:ann',
+  '- (ask)',
+  '* [Звони] -> b',
+  '* [Промолчать #silent]',
+  '  ~ quiet = true',
+  '  -> b',
+  '* [#remind:2h] алё?',
+  '  -> ask',
+  '* [#remind:1h] мне нужно да или нет',
+  '  -> ask',
+  '=== b ===',
+  'лезть в окно? #from:ann',
+  '- (ask)',
+  '* [Лезь] -> c',
+  '* [#noanswer:30m]',
+  '  ~ ignored = true',
+  '  ладно, жду',
+  '  -> c',
+  '=== c ===',
+  'тут кто-то есть #from:ann',
+  '- (ask)',
+  '* [Беги] -> END',
+  '* [#remind:10m] ау',
+  '  -> ask',
+].join('\n');
+
+test('bot: неотвечающий — напоминания, потом #noanswer или #silent; без напоминаний кнопка ждёт', () => {
+  const { json } = compile(REMIND_INK);
+  const r = play(json, { strategy: strategies.unresponsive() });
+  const of = (type) => r.events.filter((e) => e.type === type);
+  // напоминания по порядку, со своими интервалами; кнопкой они не показываются
+  assert.deepEqual(of('remind').map((e) => [e.n, e.seconds]), [[1, 7200], [2, 3600], [1, 600]]);
+  assert.ok(of('choice').every((e) => e.options.every((o) => o.text && !o.tags.some((t) => /^(remind|noanswer)/.test(t)))));
+  // после последнего напоминания — #silent того же выбора, ждём столько же, сколько перед последним
+  const [a, b] = of('choice');
+  assert.equal(a.picked, NO_ANSWER);
+  assert.deepEqual(a.noAnswer, { via: 'silent', seconds: 3600, reminders: 2 });
+  // скрытая ветка #noanswer со своим сроком, без напоминаний
+  assert.deepEqual(b.noAnswer, { via: 'noanswer', seconds: 1800, reminders: 0 });
+  assert.ok(r.events.some((e) => e.type === 'line' && e.text === 'ладно, жду'));
+  assert.deepEqual([r.vars.quiet, r.vars.ignored], [true, true]);
+  // напоминание без продолжения: stall no-target, дальше запасная стратегия
+  assert.deepEqual(of('stall').map((e) => [e.reason, e.reminders]), [['no-target', 1]]);
+  assert.equal(r.waited, 7200 + 3600 + 3600 + 1800 + 600);
+  const series = reminderSeries(r.events);
+  assert.deepEqual(series.map((x) => [x.n, x.next]), [[2, 'не ответил'], [1, 'стоит']]);
+  assert.deepEqual(series[0].texts, ['алё?', 'мне нужно да или нет']);
+  // по клику напоминаний нет: молчание — stall click
+  const click = play(json, { strategy: strategies.unresponsive(), mode: 'click' });
+  assert.equal(click.events.filter((e) => e.type === 'remind').length, 0);
+  assert.ok(click.events.filter((e) => e.type === 'stall').every((e) => e.reason === 'click'));
+  // обычные персоны напоминаний не видят и не жмут
+  for (let k = 0; k < 20; k++) assert.ok(!play(json, { rng: seeded(k) }).events.some((e) => e.type === 'remind'));
+  // маршрут -1 — «не ответил», как его записал неотвечающий
+  assert.deepEqual(play(json, { strategy: strategies.scripted([NO_ANSWER, 0, 0]) }).choices, ['Промолчать', 'Лезь', 'Беги']);
+  // #silent без напоминаний и без срока: кнопка ждёт, как в движке
+  const { json: nodes } = compile(NODES_INK);
+  const w = play(nodes, { strategy: strategies.unresponsive(() => 0) });
+  assert.equal(w.events.find((e) => e.type === 'stall').reason, 'waits');
+  assert.deepEqual(w.choices, ['Север']);
   assert.equal(noAnswer([{ text: 'а', tags: [] }, { text: 'б', tags: ['silent'] }]), 1);
   assert.equal(noAnswer([{ text: 'а', silent: false }, { text: 'б', silent: true }]), 1);
+  assert.equal(noAnswer([{ text: 'а', tags: ['silent'] }, { text: '', tags: ['noanswer'] }]), 1);
   assert.equal(noAnswer([{ text: 'а', tags: ['to:ann'] }]), -1);
-  const stuck = strategies.unresponsive(() => 0);
-  assert.equal(stuck([{ text: 'а', tags: [] }, { text: 'б', tags: [] }], {}), 0);
+  assert.deepEqual(['button', 'remind', 'noanswer', 'button'], [[], ['remind:2h'], ['noanswer'], ['noanswer', 'silent']].map((tags) => choiceRole({ tags })));
+});
+
+test('ink: напоминание и скрытая ветка «не ответил» — роль варианта в дереве', () => {
+  const tree = parseInk(REMIND_INK);
+  const roles = [];
+  for (const k of tree.knots) walk(k.items, (it) => { if (it.type === 'choice') roles.push([it.role, it.text]); });
+  assert.deepEqual(roles, [['button', 'Звони'], ['button', 'Промолчать'], ['remind', ''], ['remind', ''], ['button', 'Лезь'], ['noanswer', ''], ['button', 'Беги'], ['remind', '']]);
 });
 
 test('bot: стратегии и повторяемость с seed', () => {

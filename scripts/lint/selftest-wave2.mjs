@@ -187,10 +187,10 @@ export function register(test, { has, hasNot, lint, keys }) {
     await hasNot(mk('смотри, что я нашла'), 'C-29.tease', { only: ['C-29'] });
   });
 
-  test('C-32: «сплю» → «доброе утро» через два часа; напоминания — deferred:E-02', async () => {
+  test('C-32: «сплю» → «доброе утро» через два часа; напоминания больше не deferred', async () => {
     const mk = (d) => `-> a\n=== a ===\nну #from:ann\n* [да]\n* [нет]\n- спокойной ночи #from:ann\nдоброе утро #from:ann #delay:${d}\n* [ок] -> END\n* [нет] -> END`;
     const res = await has(mk('2h'), 'story.sleep_morning.min_h', { only: ['C-32'] });
-    assert.ok(res.skipped.some((s) => s.check === 'C-32' && s.key === 'story.reminders.max' && /deferred:E-02/.test(s.why)), 'напоминания ждут E-02');
+    assert.ok(!res.skipped.some((s) => s.check === 'C-32' && s.key), 'C-32 ничего не пропускает');
     await hasNot(mk('7h'), 'story.sleep_morning.min_h', { only: ['C-32'] });
   });
 

@@ -94,12 +94,18 @@ export function DebugSheet({
                   {formatDuration(view.status.pauseMs)} игрового времени (реально{' '}
                   {formatDuration(view.status.realMs)}).
                 </p>
+              ) : view.silence ? (
+                <p className="sheet__note">
+                  Ждём выбор игрока. Если он молчит, через {formatDuration(view.silence.leftMs)}{' '}
+                  {view.silence.remind ? 'персонаж напомнит' : 'история пойдёт веткой «не ответил»'}
+                  {view.silence.realMs === null ? ' (без пауз — только по кнопке ниже).' : ` (реально ${formatDuration(view.silence.realMs)}).`}
+                </p>
               ) : (
                 <p className="sheet__note">{view.ended ? 'Сцена закончилась.' : 'Ждём выбор игрока.'}</p>
               )}
               <button
                 className="btn"
-                disabled={!view.status}
+                disabled={!view.status && !view.silence}
                 onClick={() => {
                   engine.skipNext();
                   refresh();

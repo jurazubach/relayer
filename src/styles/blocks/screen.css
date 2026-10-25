@@ -28,6 +28,13 @@
   justify-content: space-between;
 }
 
+/* кнопки справа в шапке: уведомления, отладка */
+.screen__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
 .screen__title {
   margin: var(--space-1) 0 var(--space-1) var(--space-2);
   font-size: var(--text-3xl);

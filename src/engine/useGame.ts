@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { DEFAULT_MODE, Engine, compileInk, type Mode, type Msg, type View } from './engine';
-import { FLAGS } from './flags';
+import { FLAGS, readLocal, writeLocal } from './flags';
 import type { Story } from './story';
 
 export interface Game {
@@ -15,7 +15,13 @@ export interface Game {
   notice: Msg | null;
   openNotice: () => void;
   hideNotice: () => void;
+  /** Уведомления о сообщениях в других чатах; игрок выключает их сам, например на ночь мира. */
+  notices: boolean;
+  setNotices: (on: boolean) => void;
 }
+
+/** Общая настройка всех историй: игрок выключил уведомления — значит, не хочет их нигде. */
+const NOTICES_KEY = 'relay:notices';
 
 /**
  * Одна игровая сессия: компиляция сценария, восстановление прогресса,
@@ -47,8 +53,11 @@ export function useGame(
     return restoreThread && threads.includes(restoreThread) ? restoreThread : null;
   });
   const [notice, setNotice] = useState<Msg | null>(null);
+  const [notices, setNoticesState] = useState(() => readLocal(NOTICES_KEY) !== '0');
   const openRef = useRef(open);
   openRef.current = open;
+  const noticesRef = useRef(notices);
+  noticesRef.current = notices;
 
   useEffect(() => {
     const engine = loaded.engine;
@@ -56,7 +65,7 @@ export function useGame(
     const timer = window.setInterval(() => {
       const fresh = engine.tick();
       const incoming = fresh.filter((m) => m.kind !== 'out' && m.thread !== openRef.current);
-      if (incoming.length) setNotice(incoming[incoming.length - 1]);
+      if (incoming.length && noticesRef.current) setNotice(incoming[incoming.length - 1]);
     }, 250);
     return () => window.clearInterval(timer);
   }, [loaded]);
@@ -95,5 +104,11 @@ export function useGame(
       });
     }, [onThreadChange]),
     hideNotice: useCallback(() => setNotice(null), []),
+    notices,
+    setNotices: useCallback((on: boolean) => {
+      writeLocal(NOTICES_KEY, on ? '1' : '0');
+      setNoticesState(on);
+      if (!on) setNotice(null);
+    }, []),
   };
 }

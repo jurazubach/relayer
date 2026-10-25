@@ -208,22 +208,38 @@ test('trace: отвлечённый уходит на длинной паузе 
   assert.equal(runOnce(probe, { persona: 'random', seed: 1 }).timeline.batches.length, 0);
 });
 
-test('trace: неотвечающий идёт по #silent, без него — история стоит', () => {
+test('trace: неотвечающий — два напоминания, потом #silent; без напоминаний кнопка ждёт', () => {
   const r = runOnce(probe, { persona: 'unresponsive' });
-  assert.equal(r.route[0], 2, 'первая развилка — #silent');
-  assert.deepEqual(r.stalls.map((s) => s.knot), ['ch2', 'ch2']);
+  assert.equal(r.route[0], -1, 'первая развилка — «не ответил»');
+  const rem = r.timeline.items.filter((i) => i.type === 'remind');
+  assert.deepEqual(rem.map((i) => i.wait), [7200, 3600]);
+  const fork = r.timeline.items.find((i) => i.type === 'choice');
+  assert.deepEqual(fork.noAnswer, { via: 'silent', seconds: 3600, reminders: 2 });
+  assert.ok(lines(r).some((l) => l.text === 'ау? ключ всё ещё у меня'));
+  assert.deepEqual(r.stalls.map((s) => [s.knot, s.reason]), [['ch2', 'waits'], ['ch2', 'waits']]);
+  // по клику напоминаний нет: кнопка ждёт и у первой развилки
+  const click = runOnce(probe, { persona: 'unresponsive', mode: 'click' });
+  assert.equal(click.timeline.items.filter((i) => i.type === 'remind').length, 0);
+  assert.equal(click.stalls[0].reason, 'click');
+  // маршрут с -1 воспроизводит «не ответил» с напоминаниями
+  const again = runOnce(probe, { persona: 'first', route: [-1] });
+  assert.equal(again.timeline.items.filter((i) => i.type === 'remind').length, 2);
 });
 
-test('trace: --compare silent — исходы, развилки без #silent, упрёк за отсутствие', () => {
+test('trace: --compare silent — напоминания, исходы, развилки без них, упрёк за отсутствие', () => {
   const j = cmdJson('trace', ['--story', PROBE, '--compare', 'silent']);
   const c = j.stories[0].runs[0];
   assert.equal(c.pairs.length, 1);
   assert.ok(c.pairs[0].ok && c.pairs[0].sameEnding);
+  assert.equal(c.pairs[0].reminders, 2);
+  assert.deepEqual(c.reminders.map((r) => [r.knot, r.n, r.next, r.repeats.length]), [['start', 2, 'не ответил', 0]]);
   assert.deepEqual(c.stalls, [{ knot: 'ch2', n: 2 }]);
   assert.equal(c.reproach[0]?.text, 'наконец-то, ты долго');
   assert.equal(c.ok, false);
+  // у историй без напоминаний «не ответил» не бывает: кнопка ждёт, сравнивать не с чем
   const tn = cmdJson('trace', ['--story', 'the-number', '--compare', 'silent']);
-  assert.ok(tn.stories[0].runs[0].pairs.length > 0);
+  assert.equal(tn.stories[0].runs[0].noAnswer, 0);
+  assert.ok(tn.stories[0].runs[0].stalls.length > 0);
 });
 
 test('trace: --partial — beta_stop законный конец; без узла — ошибка', () => {

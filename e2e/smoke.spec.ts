@@ -13,8 +13,6 @@ import {
   messages,
   uploadFixture,
 } from './fixture';
-// тесты режимов игры живут отдельно, но идут в том же прогоне
-import './modes';
 
 const tile = `tile-${FIXTURE.id}`;
 

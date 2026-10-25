@@ -1,15 +1,32 @@
 // C-32. Расписание возвращений: частота возвращений, первая пауза, паузы глав 1–2, стык с главой 2,
 // «сплю» → «доброе утро». Часы игрока не моделируются (A-02): отсчёт от старта прогона.
-// Измерения 6–7 (напоминания и цена «не ответил») ждут E-02 — deferred в thresholds.json.
+// Измерения 6–7 — молчание у кнопки (E-02): «неотвечающий» в реальном времени, напоминания #remind
+// и ветка «не ответил» (#noanswer, иначе #silent) против нажатого #silent.
 import { isIncoming, median, norm } from '../journal.mjs';
+import { NO_ANSWER, play, reminderSeries, seeded, strategies } from '../../lib/bot.mjs';
+import { isReproach } from '../../lib/lexicon.mjs';
 import { fmtDur, places, plural, short } from '../text.mjs';
+
+/** Прогоны «неотвечающего»: журнал play() целиком — напоминаний и «не ответил» в журнале линта нет. */
+function silentRuns(ctx) {
+  const { T, st } = ctx;
+  const n = Math.min(ctx.runs.length, T.value('C-32.no_answer_runs'));
+  const rng = seeded(T.value('C-32.no_answer_runs'));
+  const nodes = [...st.ids];
+  const maxSteps = T.value('lint.max_steps');
+  const runs = [];
+  for (let r = 0; r < n; r++) runs.push(play(ctx.built.json, { rng, nodes, maxSteps, strategy: strategies.unresponsive(), log: true, trackVars: false }));
+  return { runs, replay: (route, seed) => play(ctx.built.json, { rng: seeded(seed), nodes, maxSteps, strategy: strategies.scripted(route), trackVars: false }) };
+}
+
+const forks = (events) => events.filter((e) => e.type === 'choice');
+const endKnot = (r) => r.events.findLast((e) => e.type === 'end' || e.type === 'stuck')?.knot ?? null;
 
 export default {
   id: 'C-32',
   title: 'Расписание возвращений и напоминания',
   plan: false,
   partial: true,
-  deferred: ['story.reminders.max', 'C-32.no_answer'],
   run(ctx, find) {
     const { st, T } = ctx;
     if (!ctx.runs.length) return;
@@ -88,5 +105,55 @@ export default {
       if (s < T.value('story.sleep_morning.min_h') * 3600) find('story.sleep_morning.min_h', { node: p.knot, chapter: st.chapterOf(p.knot), message: `утро наступает через ${fmtDur(s)} после «${short(p.text)}» в ${p.knot}: в «по клику» без метки утро придёт через секунды` });
     }
     for (const p of earlyPause.values()) find('attn.pause.early_max', { node: p.knot, chapter: st.chapterOf(p.knot), message: `пауза ${fmtDur(p.delay)} в первые минуты (${p.knot}) — игрок ещё не втянулся` });
+    noAnswer(ctx, find);
   },
 };
+
+/** 6–7. Напоминания у каждой точки выбора и цена «не ответил» против #silent той же развилки. */
+function noAnswer(ctx, find) {
+  const { st, T } = ctx;
+  const { runs, replay } = silentRuns(ctx);
+  if (!runs.length) return;
+  const max = T.value('story.reminders.max');
+  const at = (knot) => ({ node: knot, chapter: st.chapterOf(knot) });
+  // 6. сколько напоминаний, повторы, продолжение после последнего
+  for (const r of runs) {
+    for (const s of reminderSeries(r.events)) {
+      if (s.n > max) find('story.reminders.max', { ...at(s.knot), message: `${s.knot}: ${plural(s.n, 'напоминание', 'напоминания', 'напоминаний')} подряд — больше ${max}: это уже давление` });
+      if (s.repeats.length) find('story.reminders.max', { ...at(s.knot), message: `${s.knot}: напоминание дословно повторяет сказанное — «${short(s.repeats[0])}»` });
+      if (s.next === 'стоит') find('story.reminders.max', { ...at(s.knot), message: `${s.knot}: после напоминаний история стоит — нет ни #noanswer, ни #silent` });
+    }
+  }
+  // 7. «не ответил» против #silent: следующие варианты и финал; упрёк за отсутствие на пути неотвечающего
+  const seen = new Set();
+  const reproach = places();
+  runs.forEach((r, k) => {
+    const list = forks(r.events);
+    const route = list.map((e) => e.picked);
+    list.forEach((f, j) => {
+      if (!f.noAnswer || f.noAnswer.via !== 'noanswer') return; // #silent как ветка «не ответил» — та же цена
+      const silent = f.options.findIndex((o) => o.tags.some((t) => t.trim() === 'silent'));
+      const key = `${f.knot}|${route.slice(0, j).join(',')}`;
+      if (silent < 0 || seen.has(key)) return;
+      seen.add(key);
+      const seed = T.value('C-32.no_answer_runs') * 1000 + k * 100 + j;
+      const A = replay([...route.slice(0, j), NO_ANSWER], seed);
+      const B = replay([...route.slice(0, j), silent], seed);
+      const next = (x) => forks(x.events)[j + 1]?.options.map((o) => o.text) ?? [];
+      const lost = next(B).filter((t) => !next(A).includes(t));
+      if (lost.length > T.value('C-32.no_answer')) find('C-32.no_answer', { ...at(f.knot), message: `${f.knot}: «не ответил» закрывает «${short(lost[0])}», а #silent — нет` });
+      const [ea, eb] = [endKnot(A), endKnot(B)];
+      if (ea !== eb) find('C-32.no_answer', { ...at(f.knot), message: `${f.knot}: «не ответил» ведёт к финалу в ${ea}, а #silent той же развилки — в ${eb}: отсутствие не должно стоить дороже молчания` });
+    });
+    // упрёк уместен только как ответ на нажатый #silent; «не ответил» и запасная кнопка — не нажатый #silent
+    let pressedSilent = true;
+    for (const e of r.events) {
+      if (e.type === 'choice') pressedSilent = !e.noAnswer && e.options[e.picked]?.tags.some((t) => t.trim() === 'silent');
+      else if (e.type === 'remind') pressedSilent = false;
+      else if (e.type === 'line' && e.kind === 'msg' && e.text && !pressedSilent && isReproach(e.text, T)) {
+        reproach.add(`${e.knot}|${e.text}`, () => ({ knot: e.knot, text: e.text }));
+      }
+    }
+  });
+  for (const p of reproach.values()) find('C-32.no_answer_reproach', { ...at(p.knot), message: `упрёк за отсутствие на пути «неотвечающего» (${p.knot}): «${short(p.text)}» — игрок не нажимал #silent` });
+}

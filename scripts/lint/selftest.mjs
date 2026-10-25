@@ -530,13 +530,59 @@ test('три истории каталога проходят без паден�
 
 wave2(test, { has, hasNot, lint, keys });
 
+// развилка с вопросом, кнопками, #silent и напоминаниями; rest — что стоит после напоминаний
+const remind = (reminders, rest = '') => [
+  '-> a', '=== a ===', 'звонить хозяину? #from:ann', '- (ask)',
+  '* [Звони] -> b', '* [Не надо] -> b', '* [Промолчать #silent]', '  ладно, сама', '  -> b',
+  ...reminders.flatMap((r) => [`* [#remind:${r[0]}] ${r[1]}`, '  -> ask']),
+  rest,
+  '=== b ===', 'хорошо #from:ann', '* [ок] -> END', '* [нет] -> END',
+].join('\n');
+
+test('C-32 п. 6: три напоминания, дословный повтор, напоминание без продолжения — ошибка; два разных — нет', async () => {
+  const two = [['2h', 'алё, ты тут?'], ['1h', 'мне нужно да или нет, я у двери']];
+  await hasNot(remind(two), 'story.reminders.max', { only: ['C-32'] });
+  const three = await has(remind([...two, ['1h', 'последний раз спрашиваю']]), 'story.reminders.max', { only: ['C-32'] });
+  assert.ok(three.findings.some((f) => /3 напоминания подряд/.test(f.message) && f.level === 'error'));
+  const same = await has(remind([['2h', 'алё, ты тут?'], ['1h', 'алё, ты тут?']]), 'story.reminders.max', { only: ['C-32'] });
+  assert.ok(same.findings.some((f) => /дословно/.test(f.message)));
+  // петля вернулась к вопросу, а не к кнопкам: вопрос печатается ещё раз
+  const loop = ['-> a', '=== a ===', '- (top) звонить хозяину? #from:ann', '* [Звони] -> END', '* [Промолчать #silent] -> END', '* [#remind:1h] алё?', '  -> top'].join('\n');
+  const looped = await has(loop, 'story.reminders.max', { only: ['C-32'] });
+  assert.ok(looped.findings.some((f) => /звонить хозяину/.test(f.message)));
+  // ни #silent, ни #noanswer: после напоминания история стоит
+  const dead = ['-> a', '=== a ===', 'звонить? #from:ann', '- (ask)', '* [Звони] -> END', '* [Нет] -> END', '* [#remind:20m] алё, ты тут?', '  -> ask'].join('\n');
+  const stuck = await has(dead, 'story.reminders.max', { only: ['C-32'] });
+  assert.ok(stuck.findings.some((f) => /история стоит/.test(f.message)));
+  await hasNot(`${dead}\n* [#noanswer]\n  ладно, без тебя\n  -> END`, 'story.reminders.max', { only: ['C-32'] });
+});
+
+test('C-32 п. 7: «не ответил» закрывает вариант или финал, которые остаются у #silent; упрёк неотвечающему', async () => {
+  const src = (noanswer) => [
+    'VAR door = false', '-> a', '=== a ===', 'звонить хозяину? #from:ann', '- (ask)',
+    '* [Звони] -> b', '* [Промолчать #silent]', '  ~ door = true', '  ладно, сама', '  -> b',
+    '* [#remind:1h] алё, ты тут?', '  -> ask',
+    '* [#noanswer]', ...noanswer, '  -> b',
+    '=== b ===', 'дальше что? #from:ann', '* [Иди домой] -> END', '* {door} [Открой дверь] -> open',
+    '=== open ===', 'открыто #from:ann', '-> END',
+  ].join('\n');
+  // скрытая ветка без door = true: у «не ответил» нет «Открой дверь», а у #silent есть
+  const lost = await has(src(['  ладно, жду']), 'C-32.no_answer', { only: ['C-32'] });
+  assert.ok(lost.findings.some((f) => /закрывает «Открой дверь»/.test(f.message) && f.level === 'warning'));
+  await hasNot(src(['  ~ door = true', '  ладно, жду']), 'C-32.no_answer', { only: ['C-32'] });
+  // упрёк за отсутствие в ветке «не ответил»
+  await has(src(['  ~ door = true', '  ты пропал, сколько можно']), 'C-32.no_answer_reproach', { only: ['C-32'] });
+});
+
 test('thresholds.json: author_decision и deferred:E-NN проходят схему, кривые — нет', () => {
   const ok = { value: 1, unit: 'ч', level: 'warning', basis: 'author_decision', sources: ['superseded.md A-05'], checks: ['C-31'], calibrated_on: null, history: [{ date: '2026-10-25', task: 'T', change: 'x' }], deferred: 'E-02' };
   assert.deepEqual(validateThresholds({ 'story.x': ok }), []);
   assert.equal(validateThresholds({ 'story.x': { ...ok, deferred: 'E2' } }).length, 1);
   assert.equal(validateThresholds({ 'story.x': { ...ok, basis: 'гадание' } }).length, 1);
   for (const k of ['story.pause.max_h', 'story.length.target_h', 'story.length.max_h', 'story.tail.max_delay_min', 'story.reading.per_day_min']) assert.equal(T.get(k).basis, 'author_decision', k);
-  assert.equal(T.deferred('story.reminders.max'), 'E-02');
+  // E-02: синтаксис напоминаний ready — ни один порог больше не ждёт эту фичу
+  assert.equal(T.deferred('story.reminders.max'), null);
+  assert.ok(T.keys().every((k) => T.deferred(k) !== 'E-02'));
 });
 
 // ключ в тексте; имена файлов (`style.md`, `story.ink`) — не ключи

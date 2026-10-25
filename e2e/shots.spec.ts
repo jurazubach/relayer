@@ -12,7 +12,8 @@ import { DEMO_PATH, FIXTURE, fixtureOnHome } from './fixture';
 const shot = (page: Page, name: string) =>
   page.screenshot({ path: `screenshots/${test.info().project.name}/${name}.png` });
 
-test('снимки экранов', async ({ page }) => {
+// тег @shots: npm run test:e2e гоняет все спеки, кроме этого (--grep-invert @shots)
+test('снимки экранов', { tag: '@shots' }, async ({ page }) => {
   await fixtureOnHome(page);
   await page.waitForTimeout(400);
   await shot(page, '1-home');
