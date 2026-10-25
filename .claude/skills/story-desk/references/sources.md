@@ -18,9 +18,9 @@
 ### TH-103 · что устаревает при смене ядра или плана; перепись ранних глав после поздних и после теста (Б-1, Б-5)
 - `dille-ultimate-guide:LESSON-05` — Сверяй вторую главу с первой, когда первая готова (`docs/books/_clean/dille-ultimate-guide/lessons.md:39` · K-R-64)
 - `narrative-postmortems:LESSON-14` — Разбирай главу, которая не передаёт чувство, а не доводи её (`docs/books/_clean/narrative-postmortems/lessons.md:106`)
-- `narrative-postmortems:P-07` — Когда механика созрела, перепиши ранние главы под неё (`docs/books/_clean/narrative-postmortems/principles.md:55`)
+- `narrative-postmortems:P-07` — Когда механика созрела, перепиши ранние главы под неё (`docs/books/_clean/narrative-postmortems/principles.md:55` · K-narrative-postmortems:P-07)
 - `narrative-postmortems:P-07#нюанс` — нюанс к P-07 (`docs/books/_clean/narrative-postmortems/principles.md:177`)
-- `narrative-postmortems:RED-12` — Поздние главы используют теги и приёмы, которых нет в первых (`docs/books/_clean/narrative-postmortems/flags.md:33`)
+- `narrative-postmortems:RED-12` — Поздние главы используют теги и приёмы, которых нет в первых (`docs/books/_clean/narrative-postmortems/flags.md:33` · K-narrative-postmortems:P-07)
 - `truby-anatomy-of-story:LESSON-05` — Не пиши сцены раньше, чем устоялся механизм выбора (`docs/books/_clean/truby-anatomy-of-story/lessons.md:37`)
 
 ## story-desk/state-format.md

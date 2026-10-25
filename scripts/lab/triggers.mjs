@@ -48,7 +48,7 @@ _example.json, описание — docs/lab/triggers/README.md. Фразы ск
   --strict-env        не запускать, если в листинге чужие скиллы, плагины или MCP
   --check-env         только сверка окружения
   --dry-run           только план: какие фразы и сколько прогонов
-  --out <путь>        куда записать результат (по умолчанию docs/lab/runs/triggers/<дата>.json)
+  --out <путь>        куда записать результат (по умолчанию docs/lab/runs/triggers/<дата>[-<скилл>].json)
   --no-save           не записывать результат
   --json              вывод в JSON
   --quiet             без таблицы фраз, только итог по скиллам
@@ -321,9 +321,11 @@ async function main() {
     if (!out) {
       mkdirSync(RUNS, { recursive: true });
       const day = date.toISOString().slice(0, 10);
-      out = join(RUNS, `${day}.json`);
+      // с --skill — своё имя файла: параллельные задачи-скиллы не сталкиваются при слиянии веток
+      const base = raw.skill ? `${day}-${raw.skill}` : day;
+      out = join(RUNS, `${base}.json`);
       // Второй прогон за день не затирает первый: --skill после полного прогона — частый сценарий.
-      for (let n = 2; existsSync(out); n++) out = join(RUNS, `${day}-${n}.json`);
+      for (let n = 2; existsSync(out); n++) out = join(RUNS, `${base}-${n}.json`);
     }
     writeFileSync(out, JSON.stringify(result, null, 2) + '\n');
     result.saved = out.startsWith(ROOT) ? relative(ROOT, out) : out;
