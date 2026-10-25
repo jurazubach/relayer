@@ -11,6 +11,22 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
+    "#attn-check-30s": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "нарезка дословно из attention-merged"
+      }
+    },
+    "#attn-check-ch2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "дословно из attention-merged"
+      }
+    },
     "ashwell-standard-patterns:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -87,6 +103,22 @@
         "note": "условие и правка сохранены"
       }
     },
+    "C-20": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "три измерения, цель и порог ключами"
+      }
+    },
+    "choiceofgames-design:contra-1": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "две отдачи и решение по длине сохранены"
+      }
+    },
     "choiceofgames-design:GREEN-10": {
       "fidelity": {
         "ok": true,
@@ -119,6 +151,14 @@
         "note": ""
       }
     },
+    "choiceofgames-design:P-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "перенос на сообщения и минуты сохранён"
+      }
+    },
     "choiceofgames-design:P-14": {
       "fidelity": {
         "ok": true,
@@ -139,12 +179,28 @@
       "status": "merged-into:R-18",
       "note": "больше двух собеседников до первой развилки — входная нагрузка R-18 (C-21); ширину развилки держит story-choices C-12"
     },
+    "cron-wired-for-story:attention§2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ядро сохранено; опущены «кнопка сдвинула переменную» и «деталь выстрелила» — есть в R-15 и других блоках"
+      }
+    },
     "cron-wired-for-story:LESSON-06": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "W1",
         "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
+      }
+    },
+    "cron-wired-for-story:P-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "граница «мяч в игре без опоры» сохранена"
       }
     },
     "cron-wired-for-story:RED-17": {
@@ -169,6 +225,38 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "цепочка документов сохранена; потеряна пометка источника «уверенность средняя»"
+      }
+    },
+    "edgerton-hooked:contra-6": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "решение первого разбора помечено как пересмотренное R-13"
+      }
+    },
+    "edgerton-hooked:P-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, пример и порог (ключи C-22) сохранены"
+      }
+    },
+    "edgerton-hooked:P-15": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "длина первой сцены (15–30 сообщений до сдвига) подменена серией C-35 между кнопками, пауза 10 мин — session_s; исправлено в ревью"
+      }
+    },
+    "edgerton-hooked:PAT-01#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; «10 сообщений, наша оценка» → до серии C-35 без пометки оценки"
       }
     },
     "emshort-structures:RED-03": {
@@ -311,6 +399,14 @@
         "note": "«ответ ≤ 2 слова» стал «короткий общий ответ» — признак группы без тел сохранён (C-10.group_bodyless)"
       }
     },
+    "mckee-story:attention§2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "три отметки сохранены, числа темпа заменены на engine.typing"
+      }
+    },
     "mckee-story:contra-1": {
       "fidelity": {
         "ok": true,
@@ -329,6 +425,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "basis model и уверенность сохранены"
+      }
+    },
+    "mckee-story:PAT-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "маркеры и напоминание после паузы сохранены; «≥ 2 ч» словами"
       }
     },
     "mckee-story:SYS-2": {
@@ -433,6 +537,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": ""
+      }
+    },
+    "messenger-genre:attention§2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "сохранено; длина на карточке переведена в A-05"
+      }
+    },
+    "messenger-genre:contra-1": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "норма внутри первой сцены, спор развёрнут шире источника"
       }
     },
     "messenger-genre:contra-5": {
@@ -607,12 +727,36 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
+    "procedural-storytelling:contra-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "порог — ключ attn.opening.names.3min"
+      }
+    },
+    "procedural-storytelling:contra-6": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "спор и решение строже, «наша оценка» сохранена"
+      }
+    },
     "procedural-storytelling:LESSON-07": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
         "note": "оценка автора помечена как не замер"
+      }
+    },
+    "R-17": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "правило подтянуто, 10-е входящее — ключ C-24.by_msg"
       }
     },
     "R-36": {
@@ -667,6 +811,14 @@
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
     },
+    "schell-art-of-game-design:P-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«≤ 6-го» — ключ C-20.start_msgs (6)"
+      }
+    },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
@@ -718,6 +870,14 @@
     "skolnick-video-game-storytelling:LESSON-07": {
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
+    },
+    "skolnick-video-game-storytelling:PAT-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "схема, страховка и исключение сохранены, ink свой"
+      }
     },
     "snyder-save-the-cat:RED-02": {
       "status": "merged-into:R-12",
