@@ -99,7 +99,7 @@ VAR kept_key = false
 
 - **Когда не работает.** Буквальный повтор без перемены смысла — это эхо, а не зеркало.
 - **Как проверить.** `npm run story:endings -- --story <id> --frame`.
-- basis: checked · опора: `snyder-save-the-cat:P-15`.
+- basis: model (уверенность высокая) · опора: `snyder-save-the-cat:P-15`.
 
 ### snyder-save-the-cat:P-15#нюанс · На коротком отрезке хватит общей детали
 
@@ -115,7 +115,7 @@ VAR kept_key = false
 
 - **Когда не работает.** Финал — разрушение правила ядра: тогда не равновесие, а отмена, и её готовят
   заранее (`video-three-things:PAT-06`).
-- basis: checked · опора: `truby-anatomy-of-story:P-16`.
+- basis: model (уверенность средняя) · опора: `truby-anatomy-of-story:P-16`.
 
 ### truby-anatomy-of-story:P-16#нюанс · Короткому финалу — одна строка формы
 
