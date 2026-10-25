@@ -102,7 +102,7 @@ for (const s of scripts) {
 const src = join(dir, 'references', 'sources.md');
 if (existsSync(src)) {
   const aliases = new Set(readdirSync('docs/books').filter((d) => !d.startsWith('_') && statSync(join('docs/books', d)).isDirectory()));
-  const used = [...readFileSync(src, 'utf8').matchAll(/([a-z0-9-]+):(?:P|PAT|GREEN|RED|LESSON|SYS)-?\d*/g)].map((m) => m[1]);
+  const used = [...readFileSync(src, 'utf8').matchAll(/(?<![\w-])([a-z0-9-]+):(?:P|PAT|GREEN|RED|LESSON|SYS)-?\d*/g)].map((m) => m[1]);
   const unknown = [...new Set(used.filter((a) => !aliases.has(a)))];
   if (unknown.length) err(`sources.md: неизвестные алиасы ${unknown.join(', ')}`);
   if (!used.length) err('sources.md: нет ни одной ссылки алиас:ID');

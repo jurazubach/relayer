@@ -201,7 +201,7 @@ docs/stories/<id>/
   plans/plan-vN.md, skeleton.ink, facts.md, reviews/<дата>.md, playtests/wave-N/
 ```
 
-- Банк идей общий для всех историй: отвергнутое для одной может подойти другой (`ideas-bank.mjs`).
+- Банк идей общий для всех историй: отвергнутое для одной может подойти другой (`idea-park.mjs` в `story-desk`).
 - Хук `SessionStart` печатает `npm run story:status` (`--all` — таблица всех историй).
 - Версии через git: тег на ревизию (`<id>-r3`), `story:diff` между тегами, откат с записью D-NN.
 

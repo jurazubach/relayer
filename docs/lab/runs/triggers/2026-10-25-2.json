@@ -1,18 +1,17 @@
 {
-  "date": "2026-10-25T12:27:59.969Z",
+  "date": "2026-10-25T11:07:25.965Z",
   "model": "claude-opus-5-5",
   "claude_code": "2.1.310",
   "runs": 3,
-  "focus": "story-choices",
+  "focus": "story-desk",
   "file": null,
   "group": [
-    "story-choices",
-    "story-endings",
-    "story-branch",
-    "story-time",
-    "story-cast",
-    "story-voice",
-    "story-pace"
+    "story-desk",
+    "story-brainstorm",
+    "story-core",
+    "story-plan",
+    "story-review",
+    "story-kb"
   ],
   "thresholds": {
     "lab.triggers.runs_per_phrase": 5,
@@ -30,11 +29,12 @@
       "lab.triggers.timeout_s": "thresholds.json"
     }
   },
-  "seconds": 192,
-  "cost_usd": 1.6923048000000003,
+  "seconds": 212,
+  "cost_usd": 1.5529154,
   "env": {
     "skills": [
       "skill-budget-audit",
+      "story-desk",
       "deep-research",
       "design",
       "slides",
@@ -60,47 +60,45 @@
       "anthropic-skills:skill-creator"
     ],
     "project": [
-      "story-choices"
+      "story-desk"
     ],
-    "warnings": [
-      "проектных скиллов нет в листинге: story-choices (off, disable-model-invocation или битый frontmatter?)"
-    ]
+    "warnings": []
   },
   "summary": {
-    "checks": 51,
-    "passed": 49,
-    "rate": 0.9607843137254902,
+    "checks": 54,
+    "passed": 51,
+    "rate": 0.9444444444444444,
     "errors": 0
   },
   "skills": [
     {
-      "skill": "story-choices",
-      "expected": 39,
-      "hits": 37,
+      "skill": "story-desk",
+      "expected": 42,
+      "hits": 39,
       "foreign": 12,
       "false": 0,
-      "bypass": 0,
+      "bypass": 2,
       "missed_to": {
-        "none": 2
+        "none": 3
       },
       "false_from": [],
-      "hit_rate": 0.9487179487179487,
+      "hit_rate": 0.9285714285714286,
       "false_rate": 0
     }
   ],
   "phrases": [
     {
-      "text": "Тестер сказал, что выбор не ощущается. Что не так с развилками?",
+      "text": "Что сейчас с историей про маяк, на каком мы шаге?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -108,7 +106,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -116,7 +114,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -126,17 +124,17 @@
       ]
     },
     {
-      "text": "Кнопки в третьей главе ничего не меняют: на любой вариант Лиза отвечает одно и то же",
+      "text": "Я неделю не открывал проект, напомни, где мы остановились",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -144,7 +142,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -152,7 +150,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -162,17 +160,17 @@
       ]
     },
     {
-      "text": "Игрок жмёт «Промолчать», а персонаж будто не заметил — так и должно быть?",
+      "text": "Запиши решение: смотритель не может уйти с острова, это теперь ядро",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -180,7 +178,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -188,7 +186,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -198,17 +196,17 @@
       ]
     },
     {
-      "text": "Я ставлю trust в первой главе, а вспоминаю о нём только в финале. Игрок вообще поймёт, что это из-за него?",
+      "text": "Отложи идею с радиоэфиром из завтрашнего дня на потом, вдруг пригодится в другой истории",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -216,7 +214,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -224,7 +222,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -234,17 +232,17 @@
       ]
     },
     {
-      "text": "В развилке сразу видно, какая кнопка правильная, все жмут одну и ту же",
+      "text": "Слушай, я передумал: пусть паромщик будет ей отцом, а не начальником. Что теперь придётся переделывать?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -252,7 +250,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -260,7 +258,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -270,17 +268,17 @@
       ]
     },
     {
-      "text": "Хочу, чтобы выбор между братом и подругой был мучительным, а сейчас все спасают подругу",
+      "text": "После теста поменяли план — какие главы и документы теперь устарели?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -288,7 +286,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -296,7 +294,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -306,17 +304,17 @@
       ]
     },
     {
-      "text": "Сколько кнопок ставить в развилке и какой длины их писать?",
+      "text": "Подруга хочет написать четвёртую главу, как нам вести историю вдвоём и не мешать друг другу?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -324,7 +322,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -332,7 +330,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -342,17 +340,17 @@
       ]
     },
     {
-      "text": "Допрос свидетеля превратился в анкету: игрок просто перебирает все вопросы подряд",
+      "text": "У меня две истории в работе, переключись на ту, что про паром",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -360,7 +358,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -368,7 +366,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -378,17 +376,17 @@
       ]
     },
     {
-      "text": "Как сделать, чтобы история помнила, что игрок соврал в самом начале?",
+      "text": "Я отклонил замечание про длинный монолог в сцене шторма, зафиксируй, чтобы ревью его больше не поднимало",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -396,7 +394,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -404,7 +402,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -414,17 +412,17 @@
       ]
     },
     {
-      "text": "отказ ни на что не влияет — герой всё равно соглашается через две реплики",
+      "text": "Дописал последнюю главу, а первые две теперь выглядят беднее остальных — что с ними делать?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -432,7 +430,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -440,7 +438,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -450,12 +448,48 @@
       ]
     },
     {
-      "text": "проверь развилки во второй главе, кажется там пустые кнопки",
+      "text": "покажи последние решения по истории и что у нас открытыми вопросами висит",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "positive",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где у нас список отложенных идей по всем историям?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
         }
       ],
       "runs": [
@@ -464,64 +498,30 @@
           "bypass": [],
           "tools": [
             "Bash",
-            "Bash",
             "Bash"
           ],
-          "turns": 4
+          "turns": 3
         },
         {
           "skill": null,
           "bypass": [],
           "tools": [
+            "Bash"
+          ],
+          "turns": 2
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-desk",
+            "story-desk"
+          ],
+          "tools": [
             "Bash",
             "Bash",
             "Bash"
           ],
           "turns": 4
-        },
-        {
-          "skill": "story-choices",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "turns": null
-        }
-      ]
-    },
-    {
-      "text": "Персонаж обиделся на игрока, а через сцену пишет как ни в чём не бывало",
-      "checks": [
-        {
-          "expect": "story-choices",
-          "kind": "positive",
-          "file": "story-choices.json"
-        }
-      ],
-      "runs": [
-        {
-          "skill": "story-choices",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "turns": null
-        },
-        {
-          "skill": "story-choices",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "turns": null
-        },
-        {
-          "skill": "story-choices",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "turns": null
         }
       ]
     },
@@ -531,7 +531,7 @@
         {
           "expect": "none",
           "kind": "negative",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
@@ -542,6 +542,19 @@
             "Bash",
             "Bash",
             "Read",
+            "Read",
+            "Read"
+          ],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Bash",
             "Read"
           ],
           "turns": 4
@@ -552,33 +565,19 @@
           "tools": [
             "Bash",
             "Bash",
-            "Read",
-            "Bash",
-            "Read"
-          ],
-          "turns": 4
-        },
-        {
-          "skill": null,
-          "bypass": [],
-          "tools": [
-            "Bash",
-            "Bash",
-            "Read",
-            "Read",
-            "Read"
+            "Bash"
           ],
           "turns": 4
         }
       ]
     },
     {
-      "text": "Сколько дней должна длиться история в реальном времени?",
+      "text": "Кнопки во второй главе ничего не меняют, выбор не ощущается",
       "checks": [
         {
-          "expect": "!story-choices",
+          "expect": "!story-desk",
           "kind": "negative",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
@@ -587,17 +586,7 @@
           "bypass": [],
           "tools": [
             "Bash",
-            "Bash",
-            "Bash"
-          ],
-          "turns": 4
-        },
-        {
-          "skill": null,
-          "bypass": [],
-          "tools": [
-            "Bash",
-            "Bash",
+            "Read",
             "Read",
             "Read",
             "Bash"
@@ -610,29 +599,8 @@
           "tools": [
             "Bash",
             "Bash",
-            "Bash",
-            "Bash"
-          ],
-          "turns": 4
-        }
-      ]
-    },
-    {
-      "text": "Первые сообщения не цепляют, игрок закрывает чат через минуту",
-      "checks": [
-        {
-          "expect": "!story-choices",
-          "kind": "negative",
-          "file": "story-choices.json"
-        }
-      ],
-      "runs": [
-        {
-          "skill": null,
-          "bypass": [],
-          "tools": [
-            "Bash",
-            "Bash",
+            "Read",
+            "Read",
             "Read"
           ],
           "turns": 4
@@ -644,30 +612,20 @@
             "Bash",
             "Bash",
             "Read",
-            "Bash"
-          ],
-          "turns": 4
-        },
-        {
-          "skill": null,
-          "bypass": [],
-          "tools": [
-            "Bash",
-            "Bash",
             "Read",
-            "Bash"
+            "Read"
           ],
           "turns": 4
         }
       ]
     },
     {
-      "text": "Сделай кнопку загрузки истории на главном экране поярче",
+      "text": "Придумай, что смотритель напишет первым сообщением, чтобы сразу зацепить",
       "checks": [
         {
-          "expect": "!story-choices",
+          "expect": "!story-desk",
           "kind": "negative",
-          "file": "story-choices.json"
+          "file": "story-desk.json"
         }
       ],
       "runs": [
@@ -676,8 +634,49 @@
           "bypass": [],
           "tools": [
             "Bash",
-            "Read",
-            "Read",
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Все персонажи пишут одинаково, голоса не различить",
+      "checks": [
+        {
+          "expect": "!story-desk",
+          "kind": "negative",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
             "Bash",
             "Bash"
           ],
@@ -689,6 +688,7 @@
           "tools": [
             "Bash",
             "Read",
+            "Bash",
             "Bash"
           ],
           "turns": 4
@@ -698,8 +698,7 @@
           "bypass": [],
           "tools": [
             "Bash",
-            "Read",
-            "Read",
+            "Bash",
             "Read",
             "Bash"
           ],
@@ -708,17 +707,17 @@
       ]
     },
     {
-      "text": "Кнопки ничего не меняют, выбор не ощущается",
+      "text": "Что сейчас с историей, на каком мы шаге и что дальше?",
       "checks": [
         {
-          "expect": "story-choices",
+          "expect": "story-desk",
           "kind": "routing",
           "file": "_routing.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -726,7 +725,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -734,7 +733,43 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я вернулся через неделю, напомни, на чём остановились",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
           "bypass": [],
           "tools": [
             "Skill"
@@ -746,69 +781,69 @@
   ],
   "skipped": [
     {
-      "text": "Финал решается скрытым порогом доверия, игрок не понимает, почему так вышло",
-      "expect": "story-endings",
-      "reason": "скилла story-endings нет в .claude/skills"
+      "text": "Накидай пару направлений для истории про ночную смену на метеостанции",
+      "expect": "story-brainstorm",
+      "reason": "скилла story-brainstorm нет в .claude/skills"
     },
     {
-      "text": "Куда может свернуть сюжет после того, как героиня узнаёт про брата?",
-      "expect": "story-branch",
-      "reason": "скилла story-branch нет в .claude/skills"
+      "text": "Разверни выбранное ядро в план на пять глав",
+      "expect": "story-plan",
+      "reason": "скилла story-plan нет в .claude/skills"
     },
     {
-      "text": "Если игрок не отвечает сутки, сколько раз персонаж должен напомнить о себе?",
-      "expect": "story-time",
-      "reason": "скилла story-time нет в .claude/skills"
+      "text": "Проверь всю историю целиком, где слабые места?",
+      "expect": "story-review",
+      "reason": "скилла story-review нет в .claude/skills"
     },
     {
-      "text": "Чатов слишком много, игрок путается, кто есть кто",
-      "expect": "story-cast",
-      "reason": "скилла story-cast нет в .claude/skills"
+      "text": "Что в базе говорят про честные загадки?",
+      "expect": "story-kb",
+      "reason": "скилла story-kb нет в .claude/skills"
     },
     {
-      "text": "Все персонажи пишут одинаково, голоса не различить",
-      "expect": "story-voice",
-      "reason": "скилла story-voice нет в .claude/skills"
+      "text": "Какая ставка у героя и кто ему противостоит? Помоги собрать ядро",
+      "expect": "story-core",
+      "reason": "скилла story-core нет в .claude/skills"
     },
     {
-      "text": "Середина второй главы провисает, всё время одно и то же",
-      "expect": "story-pace",
-      "reason": "скилла story-pace нет в .claude/skills"
+      "text": "У меня есть идея: девушка находит чужой телефон в такси. Что из этого может выйти?",
+      "expect": "story-brainstorm",
+      "reason": "скилла story-brainstorm нет в .claude/skills"
     },
     {
-      "text": "Куда может свернуть сюжет после того, как герой узнаёт про брата?",
-      "expect": "story-branch",
-      "reason": "скилла story-branch нет в .claude/skills"
+      "text": "Накидай пару направлений для истории про ночную смену на метеостанции",
+      "expect": "story-brainstorm",
+      "reason": "скилла story-brainstorm нет в .claude/skills"
     },
     {
-      "text": "Граф почти линейный, предложи, где развести ветки",
-      "expect": "story-branch",
-      "reason": "скилла story-branch нет в .claude/skills"
+      "text": "Проверь всю историю целиком, где слабые места?",
+      "expect": "story-review",
+      "reason": "скилла story-review нет в .claude/skills"
     },
     {
-      "text": "Финал решается скрытой проверкой, игрок не понимает, почему так вышло",
-      "expect": "story-endings",
-      "reason": "скилла story-endings нет в .claude/skills"
+      "text": "Где игроку станет скучно?",
+      "expect": "story-review",
+      "reason": "скилла story-review нет в .claude/skills"
     },
     {
-      "text": "Чатов слишком много, игрок путается, кто есть кто",
-      "expect": "story-cast",
-      "reason": "скилла story-cast нет в .claude/skills"
+      "text": "Что в базе говорят про честные загадки?",
+      "expect": "story-kb",
+      "reason": "скилла story-kb нет в .claude/skills"
     },
     {
-      "text": "Все персонажи пишут одинаково, голоса не различить",
-      "expect": "story-voice",
-      "reason": "скилла story-voice нет в .claude/skills"
+      "text": "Разбери мою сцену, как разобрал бы наставник, и дай упражнение",
+      "expect": "story-kb",
+      "reason": "скилла story-kb нет в .claude/skills"
     },
     {
-      "text": "Середина провисает, всё время одно и то же",
-      "expect": "story-pace",
-      "reason": "скилла story-pace нет в .claude/skills"
+      "text": "Сделай скелет истории на пять глав",
+      "expect": "story-plan",
+      "reason": "скилла story-plan нет в .claude/skills"
     },
     {
-      "text": "Персонаж пишет «буду через два часа» — так можно?",
-      "expect": "story-time",
-      "reason": "скилла story-time нет в .claude/skills"
+      "text": "Сформулируй ядро: о чём история, какая ставка и кто противник",
+      "expect": "story-core",
+      "reason": "скилла story-core нет в .claude/skills"
     }
   ],
   "fails": [],
