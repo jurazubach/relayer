@@ -88,6 +88,12 @@
   text-overflow: ellipsis;
 }
 
+.story-tile__state--size {
+  font-size: var(--text-xs);
+  line-height: 1.3;
+  white-space: normal;
+}
+
 .story-tile__ago {
   color: var(--color-on-cover-faint);
   font-size: var(--text-xs);

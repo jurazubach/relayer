@@ -10,6 +10,14 @@
     "engineering@synced": false
   },
   "disableClaudeAiConnectors": true,
+  "permissions": {
+    "allow": [
+      "Bash(npm run story:*)",
+      "Bash(npm run check:story*)",
+      "Bash(node scripts/hooks/full.mjs *)",
+      "Bash(node scripts/story/*)"
+    ]
+  },
   "skillOverrides": {
     "pls-mngd-cicd-troubleshooting": "off",
     "pls-mngd-collect-github-rulesets": "off",

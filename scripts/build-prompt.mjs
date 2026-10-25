@@ -2,8 +2,12 @@
 /**
  * Собирает промпт для генерации новых историй из docs/capabilities.json.
  *
- *   npm run prompt            печатает промпт и обновляет docs/PROMPT.md
- *   npm run prompt -- --copy  ещё и кладёт в буфер обмена (macOS)
+ *   npm run prompt             печатает промпт и обновляет docs/PROMPT.md
+ *   npm run prompt -- --quiet  только обновляет docs/PROMPT.md
+ *   npm run prompt -- --copy   ещё и кладёт в буфер обмена (macOS)
+ *
+ * Короткая версия стиля (docs/style.md §1) вставляется как есть; ключи порогов в ней
+ * заменяются числами из docs/playbook/thresholds.json: генератор этих файлов не видит.
  *
  * Правило простое: добавили фичу в чат — добавили её в capabilities.json.
  * Промпт пересобирается, и следующая история уже знает про новую возможность.
@@ -13,10 +17,48 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
+if (process.argv.includes('--help')) {
+  console.log(`npm run prompt [-- --quiet] [-- --copy]
+
+Собирает docs/PROMPT.md — промпт для генерации историй — из docs/capabilities.json,
+образца examples/demo.story.json и короткой версии стиля docs/style.md §1.
+Падает, если реестр разошёлся с движком (тег ready, которого engine.ts не разбирает, или наоборот).
+
+  --quiet   не печатать промпт, только обновить файл
+  --copy    положить промпт в буфер обмена (macOS, pbcopy)`);
+  process.exit(0);
+}
+
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const caps = JSON.parse(readFileSync(join(root, 'docs/capabilities.json'), 'utf8'));
 const engine = readFileSync(join(root, 'src/engine/engine.ts'), 'utf8');
 const example = readFileSync(join(root, 'examples/demo.story.json'), 'utf8');
+const style = readFileSync(join(root, 'docs/style.md'), 'utf8');
+const thresholds = JSON.parse(readFileSync(join(root, 'docs/playbook/thresholds.json'), 'utf8'));
+
+/**
+ * docs/style.md §1 для промпта: числовой ключ → число, составной ключ в скобках и ссылки
+ * на положения (ST-NN, §NN) убираются — генератору нужен текст правила, а не адрес.
+ */
+function shortStyle() {
+  const from = style.indexOf('## 1. Короткая версия');
+  const to = style.indexOf('\n---', from);
+  if (from < 0 || to < 0) throw new Error('docs/style.md: не нашёл раздел «1. Короткая версия»');
+  const items = style.slice(from, to).split('\n').filter((l) => /^\d+\. /.test(l));
+  if (!items.length) throw new Error('docs/style.md §1: пустой список');
+  return items
+    .map((line) =>
+      line
+        .replace(/\s*\((?:ST-\d+(?:…ST-\d+)?|§\d+)(?:,\s*(?:ST-\d+(?:…ST-\d+)?|§\d+))*\)\.?$/, '')
+        .replace(/\s*\(`([\w.-]+)`\)/g, (m, key) => (typeof thresholds[key]?.value === 'number' ? ` (${thresholds[key].value})` : ''))
+        .replace(/`([\w.-]+)`/g, (m, key) => {
+          if (!(key in thresholds)) return m;
+          if (typeof thresholds[key].value !== 'number') throw new Error(`docs/style.md §1: ключ ${key} — не число, в промпт не подставить`);
+          return String(thresholds[key].value);
+        }),
+    )
+    .join('\n');
+}
 
 // --- проверка, что реестр не разошёлся с движком ---------------------------
 const problems = [];
@@ -75,8 +117,19 @@ const prompt = `# Промпт: написать историю для relayer
 - **Голос у каждого свой.** Один пишет капсом, другой — одними короткими словами,
   третий вежливо и полными предложениями. По стилю должно быть понятно, кто пишет, без имени.
 - **Время работает на историю.** Пауза в четырнадцать минут посреди разговора — это событие.
-  Молчание ночью — тоже.
+  Ночь, утро, «тут светает» — время мира истории, а не часы игрока.
+- **Два режима, равноценных.** Игрок выбирает режим перед началом, сменить его можно только перезапуском.
+  В «реальном времени» паузы \`#delay\` настоящие. «По клику» ожидания нет: следующее сообщение приходит
+  сразу, а долгий скачок времени движок сам отмечает строкой «спустя N». Сюжет, выборы и финалы
+  в режимах одинаковы, поэтому текст после паузы должен читаться и без неё.
+- **Персонаж не называет срок.** Уходя, он говорит, почему, но не когда вернётся: без «через час» и «утром напишу».
 - **Игрок всегда может промолчать.** Это такой же ход, как ответить.
+
+## Стиль: короткая версия
+
+Это общий «код-стайл» всех историй (docs/style.md). Держись его в каждой реплике.
+
+${shortStyle()}
 
 ## Что ты отдаёшь
 
@@ -87,22 +140,37 @@ const prompt = `# Промпт: написать историю для relayer
   "format": "relayer-story",
   "version": 1,
   "id": "latinkoy-bez-probelov",
+  "revision": 1,                       // ревизия сценария: растёт с каждой выпущенной правкой текста
   "series": "Название мира",          // необязательно
   "title": "Название эпизода",
   "tagline": "Одна строка — она же на карточке",
   "synopsis": "Абзац-два: завязка без спойлеров",
-  "minutes": 20,                       // сколько примерно займёт
+  "minutes": 20,                       // сколько минут по клику, без ожиданий
+  "days": 2,                           // сколько дней в реальном времени; меньше суток — дробью (0.5)
+  "free_chapters": 1,                  // необязательно: сколько первых глав бесплатно; нет поля — все
   "cover": { "from": "#1e3a8a", "to": "#0b1020", "glyph": "№" },
   "features": ["Чем история интересна", "Ещё одна строка"],
   "chapters": [{ "title": "Название", "when": "ночь", "about": "Одно предложение" }],
   "characters": [
-    { "id": "theo", "name": "Тео", "role": "кто это одной строкой", "about": "Пара предложений" }
+    {
+      "id": "mark", "name": "Марк", "role": "кто это одной строкой", "about": "Пара предложений",
+      // служебное, игрок не видит: карточка голоса и функция по главам
+      "voice": { "length": "2–5 слов", "case": "строчные, без точек", "emoji": "никогда",
+                 "word": "короче", "address": "ты", "wants": "чтобы игрок сходил на склад" },
+      "arc": [{ "from": 1, "role": "просит помощи" }, { "from": 3, "role": "врёт про склад" }]
+    },
+    { "id": "bank", "name": "Банк", "role": "уведомления о платежах", "service": true }
   ],
   "ink": "весь сценарий одной строкой, переносы как \\\\n"
 }
 \`\`\`
 
-\`id\` персонажа обязан совпадать с id контакта в сценарии (\`# contact: theo, ...\`).
+\`id\` персонажа обязан совпадать с id контакта в сценарии (\`# contact: mark, ...\`).
+Поле \`voice\` — карточка голоса для автора и проверок, с тегом \`#voice\` оно не связано.
+\`voice\` и \`arc\` экран истории не показывает: «врёт с главы 3» — спойлер.
+\`service: true\` — служебный контакт (заметки, пульт, банк, сервис): пишет в чат, но в списке героев его нет.
+\`minutes\` и \`days\` — два числа на карточке: «≈ 20 мин по клику · ≈ 2 дня в реальном времени».
+Режим в файле не пишется: его выбирает игрок.
 
 ## Что умеет движок
 

@@ -74,6 +74,7 @@ npx playwright show-trace test-results/*/trace.zip
 | `?screen=home` \| `story` \| `game` | какой экран показать |
 | `?fresh=1` | стереть прогресс перед запуском |
 | `?fast=1` | без пауз сюжета, набор текста ×4 |
+| `?mode=click` \| `realtime` | режим новой игры, если она начинается не с экрана истории |
 
 Например: `http://localhost:5173/?story=the-number&fresh=1&fast=1`.
 
@@ -126,7 +127,7 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
 
 Ключи в `localStorage`: `relay:<storyId>` — прогресс истории, `relay:route` — где игрок был
 в прошлый раз (экран, история и открытый чат), `relay:uploads` — загруженные истории целиком,
-`relay:speed` / `relay:fast` — настройки отладки.
+`relay:fast` — быстрый набор в отладке. Режим игры (`realtime` / `click`) лежит в прогрессе истории.
 
 Прогресс хранится по `id` истории, а не по происхождению: загруженная файлом и приехавшая
 потом в репозиторий — это одна и та же история, и встроенная вытесняет загруженную копию.
@@ -194,7 +195,8 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
   и строчка импорта в `src/styles/index.css`. Вложенные селекторы не использовать.
 - Селекторы для тестов — `data-testid`, не классы: `home`, `tile-<id>`, `upload`, `upload-input`,
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
-  `thread-<id>`, `chat`, `notice`, `back-story`, `debug-home`.
+  `thread-<id>`, `chat`, `notice`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
+  `skip-next`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).
   И `width: 100%` у `.phone` не убирать: с автоотступами в flex-колонке он ужимается

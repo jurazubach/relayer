@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import { CONTACT_COLORS, downloadStory, sizeLabel, storyPalette, formatAgo } from '../engine';
-import type { Progress, Story } from '../engine';
+import { CONTACT_COLORS, DEFAULT_MODE, MODES, downloadStory, modeSizes, sizeLabel, storyPalette, formatAgo } from '../engine';
+import type { Mode, Progress, Story } from '../engine';
 import { Avatar } from './Avatar';
+
+const MODE_TEXT: Record<Mode, { name: string; hint: string }> = {
+  realtime: { name: 'Реальное время', hint: 'паузы настоящие, сообщения приходят сами' },
+  click: { name: 'По клику', hint: 'без ожиданий: следующее приходит сразу' },
+};
 
 /**
  * Экран истории: о чём, как играется, герои, главы. Отсюда её запускают.
@@ -17,21 +22,28 @@ export function StoryScreen({
 }: {
   story: Story;
   progress: Progress | null;
-  onPlay: () => void;
+  /** Режим важен только новой игре: начатая продолжается в своём. */
+  onPlay: (mode: Mode) => void;
   onBack: () => void;
   onReset: () => void;
   /** Есть только у загруженных историй: встроенную из репозитория не удалить. */
   onDelete?: () => void;
 }) {
-  const [confirm, setConfirm] = useState<null | 'reset' | 'delete'>(null);
+  const [confirm, setConfirm] = useState<null | 'reset' | 'delete' | Mode>(null);
+  const [picked, setPicked] = useState<Mode>(progress?.mode ?? DEFAULT_MODE);
+  // начатая игра идёт в своём режиме: другой включается только перезапуском
+  const mode = progress?.mode ?? picked;
+  const sizes = modeSizes(story);
   const palette = storyPalette(story.ink);
+  // служебные контакты (заметки, банк, сервис) пишут в чат, но героями не считаются
+  const people = (story.characters ?? []).filter((c) => !c.service);
 
   const cta = !progress ? 'Начать' : progress.ended ? 'Пройти заново' : 'Продолжить';
   const where = progress
     ? progress.ended
       ? 'История пройдена'
       : `${progress.chapter || `${progress.messages} сообщений`} · ${formatAgo(progress.savedAt)}`
-    : sizeLabel(story.chapters?.length, story.minutes);
+    : sizeLabel(story);
 
   return (
     <div className="screen screen--scroll" data-testid="story">
@@ -57,7 +69,46 @@ export function StoryScreen({
 
       <div className="story__body">
         <div className="story__play">
-          <button className="btn btn--primary" onClick={onPlay} data-testid="play">
+          <div className="mode-picker" role="radiogroup" aria-label="Режим игры">
+            {MODES.map((m) => (
+              <button
+                key={m}
+                role="radio"
+                aria-checked={mode === m}
+                className={mode === m ? 'mode-picker__option mode-picker__option--active' : 'mode-picker__option'}
+                onClick={() => (m === mode ? setConfirm(null) : progress ? setConfirm(m) : setPicked(m))}
+                data-testid={`mode-${m}`}
+              >
+                <span className="mode-picker__name">{MODE_TEXT[m].name}</span>
+                {sizes[m] && (
+                  <span className={mode === m ? 'mode-picker__size mode-picker__size--active' : 'mode-picker__size'}>
+                    {sizes[m]}
+                  </span>
+                )}
+                <span className="mode-picker__hint">{MODE_TEXT[m].hint}</span>
+              </button>
+            ))}
+          </div>
+          {confirm === 'realtime' || confirm === 'click' ? (
+            <div className="confirm confirm--center">
+              <span>Режим меняется только с начала: прогресс сотрётся.</span>
+              <button
+                className="btn btn--danger"
+                onClick={() => {
+                  onReset();
+                  setPicked(confirm);
+                  setConfirm(null);
+                }}
+                data-testid="mode-confirm"
+              >
+                Начать заново
+              </button>
+              <button className="btn btn--ghost" onClick={() => setConfirm(null)}>
+                Отмена
+              </button>
+            </div>
+          ) : null}
+          <button className="btn btn--primary" onClick={() => onPlay(mode)} data-testid="play">
             {cta} →
           </button>
           {progress &&
@@ -109,11 +160,11 @@ export function StoryScreen({
           </section>
         )}
 
-        {!!story.characters?.length && (
+        {!!people.length && (
           <section className="info">
             <h2 className="info__title">Герои</h2>
             <ul className="people">
-              {story.characters.map((c) => (
+              {people.map((c) => (
                 <li className="people__item" key={c.name}>
                   <Avatar
                     contact={{

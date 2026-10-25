@@ -1,4 +1,5 @@
 import { parseStoryFile } from './bundle';
+import { plural, type Mode } from './engine';
 import { readProgress, type Progress } from './progress';
 import type { Story, StoryFile } from './story';
 import { readUploads, removeUpload, saveUpload } from './uploads';
@@ -83,26 +84,38 @@ export type { Progress };
 /** Подпись одной строкой: для списков и панели отладки. */
 export const storyLabel = (s: Story): string => (s.series ? `${s.series} · ${s.title}` : s.title);
 
-/** «1 глава», «2 главы», «5 глав». */
-export function plural(n: number, one: string, few: string, many: string): string {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return one;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
-  return many;
+/** «≈ 2 дня», меньше суток — часами: «≈ 3 ч». */
+function daysText(days: number): string {
+  if (days >= 1) {
+    const n = Math.round(days);
+    return `≈ ${n} ${plural(n, 'день', 'дня', 'дней')}`;
+  }
+  return `≈ ${Math.max(1, Math.round(days * 24))} ч`;
+}
+
+/** Два числа на карточке (A-05): минуты по клику и дни в реальном времени — каждое со своим режимом. */
+export function modeSizes(story: Pick<Story, 'minutes' | 'days'>): Partial<Record<Mode, string>> {
+  return {
+    ...(story.minutes ? { click: `≈ ${story.minutes} мин` } : {}),
+    ...(story.days ? { realtime: daysText(story.days) } : {}),
+  };
 }
 
 /**
- * Подпись объёма истории: «5 глав · ~25 мин», с днями — «5 глав · ~25 мин · ~2 дня».
- * Минуты — режим «по клику», дни — реальное время; меньше суток показываем часами.
+ * Подпись объёма истории: «≈ 35 мин по клику · ≈ 2 дня в реальном времени».
+ * Оба числа видны до выбора режима; без них — число глав.
  */
-export function sizeLabel(chapters?: number, minutes?: number, days?: number): string {
+export function sizeLabel(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string {
+  return sizeLines(story).join(' · ');
+}
+
+/** То же по строкам — для узкой карточки, где одна строка не помещается. */
+export function sizeLines(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string[] {
+  const sizes = modeSizes(story);
   const parts: string[] = [];
-  if (chapters) parts.push(`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`);
-  if (minutes) parts.push(`~${minutes} мин`);
-  if (days && days >= 1) {
-    const n = Math.round(days);
-    parts.push(`~${n} ${plural(n, 'день', 'дня', 'дней')}`);
-  } else if (days) parts.push(`~${Math.max(1, Math.round(days * 24))} ч`);
-  return parts.join(' · ') || 'Новая история';
+  if (sizes.click) parts.push(`${sizes.click} по клику`);
+  if (sizes.realtime) parts.push(`${sizes.realtime} в реальном времени`);
+  if (parts.length) return parts;
+  const chapters = story.chapters?.length;
+  return [chapters ? `${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}` : 'Новая история'];
 }

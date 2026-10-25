@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useGame, useLibrary, useRouter, type Story } from './engine';
+import { useGame, useLibrary, useRouter, type Mode, type Story } from './engine';
 import { HomeScreen } from './ui/HomeScreen';
 import { StoryScreen } from './ui/StoryScreen';
 import { ChatsScreen } from './ui/ChatsScreen';
@@ -41,7 +41,7 @@ export function App() {
         <StoryScreen
           story={story}
           progress={library.progress(story.id)}
-          onPlay={() => play(story.id)}
+          onPlay={(mode) => play(story.id, mode)}
           onBack={goHome}
           onReset={() => library.reset(story.id)}
           onDelete={
@@ -63,6 +63,7 @@ export function App() {
       story={story}
       stories={library.stories}
       thread={route.thread ?? null}
+      mode={route.mode}
       onThreadChange={rememberChat}
       onBack={() => openStory(story.id)}
       onHome={goHome}
@@ -76,6 +77,7 @@ function GameShell({
   story,
   stories,
   thread,
+  mode,
   onThreadChange,
   onBack,
   onHome,
@@ -85,6 +87,8 @@ function GameShell({
   stories: Story[];
   /** Чат, открытый в прошлый раз: восстанавливаем после перезагрузки. */
   thread: string | null;
+  /** Режим новой игры с экрана истории. */
+  mode?: Mode;
   onThreadChange: (id: string, thread: string | null) => void;
   onBack: () => void;
   onHome: () => void;
@@ -94,7 +98,7 @@ function GameShell({
     (next: string | null) => onThreadChange(story.id, next),
     [onThreadChange, story.id],
   );
-  const game = useGame(story, thread, remember);
+  const game = useGame(story, thread, remember, mode);
   const [debug, setDebug] = useState(false);
 
   return (

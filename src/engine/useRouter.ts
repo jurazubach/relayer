@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { FLAGS, readLocal, writeLocal } from './flags';
 import { BUILTIN } from './library';
+import type { Mode } from './engine';
 import { clearProgress } from './progress';
 
 /**
@@ -10,7 +11,7 @@ import { clearProgress } from './progress';
 export type Route =
   | { screen: 'home' }
   | { screen: 'story'; id: string }
-  | { screen: 'game'; id: string; thread?: string | null };
+  | { screen: 'game'; id: string; thread?: string | null; mode?: Mode };
 
 const ROUTE_KEY = 'relay:route';
 
@@ -31,7 +32,8 @@ export interface Router {
   route: Route;
   goHome: () => void;
   openStory: (id: string) => void;
-  play: (id: string) => void;
+  /** Режим нужен только новой игре: начатая продолжается в своём. */
+  play: (id: string, mode?: Mode) => void;
   /** Запомнить, какой чат открыт внутри истории (null — список чатов). */
   rememberChat: (id: string, thread: string | null) => void;
 }
@@ -48,7 +50,7 @@ export function useRouter(): Router {
     route,
     goHome: useCallback(() => setRoute({ screen: 'home' }), [setRoute]),
     openStory: useCallback((id: string) => setRoute({ screen: 'story', id }), [setRoute]),
-    play: useCallback((id: string) => setRoute({ screen: 'game', id }), [setRoute]),
+    play: useCallback((id: string, mode?: Mode) => setRoute({ screen: 'game', id, mode }), [setRoute]),
     // чат меняется часто, поэтому пишем в хранилище, но не дёргаем перерисовку маршрута
     rememberChat: useCallback((id: string, thread: string | null) => {
       writeLocal(ROUTE_KEY, JSON.stringify({ screen: 'game', id, thread }));

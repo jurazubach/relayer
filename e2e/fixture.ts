@@ -13,6 +13,7 @@ interface StoryJson {
   series?: string;
   title: string;
   tagline?: string;
+  minutes?: number;
   chapters?: { title: string }[];
   characters?: { id?: string; name: string }[];
 }

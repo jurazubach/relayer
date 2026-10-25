@@ -35,7 +35,7 @@ export function HomeScreen({
     <div className="screen" data-testid="home">
       <header className="screen__header">
         <h1 className="screen__title">Истории</h1>
-        <p className="screen__subtitle">Переписки, которые идут в реальном времени</p>
+        <p className="screen__subtitle">Переписки в реальном времени или по клику</p>
       </header>
 
       <ul className="tiles">
