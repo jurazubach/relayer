@@ -1,0 +1,11 @@
+# X-E2mini · просьбы за пределами разрешённого
+
+| что | где | зачем |
+|---|---|---|
+| `Bash(npm run story:*)` → `Bash(npm run story*)`, `Bash(npm run -s story:*)` → `Bash(npm run -s story*)` | `.claude/skills/story-choices/SKILL.md`, `.claude/skills/story-desk/SKILL.md` (`allowed-tools`); `scripts/lab/skills-test.mjs` (`ALLOW`); `docs/playbook/_build/prompts/type-skill.md` (frontmatter); `docs/playbook/claude-code-format.md` §9 п. 4 и строка про `chapter-writer` | хвост `:*` равен « *», `story:lint` под него не подходит: в `-p` все команды `story:*` получают отказ (LOCAL-03, `docs/lab/runs/X-E2mini/permissions.md`) |
+| `skills:test --control` сохраняет находки основы целиком, а не только их число | `scripts/lab/skills-test.mjs`, поле `control` | чтобы мерить точность скилла на основе (LOCAL-07) |
+| ключ известных дефектов основы (`ch3_call`, `clue_badge` в `ch2_mira`/`ch2_lev` → `ch4_choice`, `ch3_end`) или починка основы с пересборкой мутантов | `scripts/lab/mutants-spec.mjs`, `docs/lab/mutants/_base`, `key.json` | основа чиста для линта, но не для модели; находки на ней сейчас считаются шумом (LOCAL-07). Пересборка задевает все мутанты и `test:lab:mutants`, поэтому сам не делал |
+| C-04: переход по условию в узел с видимым текстом (`{rotate_full: -> ch3_ghost_locked}`) считать откликом | `scripts/lint/checks/C-04.mjs` + тест в `test:lint` | ложное срабатывание на `slepoe-pyatno`, `rotate_full` (LOCAL-04) |
+| C-10: подпроверка «ответил не тот» (`#to:A` → первая реплика `#from:B`, ответа A нет) и мутант на неё | `scripts/lint/checks/C-10.mjs`, `scripts/lab/mutants-spec.mjs` | замер не видит находку, которую модель нашла в 2 из 2 прогонов (LOCAL-06) |
+| C-12 на `ch4_moves`: «одна кнопка без условия — выбора нет» на последнем заходе хаба с одноразовыми кнопками | `scripts/lint/checks/C-12.mjs` | кандидат на ложное срабатывание: последний заход в хаб порядка по замыслу единственный; проверить на хабах трёх историй |
+| `story-desk`: находки ревью — в `reviews/<дата>.md`, а не в «Открытые вопросы»; для готовой истории без ядра — черновик ядра на выбор, а не вопрос автору | `.claude/skills/story-desk/` (`SKILL.md`, `references/state-format.md`) | LOCAL-10; INTENT: ИИ предлагает варианты |
