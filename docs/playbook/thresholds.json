@@ -6308,7 +6308,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
-      "mystery-fair-play:RED-02"
+      "mystery-fair-play:RED-01"
     ],
     "calibrated_on": null,
     "history": [
@@ -6316,6 +6316,31 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора RED-02 (вывод делает NPC) → RED-01 (улика только в ветке)"
+      }
+    ]
+  },
+  "C-54.channels": {
+    "value": 2,
+    "unit": "разных контактов среди улик при входе в узел раскрытия",
+    "op": "<",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "mystery-fair-play:P-07",
+      "mystery-fair-play:GREEN-01",
+      "rules.md R-92 (в короткой истории — две улики от двух голосов)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "заведён: улики одного голоса — одна попытка заметить; предупреждение, если в большинстве прогонов меньше двух отправителей"
       }
     ]
   },
@@ -6326,6 +6351,7 @@
     "level": "warning",
     "basis": "source",
     "sources": [
+      "mystery-fair-play:RED-02",
       "mystery-fair-play:RED-03"
     ],
     "calibrated_on": null,
@@ -6334,6 +6360,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора дополнена RED-02: нет кнопки с выводом между последней уликой и раскрытием"
       }
     ]
   },
@@ -6375,6 +6406,27 @@
       }
     ]
   },
+  "C-54.guess_share": {
+    "value": {
+      "min": 0.3,
+      "max": 0.7
+    },
+    "unit": "доля холодных читателей, назвавших виновника до раскрытия",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "mystery-fair-play:P-16",
+      "mystery-fair-play checklists §4 (30–70 % угадавших)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "заведён для guess.mjs скилла story-mystery (холодный читатель в режиме guess); story:lint его не считает"
+      }
+    ]
+  },
   "C-54.long_answer": {
     "value": 1.5,
     "unit": "раза длиннее самой короткой кнопки",
@@ -6383,7 +6435,7 @@
     "basis": "source",
     "sources": [
       "mystery-fair-play:§2",
-      "mystery-fair-play:RED-11"
+      "mystery-fair-play:RED-06"
     ],
     "calibrated_on": null,
     "history": [
@@ -6391,6 +6443,11 @@
         "date": "2026-10-25",
         "task": "T-03b",
         "change": "заведён"
+      },
+      {
+        "date": "2026-10-25",
+        "task": "S-mystery",
+        "change": "опора RED-11 (двойник) → RED-06 (верная кнопка длиннее); сравнение — с самой короткой из остальных кнопок"
       }
     ]
   },
