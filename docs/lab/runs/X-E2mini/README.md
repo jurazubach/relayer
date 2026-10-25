@@ -21,6 +21,8 @@
   `node_modules` — ссылка, свой `git init`. Чтение исходного репозитория запрещено правилом
   `Read(//Users/y.zubach/dev/**)`. Остались только строки калибровки в `thresholds.json` (`history`), где
   упоминаются узлы истории. Это выводы команд, а не находки.
+- **Для следующих прогонов на этой истории** из копии убирать и `docs/playbook/local-lessons.md`: в момент этих
+  прогонов файла не было, а теперь LOCAL-04…LOCAL-06 и LOCAL-10 пересказывают находки по «Слепому пятну».
 - **Права:** `Read, Grep, Glob, Skill`, `Bash(npm run story:*)`, `Bash(node scripts/*)`, `Bash(node .claude/skills/*)`,
   `Write/Edit(docs/stories/**)`. `WebFetch`/`WebSearch` и запись вне `docs/stories/` запрещены. `--max-turns 120`,
   `--no-session-persistence`, `--strict-mcp-config`, `--permission-prompts none`, модель `claude-opus-5-5`.
