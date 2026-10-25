@@ -135,6 +135,10 @@
         "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
       }
     },
+    "choiceofgames-design:RED-19": {
+      "status": "merged-into:R-18",
+      "note": "больше двух собеседников до первой развилки — входная нагрузка R-18 (C-21); ширину развилки держит story-choices C-12"
+    },
     "cron-wired-for-story:LESSON-06": {
       "fidelity": {
         "ok": true,
@@ -142,6 +146,10 @@
         "by": "W1",
         "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
       }
+    },
+    "cron-wired-for-story:RED-17": {
+      "status": "merged-into:C-23",
+      "note": "нет опоры в первых двух входящих — C-23 п. 2 (C-23.anchor)"
     },
     "dille-ultimate-guide:contra-3": {
       "status": "merged-into:choiceofgames-design:contra-2",
@@ -202,6 +210,10 @@
         "by": "review",
         "note": "4–8 реплик подводки стали «несколько», масштаб 5/50 есть"
       }
+    },
+    "failbetter-qbn:RED-13": {
+      "status": "merged-into:R-13",
+      "note": "тот же порог первой кнопки; ловит C-20 (мутант m18)"
     },
     "inkle-ingold:contra-2": {
       "status": "merged-into:choiceofgames-design:contra-2",
@@ -443,9 +455,17 @@
         "note": "аналог #label сохранён"
       }
     },
+    "mobile-interactive-stories:GREEN-07": {
+      "status": "merged-into:R-13",
+      "note": "первая кнопка в первые полминуты и один-два собеседника — R-13 и R-18 (C-20, C-21)"
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "mobile-interactive-stories:RED-10": {
+      "status": "merged-into:R-18",
+      "note": "много контактов и имён в главе 1 — R-18 (C-21, C-22)"
     },
     "narrative-postmortems:contra-2": {
       "status": "merged-into:bateman-game-writing:contra-5",
@@ -531,6 +551,10 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
+    "narrative-testing:GREEN-01": {
+      "status": "merged-into:R-13",
+      "note": "зелёный двойник порога первой кнопки C-20"
+    },
     "narrative-testing:GREEN-08": {
       "fidelity": {
         "ok": true,
@@ -554,6 +578,10 @@
         "by": "review",
         "note": "порог ключом C-10.cosmetic_chapter"
       }
+    },
+    "narrative-testing:RED-21": {
+      "status": "merged-into:R-18",
+      "note": "новые имена до первого сообщения им — R-18 (C-22)"
     },
     "nicklin-writing-for-games:contra-1": {
       "status": "merged-into:bateman-game-writing:contra-5",
@@ -691,6 +719,10 @@
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
     },
+    "snyder-save-the-cat:RED-02": {
+      "status": "merged-into:R-12",
+      "note": "катализатор позже первых входящих — R-12 и attn.opening.incident.msg (C-23)"
+    },
     "truby-anatomy-of-story:LESSON-02": {
       "status": "merged-into:meaningful-choice:LESSON-04",
       "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:LESSON-04 (story-choices)"
@@ -711,6 +743,18 @@
         "note": "схема, ловушки, basis secondary"
       }
     },
+    "video-three-things:RED-01": {
+      "status": "merged-into:C-23",
+      "note": "первая реплика — предыстория — C-23 п. 3 (C-23.past)"
+    },
+    "video-three-things:RED-03": {
+      "status": "merged-into:R-18",
+      "note": "список имён одним сообщением — R-18 и C-22.line_list"
+    },
+    "video-three-things:RED-04": {
+      "status": "merged-into:R-18",
+      "note": "много контактов впервые в главе 1 — R-18 (C-21.new_ch1)"
+    },
     "vogler-writers-journey:PAT-06": {
       "fidelity": {
         "ok": false,
@@ -718,6 +762,10 @@
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
       }
+    },
+    "yorke-into-the-woods:RED-18": {
+      "status": "merged-into:R-18",
+      "note": "новые имена в первых входящих — R-18 (C-22.first15)"
     }
   }
 }
