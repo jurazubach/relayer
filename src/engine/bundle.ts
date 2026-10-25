@@ -1,4 +1,5 @@
 import { CONTACT_COLORS, compileInk } from './engine';
+import { badFreeChapters } from './paywall';
 import { DEFAULT_COVER, type Story, type StoryFile } from './story';
 
 /** Из имени файла получаем id: «Эпизод 2.story.json» → «эпизод-2». */
@@ -43,6 +44,9 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       return { error: 'Поле "includes" — объект { "ch01.ink": "текст главы" }' };
     }
     if (!file.title?.trim()) return { error: 'В истории нет названия (поле "title")' };
+    if (badFreeChapters(file.free_chapters)) {
+      return { error: 'Поле "free_chapters" — целое число от 1: сколько первых глав бесплатно' };
+    }
   } else {
     // голый .ink: название возьмём из глобального тега # title
     const title = trimmed.match(/^#\s*title\s*:\s*(.+)$/m)?.[1]?.trim();

@@ -59,6 +59,11 @@ test('журнал по клику: кнопки, узлы и выгрузка, 
   await page.getByRole('button', { name: 'Готово' }).click();
 
   await page.locator('.choice', { hasText: PLOT.choice }).click();
+  // вторая развилка — в главе 2 за бесплатной границей фикстуры: тестер открывает главы в отладке
+  await expect(page.getByTestId('paywall')).toBeVisible();
+  await page.getByLabel('Панель отладки').click();
+  await page.getByTestId('chapters-open').click();
+  await page.getByRole('button', { name: 'Готово' }).click();
   await page.locator('.choice', { hasText: SECOND.button }).click();
   await expect(page.locator('.choice')).toHaveCount(0);
 

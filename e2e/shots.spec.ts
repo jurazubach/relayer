@@ -1,5 +1,6 @@
 import { test, type Page } from '@playwright/test';
-import { DEMO_PATH, FIXTURE, fixtureOnHome } from './fixture';
+import { readFileSync } from 'node:fs';
+import { DEMO_PATH, FIXTURE, FIXTURE_PATH, fixtureOnHome } from './fixture';
 
 /**
  * Не проверка, а съёмка: кладёт скриншоты в screenshots/<устройство>/,
@@ -65,4 +66,52 @@ test('снимки экранов', { tag: '@shots' }, async ({ page }) => {
   await page.getByTestId('upload').evaluate((el) => el.scrollIntoView({ block: 'end' }));
   await page.waitForTimeout(300);
   await shot(page, '7b-home-uploaded-end');
+});
+
+// плашка ревизии: сохранение от прошлой версии на экране истории и прямо в игре
+test('снимки сброса по ревизии', { tag: '@shots' }, async ({ page }) => {
+  await fixtureOnHome(page);
+  await page.getByTestId(`tile-${FIXTURE.id}`).click();
+  await page.getByTestId('play').click();
+  await page.locator('[data-testid^="thread-"]').first().waitFor();
+
+  await page.goto('/?screen=home');
+  const raw = JSON.parse(readFileSync(FIXTURE_PATH, 'utf8'));
+  await page.getByTestId('upload-input').setInputFiles({
+    name: `${FIXTURE.id}.story.json`,
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ ...raw, revision: 2 })),
+  });
+  await page.getByTestId('revision-notice').waitFor();
+  await page.waitForTimeout(300);
+  await shot(page, '8-story-revision');
+
+  await page.goto(`/?story=${FIXTURE.id}&screen=game&fast=1`);
+  await page.getByTestId('revision-notice').waitFor();
+  await page.waitForTimeout(1500);
+  await shot(page, '9-game-revision');
+});
+
+// платная граница: закрытые главы на экране истории, плашка в чате и над списком чатов
+test('снимки платной границы', { tag: '@shots' }, async ({ page }) => {
+  await fixtureOnHome(page);
+  await page.getByTestId(`tile-${FIXTURE.id}`).click();
+  await page
+    .getByRole('heading', { name: 'Файл истории', exact: true })
+    .evaluate((el) => el.scrollIntoView({ block: 'end' }));
+  await page.waitForTimeout(300);
+  await shot(page, '10-story-locked');
+
+  await page.getByTestId('mode-click').click();
+  await page.getByTestId('play').click();
+  await page.locator('[data-testid^="thread-"]').first().click();
+  await page.locator('.choice').first().click();
+  await page.getByTestId('paywall').waitFor();
+  await page.getByTestId('paywall-buy').click();
+  await page.waitForTimeout(400);
+  await shot(page, '11-chat-paywall');
+
+  await page.getByLabel('Назад к сообщениям').click();
+  await page.waitForTimeout(400);
+  await shot(page, '12-chats-paywall');
 });

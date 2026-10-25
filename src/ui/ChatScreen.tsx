@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import type { Engine, View } from '../engine';
 import { formatTime } from '../engine';
 import { Avatar } from './Avatar';
@@ -12,6 +13,7 @@ export function ChatScreen({
   onBack,
   onDebug,
   onOpen,
+  paywall,
 }: {
   engine: Engine;
   view: View;
@@ -19,6 +21,8 @@ export function ChatScreen({
   onBack: () => void;
   onDebug: () => void;
   onOpen: (thread: string) => void;
+  /** Плашка платной границы: история стоит, пока продолжение закрыто. */
+  paywall?: ReactNode;
 }) {
   const contact = engine.contact(thread);
   const msgs = view.messages.filter((m) => m.thread === thread);
@@ -133,6 +137,8 @@ export function ChatScreen({
             ))}
             {elsewhere}
           </div>
+        ) : paywall ? (
+          paywall
         ) : view.ended ? (
           <p className="chat__hint">Конец сцены. Начать заново можно в панели отладки.</p>
         ) : waitingElsewhere ? (
