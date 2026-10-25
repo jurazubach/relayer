@@ -21,6 +21,7 @@ const HELP = `npm run graph [-- <id | путь> …] [--open] [--json] [--seed N
   --help       эта справка`;
 
 const RUNS = threshold('bot.graph_runs');
+const MAX_LINES = threshold('bot.graph_max_lines');
 const OUT = 'graph/index.html';
 
 const args = process.argv.slice(2);
@@ -60,7 +61,7 @@ function collectEdges(knot, knotIds) {
 function playtest(json, ids) {
   const visits = Object.fromEntries(ids.map((id) => [id, 0]));
   for (let run = 0; run < RUNS; run++) {
-    const { visited } = play(json, { rng, nodes: ids, maxSteps: threshold('bot.graph_max_lines'), log: false });
+    const { visited } = play(json, { rng, nodes: ids, maxSteps: MAX_LINES, log: false });
     for (const id of visited) visits[id]++;
   }
   return Object.fromEntries(Object.entries(visits).map(([k, v]) => [k, Math.round((v / RUNS) * 1000) / 10]));
