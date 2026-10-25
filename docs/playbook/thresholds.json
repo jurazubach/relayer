@@ -679,6 +679,241 @@
       }
     ]
   },
+  "lab.playtest.repeat_min": {
+    "value": 2,
+    "unit": "тестеров",
+    "op": "≥",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:P-06: два и больше независимых совпадения по узлу и типу — чинить или объяснить письменно"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: порог обязательного списка сводки (digest.mjs) для волн до playtest.small_wave_max человек"
+      }
+    ]
+  },
+  "lab.playtest.small_wave_max": {
+    "value": 8,
+    "unit": "тестеров",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:P-06#нюанс: порог «≥2» осмыслен при 3–8 тестерах"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: до скольки человек в волне действует playtest.repeat_min, дальше — playtest.repeat_share"
+      }
+    ]
+  },
+  "lab.playtest.repeat_share": {
+    "value": 0.25,
+    "unit": "доля волны",
+    "op": "≥",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:P-06#нюанс: в больших волнах — доля тестеров, а не два совпадения"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: порог обязательного списка для волн больше playtest.small_wave_max"
+      }
+    ]
+  },
+  "lab.playtest.survey.open_questions": {
+    "value": 3,
+    "unit": "вопроса",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:attention§1: три открытых вопроса и пересказ вместо шкальной анкеты"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: столько открытых вопросов в анкете playtest-kit.mjs, плюс пересказ"
+      }
+    ]
+  },
+  "lab.playtest.survey.scales_min": {
+    "value": 5,
+    "unit": "человек в волне",
+    "op": "≥",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:attention§1: шкалы — только для волн из 5+ человек, где их можно сравнивать"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: с какого размера волны playtest-kit.mjs добавляет шкалы к анкете"
+      }
+    ]
+  },
+  "lab.playtest.brief.questions_max": {
+    "value": 3,
+    "unit": "вопроса автора",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:P-03: в записке тестеру 1–3 вопроса и список известных проблем"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: больше вопросов в брифе playtest-kit.mjs не берёт"
+      }
+    ]
+  },
+  "lab.playtest.wave1.max": {
+    "value": 3,
+    "unit": "тестеров",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:P-08: раунд 1 — 2–3 человека на главы 1–2",
+      "narrative-testing:PAT-02: волна 1 — 2–3 быстрых тестера"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: размер первой живой волны"
+      }
+    ]
+  },
+  "lab.playtest.short_story_min": {
+    "value": 30,
+    "unit": "мин по клику",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "narrative-testing:attention§1: истории до 30 минут хватит одной волны из 3 человек и одного свежего после правок"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: короче — одна волна вместо трёх (waves.md)"
+      }
+    ]
+  },
+  "lab.playtest.panel.opening_incoming": {
+    "value": 25,
+    "unit": "входящих",
+    "op": "≥",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "#attn-check-cold: после 3 минут, примерно 25 входящих, читатель без синопсиса отвечает на вопросы начала"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: точка «начало» симулированной панели (panel.mjs) — первый узел после стольких входящих"
+      }
+    ]
+  },
+  "lab.playtest.slice.count": {
+    "value": 10,
+    "unit": "отрезков",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "maass-fire-in-fiction:P-16: 10 мест случайного прохождения без контекста"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: сколько случайных срезов берёт panel.mjs --slices без числа"
+      }
+    ]
+  },
+  "lab.playtest.slice.lines": {
+    "value": 8,
+    "unit": "реплик",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "maass-fire-in-fiction:P-16: отрезки по 8 реплик без контекста"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: длина среза panel.mjs --slices (story:cold-read --last)"
+      }
+    ]
+  },
+  "lab.playtest.slice.empty_max_share": {
+    "value": 0.2,
+    "unit": "доля срезов",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "maass-fire-in-fiction:P-16: не больше 2 из 10 отрезков без открытого вопроса"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: выше — «скучно» кандидатом в сводку панели (story-pace подтверждает)"
+      }
+    ]
+  },
+  "lab.playtest.kit.runs": {
+    "value": 20,
+    "unit": "прохождений",
+    "op": null,
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: хватает, чтобы бот дошёл до beta_stop по разным веткам и дал медиану длительности для брифа"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-playtest",
+        "change": "заведён: прогоны проверки набора playtest-kit.mjs"
+      }
+    ]
+  },
   "cast.episodic_lines": {
     "value": 10,
     "unit": "реплик",
