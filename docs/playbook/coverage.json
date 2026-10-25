@@ -31,6 +31,14 @@
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
     },
+    "ashwell-standard-patterns:P-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "bateman-game-writing:contra-5": {
       "fidelity": {
         "ok": true,
@@ -143,6 +151,14 @@
         "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
       }
     },
+    "choiceofgames-design:RED-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "cron-wired-for-story:LESSON-05": {
       "fidelity": {
         "ok": true,
@@ -162,6 +178,14 @@
     "dille-ultimate-guide:contra-3": {
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "dille-ultimate-guide:GREEN-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
     },
     "dille-ultimate-guide:LESSON-05": {
       "fidelity": {
@@ -339,6 +363,14 @@
         "note": "ok"
       }
     },
+    "inkle-ingold:SYS-6": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "maass-fire-in-fiction:RED-06": {
       "fidelity": {
         "ok": true,
@@ -369,10 +401,10 @@
     },
     "mckee-story:PAT-06#нюанс": {
       "fidelity": {
-        "ok": false,
+        "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "в источнике кнопок кризиса до 4, в reference «три — потолок» числом без ключа; исправлено в ревью на C-12.four"
+        "note": "повторная выборка"
       }
     },
     "mckee-story:SYS-2": {
@@ -470,6 +502,14 @@
     "meaningful-choice:PAT-04#нюанс": {
       "status": "merged-into:meaningful-choice:P-11#нюанс",
       "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-11#нюанс (story-choices)"
+    },
+    "meaningful-choice:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
     },
     "meaningful-choice:PAT-06#нюанс": {
       "fidelity": {
@@ -627,6 +667,14 @@
         "note": "проверка через C-11 (а)"
       }
     },
+    "narrative-testing:P-12": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«исключительно редкий — почти наверняка ошибка» не из источника: там награда с подсказкой или упростить; исправлено ревьюером"
+      }
+    },
     "narrative-testing:PAT-08": {
       "fidelity": {
         "ok": true,
@@ -641,6 +689,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "порог ключом C-10.cosmetic_chapter"
+      }
+    },
+    "narrative-testing:RED-25": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
       }
     },
     "nicklin-writing-for-games:contra-1": {
@@ -723,6 +779,14 @@
         "note": "правило целиком, пример заменён выдуманным"
       }
     },
+    "R-106": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "«три развилки, в двух — условия» смягчено до «несколько, в части»; число держит C-06"
+      }
+    },
     "R-108": {
       "fidelity": {
         "ok": true,
@@ -739,9 +803,25 @@
         "note": "окно сообщений без чисел и без ключа"
       }
     },
+    "schell-art-of-game-design:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "schell-art-of-game-design:LESSON-07": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "schell-art-of-game-design:P-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
     },
     "sheldon-character-storytelling:contra-1": {
       "status": "merged-into:emshort-structures:contra-3",
@@ -795,12 +875,28 @@
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
     },
+    "snyder-save-the-cat:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "snyder-save-the-cat:P-14": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
         "note": "смысл сохранён; потеряно «минимум три развилки в последней главе» (держит C-06)"
+      }
+    },
+    "snyder-save-the-cat:PAT-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
       }
     },
     "snyder-save-the-cat:RED-09": {
@@ -831,6 +927,14 @@
         "note": "перепроверка глав целиком при смене каркаса сохранена"
       }
     },
+    "truby-anatomy-of-story:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
+      }
+    },
     "truby-anatomy-of-story:PAT-06": {
       "fidelity": {
         "ok": true,
@@ -845,6 +949,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "ok"
+      }
+    },
+    "video-three-things:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
       }
     },
     "vogler-writers-journey:P-13#нюанс": {
@@ -877,6 +989,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "ok"
+      }
+    },
+    "yorke-into-the-woods:LESSON-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "хвост «отвергли даже бесплатную» — вольно: в источнике free-to-play с покупками"
+      }
+    },
+    "yorke-into-the-woods:PAT-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "повторная выборка"
       }
     }
   }
