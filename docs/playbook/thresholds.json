@@ -6211,6 +6211,42 @@
       }
     ]
   },
+  "C-51.world_states": {
+    "value": 3,
+    "unit": "состояний мира, которые читают следующие главы",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; больше — свести в одно сводное состояние (mobile-interactive-stories:PAT-04)"
+      }
+    ]
+  },
+  "C-51.diverging_forks": {
+    "value": 4,
+    "unit": "расходящихся по смыслу развилок на главу",
+    "op": ">",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mobile-interactive-stories:RED-07"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-continuity",
+        "change": "заведён при сверке курса: число стояло словами в story-continuity/references/canon.md; согласованность глав ломается комбинаторикой"
+      }
+    ]
+  },
   "C-51.clock_drift_min": {
     "value": 30,
     "unit": "минут расхождения часов мира с паузами",

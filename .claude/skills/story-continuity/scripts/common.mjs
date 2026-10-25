@@ -28,9 +28,13 @@ export function args(help) {
   if (a.includes('--help') || a.includes('-h')) { console.log(help); process.exit(0); }
   const opt = (k) => { const i = a.indexOf(k); return i >= 0 ? a[i + 1] : null; };
   const T = thresholds();
+  // История позиционным аргументом — как у story:lint; иначе она молча терялась и считались все истории.
+  const valued = new Set(['--story', '--runs', '--node', '--contact']);
+  const positional = a.filter((x, i) => !x.startsWith('-') && !valued.has(a[i - 1]));
+  const ids = [...(opt('--story') ?? '').split(','), ...positional].filter(Boolean);
   return {
     T, opt, has: (k) => a.includes(k), json: a.includes('--json'),
-    refs: storyRefs((opt('--story') ?? '').split(',').filter(Boolean)),
+    refs: storyRefs(ids),
     runs: opt('--runs') ? Number(opt('--runs')) : T.value('lint.runs.full'),
   };
 }
