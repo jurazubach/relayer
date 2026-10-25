@@ -381,8 +381,10 @@ claude -p "$PHRASE" --model opus --output-format stream-json --verbose \
    В шаблон `SKILL.md` внести обе формы. Скрипты считают пути от `import.meta.url` или корня проекта,
    cwd = корень проекта.
 3. **Строка версии** — в `metadata: {version: …}` frontmatter, Claude Code её игнорирует.
-4. В `allowed-tools` модулей с командами — `Bash(npm run story:*)` и `Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)`,
-   чтобы команды подсчёта не спрашивали разрешения. Только снимает запросы, не ограничивает.
+4. В `allowed-tools` модулей с командами — `Bash(npm run story*)`, `Bash(npm run -s story*)` и
+   `Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)`, чтобы команды подсчёта не спрашивали разрешения. Только снимает
+   запросы, не ограничивает. Не `story:*`: хвост `:*` равен « *», и `npm run story:lint` под правило не подходит
+   (проверено экспериментом, LOCAL-03, `docs/lab/runs/X-E2mini/permissions.md`).
 5. **Самое важное — в первые строки `SKILL.md`**: после сжатия контекста от скилла остаются первые 5000 токенов.
 
 ### §5 «Скиллы» — поменять пункт про скрытие модулей
@@ -416,7 +418,7 @@ Claude Code считает обходом. Решение:
    агент всё же нужен — `omitClaudeMd: true`, но git status и формулировка задания остаются утечкой.
 4. **Ограничение путей:** `chapter-writer` и `story-architect` пишут через `Write`/`Edit`. Хук `PreToolUse`
    с проверкой `tool_input.file_path` и `agent_type` (вход хука) — надёжнее правил разрешений, которые
-   глобальны для сессии. Bash у `chapter-writer` — только `npm run story:*` через `PreToolUse` на `Bash`.
+   глобальны для сессии. Bash у `chapter-writer` — только `npm run story*` через `PreToolUse` на `Bash`.
 5. **`permissionMode`** для пишущих агентов — `acceptEdits` (поле есть **[док]**; что фоновый агент без него
    упрётся в запросы — наша оценка, не проверялось).
 

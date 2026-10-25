@@ -121,7 +121,7 @@ if (args.includes('--json')) {
   console.log(JSON.stringify({ stories: report, keys: { gap_hint: T.value('C-04.gap_hint'), gap_warning: T.value('C-04.gap_warning'), ratio: T.value('C-02.ratio') } }, null, 1));
   process.exit(0);
 }
-const pad = (s, n) => String(s).padEnd(n);
+const pad = (s, n) => String(s).padEnd(n - 1) + ' ';
 for (const r of report) {
   console.log(`${r.path} · переменных ${r.vars.length}${finalOnly ? ' (читает финал)' : ''} · глав ${r.chapters}`);
   if (one) {

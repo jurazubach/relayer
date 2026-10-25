@@ -107,7 +107,7 @@
 ```
 
 **`SKILL.md`:**
-- frontmatter: `name`, `description` до 300 знаков — симптомы словами автора, главное в начале; `when_to_use` не используем (тратит тот же бюджет); версия — в `metadata.version`; у скиллов с командами — `allowed-tools: Bash(npm run story:*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)`; модули — `user-invocable: false` (T-00, `claude-code-format.md` §9);
+- frontmatter: `name`, `description` до 300 знаков — симптомы словами автора, главное в начале; `when_to_use` не используем (тратит тот же бюджет); версия — в `metadata.version`; у скиллов с командами — `allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)` (не `story:*` — LOCAL-03); модули — `user-invocable: false` (T-00, `claude-code-format.md` §9);
 - ссылки: скрипты — `${CLAUDE_SKILL_DIR}/scripts/x.mjs`, references — относительной ссылкой markdown; самое важное — в первых строках `SKILL.md` (после сжатия контекста остаётся только начало);
 - **первый шаг** — прочитать `docs/stories/<id>/STATUS.md` и `docs/style.md`, если скилл пишет или правит текст. Если шаг истории не тот, о котором просят, сказать об этом;
 - граница с соседями поимённо, вход и выход;

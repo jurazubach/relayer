@@ -12,10 +12,12 @@
   "disableClaudeAiConnectors": true,
   "permissions": {
     "allow": [
-      "Bash(npm run story:*)",
+      "Bash(npm run story*)",
+      "Bash(npm run -s story*)",
       "Bash(npm run check:story*)",
       "Bash(node scripts/hooks/full.mjs *)",
-      "Bash(node scripts/story/*)"
+      "Bash(node scripts/story/*)",
+      "Bash(node .claude/skills/*)"
     ]
   },
   "skillOverrides": {

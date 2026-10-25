@@ -1,7 +1,7 @@
 ---
 name: story-desk
 description: Где мы с историей и что дальше; вернулся через неделю — на чём остановились; запиши решение; отложи идею на потом; передумал ядро или план — что теперь устарело; ранние главы отстали от поздних; две истории или второй автор. Ведёт STATUS, решения и банк идей в docs/stories/<id>/.
-allowed-tools: Bash(npm run story:*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
   version: 1
 ---

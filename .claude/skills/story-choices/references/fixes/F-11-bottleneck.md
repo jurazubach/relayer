@@ -82,7 +82,7 @@ VAR risk = 0
 ```
 
 basis: our_estimate (рецепт перехода — вывод разбора; наблюдение о горлышке и состоянии — источник) · опора:
-`skills.md` §6 F-11; проход `/story-deepen` и `ashwell-standard-patterns:PAT-12`.
+`skills.md` §6 F-11; проход разбора `ashwell-standard-patterns:/story-deepen` (это не скилл) и `ashwell-standard-patterns:PAT-12`.
 
 ## Источники
 

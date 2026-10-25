@@ -2,7 +2,7 @@
 name: story-choices
 description: "Выбор не ощущается: кнопки ничего не меняют, на все варианты один ответ, «Промолчать» никто не замечает, игрок не помнит, что выбирал, выбор очевиден или предрешён, ветки сходятся и всё забывают, хаб утомляет. Аудит кнопок, молчания, переменных и эха, цены, выбора между людьми."
 user-invocable: false
-allowed-tools: Bash(npm run story:*), Bash(npm run -s story:*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
   version: 1
 ---

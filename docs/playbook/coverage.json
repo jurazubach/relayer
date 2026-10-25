@@ -11,21 +11,9 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
-    "R-46": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": "все пределы ключами C-13"
-      }
-    },
-    "R-47": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": "окно 1–3 сообщения передано словами, без ключа"
-      }
+    "ashwell-standard-patterns:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
     "ashwell-standard-patterns:LESSON-07": {
       "status": "merged-into:maass-fire-in-fiction:LESSON-05",
@@ -35,9 +23,13 @@
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
     },
-    "ashwell-standard-patterns:contra-1": {
-      "status": "merged-into:emshort-structures:contra-3",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    "bateman-game-writing:contra-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "«и» источника прочитано как «одно из двух» — согласуется со второй фразой источника (запрещён выбор без реакции и без записи)"
+      }
     },
     "bateman-game-writing:GREEN-06": {
       "fidelity": {
@@ -71,6 +63,14 @@
         "note": "фон и биографии для команды сохранены"
       }
     },
+    "C-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "условие и правка сохранены"
+      }
+    },
     "choiceofgames-design:LESSON-07": {
       "status": "merged-into:maass-fire-in-fiction:LESSON-05",
       "note": "тот же спор/урок/нюанс; содержание влито в блок maass-fire-in-fiction:LESSON-05 (story-choices)"
@@ -78,6 +78,14 @@
     "choiceofgames-design:LESSON-11": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "choiceofgames-design:P-05#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
     },
     "choiceofgames-design:P-07": {
       "fidelity": {
@@ -95,6 +103,26 @@
         "note": ""
       }
     },
+    "choiceofgames-design:PAT-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
+      }
+    },
+    "cron-wired-for-story:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "числа «выбор раз в 100–200 слов, 400 — ошибка» опущены — тема стены текста у story-pace"
+      }
+    },
+    "dille-ultimate-guide:contra-3": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
     "dille-ultimate-guide:LESSON-05": {
       "fidelity": {
         "ok": true,
@@ -110,10 +138,6 @@
         "by": "review",
         "note": "цепочка документов сохранена; потеряна пометка источника «уверенность средняя»"
       }
-    },
-    "dille-ultimate-guide:contra-3": {
-      "status": "merged-into:choiceofgames-design:contra-2",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
     },
     "emshort-structures:RED-03": {
       "fidelity": {
@@ -131,24 +155,12 @@
         "note": ""
       }
     },
-    "inkle-ingold:P-02#нюанс": {
+    "F-08": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
-        "by": "review",
-        "note": ""
-      }
-    },
-    "inkle-ingold:PAT-05#нюанс": {
-      "status": "merged-into:inkle-ingold:P-12#нюанс",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок inkle-ingold:P-12#нюанс (story-choices)"
-    },
-    "inkle-ingold:PAT-06#нюанс": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": ""
+        "by": "W1",
+        "note": "«> 2 глав» передано ключом vars.silent_chapters"
       }
     },
     "inkle-ingold:contra-2": {
@@ -163,12 +175,64 @@
       "status": "merged-into:ashwell-standard-patterns:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:contra-2 (story-choices)"
     },
-    "mckee-story:P-10": {
+    "inkle-ingold:P-02#нюанс": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "basis model и уверенность сохранены"
+        "note": ""
+      }
+    },
+    "inkle-ingold:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
+    },
+    "inkle-ingold:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "без довода «знание о скрытой системе заставляет читать внимательнее» — не меняет правила"
+      }
+    },
+    "inkle-ingold:P-09#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
+    },
+    "inkle-ingold:P-14#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
+    },
+    "inkle-ingold:PAT-05#нюанс": {
+      "status": "merged-into:inkle-ingold:P-12#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок inkle-ingold:P-12#нюанс (story-choices)"
+    },
+    "inkle-ingold:PAT-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": ""
+      }
+    },
+    "maass-fire-in-fiction:RED-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "«ответ ≤ 2 слова» стал «короткий общий ответ» — признак группы без тел сохранён (C-10.group_bodyless)"
       }
     },
     "mckee-story:contra-1": {
@@ -183,52 +247,12 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
-    "meaningful-choice:LESSON-04": {
+    "mckee-story:P-10": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
-        "note": "класс C и вывод сохранены; вторая половина урока (хочет против должен) опущена"
-      }
-    },
-    "meaningful-choice:LESSON-08": {
-      "status": "merged-into:sheldon-character-storytelling:LESSON-09",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-09 (story-choices)"
-    },
-    "meaningful-choice:LESSON-12": {
-      "status": "merged-into:choiceofgames-design:LESSON-12",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
-    },
-    "meaningful-choice:P-09": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": "ориентир доли без ключа опущен"
-      }
-    },
-    "meaningful-choice:P-11#нюанс": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": ""
-      }
-    },
-    "meaningful-choice:PAT-01#нюанс": {
-      "status": "merged-into:meaningful-choice:P-09#нюанс",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-09#нюанс (story-choices)"
-    },
-    "meaningful-choice:PAT-04#нюанс": {
-      "status": "merged-into:meaningful-choice:P-11#нюанс",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-11#нюанс (story-choices)"
-    },
-    "meaningful-choice:PAT-09#нюанс": {
-      "fidelity": {
-        "ok": true,
-        "date": "2026-10-25",
-        "by": "review",
-        "note": ""
+        "note": "basis model и уверенность сохранены"
       }
     },
     "meaningful-choice:contra-1": {
@@ -247,13 +271,97 @@
       "status": "merged-into:schell-art-of-game-design:contra-6",
       "note": "тот же спор/урок/нюанс; содержание влито в блок schell-art-of-game-design:contra-6 (story-choices)"
     },
+    "meaningful-choice:LESSON-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс C и вывод сохранены; вторая половина урока (хочет против должен) опущена"
+      }
+    },
+    "meaningful-choice:LESSON-08": {
+      "status": "merged-into:sheldon-character-storytelling:LESSON-09",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-09 (story-choices)"
+    },
+    "meaningful-choice:LESSON-12": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "meaningful-choice:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
+    },
+    "meaningful-choice:P-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ориентир доли без ключа опущен"
+      }
+    },
+    "meaningful-choice:P-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено, добавлены исключения про паузу игры и сцену действия"
+      }
+    },
+    "meaningful-choice:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": ""
+      }
+    },
+    "meaningful-choice:PAT-01#нюанс": {
+      "status": "merged-into:meaningful-choice:P-09#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-09#нюанс (story-choices)"
+    },
+    "meaningful-choice:PAT-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
+      }
+    },
+    "meaningful-choice:PAT-04#нюанс": {
+      "status": "merged-into:meaningful-choice:P-11#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-11#нюанс (story-choices)"
+    },
+    "meaningful-choice:PAT-09#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": ""
+      }
+    },
     "messenger-genre:contra-5": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
     },
+    "messenger-genre:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "потеряна проверка ботом «первые реплики ответов не совпадают» — она есть в C-10; класс C верен"
+      }
+    },
     "mobile-interactive-stories:LESSON-05": {
       "status": "merged-into:choiceofgames-design:LESSON-12",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "narrative-postmortems:contra-2": {
+      "status": "merged-into:bateman-game-writing:contra-5",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
     },
     "narrative-postmortems:LESSON-14": {
       "fidelity": {
@@ -277,6 +385,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "80 Days, перепись как ожидаемая цена — сохранено"
+      }
+    },
+    "narrative-postmortems:PAT-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
       }
     },
     "narrative-postmortems:RED-05": {
@@ -303,9 +419,21 @@
         "note": ""
       }
     },
-    "narrative-postmortems:contra-2": {
-      "status": "merged-into:bateman-game-writing:contra-5",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    "narrative-testing:contra-2": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "narrative-testing:contra-3": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "narrative-testing:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "схема, цена, ловушка и исключение сохранены"
+      }
     },
     "narrative-testing:RED-02": {
       "fidelity": {
@@ -315,18 +443,6 @@
         "note": "порог ключом C-10.cosmetic_chapter"
       }
     },
-    "narrative-testing:contra-2": {
-      "status": "merged-into:choiceofgames-design:contra-2",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
-    },
-    "narrative-testing:contra-3": {
-      "status": "merged-into:emshort-structures:contra-3",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
-    },
-    "nicklin-writing-for-games:LESSON-09": {
-      "status": "merged-into:choiceofgames-design:LESSON-12",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
-    },
     "nicklin-writing-for-games:contra-1": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
@@ -334,6 +450,14 @@
     "nicklin-writing-for-games:contra-2": {
       "status": "merged-into:choiceofgames-design:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "nicklin-writing-for-games:LESSON-09": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "procedural-storytelling:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
     "procedural-storytelling:LESSON-07": {
       "fidelity": {
@@ -343,13 +467,37 @@
         "note": "оценка автора помечена как не замер"
       }
     },
-    "procedural-storytelling:contra-1": {
-      "status": "merged-into:emshort-structures:contra-3",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    "R-36": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "потеряно условие «ветку, куда попадёт меньше 1 из 10 игроков, держи короче 15 сообщений»; «длиннее трёх реплик» → «нескольких» без ключа"
+      }
     },
-    "schell-art-of-game-design:LESSON-07": {
-      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    "R-40": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "«больше четырёх записей» передано ключом C-02.ratio, как в checks.md; эхо флага «1–3 на главу» из спора — словами"
+      }
+    },
+    "R-46": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "все пределы ключами C-13"
+      }
+    },
+    "R-47": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "окно 1–3 сообщения передано словами, без ключа"
+      }
     },
     "schell-art-of-game-design:contra-4": {
       "fidelity": {
@@ -357,6 +505,22 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "окно сообщений без чисел и без ключа"
+      }
+    },
+    "schell-art-of-game-design:LESSON-07": {
+      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "sheldon-character-storytelling:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "sheldon-character-storytelling:contra-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "W1",
+        "note": "сохранено"
       }
     },
     "sheldon-character-storytelling:LESSON-05": {
@@ -374,10 +538,6 @@
         "by": "review",
         "note": ""
       }
-    },
-    "sheldon-character-storytelling:contra-1": {
-      "status": "merged-into:emshort-structures:contra-3",
-      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
     "skolnick-video-game-storytelling:LESSON-01": {
       "status": "merged-into:ashwell-standard-patterns:LESSON-08",

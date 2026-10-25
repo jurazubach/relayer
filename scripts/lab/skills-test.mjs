@@ -31,7 +31,7 @@ const DENY = [
   // node scripts/* разрешён ради линта и бота, но skills-test.mjs --json печатает ключ целиком
   'Bash(node scripts/lab/*)',
 ];
-const ALLOW = ['Read', 'Grep', 'Glob', 'Skill', 'Bash(npm run story:*)', 'Bash(npm run -s story:*)', 'Bash(node scripts/*)', 'Bash(node .claude/skills/*)'];
+const ALLOW = ['Read', 'Grep', 'Glob', 'Skill', 'Bash(npm run story*)', 'Bash(npm run -s story*)', 'Bash(node scripts/*)', 'Bash(node .claude/skills/*)'];
 
 const HELP = `npm run skills:test [-- флаги]
 
