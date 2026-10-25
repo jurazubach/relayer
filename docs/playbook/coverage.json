@@ -10,5 +10,154 @@
     },
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
-  "rows": {}
+  "rows": {
+    "ashwell-standard-patterns:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "ashwell-standard-patterns:LESSON-07": {
+      "status": "merged-into:maass-fire-in-fiction:LESSON-05",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок maass-fire-in-fiction:LESSON-05 (story-choices)"
+    },
+    "ashwell-standard-patterns:LESSON-14": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "choiceofgames-design:LESSON-07": {
+      "status": "merged-into:maass-fire-in-fiction:LESSON-05",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок maass-fire-in-fiction:LESSON-05 (story-choices)"
+    },
+    "choiceofgames-design:LESSON-11": {
+      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "dille-ultimate-guide:contra-3": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "inkle-ingold:contra-2": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "inkle-ingold:contra-3": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "inkle-ingold:contra-4": {
+      "status": "merged-into:ashwell-standard-patterns:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:contra-2 (story-choices)"
+    },
+    "inkle-ingold:PAT-05#нюанс": {
+      "status": "merged-into:inkle-ingold:P-12#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок inkle-ingold:P-12#нюанс (story-choices)"
+    },
+    "mckee-story:contra-2": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "meaningful-choice:contra-1": {
+      "status": "merged-into:bateman-game-writing:contra-5",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "meaningful-choice:contra-3": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "meaningful-choice:contra-5": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "meaningful-choice:contra-8": {
+      "status": "merged-into:schell-art-of-game-design:contra-6",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок schell-art-of-game-design:contra-6 (story-choices)"
+    },
+    "meaningful-choice:LESSON-08": {
+      "status": "merged-into:sheldon-character-storytelling:LESSON-09",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-09 (story-choices)"
+    },
+    "meaningful-choice:LESSON-12": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "meaningful-choice:PAT-01#нюанс": {
+      "status": "merged-into:meaningful-choice:P-09#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-09#нюанс (story-choices)"
+    },
+    "meaningful-choice:PAT-04#нюанс": {
+      "status": "merged-into:meaningful-choice:P-11#нюанс",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-11#нюанс (story-choices)"
+    },
+    "messenger-genre:contra-5": {
+      "status": "merged-into:bateman-game-writing:contra-5",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "mobile-interactive-stories:LESSON-05": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "narrative-postmortems:contra-2": {
+      "status": "merged-into:bateman-game-writing:contra-5",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "narrative-testing:contra-2": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "narrative-testing:contra-3": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "nicklin-writing-for-games:contra-1": {
+      "status": "merged-into:bateman-game-writing:contra-5",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "nicklin-writing-for-games:contra-2": {
+      "status": "merged-into:choiceofgames-design:contra-2",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:contra-2 (story-choices)"
+    },
+    "nicklin-writing-for-games:LESSON-09": {
+      "status": "merged-into:choiceofgames-design:LESSON-12",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок choiceofgames-design:LESSON-12 (story-choices)"
+    },
+    "procedural-storytelling:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "schell-art-of-game-design:LESSON-07": {
+      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "sheldon-character-storytelling:contra-1": {
+      "status": "merged-into:emshort-structures:contra-3",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
+    },
+    "sheldon-character-storytelling:LESSON-05": {
+      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "sheldon-character-storytelling:LESSON-07": {
+      "status": "merged-into:narrative-postmortems:LESSON-10",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок narrative-postmortems:LESSON-10 (story-choices)"
+    },
+    "skolnick-video-game-storytelling:LESSON-01": {
+      "status": "merged-into:ashwell-standard-patterns:LESSON-08",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:LESSON-08 (story-choices)"
+    },
+    "skolnick-video-game-storytelling:LESSON-02": {
+      "status": "merged-into:truby-anatomy-of-story:LESSON-01",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок truby-anatomy-of-story:LESSON-01 (story-choices)"
+    },
+    "skolnick-video-game-storytelling:LESSON-04": {
+      "status": "merged-into:narrative-postmortems:LESSON-10",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок narrative-postmortems:LESSON-10 (story-choices)"
+    },
+    "skolnick-video-game-storytelling:LESSON-07": {
+      "status": "merged-into:sheldon-character-storytelling:LESSON-03",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
+    },
+    "truby-anatomy-of-story:LESSON-02": {
+      "status": "merged-into:meaningful-choice:LESSON-04",
+      "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:LESSON-04 (story-choices)"
+    }
+  }
 }

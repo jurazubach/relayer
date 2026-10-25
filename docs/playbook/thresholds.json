@@ -7640,6 +7640,28 @@
       }
     ]
   },
+  "attn.echo.reply_msgs": {
+    "value": 3,
+    "unit": "сообщений от кнопки до видимого отклика на неё",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "docs/playbook/attention-merged.md #attn-min-choice",
+      "docs/playbook/attention-merged.md #attn-min-state"
+    ],
+    "checks": [
+      "C-04"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-choices",
+        "change": "заведён: «отклик не позже чем через 3 сообщения» из #attn-min-choice и #attn-min-state — число в нарезке attention.md скилла заменено ключом; своей проверки пока нет (ближайшая — C-04 по главам)"
+      }
+    ]
+  },
   "attn.chapter.blows": {
     "value": {
       "blows": 1,
