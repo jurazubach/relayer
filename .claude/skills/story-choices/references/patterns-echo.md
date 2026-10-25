@@ -114,8 +114,8 @@ VAR tone = ""
 === meet ===
 как тебя называть? #from:vera
 * [Ли #to:vera]
-* [Ника #to:vera]
-    ~ nick = "Ника"
+* [Зоя #to:vera]
+    ~ nick = "Зоя"
 - а что ты думаешь про всю эту историю? #from:vera #delay:20s
 * [Мне страшно, если честно #to:vera]
     ~ tone = "soft"
@@ -147,22 +147,22 @@ VAR tone = ""
 - basis: secondary (разговорные выборы рынка; отзвук вместо ветки) · ловит C-10 `C-10.cosmetic_chapter`.
 
 ```ink
-# contact: mira, Мира, amber
+# contact: ksenia, Ксения, amber
 VAR mood = ""
-мне кажется, за мной кто-то идёт #from:mira #delay:5s
-* [Где ты сейчас? #to:mira]
+мне кажется, за мной кто-то идёт #from:ksenia #delay:5s
+* [Где ты сейчас? #to:ksenia]
     ~ mood = "calm"
-    у аптеки на углу #from:mira #delay:10s
-* [Беги! #to:mira]
+    у аптеки на углу #from:ksenia #delay:10s
+* [Беги! #to:ksenia]
     ~ mood = "panic"
-    куда?? я на каблуках #from:mira #delay:6s
-* [Тебе кажется #to:mira]
+    куда?? я на каблуках #from:ksenia #delay:6s
+* [Тебе кажется #to:ksenia]
     ~ mood = "dismiss"
-    спасибо, очень помогает #from:mira #delay:15s
-- зашла в аптеку #from:mira #delay:2m
-{mood == "dismiss":он стоит у витрины. всё ещё кажется? #from:mira}
-{mood == "panic":отдышалась. от твоего «беги» было страшнее, чем от него #from:mira}
-{mood == "calm":спасибо за вопрос «где ты». стало легче #from:mira}
+    спасибо, очень помогает #from:ksenia #delay:15s
+- зашла в аптеку #from:ksenia #delay:2m
+{mood == "dismiss":он стоит у витрины. всё ещё кажется? #from:ksenia}
+{mood == "panic":отдышалась. от твоего «беги» было страшнее, чем от него #from:ksenia}
+{mood == "calm":спасибо за вопрос «где ты». стало легче #from:ksenia}
 -> END
 ```
 
@@ -177,22 +177,22 @@ VAR mood = ""
 - basis: model (жалобы тестеров на «рельсы», уверенность средняя).
 
 ```ink
-# contact: mira, Мира, teal
+# contact: ksenia, Ксения, teal
 VAR tone = ""
-его машина правда стояла у моста? #from:mira #delay:5s
-* [Да. Точно стояла #to:mira]
+его машина правда стояла у моста? #from:ksenia #delay:5s
+* [Да. Точно стояла #to:ksenia]
     ~ tone = "sure"
-    точно. запомнила #from:mira #delay:30s
-* [Кажется, да #to:mira]
+    точно. запомнила #from:ksenia #delay:30s
+* [Кажется, да #to:ksenia]
     ~ tone = "unsure"
-    «кажется» — это не «да» #from:mira #delay:40s
-* [Промолчать #to:mira #silent]
+    «кажется» — это не «да» #from:ksenia #delay:40s
+* [Промолчать #to:ksenia #silent]
     ~ tone = "silent"
-    ладно. потом #from:mira #delay:15m
-- скину это следователю #from:mira #delay:20s
-{tone == "sure":скажу, что свидетель надёжный #from:mira}
-{tone == "unsure":скажу, что свидетель сомневается. так честнее #from:mira}
-{tone == "silent":про тебя ничего не скажу #from:mira}
+    ладно. потом #from:ksenia #delay:15m
+- скину это следователю #from:ksenia #delay:20s
+{tone == "sure":скажу, что свидетель надёжный #from:ksenia}
+{tone == "unsure":скажу, что свидетель сомневается. так честнее #from:ksenia}
+{tone == "silent":про тебя ничего не скажу #from:ksenia}
 -> END
 ```
 
@@ -214,23 +214,23 @@ VAR tone = ""
 - basis: model · ловит C-03 `C-03.invisible`, C-04 `C-04.gap_warning`.
 
 ```ink
-# contact: mira, Мира, teal
+# contact: ksenia, Ксения, teal
 # contact: oleg, Олег, amber
 VAR told_oleg = false
 -> ch1
 === ch1 ===
-олег спрашивает, где я была ночью #from:mira
-* [Она была дома. Всю ночь #to:oleg #label:Прикрыть Миру]
+олег спрашивает, где я была ночью #from:ksenia
+* [Она была дома. Всю ночь #to:oleg #label:Прикрыть Ксению]
     ~ told_oleg = true
-* [Не вмешиваться #to:mira #silent]
+* [Не вмешиваться #to:ksenia #silent]
 - -> ch2
 === ch2 ===
-День 2 #sys:mira #chapter
+День 2 #sys:ksenia #chapter
 {told_oleg:
-    олег сегодня со мной не здоровается #from:mira #delay:2h
+    олег сегодня со мной не здоровается #from:ksenia #delay:2h
     что было в твоём сообщении?
 - else:
-    олег спрашивал ещё раз. я соврала сама #from:mira #delay:2h
+    олег спрашивал ещё раз. я соврала сама #from:ksenia #delay:2h
 }
 -> END
 ```

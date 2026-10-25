@@ -18,28 +18,28 @@
 - basis: checked (руководство ink) · ловит C-19 `C-19.no_exit`.
 
 ```ink
-# contact: lev, Лев, teal
+# contact: arseny, Арсений, teal
 VAR asked = 0
 -> hub
 === hub ===
-* (where) [А ночью ты где? #to:lev]
+* (where) [А ночью ты где? #to:arseny]
     ~ asked += 1
-    дома. как обычно #from:lev #delay:30s
+    дома. как обычно #from:arseny #delay:30s
     -> hub
-* (who) [Кто ещё знает про сорок третью? #to:lev]
+* (who) [Кто ещё знает про сорок третью? #to:arseny]
     ~ asked += 1
-    консьержка. и ты #from:lev #delay:30s
+    консьержка. и ты #from:arseny #delay:30s
     -> hub
-* (key) [У кого ключ? #to:lev]
+* (key) [У кого ключ? #to:arseny]
     ~ asked += 1
-    у управдома. и, похоже, не только #from:lev #delay:40s
+    у управдома. и, похоже, не только #from:arseny #delay:40s
     -> hub
-+ {asked >= 2} [Хватит. Ясно #to:lev #silent]
++ {asked >= 2} [Хватит. Ясно #to:arseny #silent]
     -> after
 * -> after
 === after ===
-{hub.key:ключ — это важно. запомни #from:lev}
-ладно, мне пора #from:lev #delay:10s
+{hub.key:ключ — это важно. запомни #from:arseny}
+ладно, мне пора #from:arseny #delay:10s
 -> END
 ```
 
@@ -104,7 +104,7 @@ VAR asked_cam = false
 - basis: checked · ловит C-15 `C-15.rare_button`.
 
 ```ink
-# contact: lev, Лев, teal
+# contact: arseny, Арсений, teal
 # contact: baba, Соседка, amber
 VAR heard_tapping = false
 -> optional
@@ -113,16 +113,16 @@ VAR heard_tapping = false
     кто это? #from:baba #delay:1h
     а, из сорок первой. по ночам в сорок третьей стучат. по батарее #from:baba #delay:30s
     ~ heard_tapping = true
-* [Не отвлекаться #to:lev #silent]
+* [Не отвлекаться #to:arseny #silent]
 - -> climax
 === climax ===
-он говорит, в сорок третьей пусто #from:lev #delay:30s
-* {heard_tapping} [Там стучат по ночам. Соседка слышала #to:lev #label:Сказать про стук]
-    тогда я поднимаюсь #from:lev #delay:20s
-* [Поверь и иди домой #to:lev]
-    иду #from:lev #delay:20s
-* [Промолчать #to:lev #silent]
-    ладно. сам разберусь #from:lev #delay:15m
+он говорит, в сорок третьей пусто #from:arseny #delay:30s
+* {heard_tapping} [Там стучат по ночам. Соседка слышала #to:arseny #label:Сказать про стук]
+    тогда я поднимаюсь #from:arseny #delay:20s
+* [Поверь и иди домой #to:arseny]
+    иду #from:arseny #delay:20s
+* [Промолчать #to:arseny #silent]
+    ладно. сам разберусь #from:arseny #delay:15m
 - -> END
 ```
 
@@ -212,15 +212,15 @@ VAR sam_alibi = false
 - basis: secondary · ловит C-15.
 
 ```ink
-# contact: mira, Мира, amber
+# contact: ksenia, Ксения, amber
 VAR mira_trust = 2
-ты завтра придёшь? #from:mira #delay:5s
-* {mira_trust >= 2} [Приду. И есть новость из архива #to:mira]
-    стоп. архив? и что там? #from:mira #delay:8s
-    тогда слушай. я никому этого не говорила #from:mira #delay:20s
-    у отца был второй телефон #from:mira #delay:30s
-* [Приду #to:mira]
-- ок. до завтра #from:mira #delay:10s
+ты завтра придёшь? #from:ksenia #delay:5s
+* {mira_trust >= 2} [Приду. И есть новость из архива #to:ksenia]
+    стоп. архив? и что там? #from:ksenia #delay:8s
+    тогда слушай. я никому этого не говорила #from:ksenia #delay:20s
+    у отца был второй телефон #from:ksenia #delay:30s
+* [Приду #to:ksenia]
+- ок. до завтра #from:ksenia #delay:10s
 -> END
 ```
 

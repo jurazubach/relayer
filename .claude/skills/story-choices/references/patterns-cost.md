@@ -164,23 +164,23 @@ VAR risk = false
 - basis: secondary (блогер о трении между собеседниками) · правило — R-49, `people-choice.md`.
 
 ```ink
-# contact: lev, Лев, teal
+# contact: arseny, Арсений, teal
 # contact: dasha, Даша, amber
 VAR side = ""
-не отдавай ей флешку #from:lev #delay:5s
+не отдавай ей флешку #from:arseny #delay:5s
 она сольёт всё в общий чат #delay:4s
 флешка у тебя? #from:dasha #delay:1m
 лев против, да? #delay:5s
-* [Лев просит подождать #to:dasha]
-    ~ side = "lev"
+* [Арсений просит подождать #to:dasha]
+    ~ side = "arseny"
     тогда без меня #from:dasha #delay:40s
 * [Скидываю тебе, Даша #to:dasha]
     ~ side = "dasha"
     спасибо. только ему не говори #from:dasha #delay:30s
-* [Что мне ей сказать? #to:lev]
+* [Что мне ей сказать? #to:arseny]
     ~ side = "ask"
-    скажи, что флешки нет #from:lev #delay:20s
-- {side == "dasha":значит, флешка у неё #from:lev #delay:2h}
+    скажи, что флешки нет #from:arseny #delay:20s
+- {side == "dasha":значит, флешка у неё #from:arseny #delay:2h}
 -> END
 ```
 

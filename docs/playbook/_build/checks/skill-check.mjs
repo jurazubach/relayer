@@ -75,6 +75,25 @@ for (const f of refs) {
 }
 if (STORY.test(body)) err('SKILL.md: упоминает наши истории');
 
+// Имена героев наших историй и основы мутантов не должны попадать в примеры: примеры придумываются заново,
+// иначе скилл тянет за собой конкретную историю, а мутант-основа узнаётся «по знакомому имени».
+const GENERIC = new Set(['Вы', 'Ты', 'Неизвестный', 'Номер', 'Сержант']);
+const heroNames = [];
+for (const d of [...(existsSync('src/stories') ? readdirSync('src/stories').map((x) => join('src/stories', x)) : []), 'docs/lab/mutants/_base']) {
+  try {
+    const m = JSON.parse(readFileSync(join(d, 'meta.json'), 'utf8'));
+    for (const c of m.characters ?? []) {
+      if (c.service) continue;
+      for (const w of String(c.name ?? '').split(/\s+/)) if (w.length >= 3 && /^[А-ЯЁ]/.test(w) && !GENERIC.has(w)) heroNames.push([w, d]);
+    }
+  } catch {}
+}
+for (const f of [skillMd, ...refs]) {
+  const t = readFileSync(f, 'utf8');
+  const hit = heroNames.filter(([w]) => new RegExp(`(?<![А-Яа-яЁё])${w}(?:[аеиоуыяюйь]{0,2})(?![А-Яа-яЁё])`).test(t));
+  if (hit.length) warn(`${f}: имена героев наших историй или основы мутантов: ${[...new Set(hit.map(([w, d]) => `${w} (${d.split('/').pop()})`))].join(', ')} — придумай свои`);
+}
+
 // примеры ink компилируются
 let Compiler = null;
 try { Compiler = createRequire(join(process.cwd(), 'package.json'))('inkjs/full').Compiler; } catch { warn('inkjs не найден — примеры ink не проверены'); }

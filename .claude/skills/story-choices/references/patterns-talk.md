@@ -18,19 +18,19 @@
 - basis: secondary (разбор Макки для интерактивной литературы) · урок — `mckee-story:LESSON-01`.
 
 ```ink
-# contact: nika, Ника, teal
+# contact: zoya, Зоя, teal
 # contact: taxi, Такси, grey
 VAR owes = false
-он стоит под окном уже час #from:nika
-можно я к тебе? прямо сейчас #from:nika #delay:20s
-* [Приезжай. Я закажу тебе такси #to:nika #label:Позвать Нику к себе]
+он стоит под окном уже час #from:zoya
+можно я к тебе? прямо сейчас #from:zoya #delay:20s
+* [Приезжай. Я закажу тебе такси #to:zoya #label:Позвать Зою к себе]
     ~ owes = true
     Такси ожидает у подъезда. #from:taxi #delay:2m
-    я в машине #from:nika #delay:1m
-    водитель спросил, к тебе ли я. по имени #from:nika #delay:40s
-* [Запрись и вызови полицию #to:nika #label:Оставить Нику дома]
-    вызвала. сказали, стоять под окном не запрещено #from:nika #delay:6m
-    он ушёл. но дверь подъезда теперь открыта #from:nika #delay:3m
+    я в машине #from:zoya #delay:1m
+    водитель спросил, к тебе ли я. по имени #from:zoya #delay:40s
+* [Запрись и вызови полицию #to:zoya #label:Оставить Зою дома]
+    вызвала. сказали, стоять под окном не запрещено #from:zoya #delay:6m
+    он ушёл. но дверь подъезда теперь открыта #from:zoya #delay:3m
 - -> END
 ```
 
@@ -54,20 +54,20 @@ VAR owes = false
 - basis: secondary.
 
 ```ink
-# contact: lev, Лев, teal
+# contact: arseny, Арсений, teal
 -> ask
 === ask ===
-мне нужна фотка двора. любая #from:lev
-* [Сейчас выйду и сфоткаю #to:lev #label:Пообещать фото]
-* [Зачем тебе? #to:lev]
-    просто. для сравнения #from:lev #delay:20s
-- стой #from:lev #delay:40s
-не выходи #from:lev #delay:3s
-у тебя под окном серая машина? #from:lev #delay:10s
-* [Есть какая-то #to:lev]
-* [Откуда ты знаешь? #to:lev]
-- это не для двора #from:lev #delay:30s
-это чтобы понять, следят ли за тобой #from:lev
+мне нужна фотка двора. любая #from:arseny
+* [Сейчас выйду и сфоткаю #to:arseny #label:Пообещать фото]
+* [Зачем тебе? #to:arseny]
+    просто. для сравнения #from:arseny #delay:20s
+- стой #from:arseny #delay:40s
+не выходи #from:arseny #delay:3s
+у тебя под окном серая машина? #from:arseny #delay:10s
+* [Есть какая-то #to:arseny]
+* [Откуда ты знаешь? #to:arseny]
+- это не для двора #from:arseny #delay:30s
+это чтобы понять, следят ли за тобой #from:arseny
 -> END
 ```
 
