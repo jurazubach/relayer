@@ -36,9 +36,14 @@ npm run test:e2e:ui         # интерактивный режим Playwright
 npm run prompt              # пересобрать промпт для генерации историй из реестра возможностей
 npm run story:coverage      # покрытие знаний скиллами: строки базы и свода, владельцы, L0–L3 (-- --help)
 npm run test:coverage       # самопроверка story:coverage
+npm run kb:clean            # очищенная копия базы docs/books/_clean/ (не в git) без строк про наши истории; -- --verify
+npm run test:kb:clean       # самопроверка kb:clean
+npm run lab:triggers        # тест срабатывания скиллов: claude -p на фразу (-- --skill <имя>, --dry-run); тратит запуски Opus
+npm run test:lab:triggers   # самопроверка lab:triggers
+npm run test:hooks          # самопроверка хуков .claude/settings.json (scripts/hooks)
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary && npm run test:hooks`.
 
 ### Playwright
 
@@ -111,6 +116,11 @@ scripts/story-pack.mjs     story:pack / story:unpack: папка истории 
 scripts/story-graph.mjs    карта сюжета: разбор ink в граф + шаблон story-graph.html
 scripts/lint/              story:lint: проверки checks/C-NN.mjs, журнал бота, подавление // намеренно:, владелец из owners.md
 docs/playbook/thresholds.json  единственное место чисел и порогов (проверки, словари, внимание, стиль, боты, скиллы)
+docs/style.md              стиль повествования: код-стайл историй (ST-NN), образцы SG-NN и антиобразцы AS-NN
+scripts/kb/                база знаний: kb:clean (очистка входа), story:coverage, кластеры
+scripts/hooks/             хуки Claude Code: проверка после правки src/stories, статус при старте; full.mjs — полный прогон главы
+scripts/lab/               эксперименты: lab:triggers, skills:test и сборка мутантов
+docs/lab/                  журнал экспериментов, baseline.md, runs/, мутанты, фразы срабатывания, cases/ (кейсы наших историй, руками не править)
 e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки), fixture.ts (загрузка фикстуры)
 ```
 

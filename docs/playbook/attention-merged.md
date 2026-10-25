@@ -463,7 +463,7 @@
 
 > Владельца каждого раздела закрепляет `owners.md` §6; здесь — какие скиллы раздел берут к себе.
 
-Кто какие разделы берёт в `references/attention.md` (по `build-plan.md` §5 и `flow-review.md` §C). Окончательно владельцев закрепит `owners.md` (T-10).
+Кто какие разделы берёт в `references/attention.md` (по `build-plan.md` §5 и `flow-review.md` §C). Владельцев закрепил `owners.md` §6 (T-10).
 
 | якорь | скиллы |
 |---|---|
