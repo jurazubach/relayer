@@ -10,5 +10,102 @@
     },
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
-  "rows": {}
+  "rows": {
+    "bateman-game-writing:GREEN-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "цель сохранена, способ по A-06/R-39"
+      }
+    },
+    "bateman-game-writing:LESSON-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "граф хребта, нити, проверка второго автора сохранены"
+      }
+    },
+    "bateman-game-writing:P-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "механизм сохранён; способ (комментарии VAR и над узлами) заменён A-06 явно"
+      }
+    },
+    "bateman-game-writing:P-08#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "фон и биографии для команды сохранены"
+      }
+    },
+    "dille-ultimate-guide:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "тон и ставки, эталон первой главы; срок паузы честно помечен отменённым A-01"
+      }
+    },
+    "dille-ultimate-guide:SYS-1": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "цепочка документов сохранена; потеряна пометка источника «уверенность средняя»"
+      }
+    },
+    "narrative-postmortems:LESSON-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "перепись целиком vs правка, масштаб 5-10 реплик сохранён"
+      }
+    },
+    "narrative-postmortems:P-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "механика и проверка (ключи порогов) сохранены; basis: checked в decisions-desk относится к замеру, не к правилу"
+      }
+    },
+    "narrative-postmortems:P-07#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "80 Days, перепись как ожидаемая цена — сохранено"
+      }
+    },
+    "narrative-postmortems:RED-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл, причина и починка сохранены; KOT заменён примером Reigns из P-07"
+      }
+    },
+    "procedural-storytelling:LESSON-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "оценка автора помечена как не замер"
+      }
+    },
+    "truby-anatomy-of-story:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "перепроверка глав целиком при смене каркаса сохранена"
+      }
+    }
+  }
 }

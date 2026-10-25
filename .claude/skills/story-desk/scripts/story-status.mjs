@@ -20,11 +20,11 @@ const CYCLE = {
   'chapters:1-2': { skill: 'story-review', done: 'отчёт ревью в reviews/<дата>.md, автор отметил, что чинить', next: 'review' },
   review: { skill: 'story-fix', done: 'одобренные правки применены, lint до и после', next: 'fix' },
   fix: { skill: 'story-time → story-playtest', done: 'оба режима проверены, напоминания; комплект для тестеров собран', next: 'playtest:wave1' },
-  'playtest:wave1': { skill: 'story-playtest → story-fix, затем story-desk + story-plan (Б-1)', done: 'сводка волны, правки по ней, план сверен с тестом (новая версия плана)', next: 'chapters:3-N' },
-  'chapters:3-N': { skill: 'chapter-write', done: 'все главы, beta_stop снят; ранние главы сверены с поздними (stale-check)', next: 'review:full' },
-  'review:full': { skill: 'story-review → story-fix', done: 'полное ревью без --partial, P1 закрыты', next: 'playtest:wave2' },
-  'playtest:wave2': { skill: 'story-playtest', done: 'вторая волна, свежие люди на начало', next: 'release' },
-  release: { skill: 'story-release', done: 'гейт выпуска пройден, ревизия и тег <id>-rN', next: null },
+  'playtest:wave1': { skill: 'story-fix (Б-2) → story-desk + story-plan (Б-1) → chapter-write', done: 'правки по сводке, план сверен с тестом (новая версия), все главы написаны, beta_stop снят, ранние сверены с поздними (stale-check)', next: 'chapters:3-N' },
+  'chapters:3-N': { skill: 'story-review → story-fix', done: 'полное ревью без --partial, P1 закрыты', next: 'review:full' },
+  'review:full': { skill: 'story-playtest', done: 'вторая волна, свежие люди на начало', next: 'playtest:wave2' },
+  'playtest:wave2': { skill: 'story-release', done: 'гейт выпуска пройден, ревизия и тег <id>-rN', next: 'release' },
+  release: { skill: 'story-release (следующая ревизия)', done: '—', next: null },
 };
 const stepKey = (s) => (CYCLE[s] ? s : /^chapters:\d+-(\d+|N)$/.test(s) ? (s === 'chapters:1-2' ? s : 'chapters:3-N') : /^playtest:wave\d+$/.test(s) ? (s === 'playtest:wave1' ? s : 'playtest:wave2') : null);
 
@@ -108,8 +108,12 @@ runCli(HELP, async (args) => {
     const made = [];
     mkdirSync(d, { recursive: true });
     const tpl = readFileSync(join(ROOT, 'scripts/story/templates/STATUS.md'), 'utf8');
+    // шаблон ставит «активная: да»; вторая заведённая история активной не становится — переключает --activate
+    const othersActive = (readStates(dir) ?? []).some((s) => s.id !== id && s.status?.active);
+    let status = setStatusField(setStatusField(setStatusField(tpl.replace('<id>', id), 'ведёт', args.get('lead', 'автор')), 'шаг', args.get('step', 'idea')), 'обновлено', today());
+    if (othersActive) status = setStatusField(status, 'активная', 'нет');
     const files = {
-      'STATUS.md': setStatusField(setStatusField(setStatusField(tpl.replace('<id>', id), 'ведёт', args.get('lead', 'автор')), 'шаг', args.get('step', 'idea')), 'обновлено', today()),
+      'STATUS.md': status,
       'decisions.md': `# Решения · ${id}\n`,
       'ideas.md': `# Идеи · ${id}\n`,
     };
