@@ -12,6 +12,7 @@
   "disableClaudeAiConnectors": true,
   "permissions": {
     "allow": [
+      "Skill",
       "Bash(npm run story*)",
       "Bash(npm run -s story*)",
       "Bash(npm run check:story*)",
