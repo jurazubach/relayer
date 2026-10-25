@@ -20,8 +20,9 @@ const HELP = `Покрытие знаний: какие единицы базы 
   npm run story:coverage -- --skill story-choices      часть матрицы для скилла
   npm run story:coverage -- --skill story-choices --min L2
                                                        код выхода 1, если кластер скилла ниже уровня
-  npm run story:coverage -- --sources story-choices [--write]
-                                                       sources.md скилла (--write — в references/sources.md)
+  npm run story:coverage -- --sources story-choices [--write] [--compact]
+                                                       sources.md скилла (--write — в references/sources.md;
+                                                       --compact — ID строками по кластеру TH, без названий и путей)
   npm run story:coverage -- --affected <ID>            кого задевает правка: строка, R/C/F, TH-NN, K-…, алиас
   npm run story:coverage -- --fidelity-sample story-choices 20 [--seed N]
                                                        случайные пары «источник ↔ reference» для ревьюера
@@ -33,6 +34,8 @@ const HELP = `Покрытие знаний: какие единицы базы 
 
 Флаги:
   --json            вывод в JSON
+  --compact         для --sources: ID через « · » по кластеру TH, нюансы отдельными строками — у большого
+                    скилла полный список длиннее skill.reference.max_lines
   --min L0..L3      порог для --skill
   --seed N          зерно выборки --fidelity-sample
   --skills-dir DIR  где искать скиллы (по умолчанию .claude/skills)
@@ -405,17 +408,22 @@ function printSkill(p) {
   return out.join('\n');
 }
 
-export function sourcesMd(res, skill) {
+// Ширина строки компактного списка: длиннее — строки диффа и превью уходят за экран.
+const COMPACT_WIDTH = 130;
+
+export function sourcesMd(res, skill, { compact = false } = {}) {
   const rows = res.matrix.filter((x) => x.owner_skill === skill).sort((a, b) => byId(a.target ?? '', b.target ?? '') || byId(a.cluster, b.cluster) || byId(a.id, b.id));
   const unit = (th) => res.kb.units.get(th);
   const lines = [
     `# Источники \`${skill}\``,
     '',
-    `Сгенерировано \`npm run story:coverage -- --sources ${skill} --write\`, руками не править. Список ID — это`,
-    'уровень L1, а не покрытие: строка покрыта, когда в reference есть блок с её ID в заголовке (L2) или',
-    'знание исполняемо (L3). Отменённое (`superseded`) не переносится; «частично» — берётся часть «в силе»',
-    '(`docs/playbook/superseded.md`).',
+    `Сгенерировано \`npm run story:coverage -- --sources ${skill} --write${compact ? ' --compact' : ''}\`, руками не править.`,
+    ...(compact ? ['Компактная форма: ID сгруппированы по кластеру TH, без названий и путей; нюансы — отдельными строками.'] : []),
+    'Список ID — это уровень L1, а не покрытие: строка покрыта, когда в reference есть блок с её ID в заголовке',
+    '(L2) или знание исполняемо (L3). Отменённое (`superseded`) не переносится; «частично» — берётся часть',
+    '«в силе» (`docs/playbook/superseded.md`).',
   ];
+  if (compact) return lines.concat(compactBody(rows, unit)).join('\n') + '\n';
   let file = null;
   let th = null;
   for (const x of rows) {
@@ -434,6 +442,39 @@ export function sourcesMd(res, skill) {
     lines.push(`- \`${x.id}\` ${x.title ? `— ${x.title}` : ''} (\`${x.source}\`${cl})${st}`);
   }
   return lines.join('\n') + '\n';
+}
+
+/** Тело компактного sources.md: файл → кластер TH → строки ID через « · ». */
+function compactBody(rows, unit) {
+  const files = new Map();
+  for (const x of rows) {
+    const f = (x.target ?? '—').replace(/#.*$/, '');
+    if (!files.has(f)) files.set(f, new Map());
+    // кластеры одного TH в файле идут вперемешку с другими — собираем TH в одну группу по первому появлению
+    const groups = files.get(f);
+    const key = x.th ?? '';
+    if (!groups.has(key)) groups.set(key, []);
+    const st = x.status !== 'used' ? ` (${x.status.replace(/^merged-into:/, 'влит в ')})` : x.partial ? ` (частично отменено ${x.partial})` : '';
+    groups.get(key).push(`\`${x.id}\`${st}`);
+  }
+  const out = [];
+  for (const [f, groups] of files) {
+    out.push('', `## ${f}`);
+    for (const [th, items] of groups) {
+      out.push('', th ? `**${th} · ${unit(th)?.topic ?? ''}:**` : '**без кластера TH:**');
+      // строка со словом «нюанс» целиком читается как нюансы (kb-levels.mjs, headingIds) — нюансы не смешиваем с прочими
+      const nuance = items.filter((s) => /нюанс/i.test(s));
+      for (const part of [items.filter((s) => !/нюанс/i.test(s)), nuance]) {
+        let cur = '';
+        for (const s of part) {
+          if (cur && (cur + ' · ' + s).length > COMPACT_WIDTH) out.push(cur), (cur = s);
+          else cur = cur ? `${cur} · ${s}` : s;
+        }
+        if (cur) out.push(cur);
+      }
+    }
+  }
+  return out;
 }
 
 export function affected(res, query) {
@@ -567,7 +608,7 @@ function parseArgs(argv) {
   return a;
 }
 
-const KNOWN = ['--summary', '--skill', '--min', '--sources', '--write', '--affected', '--fidelity-sample', '--seed', '--owners-check', '--unowned', '--build-clusters', '--check', '--record', '--json', '--skills-dir', '--fresh', '--help', '-h'];
+const KNOWN = ['--summary', '--skill', '--min', '--sources', '--write', '--compact', '--affected', '--fidelity-sample', '--seed', '--owners-check', '--unowned', '--build-clusters', '--check', '--record', '--json', '--skills-dir', '--fresh', '--help', '-h'];
 
 export function main(argv, paths = PATHS) {
   const a = parseArgs(argv);
@@ -617,7 +658,7 @@ export function main(argv, paths = PATHS) {
   }
   if (a['--sources']) {
     const s = needSkill(a['--sources']);
-    const text = sourcesMd(res, s);
+    const text = sourcesMd(res, s, { compact: Boolean(a['--compact']) });
     if (a['--write']) {
       const out = join(paths.skills, s, 'references', 'sources.md');
       mkdirSync(dirname(out), { recursive: true });
