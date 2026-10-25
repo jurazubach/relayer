@@ -8,7 +8,7 @@ const HELP = `node scripts/hooks/post-edit.mjs < вход-хука.json
 
 Хук PostToolUse из .claude/settings.json. Читает JSON хука со stdin и, если правка задела
 src/stories/<id>/ (Write, Edit, MultiEdit — по tool_input.file_path; Bash — по git status
-src/stories), гоняет быстрый режим: check:story по истории и story:lint --changed --quick.
+src/stories), гоняет быстрый режим: check:story по истории и story:lint --changed --quick --summary.
 Модели возвращает короткий отчёт в hookSpecificOutput.additionalContext: новые ошибки целиком,
 о прежних — только число. Полный отчёт — node scripts/hooks/full.mjs <id>.
 
@@ -63,7 +63,7 @@ function report(res) {
     old ? `прежних ${old} (уже сообщалось)` : null,
     fixed ? `исправлено ${fixed}` : null,
     res.compiled ? `предупреждений lint ${c.warning - loud.filter((f) => f.level === 'warning').length}, подсказок ${c.hint}` : null,
-  ].filter(Boolean).join(' · ');
+  ].filter(Boolean).join(' · ') + (res.byCheck ? `\n  story:lint --summary, ${res.byCheck}` : '');
 
   // ошибки компиляции повторяем каждый раз: пока история не собирается, остальные проверки молчат
   if (!res.compiled) {

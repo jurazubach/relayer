@@ -8,7 +8,7 @@ import { tmpdir } from 'node:os';
 import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, record, clustersFileContent, ownerDups, PATHS } from './coverage.mjs';
 import { statusError } from './kb-status.mjs';
 import { parseOpora } from './kb-owners.mjs';
-import { aliasResolver } from './kb-rows.mjs';
+import { aliasResolver, plain } from './kb-rows.mjs';
 
 const LONG = 'Смотритель переправы отвечает только на прямой вопрос, а паромщик молчит до третьего гудка. ';
 
@@ -416,6 +416,10 @@ test('сводка падает, если строка без владельца
   } finally {
     f.done();
   }
+});
+
+test('текст строки: «_» внутри ключа остаётся, курсив снимается', () => {
+  assert.equal(plain('до 48 ч (`story.length.target_h`), _курсив_ и **жирный**'), 'до 48 ч ( story.length.target_h ), курсив и жирный');
 });
 
 test('опора: короткие алиасы, диапазоны, ×30, «кроме», системы', () => {

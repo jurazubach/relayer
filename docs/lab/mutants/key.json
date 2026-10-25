@@ -153,16 +153,12 @@
     {
       "id": "m10-absence-reproach",
       "zone": "story-time",
-      "check": "C-32",
+      "check": "C-47",
       "node": "ch3",
       "broken": "после паузы, которую поставила сама история, Ника упрекает игрока за отсутствие («ты где пропала?»), без связи с #silent",
-      "lint": [
-        "C-47"
-      ],
-      "lint_auto": false,
-      "lint_why": "упрёк на пути «неотвечающего» — п. 7 C-32, он ждёт E-02 (напоминания); сам упрёк ловит C-47",
+      "lint": [],
+      "lint_auto": true,
       "catches": [
-        "C-32",
         "C-47"
       ],
       "path": "docs/lab/mutants/m10-absence-reproach"

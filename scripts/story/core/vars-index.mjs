@@ -2,6 +2,7 @@
 // Запись — `~ x =`, `+=`, `-=`, `++`, `--`; чтение — всё остальное: условия, подстановки, правые части, аргументы.
 import { walk } from '../../lib/ink.mjs';
 import { finalNodes } from './graph.mjs';
+import { threshold } from '../../lib/thresholds.mjs';
 
 const TOKEN = /[\p{L}\p{N}_]+(?:\.[\p{L}\p{N}_]+)*(\s*\()?/gu;
 const WRITE = /^(temp\s+)?([\p{L}\p{N}_]+)\s*(\+\+|--|[+\-*/]?=(?!=))\s*(.*)$/u;
@@ -142,6 +143,7 @@ export function varIndex(tree) {
 
   const { final, distributors } = finalNodes(tree);
   const lastChapter = Math.max(0, ...tree.knots.map((k) => k.chapter ?? 0));
+  const silent = threshold('vars.silent_chapters');
   const out = [...rows.values()].map((r) => {
     // производные: «y пишется внутри условия на x» — чтение y засчитывается и x (одна ступень)
     const viaFeeds = [...r.feeds].flatMap((y) => rows.get(y).reads.map((rd) => ({ ...rd, via: rd.via ?? y })));
@@ -155,6 +157,11 @@ export function varIndex(tree) {
     if (reads.length && !visible.length) flags.push('невидимая');
     const early = r.writes.some((w) => (w.chapter ?? 0) < lastChapter);
     if (reads.length && early && reads.every((x) => final.has(x.node) || distributors.has(x.node) || (x.chapter ?? 0) >= lastChapter)) flags.push('только финал');
+    // «молчит» (skills.md K-02): между первой записью и первым чтением после неё больше vars.silent_chapters глав —
+    // к чтению игрок уже не помнит, что выбирал
+    const fw = minCh(r.writes);
+    const fr = minCh(reads.filter((x) => (x.chapter ?? 0) >= fw));
+    if (fw != null && fr != null && fr - fw > silent) flags.push('молчит');
     return {
       name: r.name, init: r.init, writes: r.writes, reads, ownReads: r.reads.length,
       visibleReads: visible.length, hiddenReads: reads.length - visible.length,

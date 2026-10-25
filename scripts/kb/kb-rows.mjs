@@ -52,7 +52,8 @@ function sectionEnd(lines, i) {
 
 const body = (lines, from, to) => lines.slice(from, to).map((l) => l.line).join('\n').trim();
 const clip = (s, n = 400) => (s.length > n ? s.slice(0, n).replace(/\s+\S*$/, '') + '…' : s);
-const plain = (s) => s.replace(/[*_`#>|]/g, ' ').replace(/\s+/g, ' ').trim();
+// «_» внутри слова — часть ключа (story.length.target_h), разметка курсива — только «_» на краю слова
+export const plain = (s) => s.replace(/[*`#>|]|(?<![\p{L}\p{N}])_|_(?![\p{L}\p{N}])/gu, ' ').replace(/\s+/g, ' ').trim();
 
 /** «Суть» записи: строка «**Суть:**» или первый абзац тела. */
 function gist(text) {

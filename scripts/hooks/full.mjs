@@ -26,17 +26,13 @@ let ids = argv.filter((a) => !a.startsWith('--'));
 const missing = ids.filter((id) => !storyExists(id));
 if (missing.length) { console.error(`full: нет истории ${missing.join(', ')} в src/stories`); process.exit(2); }
 if (!ids.length) ids = changedSince({}, storySnapshot() ?? {});
-if (!ids.length) {
-  if (flags.has('--json')) console.log(JSON.stringify({ ok: true, stories: [] }));
-  else console.log('full: изменённых историй нет — укажи id: node scripts/hooks/full.mjs <id>');
-  process.exit(0);
-}
-
 const results = ids.map((id) => checkStory(id, { quick: false }));
 const errors = results.reduce((s, r) => s + counts(r.findings).error, 0);
 
 if (flags.has('--json')) {
   console.log(JSON.stringify({ ok: errors === 0, stories: results.map((r) => ({ ...r, counts: counts(r.findings) })) }, null, 2));
+} else if (!ids.length) {
+  console.log('full: изменённых историй нет — укажи id: node scripts/hooks/full.mjs <id>');
 } else {
   console.log(results.map(format).join('\n\n'));
 }

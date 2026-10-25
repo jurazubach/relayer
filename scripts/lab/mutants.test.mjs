@@ -41,11 +41,12 @@ test('набор: размер, поля, зоны и проверки сход�
 });
 
 test('набор: дефекты из задачи T-13 все на месте', () => {
-  const want = ['C-24', 'C-01', 'C-06', 'C-35', 'C-42', 'C-45', 'C-21', 'C-27', 'C-32', 'C-40', 'C-54', 'C-10', 'C-26', 'C-44', 'C-49', 'C-20', 'C-39'];
+  const want = ['C-24', 'C-01', 'C-06', 'C-35', 'C-42', 'C-45', 'C-21', 'C-27', 'C-32', 'C-40', 'C-54', 'C-10', 'C-26', 'C-44', 'C-49', 'C-20', 'C-39', 'C-47'];
   const have = new Set(MUTANTS.map((m) => m.check));
   assert.deepEqual(want.filter((c) => !have.has(c)), []);
-  // три дефекта времени (утро, упрёк, напоминание) меряет одна C-32
-  assert.equal(MUTANTS.filter((m) => m.check === 'C-32').length, 3);
+  // утро и напоминание меряет C-32; упрёк за отсутствие — строка C-47 из зоны story-time (T-03d)
+  assert.deepEqual(MUTANTS.filter((m) => m.check === 'C-32').map((m) => m.id), ['m09-instant-morning', 'm11-reminder-dead-end']);
+  assert.deepEqual(MUTANTS.filter((m) => m.zone === 'story-time' && m.check === 'C-47').map((m) => m.id), ['m10-absence-reproach']);
 });
 
 test('каждый мутант ложится на основу, компилируется и отличается от неё', () => {

@@ -92,6 +92,16 @@ export function register(test, { has, hasNot, lint, keys }) {
     const src = `-> a\n=== a ===\n${many(5)}\nя тоже #from:bob\nкому? #from:ann\n* [ей #to:ann] -> END\n* [ему #to:bob] -> END`;
     await has(src, 'C-17.ratio', { only: ['C-17'] });
     await hasNot(src.replace(many(5), 'одна #from:ann'), 'C-17.ratio', { only: ['C-17'] });
+    // «3 против 0» — ещё не знакомство: у большего меньше C-17.min_msgs
+    await hasNot(src.replace(many(5), many(2)).replace('я тоже #from:bob\n', ''), 'C-17.ratio', { only: ['C-17'] });
+  });
+
+  test('C-17: окно главы — прошлые главы не в счёт; спица хаба — не выбор между людьми', async () => {
+    const pick = 'кому? #from:ann\n* [ей #to:ann] -> END\n* [ему #to:bob] -> END';
+    await has(`-> ch1\n${chapters(many(2), `${many(6)}\nя тоже #from:bob\n${pick}`)}`.replace(/\n-> END$/, ''), 'C-17.ratio', { only: ['C-17'] });
+    await hasNot(`-> ch1\n${chapters(many(8), `одна #from:ann\nя тоже #from:bob\n${pick}`)}`.replace(/\n-> END$/, ''), 'C-17.ratio', { only: ['C-17'] });
+    const hub = `-> a\n=== a ===\n${many(6)}\nя тоже #from:bob\n- (top) кому? #from:ann\n* [ей #to:ann] -> top\n* [ему #to:bob] -> top\n* [всё] -> END`;
+    await hasNot(hub, 'C-17.ratio', { only: ['C-17'] });
   });
 
   test('C-18: кнопка под условием уходит туда же, куда соседняя', async () => {
@@ -141,6 +151,23 @@ export function register(test, { has, hasNot, lint, keys }) {
     await has(mk('ладно'), 'C-27.long_h', { only: ['C-27'] });
     await hasNot(mk('мне на смену'), 'C-27.long_h', { only: ['C-27'] });
     await has(mk('напишу утром'), 'C-27.deadline', { only: ['C-27'] });
+  });
+
+  test('C-27: калибровка — смена собеседника, стык глав, исключение R-63, дело в процессе', async () => {
+    const mk = (last, next, d) => `-> a\n=== a ===\nну #from:ann\n* [да]\n* [нет]\n- ${last} #from:ann\n${next} #delay:${d}\n* [ок] -> END\n* [нет] -> END`;
+    // короткая пауза посреди разговора — подсказка; после неё пишет другой контакт — разговор не оборван
+    await has(mk('смотри', 'продолжим #from:ann', '1h'), 'C-27.unexplained', { only: ['C-27'] });
+    await hasNot(mk('смотри', 'это я #from:bob', '1h'), 'C-27.unexplained', { only: ['C-27'] });
+    // долгая — причина нужна и при смене собеседника; без неё — только после прощания (R-63)
+    await has(mk('смотри', 'это я #from:bob', '4h'), 'C-27.long_h', { only: ['C-27'] });
+    await hasNot(mk('спокойной ночи', 'это я #from:bob', '4h'), 'C-27.long_h', { only: ['C-27'] });
+    await has(mk('спокойной ночи', 'продолжим #from:ann', '4h'), 'C-27.long_h', { only: ['C-27'] });
+    // «я иду к ним» — дело, которое займёт время: это причина
+    await hasNot(mk('я иду к ним', 'продолжим #from:ann', '1h'), 'C-27.unexplained', { only: ['C-27'] });
+    // короткая пауза на стыке глав — дело C-39 и C-32 п. 4
+    const joint = (d) => `-> ch1\n${chapters('ну #from:ann\n* [да]\n* [нет]\n- смотри #from:ann', `продолжим #from:ann #delay:${d}\n* [ок]\n* [нет]\n-`)}`;
+    await hasNot(joint('1h'), 'C-27.unexplained', { only: ['C-27'] });
+    await has(joint('4h'), 'C-27.long_h', { only: ['C-27'] });
   });
 
   test('C-29: анонс без содержания перед паузой', async () => {

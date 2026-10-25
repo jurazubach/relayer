@@ -23,7 +23,7 @@ export default {
         const t = l.text.toLowerCase();
         // одно общее слово со ставкой — ещё не ставка: «камера» звучит в любой ветке истории про камеру
         const shared = [...roots(t, T.value('C-24.root'))].filter((r) => stake.has(r)).length;
-        if (re.test(t) || (shared && shared >= Math.min(T.value('story.stake.min_roots'), stake.size))) { found = l; break; }
+        if (re.test(t) || (shared && shared >= Math.min(T.value('C-24.min_roots'), stake.size))) { found = l; break; }
       }
       if (found) { hit++; firstAt.set(found.knot, (firstAt.get(found.knot) ?? 0) + 1); }
     }

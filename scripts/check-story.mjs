@@ -5,21 +5,24 @@ import { compile, formatMessages } from './lib/compile.mjs';
 import { nodeIds, parseTag } from './lib/ink.mjs';
 import { play, seeded } from './lib/bot.mjs';
 import { compileInput, loadStory, parseStory, storyRefs } from './lib/story.mjs';
+import { threshold } from './lib/thresholds.mjs';
 
 const HELP = `npm run check:story [-- <id | путь> …] [--json] [--seed N]
 
-Компилирует каждую историю и прогоняет бота: 400 случайных прохождений, редкие ветки
-добираются до 2000. Падает, если есть ошибки компиляции, тупики или недостижимые узлы.
+Компилирует каждую историю и прогоняет бота: bot.runs случайных прохождений, редкие ветки
+добираются до bot.max_runs (числа — docs/playbook/thresholds.json). Падает, если есть ошибки
+компиляции, тупики или недостижимые узлы.
 
   <id | путь>  история по id (the-number), файл .json / .ink или папка; по умолчанию все в src/stories
   --json       итоги одним JSON в stdout вместо текста
   --seed N     повторяемые прохождения (иначе Math.random)
   --help       эта справка`;
 
-const RUNS = 400;
-// Редкие ветки (финалы, которые надо заработать) случайный бот может не встретить за 400 прогонов —
+const RUNS = threshold('bot.runs');
+// Редкие ветки (финалы, которые надо заработать) случайный бот может не встретить за bot.runs прогонов —
 // тогда добираем прогоны, пока не найдутся все узлы. Недостижимый узел так и останется недостижимым.
-const MAX_RUNS = 2000;
+const MAX_RUNS = threshold('bot.max_runs');
+const MAX_LINES = threshold('bot.max_lines');
 
 const argv = process.argv.slice(2);
 if (argv.includes('--help') || argv.includes('-h')) { console.log(HELP); process.exit(0); }
@@ -65,7 +68,7 @@ for (const ref of refs) {
   for (let run = 0; run < MAX_RUNS; run++) {
     if (run >= RUNS && all.every((k) => knots.has(k))) break;
     runs++;
-    const r = play(built.json, { rng, nodes: all, maxSteps: 2000, trackVars: false });
+    const r = play(built.json, { rng, nodes: all, maxSteps: MAX_LINES, trackVars: false });
     let lastLine = '';
     for (const e of r.events) {
       if (e.type === 'line') {
@@ -87,7 +90,7 @@ for (const ref of refs) {
     maxSteps = Math.max(maxSteps, r.steps);
     durations.push(r.delay);
     messagesPerRun.push(r.steps);
-    if (r.steps >= 2000) problems.add('прохождение не закончилось за 2000 шагов: возможен бесконечный цикл');
+    if (r.steps >= MAX_LINES) problems.add(`прохождение не закончилось за ${MAX_LINES} шагов: возможен бесконечный цикл`);
   }
 
   out(`✓ ${file}`);
@@ -124,4 +127,5 @@ for (const ref of refs) {
 }
 
 if (asJson) console.log(JSON.stringify({ ok: !failed, stories: report }, null, 2));
-process.exit(failed ? 1 : 0);
+// exitCode, а не exit: иначе большой --json в трубе обрывается на 64 КБ
+process.exitCode = failed ? 1 : 0;

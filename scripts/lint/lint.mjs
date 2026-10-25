@@ -33,7 +33,7 @@ const HELP = `npm run story:lint [-- <id | путь> …] [флаги]
   --changed          только истории, изменённые в рабочей копии git (src/stories)
   --quick            меньше прогонов бота (lint.runs.quick) — для хука после правки
   --summary          кратко: счётчики по проверкам и lint.summary.top находок на историю,
-                     не длиннее skill.hook.max_output_chars — для хука
+                     не длиннее skill.hook.max_output_chars — для хука; с --json — поле summary
   --transcript N     выгрузить N прохождений бота в .md для чтения человеком (C-52 п. 5)
   --out <папка>      куда класть транскрипты (по умолчанию временная папка)
   --seed N           другой seed бота
@@ -126,7 +126,9 @@ for (const { ref, id } of list) {
 
 const errors = results.reduce((s, r) => s + r.counts.error, 0);
 if (opts.json) {
-  console.log(JSON.stringify({ ok: errors === 0, strict: opts.strict, runs, seed: opts.seed, stories: results }, null, 2));
+  // --summary с --json: та же сводка полем summary — хук (T-11) берёт из неё счётчики, а находки — из stories
+  const summary = opts.summary ? { summary: formatSummary(results, T) } : {};
+  console.log(JSON.stringify({ ok: errors === 0, strict: opts.strict, runs, seed: opts.seed, ...summary, stories: results }, null, 2));
 } else if (nothingChanged) {
   console.log('story:lint: изменённых историй нет');
 } else if (opts.summary) {
