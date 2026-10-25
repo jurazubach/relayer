@@ -28,8 +28,12 @@ export function visibleText(items, mode, { who = (_, s) => s, chat = (_, s) => s
       if (it.kind === 'sys') out.push(`   · ${it.text}`);
       else if (it.kind === 'me') out.push(`   Вы: ${it.text}`);
       else out.push(`   ${who(it, it.whoName ?? it.name)}: ${it.kind === 'photo' ? '[фото] ' : ''}${it.text}`);
+    } else if (it.type === 'remind') {
+      out.push(`   [ ${it.options.join(' | ')} ]`);
+      out.push(`        … вы молчите ${fmtDuration(it.wait)} …`);
     } else if (it.type === 'choice') {
       out.push(`   [ ${it.options.map((o) => o.text).join(' | ')} ]`);
+      if (it.noAnswer) { out.push(`        … вы молчите ${fmtDuration(it.noAnswer.seconds)} …`, '   (вы не ответили)'); continue; }
       if (it.thread !== thread) { out.push(`— чат: ${chat(it, it.name)}`); thread = it.thread; }
       out.push(it.silent ? '   (вы промолчали)' : `   Вы: ${it.text}`);
     } else if (it.type === 'end') out.push('— конец —');

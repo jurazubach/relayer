@@ -21,7 +21,7 @@
 ## Устройство
 
 - `core/run.mjs` — `prepare(id)` (загрузка, компиляция, дерево, финалы) и `runOnce(p, { persona, seed, mode, start, set, save, route, partial })`.
-- `core/personas.mjs` — персоны как стратегии `bot.play`; «неотвечающий» и `noAnswer(choices)` — в `scripts/lib/bot.mjs` (до E-02 — `#silent`).
+- `core/personas.mjs` — персоны как стратегии `bot.play`; «неотвечающий» (`NO_ANSWER`: напоминания `#remind`, потом `#noanswer` или `#silent`; по клику — stall), `noAnswer(choices)` и `reminderSeries(events)` — в `scripts/lib/bot.mjs`. В `--route` «не ответил» — `-1`.
 - `core/timeline.mjs` — журнал бота → хронология: чат, кто пишет, `tReal` / `tClick`; время — `scripts/lib/playtime.mjs`, та же формула, что у `story:lint`.
 - `core/sessions.mjs`, `core/vars-index.mjs`, `core/graph.mjs` (финальные узлы и распределители по `checks.md`).
 - Пороги — только ключи `docs/playbook/thresholds.json` через `scripts/lib/thresholds.mjs` (`threshold`, `thresholdSeconds` — по единице ключа), словари — `scripts/lib/lexicon.mjs` (`dict.*`, те же, что у `story:lint`). Свои — только словари персон в `core/personas.mjs`: это характер бота, а не правило свода.

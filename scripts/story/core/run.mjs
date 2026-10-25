@@ -5,7 +5,7 @@ import { findEndings, nodeIds, walk } from '../../lib/ink.mjs';
 import { finalNodes } from './graph.mjs';
 import { play, seeded, strategies } from '../../lib/bot.mjs';
 import { compileInput, loadStory, parseStory } from '../../lib/story.mjs';
-import { PERSONAS, noAnswer } from './personas.mjs';
+import { PERSONAS } from './personas.mjs';
 import { timeline } from './timeline.mjs';
 import { threshold } from '../../lib/thresholds.mjs';
 
@@ -135,15 +135,14 @@ export function runOnce(p, o = {}) {
       story.variablesState[name] = value;
     }
   };
-  const r = play(p.built.json, { strategy, rng, nodes: p.nodes, maxSteps: threshold('bot.max_lines'), setup });
+  const r = play(p.built.json, { strategy, rng, nodes: p.nodes, maxSteps: threshold('bot.max_lines'), setup, mode: o.mode ?? 'realtime' });
   const t = timeline(r.events, { tree: p.tree, away: !!persona.away });
   const ending = endingOf(t.items, p.endings, { partial: o.partial, visited: r.visited });
   const route_ = r.events.filter((e) => e.type === 'choice').map((e) => e.picked);
   const initial = { ...r.vars };
   for (const e of [...r.events].reverse()) if (e.type === 'var') initial[e.name] = e.prev;
-  const stalls = persona.noAnswer
-    ? t.items.filter((i) => i.type === 'choice' && noAnswer(i.options) < 0).map((i) => ({ knot: i.knot, chapter: i.chapter, options: i.options.length }))
-    : [];
+  // молчание, которое история не продолжила: после напоминаний вести некуда или по клику кнопка ждёт
+  const stalls = t.items.filter((i) => i.type === 'stall').map((i) => ({ knot: i.knot, chapter: i.chapter, reminders: i.reminders, reason: i.reason }));
   return {
     persona: o.persona ?? 'random', seed: o.seed ?? 1, mode: o.mode ?? 'realtime',
     start, set: Object.keys(set).length ? set : null, route: route_,

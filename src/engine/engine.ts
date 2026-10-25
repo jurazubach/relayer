@@ -23,7 +23,7 @@ export const DEFAULT_MODE: Mode = 'realtime';
 /**
  * Порог метки «спустя N» в режиме «по клику», часы. Копия ключа engine.click.time_jump_label
  * из docs/playbook/thresholds.json: файл весит сотни килобайт и в сборку не грузится,
- * поэтому число здесь, а e2e (e2e/modes.ts) сверяет его с ключом.
+ * поэтому число здесь, а e2e (e2e/modes.spec.ts) сверяет его с ключом.
  */
 export const TIME_JUMP_LABEL_H = 1;
 
@@ -70,6 +70,20 @@ export interface ChoiceView {
   label?: string;
 }
 
+/**
+ * Что делает история, если игрок молчит у кнопки (реальное время, E-02). Скрытые варианты сценария:
+ * #remind:2h — напоминание через 2 ч тишины; #noanswer[:1h] — ветка «не ответил». Без #noanswer ветка
+ * «не ответил» — кнопка #silent. Кнопками они не показываются.
+ */
+interface Silence {
+  /** Напоминания по порядку: ink-индекс варианта и интервал тишины перед ним. */
+  reminders: { index: number; ms: number }[];
+  /** Куда идёт история после последнего напоминания; ms — сколько ждать, null — как последнее напоминание. */
+  target: { index: number; ms: number | null } | null;
+  /** Откуда кнопки в сценарии: после напоминания та же развилка возвращается с тем же ключом. */
+  key: string;
+}
+
 interface SaveData {
   v: 1 | 2;
   storyId: string;
@@ -90,6 +104,10 @@ interface SaveData {
   renamed?: Record<string, string>;
   /** Сохранения до режимов его не знают: они шли в реальном времени. */
   mode?: Mode;
+  /** Сохранения до напоминаний их не знают: кнопка там ждала. */
+  silence?: Silence | null;
+  waitDone?: number;
+  lastRemind?: { ms: number; key: string } | null;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -146,6 +164,16 @@ function gapTime(kind: Kind, text: string, afterPlayer: boolean): number {
   return afterPlayer ? jitter + 1200 : jitter;
 }
 
+/** Скрытый вариант не кнопка: напоминание или ветка «не ответил» без #silent. */
+function hiddenRole(tags: string[]): 'remind' | 'noanswer' | null {
+  for (const raw of tags) {
+    const key = raw.split(':')[0].trim();
+    if (key === 'remind') return 'remind';
+  }
+  const keys = tags.map((t) => t.split(':')[0].trim());
+  return keys.includes('noanswer') && !keys.includes('silent') ? 'noanswer' : null;
+}
+
 export class Engine {
   readonly storyId: string;
   readonly title: string;
@@ -171,6 +199,11 @@ export class Engine {
   private afterPlayer = false;
   private chapter = '';
   private renamed: Record<string, string> = {};
+  private silence: Silence | null = null;
+  /** Сколько игрок молчит у текущих кнопок, мс игрового времени: с появления кнопок или с напоминания. */
+  private waitDone = 0;
+  /** Последнее напоминание: столько же ждём перед веткой «не ответил» той же развилки, если сценарий не сказал иначе. */
+  private lastRemind: { ms: number; key: string } | null = null;
   mode: Mode = DEFAULT_MODE;
   /** Отладка: набор текста в 4 раза быстрее. */
   fastTyping = false;
@@ -253,6 +286,9 @@ export class Engine {
     this.nextId = 1;
     this.carryDelay = 0;
     this.chapter = '';
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
     for (const id of Object.keys(this.renamed)) {
       const original = this.originalNames.get(id);
       if (original) this.contact(id).name = original;
@@ -330,22 +366,74 @@ export class Engine {
     }
     if (!this.pending && !this.story.canContinue) {
       const fallback = this.lastThread || this.speaker || 'unknown';
-      this.choices = this.story.currentChoices.map((c) => {
+      const silence: Silence = { reminders: [], target: null, key: '' };
+      const sources: string[] = [];
+      let silentIndex = -1;
+      this.choices = [];
+      for (const c of this.story.currentChoices) {
+        const tags = c.tags ?? [];
         let thread = fallback;
         let silent = false;
         let label: string | undefined;
-        for (const raw of c.tags ?? []) {
+        let remind = 0;
+        let noanswer: number | null | undefined;
+        for (const raw of tags) {
           const [k, ...rest] = raw.split(':');
-          if (k.trim() === 'to') thread = rest.join(':').trim() || fallback;
-          if (k.trim() === 'silent') silent = true;
-          if (k.trim() === 'label') label = rest.join(':').trim();
+          const key = k.trim();
+          const value = rest.join(':').trim();
+          if (key === 'to') thread = value || fallback;
+          if (key === 'silent') silent = true;
+          if (key === 'label') label = value;
+          if (key === 'remind') remind = parseDelay(value);
+          if (key === 'noanswer') noanswer = value ? parseDelay(value) : null;
         }
+        // первый #noanswer — ветка «не ответил»; #silent — только если #noanswer нет
+        if (noanswer !== undefined && !silence.target) silence.target = { index: c.index, ms: noanswer };
+        if (silent && silentIndex < 0) silentIndex = c.index;
+        const role = hiddenRole(tags);
+        if (role === 'remind') {
+          if (remind > 0) silence.reminders.push({ index: c.index, ms: remind });
+          continue;
+        }
+        if (role === 'noanswer') continue;
+        sources.push(c.sourcePath);
         if (!this.unlocked.includes(thread)) this.unlock(thread);
-        return { index: c.index, text: c.text, thread, silent, label };
-      });
+        this.choices.push({ index: c.index, text: c.text, thread, silent, label });
+      }
+      if (!silence.target && silentIndex >= 0) silence.target = { index: silentIndex, ms: null };
+      silence.key = sources.join('|');
+      this.silence = this.choices.length && (silence.reminders.length || silence.target) ? silence : null;
+      this.waitDone = 0;
       this.choiceThread = this.choices.length ? fallback : null;
       this.ended = this.choices.length === 0;
     }
+  }
+
+  /**
+   * Сколько ещё молчать до следующего шага истории (мс игрового времени) и что это за шаг.
+   * null — кнопка ждёт: режим «по клику», напоминаний нет или они кончились, а вести некуда.
+   */
+  private nextSilence(): { ms: number; index: number; remind: boolean } | null {
+    const s = this.silence;
+    if (!s || this.mode === 'click' || this.pending || !this.choices.length) return null;
+    const r = s.reminders[0];
+    if (r) return { ms: r.ms, index: r.index, remind: true };
+    if (!s.target) return null;
+    const ms = s.target.ms ?? (this.lastRemind?.key === s.key ? this.lastRemind.ms : null);
+    return ms ? { ms, index: s.target.index, remind: false } : null;
+  }
+
+  /** Игрок промолчал до срока: персонаж напоминает или история идёт веткой «не ответил». Исходящего сообщения нет. */
+  private fireSilence(step: { index: number; ms: number; remind: boolean }) {
+    this.lastRemind = step.remind && this.silence ? { ms: step.ms, key: this.silence.key } : null;
+    this.lastThread = this.choiceThread ?? this.lastThread;
+    this.afterPlayer = false;
+    this.story.ChooseChoiceIndex(step.index);
+    this.choices = [];
+    this.choiceThread = null;
+    this.silence = null;
+    this.waitDone = 0;
+    this.advance();
   }
 
   private commit(p: Pending, at = Date.now()) {
@@ -366,7 +454,25 @@ export class Engine {
     const fresh: Msg[] = [];
     let real = dt * (this.fastTyping ? 4 : 1); // реальные миллисекунды на «подумал» и «печатает»
     let guard = 0;
-    while (this.pending && guard++ < 1000) {
+    let fired = false;
+    while (guard++ < 1000) {
+      if (!this.pending) {
+        // игрок молчит у кнопок: напоминания и ветка «не ответил» идут по тому же времени, что и паузы,
+        // поэтому офлайн они тоже догоняются. «Без пауз» (∞) кнопку не торопит: только «пропустить»
+        const step = this.speed === Infinity ? null : this.nextSilence();
+        if (!step) break;
+        const k = this.speed / (this.fastTyping ? 4 : 1);
+        const left = step.ms - this.waitDone;
+        if (real * k < left) {
+          this.waitDone += real * k;
+          real = 0;
+          break;
+        }
+        real -= left / k;
+        this.fireSilence(step);
+        fired = true;
+        continue;
+      }
       const p = this.pending;
       // по клику пауз нет, но скачок времени мира игрок должен увидеть
       if (this.mode === 'click' && !p.jumpShown && p.delayMs >= TIME_JUMP_LABEL_H * 3_600_000) {
@@ -415,8 +521,8 @@ export class Engine {
       fresh.push(this.messages[this.messages.length - 1]);
       this.advance();
     }
-    if (fresh.length) this.emit();
-    else if (this.pending) this.notify();
+    if (fresh.length || fired) this.emit();
+    else if (this.pending || this.silence) this.notify();
     return fresh;
   }
 
@@ -434,14 +540,25 @@ export class Engine {
     this.story.ChooseChoiceIndex(index);
     this.choices = [];
     this.choiceThread = null;
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
     this.advance();
     this.emit();
   }
 
-  /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора. */
+  /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора; у кнопок — следующее напоминание. */
   skipNext() {
     const p = this.pending;
-    if (!p) return;
+    if (!p) {
+      this.tick();
+      const step = this.nextSilence();
+      if (!step) return;
+      this.fireSilence(step);
+      this.tick();
+      this.emit();
+      return;
+    }
     p.delayDone = p.delayMs;
     p.gapDone = p.gapMs;
     p.typingDone = p.typingMs;
@@ -467,6 +584,9 @@ export class Engine {
     this.choiceThread = null;
     this.ended = false;
     this.carryDelay = 0;
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
     this.messages.push({ id: this.nextId++, thread: this.lastThread || this.speaker || 'unknown', kind: 'sys', text: `переход к «${knot}»`, at: Date.now() });
     this.advance();
     this.emit();
@@ -504,6 +624,14 @@ export class Engine {
         realMs: (this.speed === Infinity || this.mode === 'click' ? 0 : pauseMs / this.speed) + liveMs,
       };
     }
+    const step = this.nextSilence();
+    const silence = step
+      ? {
+          remind: step.remind,
+          leftMs: Math.max(0, step.ms - this.waitDone),
+          realMs: this.speed === Infinity ? null : Math.max(0, step.ms - this.waitDone) / this.speed,
+        }
+      : null;
     return {
       messages: this.messages,
       threads: this.unlocked,
@@ -512,6 +640,7 @@ export class Engine {
       ended: this.ended,
       chapter: this.chapter,
       status,
+      silence,
       read: this.read,
       speed: this.speed,
       fastTyping: this.fastTyping,
@@ -543,6 +672,9 @@ export class Engine {
       chapter: this.chapter,
       renamed: this.renamed,
       mode: this.mode,
+      silence: this.silence,
+      waitDone: this.waitDone,
+      lastRemind: this.lastRemind,
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
@@ -575,6 +707,9 @@ export class Engine {
       this.chapter = d.chapter ?? '';
       this.renamed = d.renamed ?? {};
       this.mode = d.mode ?? DEFAULT_MODE;
+      this.silence = d.silence ?? null;
+      this.waitDone = d.waitDone ?? 0;
+      this.lastRemind = d.lastRemind ?? null;
       for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();
       return true;

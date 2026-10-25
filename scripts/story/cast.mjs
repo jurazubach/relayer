@@ -58,7 +58,8 @@ function castOf(p, { runs = 0, seed = 1 } = {}) {
         const r = row(it.tags.unlock);
         if (r.unlock == null || k.chapter < r.unlock) r.unlock = k.chapter;
       }
-      if (it.type === 'choice') {
+      // напоминание и скрытая ветка «не ответил» — не кнопка: разговора с игроком в них нет
+      if (it.type === 'choice' && it.role === 'button') {
         const to = it.tags.to || it.speaker;
         if (!to) return;
         const r = row(to);

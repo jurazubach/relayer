@@ -122,12 +122,13 @@ scripts/kb/                база знаний: kb:clean (очистка вх�
 scripts/hooks/             хуки Claude Code: проверка после правки src/stories, статус при старте; full.mjs — полный прогон главы
 scripts/lab/               эксперименты: lab:triggers, skills:test и сборка мутантов
 docs/lab/                  журнал экспериментов, baseline.md, runs/, мутанты, фразы срабатывания, cases/ (кейсы наших историй, руками не править)
-e2e/                       Playwright: smoke.spec.ts (проверки), shots.spec.ts (снимки), fixture.ts (загрузка фикстуры)
+e2e/                       Playwright: smoke / modes / reminders .spec.ts (проверки), shots.spec.ts (снимки, @shots), fixture.ts
 ```
 
 Ключи в `localStorage`: `relay:<storyId>` — прогресс истории, `relay:route` — где игрок был
 в прошлый раз (экран, история и открытый чат), `relay:uploads` — загруженные истории целиком,
-`relay:fast` — быстрый набор в отладке. Режим игры (`realtime` / `click`) лежит в прогрессе истории.
+`relay:fast` — быстрый набор в отладке, `relay:notices` — `0`, если игрок выключил уведомления.
+Режим игры (`realtime` / `click`) и молчание у кнопки (напоминания `#remind`) лежат в прогрессе истории.
 
 Прогресс хранится по `id` истории, а не по происхождению: загруженная файлом и приехавшая
 потом в репозиторий — это одна и та же история, и встроенная вытесняет загруженную копию.
@@ -195,7 +196,7 @@ e2e/                       Playwright: smoke.spec.ts (проверки), shots.s
   и строчка импорта в `src/styles/index.css`. Вложенные селекторы не использовать.
 - Селекторы для тестов — `data-testid`, не классы: `home`, `tile-<id>`, `upload`, `upload-input`,
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
-  `thread-<id>`, `chat`, `notice`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
+  `thread-<id>`, `chat`, `notice`, `notices`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `skip-next`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).

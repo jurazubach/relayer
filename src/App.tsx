@@ -130,6 +130,8 @@ function GameShell({
             backLabel={story.title}
             onBack={onBack}
             onDebug={() => setDebug(true)}
+            notices={game.notices}
+            onNotices={game.setNotices}
           />
         )
       ) : (

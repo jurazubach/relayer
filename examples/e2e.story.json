@@ -7,6 +7,7 @@
   "tagline": "История для e2e-тестов: тексты здесь стабильны, их проверяют тесты",
   "synopsis": "Служебная история для Playwright. Не шаблон и не часть каталога: тесты загружают её через «Загрузить историю» и сверяют поведение приложения с этими текстами. Две главы, два контакта, одна развилка.",
   "minutes": 2,
+  "days": 0.1,
   "cover": {
     "from": "#1e3a5f",
     "to": "#0b1220",
@@ -14,7 +15,9 @@
   },
   "features": [
     "Второй контакт открывается по ходу разговора — тег #unlock",
-    "Ответ можно не отправлять — вариант с тегом #silent"
+    "Ответ можно не отправлять — вариант с тегом #silent",
+    "Если молчать у кнопки в реальном времени, Мира напоминает — скрытые варианты #remind, ветка «не ответил» — #silent или #noanswer",
+    "Между главами — пауза в два часа: по клику её закрывает метка «спустя 2 часа»"
   ],
   "chapters": [
     {
@@ -42,5 +45,5 @@
       "about": "Появляется, если Мира попросит помощи."
     }
   ],
-  "ink": "# title: Фикстура · Пустой причал\n# contact: mira, Мира, teal\n# contact: keeper, Смотритель, grey\n\nГлава 1 · Лодка не вернулась #sys:mira #chapter\nты тут? #from:mira\nлодки нет #delay:10s\nуже час #delay:10s\n\n* [Позови смотрителя #to:mira]\n    сейчас напишу ему #from:mira #delay:10s\n    видел огонь у старой пристани #from:keeper #unlock:keeper #delay:20s\n    -> shore\n* [Промолчать #to:mira #silent]\n    ладно, сама #from:mira #delay:20s\n    -> shore\n\n=== shore ===\nГлава 2 · Сигнал с берега #sys:mira #chapter\nиду туда #from:mira #delay:15s\n* [Я с тобой #to:mira]\n    жду у маяка #from:mira #delay:10s\n    -> finish\n* [Будь осторожна #to:mira]\n    буду #from:mira #delay:10s\n    -> finish\n\n=== finish ===\nМира вышла из чата. #sys:mira\n-> END\n"
+  "ink": "# title: Фикстура · Пустой причал\n# contact: mira, Мира, teal\n# contact: keeper, Смотритель, grey\n\nГлава 1 · Лодка не вернулась #sys:mira #chapter\nты тут? #from:mira\nлодки нет #delay:10s\nуже час #delay:10s\n- (ask)\n* [Позови смотрителя #to:mira]\n    сейчас напишу ему #from:mira #delay:10s\n    видел огонь у старой пристани #from:keeper #unlock:keeper #delay:20s\n    -> shore\n* [Промолчать #to:mira #silent]\n    ладно, сама #from:mira #delay:20s\n    -> shore\n* [#remind:20m] позвать смотрителя? он на маяке\n    -> ask\n* [#remind:40m] мне нужно да или нет. темнеет\n    -> ask\n\n=== shore ===\nГлава 2 · Сигнал с берега #sys:mira #chapter #delay:2h\nиду туда #from:mira #delay:15s\n- (wait)\n* [Я с тобой #to:mira]\n    жду у маяка #from:mira #delay:10s\n    -> finish\n* [Будь осторожна #to:mira]\n    буду #from:mira #delay:10s\n    -> finish\n* [#remind:30m] ты со мной или нет?\n    -> wait\n* [#noanswer]\n    не дождалась. иду одна #from:mira #delay:10s\n    -> finish\n\n=== finish ===\nМира вышла из чата. #sys:mira\n-> END\n"
 }
