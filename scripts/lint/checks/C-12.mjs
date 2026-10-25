@@ -32,12 +32,28 @@ export default {
     // одиночки: кнопка без условия — подсказка по узлу; несколько подряд на пути — предупреждение
     const single = T.value('C-12.single');
     const conditional = (c) => st.buttons.list.some((b) => b.knot === c.knot && b.text === c.texts[0] && b.conds.length);
+    // последний заход в хаб с одноразовыми кнопками: остальные уже нажаты в этом прогоне, одна оставшаяся —
+    // не «выбора нет», а конец перебора (хаб порядка, LOCAL-04)
+    // текст кнопки может быть вычислимым ({opener}): тогда кнопку узнаём по адресату, если он в узле один
+    const source = (knot, text, to) => st.button(knot, text) ?? (() => {
+      const same = st.buttons.list.filter((b) => b.knot === knot && b.to === to);
+      return same.length === 1 ? same[0] : null;
+    })();
+    const hubRest = (c, taken) => {
+      const b = source(c.knot, c.texts[0], c.tos[0]);
+      if (!b?.group || b.group.buttons.length < 2) return false;
+      return b.group.buttons.some((x) => x !== b && !x.choice.sticky && taken.has(x));
+    };
     const singles = new Set();
     const streaks = new Map();
     for (const run of ctx.runs) {
       let streak = 0;
+      const taken = new Set();
       for (const c of run.choices) {
-        if (c.n !== single) { streak = 0; continue; }
+        const picked = source(c.knot, c.texts[c.picked], c.tos[c.picked]);
+        const rest = c.n === single && hubRest(c, taken);
+        if (picked) taken.add(picked);
+        if (c.n !== single || rest) { streak = 0; continue; }
         streak++;
         if (!conditional(c)) singles.add(c.knot);
         if (streak >= T.value('C-12.single_streak')) streaks.set(c.knot, Math.max(streaks.get(c.knot) ?? 0, streak));

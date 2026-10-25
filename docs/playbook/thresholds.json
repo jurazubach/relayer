@@ -1451,6 +1451,25 @@
       }
     ]
   },
+  "C-10.wrong_responder": {
+    "value": 0,
+    "unit": "кнопок, на которые отвечает не адресат",
+    "op": ">",
+    "level": "warning",
+    "basis": "our_estimate",
+    "sources": [
+      "LOCAL-06",
+      "docs/lab/journal.md 2026-10-25 X-E2mini"
+    ],
+    "calibrated_on": "2026-10-25: slepoe-pyatno 1 (ch3, находка обоих прогонов X-E2mini), the-number и chuzhoy-golos — см. S-choices-v2",
+    "history": [
+      {
+        "date": "2026-10-25",
+        "task": "S-choices-v2",
+        "change": "заведён: подпроверка C-10 «ответил не тот» (кнопка #to:A, первым и до следующей развилки отвечает B, A молчит, #sys не объясняет)"
+      }
+    ]
+  },
   "C-11.silent_unnoticed_share": {
     "value": 0.3334,
     "unit": "доля #silent",
