@@ -390,6 +390,35 @@ test('--skill --min, --sources, --affected, --fidelity-sample, --record, merged-
   }
 });
 
+test('--sources --compact: ID по кластеру TH без названий, нюансы отдельно, покрытие то же', () => {
+  const f = fixture();
+  try {
+    f.w('playbook/clusters.json', JSON.stringify(clustersFileContent(loadKnowledge(f.paths))));
+    const { res } = run(f.paths);
+    const md = sourcesMd(res, 'story-alpha', { compact: true });
+    assert.match(md, /--write --compact/);
+    assert.match(md, /## story-alpha\/hooks\.md/);
+    assert.ok(!md.includes('Держи переправу'), 'без названий');
+    assert.ok(!/\(`docs\/books/.test(md) && !/^- `/m.test(md), 'без путей и без строки на каждый ID');
+    for (const line of md.split('\n').filter((l) => l.includes('`'))) {
+      const ids = line.match(/`[^`]+`/g) ?? [];
+      if (/нюанс/.test(line)) assert.ok(ids.every((x) => x.includes('#нюанс')), `в строке нюансов чужой ID: ${line}`);
+    }
+    assert.match(md, /`alpha-ferry:P-01#нюанс`/);
+
+    const inSources = () => run(f.paths).res.matrix.filter((x) => x.owner_skill === 'story-alpha' && x.in_sources).map((x) => x.id).sort();
+    quiet(() => main(['--sources', 'story-alpha', '--write'], f.paths));
+    const full = inSources();
+    assert.ok(full.length > 3);
+    assert.equal(quiet(() => main(['--sources', 'story-alpha', '--write', '--compact'], f.paths)).code, 0);
+    assert.match(readFileSync(join(f.paths.skills, 'story-alpha/references/sources.md'), 'utf8'), /Компактная форма/);
+    assert.deepEqual(inSources(), full, 'story:coverage засчитывает те же строки, что и из полного списка');
+    assert.match(quiet(() => main(['--help'], f.paths)).out, /--compact/);
+  } finally {
+    f.done();
+  }
+});
+
 test('сводка падает, если строка без владельца или у неё два владельца', () => {
   const f = fixture();
   try {

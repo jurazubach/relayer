@@ -544,10 +544,10 @@ const KEY = /`((?:C-\d\d|story|engine|lint|dict|attn|style|bot|lab|skill)\.(?![\
 const doc = (f) => readFileSync(join(ROOT, f), 'utf8');
 const section = (text, from, to) => text.slice(text.indexOf(from), to ? text.indexOf(to, text.indexOf(from)) : undefined);
 
-test('attention-merged.md §6: 64 строки — ключи thresholds.json, в «решении» нет чисел', () => {
+test('attention-merged.md §6: 65 строк — ключи thresholds.json, в «решении» нет чисел', () => {
   const s6 = section(doc('docs/playbook/attention-merged.md'), '## 6. Пороги нагрузки', '## 7.');
   const rows = s6.split('\n').filter((l) => /^\| `/.test(l));
-  assert.equal(rows.length, 64);
+  assert.equal(rows.length, 65);
   for (const r of rows) {
     const cells = r.split(' | ');
     for (const m of cells[0].matchAll(KEY)) assert.doesNotThrow(() => T.get(m[1]), m[1]);
