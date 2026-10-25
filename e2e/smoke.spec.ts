@@ -34,7 +34,9 @@ test('карточка показывает затравки, главы и ге
   for (const t of FIXTURE.teasers!) await expect(teasers).toContainText(t);
 
   const counts = page.getByTestId(`tile-counts-${FIXTURE.id}`);
-  const people = FIXTURE.characters!.filter((c) => !c.service).length;
+  // игрок (запись без id) и служебные контакты в число героев не входят
+  const people = FIXTURE.characters!.filter((c) => c.id && !c.service).length;
+  expect(people).toBeLessThan(FIXTURE.characters!.length);
   await expect(counts).toContainText(new RegExp(`${FIXTURE.chapters!.length}\\s+глав`));
   await expect(counts).toContainText(new RegExp(`${people}\\s+геро`));
   await expect(page.getByTestId(tile)).toContainText('по клику');

@@ -133,10 +133,13 @@ export function timeLines(story: Pick<Story, 'minutes' | 'days'>): string[] {
 /** Герои истории: служебные контакты (заметки, банк, сервис) пишут в чат, но героями не считаются. */
 export const storyPeople = (story: Pick<Story, 'characters'>) => (story.characters ?? []).filter((c) => !c.service);
 
-/** Числа в углу карточки: «5 глав», «6 героев». Чего в файле нет, того и на карточке нет. */
+/**
+ * Числа в углу карточки: «5 глав», «5 героев». Чего в файле нет, того и на карточке нет.
+ * Герой здесь — тот, кто пишет в чат: запись без id — это сам игрок («Вы», «Ты»), его не считаем.
+ */
 export function storyCounts(story: Pick<Story, 'chapters' | 'characters'>): string[] {
   const chapters = story.chapters?.length ?? 0;
-  const people = storyPeople(story).length;
+  const people = storyPeople(story).filter((c) => c.id).length;
   return [
     ...(chapters ? [`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`] : []),
     ...(people ? [`${people} ${plural(people, 'герой', 'героя', 'героев')}`] : []),

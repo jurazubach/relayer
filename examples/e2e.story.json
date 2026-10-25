@@ -44,6 +44,10 @@
       "name": "Смотритель",
       "role": "открывается по ходу",
       "about": "Появляется, если Мира попросит помощи."
+    },
+    {
+      "name": "Ты",
+      "role": "тот, кому пишет Мира"
     }
   ],
   "ink": "# title: Фикстура · Пустой причал\n# contact: mira, Мира, teal\n# contact: keeper, Смотритель, grey\n\nГлава 1 · Лодка не вернулась #sys:mira #chapter\nты тут? #from:mira\nлодки нет #delay:10s\nуже час #delay:10s\n\n* [Позови смотрителя #to:mira]\n    сейчас напишу ему #from:mira #delay:10s\n    видел огонь у старой пристани #from:keeper #unlock:keeper #delay:20s\n    -> shore\n* [Промолчать #to:mira #silent]\n    ладно, сама #from:mira #delay:20s\n    -> shore\n\n=== shore ===\nГлава 2 · Сигнал с берега #sys:mira #chapter\nиду туда #from:mira #delay:15s\n* [Я с тобой #to:mira]\n    жду у маяка #from:mira #delay:10s\n    -> finish\n* [Будь осторожна #to:mira]\n    буду #from:mira #delay:10s\n    -> finish\n\n=== finish ===\nМира вышла из чата. #sys:mira\n-> END\n"
