@@ -15,8 +15,8 @@ export default {
     for (const run of ctx.runs) {
       const firstOf = firstLines(run);
       // пауза после последней кнопки — эпилог: крючок перед кодой вреден (yorke-into-the-woods:PAT-05#нюанс),
-      // хвост меряет C-42
-      const lastChoice = run.choices.at(-1)?.at ?? -1;
+      // хвост меряет C-42. На пути без кнопок эпилога нет — проверяются все паузы
+      const lastChoice = run.choices.at(-1)?.at ?? Infinity;
       for (const l of run.lines) {
         if (l.delay < long || l.i === 0 || l.i >= lastChoice) continue;
         const before = run.lines.slice(Math.max(0, l.i - win), l.i);

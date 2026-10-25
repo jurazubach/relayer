@@ -11,6 +11,14 @@
     "how": "Править командой: npm run story:coverage -- --record <ID> status=… fidelity=ok|bad note=… by=…; команда проверяет статус и причину по списку."
   },
   "rows": {
+    "#attn-return-recap": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ступени ключами attn.recap.*"
+      }
+    },
     "ashwell-standard-patterns:attention§3": {
       "status": "merged-into:#attn-return-first",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
@@ -43,6 +51,22 @@
       "status": "merged-into:serial-hooks:contra-3",
       "note": "тот же спор «пауза на размышление против паузы после события»; влито в блок serial-hooks:contra-3 (story-pauses/contradictions.md)"
     },
+    "attention-today:P-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "10 мин источника стали story.pause.notice_min (15); якорь-действие — в родительском блоке return.md"
+      }
+    },
+    "attention-today:PAT-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
     "bateman-game-writing:attention§3": {
       "status": "merged-into:#attn-return-first",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
@@ -71,6 +95,14 @@
         "note": "граф хребта, нити, проверка второго автора сохранены"
       }
     },
+    "bateman-game-writing:P-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
     "bateman-game-writing:P-08": {
       "fidelity": {
         "ok": true,
@@ -87,9 +119,25 @@
         "note": "фон и биографии для команды сохранены"
       }
     },
+    "bateman-game-writing:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
     "bateman-game-writing:P-20#нюанс": {
       "status": "rejected:not-our-format",
       "note": "служебная пометка о том, что новых открытых источников не найдено; знания не несёт"
+    },
+    "bateman-game-writing:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ink пересобран, ловушки сохранены"
+      }
     },
     "bateman-game-writing:PAT-06#нюанс": {
       "fidelity": {
@@ -97,6 +145,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "«больше 3 тем» ключом C-19.spokes_max"
+      }
+    },
+    "bateman-game-writing:RED-16": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
       }
     },
     "C-03": {
@@ -114,6 +170,14 @@
     "chat-fiction-apps:P-03#нюанс": {
       "status": "merged-into:chat-fiction-apps:P-02#нюанс",
       "note": "тот же текст нюанса «К P-02 и P-03»; влито в блок chat-fiction-apps:P-02#нюанс (story-pauses/hooks.md)"
+    },
+    "chat-fiction-apps:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "частота, глава 1, возврат детали сохранены"
+      }
     },
     "choiceofgames-design:attention§3": {
       "status": "merged-into:#attn-return-first",
@@ -195,6 +259,14 @@
         "note": "тон и ставки, эталон первой главы; срок паузы честно помечен отменённым A-01"
       }
     },
+    "dille-ultimate-guide:P-13": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "в сводном блоке R-64; низкая уверенность Dille не помечена, но правило держат другие источники"
+      }
+    },
     "dille-ultimate-guide:P-13#нюанс": {
       "status": "superseded:A-01",
       "note": "называть срок продолжения перед паузой от 6 ч — отменено A-01; крючок перед паузой в силе (hooks.md, R-64)"
@@ -210,6 +282,14 @@
     "edgerton-hooked:attention§3": {
       "status": "merged-into:#attn-return-first",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-first в story-pauses/attention.md"
+    },
+    "edgerton-hooked:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "кнопка «не позже 3-го» обобщена до C-28.pack; ≤60 знаков стало «коротко»"
+      }
     },
     "emshort-structures:attention§3": {
       "status": "merged-into:#attn-return-hook",
@@ -251,9 +331,25 @@
       "status": "merged-into:#attn-return-recap",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-recap в story-pauses/attention.md"
     },
+    "failbetter-qbn:GREEN-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
     "failbetter-qbn:P-08#нюанс": {
       "status": "superseded:A-01",
       "note": "срок паузы перед ощутимой паузой — отменено A-01; причина без срока — R-63 у story-time"
+    },
+    "failbetter-qbn:P-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
     },
     "failbetter-qbn:PAT-10": {
       "fidelity": {
@@ -511,6 +607,14 @@
         "note": "потеряна проверка ботом «первые реплики ответов не совпадают» — она есть в C-10; класс C верен"
       }
     },
+    "messenger-genre:P-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "исключение ночи и порог C-28.pack сохранены"
+      }
+    },
     "messenger-genre:P-13#нюанс": {
       "fidelity": {
         "ok": true,
@@ -719,6 +823,14 @@
         "note": "правило целиком, пример заменён выдуманным"
       }
     },
+    "R-72": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "развилка по C-28.pack/pack_long; новичок — в return.md R-72"
+      }
+    },
     "schell-art-of-game-design:attention§3": {
       "status": "merged-into:#attn-return-batch",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-batch в story-pauses/attention.md"
@@ -739,13 +851,45 @@
       "status": "merged-into:#attn-return-dose",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-dose в story-pauses/attention.md"
     },
+    "serial-hooks:contra-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "до часа → story.pause.long_s; добавлено условие заметок"
+      }
+    },
     "serial-hooks:GREEN-09": {
       "status": "superseded:A-04",
       "note": "быстрый повтор после финала — заменён режимом «по клику» с начала (A-04, R-122); пояснение в flags.md"
     },
+    "serial-hooks:P-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "числа заменены ключами C-33.*"
+      }
+    },
+    "serial-hooks:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "петли ключом attn.hook.open_loops, последняя сессия сохранена"
+      }
+    },
     "serial-hooks:P-13#нюанс": {
       "status": "superseded:A-01",
       "note": "«утром» как честный срок паузы — отменено A-01; время события мира в силе (R-64)"
+    },
+    "serial-hooks:PAT-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "3h → attn.recap.stake_h"
+      }
     },
     "serial-hooks:PAT-11#нюанс": {
       "status": "merged-into:serial-hooks:PAT-11",
@@ -811,6 +955,14 @@
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
     },
+    "skolnick-video-game-storytelling:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
     "snyder-save-the-cat:attention§3": {
       "status": "merged-into:#attn-return-hook",
       "note": "раздел «Возвращение после паузы» сведён в attention-merged.md §5 (T-08) без дублей; держится блоком #attn-return-hook в story-pauses/attention.md"
@@ -837,6 +989,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "схема, ловушки, basis secondary"
+      }
+    },
+    "video-three-things:LESSON-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "класс B, вывод сохранён"
       }
     },
     "vogler-writers-journey:attention§3": {

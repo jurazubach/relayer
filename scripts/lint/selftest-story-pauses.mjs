@@ -13,6 +13,8 @@ export function register(test, { has, hasNot, lint, keys }) {
     const tail = `-> a\n=== a ===\nну #from:ann\n${group('да', 'нет')} на смене #from:ann\nтут шумно #from:ann\nспасибо #from:ann\n#delay:2h\nвернулась #from:ann\n-> END`;
     await hasNot(tail, 'C-26.closing', { only: ['C-26'] });
     await hasNot(tail, 'C-26.share', { only: ['C-26'] });
+    // путь без единой кнопки эпилога не имеет
+    await has(`-> a\n=== a ===\nну #from:ann\nна смене #from:ann\nтут шумно #from:ann\nспасибо #from:ann\n#delay:2h\nвернулась #from:ann\n-> END`, 'C-26.closing', { only: ['C-26'] });
   });
 
   test('C-28: одно слово-событие и «здравствуйте» нового контакта — не пустое уведомление; «привет» знакомого — пустое', async () => {
