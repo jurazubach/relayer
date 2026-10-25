@@ -1,0 +1,38 @@
+src/stories/the-number · переменных 30 · глав 5
+   финальные узлы: new_client · распределители: —
+
+   VAR                пиш.  видно/скрыто  главы  финал  метки                 где пишется → где читается
+   ─────────────────  ────  ────────────  ─────  ─────  ────────────────────  ────────────────────────────────────────────────────────────────────────────────────────
+   theo_trust         14    1/0           1→5           только финал, молчит  plan, confront, opened×2, night +7 → ray_answers
+   told_theo          2     0/0           1→—           мёртвая               hub, sleepless → —
+   lied               1     0/1           1→1           невидимая             sleepless → theo_goes
+   dentist_clue       1     1/0           1→5           только финал, молчит  theo_told → ray_answers
+   dentist_confirmed  2     2/0           1→5           только финал, молчит  hub, confirm_dentist → ray_copy, finale
+   knows_story        1     3/0           1→1                                 who_is_ray → plan, night, ch4
+   watcher_knows      2     2/0           1→1                                 hub, talk → hiding, talk
+   gave_code          1     2/0           1→1                                 open_gate → intruder, hiding
+   climbed            1     1/0           1→1                                 fence → ran
+   warned             2     1/0           1→1                                 intruder×2 → hiding
+   saw_shoes          1     3/0           1→1                                 standoff → night, dashcam, ray_answers
+   bluffed            1     1/0           1→1                                 deal → deal
+   asked_how          1     2/0           1→1                                 deal → deal, cliffhanger
+   ending             3     9/3           1→1                                 locked_in, gave_box, ran → night×3, cliffhanger, ch2, code_hub×4 +3
+   code_choice        3     0/0           2→—           мёртвая               code_hub×3 → —
+   hostile            4     3/2           2→2                                 code_forwarded, code_fake, code_withheld, ch3_end → decoy_gave, ch2_end, ch3, ch3_end +1
+   told_dina          2     1/1           2→2                                 code_hub, rescue_where → code_hub, rescue
+   dina_trust         8     0/1           2→3           невидимая             rescue_drive×2, dina_meets×2, keys, dina_twist×2 +1 → ch3
+   dina_drove         1     3/0           3→3                                 ch3 → to_car, dashcam, dina_twist
+   warned_tail        1     0/0           3→—           мёртвая               tail → —
+   paid_fines         2     1/0           3→3                                 tow_plan, tow_talk → to_car
+   found_adapter      1     1/0           3→3                                 search_loop → dashcam
+   sold_out           1     2/1           3→4                                 ch3_end → laundry_arrival, gives_card, ch4_end
+   gave_card          1     0/0           4→—           мёртвая               gives_card → —
+   redeemed           1     1/0           4→4                                 betrayal → ch4_end
+   fob_safe           1     7/2           4→4                                 betrayal → watcher_leaves, ch5, auction, okafor_reply +2
+   heard_audio        2     0/0           5→—           мёртвая               drive_open×2 → —
+   auction_won        1     0/1           5→5           невидимая             auction → okafor_reply
+   took_role          2     1/0           5→5    да                           okafor_saved, okafor_wait → new_client
+   keep_secret        1     2/0           5→5                                 ray_answers → finale×2
+
+   мёртвых 5 · невидимых 3 · только в финале 3 · не пишутся 0 · молчат 3
+

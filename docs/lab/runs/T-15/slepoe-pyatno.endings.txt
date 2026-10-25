@@ -1,0 +1,38 @@
+src/stories/slepoe-pyatno · финалов 7 (по -> END, меток нет) · прохождений 1602
+   распределители: ch5 · финальные узлы: debrief, end_locked, end_contained, end_backdoor, end_burned, end_quiet, end_complicit, end_phished
+   финал          узел           всего      гл.  random  silent  first  last  refuse  curiou  trusti  suspic  distra  unresp
+   ─────────────  ─────────────  ─────────  ───  ──────  ──────  ─────  ────  ──────  ──────  ──────  ──────  ──────  ──────
+   end_locked     end_locked     390 · 24%  5    15%     0%      0%     0%    51%     0%      0%      100%    15%     14%
+   end_contained  end_contained  38 · 2%    5    3%      0%      0%     0%    6%      0%      0%      0%      3%      7%
+   end_backdoor   end_backdoor   238 · 15%  5    20%     0%      0%     0%    28%     0%      0%      0%      20%     51%
+   end_burned     end_burned     266 · 17%  5    17%     0%      0%     0%    0%      100%    0%      0%      17%     0%
+   end_quiet      end_quiet      319 · 20%  5    8%      100%    0%     100%  15%     0%      0%      0%      8%      28%
+   end_complicit  end_complicit  30 · 2%    5    8%      0%      0%     0%    0%      0%      0%      0%      8%      0%
+   end_phished    end_phished    321 · 20%  5    30%     0%      100%   0%    0%      0%      100%    0%      30%     0%
+
+   значения VAR ending по финалам:
+     end_locked: "locked" 100%
+     end_contained: "contained" 100%
+     end_backdoor: "backdoor" 100%
+     end_burned: "burned" 100%
+     end_quiet: "quiet" 100%
+     end_complicit: "complicit" 100%
+     end_phished: "phished" 100%
+
+   что решает (статически, условия над переходами в финал):
+     end_locked: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+     end_contained: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+     end_burned: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+     end_quiet: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+     end_complicit: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+     end_phished: ending — в ch5; ending ← phished, leaked, note_defense, rotate_full, blamed_rid, replace_nodes, cloudtrail, first_move, obeyed_manager, shift_alert
+
+   что решает (по прохождениям, прирост точности предсказания финала):
+     first_move: +28 п. п. ("token" → end_quiet 44%; "" → end_locked 100%; "iam" → end_phished 35%)
+     trust_sec: +26 п. п. (2 → end_locked 42%; 1 → end_locked 35%; 3 → end_locked 30%)
+     skill: +24 п. п. (8 → end_locked 37%; 7 → end_locked 39%; 9 → end_locked 30%)
+     rotate_full: +20 п. п. (false → end_phished 26%; true → end_locked 100%)
+     moves: +20 п. п. (3 → end_phished 26%; 0 → end_locked 100%)
+
+   ℹ финал «end_complicit» выпал в 2% — достижим ли он целенаправленно? (C-40.rare_share = 0.02)
+

@@ -1,0 +1,30 @@
+src/stories/slepoe-pyatno · переменных 22 · глав 5
+   финальные узлы: debrief, end_locked, end_contained, end_backdoor, end_burned, end_quiet, end_complicit, end_phished · распределители: ch5
+
+   VAR                 пиш.  видно/скрыто  главы  финал  метки                 где пишется → где читается
+   ──────────────────  ────  ────────────  ─────  ─────  ────────────────────  ────────────────────────────────────────────────────────────────────────────────────────────
+   matbug              1     1/0           1→2                                 ch1_reading → ch2_notes
+   pods_seen           1     1/0           1→2                                 ch1_bonus → ch2
+   snapshot            2     4/6           2→2    да                           ch2_vera, ch2_rita → ch2_kill, ch2_rotate_push×2, ch3_token, ch3_ghost +3
+   games_pulled_early  1     1/0           2→2                                 ch2_rita → ch2_notes
+   rotate_full         3     8/12          2→5    да                           ch2_rotate_push, ch3_token×2 → ch3_token, ch3_ghost, ch4, ch5×9 +1
+   rotate_pushed       2     3/6           2→3    да                           ch2_rotate, ch3_token → ch3_token×3, ch3_ghost, ch4, ch5×3 +1
+   shift_alert         1     10/7          3→4    да                           ch3_alert → ch4_node, ch4_after, ch5×7, debrief×8
+   note_defense        1     10/7          2→3    да                           ch2_notes → ch3_ghost, ch4_node, ch5×7, debrief×8
+   knows_prep          1     4/1           3→3    да                           ch3 → ch3_alert, ch4_node, ch4_after, ch5 +1
+   blamed_rid          1     7/7           4→5    да     только финал          ch4 → ch5×7, debrief×7
+   replace_nodes       2     8/7           4→5    да     только финал          ch4_cleanup, ch4_locked → ch5×7, end_backdoor, debrief×7
+   cloudtrail          2     9/7           4→5    да     только финал          ch4_cleanup, ch4_locked → ch5×7, end_backdoor×2, debrief×7
+   first_move          3     8/7           4→4    да                           ch4_moves×3 → ch4_after, ch5×7, debrief×7
+   moves               3     3/4           4→4    да                           ch4_moves×3 → ch4_moves×3, ch4_after, ch5, debrief×2
+   trust_lead          5     5/1           1→3    да                           ch1, ch1_reading, ch2_vera, ch4×2 → ch3_alert, ch4_cleanup, ch4_node, ch4_after +2
+   trust_sec           11    3/6           2→2    да                           ch2_vera, ch2_rita, ch2_kill, ch2_notes +6 → ch2_rotate_push, ch3_token×2, ch3_ghost, ch4 +2
+   leaked              2     7/7           3→5    да     только финал          ch3_ghost, ch4_fake → ch5×7, debrief×7
+   phished             1     8/7           4→5    да     только финал          ch4_fake → ch5×7, debrief×8
+   checked_fake        1     1/0           4→5    да     только финал          ch4_fake → debrief
+   obeyed_manager      2     7/7           2→5    да     только финал, молчит  ch2_rita, ch3 → ch5×7, debrief×7
+   skill               23    2/0           1→5    да     только финал, молчит  ch1×3, ch1_reading×2, ch1_bonus, ch2 +14 → debrief×2
+   ending              7     7/6           5→5    да                           ch5×7 → ch5×6, debrief×7
+
+   мёртвых 0 · невидимых 0 · только в финале 8 · не пишутся 0 · молчат 2
+

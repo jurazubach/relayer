@@ -1,0 +1,395 @@
+{
+ "stories": [
+  {
+   "id": "slepoe-pyatno",
+   "path": "src/stories/slepoe-pyatno",
+   "runs": 400,
+   "levels": {
+    "ось": [
+     "sec",
+     "lead",
+     "devops",
+     "intern",
+     "manager"
+    ],
+    "сторона": [],
+    "источник": [],
+    "фон": [
+     "argus",
+     "ghost",
+     "partner"
+    ],
+    "эпизодический": [
+     "fake",
+     "notes"
+    ]
+   },
+   "cast": [
+    {
+     "id": "sec",
+     "name": "Меган",
+     "level": "ось",
+     "why": "финал читает snapshot, trust_sec",
+     "first": 2,
+     "unlock": 2,
+     "lines": 126,
+     "blocks": 44,
+     "buttons": 17,
+     "chapters": [
+      2,
+      3,
+      4,
+      5
+     ],
+     "presence": 0.8,
+     "vars": [
+      "snapshot",
+      "trust_sec"
+     ],
+     "finalVars": [
+      "snapshot",
+      "trust_sec"
+     ],
+     "notes": [],
+     "under": {
+      "trust_lead": 1,
+      "snapshot": 2,
+      "trust_sec": 10,
+      "skill": 7,
+      "rotate_full": 1,
+      "moves": 1,
+      "first_move": 1,
+      "cloudtrail": 1
+     },
+     "played": {
+      "median": 63,
+      "share": 1
+     }
+    },
+    {
+     "id": "lead",
+     "name": "Кай",
+     "level": "ось",
+     "why": "финал читает trust_lead",
+     "first": 1,
+     "unlock": null,
+     "lines": 50,
+     "blocks": 24,
+     "buttons": 8,
+     "chapters": [
+      1,
+      2,
+      3,
+      4,
+      5
+     ],
+     "presence": 1,
+     "vars": [
+      "trust_lead",
+      "matbug"
+     ],
+     "finalVars": [
+      "trust_lead"
+     ],
+     "notes": [],
+     "under": {
+      "trust_lead": 3,
+      "skill": 4,
+      "matbug": 1,
+      "moves": 1,
+      "first_move": 1
+     },
+     "played": {
+      "median": 28,
+      "share": 1
+     }
+    },
+    {
+     "id": "devops",
+     "name": "Рид",
+     "level": "ось",
+     "why": "финал читает rotate_pushed, blamed_rid, checked_fake",
+     "first": 2,
+     "unlock": 2,
+     "lines": 50,
+     "blocks": 22,
+     "buttons": 11,
+     "chapters": [
+      2,
+      3,
+      4,
+      5
+     ],
+     "presence": 0.8,
+     "vars": [
+      "rotate_pushed",
+      "blamed_rid",
+      "checked_fake"
+     ],
+     "finalVars": [
+      "rotate_pushed",
+      "blamed_rid",
+      "checked_fake"
+     ],
+     "notes": [],
+     "under": {
+      "skill": 4,
+      "rotate_pushed": 2,
+      "rotate_full": 1,
+      "blamed_rid": 1,
+      "trust_lead": 1,
+      "checked_fake": 1,
+      "trust_sec": 1,
+      "moves": 1,
+      "first_move": 1,
+      "replace_nodes": 1
+     },
+     "played": {
+      "median": 27,
+      "share": 1
+     }
+    },
+    {
+     "id": "intern",
+     "name": "Итан",
+     "level": "ось",
+     "why": "финал читает knows_prep",
+     "first": 1,
+     "unlock": 1,
+     "lines": 40,
+     "blocks": 14,
+     "buttons": 8,
+     "chapters": [
+      1,
+      3,
+      4
+     ],
+     "presence": 0.6,
+     "vars": [
+      "pods_seen",
+      "knows_prep"
+     ],
+     "finalVars": [
+      "knows_prep"
+     ],
+     "notes": [],
+     "under": {
+      "skill": 4,
+      "pods_seen": 1,
+      "knows_prep": 1
+     },
+     "played": {
+      "median": 30,
+      "share": 1
+     }
+    },
+    {
+     "id": "argus",
+     "name": "Аргус",
+     "level": "фон",
+     "why": "реплик 18, кнопок 0, глав 3",
+     "first": 2,
+     "unlock": null,
+     "lines": 18,
+     "blocks": 6,
+     "buttons": 0,
+     "chapters": [
+      2,
+      4,
+      5
+     ],
+     "presence": 0.6,
+     "vars": [],
+     "finalVars": [],
+     "notes": [
+      "нет в characters"
+     ],
+     "under": {},
+     "played": {
+      "median": 8,
+      "share": 1
+     }
+    },
+    {
+     "id": "ghost",
+     "name": "Неизвестный номер",
+     "level": "фон",
+     "why": "реплик 17, кнопок 2, глав 3",
+     "first": 3,
+     "unlock": 3,
+     "lines": 17,
+     "blocks": 8,
+     "buttons": 2,
+     "chapters": [
+      3,
+      4,
+      5
+     ],
+     "presence": 0.6,
+     "vars": [],
+     "finalVars": [],
+     "notes": [],
+     "under": {
+      "leaked": 1
+     },
+     "played": {
+      "median": 5,
+      "share": 1
+     }
+    },
+    {
+     "id": "manager",
+     "name": "Рита",
+     "level": "ось",
+     "why": "финал читает obeyed_manager",
+     "first": 2,
+     "unlock": 2,
+     "lines": 10,
+     "blocks": 6,
+     "buttons": 5,
+     "chapters": [
+      2,
+      3,
+      5
+     ],
+     "presence": 0.6,
+     "vars": [
+      "games_pulled_early",
+      "obeyed_manager"
+     ],
+     "finalVars": [
+      "obeyed_manager"
+     ],
+     "notes": [],
+     "under": {
+      "games_pulled_early": 1,
+      "skill": 1,
+      "obeyed_manager": 2
+     },
+     "played": {
+      "median": 3,
+      "share": 1
+     }
+    },
+    {
+     "id": "partner",
+     "name": "Кронбет",
+     "level": "фон",
+     "why": "реплик 10, кнопок 2, глав 2",
+     "first": 1,
+     "unlock": null,
+     "lines": 10,
+     "blocks": 5,
+     "buttons": 2,
+     "chapters": [
+      1,
+      4
+     ],
+     "presence": 0.4,
+     "vars": [],
+     "finalVars": [],
+     "notes": [],
+     "under": {
+      "skill": 1
+     },
+     "played": {
+      "median": 6,
+      "share": 1
+     }
+    },
+    {
+     "id": "fake",
+     "name": "Рид (новый номер)",
+     "level": "эпизодический",
+     "why": "реплик 6 < 10",
+     "first": 4,
+     "unlock": 4,
+     "lines": 6,
+     "blocks": 3,
+     "buttons": 2,
+     "chapters": [
+      4
+     ],
+     "presence": 0.2,
+     "vars": [
+      "phished"
+     ],
+     "finalVars": [
+      "phished"
+     ],
+     "notes": [],
+     "under": {
+      "phished": 1,
+      "leaked": 1
+     },
+     "played": {
+      "median": 4,
+      "share": 0.84
+     }
+    },
+    {
+     "id": "notes",
+     "name": "Заметки",
+     "level": "эпизодический",
+     "why": "реплик 4 < 10",
+     "first": 2,
+     "unlock": null,
+     "lines": 4,
+     "blocks": 0,
+     "buttons": 2,
+     "chapters": [
+      2
+     ],
+     "presence": 0.2,
+     "vars": [
+      "note_defense"
+     ],
+     "finalVars": [
+      "note_defense"
+     ],
+     "notes": [
+      "нет в characters"
+     ],
+     "under": {
+      "note_defense": 1,
+      "skill": 1
+     },
+     "played": {
+      "median": 1,
+      "share": 0.65
+     }
+    }
+   ]
+  }
+ ],
+ "thresholds": [
+  {
+   "key": "cast.episodic_lines",
+   "value": 10,
+   "unit": "реплик",
+   "from": "docs/playbook/thresholds.json",
+   "basis": "source"
+  },
+  {
+   "key": "cast.main_lines",
+   "value": 20,
+   "unit": "реплик",
+   "from": "docs/playbook/thresholds.json",
+   "basis": "source"
+  },
+  {
+   "key": "cast.side_buttons",
+   "value": 3,
+   "unit": "кнопок",
+   "from": "docs/playbook/thresholds.json",
+   "basis": "our_estimate"
+  },
+  {
+   "key": "cast.side_presence",
+   "value": 0.5,
+   "unit": "доля глав",
+   "from": "docs/playbook/thresholds.json",
+   "basis": "our_estimate"
+  }
+ ]
+}
