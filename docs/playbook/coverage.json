@@ -119,6 +119,14 @@
         "note": ""
       }
     },
+    "choiceofgames-design:P-11#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "choiceofgames-design:P-14": {
       "fidelity": {
         "ok": true,
@@ -133,6 +141,14 @@
         "date": "2026-10-25",
         "by": "W1",
         "note": "цена 1–3 строки словами, без ключа; исключение сохранено"
+      }
+    },
+    "cron-wired-for-story:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     },
     "cron-wired-for-story:LESSON-06": {
@@ -187,12 +203,28 @@
         "note": "«> 2 глав» передано ключом vars.silent_chapters"
       }
     },
+    "F-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "F-14": {
       "fidelity": {
         "ok": true,
         "date": "2026-10-25",
         "by": "review",
         "note": "шаги и замеры сохранены"
+      }
+    },
+    "failbetter-qbn:LESSON-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     },
     "failbetter-qbn:PAT-10": {
@@ -214,6 +246,14 @@
     "inkle-ingold:contra-4": {
       "status": "merged-into:ashwell-standard-patterns:contra-2",
       "note": "тот же спор/урок/нюанс; содержание влито в блок ashwell-standard-patterns:contra-2 (story-choices)"
+    },
+    "inkle-ingold:LESSON-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
     },
     "inkle-ingold:P-02#нюанс": {
       "fidelity": {
@@ -291,6 +331,14 @@
         "note": ""
       }
     },
+    "inkle-ingold:SYS-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "maass-fire-in-fiction:RED-06": {
       "fidelity": {
         "ok": true,
@@ -317,6 +365,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "basis model и уверенность сохранены"
+      }
+    },
+    "mckee-story:PAT-06#нюанс": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "в источнике кнопок кризиса до 4, в reference «три — потолок» числом без ключа; исправлено в ревью на C-12.four"
       }
     },
     "mckee-story:SYS-2": {
@@ -415,6 +471,14 @@
       "status": "merged-into:meaningful-choice:P-11#нюанс",
       "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:P-11#нюанс (story-choices)"
     },
+    "meaningful-choice:PAT-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "meaningful-choice:PAT-09#нюанс": {
       "fidelity": {
         "ok": true,
@@ -426,6 +490,14 @@
     "messenger-genre:contra-5": {
       "status": "merged-into:bateman-game-writing:contra-5",
       "note": "тот же спор/урок/нюанс; содержание влито в блок bateman-game-writing:contra-5 (story-choices)"
+    },
+    "messenger-genre:GREEN-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
     },
     "messenger-genre:LESSON-06": {
       "fidelity": {
@@ -441,6 +513,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "аналог #label сохранён"
+      }
+    },
+    "messenger-genre:RED-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     },
     "mobile-interactive-stories:LESSON-05": {
@@ -505,6 +585,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "перекос ключом C-17.ratio"
+      }
+    },
+    "narrative-postmortems:RED-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     },
     "narrative-postmortems:RED-12": {
@@ -579,6 +667,14 @@
       "status": "merged-into:emshort-structures:contra-3",
       "note": "тот же спор/урок/нюанс; содержание влито в блок emshort-structures:contra-3 (story-choices)"
     },
+    "procedural-storytelling:contra-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "procedural-storytelling:LESSON-07": {
       "fidelity": {
         "ok": true,
@@ -625,6 +721,14 @@
         "date": "2026-10-25",
         "by": "review",
         "note": "правило целиком, пример заменён выдуманным"
+      }
+    },
+    "R-108": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     },
     "schell-art-of-game-design:contra-4": {
@@ -691,6 +795,30 @@
       "status": "merged-into:sheldon-character-storytelling:LESSON-03",
       "note": "тот же спор/урок/нюанс; содержание влито в блок sheldon-character-storytelling:LESSON-03 (story-choices)"
     },
+    "snyder-save-the-cat:P-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "смысл сохранён; потеряно «минимум три развилки в последней главе» (держит C-06)"
+      }
+    },
+    "snyder-save-the-cat:RED-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
+    "snyder-save-the-cat:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "truby-anatomy-of-story:LESSON-02": {
       "status": "merged-into:meaningful-choice:LESSON-04",
       "note": "тот же спор/урок/нюанс; содержание влито в блок meaningful-choice:LESSON-04 (story-choices)"
@@ -711,12 +839,44 @@
         "note": "схема, ловушки, basis secondary"
       }
     },
+    "truby-anatomy-of-story:RED-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
+    "vogler-writers-journey:P-13#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
+    "vogler-writers-journey:P-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
+      }
+    },
     "vogler-writers-journey:PAT-06": {
       "fidelity": {
         "ok": false,
         "date": "2026-10-25",
         "by": "review",
         "note": "порог короткой истории (15 минут) искажён в несколько десятков минут; исправлено ревьюером"
+      }
+    },
+    "vogler-writers-journey:PAT-08#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ok"
       }
     }
   }
