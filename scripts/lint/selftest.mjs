@@ -593,4 +593,4 @@ else {
   for (const r of results) console.log(`${r.ok ? '✓' : '✗'} ${r.name}${r.ok ? '' : `\n    ${r.error.split('\n').join('\n    ')}`}`);
   console.log(`\n${results.length - failed.length} из ${results.length} тестов прошли`);
 }
-process.exit(failed.length ? 1 : 0);
+process.exitCode = failed.length ? 1 : 0;

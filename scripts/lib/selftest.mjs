@@ -594,4 +594,4 @@ for (const t of tests) {
 const failed = results.filter((r) => !r.ok).length;
 if (asJson) console.log(JSON.stringify({ ok: failed === 0, passed: results.length - failed, failed, results }, null, 2));
 else console.log(`\n${results.length - failed} из ${results.length} прошли${failed ? `, упали: ${failed}` : ''}`);
-process.exit(failed ? 1 : 0);
+process.exitCode = failed ? 1 : 0;
