@@ -31,8 +31,8 @@
 
 ## 4. Сколько длится история
 
-- **Стороны:** `yorke-into-the-woods`, `skolnick-video-game-storytelling` — около трёх дней (Lifeline);
-  `inkle-ingold:P-18`, `schell-art-of-game-design` — 48 часов.
+- **Стороны:** `yorke-into-the-woods`, `skolnick-video-game-storytelling` — около `story.length.max_h` (Lifeline);
+  `inkle-ingold:P-18`, `schell-art-of-game-design` — `story.length.target_h`.
 - **Решение автора (A-05):** цель `story.length.target_h`, потолок `story.length.max_h`, пауза до
   `story.pause.max_h`, хвост — минуты.
 
