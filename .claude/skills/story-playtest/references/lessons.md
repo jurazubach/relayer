@@ -87,3 +87,13 @@
 `narrative-testing:LESSON-01`, `LESSON-10`, `LESSON-11`, `LESSON-12`; `inkle-ingold:LESSON-06`;
 `choiceofgames-design:LESSON-06`, `LESSON-09`, `LESSON-14`; `procedural-storytelling:LESSON-10`;
 `attention-today:LESSON-03`; `messenger-genre:LESSON-08`; `serial-hooks:LESSON-05`.
+
+## Наши уроки (LOCAL)
+
+### LOCAL-13 · Холодный читатель с `--json` на длинной истории делает прогон недействительным
+
+Класс A, двенадцать прогонов ревью. `story:cold-read --ask --json` несёт всю переписку до узла; на длинной истории
+вывод больше лимита, Claude Code сохраняет его в файл, агент дочитывает файл интерпретатором и получает отказ в
+правах — прогон по T-17 недействителен. Без `--json` команда печатает ответ, ключ и проверку изоляции, и отказов
+нет. Вывод: агенту `cold-reader` — `--ask` без `--json`; JSON — только скрипту, который сам его разбирает.
+
