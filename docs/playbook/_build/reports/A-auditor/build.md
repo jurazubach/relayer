@@ -39,7 +39,7 @@
 ## Проверки
 
 - `node docs/playbook/_build/checks/agent-check.mjs story-auditor` → `✓ агент story-auditor: ок`.
-- Ссылки таблицы: все 31 относительная ссылка `../skills/…` ведут на существующие файлы.
+- Ссылки таблицы: все 33 относительные ссылки `../skills/…` ведут на существующие файлы.
 - Сторож Bash отдельно, 17 случаев: пропускает `npm run -s story:lint -- --story x --only C-35`, абсолютный путь к
   `story-pace/scripts/pace.mjs`, `grep -n "^===\|…"`, `grep -n -E "a|b"`, `grep -rn`, `grep '…'`, `grep` без флагов;
   отклоняет `> out`, `"$(rm …)"`, `\"` с `;` внутри, `; rm`, `| head`, скрипт `story-desk`, `story:unpack`,
