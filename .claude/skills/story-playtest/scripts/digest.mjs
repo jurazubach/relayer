@@ -25,6 +25,11 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/digest.mjs --story <id|набо�
       тип: скучно | непонятно | не верю | нестыковка | баг | выбор | понравилось | предложение
       место: узел (ch2_bank), «начало сообщения» или «Чат: начало сообщения»
 
+Ответ холодного читателя (цитата «> …» в заготовке panel.mjs или сам .json от story:cold-read --json, если он
+передан файлом) разбирается и по шкале «Интерес» (references/cold-reader.md, «Формат ответа»): точка «теряю» с
+цитатой становится строкой «скучно» с пометкой «интерес», а сводка считает по каждой точке, сколько профилей
+держит, ровно, теряю и где именно теряют.
+
 Обязательный список: одно место и один тип у lab.playtest.repeat_min живых людей при волне до
 lab.playtest.small_wave_max человек, у доли lab.playtest.repeat_share — при большей. Один человек против замера
 — «нужен третий» (Б-3). Совпадения профилей симуляции — кандидат: это одна модель, а не независимые люди.
@@ -49,7 +54,50 @@ export const TYPE_CHECKS = {
 
 const norm = (s) => String(s).toLowerCase().replace(/ё/g, 'е').replace(/[«»"“”„.,!?…:;()—–-]/g, ' ').replace(/\s+/g, ' ').trim();
 
-/** Файл отзыва → { tester, mode, source, log, notes: [{ type, place, symptom }] }. */
+// Точки шкалы интереса — в порядке протокола; узнаются по словам, а не по точной строке: модель пишет их по-разному.
+export const POINTS = [
+  { id: 'first', name: 'после первых сообщений', re: /перв\S*\s+сообщ/i },
+  { id: 'button', name: 'на первой кнопке', re: /кнопк/i },
+  { id: 'pause', name: 'перед паузой', re: /перед\s+пауз/i },
+  { id: 'return', name: 'после возвращения', re: /возвращ/i },
+];
+export const LEVELS = ['держит', 'ровно', 'теряю'];
+
+/** Блок «Интерес» ответа читателя → [{ point, level, quote, why }]; «нет» — точки в отрезке не было. */
+export function interestOf(answer) {
+  const out = [];
+  let inside = false;
+  for (const raw of String(answer).split('\n')) {
+    const line = raw.replace(/^\s*>\s?/, '');
+    if (/^\s*[*_]*Интерес[*_]*\s*:/i.test(line)) { inside = true; continue; }
+    if (!inside) continue;
+    if (/^\s*[*_]*(Итог|Слабое место|К\d)/i.test(line)) break;
+    const m = line.match(/^\s*[-*]?\s*(.+?)\s*:\s*[*_]*(держит|ровно|теряю|нет)[*_]*(?![\p{L}])(.*)$/iu);
+    if (!m) continue;
+    const point = POINTS.find((p) => p.re.test(m[1]));
+    if (!point || out.some((x) => x.point === point.id)) continue;
+    const level = m[2].toLowerCase();
+    const quote = m[3].match(/[«"“]([^»"”]+)[»"”]/)?.[1]?.trim() ?? null;
+    const why = m[3].split(/\s[—–-]\s/).map((x) => x.trim()).filter((x) => x && !/^[«"“]/.test(x)).join(' — ') || null;
+    out.push({ point: point.id, level: level === 'нет' ? null : level, quote, why });
+  }
+  return out;
+}
+
+/** «Теряю» с цитатой → строка «скучно» с пометкой «интерес», если модель не отметила то же место сама. */
+function interestNotes(interest, notes) {
+  const seen = new Set(notes.filter((n) => n.type === 'скучно').map((n) => norm(n.place)));
+  return interest.filter((x) => x.level === 'теряю' && x.quote && !seen.has(norm(`«${x.quote}»`)))
+    .map((x) => ({ type: 'скучно', place: `«${x.quote}»`, symptom: `интерес: теряю ${POINTS.find((p) => p.id === x.point).name}${x.why ? ` — ${x.why}` : ''}`, interest: x.point }));
+}
+
+/** Ответ story:cold-read --json → отзыв симуляции (без разметки модели: только шкала интереса). */
+export function feedbackFromCold(data, file = '') {
+  const interest = interestOf(data.answer ?? '');
+  return { file, tester: data.profile ?? basename(file, '.json'), mode: data.mode === 'click' ? 'click' : 'realtime', source: 'симуляция', log: null, notes: interestNotes(interest, []), bad: [], interest };
+}
+
+/** Файл отзыва → { tester, mode, source, log, notes: [{ type, place, symptom }], interest }. */
 export function parseFeedback(text, file = '') {
   const head = (k) => text.match(new RegExp(`^\\s*${k}\\s*:\\s*(.+)$`, 'mi'))?.[1]?.trim() ?? null;
   const notes = [];
@@ -67,7 +115,10 @@ export function parseFeedback(text, file = '') {
     notes.push({ type: known, place, symptom: parts.slice(split ? 3 : 2).join(' · ') || null });
   }
   const source = /симул/i.test(head('источник') ?? '') ? 'симуляция' : 'живой';
-  return { file, tester: head('тестер') ?? basename(file, '.md'), mode: head('режим'), source, log: head('журнал'), notes, bad };
+  // шкалу читают только у симуляции: у живого тестера цитата «> …» — его собственные слова, а не ответ по протоколу
+  const interest = source === 'симуляция' ? interestOf(text.split('\n').filter((l) => /^\s*>/.test(l)).join('\n')) : [];
+  notes.push(...interestNotes(interest, notes));
+  return { file, tester: head('тестер') ?? basename(file, '.md'), mode: head('режим'), source, log: head('журнал'), notes, bad, interest };
 }
 
 /** Строки ink с узлами: где искать цитату тестера. */
@@ -135,6 +186,18 @@ export function digest(feedback, p, findings, T) {
       if (n.symptom) g.quotes.push(`${fb.tester}: ${n.symptom}`);
     }
   }
+  // шкала интереса по точкам: сколько профилей держит / ровно / теряю и в каких узлах теряют
+  const interest = POINTS.map((pt) => {
+    const row = { point: pt.id, name: pt.name, 'держит': 0, 'ровно': 0, 'теряю': 0, none: 0, lost: [] };
+    for (const fb of feedback) {
+      const x = fb.interest?.find((i) => i.point === pt.id);
+      if (!x) continue;
+      if (!x.level) { row.none++; continue; }
+      row[x.level]++;
+      if (x.level === 'теряю') row.lost.push({ tester: fb.tester, knot: x.quote ? locate(`«${x.quote}»`, { nodes, path: null, lines }).knot : null, quote: x.quote, why: x.why });
+    }
+    return row;
+  });
   const wave = live.size;
   const need = wave > T.value('lab.playtest.small_wave_max') ? Math.ceil(wave * T.value('lab.playtest.repeat_share')) : T.value('lab.playtest.repeat_min');
   const rows = [...groups.values()].map((g) => {
@@ -148,12 +211,13 @@ export function digest(feedback, p, findings, T) {
     else status = '—';
     return { knot: g.knot, chapter: g.chapter, type: g.type, people, sim: g.sim.size, simProfiles: [...g.sim], testers: [...g.live], measure: m.verdict, checks: m.checks, owner: m.owner ?? TYPE_CHECKS[g.type].owner, status, quotes: g.quotes };
   }).sort((a, b) => (b.people - a.people) || ((b.measure === 'да') - (a.measure === 'да')) || (b.sim - a.sim) || String(a.knot).localeCompare(String(b.knot)));
-  return { story: p.story.id, wave, need, simulated: feedback.some((f) => f.source === 'симуляция'), onlySimulated: !wave, rows, side, unplaced, bad: feedback.flatMap((f) => f.bad.map((b) => `${f.tester}: ${b}`)) };
+  return { story: p.story.id, wave, need, interest: interest.some((r) => r['держит'] + r['ровно'] + r['теряю'] + r.none) ? interest : null, simulated: feedback.some((f) => f.source === 'симуляция'), onlySimulated: !wave, rows, side, unplaced, bad: feedback.flatMap((f) => f.bad.map((b) => `${f.tester}: ${b}`)) };
 }
 
 function files(args) {
   const out = [];
   for (const a of args) {
+    // из папки — только .md: рядом panel.mjs кладёт .json того же читателя, он посчитался бы дважды
     if (statSync(a).isDirectory()) out.push(...readdirSync(a).filter((f) => f.endsWith('.md')).sort().map((f) => join(a, f)));
     else out.push(a);
   }
@@ -168,7 +232,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
   if (!inputs.length) throw new Error('нужны файлы отзывов (.md) или папка с ними');
   const T = thresholds();
   const p = prepare(ref);
-  const feedback = inputs.map((f) => parseFeedback(readFileSync(f, 'utf8'), f)).filter((f) => f.notes.length || f.bad.length);
+  const feedback = inputs.map((f) => (f.endsWith('.json') ? feedbackFromCold(JSON.parse(readFileSync(f, 'utf8')), f) : parseFeedback(readFileSync(f, 'utf8'), f)))
+    .filter((f) => f.notes.length || f.bad.length || f.interest.length);
   const findings = args.has('no-lint') ? null : lintFindings(p.story.path, p.nodes.includes('beta_stop'));
   const d = digest(feedback, p, findings, T);
   if (args.has('json')) { console.log(JSON.stringify(d, null, 1)); return 0; }
@@ -181,9 +246,15 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
     const measure = r.measure === 'да' || r.measure === 'рядом' ? `${r.measure}: ${r.checks.join(', ')}` : r.measure;
     console.log(`| ${r.knot} | ${r.type} | ${r.people} | ${r.sim ? `${r.sim} (${r.simProfiles.join(', ')})` : '—'} | ${measure} | ${r.owner} | ${r.status} | ${r.quotes.slice(0, 3).join('; ').replace(/\|/g, '/')} |`);
   }
+  if (d.interest) {
+    console.log('\nИнтерес по точкам (симуляция: шкала холодных читателей, references/cold-reader.md):\n');
+    console.log('| точка | держит | ровно | теряю | нет точки | где теряют |');
+    console.log('|---|---|---|---|---|---|');
+    for (const r of d.interest) console.log(`| ${r.name} | ${r['держит']} | ${r['ровно']} | ${r['теряю']} | ${r.none} | ${r.lost.map((l) => `${l.knot ?? `«${l.quote ?? '?'}»`} (${l.tester}${l.why ? `: ${l.why}` : ''})`).join('; ').replace(/\|/g, '/') || '—'} |`);
+  }
   if (d.unplaced.length) console.log(`\nБез места (уточнить у тестера: чат и начало сообщения, RED-14):\n${d.unplaced.map((u) => `- ${u.tester} · ${u.type} · ${u.place}${u.symptom ? ` · ${u.symptom}` : ''}`).join('\n')}`);
   if (d.side['понравилось'].length) console.log(`\nПонравилось (не сломать при правке):\n${d.side['понравилось'].map((s) => `- ${s.knot ?? s.place} · ${s.tester}${s.text ? `: ${s.text}` : ''}`).join('\n')}`);
   if (d.side['предложение'].length) console.log(`\nРецепты тестеров (в ideas.md, не в правку — P-05):\n${d.side['предложение'].map((s) => `- ${s.knot ?? s.place} · ${s.tester}${s.text ? `: ${s.text}` : ''}`).join('\n')}`);
   if (d.bad.length) console.log(`\nНе разобраны (тип не из списка или нет места):\n${d.bad.map((b) => `- ${b}`).join('\n')}`);
   return 0;
-});
+}, { bool: ['no-lint'] });

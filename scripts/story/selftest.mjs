@@ -14,6 +14,8 @@ import { gapTime, typingTime } from '../lib/playtime.mjs';
 import { threshold, thresholdEntry, thresholdSeconds } from '../lib/thresholds.mjs';
 import { varIndex } from './core/vars-index.mjs';
 import { MODES, checkIsolation, readProtocol } from './core/cold.mjs';
+import { PROTOCOL, readProfiles } from './cold-read.mjs';
+import { POINTS, interestOf } from '../../.claude/skills/story-playtest/scripts/digest.mjs';
 import { hunks, lineDiff, nodeDialogue } from './core/dialogue.mjs';
 import { lookupId, normalizeId } from './core/playbook.mjs';
 import { knownStep, parseDecisions, pickActive, readStates } from './core/state.mjs';
@@ -529,14 +531,43 @@ test('cold-read: режимы return и voices; протокол; проверк
   assert.ok(!/^ {3}(Анна|Боб):/m.test(v.transcript), 'подпись с именем в голосах вслепую');
   assert.ok(!/Анна не в сети/.test(v.transcript));
   assert.deepEqual(Object.values(v.key.voices).sort(), ['Анна', 'Банк', 'Боб']);
-  const proto = readProtocol(join(HERE, 'cold-reader-protocol.md'));
+  // протокол один — у скилла story-playtest: его читают и команда, и агент cold-reader
+  const proto = readProtocol(PROTOCOL);
   assert.ok(proto.role && proto.control && proto.format);
   for (const m of Object.keys(MODES)) assert.ok(proto.mode(m), `в протоколе нет режима ${m}`);
+  assert.deepEqual(Object.keys(readProfiles(PROTOCOL)).sort(), ['attentive', 'distracted', 'hurried', 'skeptic', 'unresponsive']);
+  assert.match(proto.control, /виновник/);
+  for (const pt of POINTS) assert.ok(pt.re.test(proto.format), `в «Формате ответа» нет точки «${pt.name}»`);
   const p = prepare(PROBE);
   const clean = checkIsolation('К1. Не знаю. К2. Не знаю.', p, v.transcript);
   assert.equal(clean.ok, true);
   const leak = checkIsolation('К1. finale. К3. вижу CLAUDE.md', p, v.transcript);
   assert.deepEqual([leak.ok, leak.leaks, leak.traces], [false, ['finale'], ['CLAUDE.md']]);
+});
+
+test('cold-read: --last — срез последних строк; --profile — только из протокола', () => {
+  const full = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0']);
+  const cut = cmdJson('cold-read', ['--story', PROBE, '--until', 'finale', '--route', '0', '--last', '2']);
+  assert.equal(cut.lines, 2);
+  assert.ok(cut.lines < full.lines);
+  assert.equal(cut.last, 2);
+  assert.equal(cmd('cold-read', ['--story', PROBE, '--until', 'finale', '--profile', 'нет-такого', '--ask']).code, 2);
+});
+
+test('cold-read: шкала интереса по точкам из ответа читателя', () => {
+  const answer = [
+    '1. Не знаю.', 'Интерес:',
+    '- после первых сообщений: держит — «ты не спишь?» — кто-то в беде',
+    '- **на первой кнопке**: ровно — «Кто это?» — кнопки понятные',
+    '- перед паузой: нет',
+    '- после возвращения: теряю — «Акция только сегодня» — реклама вместо истории',
+    'Итог: дочитал бы', 'К1. не знаю',
+  ].join('\n');
+  const x = interestOf(answer);
+  assert.deepEqual(x.map((i) => [i.point, i.level]), [['first', 'держит'], ['button', 'ровно'], ['pause', null], ['return', 'теряю']]);
+  assert.equal(x[3].quote, 'Акция только сегодня');
+  assert.equal(x[3].why, 'реклама вместо истории');
+  assert.deepEqual(interestOf('Итог: дочитал бы'), []);
 });
 
 // ───────── прогон

@@ -1,7 +1,7 @@
 // story:cold-read — видимая переписка до узла для холодного читателя; --ask — сам читатель через claude -p
 // из пустого каталога, без инструментов (план §6, claude-code-format.md §4.1).
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, realpathSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -11,9 +11,8 @@ import { prepare, runOnce } from './core/run.mjs';
 import { MODES, checkIsolation, compose, nextLines, readProtocol } from './core/cold.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-// Протокол — у скилла story-playtest (TH-88); заглушка рядом остаётся запасной, если скилла в проекте нет.
-const SKILL_PROTOCOL = join(HERE, '../../.claude/skills/story-playtest/references/cold-reader.md');
-const PROTOCOL = existsSync(SKILL_PROTOCOL) ? SKILL_PROTOCOL : join(HERE, 'cold-reader-protocol.md');
+// Протокол один — у скилла story-playtest (TH-88): через эту команду его же берёт агент cold-reader.
+export const PROTOCOL = join(HERE, '../../.claude/skills/story-playtest/references/cold-reader.md');
 // Модель не настраивается: Opus для всех агентов — решение автора (INTENT.md), совет flow-review о второй модели им перекрыт.
 const MODEL = 'claude-opus-5-5';
 
@@ -36,8 +35,7 @@ ${Object.entries(MODES).map(([k, v]) => `  ${k.padEnd(9)}${v}`).join('\n')}
 
 --ask запускает читателя: claude -p --model ${MODEL} из пустого временного каталога, --tools "",
 без MCP, настроек, команд и автопамяти, роль и вопросы — из протокола (по умолчанию
-.claude/skills/story-playtest/references/cold-reader.md, без скилла — заглушка
-scripts/story/cold-reader-protocol.md). Контрольные вопросы (служебное имя последнего узла, финалы и
+.claude/skills/story-playtest/references/cold-reader.md; его же берёт агент cold-reader). Контрольные вопросы (служебное имя последнего узла, финалы и
 виновник, название истории) проверяют изоляцию: если в ответе есть имя узла, финала или истории,
 которого нет в переписке, или следы проекта — изоляция нарушена, код выхода 1. Строки ответа об
 окружении claude -p (почта, рабочая папка, пути) из сохраняемого ответа вырезаются: это не знание
