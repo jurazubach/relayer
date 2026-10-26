@@ -9052,6 +9052,25 @@
       }
     ]
   },
+  "lab.stability_runs": {
+    "value": 3,
+    "unit": "прогонов",
+    "op": "<",
+    "level": "error",
+    "basis": "our_estimate",
+    "sources": [
+      "build-plan.md §13 Э2: устойчивость — пересечение прогонов",
+      "lab.mutants.skill_runs — два прогона дают одно пересечение, три — ещё и «2 из 3»"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-26",
+        "task": "X-E2",
+        "change": "заведён: устойчивость ревью и скиллов на мутантах меряется не меньше чем на стольких прогонах; два прогона X-E2mini дали одно пересечение без большинства (7 тем из 13)"
+      }
+    ]
+  },
   "lab.mutants.skill_timeout_s": {
     "value": 900,
     "unit": "с",

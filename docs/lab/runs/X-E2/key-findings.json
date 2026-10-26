@@ -1,0 +1,54 @@
+{
+  "_about": "Ключ полноты Э2: 28 находок docs/playbook/story-findings.md (узлы — из поля «Узлы», переменные и слова — для поиска кандидатов). Совпадение узла даёт кандидата; засчитывает ли кандидат находку — решение в judgments.json (оценка исполнителя в роли автора). Бэклоги P3 (CG-17, SP-07, TN-04) — по строкам: ✓, если найдена половина строк и больше, ◐ — хотя бы одна.",
+  "findings": [
+    { "id": "CG-01", "story": "chuzhoy-golos", "p": 1, "what": "смерть Лили и срок слушания только в ветке ch1_party", "nodes": ["ch1", "ch1_party", "ch1_terms", "ch1_jess", "ch2_article"], "vars": [], "terms": ["слушани", "коронер", "ставк", "Лил", "synopsis"] },
+    { "id": "CG-02", "story": "chuzhoy-golos", "p": 1, "what": "ch10_maya уводит мимо двери в fin_revenge, «Подожди» решает скрытое доверие Маи", "nodes": ["ch10_maya", "ch10_maya_go", "fin_revenge"], "vars": ["maya_trust", "maya_target"], "terms": ["fin_revenge", "Ма[яи]"] },
+    { "id": "CG-03", "story": "chuzhoy-golos", "p": 1, "what": "fin_truth решает скрытый счёт proof, перед ch10_door нет итога улик, fin_unproven не говорит, чего не хватило", "nodes": ["ch10_door", "ch10_route", "fin_unproven", "ch10_judith"], "vars": ["proof"], "terms": ["proof", "fin_unproven"] },
+    { "id": "CG-04", "story": "chuzhoy-golos", "p": 1, "what": "развязки идут часами без кнопки (хвост после последней кнопки)", "nodes": ["fin_truth", "fin_herself", "fin_unproven", "fin_revenge", "fin_silence", "fin_scapegoat", "fin_puppet", "fin_coda", "end_ellie_together", "end_coroner", "end_silence"], "vars": [], "terms": ["хвост", "после последней кнопки", "C-42", "эпилог", "развязк"] },
+    { "id": "CG-05", "story": "chuzhoy-golos", "p": 1, "what": "ellie_trust копится четыре главы молча и решает исход; пороги 3 и 2 разные", "nodes": ["end_silence", "ch4_confess", "ch7_ellie"], "vars": ["ellie_trust"], "terms": ["ellie_trust"] },
+    { "id": "CG-06", "story": "chuzhoy-golos", "p": 2, "what": "called_bluff пишется и не читается", "nodes": ["ch4_bluff"], "vars": ["called_bluff"], "terms": ["called_bluff"] },
+    { "id": "CG-07", "story": "chuzhoy-golos", "p": 2, "what": "кульминация первой половины рассказана: ультиматум ch5_owen без кнопки, ch5_final — четыре кнопки в четыре финала", "nodes": ["ch5", "ch5_owen", "ch5_final"], "vars": ["note_threat", "connor_ally", "owen_weakened"], "terms": ["ch5_owen", "ch5_final", "ультиматум"] },
+    { "id": "CG-08", "story": "chuzhoy-golos", "p": 2, "what": "игрок отвечает, а в ответ пустое «ок» (ch1_jess ваучер, ch3_why, ch2_ellie_none, ch10_ellie, ch2_hook)", "nodes": ["ch1_jess", "ch3_why", "ch2_ellie_none", "ch10_ellie", "ch2_hook"], "vars": [], "terms": ["ваучер", "супер"] },
+    { "id": "CG-09", "story": "chuzhoy-golos", "p": 2, "what": "крючок после паузы, а уведомление после возвращения пустое", "nodes": ["ch1_confront", "ch1_unknown", "ch7_hook", "season_hook", "ch9", "ch9_morning", "ch2_judith", "ch6_judith", "ch2_beth", "ch2_ellie_partial", "ch3_fake"], "vars": [], "terms": ["C-26", "C-28", "крюч"] },
+    { "id": "CG-10", "story": "chuzhoy-golos", "p": 2, "what": "монологи-признания без кнопки: ch4_confess, ch6_story, ch9_owen_turn, ch10_full, инструкция в ch1", "nodes": ["ch4_confess", "ch6_story", "ch9_owen_turn", "ch10_full", "ch10_dawn"], "vars": [], "terms": ["монолог", "C-35"] },
+    { "id": "CG-11", "story": "chuzhoy-golos", "p": 2, "what": "перегруз первой главы: скрин из восьми имён и хаб на четыре кнопки без причин", "nodes": ["ch1_terms", "ch1_hub"], "vars": [], "terms": ["C-21", "C-22", "скрин", "имён"] },
+    { "id": "CG-12", "story": "chuzhoy-golos", "p": 2, "what": "честность наказана, ложь — нет (ch1_evening, ch3_owen_probe)", "nodes": ["ch1_evening", "ch3_owen_probe"], "vars": [], "terms": ["честн", "правд"] },
+    { "id": "CG-13", "story": "chuzhoy-golos", "p": 2, "what": "отказ «Я пас» в ch1_refuse не запоминается", "nodes": ["ch1_refuse"], "vars": [], "terms": ["пас", "отказ"] },
+    { "id": "CG-14", "story": "chuzhoy-golos", "p": 2, "what": "кнопки «в заметки» без флага и #silent без реакции", "nodes": ["ch1_kt", "ch10_owen", "ch9_fake", "ch8_maya", "ch1_ellie_lie", "ch2_rumor", "ch2_judith_med", "ch3_cc_body"], "vars": [], "terms": ["заметк", "notes", "#silent", "Промолч"] },
+    { "id": "CG-15", "story": "chuzhoy-golos", "p": 2, "what": "легенда «студент» задаёт игроку мужской род", "nodes": ["ch1_terms"], "vars": ["opener"], "terms": ["студент", "род", "C-14"] },
+    { "id": "CG-16", "story": "chuzhoy-golos", "p": 2, "what": "карточка: 90 минут против недели, synopsis раскрывает главы 6–7", "nodes": [], "vars": [], "terms": ["карточк", "minutes", "synopsis", "C-31", "C-49", "спойлер"] },
+    { "id": "CG-17", "story": "chuzhoy-golos", "p": 3, "what": "бэклог: 10 строк", "rows": [
+      { "n": 1, "what": "Киран одно «кто это?» и исчезает, в characters нет", "nodes": ["ch1_kt"], "terms": ["Киран", "kieran"] },
+      { "n": 2, "what": "«кто Вы на самом деле» Джудит закрыто только в fin_truth; Kind regards в ch9_hook", "nodes": ["ch2_judith", "fin_coda", "ch9_hook"], "terms": ["Kind regards", "кто Вы"] },
+      { "n": 3, "what": "ch5 «Вырежи кадры» → «точно?» без новой детали, end_coroner наказывает оригиналом", "nodes": ["ch5", "end_coroner"], "terms": ["кадр", "оригинал"] },
+      { "n": 4, "what": "jess_clues и maya_trust копятся молча", "nodes": [], "vars": ["jess_clues", "maya_trust"], "terms": ["jess_clues", "maya_trust"] },
+      { "n": 5, "what": "cover в финале меняет только текст", "nodes": ["ch10_route"], "vars": ["cover"], "terms": ["cover"] },
+      { "n": 6, "what": "запасные кнопки ch9_jess не видны боту; признание Джесс в ch10_dawn подарком", "nodes": ["ch9_jess", "ch10_dawn"], "vars": ["c9_has_ev", "jess_bond"], "terms": ["c9_has_ev", "jess_bond"] },
+      { "n": 7, "what": "без owen_knows >= 2 угрозы игроку в главах 1–5 нет", "nodes": ["ch3_owen_probe", "ch5_owen"], "vars": ["owen_knows"], "terms": ["owen_knows"] },
+      { "n": 8, "what": "у Джесс нет реплик в главах 4–5", "nodes": [], "terms": ["Джесс"] },
+      { "n": 9, "what": "вторая половина тяжелее первой (паузы глав 6–9)", "nodes": [], "terms": ["C-38", "вторая половина", "C-31"] },
+      { "n": 10, "what": "перемена тона Джесс в ch10 не зависит от выбора", "nodes": ["ch10"], "vars": ["jess_bond"], "terms": ["тон"] }
+    ] },
+    { "id": "SP-01", "story": "slepoe-pyatno", "p": 1, "what": "жаргон rtp не объяснён, шифт только за кнопкой", "nodes": ["ch1", "ch1_reading", "ch1_hub"], "vars": [], "terms": ["rtp", "RTP", "жаргон", "шифт"] },
+    { "id": "SP-02", "story": "slepoe-pyatno", "p": 1, "what": "«кто это?» в ch3_ghost скрыто ведёт к end_complicit", "nodes": ["ch3_ghost", "end_complicit"], "vars": ["leaked"], "terms": ["leaked", "complicit", "кто это"] },
+    { "id": "SP-03", "story": "slepoe-pyatno", "p": 2, "what": "подмена коллеги и подпись коммитов не подготовлены", "nodes": ["ch4", "ch4_fake", "ch3_ghost_vera", "ch4_oidc", "ch2_rotate", "ch3_token"], "vars": [], "terms": ["подпис", "подмен", "C-54"] },
+    { "id": "SP-04", "story": "slepoe-pyatno", "p": 2, "what": "загадку разгадывает Меган, а не игрок", "nodes": ["ch3_ghost", "ch3_ghost_vera"], "vars": [], "terms": ["Меган", "разгад", "вывод"] },
+    { "id": "SP-05", "story": "slepoe-pyatno", "p": 2, "what": "лучшая игра (rotate_full) даёт меньше истории", "nodes": ["ch2_rotate", "ch3_ghost_locked", "ch4_locked", "end_locked"], "vars": ["rotate_full"], "terms": ["rotate_full", "короче", "меньше истории"] },
+    { "id": "SP-06", "story": "slepoe-pyatno", "p": 2, "what": "debrief — лекция 12–15 сообщений без кнопки", "nodes": ["debrief"], "vars": [], "terms": ["debrief", "разбор", "C-42"] },
+    { "id": "SP-07", "story": "slepoe-pyatno", "p": 3, "what": "бэклог: 4 строки", "rows": [
+      { "n": 1, "what": "skill и trust_sec копятся вслепую, звучат в debrief", "nodes": [], "vars": ["skill", "trust_sec"], "terms": ["skill", "trust_sec"] },
+      { "n": 2, "what": "семь финалов выбирает каскад ch5, последняя кнопка ничего не решает", "nodes": ["ch5"], "terms": ["каскад", "C-16", "позици"] },
+      { "n": 3, "what": "«Тихие шесть недель» — заголовок с #delay:20m", "nodes": ["ch3"], "terms": ["шесть недель"] },
+      { "n": 4, "what": "«это было в твоих заметках» без цитаты", "nodes": ["ch4_node", "end_complicit"], "vars": ["note_defense"], "terms": ["note_defense", "цитат"] }
+    ] },
+    { "id": "TN-01", "story": "the-number", "p": 2, "what": "пять мёртвых переменных, theo_trust 14 записей на одно чтение", "nodes": [], "vars": ["told_theo", "code_choice", "warned_tail", "gave_card", "heard_audio", "theo_trust"], "terms": ["C-01", "theo_trust", "мёртв"] },
+    { "id": "TN-02", "story": "the-number", "p": 2, "what": "цена «он ответил мне» не взыскана", "nodes": ["finale", "new_client"], "vars": ["ray_answers"], "terms": ["ray_answers", "он ответил мне"] },
+    { "id": "TN-03", "story": "the-number", "p": 2, "what": "начало: оператор с полным номером, Тео прощается перед паузой", "nodes": ["ch1", "delivered", "inbox"], "vars": [], "terms": ["оператор", "прощ", "номер"] },
+    { "id": "TN-04", "story": "the-number", "p": 3, "what": "бэклог: 4 строки", "rows": [
+      { "n": 1, "what": "laundry_arrival: две кнопки — одно и то же", "nodes": ["laundry_arrival"], "terms": ["флешк"] },
+      { "n": 2, "what": "ch3_end «Новостей нет» → «Ладно» в узле предательства Дины", "nodes": ["ch3_end"], "terms": ["Новостей нет"] },
+      { "n": 3, "what": "lock/opened: подготовка «не знаю, когда у него др» только на одной кнопке", "nodes": ["lock", "opened"], "terms": ["др", "день рожд"] },
+      { "n": 4, "what": "new_client: финал один, бот не различает исходы", "nodes": ["new_client"], "terms": ["один финал", "финал один", "ending"] }
+    ] }
+  ]
+}
