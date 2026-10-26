@@ -47,7 +47,9 @@ function why(it, info) {
     const x = info.get(c);
     if (x) parts.push(`${c} «${x.title}»${x.why ? ` — ${x.why}` : ''}`);
   }
-  parts.push(it.bases.map((b) => BASIS_WHY[b]).filter(Boolean).join('; '));
+  // без сверки строка замера ещё не прошла LOCAL-04 — не обещаем того, чего не было
+  const basis = (b) => (b === 'замер' && it.unverified ? 'число из story:lint, с узлом ещё не сверено (LOCAL-04)' : BASIS_WHY[b]);
+  parts.push(it.bases.map(basis).filter(Boolean).join('; '));
   if (it.raised) parts.push(`выше на ступень: ${it.raised}`);
   if (it.note) parts.push(it.note);
   return parts.filter(Boolean).join('. ');
