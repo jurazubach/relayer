@@ -11,6 +11,7 @@
 | `docs/playbook/clusters.json` | `manual.th`: LOCAL-11, 14, 15 → TH-28; LOCAL-12 → TH-32; LOCAL-16 → TH-29; LOCAL-13 → TH-88 |
 | `.claude/skills/story-review/references/lessons.md` | блоки LOCAL-11, 12, 14, 15, 16 в разделе «Наши уроки» (без примеров из историй) |
 | `.claude/skills/story-playtest/references/lessons.md` | раздел «Наши уроки (LOCAL)», блок LOCAL-13 |
+| `scripts/lab/mutants-spec.mjs` | правки m03 и m11 под починенную основу (мутанты собираются из спецификации, без этого `skills:test` не сходится с `_base`) и `BASE_KEY` B01…B18; дописано при сверке курса |
 
 Если королева считает это превышением — откатить три файла и `local-lessons.md` LOCAL-11…16 вместе: по отдельности
 ломается либо `--summary`, либо `--skill <владелец> --min L2`.
