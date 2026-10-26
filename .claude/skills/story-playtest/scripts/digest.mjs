@@ -257,4 +257,4 @@ if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.ar
   if (d.side['предложение'].length) console.log(`\nРецепты тестеров (в ideas.md, не в правку — P-05):\n${d.side['предложение'].map((s) => `- ${s.knot ?? s.place} · ${s.tester}${s.text ? `: ${s.text}` : ''}`).join('\n')}`);
   if (d.bad.length) console.log(`\nНе разобраны (тип не из списка или нет места):\n${d.bad.map((b) => `- ${b}`).join('\n')}`);
   return 0;
-});
+}, { bool: ['no-lint'] });
