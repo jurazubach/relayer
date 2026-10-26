@@ -224,13 +224,13 @@
 | C-28 | возвращение после паузы | `story-pauses` | `return.md` | — |
 | C-29 | износ формул и отменённый крючок | `story-pauses` | `hooks.md` | — |
 | C-30 | паузы без кнопки и микросессии | `story-pauses` | `sessions.md` | — |
-| C-31 | реальное время истории (A-05) | `story-time` | `length.md` (`sessions-view.mjs`) | `story-release/two-durations.md` |
-| C-32 | расписание возвращений и напоминания (A-02, A-03) | `story-time` | `reminders.md` | `story-playtest/personas.md` (неотвечающий) |
+| C-31 | реальное время истории (A-05) | `story-time` | `length.md` (`story:sessions`) | `story-release/two-durations.md` |
+| C-32 | расписание возвращений и напоминания (A-02, A-03) | `story-time` | `reminders.md` (`guilt-scan.mjs`, `clock-scan.mjs`) | `story-playtest/personas.md` (неотвечающий) |
 | C-33 | объём сессии | `story-pauses` | `sessions.md` | `story-pace` |
 | C-34 | длина сообщения | `story-voice` | `line-edit.md` (`voice-stats.mjs`) | `story-pace/density.md`, `chapter-write` |
 | C-35 | серия без выбора | `story-pace` | `density.md` (`pace.mjs`) | `story-opening` |
 | C-36 | затишье | `story-pace` | `density.md` | — |
-| C-37 | давление и ложная срочность | `story-time` | `no-guilt.md` | `story-release/ethics.md` |
+| C-37 | давление и ложная срочность | `story-time` | `no-guilt.md` (`guilt-scan.mjs`) | `story-release/ethics.md` |
 | C-38 | темп и пропорции глав | `story-pace` | `density.md` | `story-plan/chapter-formula.md` |
 | C-39 | стык глав | `story-pauses` | `hooks.md` | `story-plan` |
 | C-40 | распределение финалов | `story-endings` | `decisions-endings.md` | `story-plan/endings-plan.md` |
@@ -293,6 +293,9 @@
 текста и коридор — TH-37, скрытый порог финала — TH-60, регистры письма — TH-68. В `story-choices` на них остались
 ссылки. «Лоза» и сведение веток (`sheldon:LESSON-03`, `skolnick:LESSON-07`) остались у `story-choices`: урок о том,
 что сведённые ветки должны помнить, — это эхо и F-11.
+S-time так же забрала в «опору» `story-time` две строки, которые лежали у `story-choices` по кластеру:
+`attention:RED-07` (молчание ведёт к худшему финалу — цена «не ответил», TH-46) и `narrative-postmortems:LESSON-08`
+(таймер — только во времени мира, TH-47).
 
 Сокращения алиасов — как в `flow-review.md` §C: `video` = `video-three-things`, `attention` =
 `attention-today`, `mystery` = `mystery-fair-play` и т. д.
@@ -398,10 +401,10 @@ TH-41, TH-42, TH-48.
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
 | TH-45 | два равноценных режима; кнопка «пропустить» для тестов | `story-time` | `modes.md` (`click-transcript.mjs`) | A-04; R-122; `messenger:LESSON-10` (риск); `schell:LESSON-06`; E-01; `choiceofgames:LESSON-10`; `maass:LESSON-06`; `narrative-postmortems:SYS-5` | все пишущие, `story-playtest` |
-| TH-46 | напоминания при молчании, ветка «не ответил» | `story-time` | `reminders.md` | A-03; R-120; `inkle:PAT-07`; `messenger` Система 1, шаг 4 | `story-choices/silence.md` |
-| TH-47 | часы сюжета против часов игрока | `story-time` | `clock.md` (`clock-scan.mjs`) | A-02; R-114, R-121; `messenger:P-12` (часть «в силе»), PAT-03 (устарел); `serial-hooks` Система 3; `narrative-testing:RED-33` | `story-core/time-model.md`, `story-continuity/timeline.md` |
+| TH-46 | напоминания при молчании, ветка «не ответил» | `story-time` | `reminders.md` (`guilt-scan.mjs`) | A-03; R-120; `inkle:PAT-07`; `messenger` Система 1, шаг 4; `attention:RED-07` (молчание ведёт к худшему финалу — цена «не ответил», S-time) | `story-choices/silence.md` |
+| TH-47 | часы сюжета против часов игрока | `story-time` | `clock.md` (`clock-scan.mjs`) | A-02; R-114, R-121; `messenger:P-12` (часть «в силе»), PAT-03 (устарел); `serial-hooks` Система 3; `narrative-testing:RED-33`; `narrative-postmortems:LESSON-08` (таймер и срок — только во времени мира, S-time) | `story-core/time-model.md`, `story-continuity/timeline.md` |
 | TH-48 | причина паузы без срока возвращения | `story-time` | `clock.md` (`promise-scan.mjs`) | A-01; R-63; `chat:PAT-03`; `maass:LESSON-03`; `mckee:LESSON-10`; `narrative-postmortems:PAT-10`, RED-11, LESSON-01; `serial:GREEN-08`, RED-08; `choiceofgames:GREEN-12`, LESSON-02 (причина паузы) | `story-pauses/hooks.md`, `chapter-write/pause-lines.md` |
-| TH-49 | длина истории и главы в реальном времени | `story-time` | `length.md` (`sessions-view.mjs`) | A-05; R-67; `inkle:P-18`, `LESSON-01`; `video:LESSON-11`; `yorke:LESSON-10`; `serial:LESSON-13`; `chat-fiction:P-13`; `chat:PAT-05`; `narrative-postmortems:P-17`; `serial:RED-07` | `story-release/two-durations.md`, `story-plan/schedule.md` |
+| TH-49 | длина истории и главы в реальном времени | `story-time` | `length.md` (`story:sessions`, `clock-scan.mjs`) | A-05; R-67; `inkle:P-18`, `LESSON-01`; `video:LESSON-11`; `yorke:LESSON-10`; `serial:LESSON-13`; `chat-fiction:P-13`; `chat:PAT-05`; `narrative-postmortems:P-17`; `serial:RED-07` | `story-release/two-durations.md`, `story-plan/schedule.md` |
 | TH-50 | повтор и быстрый режим | `story-time` | `replay.md` | `messenger:LESSON-04`; уроки о быстром режиме в части «в силе» (`superseded.md` A-04); `narrative-postmortems:LESSON-15`; `sheldon:LESSON-11`; `skolnick:LESSON-06` | `story-release` |
 | TH-51 | упрёк только за `#silent`, никогда за отсутствие | `story-time` | `no-guilt.md` (`guilt-scan.mjs`) | R-74; `attention:P-10` (часть «в силе»), `LESSON-11`; `meaningful:attention§3`, `§5`; `messenger:attention§5` | `story-voice` (C-47), `story-release/ethics.md` |
 | TH-52 | давление и ложная срочность | `story-time` | `no-guilt.md` | C-37; `attention:RED-08`; `serial:RED-17`; `maass:RED-10` | `story-release/ethics.md` |
