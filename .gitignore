@@ -14,6 +14,8 @@ screenshots
 # локальное
 .idea
 chat-export
+# story-review: папки прогонов ревью (вывод story:lint и ответы линз по хэшу ink)
+.story-review
 
 # база знаний: логи агентов и присланные материалы
 docs/books/_pipeline/logs

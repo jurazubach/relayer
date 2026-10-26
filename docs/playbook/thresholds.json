@@ -9213,6 +9213,43 @@
       }
     ]
   },
+  "skill.review.top_per_chapter": {
+    "value": 5,
+    "unit": "находок на главу",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "_build/reports/W0/checkpoint.md, правка 8: на три истории линт даёт больше тысячи находок — автору не прочесть",
+      "schell-art-of-game-design:SYS-2 (не больше нескольких правок на главу по влиянию)",
+      "story-review/references/report.md"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-26",
+        "task": "S-review",
+        "change": "заведён: сколько находок на главу отчёт story-review показывает автору в основном списке; остальное — в приложение"
+      }
+    ]
+  },
+  "skill.review.task_max_lines": {
+    "value": 40,
+    "unit": "строк story:lint",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      ".claude/agents/story-auditor.md «Узлы, а не весь ink»",
+      "story-review/references/routing.md"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-26",
+        "task": "S-review",
+        "change": "заведён: сколько строк story:lint линзы идёт в задание аудитору поимённо (ошибки и предупреждения первыми), остальное — счётом по проверкам"
+      }
+    ]
+  },
   "skill.coverage.block_min_chars": {
     "value": 240,
     "unit": "знаков",
