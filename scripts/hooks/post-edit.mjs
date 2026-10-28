@@ -23,7 +23,7 @@ if (process.env.RELAYER_HOOKS === 'off') process.exit(0);
 // быстрый: полный прогон дорог для каждой правки, его зовут по окончании главы (full.mjs).
 // partial — быстрый с story:lint --partial: агент главы пишет главы 1–2 с заглушкой beta_stop, и без него
 // хук ругался бы на «финал» в заглушке и на всё, что бывает только в целой истории. Включается сам по
-// узлу beta_stop (isPartial), для любого агента.
+// узлу beta_stop (isPartial), для любого агента; checkStory сам смотрит isPartial, и полный режим его не теряет.
 const MODE_BY_AGENT = { 'chapter-writer': 'quick' };
 const modeFor = (agent, id) => {
   const mode = MODE_BY_AGENT[agent] ?? 'quick';
@@ -52,7 +52,7 @@ const modes = new Set();
 for (const id of ids) {
   const mode = modeFor(input.agent_type, id);
   modes.add(mode);
-  parts.push(report(checkStory(id, { quick: mode !== 'full', partial: mode === 'partial' })));
+  parts.push(report(checkStory(id, { quick: mode !== 'full' })));
 }
 state.save();
 
