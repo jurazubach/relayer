@@ -143,15 +143,15 @@
 | R-78 | новый контакт сразу показывает голос и желание | `story-cast` | `unlock-schedule.md` | `story-voice` |
 | R-79 | основной персонаж пишет первым | `story-cast` | `tiers.md` | — |
 | R-80 | два несовместимых чувства в очереди | `story-pace` | `micro-tension.md` | `story-voice` |
-| R-81 | `#sys` и `#photo` — поведение, а не чувства | `story-voice` | `line-edit.md` | — |
+| R-81 | `#sys` и `#photo` — поведение, а не чувства | `story-voice` | `registers.md` | — |
 | R-82 | голос меняется с отношением | `story-voice` | `voice-sheet.md` | — |
 | R-83 | неожиданный поступок готовят два намёка | `story-cast` | `arcs.md` | `story-mystery` |
 | R-84 | противник — соперник за ту же вещь | `story-core` | `antagonist.md` | `story-cast` |
 | R-85 | персонаж знает только написанное ему | `story-continuity` | `knowledge-flow.md` | `story-voice` (C-47) |
 | R-86 | одно имя на человека | `story-voice` | `names.md` | `story-mystery` (имя-улика) |
-| R-87 | добро третьему, тёплая реплика, юмор | `story-voice` | `humor.md` | `story-cast/character-card.md` |
+| R-87 | добро третьему, тёплая реплика, юмор | `story-voice` | `warmth.md`, `humor.md` | `story-cast/character-card.md` |
 | R-88 | каждый блок реплик делает работу; фон | `story-cast` | `tiers.md` | `story-pace` |
-| R-89 | реплики игрока без пола | `story-voice` | `line-edit.md` | `story-choices/buttons.md` |
+| R-89 | реплики игрока без пола | `story-voice` | `player-voice.md` | `story-choices/buttons.md` |
 | R-90 | у каждого контакта позиция по главному вопросу | `story-cast` | `character-card.md` | `story-core/theme.md` |
 | R-91 | правда — хронология в `facts.md` | `story-continuity` | `timeline.md` (`facts.mjs`) | `story-mystery`, `chapter-write/facts-anchor.md` |
 | R-92 | метка `// reveal:` над узлом раскрытия | `story-mystery` | `clue-map.md` | — |
@@ -181,7 +181,7 @@
 | R-116 | отношения не числом, без статистики игроков | `story-choices` | `cost.md` | `story-endings` |
 | R-117 | всё вымышлено | `story-brainstorm` | `fiction.md` | `story-voice/names.md` (C-48), `story-release` |
 | R-118 | без функций, которых нет в движке | `chapter-write` | `ink-idioms.md` | `story-review` |
-| R-119 | не сшивать реплики из кусков | `story-voice` | `line-edit.md` | `chapter-write/ink-idioms.md` |
+| R-119 | не сшивать реплики из кусков | `story-voice` | `player-voice.md` | `chapter-write/ink-idioms.md` |
 | R-120 | напоминания при молчании (A-03) | `story-time` | `reminders.md` | `story-choices/silence.md` |
 | R-121 | время суток — время мира (A-02) | `story-time` | `clock.md` (`clock-scan.mjs`) | `story-core/time-model.md`, `story-continuity/timeline.md` |
 | R-122 | текст читается в обоих режимах (A-04) | `story-time` | `modes.md` | `chapter-write`, `story-pauses` |
@@ -207,7 +207,7 @@
 | C-11 | молчание и отказ без следа | `story-choices` | `silence.md` | `story-time/reminders.md` |
 | C-12 | ширина развилки | `story-choices` | `buttons.md` | — |
 | C-13 | текст кнопки | `story-choices` | `buttons.md` | `story-voice` |
-| C-14 | пол игрока | `story-voice` | `line-edit.md` | `story-choices/buttons.md` |
+| C-14 | пол игрока | `story-voice` | `player-voice.md` | `story-choices/buttons.md` |
 | C-15 | недостижимое | `story-choices` | `choice-types.md` | `story-endings`, `story-branch` |
 | C-16 | перекос выбора к финалу | `story-choices` | `buttons.md` (`position-bias.mjs`) | `story-endings` |
 | C-17 | перекос знакомства | `story-choices` | `people-choice.md` | `story-cast` |
@@ -239,12 +239,12 @@
 | C-43 | развязка | `story-endings` | `resolution.md` | — |
 | C-44 | голоса | `story-voice` | `voice-sheet.md` (`voice-stats.mjs`) | `story-cast` |
 | C-45 | молчащие контакты | `story-cast` | `tiers.md` | — |
-| C-46 | повторы | `story-voice` | `line-edit.md` | `story-continuity/merge-guard.md`, `story-pace` |
-| C-47 | маркеры в тексте | `story-voice` | `line-edit.md` | `story-time` (строки «упрёк за отсутствие», «прожитое ожидание», «время игрока»: `guilt-scan.mjs`, `clock-scan.mjs`), `story-opening/backstory.md` (предыстория блоком), `story-endings` (R-107) |
+| C-46 | повторы | `story-voice` | `repeats.md` | `story-continuity/merge-guard.md`, `story-pace` |
+| C-47 | маркеры в тексте | `story-voice` | `registers.md` | `story-time` (строки «упрёк за отсутствие», «прожитое ожидание», «время игрока»: `guilt-scan.mjs`, `clock-scan.mjs`), `story-opening/backstory.md` (предыстория блоком), `story-endings` (R-107) |
 | C-48 | имена | `story-voice` | `names.md` | `story-brainstorm/fiction.md` (пункт б) |
 | C-49 | факты, хронология, карточка | `story-release` | `card.md` (`card-check.mjs`) | `story-continuity/timeline.md` (пункт г) |
 | C-50 | адресат и шум | `story-cast` | `tiers.md` | `story-continuity/cross-chat.md` |
-| C-51 | знание игрока на пути | `story-continuity` | `knowledge-flow.md` (`knowledge.mjs`) | `story-mystery` |
+| C-51 | знание игрока на пути | `story-continuity` | `knowledge-flow.md` (`knowledge.mjs`, `merges.mjs`, `facts.mjs`, `timeline.mjs`; формат `facts.md` — `facts-format.md`) | `story-mystery` |
 | C-52 | служебные проверки бота | `story:lint` | `scripts/lib/`, `check:story` | `story-review/routing.md`, `story-playtest` (`--transcript`) |
 | C-53 | разметка комментариями (валидатор) | `story:lint` | валидатор разметки `build-plan.md` §9 | `story-plan/skeleton-format.md`, `chapter-write`, `story-review` |
 | C-54 | честная игра улик | `story-mystery` | `fair-play.md` (`clues.mjs`) | — |
@@ -484,7 +484,7 @@ TH-41, TH-42, TH-48.
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
 | TH-88 | протокол холодного читателя: режимы | `story-playtest` | `cold-reader.md` | `attention:RED-04`; `narrative-testing:PAT-10`, SYS-05; `maass:P-16` | агент `cold-reader`, `story-opening`, `story-review` |
-| TH-89 | персоны бота и профили холодных читателей | `story-playtest` | `personas.md` | `narrative-testing:P-07`, PAT-04, `LESSON-10`; `attention:LESSON-03`; профили из `INTENT.md`; `choiceofgames:LESSON-09`; `messenger:LESSON-08`; `procedural:LESSON-10`; `schell:P-17` | `story-time` (неотвечающий) |
+| TH-89 | персоны бота и профили холодных читателей | `story-playtest` | `personas.md` (`panel.mjs`) | `narrative-testing:P-07`, PAT-04, `LESSON-10`; `attention:LESSON-03`; профили из `INTENT.md`; `choiceofgames:LESSON-09`; `messenger:LESSON-08`; `procedural:LESSON-10`; `schell:P-17` | `story-time` (неотвечающий) |
 | TH-90 | волны теста, расход свежих глаз | `story-playtest` | `waves.md` | `narrative-testing:P-08`, SYS-01, `LESSON-11`, `LESSON-12`; `choiceofgames:LESSON-06`, LESSON-14 | `story-release` (вторая волна) |
 | TH-91 | бриф и сборка: `.json`, `beta_stop`, входы `test_*` | `story-playtest` | `brief.md`, `build.md` (`playtest-kit.mjs`) | `narrative-testing:P-03`, `P-04`, PAT-02, PAT-03, `LESSON-01`; `narrative-postmortems:P-15` | `story-plan/skeleton-format.md` |
 | TH-92 | анкета: 3 вопроса и пересказ | `story-playtest` | `survey.md` | `narrative-testing` `checklists.md` §4, `attention§1`; `meaningful` `checklists.md` §4; `narrative-testing:RED-18` | — |
@@ -635,3 +635,21 @@ npm run story:coverage -- --summary        # строки базы: без вл�
 
 Результат на момент сборки: `строк 329 · TH 108 · дубли: нет · нет владельца: нет · чужой владелец: нет`
 (122 R + 54 C + 15 F + 108 TH + 30 якорей); строки базы — `без владельца 0 · два владельца 0`.
+
+## 9. Кто ставит статусы строк базы
+
+Статус строки базы (`used`, `merged-into:<ID>`, `rejected:…`, `superseded:…`, `deferred:…`) и пометку верности
+хранят шарды `docs/playbook/coverage/<владелец>.json`. Правило (W2, просьба S-opening о 12 строках `merged-into`):
+
+- **Статус ставит владелец строки** — задача, которая собирает или чинит скилл из колонки `owner_skill` матрицы
+  (`npm run story:coverage -- --skill <скилл> --json`). Строка без владельца (`_common.json`) — владелец её цели:
+  у `merged-into:R-18` это владелец R-18.
+- **Только командой**, с задачей в `by`: `npm run story:coverage -- --record <ID> status=… note=… by=<задача>`.
+  Команда проверяет статус и причину по списку; шарды руками не правят.
+- **`merged-into` — в строку или единицу свода, которую держит тот же владелец** (§2–§6 этого файла) или на которую
+  он ссылается. Цель чужого скилла — просьба владельцу цели в `requests.md`, а не `--record`.
+- **Ревьюер статусов не ставит.** Он ставит верность (`--fidelity-sample`, `--record <ID> fidelity=ok|bad`) и, если
+  статус спорный, пишет просьбу владельцу.
+
+Двенадцать строк `merged-into`, которые S-opening записал без `by` (дубли R-12, R-13, R-18, C-23 — все за
+`story-opening`), этому правилу отвечают: владелец цели — сам S-opening. Откатывать их не нужно.

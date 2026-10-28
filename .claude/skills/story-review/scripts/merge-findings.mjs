@@ -17,6 +17,7 @@ human-*.md. Строка находки — общий формат (references/
     (в разделе «ложные»), «не разобрано» (линза отвечала, а строку не назвала), «не сверено» (линзу не
     запускали) — в основной список идут только сверенные (LOCAL-04);
   — дубли (тот же узел и та же проверка, или тот же узел и тип без проверки) сливает, источники складывает;
+    пункт qa-six сливается с пунктом линзы той же C-NN, если у них есть общий узел;
     два разных источника (замер, модель, человек) поднимают находку на ступень;
   — потолки P (skill.review.p_cap, LOCAL-16): «скучно» без человека — не выше boring, если глава держится
     (P1 остаётся, когда замер подтвердил линзу, а холодный читатель в той же главе «отложил бы»); голоса,
@@ -103,6 +104,17 @@ await runCli(HELP, async (args) => {
     was.people = Math.max(was.people, it.people);
     if (!was.fix && it.fix) was.fix = it.fix;
     if (typeRank(it.type) < typeRank(was.type)) was.type = it.type;
+  }
+  // QA «шесть списков» и линза называют одно место разным набором узлов: та же C-NN и общий узел — одна находка
+  for (const [k, q] of [...merged]) {
+    if (q.kind !== 'qa' || !q.checks.length) continue;
+    const twin = [...merged.values()].find((x) => x !== q && x.kind !== 'qa' && x.checks.includes(q.checks[0]) && x.nodes.some((n) => q.nodes.includes(n)));
+    if (!twin) continue;
+    twin.p = Math.min(twin.p, q.p);
+    twin.bases = [...new Set([...twin.bases, ...q.bases])];
+    twin.sources = [...new Set([...twin.sources, ...q.sources])];
+    twin.nodes = [...new Set([...twin.nodes, ...q.nodes])];
+    merged.delete(k);
   }
   const list = [...merged.values()];
   const cap = T().value('skill.review.p_cap');

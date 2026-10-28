@@ -127,8 +127,10 @@ export function register(test, { lint }) {
       assert.equal(m.items.find((i) => i.checks.includes('C-44')).p, Math.max(1, cap.voice_form), 'голос по форме');
       assert.equal(m.items.find((i) => i.checks.includes('C-35')).p, cap.boring, 'скучно без читателя — кандидат');
       writeFileSync(join(run, 'cold-middle-skeptic.md'), 'cold-reader · pier-cap · guess\n\nнаходки:\nP3 · скучно · «шаг 3 по пирсу» · Итог: отложил бы · → story-pace · [модель · симуляция · низкая]\n');
+      writeFileSync(join(run, 'qa-six.md'), 'qa · pier-cap\n\nнаходки:\nP2 · скучно · ch1, pier · серия без кнопки · → story-pace · [C-35 · модель · средняя]\n');
       m = JSON.parse(cli('merge-findings.mjs', ['--story', file, '--json']));
       assert.equal(m.items.find((i) => i.checks.includes('C-35')).p, 1, 'глава не держится: замер + читатель отложил бы — P1');
+      assert.equal(m.items.filter((i) => i.checks.includes('C-35')).length, 1, 'пункт qa той же C-NN с общим узлом слит с линзой');
     } finally {
       rmSync(dir, { recursive: true, force: true });
       rmSync(join(CACHE_DIR, 'pier-cap'), { recursive: true, force: true });

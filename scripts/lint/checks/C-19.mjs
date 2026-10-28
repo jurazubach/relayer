@@ -37,6 +37,12 @@ export default {
         walk(b.choice.items, (it) => { if (it.type === 'divert' && (it.target === id || st.labels.get(id)?.has(it.target))) self = true; });
         return self;
       };
+      // петля напоминания (#remind → -> ask) — не хаб: в узел возвращается молчание, а не кнопка (E-02)
+      const isSelf = (it) => it.type === 'divert' && (it.target === id || st.labels.get(id)?.has(it.target));
+      const loops = (items) => items.some((it) => isSelf(it)
+        || (it.type === 'choice' && (it.role ?? 'button') === 'button' && loops(it.items))
+        || (it.type === 'cond' && it.branches.some((br) => loops(br.items))));
+      if (!loops(k.items)) continue;
       const exits = spokes.filter((b) => !back(b) && b.cls === 'node');
       // 1. нет выхода по условию или «+». Видимый простой выход — другой случай, чем «уйти можно, только перебрав
       // всё»: уйти можно сразу, ничего не спросив (inkle-ingold:PAT-06, ловушки). Ключ один, сообщение — по случаю.

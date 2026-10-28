@@ -7371,6 +7371,25 @@
       }
     ]
   },
+  "dict.mystery_question": {
+    "value": "(^|[^\\p{L}])кто(?!\\p{L})|что (случилось|произошло|стало)|виноват|виновник|убийц|украл|подменил|подставил",
+    "unit": "regex по строке // вопрос: шапки или «вопрос:» ядра в docs/stories/<id>/decisions.md",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "docs/playbook/local-lessons.md LOCAL-12",
+      "mystery-fair-play:P-01"
+    ],
+    "checks": [],
+    "calibrated_on": "2026-10-26: X-E2 — три истории каталога и основа мутантов: вопрос ядра «что случилось / кто …» у всех, меток // reveal: нет ни у одной",
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "T-19",
+        "change": "заведён: select-lenses.mjs включает story-mystery в режиме «разметка», если вопрос истории — загадка, а меток A-06 нет (LOCAL-12: 12 из 12 прогонов без линзы)"
+      }
+    ]
+  },
   "dict.risk": {
     "value": "если|иначе|тогда|только|не надо|пожалеешь|припомню",
     "unit": "regex",
@@ -9494,6 +9513,42 @@
         "date": "2026-10-25",
         "task": "T-17",
         "change": "заведён: больше такой доли недействительных прогонов (отказ на Bash/Skill) — замер мерит права, а не скилл; lab:triggers и skills:test выходят с кодом 1"
+      }
+    ]
+  },
+  "lab.denials.cmds_shown": {
+    "value": 5,
+    "unit": "команд в строке отказов (остальные — «…ещё N»)",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "_build/reports/W2/checkpoint.md, правка 7: склейка 72 отклонённых команд через «; » читалась как одна чужая команда"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "T-19",
+        "change": "заведён: denialText() печатает не больше стольких отклонённых команд на инструмент"
+      }
+    ]
+  },
+  "lab.denials.cmd_chars": {
+    "value": 120,
+    "unit": "знаков одной команды в строке отказов",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "_build/reports/W2/checkpoint.md, правка 7: склейка 72 отклонённых команд через «; » читалась как одна чужая команда"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "T-19",
+        "change": "заведён: denialText() обрезает каждую отклонённую команду до стольких знаков"
       }
     ]
   },
