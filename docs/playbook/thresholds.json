@@ -7377,8 +7377,7 @@
     "level": null,
     "basis": "our_estimate",
     "sources": [
-      "docs/playbook/local-lessons.md LOCAL-12",
-      "mystery-fair-play:P-01"
+      "docs/playbook/local-lessons.md LOCAL-12"
     ],
     "checks": [],
     "calibrated_on": "2026-10-26: X-E2 — три истории каталога и основа мутантов: вопрос ядра «что случилось / кто …» у всех, меток // reveal: нет ни у одной",
