@@ -281,16 +281,24 @@ export function invalidReason(denials, opts) {
   return blocking.length ? `отказ в правах: ${denialText(blocking)}` : null;
 }
 
-/** Отказы одной строкой для отчёта: «Bash ×2 (npm run story:lint, …), Skill ×1». */
-export function denialText(denials) {
+/**
+ * Отказы одной строкой для отчёта: «Bash ×2 (npm run story:lint, …), Skill ×1». Команды обрезаны до
+ * `lab.denials.cmd_chars`, их не больше `lab.denials.cmds_shown` на инструмент: склейка всех отклонённых команд
+ * через «; » читалась как одна гигантская чужая команда (W2, правка 7). Разделитель — « · »: в самих командах
+ * бывает «;».
+ */
+export function denialText(denials, { shown = loadAll().value('lab.denials.cmds_shown'), chars = loadAll().value('lab.denials.cmd_chars') } = {}) {
   const by = new Map();
   for (const d of denials) {
     const row = by.get(d.tool) ?? { n: 0, cmds: [] };
     row.n++;
-    if (d.command && !row.cmds.includes(d.command)) row.cmds.push(d.command);
+    const cmd = String(d.command ?? '').replace(/\s+/g, ' ').trim();
+    if (cmd && !row.cmds.includes(cmd)) row.cmds.push(cmd);
     by.set(d.tool, row);
   }
-  return [...by].map(([t, r]) => `${t} ×${r.n}${r.cmds.length ? ` (${r.cmds.join('; ')})` : ''}`).join(', ');
+  const cut = (c) => (c.length > chars ? `${c.slice(0, chars - 1)}…` : c);
+  const list = (cmds) => [...cmds.slice(0, shown).map(cut), ...(cmds.length > shown ? [`…ещё ${cmds.length - shown}`] : [])].join(' · ');
+  return [...by].map(([t, r]) => `${t} ×${r.n}${r.cmds.length ? ` (${list(r.cmds)})` : ''}`).join(', ');
 }
 
 /** Доля недействительных прогонов против `lab.denials.max_invalid_share`: строка ошибки или null. */

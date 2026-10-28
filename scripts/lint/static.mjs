@@ -203,10 +203,18 @@ function buildButtons(tree, ids, vars) {
           continue;
         }
         const group = { knot: k.id, chapter, buttons: [], line: items[i].line };
+        // варианты #remind и скрытый #noanswer — не кнопки (E-02): игрок их не видит, но переходы и записи в них
+        // настоящие, поэтому их тела обходим как вложенные
+        const hidden = [];
         while (i < items.length && (items[i].type === 'choice' || items[i].type === 'comment')) {
-          if (items[i].type === 'choice') group.buttons.push(classify(items[i], k, ids, chapter));
+          if (items[i].type === 'choice') {
+            if ((items[i].role ?? 'button') === 'button') group.buttons.push(classify(items[i], k, ids, chapter));
+            else hidden.push(items[i]);
+          }
           i++;
         }
+        for (const h of hidden) scan(h.items, []);
+        if (!group.buttons.length) continue;
         // что читает продолжение после сборки — до следующей группы кнопок
         const after = [];
         let j = i;

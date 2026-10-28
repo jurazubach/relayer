@@ -27,6 +27,14 @@ export function register(test, { has, hasNot, lint }) {
     await has(joint(['утром напишу #from:zoya']), 'C-27.deadline', { only: ['C-27'] });
   });
 
+  // ───────── T-19: петля напоминания — не хаб, варианты #remind — не кнопки (E-02, просьба 3)
+  test('C-19 (T-19): петля #remind → -> ask не делает узел хабом; кнопка, которая возвращается, — делает', async () => {
+    const fork = (extra) => ['-> a', '=== a ===', 'сделку берём? #from:savva', '- (ask)',
+      '* [Берём] -> END', '* [Нет] -> END', ...extra].join('\n');
+    await hasNot(fork(['* [#remind:20m] алё, ты тут? нужно да или нет', '  -> ask', '* [#remind:40m] он ждёт у двери', '  -> ask']), 'C-19.spokes_min', { only: ['C-19'] });
+    await has(fork(['* [Спроси ещё раз]', '  -> ask']), 'C-19.no_exit', { only: ['C-19'] });
+  });
+
   // ───────── C-32 п. 7: где упрёк — реакция на кнопку, а где упрёк за отсутствие
   const unresponsive = (body) => [
     '-> a', '=== a ===', 'закрываем отчёт? #from:savva',

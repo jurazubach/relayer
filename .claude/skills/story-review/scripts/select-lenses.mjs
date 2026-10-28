@@ -1,7 +1,7 @@
 // select-lenses — шаг 3 ревью: какие линзы (диагностические скиллы) запускать аудиторами и почему.
 // Правило — references/routing.md: разметка (// reveal:, // финал:), метрики ink (контакты, паузы, финалы)
 // и находки story:lint по полю owner. Каждая линза получает задание в формате агента story-auditor.
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { runCli, table } from '../../../../scripts/story/core/cli.mjs';
 import { allMarks, findEndings, parseDelay, walk } from '../../../../scripts/lib/ink.mjs';
@@ -51,6 +51,9 @@ function signals(ctx) {
   const marks = allMarks(tree);
   const endings = findEndings(tree);
   const endingVar = tree.vars.some((v) => v.name === 'ending');
+  // вопрос истории: шапка ink, иначе последний «вопрос:» ядра в decisions.md
+  const decisions = join(STATE_DIR, ctx.id, 'decisions.md');
+  const question = String(tree.head?.['вопрос'] ?? (existsSync(decisions) ? readFileSync(decisions, 'utf8').match(/^- вопрос:\s*(.+)$/gm)?.at(-1)?.replace(/^- вопрос:\s*/, '') ?? '' : ''));
   return {
     chapters: tree.chapters.length || Math.max(0, ...tree.knots.map((k) => k.chapter ?? 0)),
     speakers: [...speakers],
@@ -64,6 +67,8 @@ function signals(ctx) {
     facts: existsSync(join(STATE_DIR, ctx.id, 'facts.md')),
     head: Object.keys(tree.head ?? {}),
     finalMarks: marks.filter((m) => m.kind === 'финал').length,
+    question,
+    mysteryQuestion: T().re('dict.mystery_question').test(question.toLowerCase()),
   };
 }
 
@@ -83,6 +88,8 @@ function trigger(lens, s, mode) {
     case 'story-mystery':
       if (s.reveal) return `меток // reveal: ${s.reveal}`;
       if (s.facts) return `есть docs/stories/<id>/facts.md`;
+      // LOCAL-12: без меток A-06 линза загадки не включалась даже в детективе — включаем в режиме «разметка»
+      if (s.mysteryQuestion) return `вопрос истории — загадка («${s.question.slice(0, 50)}») без // reveal: и facts.md: режим «разметка»`;
       return null;
     case 'story-continuity': return s.speakers.length > 1 ? `пишут контактов: ${s.speakers.length} — сведения ходят между чатами` : null;
     case 'story-cast': return s.speakers.length > 1 ? `пишут контактов: ${s.speakers.length}` : null;
@@ -136,6 +143,10 @@ function task(ctx, row, symptom) {
     ...shown.map((f) => `  ${LEVEL_RU[f.level]} · ${f.check} · ${f.node ?? '—'}${f.chapter ? ` (гл. ${f.chapter})` : ''} · ${f.message} · чинит ${f.owner}`),
   ];
   if (!list.length) lines.push('  — (строк нет: замерь сам командой из шага «Замер» скилла)');
+  const s = signals(ctx);
+  if (row.lens === 'story-mystery' && !s.reveal && !s.facts) {
+    lines.push('режим линзы: разметка — меток // reveal: и facts.md нет: предложи метки улик и строку «виновник:», честность улик без них не суди (LOCAL-12)');
+  }
   if (rest.length) {
     const by = new Map();
     for (const f of rest) { const k = `${LEVEL_RU[f.level]} ${f.check}`; if (!by.has(k)) by.set(k, []); by.get(k).push(f.node ?? '—'); }
@@ -150,7 +161,7 @@ function task(ctx, row, symptom) {
 /** Точки холодного читателя: конец главы 1 (кто пишет, зачем) и середина (что дальше, кому не веришь). */
 function coldPoints(ctx, s) {
   const ref = ctx.mode === 'plan' ? rel(ctx.skeleton) : ctx.ref;
-  const cmd = (until, mode, profile) => `npm run -s story:cold-read -- --story ${ref} --until ${until} --mode ${mode} --profile ${profile} --ask --json`;
+  const cmd = (until, mode, profile) => `npm run -s story:cold-read -- --story ${ref} --until ${until} --mode ${mode} --profile ${profile} --ask`;
   const out = [];
   const tree = ctx.tree;
   const ends = findEndings(tree).endings;
@@ -200,7 +211,8 @@ await runCli(HELP, async (args) => {
   const missing = ['ставка', 'вопрос', 'оси', 'логлайн'].filter((k) => !s.head.includes(k));
   if (ctx.mode !== 'plan' && (missing.length || (!s.reveal && !s.finalMarks))) {
     console.log(`разметка A-06: ${missing.length ? `в шапке нет ${missing.map((k) => `// ${k}:`).join(', ')}` : 'шапка есть'}; меток // reveal: ${s.reveal}, // финал: ${s.finalMarks}` +
-      ' — C-24, C-54 и C-06 без неё молчат или считают по графу (LOCAL-02): скрытую правду назовёт только автор → --focus story-mystery');
+      ' — C-24, C-54 и C-06 без неё молчат или считают по графу (LOCAL-02): скрытую правду назовёт только автор' +
+      (rows.find((r) => r.lens === 'story-mystery')?.run ? ' — story-mystery идёт в режиме «разметка»' : ' → --focus story-mystery'));
   }
   console.log('');
   console.log(table(rows.map((r) => [r.lens, r.run ? 'да' : '—', r.done ? 'есть' : '—', r.reason]), ['линза', 'запускать', 'ответ', 'почему']));
