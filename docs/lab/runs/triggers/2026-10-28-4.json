@@ -1,0 +1,1203 @@
+{
+  "date": "2026-10-28T15:03:23.187Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.312",
+  "runs": 3,
+  "focus": null,
+  "file": "docs/lab/triggers/story-time.json",
+  "group": null,
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "seconds": 115,
+  "cost_usd": 0.6799687999999999,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-brainstorm",
+      "story-branch",
+      "story-desk",
+      "story-fix",
+      "story-playtest",
+      "story-release",
+      "story-review",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "story-brainstorm",
+      "story-branch",
+      "story-cast",
+      "story-choices",
+      "story-continuity",
+      "story-core",
+      "story-desk",
+      "story-endings",
+      "story-fix",
+      "story-mystery",
+      "story-opening",
+      "story-pace",
+      "story-pauses",
+      "story-plan",
+      "story-playtest",
+      "story-release",
+      "story-review",
+      "story-time",
+      "story-voice"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 57,
+    "passed": 52,
+    "rate": 0.9122807017543859,
+    "errors": 0,
+    "denied": 3,
+    "failed_runs": 3
+  },
+  "skills": [
+    {
+      "skill": "story-brainstorm",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-branch",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-cast",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-continuity",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-core",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-endings",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Какой из финалов сделать главным и как распределить игроков между ними?"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    },
+    {
+      "skill": "story-fix",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-mystery",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-opening",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pace",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pauses",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 6,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Перед перерывом глава обрывается на ровном месте, игроку незачем возвращаться",
+        "Игрок вернулся после паузы и не помнит, что было, — как напомнить?"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.10526315789473684
+    },
+    {
+      "skill": "story-plan",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-playtest",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-release",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 6,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "на карточке 30 минут, а по факту история идёт три дня — как посчитать честно?",
+        "Подготовь карточку истории для каталога и проверь платную границу"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.10526315789473684
+    },
+    {
+      "skill": "story-review",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-time",
+      "expected": 39,
+      "hits": 34,
+      "foreign": 18,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {
+        "none": 2,
+        "story-release": 3
+      },
+      "false_from": [],
+      "hit_rate": 0.8717948717948718,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-voice",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Персонаж перед уходом пишет «вернусь через час» — так нормально?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Если игрок не отвечает полдня, что делает героиня? Сколько раз ей напоминать о себе?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "А как эта глава будет читаться в режиме по клику?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что будет, если сообщение придёт игроку в три часа ночи?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "История идёт почти неделю, это не слишком долго? Сколько дней нормально?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "героиня пишет «доброе утро» через минуту после «спокойной ночи»",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Персонаж обижается, что игрок долго не отвечал, — это ок?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня в тексте «у тебя пять минут, иначе всё», а от времени ответа ничего не зависит",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "пауза на шесть часов без объяснения, тестер подумал что игра зависла",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь напоминания во второй главе: сколько раз героиня напомнит, если игрок молчит у кнопки?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "на карточке 30 минут, а по факту история идёт три дня — как посчитать честно?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как проверить главу с паузами в реальном времени, не ожидая часами?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 2
+        }
+      ]
+    },
+    {
+      "text": "Можно ли герою писать ночью, если игрок наверняка спит?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Игрок нажал «Промолчать», а персонаж будто не заметил",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где мы сейчас с историей и что дальше по плану?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Почини падающий e2e-тест на экране чатов",
+      "checks": [
+        {
+          "expect": "none",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01P3C3iCRivtsHkJNQY1KMEV",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01WkqwSHSCh9vRDnG5YSYCiP",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60",
+              "id": "toolu_0187hrYRzmeN3HUQ6WSD8ydX",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60)"
+        }
+      ]
+    },
+    {
+      "text": "Перед перерывом глава обрывается на ровном месте, игроку незачем возвращаться",
+      "checks": [
+        {
+          "expect": "!story-time",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Игрок вернулся после паузы и не помнит, что было, — как напомнить?",
+      "checks": [
+        {
+          "expect": "!story-time",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Какой из финалов сделать главным и как распределить игроков между ними?",
+      "checks": [
+        {
+          "expect": "!story-time",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Подготовь карточку истории для каталога и проверь платную границу",
+      "checks": [
+        {
+          "expect": "!story-time",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-release",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 1,
+      "tool": "Bash",
+      "command": "HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 2,
+      "tool": "Bash",
+      "command": "HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 3,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test 2>&1 | tail -60",
+      "blocking": true
+    }
+  ],
+  "skipped": [],
+  "fails": [],
+  "ok": true
+}

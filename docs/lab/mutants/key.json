@@ -1,0 +1,432 @@
+{
+  "_about": {
+    "what": "Ключ мутантов T-13: какой скилл (zone) должен найти дефект, какая проверка его меряет (check), где он (node) и что сломано (broken). lint — проверки story:lint, которые ловят мутанта уже сейчас.",
+    "build": "npm run skills:test -- --build (из scripts/lab/mutants-spec.mjs); руками не править",
+    "test": "npm run skills:test — линт; npm run skills:test -- --skill <имя> — скилл через claude -p"
+  },
+  "base": "docs/lab/mutants/_base",
+  "mutants": [
+    {
+      "id": "m01-stake-behind-button",
+      "zone": "story-opening",
+      "check": "C-24",
+      "node": "ch1_door",
+      "broken": "ставка («к 06:00 семена погибнут») убрана из ствола главы 1 и звучит только за кнопкой «Стучи» — большинство игроков её не видят",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "ashwell-standard-patterns:RED-12",
+        "narrative-postmortems:RED-10",
+        "edgerton-hooked:RED-06",
+        "C-24"
+      ],
+      "path": "docs/lab/mutants/m01-stake-behind-button"
+    },
+    {
+      "id": "m02-dead-var",
+      "zone": "story-choices",
+      "check": "C-01",
+      "node": "ch1_panel",
+      "broken": "кнопка «Сфоткай щиток» пишет checked_panel, но реплика-отклик убрана — переменную никто не читает",
+      "lint": [
+        "C-01"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "emshort-structures:RED-01",
+        "inkle-ingold:RED-06",
+        "meaningful-choice:RED-02",
+        "C-01"
+      ],
+      "path": "docs/lab/mutants/m02-dead-var"
+    },
+    {
+      "id": "m03-hidden-ending-gate",
+      "zone": "story-endings",
+      "check": "C-06",
+      "node": "ch4_choice",
+      "broken": "последней кнопки нет: финал решает скрытый порог bold, которого игрок не видел; «что делаем?» остаётся без ответа",
+      "lint": [
+        "C-06"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "ashwell-standard-patterns:RED-06",
+        "truby-anatomy-of-story:RED-08",
+        "mckee-story:RED-10",
+        "C-06"
+      ],
+      "path": "docs/lab/mutants/m03-hidden-ending-gate"
+    },
+    {
+      "id": "m04-monologue",
+      "zone": "story-pace",
+      "check": "C-35",
+      "node": "ch3_radio",
+      "broken": "Ника пересказывает речь Льва монологом из 15 реплик подряд без вопроса и без кнопки",
+      "lint": [
+        "C-35"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "maass-fire-in-fiction:RED-02",
+        "snyder-save-the-cat:RED-07",
+        "mckee-story:RED-04",
+        "C-35"
+      ],
+      "path": "docs/lab/mutants/m04-monologue"
+    },
+    {
+      "id": "m05-long-epilogue",
+      "zone": "story-endings",
+      "check": "C-42",
+      "node": "epilogue",
+      "broken": "после последней кнопки — 12 сообщений эпилога, между ними часовые паузы: игрок ждёт полдня, ничего не решая",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "messenger-genre:RED-09",
+        "schell-art-of-game-design:RED-03",
+        "C-42"
+      ],
+      "path": "docs/lab/mutants/m05-long-epilogue"
+    },
+    {
+      "id": "m06-one-line-contact",
+      "zone": "story-cast",
+      "check": "C-45",
+      "node": "ch4",
+      "broken": "новый контакт «Пилот» открывается в главе 4 ради одной реплики и больше не пишет",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "nicklin-writing-for-games:RED-03",
+        "C-45"
+      ],
+      "path": "docs/lab/mutants/m06-one-line-contact"
+    },
+    {
+      "id": "m07-crowd-ch1",
+      "zone": "story-cast",
+      "check": "C-21",
+      "node": "ch1_who",
+      "broken": "в главе 1 появляются 7 контактов: к Нике и Мире добавлены пять служебных чатов станции",
+      "lint": [
+        "C-21"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "mobile-interactive-stories:RED-10",
+        "video-three-things:RED-04",
+        "nicklin-writing-for-games:RED-17",
+        "C-21"
+      ],
+      "path": "docs/lab/mutants/m07-crowd-ch1"
+    },
+    {
+      "id": "m08-return-deadline",
+      "zone": "story-time",
+      "check": "C-27",
+      "node": "ch3_radio",
+      "broken": "перед паузой Ника называет срок возвращения («напишу через два часа») — в реальном времени это будильник, по клику обещание сбывается через секунду",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "C-27"
+      ],
+      "path": "docs/lab/mutants/m08-return-deadline"
+    },
+    {
+      "id": "m09-instant-morning",
+      "zone": "story-time",
+      "check": "C-32",
+      "node": "ch2_sleep",
+      "broken": "Ника ложится спать и через 10 секунд пишет «доброе утро»: время мира прыгает на ночь без паузы, по клику метки не будет",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "messenger-genre:RED-13",
+        "C-32"
+      ],
+      "path": "docs/lab/mutants/m09-instant-morning"
+    },
+    {
+      "id": "m10-absence-reproach",
+      "zone": "story-time",
+      "check": "C-47",
+      "node": "ch3",
+      "broken": "после паузы, которую поставила сама история, Ника упрекает игрока за отсутствие («ты где пропала?»), без связи с #silent",
+      "lint": [
+        "C-47",
+        "C-32"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "C-47",
+        "C-32"
+      ],
+      "path": "docs/lab/mutants/m10-absence-reproach"
+    },
+    {
+      "id": "m11-reminder-dead-end",
+      "zone": "story-time",
+      "check": "C-32",
+      "node": "ch3_after",
+      "broken": "если игрок молчит у сделки, Ника дважды напоминает, а потом история стоит: продолжения после напоминаний нет",
+      "lint": [
+        "C-32"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "C-32"
+      ],
+      "path": "docs/lab/mutants/m11-reminder-dead-end"
+    },
+    {
+      "id": "m12-unmarked-ending",
+      "zone": "story-endings",
+      "check": "C-40",
+      "node": "end_deal",
+      "broken": "у финала end_deal снята метка «// финал:» — прогоны через него не засчитываются ни в один финал",
+      "lint": [
+        "C-40",
+        "C-53"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "C-40",
+        "C-53"
+      ],
+      "path": "docs/lab/mutants/m12-unmarked-ending"
+    },
+    {
+      "id": "m13-clue-after-reveal",
+      "zone": "story-mystery",
+      "check": "C-54",
+      "node": "ch4_truth",
+      "broken": "улика clue_frost (иней на ботинках) находится только в финале, после раскрытия в ch4_truth: разгадка опирается на то, чего игрок ещё не видел",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "mystery-fair-play:RED-01",
+        "C-54"
+      ],
+      "path": "docs/lab/mutants/m13-clue-after-reveal"
+    },
+    {
+      "id": "m14-same-reply-buttons",
+      "zone": "story-choices",
+      "check": "C-10",
+      "node": "ch1_lev",
+      "broken": "обе кнопки «Стучи» и «Иди к щитку» без своего ответа и последствий: дальше одна и та же реплика и один узел",
+      "lint": [
+        "C-10"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "inkle-ingold:RED-02",
+        "choiceofgames-design:RED-05",
+        "emshort-structures:RED-11",
+        "C-10"
+      ],
+      "path": "docs/lab/mutants/m14-same-reply-buttons"
+    },
+    {
+      "id": "m15-pause-no-hook",
+      "zone": "story-pauses",
+      "check": "C-26",
+      "node": "ch3_radio",
+      "broken": "перед паузой 2 ч последняя реплика — прощание «ладно, пока»: открытого вопроса нет, возвращаться незачем",
+      "lint": [
+        "C-26"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "serial-hooks:RED-01",
+        "narrative-testing:RED-05",
+        "mobile-interactive-stories:RED-03",
+        "C-26"
+      ],
+      "path": "docs/lab/mutants/m15-pause-no-hook"
+    },
+    {
+      "id": "m16-same-voices",
+      "zone": "story-voice",
+      "check": "C-44",
+      "node": "ch2_lev",
+      "broken": "Лев пишет как Мира: строчные, «!!», эмодзи, «честно» — голоса начальника и стажёра не различить",
+      "lint": [],
+      "lint_auto": false,
+      "lint_why": "C-44 сравнивает голоса контактов от 20 реплик, а у Льва и Миры в основе меньше",
+      "catches": [
+        "procedural-storytelling:RED-08",
+        "sheldon-character-storytelling:RED-05",
+        "snyder-save-the-cat:RED-16",
+        "C-44"
+      ],
+      "path": "docs/lab/mutants/m16-same-voices"
+    },
+    {
+      "id": "m17-fact-mismatch",
+      "zone": "story-continuity",
+      "check": "C-49",
+      "node": "ch2_lev",
+      "broken": "в ветке Льва камеру открыли пропуском Миры в 03:40, в стволе и у Миры — в 02:10: факт расходится между ветками",
+      "lint": [],
+      "lint_auto": false,
+      "lint_why": "C-49 сверяет числа карточки с текстом; расхождение факта между ветками требует реестра facts.md",
+      "catches": [
+        "narrative-testing:RED-10",
+        "C-49"
+      ],
+      "path": "docs/lab/mutants/m17-fact-mismatch"
+    },
+    {
+      "id": "m18-late-first-button",
+      "zone": "story-opening",
+      "check": "C-20",
+      "node": "ch1",
+      "broken": "до первой кнопки 11 входящих: Ника долго рассказывает про станцию, игрок только читает",
+      "lint": [
+        "C-20"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "messenger-genre:RED-01",
+        "skolnick-video-game-storytelling:RED-01",
+        "failbetter-qbn:RED-13",
+        "C-20"
+      ],
+      "path": "docs/lab/mutants/m18-late-first-button"
+    },
+    {
+      "id": "m19-paid-boundary-no-hook",
+      "zone": "story-release",
+      "check": "C-39",
+      "node": "ch1_end",
+      "broken": "бесплатная глава 1 (free_chapters: 1) кончается прощанием без крючка: на платной границе нечего хотеть дальше",
+      "lint": [
+        "C-26"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "edgerton-hooked:RED-09",
+        "serial-hooks:RED-01",
+        "yorke-into-the-woods:RED-04",
+        "C-39",
+        "C-26"
+      ],
+      "path": "docs/lab/mutants/m19-paid-boundary-no-hook"
+    },
+    {
+      "id": "m21-long-message",
+      "zone": "story-voice",
+      "check": "C-34",
+      "node": "ch2_mira",
+      "broken": "Мира пишет одним пузырём на 170+ знаков — стена текста",
+      "lint": [
+        "C-34"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "narrative-testing:RED-32",
+        "yorke-into-the-woods:RED-17",
+        "C-34"
+      ],
+      "path": "docs/lab/mutants/m21-long-message"
+    },
+    {
+      "id": "m23-greeting-after-pause",
+      "zone": "story-pauses",
+      "check": "C-28",
+      "node": "ch3",
+      "broken": "после паузы 9 ч первая строка — «привет»: в уведомлении нет события, которое зовёт вернуться",
+      "lint": [
+        "C-28"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "choiceofgames-design:RED-18",
+        "narrative-testing:RED-29",
+        "maass-fire-in-fiction:RED-14",
+        "C-28"
+      ],
+      "path": "docs/lab/mutants/m23-greeting-after-pause"
+    },
+    {
+      "id": "m25-wrong-responder",
+      "zone": "story-choices",
+      "check": "C-10",
+      "node": "ch2_mira",
+      "broken": "на вопрос Мире «Кто знает про крючок?» отвечает Ника, а Мира молчит до следующей развилки — ответил не тот",
+      "lint": [
+        "C-10"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "C-10"
+      ],
+      "path": "docs/lab/mutants/m25-wrong-responder"
+    },
+    {
+      "id": "m26-backstory-opening",
+      "zone": "story-opening",
+      "check": "C-47",
+      "node": "ch1",
+      "broken": "до первой кнопки Ника рассказывает историю станции блоком: четыре реплики о прошлом подряд, а инцидент отодвинут",
+      "lint": [
+        "C-23"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "edgerton-hooked:RED-03",
+        "cron-wired-for-story:RED-17",
+        "C-47",
+        "C-23"
+      ],
+      "path": "docs/lab/mutants/m26-backstory-opening"
+    },
+    {
+      "id": "m27-broadcast-interrupt",
+      "zone": "story-cast",
+      "check": "C-50",
+      "node": "ch1_who",
+      "broken": "между вопросом Ники «дать тебе её номер?» и кнопками ответа встаёт рассылка метеопоста, которому ответить нельзя: вопрос уезжает вверх",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "messenger-genre:RED-14",
+        "C-50"
+      ],
+      "path": "docs/lab/mutants/m27-broadcast-interrupt"
+    },
+    {
+      "id": "m28-met-twice",
+      "zone": "story-continuity",
+      "check": "C-51",
+      "node": "epilogue",
+      "broken": "в эпилоге Мира представляется заново («мы не знакомы») и тем, кто переписывался с ней в главах 2–3: знакомство без условия",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "inkle-ingold:RED-04",
+        "C-51"
+      ],
+      "path": "docs/lab/mutants/m28-met-twice"
+    },
+    {
+      "id": "m29-clue-no-gate",
+      "zone": "story-mystery",
+      "check": "C-54",
+      "node": "ch4_truth",
+      "broken": "иней на ботинках Льва впервые всплывает в главе 4, в строке прямо перед раскрытием: между последней уликой и разгадкой нет выбора",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "mystery-fair-play:RED-03",
+        "C-54"
+      ],
+      "path": "docs/lab/mutants/m29-clue-no-gate"
+    }
+  ]
+}

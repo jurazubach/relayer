@@ -1,7 +1,8 @@
+import type { ReactNode } from 'react';
 import type { Engine, View } from '../engine';
 import { formatTime } from '../engine';
 import { Avatar } from './Avatar';
-import { GearIcon } from './Icons';
+import { BellIcon, GearIcon } from './Icons';
 
 /** Список чатов внутри истории. Назад ведёт на описание истории. */
 export function ChatsScreen({
@@ -11,6 +12,9 @@ export function ChatsScreen({
   backLabel,
   onBack,
   onDebug,
+  notices,
+  onNotices,
+  paywall,
 }: {
   engine: Engine;
   view: View;
@@ -18,6 +22,11 @@ export function ChatsScreen({
   backLabel: string;
   onBack: () => void;
   onDebug: () => void;
+  /** Уведомления о сообщениях в других чатах включены. */
+  notices: boolean;
+  onNotices: (on: boolean) => void;
+  /** Плашка платной границы над списком чатов. */
+  paywall?: ReactNode;
 }) {
   return (
     <div className="screen" data-testid="contacts">
@@ -26,13 +35,26 @@ export function ChatsScreen({
           <button className="btn btn--back" onClick={onBack} data-testid="back-story">
             ← {backLabel}
           </button>
-          <button className="btn btn--icon" onClick={onDebug} aria-label="Панель отладки">
-            <GearIcon />
-          </button>
+          <span className="screen__actions">
+            <button
+              className={notices ? 'btn btn--icon' : 'btn btn--icon is-off'}
+              onClick={() => onNotices(!notices)}
+              aria-pressed={!notices}
+              aria-label={notices ? 'Выключить уведомления' : 'Включить уведомления'}
+              title={notices ? 'Уведомления включены' : 'Уведомления выключены'}
+              data-testid="notices"
+            >
+              <BellIcon off={!notices} />
+            </button>
+            <button className="btn btn--icon" onClick={onDebug} aria-label="Панель отладки">
+              <GearIcon />
+            </button>
+          </span>
         </div>
         <h1 className="screen__title">Сообщения</h1>
       </header>
 
+      {paywall}
       <ul className="chat-list">
         {view.threads.length === 0 && <li className="chat-list__empty">Пока тихо. Кто-то скоро напишет.</li>}
         {view.threads.map((id) => {

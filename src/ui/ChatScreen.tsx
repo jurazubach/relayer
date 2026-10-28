@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import type { Engine, View } from '../engine';
-import { formatDuration, formatTime } from '../engine';
+import { formatTime } from '../engine';
 import { Avatar } from './Avatar';
 import { BackIcon, CameraIcon, GearIcon } from './Icons';
 
@@ -12,6 +13,7 @@ export function ChatScreen({
   onBack,
   onDebug,
   onOpen,
+  paywall,
 }: {
   engine: Engine;
   view: View;
@@ -19,6 +21,8 @@ export function ChatScreen({
   onBack: () => void;
   onDebug: () => void;
   onOpen: (thread: string) => void;
+  /** Плашка платной границы: история стоит, пока продолжение закрыто. */
+  paywall?: ReactNode;
 }) {
   const contact = engine.contact(thread);
   const msgs = view.messages.filter((m) => m.thread === thread);
@@ -133,15 +137,15 @@ export function ChatScreen({
             ))}
             {elsewhere}
           </div>
+        ) : paywall ? (
+          paywall
         ) : view.ended ? (
           <p className="chat__hint">Конец сцены. Начать заново можно в панели отладки.</p>
         ) : waitingElsewhere ? (
           elsewhere
-        ) : away && st ? (
-          <p className="chat__hint">
-            {contact.name} ответит через {formatDuration(st.pauseMs)}
-            {view.speed > 1 && view.speed !== Infinity ? ` · реально ${formatDuration(st.realMs)}` : ''}
-          </p>
+        ) : statusText === 'не в сети' ? (
+          // срок паузы игроку не называем (A-01): точное время — в панели отладки
+          <p className="chat__hint">{contact.name} не в сети</p>
         ) : (
           <p className="chat__hint">…</p>
         )}

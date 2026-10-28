@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "#attn-ethics": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "таблица перенесена без пересказа, источники вынесены"
+      }
+    },
+    "ashwell-standard-patterns:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "свой вклад сохранён, расхождение с A-03 отмечено"
+      }
+    },
+    "attention-today:SYS-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "определение, классы и исключение для хорошего обмана сохранены"
+      }
+    },
+    "bateman-game-writing:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "свой вклад сохранён"
+      }
+    },
+    "dille-ultimate-guide:LESSON-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "класс C (критики) сохранён"
+      }
+    },
+    "edgerton-hooked:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "смысл сохранён; потерян порог «первые пять сообщений» (без ключа), не критично"
+      }
+    },
+    "edgerton-hooked:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "когда применять, когда нет и ловушка сохранены"
+      }
+    },
+    "inkle-ingold:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "смысл сохранён; «пауза от часа» словами, без ключа"
+      }
+    },
+    "maass-fire-in-fiction:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и граница манипуляции сохранены"
+      }
+    },
+    "messenger-genre:LESSON-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "слит с дублями одним блоком, вывод и уверенность сохранены"
+      }
+    },
+    "mystery-fair-play:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "смысл сохранён; потолок паузы-раздумья опущен"
+      }
+    },
+    "nicklin-writing-for-games:RED-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "признак и починка сохранены, ловит C-47"
+      }
+    },
+    "R-115": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "правило и отсутствие исключений сохранены (ethics.md, decisions-release.md)"
+      }
+    },
+    "serial-hooks:LESSON-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "модель и отказ от неё сохранены, класс C верен (нет данных об удержании)"
+      }
+    },
+    "sheldon-character-storytelling:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "давление жалостью и проверка сохранены"
+      }
+    },
+    "skolnick-video-game-storytelling:LESSON-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "слит с дублями Lifeline, вывод сохранён"
+      }
+    },
+    "snyder-save-the-cat:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "пауза после всё потеряно и ложный катализатор сохранены"
+      }
+    },
+    "video-three-things:attention§5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "свой вклад и привязка к C-49 (е), R-11"
+      }
+    },
+    "video-three-things:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "оба исключения сохранены, плюс подавление C-49"
+      }
+    },
+    "yorke-into-the-woods:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "корреляция не выдана за причину, класс B"
+      }
+    }
+  }
+}

@@ -14,6 +14,11 @@ const minRefs = Number(opt('--min-refs', 8));
 const minScripts = Number(opt('--min-scripts', 2));
 const fixes = (opt('--fixes', '') || '').split(',').filter(Boolean);
 
+// пороги контракта — из thresholds.json, жёсткие границы приёмки чуть шире цели
+const TH = (() => { try { const t = JSON.parse(readFileSync('docs/playbook/thresholds.json', 'utf8')); return t.thresholds ?? t; } catch { return {}; } })();
+const thv = (k, d) => TH[k]?.value ?? d;
+const coreMin = thv('skill.core.min_lines', 60), coreMax = thv('skill.core.max_lines', 120);
+const descMax = thv('skill.description.max_chars', 300);
 const dir = join('.claude/skills', name);
 const errors = [], warns = [];
 const err = (m) => errors.push(m), warn = (m) => warns.push(m);
@@ -32,16 +37,23 @@ else {
   const desc = fm[1].match(/^description:\s*([\s\S]*?)(?=^\w[\w-]*:|$(?![\s\S]))/m);
   const d = desc ? desc[1].replace(/\s+/g, ' ').trim().replace(/^["']|["']$/g, '') : '';
   if (!d) err('frontmatter: нет description');
-  else if (d.length > 300) err(`description ${d.length} знаков (> 300)`);
+  else if (d.length > descMax) err(`description ${d.length} знаков (> ${descMax}, skill.description.max_chars)`);
 }
 const body = text.replace(/^---[\s\S]*?\n---\n/, '');
 const lines = body.split('\n').length;
-if (lines < 40 || lines > 160) err(`SKILL.md: ${lines} строк (допустимо 40–160, цель 60–120)`);
-else if (lines < 60 || lines > 120) warn(`SKILL.md: ${lines} строк (цель 60–120)`);
+const hardMin = thv('skill.core.hard_min_lines', Math.round(coreMin * 2 / 3)), hardMax = thv('skill.core.hard_max_lines', Math.round(coreMax * 4 / 3));
+if (lines < hardMin || lines > hardMax) err(`SKILL.md: ${lines} строк (допустимо ${hardMin}–${hardMax}, цель ${coreMin}–${coreMax}: skill.core.*)`);
+else if (lines < coreMin || lines > coreMax) warn(`SKILL.md: ${lines} строк (цель ${coreMin}–${coreMax}: skill.core.*)`);
 if (!/STATUS\.md/.test(body)) err('SKILL.md: первый шаг должен читать docs/stories/<id>/STATUS.md');
 if (!/references\//.test(body)) err('SKILL.md: не ссылается на references/');
 if (!/объясни/i.test(body)) warn('SKILL.md: нет режима «объясни»');
-if (!/Версия:\s*\d/.test(body)) warn('SKILL.md: нет строки «Версия: N»');
+if (!/Версия:\s*\d/.test(body) && !/^metadata:[\s\S]*?version:\s*\d/m.test(fm?.[1] ?? '')) warn('SKILL.md: нет версии (metadata.version или «Версия: N»)');
+// `Bash(npm run story:*)` совпадает с `npm run story *` и не пропускает `npm run story:lint` (LOCAL-03)
+if (fm && /allowed-tools:[^\n]*npm run (?:-s )?story:\*/.test(fm[1])) err('allowed-tools: правило story:* не пропускает npm run story:lint — нужно Bash(npm run story*) (LOCAL-03)');
+if (fm && /npm run -s story/.test(text) && !/allowed-tools:[^\n]*npm run -s story\*/.test(fm[1])) err('allowed-tools: в SKILL.md есть npm run -s story…, нужно ещё Bash(npm run -s story*)');
+if (fm && /^when_to_use:/m.test(fm[1])) warn('frontmatter: when_to_use тратит бюджет листинга — симптомы в description (claude-code-format.md §1.2)');
+if (fm && /^disable-model-invocation:\s*true/m.test(fm[1])) err('frontmatter: disable-model-invocation запрещает вызов моделью — модулю нужен user-invocable: false');
+if (/\.claude\/skills\/[a-z0-9-]+\/scripts\//.test(body)) warn('SKILL.md: скрипты своего скилла — через ${CLAUDE_SKILL_DIR}/scripts/');
 
 // references
 const refs = walk(join(dir, 'references')).filter((f) => f.endsWith('.md'));
@@ -57,13 +69,33 @@ const STORY = /the-number|slepoe-pyatno|chuzhoy-golos|Чужой голос|Сл
 for (const f of refs) {
   const t = readFileSync(f, 'utf8');
   const n = t.split('\n').length;
-  if (n > 350) err(`${f}: ${n} строк (> 300)`); else if (n > 300) warn(`${f}: ${n} строк (> 300)`);
+  const refMax = thv('skill.reference.max_lines', 300);
+  if (n > Math.round(refMax * 7 / 6)) err(`${f}: ${n} строк (> ${refMax}, skill.reference.max_lines)`); else if (n > refMax) warn(`${f}: ${n} строк (> ${refMax}, skill.reference.max_lines)`);
   if (!f.endsWith('sources.md') && !/^#+\s*Источники/m.test(t)) warn(`${f}: нет раздела «Источники»`);
   if (STORY.test(t)) err(`${f}: упоминает наши истории — примеры в скиллах должны быть придуманными`);
   if (/^-\s|^\|/m.test(t) && f.includes('decisions-') && !/[Кк]огда не работает/.test(t)) warn(`${f}: в развилках нет «когда не работает»`);
   if ((f.includes('decisions-') || f.includes('patterns-')) && !/basis/.test(t)) warn(`${f}: нет пометок basis`);
 }
 if (STORY.test(body)) err('SKILL.md: упоминает наши истории');
+
+// Имена героев наших историй и основы мутантов не должны попадать в примеры: примеры придумываются заново,
+// иначе скилл тянет за собой конкретную историю, а мутант-основа узнаётся «по знакомому имени».
+const GENERIC = new Set(['Вы', 'Ты', 'Неизвестный', 'Номер', 'Сержант']);
+const heroNames = [];
+for (const d of [...(existsSync('src/stories') ? readdirSync('src/stories').map((x) => join('src/stories', x)) : []), 'docs/lab/mutants/_base']) {
+  try {
+    const m = JSON.parse(readFileSync(join(d, 'meta.json'), 'utf8'));
+    for (const c of m.characters ?? []) {
+      if (c.service) continue;
+      for (const w of String(c.name ?? '').split(/\s+/)) if (w.length >= 3 && /^[А-ЯЁ]/.test(w) && !GENERIC.has(w)) heroNames.push([w, d]);
+    }
+  } catch {}
+}
+for (const f of [skillMd, ...refs]) {
+  const t = readFileSync(f, 'utf8');
+  const hit = heroNames.filter(([w]) => new RegExp(`(?<![А-Яа-яЁё])${w}(?:[аеиоуыяюйь]{0,2})(?![А-Яа-яЁё])`).test(t));
+  if (hit.length) warn(`${f}: имена героев наших историй или основы мутантов: ${[...new Set(hit.map(([w, d]) => `${w} (${d.split('/').pop()})`))].join(', ')} — придумай свои`);
+}
 
 // примеры ink компилируются
 let Compiler = null;
@@ -92,7 +124,7 @@ for (const s of scripts) {
 const src = join(dir, 'references', 'sources.md');
 if (existsSync(src)) {
   const aliases = new Set(readdirSync('docs/books').filter((d) => !d.startsWith('_') && statSync(join('docs/books', d)).isDirectory()));
-  const used = [...readFileSync(src, 'utf8').matchAll(/([a-z0-9-]+):(?:P|PAT|GREEN|RED|LESSON|SYS)-?\d*/g)].map((m) => m[1]);
+  const used = [...readFileSync(src, 'utf8').matchAll(/(?<![\w-])([a-z0-9-]+):(?:P|PAT|GREEN|RED|LESSON|SYS)-?\d*/g)].map((m) => m[1]);
   const unknown = [...new Set(used.filter((a) => !aliases.has(a)))];
   if (unknown.length) err(`sources.md: неизвестные алиасы ${unknown.join(', ')}`);
   if (!used.length) err('sources.md: нет ни одной ссылки алиас:ID');

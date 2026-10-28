@@ -1,0 +1,233 @@
+# Источники `story-endings`
+
+Сгенерировано `npm run story:coverage -- --sources story-endings --write`, руками не править.
+Список ID — это уровень L1, а не покрытие: строка покрыта, когда в reference есть блок с её ID в заголовке
+(L2) или знание исполняемо (L3). Отменённое (`superseded`) не переносится; «частично» — берётся часть
+«в силе» (`docs/playbook/superseded.md`).
+
+## story-endings/attention.md
+- `#attn-min-ending` — Финал и структура (`docs/playbook/attention-merged.md:114`)
+
+## story-endings/decisions-endings.md
+
+### TH-60 · распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов
+- `ashwell-standard-patterns:GREEN-05` — Финальную V -развилку решают последний выбор и ранние переменные (`docs/books/_clean/ashwell-standard-patterns/flags.md:14` · K-R-102)
+- `ashwell-standard-patterns:LESSON-12` — Распределяй не в первой главе, а взрыв ветвления держи для финала (`docs/books/_clean/ashwell-standard-patterns/lessons.md:96` · K-R-102)
+- `ashwell-standard-patterns:P-11` — Собирай финал из последнего выбора и накопленного состояния (`docs/books/_clean/ashwell-standard-patterns/principles.md:87` · K-R-102)
+- `ashwell-standard-patterns:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/ashwell-standard-patterns/principles.md:87`)
+- `ashwell-standard-patterns:RED-06` — Финалы выбирает только скрытая проверка без последнего выбора (`docs/books/_clean/ashwell-standard-patterns/flags.md:28` · K-R-102)
+- `ashwell-standard-patterns:RED-07` — Финал решает только последняя кнопка, без условий (`docs/books/_clean/ashwell-standard-patterns/flags.md:29`)
+- `bateman-game-writing:RED-11` — Финал решает одна кнопка, нажатая без предупреждения, и перекрывает все остальные выборы (`docs/books/_clean/bateman-game-writing/flags.md:31` · K-bateman-game-writing:RED-11)
+
+### без кластера TH
+- `C-06` — Что читает распределитель финала (`docs/playbook/checks.md:212`)
+- `C-40` — Распределение финалов (`docs/playbook/checks.md:1066`)
+- `C-41` — Ранний и короткий финал (`docs/playbook/checks.md:1092`)
+
+### TH-60 · распределитель: хребет и заплатки, сортировщик, видимость порога, сколько финалов
+- `choiceofgames-design:P-11` — Строй финал из нескольких независимых целей (victory design — дизайн победы) (`docs/books/_clean/choiceofgames-design/principles.md:105` · K-choiceofgames-design:P-11)
+- `choiceofgames-design:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/choiceofgames-design/principles.md:293`)
+- `choiceofgames-design:P-12` — Объясняй финал и не обрывай историю рано (`docs/books/_clean/choiceofgames-design/principles.md:113` · K-R-32)
+- `choiceofgames-design:P-12#нюанс` — нюанс к P-12 (`docs/books/_clean/choiceofgames-design/principles.md:296`)
+- `choiceofgames-design:RED-08` — Порог или финал почти недостижим (`docs/books/_clean/choiceofgames-design/flags.md:32`)
+- `choiceofgames-design:RED-12` — Финал раньше ~75% длины (`docs/books/_clean/choiceofgames-design/flags.md:36`)
+- `emshort-structures:RED-02` — Переменная влияет только на одну скрытую проверку в финале (`docs/books/_clean/emshort-structures/flags.md:23` · K-R-71)
+- `failbetter-qbn:contra-4` — Финал по порогу или по ценностям (`docs/books/_clean/failbetter-qbn/for-relayer.md:134`)
+- `failbetter-qbn:GREEN-06` — персонаж вслух называет уровень угрозы или прогресса (`docs/books/_clean/failbetter-qbn/flags.md:14` · K-R-104)
+- `failbetter-qbn:P-07` — Показывай, сколько осталось до цели (`docs/books/_clean/failbetter-qbn/principles.md:66` · K-R-104)
+- `failbetter-qbn:P-07#нюанс` — нюанс к P-07 (`docs/books/_clean/failbetter-qbn/principles.md:229`)
+- `failbetter-qbn:PAT-04` — Стол с закусками: разные исходы по разным качествам (Midnight Buffet) (`docs/books/_clean/failbetter-qbn/patterns.md:36` · K-R-104)
+- `failbetter-qbn:PAT-04#нюанс` — нюанс к PAT-04 (`docs/books/_clean/failbetter-qbn/patterns.md:126`)
+- `failbetter-qbn:RED-01` — скрытый порог решает финал (`docs/books/_clean/failbetter-qbn/flags.md:22` · K-R-104)
+- `inkle-ingold:LESSON-02` — Пиши хребет «если игрок ничего не сделал» и вешай на него заплатки (`docs/books/_clean/inkle-ingold/lessons.md:30`)
+- `inkle-ingold:P-17` — Пиши финал как хребет «игрок ничего не сделал», а последствия — заплатками (`docs/books/_clean/inkle-ingold/principles.md:160` · K-R-25)
+- `inkle-ingold:P-17#нюанс` — нюанс к P-17 (`docs/books/_clean/inkle-ingold/principles.md:160`)
+- `inkle-ingold:PAT-11` — Финал-хребет с заплатками-туннелями (core spine and patches) (`docs/books/_clean/inkle-ingold/patterns.md:394`)
+- `inkle-ingold:SYS-3` — SYS-3. Хребет и заплатки (core spine and patches) (`docs/books/_clean/inkle-ingold/patterns.md:356`)
+- `inkle-ingold:SYS-6` — PAT-11. Финал-хребет с заплатками-туннелями (core spine and patches) (`docs/books/_clean/inkle-ingold/patterns.md:394`)
+- `meaningful-choice:contra-6` — PAT-07 (сводка с оценкой «хватит ли») · messenger-genre:P-15 (не называй игроку «правильный» финал)… (`docs/books/_clean/meaningful-choice/for-relayer.md:117`)
+- `meaningful-choice:LESSON-05` — Игрок считает вероятность по ощущению, а не по формуле (`docs/books/_clean/meaningful-choice/lessons.md:52`)
+- `meaningful-choice:LESSON-09` — Мелкие выборы можно не подсвечивать, если их последствие видно в поведении персонажа (`docs/books/_clean/meaningful-choice/lessons.md:83`)
+- `meaningful-choice:PAT-06` — Счётчик с озвученным порогом (`docs/books/_clean/meaningful-choice/patterns.md:117`)
+- `meaningful-choice:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/meaningful-choice/patterns.md:278`)
+- `meaningful-choice:PAT-07` — Сводка перед решающим выбором (evidence recap) (`docs/books/_clean/meaningful-choice/patterns.md:148` · K-meaningful-choice:RED-08)
+- `meaningful-choice:PAT-07#нюанс` — нюанс к PAT-07 (`docs/books/_clean/meaningful-choice/patterns.md:279`)
+- `meaningful-choice:RED-07` — Счётчик с большим числом записей и одним–двумя чтениями, о росте которого никто не говорит (`docs/books/_clean/meaningful-choice/flags.md:28`)
+- `meaningful-choice:RED-08` — Финал выбирает скрытая сумма, о которой игрок не знает (`docs/books/_clean/meaningful-choice/flags.md:29` · K-meaningful-choice:RED-08)
+- `messenger-genre:RED-10` — Один финал собирает 50% прогонов бота, а другой < 1% (`docs/books/_clean/messenger-genre/flags.md:31`)
+- `mobile-interactive-stories:GREEN-06` — Финалы различаются причиной, которую персонаж называет вслух (`docs/books/_clean/mobile-interactive-stories/flags.md:14` · K-R-102)
+- `mobile-interactive-stories:PAT-06` — Итог главы (end-of-chapter report) (`docs/books/_clean/mobile-interactive-stories/patterns.md:124`)
+- `mobile-interactive-stories:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/mobile-interactive-stories/patterns.md:226`)
+- `mobile-interactive-stories:RED-06` — Один финал набирает 50% случайных прохождений при 4+ финалах (`docs/books/_clean/mobile-interactive-stories/flags.md:27`)
+- `mobile-interactive-stories:RED-11` — Ветка «не прошёл скрытый порог» давит виной: персонаж страдает и упрекает игрока за то, о чём тот не знал (`docs/books/_clean/mobile-interactive-stories/flags.md:32` · K-R-48)
+- `mystery-fair-play:contra-4` — P-15: разбор ≤ 10 сообщений · choiceofgames-design:P-12 : игрок должен понять, почему пришёл к… (`docs/books/_clean/mystery-fair-play/for-relayer.md:109`)
+- `mystery-fair-play:RED-07` — Переменная финала меняется кнопкой без предупреждения о риске (`docs/books/_clean/mystery-fair-play/flags.md:27` · K-R-102)
+- `narrative-postmortems:contra-4` — Редкие финалы (`docs/books/_clean/narrative-postmortems/for-relayer.md:100`)
+- `narrative-postmortems:GREEN-07` — Перед финалом персонаж перечисляет, что у вас есть (`docs/books/_clean/narrative-postmortems/flags.md:15`)
+- `narrative-postmortems:P-16` — Распределяй силы так, чтобы конец не вышел тоньше начала (`docs/books/_clean/narrative-postmortems/principles.md:133` · K-R-42)
+- `narrative-postmortems:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/narrative-postmortems/principles.md:183`)
+- `narrative-postmortems:PAT-06` — Сводка главы (экран статистики Telltale) (`docs/books/_clean/narrative-postmortems/patterns.md:134`)
+- `narrative-postmortems:RED-07` — Финал выбирает скрытый счёт, о котором игрок не знает (`docs/books/_clean/narrative-postmortems/flags.md:28`)
+- `narrative-postmortems:RED-08` — Один финал забирает больше половины прогонов, ещё один — меньше 1 % (`docs/books/_clean/narrative-postmortems/flags.md:29`)
+- `narrative-testing:GREEN-06` — Финалы распределены без доминанта: ни один не берёт 40 % у случайного бота (`docs/books/_clean/narrative-testing/flags.md:14`)
+- `narrative-testing:RED-12` — Один финал берёт 50 % прогонов случайного бота (`docs/books/_clean/narrative-testing/flags.md:35`)
+- `narrative-testing:RED-13` — Финал наступает раньше последней главы у 20 % прогонов (`docs/books/_clean/narrative-testing/flags.md:36`)
+- `narrative-testing:RED-25` — Финал решает скрытая проверка, а в тексте финала нет «потому что» (`docs/books/_clean/narrative-testing/flags.md:73`)
+- `procedural-storytelling:RED-10` — Финал выбирается проверкой переменных, которые игрок ни разу не «слышал» (`docs/books/_clean/procedural-storytelling/flags.md:29` · K-R-40)
+- `R-102` — В последней главе финал выбирает игрок кнопкой-ценностью: две ценности, которые защищают разные знакомые ему люди, а варианты уходят в разные чаты ( to ).… (`docs/playbook/rules.md:531` · K-R-102)
+- `R-104` — Каждую переменную, которая решает финал, записывай выбором раньше последней главы; какие переменные читает распределитель финала, считает story:endings (C-06),… (`docs/playbook/rules.md:541` · K-R-104)
+- `R-112` — Плохой финал должен быть полноценным: не короче 60% хорошего и с развязками судеб. Нет финала, где игрок проиграл во всём. Финал не наступает раньше трёх… (`docs/playbook/rules.md:577`)
+- `schell-art-of-game-design:contra-5` — Множественные финалы · P-18 / Шелл скептичен ↔ emshort-structures:P-08 ,… (`docs/books/_clean/schell-art-of-game-design/for-relayer.md:111`)
+- `schell-art-of-game-design:LESSON-05` — На повторе отключать ожидание (`docs/books/_clean/schell-art-of-game-design/lessons.md:41`) — частично отменено A-04
+- `schell-art-of-game-design:P-18` — Не прячь финалы за проверкой, которую игрок не чувствует (`docs/books/_clean/schell-art-of-game-design/principles.md:139` · K-R-102)
+- `schell-art-of-game-design:P-18#нюанс` — нюанс к P-18 (`docs/books/_clean/schell-art-of-game-design/principles.md:249`)
+- `schell-art-of-game-design:PAT-10` — Видимый счёт перед скрытой проверкой (`docs/books/_clean/schell-art-of-game-design/patterns.md:97` · K-R-102)
+- `schell-art-of-game-design:PAT-10#нюанс` — нюанс к PAT-10 (`docs/books/_clean/schell-art-of-game-design/patterns.md:130`)
+- `schell-art-of-game-design:RED-10` — Переменная пишется, но читается только в скрытой проверке финала (`docs/books/_clean/schell-art-of-game-design/flags.md:31` · K-R-102)
+- `schell-art-of-game-design:RED-11` — Один финал набирает 50 % случайных прохождений (`docs/books/_clean/schell-art-of-game-design/flags.md:32` · K-R-102)
+- `truby-anatomy-of-story:RED-08` — Финал выбирает только скрытая проверка (`docs/books/_clean/truby-anatomy-of-story/flags.md:30` · K-truby-anatomy-of-story:RED-08)
+- `vogler-writers-journey:GREEN-07` — В воскрешении есть и условный, и безусловный варианты (`docs/books/_clean/vogler-writers-journey/flags.md:15` · K-R-102)
+- `vogler-writers-journey:RED-10` — Финал решает одна новая кнопка или одна скрытая проверка (`docs/books/_clean/vogler-writers-journey/flags.md:31` · K-R-102)
+- `vogler-writers-journey:RED-11` — В воскрешении герой спрашивает игрока «что мне делать» и выполняет (`docs/books/_clean/vogler-writers-journey/flags.md:32` · K-R-102)
+- `yorke-into-the-woods:LESSON-08` — Не прячь лучшие сцены в ветки: веди лозу, а не дерево (`docs/books/_clean/yorke-into-the-woods/lessons.md:75` · K-R-102)
+- `yorke-into-the-woods:LESSON-09` — Не ломай погружение покупками: игроки Lifeline отвергли бесплатную версию (`docs/books/_clean/yorke-into-the-woods/lessons.md:83`)
+- `yorke-into-the-woods:P-08` — Строй кризис как дилемму, где каждая кнопка стоит чего-то (`docs/books/_clean/yorke-into-the-woods/principles.md:74` · K-R-102)
+- `yorke-into-the-woods:P-08#нюанс` — нюанс к P-08 (`docs/books/_clean/yorke-into-the-woods/principles.md:174`)
+- `yorke-into-the-woods:PAT-07` — Кризис-дилемма с ценой у каждой кнопки (crisis) (`docs/books/_clean/yorke-into-the-woods/patterns.md:180`)
+- `yorke-into-the-woods:PAT-07#нюанс` — нюанс к PAT-07 (`docs/books/_clean/yorke-into-the-woods/patterns.md:380`)
+- `yorke-into-the-woods:RED-08` — Кризис можно обойти: финал выбирает проверка раньше, чем игрок дойдёт до финальной дилеммы (`docs/books/_clean/yorke-into-the-woods/flags.md:27` · K-R-102)
+- `yorke-into-the-woods:RED-09` — В финальной развилке есть вариант без цены (`docs/books/_clean/yorke-into-the-woods/flags.md:28` · K-R-102)
+
+## story-endings/declaring-endings.md
+
+### TH-63 · как объявлять финалы
+- `emshort-structures:LESSON-08` — Если варианты подаются неравно, «50/50» не получится (`docs/books/_clean/emshort-structures/lessons.md:77` · K-R-103)
+- `narrative-testing:GREEN-07` — Редкий финал (<1 %) объявлен как награда и на него есть намёк (`docs/books/_clean/narrative-testing/flags.md:15`)
+- `narrative-testing:LESSON-03` — Убирай из случайного прогона ходы, которых игрок не сделал бы (`docs/books/_clean/narrative-testing/lessons.md:27` · K-R-103)
+- `narrative-testing:LESSON-04` — Проверяй, не подсказывает ли формулировка «правильную» кнопку (`docs/books/_clean/narrative-testing/lessons.md:35` · K-R-103)
+- `narrative-testing:P-11` — Не доверяй частотам случайного бота как поведению игрока (`docs/books/_clean/narrative-testing/principles.md:87` · K-R-103)
+- `narrative-testing:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/narrative-testing/principles.md:149`)
+- `narrative-testing:P-12` — Подбирай редкость веток по счётчикам покрытия (`docs/books/_clean/narrative-testing/principles.md:94` · K-R-103)
+- `narrative-testing:P-12#нюанс` — нюанс к P-12 (`docs/books/_clean/narrative-testing/principles.md:150`)
+- `narrative-testing:RED-30` — Узел-петля: после ответа игрока возвращается тот же выбор («ты тут?» → снова «Промолчать») (`docs/books/_clean/narrative-testing/flags.md:88`)
+- `narrative-testing:SYS-3` — SYS-03. Автотесты CoG: quicktest и randomtest (`docs/books/_clean/narrative-testing/patterns.md:295`)
+- `procedural-storytelling:contra-5` — LESSON-02 (порог «ветка находится ботом реже 1%») против narrative-testing:P-11 (не доверяй частотам бота) (`docs/books/_clean/procedural-storytelling/for-relayer.md:115`)
+- `R-103` — Делай 2–4 финала, которые различаются событием, и над узлом каждого ставь // финал: <имя — без метки бот не отличит финалы, которые сходятся в один END .… (`docs/playbook/rules.md:536` · K-R-103)
+
+## story-endings/fixes/F-09-threshold.md
+
+### TH-87 · указатель приёмов
+- `F-09` — Показать скрытый порог (`docs/playbook/skills.md:640`)
+
+## story-endings/fixes/F-10-finale-recap.md
+
+### TH-87 · указатель приёмов
+- `F-10` — Сводка перед финалом (`docs/playbook/skills.md:641`)
+
+## story-endings/fixes/F-12-resolution.md
+
+### TH-87 · указатель приёмов
+- `F-12` — Сжать развязку (`docs/playbook/skills.md:643`)
+
+## story-endings/patterns-endings.md
+
+### TH-61 · приёмы финала: зеркало, другой носитель, следы, финал из шагов
+- `bateman-game-writing:LESSON-09` — Не отнимай в кульминации тот способ игры, который обещал (`docs/books/_clean/bateman-game-writing/lessons.md:83` · K-bateman-game-writing:RED-11)
+
+### без кластера TH
+- `C-07` — Финал цитирует путь (`docs/playbook/checks.md:241`)
+
+### TH-61 · приёмы финала: зеркало, другой носитель, следы, финал из шагов
+- `cron-wired-for-story:LESSON-05` — Финал должен читать накопленные выборы: заплатка после релиза спасает наполовину (`docs/books/_clean/cron-wired-for-story/lessons.md:56` · K-R-107)
+- `cron-wired-for-story:P-16` — Сделай финалы разными по тому, изменился ли NPC, а не только по исходу (`docs/books/_clean/cron-wired-for-story/principles.md:193` · K-R-107)
+- `cron-wired-for-story:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/cron-wired-for-story/principles.md:285`)
+- `cron-wired-for-story:RED-20` — Финал не цитирует ни одного конкретного решения игрока (`docs/books/_clean/cron-wired-for-story/flags.md:72`)
+- `inkle-ingold:LESSON-11` — Пиши плохой финал как путешествие, а не как наказание (`docs/books/_clean/inkle-ingold/lessons.md:102`)
+- `mckee-story:PAT-06` — Кризис-дилемма, затем исполнение по накопленному (crisis → climax) (`docs/books/_clean/mckee-story/patterns.md:171`)
+- `mckee-story:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/mckee-story/patterns.md:344`)
+- `meaningful-choice:LESSON-07` — Если финал отменяет накопленные выборы, пояснение не спасёт (`docs/books/_clean/meaningful-choice/lessons.md:68`)
+- `meaningful-choice:PAT-10` — Эпилог со следами (epilogue traces) (`docs/books/_clean/meaningful-choice/patterns.md:232`)
+- `meaningful-choice:PAT-10#нюанс` — нюанс к PAT-10 (`docs/books/_clean/meaningful-choice/patterns.md:282`)
+- `messenger-genre:GREEN-04` — Финал подан в другом носителе (`docs/books/_clean/messenger-genre/flags.md:14` · K-R-109)
+- `messenger-genre:P-14` — Подавай финал в другом носителе (`docs/books/_clean/messenger-genre/principles.md:162` · K-R-109)
+- `messenger-genre:P-14#нюанс` — нюанс к P-14 (`docs/books/_clean/messenger-genre/principles.md:251`)
+- `messenger-genre:P-15` — Не называй игроку «правильный» финал (`docs/books/_clean/messenger-genre/principles.md:169` · K-R-111)
+- `mystery-fair-play:contra-2` — Ван Дайн: разгадка — чистая логика (С-2) · truby-anatomy-of-story:P-11 : финал — столкновение… (`docs/books/_clean/mystery-fair-play/for-relayer.md:107`)
+- `mystery-fair-play:contra-3` — PAT-02: NPC подтверждает верную версию ( solved ) · messenger-genre:P-15 : не называй «правильный»… (`docs/books/_clean/mystery-fair-play/for-relayer.md:108`)
+- `narrative-testing:PAT-07` — Ловушка-финал → последний шанс (`docs/books/_clean/narrative-testing/patterns.md:193`)
+- `narrative-testing:PAT-07#нюанс` — нюанс к PAT-07 (`docs/books/_clean/narrative-testing/patterns.md:329`)
+- `R-105` — Перед финальной кнопкой персонаж или заметки перечисляют всё, что учитывает условие финала: что у игрока есть, чего нет и хватит ли этого для шага, который он… (`docs/playbook/rules.md:545` · K-R-105)
+- `R-106` — Строй последнюю главу шагами: план, удача, ловушка, смена плана по ранним переменным, итог (в короткой истории хватит ловушки и смены плана). Ловушка не… (`docs/playbook/rules.md:550` · K-R-106)
+- `R-107` — В финале герой решает сам: не кончай историю его вопросом «что мне делать?», на который игрок отвечает за него. Самораскрытие — поступок NPC или вопрос к… (`docs/playbook/rules.md:554` · K-R-107)
+- `R-108` — В каждом финале 1–3 строки называют конкретные решения игрока из разных глав — с ключевым словом кнопки и именем того, кому он отвечал. Ответ игрока на кризис… (`docs/playbook/rules.md:559` · K-R-108)
+- `R-109` — Последняя строка повторяет форму первого входящего (тот же отправитель, тип вложения, сумма или фраза), но с перевёрнутым смыслом. Пару не размечай:… (`docs/playbook/rules.md:563` · K-R-109)
+- `snyder-save-the-cat:contra-2` — Финал как синтез улик или как столкновение ценностей (`docs/books/_clean/snyder-save-the-cat/for-relayer.md:137`)
+- `snyder-save-the-cat:contra-3` — Тема вслух или поступком (`docs/books/_clean/snyder-save-the-cat/for-relayer.md:138`)
+- `snyder-save-the-cat:contra-6` — Финал-победа против нескольких финалов (`docs/books/_clean/snyder-save-the-cat/for-relayer.md:141`)
+- `snyder-save-the-cat:GREEN-05` — Условие финала читает и A-, и B-переменную (`docs/books/_clean/snyder-save-the-cat/flags.md:13` · K-snyder-save-the-cat:P-13)
+- `snyder-save-the-cat:GREEN-06` — Тему говорит NPC в гл. 1–2, и ось из гл. 1 читается в финале (`docs/books/_clean/snyder-save-the-cat/flags.md:14` · K-R-107)
+- `snyder-save-the-cat:GREEN-07` — Первое входящее и последние строки финалов — зеркало (`docs/books/_clean/snyder-save-the-cat/flags.md:15` · K-R-109)
+- `snyder-save-the-cat:LESSON-09` — Дай финалу собственную внутреннюю структуру (`docs/books/_clean/snyder-save-the-cat/lessons.md:85` · K-R-106)
+- `snyder-save-the-cat:P-08` — Пусть тему вслух скажет не игрок, а другой человек, и в первой главе (`docs/books/_clean/snyder-save-the-cat/principles.md:71` · K-R-107)
+- `snyder-save-the-cat:P-08#нюанс` — нюанс к P-08 (`docs/books/_clean/snyder-save-the-cat/principles.md:292`)
+- `snyder-save-the-cat:P-13` — Собирай решение третьего акта из линий A и B (`docs/books/_clean/snyder-save-the-cat/principles.md:115` · K-snyder-save-the-cat:P-13)
+- `snyder-save-the-cat:P-13#нюанс` — нюанс к P-13 (`docs/books/_clean/snyder-save-the-cat/principles.md:297`)
+- `snyder-save-the-cat:P-14` — Сделай финал несколькими шагами, где срабатывает накопленное (`docs/books/_clean/snyder-save-the-cat/principles.md:122` · K-R-106)
+- `snyder-save-the-cat:P-14#нюанс` — нюанс к P-14 (`docs/books/_clean/snyder-save-the-cat/principles.md:298`)
+- `snyder-save-the-cat:P-15` — Отзеркаль первое и последнее сообщение (`docs/books/_clean/snyder-save-the-cat/principles.md:129` · K-R-109)
+- `snyder-save-the-cat:P-15#нюанс` — нюанс к P-15 (`docs/books/_clean/snyder-save-the-cat/principles.md:299`)
+- `snyder-save-the-cat:PAT-07` — Синтез A и B в условии финала (Break into Three) (`docs/books/_clean/snyder-save-the-cat/patterns.md:199` · K-snyder-save-the-cat:P-13)
+- `snyder-save-the-cat:PAT-07#нюанс` — нюанс к PAT-07 (`docs/books/_clean/snyder-save-the-cat/patterns.md:339`)
+- `snyder-save-the-cat:PAT-12` — Финал из пяти шагов в последней главе (five-step finale) (`docs/books/_clean/snyder-save-the-cat/patterns.md:317` · K-R-102)
+- `snyder-save-the-cat:PAT-12#нюанс` — нюанс к PAT-12 (`docs/books/_clean/snyder-save-the-cat/patterns.md:317`)
+- `snyder-save-the-cat:RED-09` — Финал выбирает одна кнопка или одна скрытая проверка (`docs/books/_clean/snyder-save-the-cat/flags.md:30` · K-R-106)
+- `snyder-save-the-cat:SYS-5` — Система 5. Финал из пяти шагов (`docs/books/_clean/snyder-save-the-cat/principles.md:261`)
+- `truby-anatomy-of-story:contra-1` — Тему говорят вслух или нет (`docs/books/_clean/truby-anatomy-of-story/for-relayer.md:120`)
+- `truby-anatomy-of-story:GREEN-08` — Последние сообщения повторяют форму первых (`docs/books/_clean/truby-anatomy-of-story/flags.md:16` · K-R-109)
+- `truby-anatomy-of-story:LESSON-12` — Не проговаривай мораль вслух: это частая слабость интерактива (`docs/books/_clean/truby-anatomy-of-story/lessons.md:92` · K-R-107)
+- `truby-anatomy-of-story:P-11` — Сделай финал столкновением ценностей, а не подсчётом улик (`docs/books/_clean/truby-anatomy-of-story/principles.md:78` · K-R-49)
+- `truby-anatomy-of-story:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/truby-anatomy-of-story/principles.md:203`)
+- `truby-anatomy-of-story:P-16` — Заканчивай новым равновесием, которое видно по сравнению (`docs/books/_clean/truby-anatomy-of-story/principles.md:114` · K-R-109)
+- `truby-anatomy-of-story:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/truby-anatomy-of-story/principles.md:208`)
+- `truby-anatomy-of-story:RED-09` — Самораскрытие сказано словами «я понял(а), что» (`docs/books/_clean/truby-anatomy-of-story/flags.md:31` · K-R-107)
+- `truby-anatomy-of-story:SYS-2` — СИСТЕМА-2. Семь шагов: что каждый получает и отдаёт (`docs/books/_clean/truby-anatomy-of-story/principles.md:148`)
+- `video-three-things:GREEN-06` — финал собирает вещи ядра заново (`docs/books/_clean/video-three-things/flags.md:14`)
+- `video-three-things:PAT-06` — Финал-зеркало (`docs/books/_clean/video-three-things/patterns.md:118` · K-R-109)
+- `video-three-things:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/video-three-things/patterns.md:202`)
+- `vogler-writers-journey:contra-3` — Финал — экзамен по пройденному или столкновение ценностей (`docs/books/_clean/vogler-writers-journey/for-relayer.md:138`)
+- `vogler-writers-journey:GREEN-08` — Кода проходит по всем ключевым чатам, а последняя строка героя повторяет деталь первой сцены (`docs/books/_clean/vogler-writers-journey/flags.md:16` · K-R-107)
+- `vogler-writers-journey:P-13` — Строй финальную проверку из того, чему герой научился (`docs/books/_clean/vogler-writers-journey/principles.md:101` · K-R-102)
+- `vogler-writers-journey:P-13#нюанс` — нюанс к P-13 (`docs/books/_clean/vogler-writers-journey/principles.md:209`)
+- `vogler-writers-journey:P-14` — Верни героя в начальную обстановку с эликсиром (`docs/books/_clean/vogler-writers-journey/principles.md:109` · K-R-107)
+- `vogler-writers-journey:P-14#нюанс` — нюанс к P-14 (`docs/books/_clean/vogler-writers-journey/principles.md:210`)
+- `vogler-writers-journey:PAT-08` — Воскрешение — экзамен (Resurrection, воскрешение) (`docs/books/_clean/vogler-writers-journey/patterns.md:237` · K-R-102)
+- `vogler-writers-journey:PAT-08#нюанс` — нюанс к PAT-08 (`docs/books/_clean/vogler-writers-journey/patterns.md:371`)
+- `vogler-writers-journey:PAT-09` — Эликсир в каждом чате (Return with the Elixir, возвращение с эликсиром) (`docs/books/_clean/vogler-writers-journey/patterns.md:266` · K-R-107)
+- `vogler-writers-journey:PAT-09#нюанс` — нюанс к PAT-09 (`docs/books/_clean/vogler-writers-journey/patterns.md:372`)
+- `vogler-writers-journey:RED-12` — Финал без эликсира: «Конец» сразу после решения (`docs/books/_clean/vogler-writers-journey/flags.md:33` · K-R-107)
+- `yorke-into-the-woods:GREEN-03` — Рамка: финал рифмуется с первыми 10 входящими (тот же отправитель, тип вложения, сумма, фраза) (`docs/books/_clean/yorke-into-the-woods/flags.md:11` · K-R-109)
+- `yorke-into-the-woods:PAT-04` — Зеркальная рамка (bookends, хиазм) (`docs/books/_clean/yorke-into-the-woods/patterns.md:94`)
+- `yorke-into-the-woods:PAT-04#нюанс` — нюанс к PAT-04 (`docs/books/_clean/yorke-into-the-woods/patterns.md:377`)
+
+## story-endings/resolution.md
+- `C-42` — Хвост после последней кнопки (`docs/playbook/checks.md:1109`)
+- `C-43` — Развязка (`docs/playbook/checks.md:1124`)
+
+### TH-62 · короткая развязка
+- `dille-ultimate-guide:GREEN-04` — Исходы прошлой части сведены к 2–3 состояниям мира, и каждое читается (`docs/books/_clean/dille-ultimate-guide/flags.md:12` · K-R-113)
+- `dille-ultimate-guide:LESSON-03` — Не убирай икону серии, не проверив, что аудитория к ней привязана (`docs/books/_clean/dille-ultimate-guide/lessons.md:23` · K-R-113)
+- `dille-ultimate-guide:RED-08` — Значение исхода прошлой части не попадает ни в одну ветку свёртки (`docs/books/_clean/dille-ultimate-guide/flags.md:26` · K-R-113)
+- `failbetter-qbn:LESSON-12` — Размер финала — по весу линии, а не по шаблону (`docs/books/_clean/failbetter-qbn/lessons.md:95`)
+- `messenger-genre:P-16` — После кульминации не заставляй ждать часами (`docs/books/_clean/messenger-genre/principles.md:176` · K-R-67)
+- `messenger-genre:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/messenger-genre/principles.md:252`)
+- `mobile-interactive-stories:GREEN-08` — В конце сезона закрыта главная линия и уже открыта следующая (`docs/books/_clean/mobile-interactive-stories/flags.md:16`)
+- `mobile-interactive-stories:P-13` — Делай меньше финалов, но каждый с понятной причиной (`docs/books/_clean/mobile-interactive-stories/principles.md:120` · K-R-102)
+- `mystery-fair-play:RED-10` — Разбор после последнего выбора длиннее 15 строк (`docs/books/_clean/mystery-fair-play/flags.md:30` · K-R-110)
+- `R-110` — Держи развязку короткой: после последней значимой кнопки — не больше 10 сообщений ( C-42.msgs ; в истории до 25 минут ( story.short_min ) — 5, C-42.msgs_short… (`docs/playbook/rules.md:568` · K-R-110)
+- `R-111` — Не называй финалы хорошими или плохими ни в тексте, ни в synopsis . Объясняй причины («счёт мы так и не нашли»), а не оценку. Моральную кнопку не помечай… (`docs/playbook/rules.md:573` · K-R-111)
+- `R-113` — Финал сезона кончается сообщением от контакта, которое открывает следующую линию, а не системной строкой и не незакрытым главным вопросом. Над таким финалом… (`docs/playbook/rules.md:581` · K-R-113)
+- `schell-art-of-game-design:contra-1` — Длина развязки · P-04 в первом проходе: ≤ 10 сообщений и ≤ 2 ч пауз ↔ messenger-genre:P-16 : ≤… (`docs/books/_clean/schell-art-of-game-design/for-relayer.md:107`)
+- `schell-art-of-game-design:P-04` — Заканчивай большой кульминацией и короткой развязкой (`docs/books/_clean/schell-art-of-game-design/principles.md:36` · K-R-110)
+- `schell-art-of-game-design:P-04#нюанс` — нюанс к P-04 (`docs/books/_clean/schell-art-of-game-design/principles.md:235`)
+- `schell-art-of-game-design:PAT-07` — Короткая развязка (resolution) (`docs/books/_clean/schell-art-of-game-design/patterns.md:76` · K-R-67)
+- `schell-art-of-game-design:PAT-07#нюанс` — нюанс к PAT-07 (`docs/books/_clean/schell-art-of-game-design/patterns.md:127`)

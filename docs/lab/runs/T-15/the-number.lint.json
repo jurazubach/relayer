@@ -1,0 +1,3936 @@
+{
+  "ok": false,
+  "strict": false,
+  "runs": 400,
+  "seed": 1,
+  "stories": [
+    {
+      "id": "the-number",
+      "path": "src/stories/the-number",
+      "mode": "full",
+      "findings": [
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "hub",
+          "chapter": 1,
+          "message": "переменная «told_theo» записывается 2 раза (hub, sleepless) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "told_theo",
+            "writes": 2,
+            "nodes": [
+              "hub",
+              "sleepless"
+            ]
+          }
+        },
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "переменная «code_choice» записывается 3 раза (code_hub) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "code_choice",
+            "writes": 3,
+            "nodes": [
+              "code_hub"
+            ]
+          }
+        },
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "tail",
+          "chapter": 3,
+          "message": "переменная «warned_tail» записывается 1 раз (tail) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "warned_tail",
+            "writes": 1,
+            "nodes": [
+              "tail"
+            ]
+          }
+        },
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "gives_card",
+          "chapter": 4,
+          "message": "переменная «gave_card» записывается 1 раз (gives_card) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "gave_card",
+            "writes": 1,
+            "nodes": [
+              "gives_card"
+            ]
+          }
+        },
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "drive_open",
+          "chapter": 5,
+          "message": "переменная «heard_audio» записывается 2 раза (drive_open) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "heard_audio",
+            "writes": 2,
+            "nodes": [
+              "drive_open"
+            ]
+          }
+        },
+        {
+          "check": "C-02",
+          "level": "hint",
+          "key": "C-02.ratio_visible",
+          "node": "plan",
+          "chapter": 1,
+          "message": "«theo_trust»: 14 записей на 1 чтение (видимых 1) — игрок копит, не зная сколько",
+          "threshold": "> 4 записей на чтение (ashwell-standard-patterns:RED-05, procedural-storytelling:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "writes": 14,
+            "reads": 1,
+            "visible": 1
+          }
+        },
+        {
+          "check": "C-02",
+          "level": "warning",
+          "key": "C-02.ratio",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "«dina_trust»: 8 записей на 1 чтение, игроку о нём не говорят — озвучь промежуточный порог",
+          "threshold": "> 4 записей на чтение (ashwell-standard-patterns:RED-05, sheldon-character-storytelling:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "writes": 8,
+            "reads": 1,
+            "visible": 0
+          }
+        },
+        {
+          "check": "C-03",
+          "level": "warning",
+          "key": "C-03.invisible",
+          "node": "plan",
+          "chapter": 1,
+          "message": "«theo_trust» меняют 14 кнопок, но читается только в ray_answers — игрок не узнает, что выбор что-то значил; дай реплику-отклик раньше",
+          "threshold": "> 0 переменных (emshort-structures:RED-02, failbetter-qbn:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "var": "theo_trust",
+            "writes": 14,
+            "buttons": 14,
+            "reads": [
+              "ray_answers"
+            ]
+          }
+        },
+        {
+          "check": "C-03",
+          "level": "warning",
+          "key": "C-03.invisible",
+          "node": "theo_told",
+          "chapter": 1,
+          "message": "«dentist_clue» меняет 1 кнопка, но читается только в ray_answers — игрок не узнает, что выбор что-то значил; дай реплику-отклик раньше",
+          "threshold": "> 0 переменных (emshort-structures:RED-02, failbetter-qbn:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "var": "dentist_clue",
+            "writes": 1,
+            "buttons": 1,
+            "reads": [
+              "ray_answers"
+            ]
+          }
+        },
+        {
+          "check": "C-03",
+          "level": "warning",
+          "key": "C-03.invisible",
+          "node": "hub",
+          "chapter": 1,
+          "message": "«dentist_confirmed» меняют 2 кнопки, но читается только в ray_copy, finale — игрок не узнает, что выбор что-то значил; дай реплику-отклик раньше",
+          "threshold": "> 0 переменных (emshort-structures:RED-02, failbetter-qbn:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "var": "dentist_confirmed",
+            "writes": 2,
+            "buttons": 2,
+            "reads": [
+              "ray_copy",
+              "finale"
+            ]
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "warning",
+          "key": "C-04.gap_warning",
+          "node": "plan",
+          "chapter": 1,
+          "message": "«theo_trust» меняется в главе 1, первый отклик игрок видит в главе 5 — добавь колбэк между ними",
+          "threshold": "≥ 3 главы (narrative-testing:RED-03, emshort-structures:RED-03)",
+          "owner": "story-choices",
+          "data": {
+            "from": 1,
+            "to": 5
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "warning",
+          "key": "C-04.gap_warning",
+          "node": "theo_told",
+          "chapter": 1,
+          "message": "«dentist_clue» меняется в главе 1, первый отклик игрок видит в главе 5 — добавь колбэк между ними",
+          "threshold": "≥ 3 главы (narrative-testing:RED-03, emshort-structures:RED-03)",
+          "owner": "story-choices",
+          "data": {
+            "from": 1,
+            "to": 5
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "warning",
+          "key": "C-04.gap_warning",
+          "node": "hub",
+          "chapter": 1,
+          "message": "«dentist_confirmed» меняется в главе 1, первый отклик игрок видит в главе 5 — добавь колбэк между ними",
+          "threshold": "≥ 3 главы (narrative-testing:RED-03, emshort-structures:RED-03)",
+          "owner": "story-choices",
+          "data": {
+            "from": 1,
+            "to": 5
+          }
+        },
+        {
+          "check": "C-07",
+          "level": "hint",
+          "key": "C-07.chapters",
+          "node": "new_client",
+          "chapter": 5,
+          "message": "финал new_client помнит только главу 5 (took_role)",
+          "threshold": "≤ 1 глава (meaningful-choice:§2 п. 14 (≥ 2 из разных глав))",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.through_vars",
+          "node": null,
+          "chapter": null,
+          "message": "10 сквозных переменных (запись и чтение в разных главах) — автор их не удержит: theo_trust, dentist_clue, dentist_confirmed, knows_story, saw_shoes, ending, hostile, dina_trust…",
+          "threshold": "> 8 сквозных переменных (наша оценка; rules.md R-39, narrative-postmortems)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.single_read_share",
+          "node": null,
+          "chapter": null,
+          "message": "60 % переменных прочитаны не больше одного раза: theo_trust, told_theo, lied, dentist_clue, gave_code, climbed…",
+          "threshold": "> 20 % доля переменных (наша оценка; failbetter-qbn, narrative-postmortems)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-10",
+          "level": "warning",
+          "key": "C-10.cosmetic_chapter",
+          "node": null,
+          "chapter": 4,
+          "message": "глава 4: 45 % кнопок меняют только реплику, 15 % — без своего ответа (пример: «Рэй, это новый владелец твоего номера.» в ch4_end)",
+          "threshold": "> 50 % доля кнопок главы (meaningful-choice, emshort-structures (35 %))",
+          "owner": "story-choices",
+          "data": {
+            "total": 20,
+            "reply": 9,
+            "none": 3
+          }
+        },
+        {
+          "check": "C-10",
+          "level": "warning",
+          "key": "C-10.group_bodyless",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "delivered: у всех 2 кнопок нет своего ответа и последствий — выбор декоративный («Мне сегодня выдали этот номер.…» …)",
+          "threshold": "= 0 кнопок с телом в группе (meaningful-choice:RED-01, emshort-structures:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-10",
+          "level": "warning",
+          "key": "C-10.group_bodyless",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "ch4_end: у всех 3 кнопок нет своего ответа и последствий — выбор декоративный («Рэй, это новый владелец твоего…» …)",
+          "threshold": "= 0 кнопок с телом в группе (meaningful-choice:RED-01, emshort-structures:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-11",
+          "level": "warning",
+          "key": "C-11.silent_unnoticed_share",
+          "node": null,
+          "chapter": null,
+          "message": "«Промолчать» никто не заметил: 4 из 9 #silent без реакции и следа (delivered, intruder, tow_plan)",
+          "threshold": "> 33,3 % доля #silent (inkle-ingold:§2)",
+          "owner": "story-choices",
+          "data": {
+            "unnoticed": 4,
+            "silent": 9,
+            "nodes": [
+              "delivered",
+              "intruder",
+              "tow_plan"
+            ]
+          }
+        },
+        {
+          "check": "C-11",
+          "level": "warning",
+          "key": "C-11.refusal_hops",
+          "node": "gate",
+          "chapter": 1,
+          "message": "отказ «Нет. Я не буду помогать вламываться.» в gate нигде не запомнен и сходится с «4471.»",
+          "threshold": "≤ 2 перехода (choiceofgames-design:RED-04, snyder-save-the-cat:RED-08)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-11",
+          "level": "warning",
+          "key": "C-11.refusal_hops",
+          "node": "gate",
+          "chapter": 1,
+          "message": "отказ «Нет. Это чужие вещи.» в gate нигде не запомнен и сходится с «4471.»",
+          "threshold": "≤ 2 перехода (choiceofgames-design:RED-04, snyder-save-the-cat:RED-08)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.hub_max",
+          "node": "hub",
+          "chapter": 1,
+          "message": "hub: 5 кнопок — на телефоне это прокрутка (хаб адресатов)",
+          "threshold": "≤ 6 кнопок (choiceofgames-design/attention.md (5 — ошибка, но без хаба адресатов))",
+          "owner": "story-choices",
+          "data": {
+            "n": 5,
+            "tos": [
+              "watcher",
+              "dental",
+              "storage",
+              "theo",
+              "theo"
+            ]
+          }
+        },
+        {
+          "check": "C-12",
+          "level": "warning",
+          "key": "C-12.wide",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "code_hub: 5 кнопок, адресаты повторяются",
+          "threshold": "≥ 5 кнопок (meaningful-choice:§2 п. 10, meaningful-choice:P-13 (потолок 4))",
+          "owner": "story-choices",
+          "data": {
+            "n": 5,
+            "tos": [
+              "watcher",
+              "watcher",
+              "watcher",
+              "dina",
+              "dina"
+            ]
+          }
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "rescue_where",
+          "chapter": 2,
+          "message": "rescue_where: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "keys",
+          "chapter": 2,
+          "message": "keys: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "okafor_saved: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "finale",
+          "chapter": 5,
+          "message": "finale: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "dina_meets",
+          "chapter": 2,
+          "message": "dina_meets: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "lock",
+          "chapter": 1,
+          "message": "lock: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "dashcam: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "ray_answers: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "delivered: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "okafor_wait",
+          "chapter": 5,
+          "message": "okafor_wait: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "intruder",
+          "chapter": 1,
+          "message": "intruder: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "search_loop: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "rescue_drive: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "confirm_dentist",
+          "chapter": 5,
+          "message": "confirm_dentist: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "кнопка «Это не Рэй. Мне сегодня выдали этот номе…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "кнопка «Мне сегодня выдали этот номер. Новая сим…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "hub",
+          "chapter": 1,
+          "message": "кнопка «Тео, тут пришло кое-что про Рэя.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "hub",
+          "chapter": 1,
+          "message": "кнопка «Новый владелец номера. Рэя здесь нет.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "sleepless",
+          "chapter": 1,
+          "message": "кнопка «Пришло. Его склад хотят продать.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "theo_told",
+          "chapter": 1,
+          "message": "кнопка «Ещё ему напомнили про зубного. На четвер…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "plan",
+          "chapter": 1,
+          "message": "кнопка «Почему ты так за него переживаешь?» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "confront",
+          "chapter": 1,
+          "message": "confront: кнопка «Я тебя не знаю. А ты просишь залезть в ч…» — 11 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "confront",
+          "chapter": 1,
+          "message": "кнопка «Я тебя не знаю. А ты просишь залезть в ч…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "gate",
+          "chapter": 1,
+          "message": "кнопка «Сначала скажи, что ты там ищешь.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "gate",
+          "chapter": 1,
+          "message": "кнопка «Нет. Я не буду помогать вламываться.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "lock",
+          "chapter": 1,
+          "message": "кнопка «Попробуй 0147. Последние цифры этого ном…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "opened",
+          "chapter": 1,
+          "message": "кнопка «Люди везде ставят один и тот же код.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "opened",
+          "chapter": 1,
+          "message": "кнопка «Не знаю. Этот номер теперь мой.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "opened",
+          "chapter": 1,
+          "message": "кнопка «А что в коробке «не открывать»?» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "intruder",
+          "chapter": 1,
+          "message": "intruder: кнопка «Тео, кто-то вошёл по коду Рэя. Это не ты…» — 9 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "intruder",
+          "chapter": 1,
+          "message": "кнопка «Тео, кто-то вошёл по коду Рэя. Это не ты…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "intruder",
+          "chapter": 1,
+          "message": "кнопка «Наверное, сбой. Не дёргать его.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "standoff",
+          "chapter": 1,
+          "message": "кнопка «Тео, он пишет мне. Он у твоей двери.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "deal",
+          "chapter": 1,
+          "message": "кнопка «Тео, отдай ему коробку. Это не наше.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "deal",
+          "chapter": 1,
+          "message": "deal: кнопка «Тео, не отдавай. Это единственное, что у…» — 9 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "deal",
+          "chapter": 1,
+          "message": "кнопка «Тео, не отдавай. Это единственное, что у…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "deal",
+          "chapter": 1,
+          "message": "кнопка «Откуда вы узнали, что мы здесь?» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "deal",
+          "chapter": 1,
+          "message": "кнопка «Тут камеры. Запись уже у охраны.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "кнопка «Он заперт на складе «Харбор Сторидж», бо…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "code_hub: кнопка «Тео, мне пришёл код от облака Рэя. Тот т…» — 11 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "кнопка «Тео, мне пришёл код от облака Рэя. Тот т…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "rescue_where",
+          "chapter": 2,
+          "message": "кнопка «Склад «Харбор Сторидж», бокс 114. Его за…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "кнопка «Есть кнопка «отправить код владельцу». К…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "decoy_gave",
+          "chapter": 2,
+          "message": "кнопка «Тео, он открыл коробку. Там кирпичи.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dina_meets",
+          "chapter": 2,
+          "message": "кнопка «Никто. Мне просто достался его номер.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dina_meets",
+          "chapter": 2,
+          "message": "кнопка «Новый владелец номера. Просто человек.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "keys",
+          "chapter": 2,
+          "message": "кнопка «Тео, его машину сегодня эвакуируют. Мне …» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "keys",
+          "chapter": 2,
+          "message": "кнопка «Уходи. Работу найдёшь, Рэя нет.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "keys",
+          "chapter": 2,
+          "message": "кнопка «Я попробую задержать эвакуатор.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "tail",
+          "chapter": 3,
+          "message": "tail: кнопка «Тео, он знает, где ты работаешь. Он напи…» — 9 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "tail",
+          "chapter": 3,
+          "message": "кнопка «Тео, он знает, где ты работаешь. Он напи…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "кнопка «Не платить. Тео что-нибудь придумает.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "кнопка «Оплатить 340 $ из своего кармана» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "кнопка «Это слишком. Тео справится сам.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "кнопка «Досмотри до конца. Там есть ещё.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "кнопка «Тео, дыши. Не делай ничего сразу.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "кнопка «Белые кроссовки. Это он. Тот, со склада.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "кнопка «Запись с регистратора. 14 августа. Ваш ф…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "кнопка «Сначала скажите правду: где Рэй?» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "кнопка «Сначала выслушай её. Потом злись.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "кнопка «Вы сделали, как он просил. Это не предат…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "ch4: кнопка «Он уехал, чтобы тебя не нашли вместе с н…» — 9 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "кнопка «Он уехал, чтобы тебя не нашли вместе с н…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "laundry_standoff",
+          "chapter": 4,
+          "message": "кнопка «В машине была только запись с регистрато…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "laundry_standoff",
+          "chapter": 4,
+          "message": "кнопка «Я знаю, где это. Выйдите на улицу, погов…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "gives_card",
+          "chapter": 4,
+          "message": "кнопка «Отдай ему карту. Флешку не трогай.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "кнопка «Да. Он предложил деньги. Прости.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "кнопка «Рэй, это новый владелец твоего номера.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "auction",
+          "chapter": 5,
+          "message": "кнопка «Пусть забирает. Не тратьте последнее.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "auction",
+          "chapter": 5,
+          "message": "кнопка «Отпустите. Бумаги Окафор есть на флешке.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "auction",
+          "chapter": 5,
+          "message": "кнопка «Отпустите. Не тратьте последнее.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "okafor_saved: кнопка «Миссис Окафор, ваши бумаги у нас. До пон…» — 9 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "кнопка «Миссис Окафор, ваши бумаги у нас. До пон…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "кнопка «Я теперь отвечаю на этот номер.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_warning",
+          "node": "okafor_wait",
+          "chapter": 5,
+          "message": "okafor_wait: кнопка «Миссис Окафор, бумаги будут. Есть копия.…» — 10 слов",
+          "threshold": "> 8 слов (rules.md R-46)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "okafor_wait",
+          "chapter": 5,
+          "message": "кнопка «Миссис Окафор, бумаги будут. Есть копия.…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "okafor_wait",
+          "chapter": 5,
+          "message": "кнопка «Я теперь отвечаю на этот номер.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "кнопка «Тот, кому Тео теперь пишет «спокойной но…» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "кнопка «Злой. Живой. Нашёл твою флешку.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "hint",
+          "key": "C-13.chars_short",
+          "node": "finale",
+          "chapter": 5,
+          "message": "кнопка «Не знаю. Он не сказал. И не скажет.» длиннее порога — сократи или добавь #label",
+          "threshold": "> 30 знаков без #label в короткой истории (наша оценка; messenger-genre:attention§4, mobile-interactive-stories:attention§4)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_share",
+          "node": null,
+          "chapter": null,
+          "message": "18 % кнопок длиннее нормы в словах (27 из 150)",
+          "threshold": "> 15 % доля кнопок истории (messenger-genre:RED-08, narrative-testing:RED-26)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-14",
+          "level": "warning",
+          "key": "C-14.gender",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "«ты его купил что ли?» в delivered задаёт пол игрока",
+          "threshold": "> 0 совпадений (choiceofgames-design:RED-10)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-14",
+          "level": "warning",
+          "key": "C-14.gender",
+          "node": "confront",
+          "chapter": 1,
+          "message": "«тебе всё приходит. и ты сказал «ничего»» в confront задаёт пол игрока",
+          "threshold": "> 0 совпадений (choiceofgames-design:RED-10)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-14",
+          "level": "warning",
+          "key": "C-14.gender",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "«Почту Рэя я читаю два месяца. Ты уже понял.» в cliffhanger задаёт пол игрока",
+          "threshold": "> 0 совпадений (choiceofgames-design:RED-10)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-14",
+          "level": "warning",
+          "key": "C-14.gender",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "«ты заплатил 340 баксов за машину человека, которог…» в to_car задаёт пол игрока",
+          "threshold": "> 0 совпадений (choiceofgames-design:RED-10)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-14",
+          "level": "warning",
+          "key": "C-14.gender",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "«это ты ему сказал?» в betrayal задаёт пол игрока",
+          "threshold": "> 0 совпадений (choiceofgames-design:RED-10)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "tow_talk",
+          "chapter": 3,
+          "message": "tow_talk: в главе 3 до выбора от theo 11 сообщений, от parking 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "decoy_gave",
+          "chapter": 2,
+          "message": "decoy_gave: в главе 2 до выбора от watcher 11 сообщений, от theo 2 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "tow_talk",
+          "chapter": 3,
+          "message": "tow_talk: в главе 3 до выбора от theo 15 сообщений, от parking 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.spokes_max",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: 7 вариантов",
+          "threshold": "> 4 варианта (failbetter-qbn:P-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub закрывается кнопкой «Тео, тут пришло кое-что про Рэя.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub закрывается кнопкой «Промолчать. Это не моё дело.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.thin_spoke",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: «1» даёт 1 строку и возвращает обратно",
+          "threshold": "≤ 1 строка (ashwell-standard-patterns:RED-10)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.thin_spoke",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: «Рэй здесь больше не живёт.» даёт 1 строку и возвращает обратно",
+          "threshold": "≤ 1 строка (ashwell-standard-patterns:RED-10)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "warning",
+          "key": "C-19.same_lines",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: «Понятно.» звучит в разных ветках — при другом порядке обхода игрок прочтёт её дважды",
+          "threshold": "> 0 одинаковых строк в разных ветках (narrative-testing:RED-01, narrative-testing:RED-30)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "warning",
+          "key": "C-19.same_lines",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: «Спасибо.» звучит в разных ветках — при другом порядке обхода игрок прочтёт её дважды",
+          "threshold": "> 0 одинаковых строк в разных ветках (narrative-testing:RED-01, narrative-testing:RED-30)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "warning",
+          "key": "C-19.same_lines",
+          "node": "hub",
+          "chapter": 1,
+          "message": "хаб hub: «Есть.» звучит в разных ветках — при другом порядке обхода игрок прочтёт её дважды",
+          "threshold": "> 0 одинаковых строк в разных ветках (narrative-testing:RED-01, narrative-testing:RED-30)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "lock",
+          "chapter": 1,
+          "message": "хаб lock: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "lock",
+          "chapter": 1,
+          "message": "хаб lock закрывается кнопкой «Попробуй 0147. Последние цифры этого ном…» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.thin_spoke",
+          "node": "lock",
+          "chapter": 1,
+          "message": "хаб lock: «Попробуй 4471, как на воротах.» даёт 1 строку и возвращает обратно",
+          "threshold": "≤ 1 строка (ashwell-standard-patterns:RED-10)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "standoff",
+          "chapter": 1,
+          "message": "хаб standoff: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "standoff",
+          "chapter": 1,
+          "message": "хаб standoff закрывается кнопкой «Ничего ему не отвечать.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "standoff",
+          "chapter": 1,
+          "message": "хаб standoff закрывается кнопкой «Рэя здесь нет.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "deal",
+          "chapter": 1,
+          "message": "хаб deal: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "deal",
+          "chapter": 1,
+          "message": "хаб deal закрывается кнопкой «Тео, отдай ему коробку. Это не наше.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "deal",
+          "chapter": 1,
+          "message": "хаб deal закрывается кнопкой «Тео, не отдавай. Это единственное, что у…» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "хаб code_hub: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.spokes_max",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "хаб code_hub: 6 вариантов",
+          "threshold": "> 4 варианта (failbetter-qbn:P-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "хаб code_hub закрывается кнопкой «Код не пришёл.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "tow_talk",
+          "chapter": 3,
+          "message": "хаб tow_talk: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "хаб search_loop: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "хаб search_loop закрывается кнопкой «Видеорегистратор. За зеркалом.» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.thin_spoke",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "хаб search_loop: «Под сиденьями.» даёт 1 строку и возвращает обратно",
+          "threshold": "≤ 1 строка (ashwell-standard-patterns:RED-10)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.thin_spoke",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "хаб search_loop: «Багажник.» даёт 1 строку и возвращает обратно",
+          "threshold": "≤ 1 строка (ashwell-standard-patterns:RED-10)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "laundry_standoff",
+          "chapter": 4,
+          "message": "хаб laundry_standoff: нет выхода по условию или кнопки + — уйти можно, только перебрав все варианты",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "laundry_standoff",
+          "chapter": 4,
+          "message": "хаб laundry_standoff закрывается кнопкой «В машине была только запись с регистрато…» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "laundry_standoff",
+          "chapter": 4,
+          "message": "хаб laundry_standoff закрывается кнопкой «Я знаю, где это. Выйдите на улицу, погов…» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-20",
+          "level": "warning",
+          "key": "C-20.start_msgs",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "первая кнопка через 7 сообщений и 1 мин — игрок ещё зритель (цель ≤ 5 и ≤ 30 с)",
+          "threshold": "> 6 входящих (edgerton-hooked, cron-wired-for-story)",
+          "owner": "story-opening",
+          "data": {
+            "msgs": 7,
+            "seconds": 65.2
+          }
+        },
+        {
+          "check": "C-21",
+          "level": "warning",
+          "key": "C-21.from_before_first",
+          "node": null,
+          "chapter": 1,
+          "message": "до первой кнопки пишут 2 собеседника — оставь одного, остальных через #unlock",
+          "threshold": "> 1 собеседник (rules.md R-18, edgerton-hooked:A5 (> 2 до второй развилки))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-21",
+          "level": "warning",
+          "key": "C-21.new_ch1_short",
+          "node": null,
+          "chapter": 1,
+          "message": "в главе 1 впервые появляются 5 контактов: carrier, theo, dental, storage, watcher",
+          "threshold": "> 2 новых контакта в главе 1 короткой истории (наша оценка; dille-ultimate-guide:attention§4, ashwell-standard-patterns:attention§4)",
+          "owner": "story-cast",
+          "data": {
+            "contacts": [
+              "carrier",
+              "theo",
+              "dental",
+              "storage",
+              "watcher"
+            ]
+          }
+        },
+        {
+          "check": "C-21",
+          "level": "warning",
+          "key": "C-21.new_other",
+          "node": null,
+          "chapter": 2,
+          "message": "в главе 2 впервые появляются 3 контакта: nimbus, dina, parking",
+          "threshold": "> 2 новых контакта (checks.md C-21, serial-hooks:RED-18)",
+          "owner": "story-cast",
+          "data": {
+            "contacts": [
+              "nimbus",
+              "dina",
+              "parking"
+            ]
+          }
+        },
+        {
+          "check": "C-21",
+          "level": "hint",
+          "key": "C-21.unlock_scene",
+          "node": "okafor_texts",
+          "chapter": 5,
+          "message": "okafor_texts: 2 #unlock между двумя кнопками — новые чаты пачкой",
+          "threshold": "> 1 #unlock между кнопками (attention-today:A10)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-21",
+          "level": "hint",
+          "key": "C-21.unlock_after_pause_lines",
+          "node": "new_client",
+          "chapter": 5,
+          "message": "new_client: новый контакт сразу после долгой паузы — игрок вернулся и не понимает, кто это",
+          "threshold": "≤ 2 строки (video-three-things:§6)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.before_first",
+          "node": null,
+          "chapter": 1,
+          "message": "начало: 5 новых имён и терминов без пояснения до первой кнопки — игрок будет листать вверх",
+          "threshold": "> 3 новых имён и терминов (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "ch1: 5 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "delivered: 8 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "sleepless",
+          "chapter": 1,
+          "message": "sleepless: 5 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "rescue_drive: 9 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "to_car: 7 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "laundry_arrival",
+          "chapter": 4,
+          "message": "laundry_arrival: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "inbox: 8 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "dina_meets",
+          "chapter": 2,
+          "message": "dina_meets: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "tow_plan: 5 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "plan",
+          "chapter": 1,
+          "message": "plan: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "dashcam: 6 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "night",
+          "chapter": 2,
+          "message": "night: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "code_forwarded",
+          "chapter": 2,
+          "message": "code_forwarded: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "«Вела Мобайл: SIM-карта активирована. Ваш номер: (5…»: 5 новых в одной реплике (Мобайл, SIM-, 555, 201, 0147)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "«Дентал Плюс: Рэй, напоминаем о записи в четверг, 1…»: 3 новых в одной реплике (Плюс, Мендес, четверг)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "«Если оплата не поступит в течение 48 часов, содерж…»: 3 новых в одной реплике (48, оплата, аукционе)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "«там два кирпича и телефонный справочник 2009 года»: 3 новых в одной реплике (2009, кирпича, справочник)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "keys",
+          "chapter": 2,
+          "message": "«Парковочная служба: ТС «Бьюик ЛеСейбр», госномер 7…»: 3 новых в одной реплике (KRY221, служба, штрафов)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "okafor_texts",
+          "chapter": 5,
+          "message": "«Мистер Колдуэлл, это Грейс Окафор.»: 3 новых в одной реплике (Колдуэлл, Окафор, мистер)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "«Парковочная служба: К оплате 340 $. Ссылка: pay.ci…»: 3 новых в одной реплике (pay, city, 340)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "decoy_gave",
+          "chapter": 2,
+          "message": "«Фото: два кирпича и телефонный справочник 2009 год…»: 3 новых в одной реплике (2009, кирпича, справочник)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "«Кадр: 02:14. Подъезжает белый фургон. На боку: «Пр…»: 3 новых в одной реплике (24, фургон, прачечная)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-23",
+          "level": "hint",
+          "key": "attn.opening.incident.msg",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "инцидент только на 15-м входящем («Дентал Плюс: Рэй, напоминаем о…») — первые сообщения без события",
+          "threshold": "attn.opening.incident.msg (наша оценка; edgerton-hooked:attention§4, snyder-save-the-cat:attention§4)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-25",
+          "level": "hint",
+          "key": "C-25.cosmetic_start",
+          "node": null,
+          "chapter": 1,
+          "message": "первые выборы ничего не решают: обе первые развилки косметические",
+          "threshold": "= 2 первые развилки (emshort-structures:RED-16, ashwell-standard-patterns:RED-03)",
+          "owner": "story-opening"
+        },
+        {
+          "check": "C-25",
+          "level": "hint",
+          "key": "C-25.last_not_max",
+          "node": null,
+          "chapter": 5,
+          "message": "в последней главе 2 развилок, а в главе 1 — 6: к финалу ветвление не растёт",
+          "threshold": "> 0 развилок сверх последней главы (emshort-structures:RED-17)",
+          "owner": "story-opening"
+        },
+        {
+          "check": "C-26",
+          "level": "warning",
+          "key": "C-26.share",
+          "node": null,
+          "chapter": null,
+          "message": "50 % долгих пауз начинаются без крючка (4 из 8; night: «спокойной, не-рэй» → 1 ч; ch3_end_hostile: «Твой друг быстро ездит. Посмот…» → 1 ч; finale: «Флешка у вас. Значит, у нас с …» → 2 ч)",
+          "threshold": "> 30 % доля пауз (cron-wired-for-story:A8, mobile-interactive-stories (20 %))",
+          "owner": "story-pauses",
+          "data": {
+            "share": 0.5,
+            "bare": 4,
+            "total": 8
+          }
+        },
+        {
+          "check": "C-27",
+          "level": "warning",
+          "key": "C-27.long_h",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "пауза 6 ч в cliffhanger не объяснена: игрок решит, что история сломалась",
+          "threshold": "≥ 3 ч (serial-hooks:S10 (часть «причина»), messenger-genre:RED-02)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-27",
+          "level": "hint",
+          "key": "C-27.unexplained",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "пауза 20 мин в to_car не объяснена: игрок решит, что история сломалась",
+          "threshold": "= 0 причин в 3 строках до паузы (rules.md R-63, failbetter-qbn:RED-06)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-27",
+          "level": "hint",
+          "key": "C-27.unexplained",
+          "node": "watcher_leaves",
+          "chapter": 4,
+          "message": "пауза 43 мин в watcher_leaves не объяснена: игрок решит, что история сломалась",
+          "threshold": "= 0 причин в 3 строках до паузы (rules.md R-63, failbetter-qbn:RED-06)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-27",
+          "level": "warning",
+          "key": "C-27.long_h",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "пауза 3 ч в ch4_end не объяснена: игрок решит, что история сломалась",
+          "threshold": "≥ 3 ч (serial-hooks:S10 (часть «причина»), messenger-genre:RED-02)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-27",
+          "level": "hint",
+          "key": "C-27.unexplained",
+          "node": "okafor_texts",
+          "chapter": 5,
+          "message": "пауза 20 мин в okafor_texts не объяснена: игрок решит, что история сломалась",
+          "threshold": "= 0 причин в 3 строках до паузы (rules.md R-63, failbetter-qbn:RED-06)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-27",
+          "level": "hint",
+          "key": "C-27.unexplained",
+          "node": "code_forwarded",
+          "chapter": 2,
+          "message": "пауза 20 мин в code_forwarded не объяснена: игрок решит, что история сломалась",
+          "threshold": "= 0 причин в 3 строках до паузы (rules.md R-63, failbetter-qbn:RED-06)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.pack",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "после паузы 1 ч в cliffhanger игрок получает стену: 15 сообщений до кнопки",
+          "threshold": "> 5 входящих (rules.md R-72, inkle-ingold)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.pack_long",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "после паузы 6 ч в ch2 игрок получает стену: 7 сообщений до кнопки",
+          "threshold": "> 3 входящих (rules.md R-72, edgerton-hooked)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.first_line_chars",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "первая строка после паузы — 84 знаков: в превью уведомления не влезет",
+          "threshold": "> 80 знаков (наша оценка; edgerton-hooked:A11 (превью уведомления))",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.pack",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "после паузы 1 ч в ch4 игрок получает стену: 9 сообщений до кнопки",
+          "threshold": "> 5 входящих (rules.md R-72, inkle-ingold)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.pack",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "после паузы 3 ч в ch5 игрок получает стену: 8 сообщений до кнопки",
+          "threshold": "> 5 входящих (rules.md R-72, inkle-ingold)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "после паузы 3 ч в ch5 нет отсылки к крючку («флешка высохла. рис победил»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.greeting",
+          "node": "finale",
+          "chapter": 5,
+          "message": "после паузы 2 ч первым идёт «слушай» — уведомление не зовёт вернуться",
+          "threshold": "= 0 событий в первой строке (messenger-genre:RED-03, serial-hooks:RED-05)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "finale",
+          "chapter": 5,
+          "message": "после паузы 2 ч в finale нет отсылки к крючку («слушай»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.pack",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "после паузы 1 ч в cliffhanger игрок получает стену: 12 сообщений до кнопки",
+          "threshold": "> 5 входящих (rules.md R-72, inkle-ingold)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "warning",
+          "key": "C-28.greeting",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "после паузы 1 ч первым идёт «Спасибо за коробку.» — уведомление не зовёт вернуться",
+          "threshold": "= 0 событий в первой строке (messenger-genre:RED-03, serial-hooks:RED-05)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-29",
+          "level": "hint",
+          "key": "C-29.closing_repeat",
+          "node": null,
+          "chapter": null,
+          "message": "перед паузой 3 раз одна и та же строка «тео не в сети» — формула обрыва износилась",
+          "threshold": "> 2 раз за историю (serial-hooks:RED-03)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-30",
+          "level": "warning",
+          "key": "C-30.streak_warning",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "cliffhanger: 2 уведомления подряд без выбора, ~7 ч",
+          "threshold": "= 2 паузы подряд без кнопки (наша оценка; attention-today/attention.md §4)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-30",
+          "level": "warning",
+          "key": "C-30.streak_warning",
+          "node": "ch2_end",
+          "chapter": 2,
+          "message": "ch2_end: 2 уведомления подряд без выбора, ~2 ч 30 мин",
+          "threshold": "= 2 паузы подряд без кнопки (наша оценка; attention-today/attention.md §4)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-30",
+          "level": "warning",
+          "key": "C-30.streak_warning",
+          "node": "finale",
+          "chapter": 5,
+          "message": "finale: 2 уведомления подряд без выбора, ~2 ч 30 мин",
+          "threshold": "= 2 паузы подряд без кнопки (наша оценка; attention-today/attention.md §4)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-32",
+          "level": "warning",
+          "key": "C-32.ch2_pause_h",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "пауза перед главой 2 — 6 ч (медиана межглавных 3 ч): это самый опасный стык",
+          "threshold": "> 2 ч (yorke-into-the-woods:Y17, yorke-into-the-woods:RED-14)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-32",
+          "level": "hint",
+          "key": "attn.pause.early_max",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "пауза 15 мин в первые минуты (inbox) — игрок ещё не втянулся",
+          "threshold": "attn.pause.early_max (наша оценка; mobile-interactive-stories:attention§2, serial-hooks:attention§2)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "заход у ch1: 74,1 мин, 90 сообщений, 16 кнопок, кончается «Харбор Сторидж: Это автоматиче…»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "sleepless",
+          "chapter": 1,
+          "message": "заход у sleepless: 54,5 мин, 80 сообщений, 14 кнопок, кончается «Тео не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.return_min_msgs",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "возврат после долгой паузы у cliffhanger: 6 сообщений, 0 кнопок — заход не окупает ожидание",
+          "threshold": "< 6 сообщений после паузы ≥ 1 ч (serial-hooks:S7)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "заход у ch2: 42,4 мин, 39 сообщений, 5 кнопок, кончается «скажу что зуб болит. к зубному…»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.return_min_msgs",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "возврат после долгой паузы у ch3: 5 сообщений, 2 кнопок — заход не окупает ожидание",
+          "threshold": "< 6 сообщений после паузы ≥ 1 ч (serial-hooks:S7)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "заход у to_car: 51,8 мин, 44 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "заход у ch4: 20,2 мин, 50 сообщений, 6 кнопок, кончается «дина села на пол»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "заход у ch5: 62,1 мин, 35 сообщений, 6 кнопок, кончается «Тогда спасибо вам. Кто бы вы н…»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.return_min_msgs",
+          "node": "finale",
+          "chapter": 5,
+          "message": "возврат после долгой паузы у finale: 4 сообщений, 1 кнопок — заход не окупает ожидание",
+          "threshold": "< 6 сообщений после паузы ≥ 1 ч (serial-hooks:S7)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "заход у to_car: 51,8 мин, 40 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "глава 1: 3 заходов дольше коридора (ch1: 74,1 мин, 90 сообщений, 16 кнопок, кончается «Харбор Сторидж: Это автоматиче…»; sleepless: 54,5 мин, 80 сообщений, 14 кнопок, кончается «Тео не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch1: 74,1 мин, 90 сообщений, 16 кнопок, кончается «Харбор Сторидж: Это автоматиче…»",
+              "sleepless: 54,5 мин, 80 сообщений, 14 кнопок, кончается «Тео не в сети»",
+              "ran: 6,4 мин, 9 сообщений, 1 кнопок, кончается «Тео не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.min_buttons",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "глава 1: 2 заходов почти без кнопок (cliffhanger: 1,5 мин, 6 сообщений, 0 кнопок, кончается «Я про тебя пока ничего не знаю…»; cliffhanger: 1,5 мин, 6 сообщений, 0 кнопок, кончается «Я про тебя пока ничего не знаю…»)",
+          "threshold": "< 2 кнопки за сессию (narrative-postmortems:RED-13)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "cliffhanger: 1,5 мин, 6 сообщений, 0 кнопок, кончается «Я про тебя пока ничего не знаю…»",
+              "cliffhanger: 1,5 мин, 6 сообщений, 0 кнопок, кончается «Я про тебя пока ничего не знаю…»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "глава 2: 1 заходов дольше коридора (ch2: 42,4 мин, 39 сообщений, 5 кнопок, кончается «скажу что зуб болит. к зубному…»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch2: 42,4 мин, 39 сообщений, 5 кнопок, кончается «скажу что зуб болит. к зубному…»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.min_buttons",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "глава 2: 2 заходов почти без кнопок (ch2_end: 0,3 мин, 3 сообщений, 0 кнопок, кончается «Смена до восьми, да?»; ch2_end: 0,1 мин, 3 сообщений, 0 кнопок, кончается «Подумай до вечера.»)",
+          "threshold": "< 2 кнопки за сессию (narrative-postmortems:RED-13)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch2_end: 0,3 мин, 3 сообщений, 0 кнопок, кончается «Смена до восьми, да?»",
+              "ch2_end: 0,1 мин, 3 сообщений, 0 кнопок, кончается «Подумай до вечера.»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "глава 3: 2 заходов дольше коридора (to_car: 51,8 мин, 44 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»; to_car: 51,8 мин, 40 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "to_car: 51,8 мин, 44 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»",
+              "to_car: 51,8 мин, 40 сообщений, 8 кнопок, кончается «Твой друг быстро ездит. Посмот…»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "глава 4: 2 заходов дольше коридора (ch4: 20,2 мин, 50 сообщений, 6 кнопок, кончается «дина села на пол»; watcher_leaves: 22,5 мин, 9 сообщений, 1 кнопок, кончается «Прочитано»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch4: 20,2 мин, 50 сообщений, 6 кнопок, кончается «дина села на пол»",
+              "watcher_leaves: 22,5 мин, 9 сообщений, 1 кнопок, кончается «Прочитано»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "глава 5: 2 заходов дольше коридора (ch5: 62,1 мин, 35 сообщений, 6 кнопок, кончается «Тогда спасибо вам. Кто бы вы н…»; ray_answers: 7 мин, 17 сообщений, 3 кнопок, кончается «Рэй не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch5: 62,1 мин, 35 сообщений, 6 кнопок, кончается «Тогда спасибо вам. Кто бы вы н…»",
+              "ray_answers: 7 мин, 17 сообщений, 3 кнопок, кончается «Рэй не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.min_buttons",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "глава 5: 3 заходов почти без кнопок (finale: 0,1 мин, 1 сообщений, 0 кнопок, кончается «Флешка у вас. Значит, у нас с …»; finale: 0,7 мин, 4 сообщений, 1 кнопок, кончается «Тео не в сети»)",
+          "threshold": "< 2 кнопки за сессию (narrative-postmortems:RED-13)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "finale: 0,1 мин, 1 сообщений, 0 кнопок, кончается «Флешка у вас. Значит, у нас с …»",
+              "finale: 0,7 мин, 4 сообщений, 1 кнопок, кончается «Тео не в сети»",
+              "finale: 0,1 мин, 1 сообщений, 0 кнопок, кончается «Спасибо за флешку. Привет Рэю.…»"
+            ]
+          }
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "sleepless",
+          "chapter": 1,
+          "message": "sleepless (гл. 1): 15 сообщений (72 слова) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "fence",
+          "chapter": 1,
+          "message": "fence (гл. 1): 9 сообщений (40 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "opened",
+          "chapter": 1,
+          "message": "opened (гл. 1): 10 сообщений (39 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "locked_in",
+          "chapter": 1,
+          "message": "locked_in (гл. 1): 12 сообщений (59 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "night",
+          "chapter": 1,
+          "message": "night (гл. 1): 16 сообщений (97 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "code_fake",
+          "chapter": 2,
+          "message": "code_fake (гл. 2): 13 сообщений (67 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "rescue_drive (гл. 2): 21 сообщение (125 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "dina_twist (гл. 3): 13 сообщений (95 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "gives_card",
+          "chapter": 4,
+          "message": "gives_card (гл. 4): 15 сообщений (84 слова) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "drive_open",
+          "chapter": 5,
+          "message": "drive_open (гл. 5): 14 сообщений (122 слова) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "ran",
+          "chapter": 1,
+          "message": "ran (гл. 1): 16 сообщений (59 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "code_withheld",
+          "chapter": 2,
+          "message": "code_withheld (гл. 2): 15 сообщений (76 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "tow_plan (гл. 3): 13 сообщений (70 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "gave_box",
+          "chapter": 1,
+          "message": "gave_box (гл. 1): 10 сообщений (52 слова) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "code_forwarded",
+          "chapter": 2,
+          "message": "code_forwarded (гл. 2): 14 сообщений (73 слова) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "betrayal (гл. 4): 17 сообщений (88 слов) без кнопки — вставь выбор после 12-го",
+          "threshold": "> 12 входящих (inkle-ingold, mobile-interactive-stories)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "warning",
+          "key": "C-35.series_ch1",
+          "node": "plan",
+          "chapter": 1,
+          "message": "plan (гл. 1): 9 сообщений (38 слов) без кнопки — вставь выбор после 8-го",
+          "threshold": "> 8 входящих (video-three-things, rules.md R-61)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "delivered",
+          "chapter": 1,
+          "message": "delivered: theo пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "fence",
+          "chapter": 1,
+          "message": "fence: theo пишет 9 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "opened",
+          "chapter": 1,
+          "message": "opened: theo пишет 10 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "cliffhanger",
+          "chapter": 1,
+          "message": "cliffhanger: watcher пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "rescue_drive",
+          "chapter": 2,
+          "message": "rescue_drive: dina пишет 15 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "to_car",
+          "chapter": 3,
+          "message": "to_car: theo пишет 12 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "tow_talk",
+          "chapter": 3,
+          "message": "tow_talk: theo пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "dashcam: theo пишет 11 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "ch4: dina пишет 7 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "drive_open",
+          "chapter": 5,
+          "message": "drive_open: theo пишет 14 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "audio",
+          "chapter": 5,
+          "message": "audio: theo пишет 9 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "ray_answers: ray пишет 10 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ran",
+          "chapter": 1,
+          "message": "ran: theo пишет 16 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "decoy_ran",
+          "chapter": 2,
+          "message": "decoy_ran: theo пишет 7 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "gave_box",
+          "chapter": 1,
+          "message": "gave_box: theo пишет 10 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "betrayal: theo пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "who_is_ray",
+          "chapter": 1,
+          "message": "who_is_ray: theo пишет 7 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ray_copy",
+          "chapter": 5,
+          "message": "ray_copy: ray пишет 9 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "gives_card",
+          "chapter": 4,
+          "message": "gives_card: 15 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "ran",
+          "chapter": 1,
+          "message": "ran: 16 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "tow_plan: 13 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "betrayal: 17 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "drive_open",
+          "chapter": 5,
+          "message": "drive_open: 14 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.lull",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "dina_twist: 13 сообщений подряд ничего не происходит — ни вопроса, ни фото, ни нового лица",
+          "threshold": "> 12 входящих без события (narrative-testing:§2а, narrative-testing:RED-31)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "глава 1: 16 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch1, delivered, sleepless, confront)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "глава 2: 9 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch2, code_fake, rescue_where, rescue_drive)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "tail",
+          "chapter": 3,
+          "message": "глава 3: 6 мест, где подряд идут реплики без цифры, имени, цитаты и фото (tail, to_car, tow_talk, dashcam)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "глава 4: 6 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch4, laundry_arrival, laundry_standoff, gives_card)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "drive_open",
+          "chapter": 5,
+          "message": "глава 5: 7 мест, где подряд идут реплики без цифры, имени, цитаты и фото (drive_open, audio, ray_answers, new_client)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.last_tempo",
+          "node": null,
+          "chapter": 5,
+          "message": "в финальной главе паузы не короче, чем в середине: темп не растёт",
+          "threshold": "≥ 1 отношение медианы пауз последней главы к медиане середины (serial-hooks:S6, snyder-save-the-cat:B7)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.ch1_share",
+          "node": null,
+          "chapter": 1,
+          "message": "глава 1 занимает 34 % строк пути",
+          "threshold": "> 25 % доля строк до финала (skolnick-video-game-storytelling:§2, rules.md R-23)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.breathers",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "главы 1…2 — передышки подряд: в начале ни срока, ни угрозы",
+          "threshold": "≥ 2 передышки подряд (rules.md R-28)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.breathers",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "главы 1…3 — передышки подряд: в начале ни срока, ни угрозы",
+          "threshold": "≥ 2 передышки подряд (rules.md R-28)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.breathers",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "главы 1…4 — передышки подряд: в начале ни срока, ни угрозы",
+          "threshold": "≥ 2 передышки подряд (rules.md R-28)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.start_event",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "глава 3 начинается без события: ни нового лица, ни фото, ни вопроса",
+          "threshold": "= 0 событий в начале главы (yorke-into-the-woods:Y4, yorke-into-the-woods:RED-02)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "крючок главы 2 не подхвачен в начале главы 3",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.cold_button",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "глава 3 после долгой паузы открывается кнопкой без контекста",
+          "threshold": "= 0 входящих перед первой кнопкой главы (dille-ultimate-guide:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.start_event",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "глава 4 начинается без события: ни нового лица, ни фото, ни вопроса",
+          "threshold": "= 0 событий в начале главы (yorke-into-the-woods:Y4, yorke-into-the-woods:RED-02)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "крючок главы 3 не подхвачен в начале главы 4",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.start_event",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "глава 5 начинается без события: ни нового лица, ни фото, ни вопроса",
+          "threshold": "= 0 событий в начале главы (yorke-into-the-woods:Y4, yorke-into-the-woods:RED-02)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "крючок главы 4 не подхвачен в начале главы 5",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-40",
+          "level": "warning",
+          "key": "C-40.unmarked_run",
+          "node": null,
+          "chapter": null,
+          "message": "400 из 400 прогонов дошли до конца истории, не пройдя ни одной // финал: — финал без метки (кончаются в new_client)",
+          "threshold": "> 0 прогонов (rules.md R-103, build-plan.md §9)",
+          "owner": "story-endings",
+          "data": {
+            "unmarked": 400
+          }
+        },
+        {
+          "check": "C-42",
+          "level": "warning",
+          "key": "story.tail.max_delay_min",
+          "node": "new_client",
+          "chapter": 5,
+          "message": "финал «new_client»: после последней кнопки ждать 1 ч 1 мин — эпилог стоит сжать",
+          "threshold": "> 15 мин (решение автора; rules.md R-67, rules.md R-110)",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-42",
+          "level": "hint",
+          "key": "C-42.thin",
+          "node": "new_client",
+          "chapter": 5,
+          "message": "финал «new_client»: 4 входящих от 1 отправителя — у остальных нет последствий",
+          "threshold": "< 3 входящих (vogler-writers-journey:V9, vogler-writers-journey:RED-12)",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-43",
+          "level": "hint",
+          "key": "C-43.open_loop",
+          "node": "new_client",
+          "chapter": 5,
+          "message": "финал new_client оставляет открытую петлю (#unlock)",
+          "threshold": "> 0 открытых петель (serial-hooks:S11, serial-hooks:RED-12)",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-43",
+          "level": "hint",
+          "key": "C-43.first_absent",
+          "node": null,
+          "chapter": 5,
+          "message": "первый собеседник (carrier) не возвращается в последней главе",
+          "threshold": "= 0 появлений первого собеседника после последней #chapter (yorke-into-the-woods:Y11, yorke-into-the-woods:RED-12)",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "audio",
+          "chapter": 5,
+          "message": "theo: 4 строки вне профиля голоса (например, ««пацан. если ты это слушаешь, значит клю…»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "watcher: 9 строк вне профиля голоса (например, «Этот номер снова работает?»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "ray: 1 строка вне профиля голоса (например, «Как он?»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт storage не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт dental не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.blocks",
+          "node": null,
+          "chapter": null,
+          "message": "контакт carrier объявлен, но говорит 1 раз",
+          "threshold": "< 3 блоков #from (nicklin-writing-for-games:RED-03)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт carrier не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.blocks",
+          "node": null,
+          "chapter": null,
+          "message": "контакт nimbus объявлен, но говорит 1 раз",
+          "threshold": "< 3 блоков #from (nicklin-writing-for-games:RED-03)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт nimbus не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт parking не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой okafor появляется в 1 главе из 5",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.blocks",
+          "node": null,
+          "chapter": null,
+          "message": "контакт ray объявлен, но говорит 1 раз",
+          "threshold": "< 3 блоков #from (nicklin-writing-for-games:RED-03)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой ray появляется в 1 главе из 5",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.blocks",
+          "node": null,
+          "chapter": null,
+          "message": "контакт stranger объявлен, но говорит 1 раз",
+          "threshold": "< 3 блоков #from (nicklin-writing-for-games:RED-03)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.undescribed",
+          "node": null,
+          "chapter": null,
+          "message": "контакт stranger не описан в characters",
+          "threshold": "= 0 записей в characters (choiceofgames-design:RED-16)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.speakers_min",
+          "node": null,
+          "chapter": 5,
+          "message": "глава 5: 2 заметных говорящих",
+          "threshold": "< 3 говорящих в главе (nicklin-writing-for-games)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-46",
+          "level": "warning",
+          "key": "C-46.path_repeat",
+          "node": "open_gate",
+          "chapter": 1,
+          "message": "строка «Харбор Сторидж: Вход по коду владельца. …» показана дважды за прохождение (open_gate, intruder)",
+          "threshold": "≥ 2 показа за прогон (inkle-ingold:RED-09, narrative-testing:RED-16)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "warning",
+          "key": "C-46.path_repeat",
+          "node": "theo_goes",
+          "chapter": 1,
+          "message": "строка «Харбор Сторидж: Код доступа к воротам: 4…» показана дважды за прохождение (theo_goes, rescue_drive)",
+          "threshold": "≥ 2 показа за прогон (inkle-ingold:RED-09, narrative-testing:RED-16)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.copy_long",
+          "node": "hub",
+          "chapter": 1,
+          "message": "строка «Дентал Плюс: Спасибо! Запись подтвержден…» скопирована в hub, confirm_dentist — вынеси в туннель или поток",
+          "threshold": "> 60 знаков (bateman-game-writing:RED-15, emshort-structures:RED-15)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.copy_long",
+          "node": "theo_goes",
+          "chapter": 1,
+          "message": "строка «Харбор Сторидж: Код доступа к воротам: 4…» скопирована в theo_goes, rescue_drive — вынеси в туннель или поток",
+          "threshold": "> 60 знаков (bateman-game-writing:RED-15, emshort-structures:RED-15)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "hub",
+          "chapter": 1,
+          "message": "кнопка «1» повторяется в hub, confirm_dentist",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "night",
+          "chapter": 1,
+          "message": "кнопка «Спокойной ночи, Тео.» повторяется в night, finale",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "кнопка «ОПЛАТА» повторяется в tow_plan, tow_talk",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "кнопка «Я теперь отвечаю на этот номер.» повторяется в okafor_saved, okafor_wait",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "okafor_saved",
+          "chapter": 5,
+          "message": "кнопка «Друг Рэя.» повторяется в okafor_saved, okafor_wait",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-47",
+          "level": "hint",
+          "key": "C-47.blame",
+          "node": "confront",
+          "chapter": 1,
+          "message": "confront: «тебе всё приходит. и ты сказал «ничего»» — упрёк без основания",
+          "threshold": "> 0 упрёков вне условия и ветки выбора (наша оценка; cron-wired-for-story:RED-13, vogler-writers-journey:RED-02)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "inbox",
+          "chapter": 1,
+          "message": "глава 1: «Мендес» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Мендес"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch2_end",
+          "chapter": 2,
+          "message": "глава 2: «Пятой» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Пятой"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "глава 3: «Дине» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Дине"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "laundry_arrival",
+          "chapter": 4,
+          "message": "глава 4: «Дине» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Дине"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "глава 5: «Дине», «Пайка», «Мендес», «Рэю» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Дине",
+              "Пайка",
+              "Мендес",
+              "Рэю"
+            ]
+          }
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.card_number",
+          "node": null,
+          "chapter": null,
+          "message": "в описании «45», в сценарии такого числа нет",
+          "threshold": "> 0 чисел карточки, которых нет в тексте (dille-ultimate-guide:RED-01)",
+          "owner": "story-release",
+          "model": true
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.spoiler_chapter",
+          "node": null,
+          "chapter": null,
+          "message": "synopsis называет «Рэй Колдуэлл», а он пишет впервые в главе 5 — спойлер карточки",
+          "threshold": "> 2 глава (dille-ultimate-guide:RED-02, edgerton-hooked:RED-10)",
+          "owner": "story-release",
+          "model": true
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.facts",
+          "node": null,
+          "chapter": null,
+          "message": "таблица фактов: 28 слов-якорей стоят рядом с разными числами (номер…: 555, 201, 0147; боксу…: 114, 3, 48; соста…: 114, 3; месяц…: 114, 3) — для сверки с хронологией, полная таблица в --json",
+          "threshold": "> 0 расхождений с facts.md (dille-ultimate-guide:RED-04, narrative-testing:RED-10)",
+          "owner": "story-release",
+          "model": true,
+          "data": {
+            "table": [
+              {
+                "anchor": "номер",
+                "numbers": [
+                  "555",
+                  "201",
+                  "0147",
+                  "7",
+                  "3"
+                ],
+                "knots": [
+                  "ch1",
+                  "laundry_arrival",
+                  "betrayal"
+                ]
+              },
+              {
+                "anchor": "боксу",
+                "numbers": [
+                  "114",
+                  "3",
+                  "48"
+                ],
+                "knots": [
+                  "theo_told",
+                  "inbox"
+                ]
+              },
+              {
+                "anchor": "соста",
+                "numbers": [
+                  "114",
+                  "3"
+                ],
+                "knots": [
+                  "inbox"
+                ]
+              },
+              {
+                "anchor": "месяц",
+                "numbers": [
+                  "114",
+                  "3"
+                ],
+                "knots": [
+                  "inbox"
+                ]
+              },
+              {
+                "anchor": "часов",
+                "numbers": [
+                  "48",
+                  "114"
+                ],
+                "knots": [
+                  "plan",
+                  "theo_told"
+                ]
+              },
+              {
+                "anchor": "через",
+                "numbers": [
+                  "114",
+                  "48",
+                  "19",
+                  "14"
+                ],
+                "knots": [
+                  "theo_told",
+                  "plan",
+                  "opened",
+                  "dashcam"
+                ]
+              },
+              {
+                "anchor": "аукци",
+                "numbers": [
+                  "48",
+                  "114"
+                ],
+                "knots": [
+                  "plan",
+                  "okafor_texts"
+                ]
+              },
+              {
+                "anchor": "ворот",
+                "numbers": [
+                  "4471",
+                  "1"
+                ],
+                "knots": [
+                  "rescue_drive",
+                  "intruder"
+                ]
+              },
+              {
+                "anchor": "ником",
+                "numbers": [
+                  "4471",
+                  "482913"
+                ],
+                "knots": [
+                  "rescue_drive",
+                  "ch2"
+                ]
+              },
+              {
+                "anchor": "сообщ",
+                "numbers": [
+                  "4471",
+                  "482913"
+                ],
+                "knots": [
+                  "rescue_drive",
+                  "ch2"
+                ]
+              },
+              {
+                "anchor": "владе",
+                "numbers": [
+                  "1",
+                  "6"
+                ],
+                "knots": [
+                  "intruder",
+                  "keys"
+                ]
+              },
+              {
+                "anchor": "двери",
+                "numbers": [
+                  "4",
+                  "114"
+                ],
+                "knots": [
+                  "unit",
+                  "rescue_drive"
+                ]
+              },
+              {
+                "anchor": "цифры",
+                "numbers": [
+                  "4",
+                  "0147"
+                ],
+                "knots": [
+                  "unit",
+                  "lock"
+                ]
+              },
+              {
+                "anchor": "попро",
+                "numbers": [
+                  "4471",
+                  "0147"
+                ],
+                "knots": [
+                  "lock"
+                ]
+              },
+              {
+                "anchor": "заряд",
+                "numbers": [
+                  "9",
+                  "2"
+                ],
+                "knots": [
+                  "night",
+                  "ch2_locked_open"
+                ]
+              },
+              {
+                "anchor": "баксо",
+                "numbers": [
+                  "300",
+                  "340"
+                ],
+                "knots": [
+                  "night",
+                  "to_car"
+                ]
+              },
+              {
+                "anchor": "праче",
+                "numbers": [
+                  "24",
+                  "7"
+                ],
+                "knots": [
+                  "ch4"
+                ]
+              },
+              {
+                "anchor": "стира",
+                "numbers": [
+                  "24",
+                  "7"
+                ],
+                "knots": [
+                  "dashcam"
+                ]
+              },
+              {
+                "anchor": "минут",
+                "numbers": [
+                  "40",
+                  "10",
+                  "43"
+                ],
+                "knots": [
+                  "to_car",
+                  "tow_talk",
+                  "watcher_leaves"
+                ]
+              },
+              {
+                "anchor": "машин",
+                "numbers": [
+                  "340",
+                  "7"
+                ],
+                "knots": [
+                  "to_car",
+                  "laundry_arrival"
+                ]
+              },
+              {
+                "anchor": "кадр:",
+                "numbers": [
+                  "14",
+                  "21"
+                ],
+                "knots": [
+                  "dashcam"
+                ]
+              },
+              {
+                "anchor": "авгус",
+                "numbers": [
+                  "14",
+                  "21"
+                ],
+                "knots": [
+                  "ch4",
+                  "dashcam"
+                ]
+              },
+              {
+                "anchor": "боку:",
+                "numbers": [
+                  "24",
+                  "7"
+                ],
+                "knots": [
+                  "dashcam"
+                ]
+              },
+              {
+                "anchor": "запис",
+                "numbers": [
+                  "14",
+                  "1"
+                ],
+                "knots": [
+                  "dina_twist",
+                  "ray_copy"
+                ]
+              },
+              {
+                "anchor": "месте",
+                "numbers": [
+                  "24",
+                  "7"
+                ],
+                "knots": [
+                  "ch4"
+                ]
+              },
+              {
+                "anchor": "сразу",
+                "numbers": [
+                  "100",
+                  "500"
+                ],
+                "knots": [
+                  "auction"
+                ]
+              },
+              {
+                "anchor": "ставь",
+                "numbers": [
+                  "1100",
+                  "300"
+                ],
+                "knots": [
+                  "auction"
+                ]
+              },
+              {
+                "anchor": "добав",
+                "numbers": [
+                  "1100",
+                  "300"
+                ],
+                "knots": [
+                  "auction"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.feature_absent",
+          "node": null,
+          "chapter": null,
+          "message": "пункт карточки «Несколько финалов — зависит от того, ком…» не звучит ни в одной реплике и кнопке",
+          "threshold": "= 0 значимых слов пункта в тексте (rules.md R-11, dille-ultimate-guide:RED-01)",
+          "owner": "story-release",
+          "model": true
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "ответ в ray ушёл в пустоту: следующая реплика — в theo, ray молчит ещё 162 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "finale",
+          "chapter": 5,
+          "message": "ответ в theo ушёл в пустоту: следующая реплика — в stranger, theo молчит ещё 110 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "ответ в ray ушёл в пустоту: следующая реплика — в theo, ray молчит ещё 124 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "finale",
+          "chapter": 5,
+          "message": "ответ в theo ушёл в пустоту: следующая реплика — в stranger, theo молчит ещё 57 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "betrayal",
+          "chapter": 4,
+          "message": "ответ в watcher ушёл в пустоту: следующая реплика — в theo, watcher молчит ещё 34 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.gap",
+          "node": "ch4_end",
+          "chapter": 4,
+          "message": "ответ в ray ушёл в пустоту: следующая реплика — в theo, ray молчит ещё 138 сообщений",
+          "threshold": "> 3 сообщений до ответа адресата (messenger-genre:RED-14)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "code_hub",
+          "chapter": 2,
+          "message": "сообщение nimbus перебивает вопрос в code_hub, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "dina_meets",
+          "chapter": 2,
+          "message": "сообщение nimbus перебивает вопрос в dina_meets, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "keys",
+          "chapter": 2,
+          "message": "сообщение nimbus перебивает вопрос в keys, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "tow_plan",
+          "chapter": 3,
+          "message": "сообщение nimbus перебивает вопрос в tow_plan, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "tow_talk",
+          "chapter": 3,
+          "message": "сообщение nimbus перебивает вопрос в tow_talk, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "search_loop",
+          "chapter": 3,
+          "message": "сообщение nimbus перебивает вопрос в search_loop, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "dashcam",
+          "chapter": 3,
+          "message": "сообщение nimbus перебивает вопрос в dashcam, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-50",
+          "level": "hint",
+          "key": "C-50.interrupt",
+          "node": "dina_twist",
+          "chapter": 3,
+          "message": "сообщение nimbus перебивает вопрос в dina_twist, а ответить nimbus нельзя",
+          "threshold": "> 0 перебиваний (inkle-ingold («не тот адресат»))",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-51",
+          "level": "warning",
+          "key": "C-51.met_twice",
+          "node": "ray_answers",
+          "chapter": 5,
+          "message": "ray_answers: ray на одних путях уже знаком игроку, на других — нет, а говорит одинаково",
+          "threshold": "> 0 узлов (inkle-ingold:RED-05, serial-hooks:RED-16)",
+          "owner": "story-continuity"
+        },
+        {
+          "check": "C-53",
+          "level": "warning",
+          "key": "C-53.header_lines",
+          "node": null,
+          "chapter": null,
+          "message": "шапка: нет // логлайн:, // вопрос:, // ставка:, // оси:",
+          "threshold": "≠ 4 строки (build-plan.md §9, superseded.md A-06)",
+          "owner": "story:lint",
+          "data": {
+            "missing": [
+              "логлайн",
+              "вопрос",
+              "ставка",
+              "оси"
+            ]
+          }
+        },
+        {
+          "check": "C-53",
+          "level": "hint",
+          "key": "C-53.unknown_mark",
+          "node": null,
+          "chapter": null,
+          "message": "строка 34: метка «на кнопке» никто не читает — это не разметка §9; если это заметка, убери двоеточие после первого слова",
+          "threshold": "> 0 меток (build-plan.md §9, checks.md C-53)",
+          "owner": "story:lint"
+        },
+        {
+          "check": "C-53",
+          "level": "warning",
+          "key": "C-53.unmarked_end",
+          "node": null,
+          "chapter": null,
+          "message": "финалы не размечены: 1 узел с -> END (new_client) без // финал:",
+          "threshold": "= 0 меток // финал: (rules.md R-103, checks.md C-40)",
+          "owner": "story:lint"
+        }
+      ],
+      "suppressed": [],
+      "skipped": [
+        {
+          "check": "C-32",
+          "key": "story.reminders.max",
+          "why": "deferred:E-02 — ждёт фичи движка"
+        },
+        {
+          "check": "C-32",
+          "key": "C-32.no_answer",
+          "why": "deferred:E-02 — ждёт фичи движка"
+        }
+      ],
+      "counts": {
+        "error": 5,
+        "warning": 76,
+        "hint": 250
+      }
+    }
+  ]
+}

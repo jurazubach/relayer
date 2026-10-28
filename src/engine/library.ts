@@ -1,4 +1,6 @@
 import { parseStoryFile } from './bundle';
+import { plural, type Mode } from './engine';
+import { FLAGS } from './flags';
 import { readProgress, type Progress } from './progress';
 import type { Story, StoryFile } from './story';
 import { readUploads, removeUpload, saveUpload } from './uploads';
@@ -6,23 +8,43 @@ import { readUploads, removeUpload, saveUpload } from './uploads';
 /**
  * Библиотека историй: всё, что приложение может открыть.
  *
- * Встроенные истории — просто файлы src/stories/<alias>.json. Положил файл в папку,
- * он сам оказался в приложении: ничего регистрировать не нужно.
- * Загруженные с устройства лежат в localStorage в том же формате.
+ * Встроенные истории — папки src/stories/<alias>/: meta.json с описанием, story.ink и главы,
+ * которые он подключает через INCLUDE. Положил папку — она сама оказалась в приложении:
+ * ничего регистрировать не нужно. Одиночный src/stories/<alias>.json тоже подхватывается,
+ * но если рядом есть папка с тем же alias, источник — папка, а .json — её копия от story:pack.
+ * Загруженные с устройства лежат в localStorage в том же формате, что .json.
  */
 
+type StoryMeta = Omit<StoryFile, 'ink' | 'includes'>;
+
+const metas = import.meta.glob<StoryMeta>('../stories/*/meta.json', { eager: true, import: 'default' });
+const inks = import.meta.glob<string>('../stories/*/**/*.ink', { eager: true, query: '?raw', import: 'default' });
 const files = import.meta.glob<StoryFile>('../stories/*.json', { eager: true, import: 'default' });
 
-/** alias файла (the-number.json → the-number) на случай, если в самом файле id забыли. */
-const aliasOf = (path: string) => path.split('/').pop()!.replace(/\.json$/, '');
+const MAIN = 'story.ink';
 
-export const BUILTIN: Story[] = Object.entries(files)
-  .map(([path, file]) => ({
-    ...(file as Story),
-    id: file.id || aliasOf(path),
+/** alias по пути: ../stories/the-number/meta.json и ../stories/the-number.json → the-number. */
+const aliasOf = (path: string) => path.replace(/^\.\.\/stories\//, '').split('/')[0].replace(/\.json$/, '');
+
+function fromFolder(alias: string, meta: StoryMeta): Story {
+  const prefix = `../stories/${alias}/`;
+  const own = Object.entries(inks).filter(([path]) => path.startsWith(prefix));
+  const includes = Object.fromEntries(own.map(([path, text]) => [path.slice(prefix.length), text]).filter(([name]) => name !== MAIN));
+  return {
+    ...(meta as Story),
+    id: meta.id || alias,
+    ink: own.find(([path]) => path === prefix + MAIN)?.[1] ?? '',
+    includes,
     origin: 'builtin' as const,
-  }))
-  .sort((a, b) => a.title.localeCompare(b.title, 'ru'));
+  };
+}
+
+const folders = Object.entries(metas).map(([path, meta]) => fromFolder(aliasOf(path), meta));
+const single = Object.entries(files)
+  .filter(([path]) => !(`../stories/${aliasOf(path)}/meta.json` in metas))
+  .map(([path, file]) => ({ ...(file as Story), id: file.id || aliasOf(path), origin: 'builtin' as const }));
+
+export const BUILTIN: Story[] = [...folders, ...single].sort((a, b) => a.title.localeCompare(b.title, 'ru'));
 
 export const isBuiltin = (id: string) => BUILTIN.some((s) => s.id === id);
 
@@ -36,9 +58,19 @@ export function allStories(uploads: Story[] = readUploads()): Story[] {
   return [...BUILTIN, ...uploads.filter((s) => !isBuiltin(s.id))];
 }
 
+/**
+ * Что видит игрок на главном: без историй с hidden: true. Скрытые не удалены — их читают
+ * команды story:*, а в игре они открываются по ?story=<id>; ?all=1 возвращает их на главный.
+ */
+export function catalogStories(stories: Story[], all: boolean = FLAGS.all): Story[] {
+  return all ? stories : stories.filter((s) => !s.hidden);
+}
+
 export function findStory(id: string, uploads: Story[] = readUploads()): Story | undefined {
   return allStories(uploads).find((s) => s.id === id);
 }
+
+export const isHidden = (id: string, all: boolean = FLAGS.all) => !all && !!findStory(id)?.hidden;
 
 export type AddResult = { story: Story } | { error: string };
 
@@ -63,19 +95,73 @@ export type { Progress };
 /** Подпись одной строкой: для списков и панели отладки. */
 export const storyLabel = (s: Story): string => (s.series ? `${s.series} · ${s.title}` : s.title);
 
-/** «1 глава», «2 главы», «5 глав». */
-export function plural(n: number, one: string, few: string, many: string): string {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return one;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
-  return many;
+/** «≈ 2 дня», меньше суток — часами: «≈ 3 ч». */
+function daysText(days: number): string {
+  if (days >= 1) {
+    const n = Math.round(days);
+    return `≈ ${n} ${plural(n, 'день', 'дня', 'дней')}`;
+  }
+  return `≈ ${Math.max(1, Math.round(days * 24))} ч`;
 }
 
-/** Подпись объёма истории: «5 глав · ~25 мин». */
-export function sizeLabel(chapters?: number, minutes?: number): string {
-  const parts: string[] = [];
-  if (chapters) parts.push(`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`);
-  if (minutes) parts.push(`~${minutes} мин`);
-  return parts.join(' · ') || 'Новая история';
+/** Два числа на карточке (A-05): минуты по клику и дни в реальном времени — каждое со своим режимом. */
+export function modeSizes(story: Pick<Story, 'minutes' | 'days'>): Partial<Record<Mode, string>> {
+  return {
+    ...(story.minutes ? { click: `≈ ${story.minutes} мин` } : {}),
+    ...(story.days ? { realtime: daysText(story.days) } : {}),
+  };
 }
+
+/**
+ * Подпись объёма истории: «≈ 35 мин по клику · ≈ 2 дня в реальном времени».
+ * Оба числа видны до выбора режима; без них — число глав.
+ */
+export function sizeLabel(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string {
+  return sizeLines(story).join(' · ');
+}
+
+/** То же по строкам — для узкой карточки, где одна строка не помещается. */
+export function sizeLines(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string[] {
+  const parts = timeLines(story);
+  if (parts.length) return parts;
+  const chapters = story.chapters?.length;
+  return [chapters ? `${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}` : 'Новая история'];
+}
+
+/**
+ * Только время, без запасной подписи главами: карточка показывает главы отдельно.
+ * «в реальном времени» склеено неразрывными пробелами: на узкой карточке строка
+ * переносится целиком после числа, а не рвёт «реальном / времени».
+ */
+export function timeLines(story: Pick<Story, 'minutes' | 'days'>): string[] {
+  const sizes = modeSizes(story);
+  const parts: string[] = [];
+  if (sizes.click) parts.push(`${sizes.click} по клику`);
+  if (sizes.realtime) parts.push(`${sizes.realtime} в\u00A0реальном\u00A0времени`);
+  return parts;
+}
+
+/** Герои истории: служебные контакты (заметки, банк, сервис) пишут в чат, но героями не считаются. */
+export const storyPeople = (story: Pick<Story, 'characters'>) => (story.characters ?? []).filter((c) => !c.service);
+
+/**
+ * Числа в углу карточки: «5 глав», «5 героев». Чего в файле нет, того и на карточке нет.
+ * Герой здесь — тот, кто пишет в чат: запись без id — это сам игрок («Вы», «Ты»), его не считаем.
+ */
+export function storyCounts(story: Pick<Story, 'chapters' | 'characters'>): string[] {
+  const chapters = story.chapters?.length ?? 0;
+  const people = storyPeople(story).filter((c) => c.id).length;
+  return [
+    ...(chapters ? [`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`] : []),
+    ...(people ? [`${people} ${plural(people, 'герой', 'героя', 'героев')}`] : []),
+  ];
+}
+
+/**
+ * Однобуквенные и двухбуквенные слова («в», «с», «не») приклеиваем к следующему неразрывным пробелом:
+ * на узкой карточке висящее в конце строки «С» читается как опечатка.
+ */
+export const keepShortWords = (text: string): string => text.replace(/(?<=^|[\s\u00A0«„(])([а-яёa-z]{1,2})\s+/giu, '$1\u00A0');
+
+/** Затравки на карточке: не больше трёх, иначе карточка превращается в синопсис. */
+export const storyTeasers = (story: Pick<Story, 'teasers'>): string[] => (story.teasers ?? []).slice(0, 3).map(keepShortWords);

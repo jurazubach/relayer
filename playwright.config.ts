@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4173;
+const PORT = Number(process.env.E2E_PORT) || 4173;
 const BASE = `http://127.0.0.1:${PORT}`;
 
 /** E2E_PREVIEW=1 — гонять тесты по продакшен-сборке, а не по дев-серверу. */
@@ -63,10 +63,11 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 900 } },
     },
   ],
+  // хост явно: иначе на macOS Vite слушает только ::1, а тесты стучатся на 127.0.0.1
   webServer: {
     command: preview
-      ? `npm run build && npm run preview -- --port ${PORT} --strictPort`
-      : `npm run dev -- --port ${PORT} --strictPort`,
+      ? `npm run build && npm run preview -- --host 127.0.0.1 --port ${PORT} --strictPort`
+      : `npm run dev -- --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: BASE,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

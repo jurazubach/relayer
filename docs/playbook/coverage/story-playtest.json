@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "attention-today:LESSON-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; класс A"
+      }
+    },
+    "attention-today:RED-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "inkle-ingold:LESSON-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "messenger-genre:LESSON-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; ремонт «угроза конкретикой, не восклицаниями» не перенесён — он чужой зоны"
+      }
+    },
+    "narrative-postmortems:P-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; 7 часов → «несколько часов», проверка — C-11"
+      }
+    },
+    "narrative-testing:attention§1": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "narrative-testing:GREEN-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "narrative-testing:P-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок по смыслу; basis в decisions-playtest — 80 Days, а у источника Short и форум CoG"
+      }
+    },
+    "narrative-testing:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; повтор ключом lab.playtest.repeat_min"
+      }
+    },
+    "narrative-testing:P-08#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; перенесено на панель"
+      }
+    },
+    "narrative-testing:PAT-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; в decisions условие сужено до регрессии, полное — в build.md"
+      }
+    },
+    "narrative-testing:PAT-01#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "narrative-testing:PAT-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; исключение «линейный пролог» сохранено"
+      }
+    },
+    "narrative-testing:PAT-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; исключение «посреди главы» сохранено"
+      }
+    },
+    "narrative-testing:PAT-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "narrative-testing:RED-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "narrative-testing:RED-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; добавлено исключение про известное из брифа"
+      }
+    },
+    "narrative-testing:RED-23": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок; «первые 3 строки» → «первые строки», шкала анкеты опущена (шкал нет)"
+      }
+    },
+    "schell-art-of-game-design:P-17#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    },
+    "serial-hooks:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-25",
+        "by": "review",
+        "note": "ок"
+      }
+    }
+  }
+}

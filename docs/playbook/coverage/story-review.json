@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "edgerton-hooked:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "LOCAL-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "LOCAL-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "LOCAL-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "meaningful-choice:SYS-2": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "meaningful-choice:SYS-3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "meaningful-choice:SYS-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "narrative-testing:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "narrative-testing:P-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "narrative-testing:P-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "narrative-testing:P-15#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "nicklin-writing-for-games:LESSON-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "schell-art-of-game-design:LESSON-12": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сомнение про AAA и «вернётся на полку» слиты в одну причину — исправлено ревью"
+      }
+    },
+    "snyder-save-the-cat:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "род автора ошибочен (он→она), исправлено ревью"
+      }
+    },
+    "snyder-save-the-cat:LESSON-04": {
+      "fidelity": {
+        "ok": false,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "«когда не работает» противоречил порогу источника (≥3 глав) — заменено ключом C-29.closing_repeat, исправлено ревью"
+      }
+    },
+    "snyder-save-the-cat:LESSON-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "vogler-writers-journey:LESSON-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "vogler-writers-journey:LESSON-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "vogler-writers-journey:P-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    },
+    "vogler-writers-journey:P-01#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-26",
+        "by": "review",
+        "note": "сверено с разбором"
+      }
+    }
+  }
+}

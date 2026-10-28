@@ -1,26 +1,44 @@
 import type { Progress, Story } from '../engine';
-import { formatAgo, sizeLabel } from '../engine';
+import { formatAgo, freeChip, isOutdated, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
 
-/** Карточка истории на главном экране. Квадрат с обложкой и состоянием прохождения. */
+/**
+ * Карточка истории на главном экране: на всю ширину, обложкой.
+ * Порядок — то, что игрок решает за три секунды: о чём (название и логлайн),
+ * чем зацепит (затравки пузырями, как входящие), сколько займёт (главы, герои, время).
+ * Начатая история вместо затравок показывает, где игрок остановился: зачем начинать, он уже знает.
+ */
 export function StoryTile({
   story,
-  progress,
+  progress: saved,
+  free,
   onOpen,
 }: {
   story: Story;
   progress: Progress | null;
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  free: number | null;
   onOpen: () => void;
 }) {
+  // сохранение от прошлой ревизии сценария не продолжить: карточка как у новой истории
+  const outdated = isOutdated(saved, story);
+  const progress = outdated ? null : saved;
+  const counts = storyCounts(story);
+  const teasers = progress ? [] : storyTeasers(story);
+  const time = timeLines(story);
   const state = !progress
-    ? sizeLabel(story.chapters?.length, story.minutes)
+    ? null
     : progress.ended
       ? 'Пройдено'
-      : progress.chapter || `${progress.messages} сообщений`;
+      : progress.locked && free !== null
+        ? 'Бесплатные главы пройдены'
+        : progress.chapter || `${progress.messages} сообщений`;
   const ago = progress && !progress.ended && progress.savedAt ? formatAgo(progress.savedAt) : '';
+  const own = story.origin === 'upload';
+  const going = !!progress && !progress.ended;
 
   return (
     <li
-      className={progress ? 'story-tile story-tile--started is-rising' : 'story-tile is-rising'}
+      className="story-tile is-rising"
       style={{
         ['--cover-from' as string]: story.cover.from,
         ['--cover-to' as string]: story.cover.to,
@@ -30,16 +48,61 @@ export function StoryTile({
         <span className="story-tile__glyph" aria-hidden="true">
           {story.cover.glyph}
         </span>
-        {story.series && <span className="story-tile__kicker">{story.series}</span>}
+
+        <span className="story-tile__head">
+          <span className="story-tile__kicker">{story.series}</span>
+          {(counts.length > 0 || own || free !== null) && (
+            <span className="story-tile__counts" data-testid={`tile-counts-${story.id}`}>
+              {own && <span className="story-tile__chip story-tile__chip--own">свой файл</span>}
+              {counts.map((c) => (
+                <span className="story-tile__chip" key={c}>
+                  {c}
+                </span>
+              ))}
+              {free !== null && (
+                <span className="story-tile__chip" data-testid={`tile-free-${story.id}`}>
+                  {freeChip(free)}
+                </span>
+              )}
+            </span>
+          )}
+        </span>
+
         <span className="story-tile__title">{story.title}</span>
-        <span className="story-tile__tagline">{story.tagline}</span>
+        {story.tagline && <span className="story-tile__tagline">{keepShortWords(story.tagline)}</span>}
+
+        {teasers.length > 0 && (
+          <span className="story-tile__teasers" data-testid={`tile-teasers-${story.id}`}>
+            {teasers.map((t) => (
+              <span className="story-tile__teaser" key={t}>
+                {t}
+              </span>
+            ))}
+          </span>
+        )}
+
         <span className="story-tile__foot">
-          <span className="story-tile__state">{state}</span>
-          {ago && <span className="story-tile__ago">{ago}</span>}
-          <span className="story-tile__cta">{progress && !progress.ended ? 'Продолжить' : 'Открыть'} →</span>
+          <span className="story-tile__meta">
+            {state !== null ? (
+              <>
+                <span className="story-tile__state">{state}</span>
+                {ago && <span className="story-tile__ago">{ago}</span>}
+              </>
+            ) : time.length ? (
+              time.map((line) => (
+                <span className="story-tile__time" key={line}>
+                  {line}
+                </span>
+              ))
+            ) : (
+              !counts.length && <span className="story-tile__time">Новая история</span>
+            )}
+          </span>
+          <span className={going ? 'story-tile__cta story-tile__cta--strong' : 'story-tile__cta'}>
+            {going ? 'Продолжить' : 'Открыть'} →
+          </span>
         </span>
       </button>
-      {story.origin === 'upload' && <span className="story-tile__mark">свой файл</span>}
     </li>
   );
 }

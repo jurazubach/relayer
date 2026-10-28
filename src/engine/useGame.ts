@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { Engine, compileInk, type Msg, type View } from './engine';
-import { FLAGS } from './flags';
+import { DEFAULT_MODE, Engine, compileInk, type Mode, type Msg, type Outdated, type View } from './engine';
+import { FLAGS, readLocal, writeLocal } from './flags';
+import { freeChapters, readChaptersOpen, writeChaptersOpen } from './paywall';
+import { revisionOf } from './progress';
 import type { Story } from './story';
 
 export interface Game {
@@ -15,24 +17,48 @@ export interface Game {
   notice: Msg | null;
   openNotice: () => void;
   hideNotice: () => void;
+  /** Уведомления о сообщениях в других чатах; игрок выключает их сам, например на ночь мира. */
+  notices: boolean;
+  setNotices: (on: boolean) => void;
+  /** Сохранение было от другой ревизии сценария и сброшено: предупреждаем, пока игрок не закроет. */
+  outdated: Outdated | null;
+  hideOutdated: () => void;
+  /** Сколько глав бесплатно; null — граница не действует. */
+  freeChapters: number | null;
+  /** Продолжение открыто (пока из отладки) — помнится для истории, «начать заново» его не закрывает. */
+  chaptersOpen: boolean;
+  setChaptersOpen: (open: boolean) => void;
 }
+
+/** Общая настройка всех историй: игрок выключил уведомления — значит, не хочет их нигде. */
+const NOTICES_KEY = 'relay:notices';
 
 /**
  * Одна игровая сессия: компиляция сценария, восстановление прогресса,
  * тиканье времени и уведомления о сообщениях в других чатах.
  */
-export function useGame(story: Story, restoreThread?: string | null, onThreadChange?: (t: string | null) => void): Game {
+export function useGame(
+  story: Story,
+  restoreThread?: string | null,
+  onThreadChange?: (t: string | null) => void,
+  /** Режим новой игры; сохранённая продолжается в своём. */
+  mode?: Mode,
+): Game {
   const loaded = useMemo(() => {
-    const result = compileInk(story.ink);
+    const result = compileInk(story.ink, story.includes);
     if ('errors' in result) return { engine: null as Engine | null, errors: result.errors };
-    const engine = new Engine(story.id, result.json);
-    engine.restore();
+    const engine = new Engine(story.id, result.json, revisionOf(story), freeChapters(story));
+    engine.chaptersOpen = readChaptersOpen(story.id);
+    // режим пишем в сохранение сразу: перезагрузка до первого сообщения не должна его потерять
+    if (!engine.restore()) engine.restart(mode ?? engine.outdated?.mode ?? FLAGS.mode ?? DEFAULT_MODE);
     if (FLAGS.fast) {
       engine.speed = Infinity;
       engine.fastTyping = true;
     }
     return { engine, errors: [] as string[] };
-  }, [story.id, story.ink]);
+  }, [story.id, story.ink, story.includes, story.revision, story.free_chapters, story.chapters]);
+
+  const [outdated, setOutdated] = useState<Outdated | null>(() => loaded.engine?.outdated ?? null);
 
   // чат восстанавливаем, только если история его уже открыла: файл мог измениться
   const [open, setOpen] = useState<string | null>(() => {
@@ -40,8 +66,11 @@ export function useGame(story: Story, restoreThread?: string | null, onThreadCha
     return restoreThread && threads.includes(restoreThread) ? restoreThread : null;
   });
   const [notice, setNotice] = useState<Msg | null>(null);
+  const [notices, setNoticesState] = useState(() => readLocal(NOTICES_KEY) !== '0');
   const openRef = useRef(open);
   openRef.current = open;
+  const noticesRef = useRef(notices);
+  noticesRef.current = notices;
 
   useEffect(() => {
     const engine = loaded.engine;
@@ -49,7 +78,7 @@ export function useGame(story: Story, restoreThread?: string | null, onThreadCha
     const timer = window.setInterval(() => {
       const fresh = engine.tick();
       const incoming = fresh.filter((m) => m.kind !== 'out' && m.thread !== openRef.current);
-      if (incoming.length) setNotice(incoming[incoming.length - 1]);
+      if (incoming.length && noticesRef.current) setNotice(incoming[incoming.length - 1]);
     }, 250);
     return () => window.clearInterval(timer);
   }, [loaded]);
@@ -88,5 +117,22 @@ export function useGame(story: Story, restoreThread?: string | null, onThreadCha
       });
     }, [onThreadChange]),
     hideNotice: useCallback(() => setNotice(null), []),
+    notices,
+    setNotices: useCallback((on: boolean) => {
+      writeLocal(NOTICES_KEY, on ? '1' : '0');
+      setNoticesState(on);
+      if (!on) setNotice(null);
+    }, []),
+    outdated,
+    hideOutdated: useCallback(() => setOutdated(null), []),
+    freeChapters: loaded.engine?.freeChapters ?? null,
+    chaptersOpen: !!loaded.engine?.chaptersOpen,
+    setChaptersOpen: useCallback(
+      (open: boolean) => {
+        writeChaptersOpen(story.id, open);
+        loaded.engine?.setChaptersOpen(open);
+      },
+      [loaded, story.id],
+    ),
   };
 }

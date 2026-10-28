@@ -1,4 +1,5 @@
 import { CONTACT_COLORS, compileInk } from './engine';
+import { badFreeChapters } from './paywall';
 import { DEFAULT_COVER, type Story, type StoryFile } from './story';
 
 /** Из имени файла получаем id: «Эпизод 2.story.json» → «эпизод-2». */
@@ -17,7 +18,8 @@ export type ParseResult = { story: Story } | { error: string };
 
 /**
  * Разбирает загруженный файл. Понимает два вида:
- *   .json — вся история целиком (описание, герои, главы и сценарий внутри)
+ *   .json — вся история целиком (описание, герои, главы и сценарий внутри);
+ *           собранная story:pack кладёт главный файл в "ink", а главы — в "includes"
  *   .ink  — только сценарий, остальное достроим из заголовка файла
  */
 export function parseStoryFile(fileName: string, text: string): ParseResult {
@@ -38,7 +40,13 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       return { error: `Чужой формат: "${file.format}". Ожидается "relayer-story"` };
     }
     if (!file.ink || !file.ink.trim()) return { error: 'В истории нет поля "ink" со сценарием' };
+    if (file.includes != null && (typeof file.includes !== 'object' || Object.values(file.includes).some((t) => typeof t !== 'string'))) {
+      return { error: 'Поле "includes" — объект { "ch01.ink": "текст главы" }' };
+    }
     if (!file.title?.trim()) return { error: 'В истории нет названия (поле "title")' };
+    if (badFreeChapters(file.free_chapters)) {
+      return { error: 'Поле "free_chapters" — целое число от 1: сколько первых глав бесплатно' };
+    }
   } else {
     // голый .ink: название возьмём из глобального тега # title
     const title = trimmed.match(/^#\s*title\s*:\s*(.+)$/m)?.[1]?.trim();
@@ -54,7 +62,8 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
   }
 
   const ink = (file.ink ?? '').trim();
-  const compiled = compileInk(ink);
+  const includes = file.includes && Object.keys(file.includes).length ? file.includes : undefined;
+  const compiled = compileInk(ink, includes);
   if ('errors' in compiled) {
     return { error: `Сценарий не компилируется:\n${compiled.errors.slice(0, 5).join('\n')}` };
   }
@@ -68,12 +77,20 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       title: file.title.trim(),
       tagline: file.tagline || '',
       synopsis: file.synopsis,
+      revision: file.revision,
       minutes: file.minutes,
+      days: file.days,
+      free_chapters: file.free_chapters,
       chapters: file.chapters,
       characters: file.characters,
       features: file.features,
+      teasers: Array.isArray(file.teasers)
+        ? file.teasers.filter((t) => typeof t === 'string' && t.trim()).map((t) => t.trim())
+        : undefined,
+      ...(file.hidden === true ? { hidden: true } : {}),
       cover: file.cover ?? DEFAULT_COVER,
       ink,
+      includes,
       origin: 'upload',
     },
   };

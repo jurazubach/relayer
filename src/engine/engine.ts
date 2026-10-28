@@ -1,4 +1,4 @@
-import { Compiler, Story } from 'inkjs/full';
+import { Compiler, CompilerOptions, JsonFileHandler, Story } from 'inkjs/full';
 
 export type Kind = 'in' | 'out' | 'sys' | 'photo';
 
@@ -9,6 +9,23 @@ export interface Msg {
   text: string;
   at: number;
 }
+
+/**
+ * Режим игры выбирается в начале истории, сменить его можно только перезапуском (INTENT.md, A-04).
+ * realtime — паузы сюжета настоящие; click — пауз нет, скачок времени мира закрывает метка «спустя N».
+ */
+export type Mode = 'realtime' | 'click';
+
+export const MODES: readonly Mode[] = ['realtime', 'click'];
+
+export const DEFAULT_MODE: Mode = 'realtime';
+
+/**
+ * Порог метки «спустя N» в режиме «по клику», часы. Копия ключа engine.click.time_jump_label
+ * из docs/playbook/thresholds.json: файл весит сотни килобайт и в сборку не грузится,
+ * поэтому число здесь, а e2e (e2e/modes.spec.ts) сверяет его с ключом.
+ */
+export const TIME_JUMP_LABEL_H = 1;
 
 export interface Contact {
   id: string;
@@ -36,6 +53,8 @@ interface Pending {
   unlock: string[];
   /** Тег #chapter: с этой строки начинается новая глава. */
   chapter?: string;
+  /** Метка «спустя N» перед этим сообщением уже показана (режим «по клику»). */
+  jumpShown?: boolean;
 }
 
 export type Phase = 'pause' | 'gap' | 'typing';
@@ -49,6 +68,55 @@ export interface ChoiceView {
   silent?: boolean;
   /** Тег #label:...: что показать на кнопке, если отправляемый текст сам по себе неочевиден. */
   label?: string;
+}
+
+/**
+ * Что делает история, если игрок молчит у кнопки (реальное время, E-02). Скрытые варианты сценария:
+ * #remind:2h — напоминание через 2 ч тишины; #noanswer[:1h] — ветка «не ответил». Без #noanswer ветка
+ * «не ответил» — кнопка #silent. Кнопками они не показываются.
+ */
+interface Silence {
+  /** Напоминания по порядку: ink-индекс варианта и интервал тишины перед ним. */
+  reminders: { index: number; ms: number }[];
+  /** Куда идёт история после последнего напоминания; ms — сколько ждать, null — как последнее напоминание. */
+  target: { index: number; ms: number | null } | null;
+  /** Откуда кнопки в сценарии: после напоминания та же развилка возвращается с тем же ключом. */
+  key: string;
+}
+
+/**
+ * Запись журнала выборов (E-03): что игрок сделал у развилки. Журнал выгружается тестером из отладки
+ * и воспроизводится ботом (story:trace --from-save), поэтому номер кнопки считается как у бота:
+ * среди показанных кнопок, с нуля; «не ответил» — −1.
+ */
+export interface LogEntry {
+  /** choice — нажал кнопку; noanswer — молчал, история пошла веткой «не ответил»; remind — персонаж напомнил;
+   *  jump и set — вмешательство из отладки: после них маршрут воспроизводится уже не точно. */
+  kind: 'choice' | 'noanswer' | 'remind' | 'jump' | 'set';
+  at: number;
+  /** Узел развилки (knot или knot.stitch); null — кнопки стоят до первого узла. */
+  knot: string | null;
+  chapter: string;
+  /** Чат, где стояли кнопки. */
+  thread: string;
+  /** Номер нажатой кнопки среди показанных; −1 — «не ответил»; null — не выбор. */
+  picked: number | null;
+  /** Текст кнопки, реплики напоминания, узла перехода или «имя = значение». */
+  text: string;
+  options: string[];
+  /** Сколько кнопки ждали игрока, мс настоящего времени: с первого появления развилки, напоминания не сбрасывают. */
+  waitMs: number;
+  /** Сколько напоминаний было у развилки до этой записи. */
+  reminders: number;
+  /** Переменные в момент решения, до последствий выбора. */
+  vars: Record<string, string | number | boolean>;
+}
+
+/** Развилка, у которой стоит игрок: для журнала. */
+interface Fork {
+  at: number;
+  knot: string | null;
+  reminders: number;
 }
 
 interface SaveData {
@@ -69,6 +137,30 @@ interface SaveData {
   savedAt: number;
   chapter?: string;
   renamed?: Record<string, string>;
+  /** Сохранения до режимов его не знают: они шли в реальном времени. */
+  mode?: Mode;
+  /** Сохранения до напоминаний их не знают: кнопка там ждала. */
+  silence?: Silence | null;
+  waitDone?: number;
+  lastRemind?: { ms: number; key: string } | null;
+  /** Сохранения до журнала выборов его не знают: журнал начинается с места, где игрок сейчас. */
+  log?: LogEntry[];
+  fork?: Fork | null;
+  startedAt?: number;
+  /** Ревизия сценария, под которую записано состояние. Сохранения до ревизий её не знают: это 1. */
+  revision?: number;
+  /** Сколько глав уже началось. Сохранения до границы глав его не знают: считаем по текущей главе. */
+  chapterNo?: number;
+  /** Игрок стоит на платной границе: для карточки и экрана истории, движок пересчитывает сам. */
+  locked?: boolean;
+}
+
+/** Сохранение от другой ревизии сценария: продолжить его нельзя, история началась заново. */
+export interface Outdated {
+  from: number;
+  to: number;
+  /** Режим сброшенной игры: игрок его уже выбирал, новая игра идёт в нём же. */
+  mode: Mode;
 }
 
 export const SPEEDS = [1, 10, 60, Infinity] as const;
@@ -88,8 +180,9 @@ export const CONTACT_COLORS: Record<string, string> = {
   indigo: '#818cf8',
 };
 
-export function compileInk(source: string): { json: string } | { errors: string[] } {
-  const compiler = new Compiler(source);
+export function compileInk(source: string, includes: Record<string, string> = {}): { json: string } | { errors: string[] } {
+  // Главы приходят строками: файловой системы в браузере нет, INCLUDE читает их из словаря.
+  const compiler = new Compiler(source, new CompilerOptions(null, [], false, null, new JsonFileHandler(includes)));
   try {
     const story = compiler.Compile();
     return { json: story.ToJson() as string };
@@ -124,8 +217,19 @@ function gapTime(kind: Kind, text: string, afterPlayer: boolean): number {
   return afterPlayer ? jitter + 1200 : jitter;
 }
 
+/** Скрытый вариант не кнопка: напоминание или ветка «не ответил» без #silent. */
+function hiddenRole(tags: string[]): 'remind' | 'noanswer' | null {
+  for (const raw of tags) {
+    const key = raw.split(':')[0].trim();
+    if (key === 'remind') return 'remind';
+  }
+  const keys = tags.map((t) => t.split(':')[0].trim());
+  return keys.includes('noanswer') && !keys.includes('silent') ? 'noanswer' : null;
+}
+
 export class Engine {
   readonly storyId: string;
+  readonly revision: number;
   readonly title: string;
   readonly contacts: Map<string, Contact> = new Map();
   readonly knots: string[];
@@ -149,16 +253,37 @@ export class Engine {
   private afterPlayer = false;
   private chapter = '';
   private renamed: Record<string, string> = {};
+  private silence: Silence | null = null;
+  /** Сколько игрок молчит у текущих кнопок, мс игрового времени: с появления кнопок или с напоминания. */
+  private waitDone = 0;
+  /** Последнее напоминание: столько же ждём перед веткой «не ответил» той же развилки, если сценарий не сказал иначе. */
+  private lastRemind: { ms: number; key: string } | null = null;
+  private log: LogEntry[] = [];
+  private fork: Fork | null = null;
+  /** Когда началась игра: в выгрузке журнала. */
+  startedAt = Date.now();
+  mode: Mode = DEFAULT_MODE;
   /** Отладка: набор текста в 4 раза быстрее. */
   fastTyping = false;
   private listeners = new Set<() => void>();
   private lastTick = Date.now();
-  speed: number = 60;
+  /** Отладка: ускорение пауз сюжета. Не сохраняется: реальное время — это ×1. */
+  speed: number = 1;
   /** Растёт при каждом изменении: удобно для React useSyncExternalStore. */
   version = 0;
+  /** restore() нашёл сохранение от другой ревизии и не стал его загружать. */
+  outdated: Outdated | null = null;
+  /** Сколько первых глав бесплатно; null — бесплатно всё (paywall.ts). */
+  readonly freeChapters: number | null;
+  /** Продолжение открыто: пока из отладки, потом покупкой. Не сохраняется в прогрессе — его помнит paywall.ts. */
+  chaptersOpen = false;
+  /** Сколько строк #chapter уже пришло. */
+  private chapterNo = 0;
 
-  constructor(storyId: string, json: string) {
+  constructor(storyId: string, json: string, revision = 1, freeChapters: number | null = null) {
     this.storyId = storyId;
+    this.revision = revision;
+    this.freeChapters = freeChapters;
     this.json = json;
     const probe = new Story(json);
     let title = storyId;
@@ -209,6 +334,12 @@ export class Engine {
     this.emit();
   }
 
+  /** Новая игра в выбранном режиме: режим меняется только так. */
+  restart(mode: Mode) {
+    this.mode = mode;
+    this.reset();
+  }
+
   private init() {
     this.story = new Story(this.json);
     this.messages = [];
@@ -223,6 +354,13 @@ export class Engine {
     this.nextId = 1;
     this.carryDelay = 0;
     this.chapter = '';
+    this.chapterNo = 0;
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
+    this.log = [];
+    this.fork = null;
+    this.startedAt = Date.now();
     for (const id of Object.keys(this.renamed)) {
       const original = this.originalNames.get(id);
       if (original) this.contact(id).name = original;
@@ -300,32 +438,116 @@ export class Engine {
     }
     if (!this.pending && !this.story.canContinue) {
       const fallback = this.lastThread || this.speaker || 'unknown';
-      this.choices = this.story.currentChoices.map((c) => {
+      const silence: Silence = { reminders: [], target: null, key: '' };
+      const sources: string[] = [];
+      let silentIndex = -1;
+      this.choices = [];
+      for (const c of this.story.currentChoices) {
+        const tags = c.tags ?? [];
         let thread = fallback;
         let silent = false;
         let label: string | undefined;
-        for (const raw of c.tags ?? []) {
+        let remind = 0;
+        let noanswer: number | null | undefined;
+        for (const raw of tags) {
           const [k, ...rest] = raw.split(':');
-          if (k.trim() === 'to') thread = rest.join(':').trim() || fallback;
-          if (k.trim() === 'silent') silent = true;
-          if (k.trim() === 'label') label = rest.join(':').trim();
+          const key = k.trim();
+          const value = rest.join(':').trim();
+          if (key === 'to') thread = value || fallback;
+          if (key === 'silent') silent = true;
+          if (key === 'label') label = value;
+          if (key === 'remind') remind = parseDelay(value);
+          if (key === 'noanswer') noanswer = value ? parseDelay(value) : null;
         }
+        // первый #noanswer — ветка «не ответил»; #silent — только если #noanswer нет
+        if (noanswer !== undefined && !silence.target) silence.target = { index: c.index, ms: noanswer };
+        if (silent && silentIndex < 0) silentIndex = c.index;
+        const role = hiddenRole(tags);
+        if (role === 'remind') {
+          if (remind > 0) silence.reminders.push({ index: c.index, ms: remind });
+          continue;
+        }
+        if (role === 'noanswer') continue;
+        sources.push(c.sourcePath);
         if (!this.unlocked.includes(thread)) this.unlock(thread);
-        return { index: c.index, text: c.text, thread, silent, label };
-      });
+        this.choices.push({ index: c.index, text: c.text, thread, silent, label });
+      }
+      if (!silence.target && silentIndex >= 0) silence.target = { index: silentIndex, ms: null };
+      silence.key = sources.join('|');
+      // напоминание вернуло к той же развилке: игрок всё ещё думает над ней
+      const same = this.fork && this.lastRemind?.key === silence.key;
+      this.fork = this.choices.length
+        ? { at: same ? this.fork!.at : Date.now(), knot: this.knotOf(sources[0]), reminders: same ? this.fork!.reminders : 0 }
+        : null;
+      this.silence = this.choices.length && (silence.reminders.length || silence.target) ? silence : null;
+      this.waitDone = 0;
       this.choiceThread = this.choices.length ? fallback : null;
       this.ended = this.choices.length === 0;
     }
   }
 
+  /**
+   * Сколько ещё молчать до следующего шага истории (мс игрового времени) и что это за шаг.
+   * null — кнопка ждёт: режим «по клику», напоминаний нет или они кончились, а вести некуда.
+   */
+  private nextSilence(): { ms: number; index: number; remind: boolean } | null {
+    const s = this.silence;
+    if (!s || this.mode === 'click' || this.pending || !this.choices.length) return null;
+    const r = s.reminders[0];
+    if (r) return { ms: r.ms, index: r.index, remind: true };
+    if (!s.target) return null;
+    const ms = s.target.ms ?? (this.lastRemind?.key === s.key ? this.lastRemind.ms : null);
+    return ms ? { ms, index: s.target.index, remind: false } : null;
+  }
+
+  /** Игрок промолчал до срока: персонаж напоминает или история идёт веткой «не ответил». Исходящего сообщения нет. */
+  private fireSilence(step: { index: number; ms: number; remind: boolean }) {
+    const hidden = this.story.currentChoices.find((c) => c.index === step.index);
+    this.record(step.remind ? 'remind' : 'noanswer', step.remind ? null : -1, hidden?.text ?? '');
+    if (step.remind && this.fork) this.fork.reminders++;
+    this.lastRemind = step.remind && this.silence ? { ms: step.ms, key: this.silence.key } : null;
+    this.lastThread = this.choiceThread ?? this.lastThread;
+    this.afterPlayer = false;
+    this.story.ChooseChoiceIndex(step.index);
+    this.choices = [];
+    this.choiceThread = null;
+    this.silence = null;
+    this.waitDone = 0;
+    this.advance();
+  }
+
   private commit(p: Pending, at = Date.now()) {
     p.unlock.forEach((id) => this.unlock(id));
     this.unlock(p.thread);
-    if (p.chapter) this.chapter = p.chapter;
+    if (p.chapter) {
+      this.chapter = p.chapter;
+      this.chapterNo++;
+    }
     this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at });
     this.lastThread = p.thread;
     // поднять чат наверх списка
     this.unlocked = [p.thread, ...this.unlocked.filter((t) => t !== p.thread)];
+  }
+
+  /**
+   * Следующая строка открывает главу за бесплатной границей, а продолжение закрыто: история стоит.
+   * Стоит до паузы этой строки, а не после: игрок видит границу сразу, как кончилась бесплатная глава,
+   * и пауза между главами идёт уже после открытия.
+   */
+  private atPaywall(): boolean {
+    return (
+      !!this.pending?.chapter &&
+      this.freeChapters !== null &&
+      !this.chaptersOpen &&
+      this.chapterNo >= this.freeChapters
+    );
+  }
+
+  /** Открыть или снова закрыть продолжение. История, стоявшая на границе, идёт дальше. */
+  setChaptersOpen(open: boolean) {
+    this.tick();
+    this.chaptersOpen = open;
+    this.emit();
   }
 
   /** Вызывается по таймеру. Догоняет и время, прошедшее офлайн. Возвращает новые сообщения. */
@@ -336,12 +558,38 @@ export class Engine {
     const fresh: Msg[] = [];
     let real = dt * (this.fastTyping ? 4 : 1); // реальные миллисекунды на «подумал» и «печатает»
     let guard = 0;
-    while (this.pending && guard++ < 1000) {
+    let fired = false;
+    while (guard++ < 1000) {
+      if (!this.pending) {
+        // игрок молчит у кнопок: напоминания и ветка «не ответил» идут по тому же времени, что и паузы,
+        // поэтому офлайн они тоже догоняются. «Без пауз» (∞) кнопку не торопит: только «пропустить»
+        const step = this.speed === Infinity ? null : this.nextSilence();
+        if (!step) break;
+        const k = this.speed / (this.fastTyping ? 4 : 1);
+        const left = step.ms - this.waitDone;
+        if (real * k < left) {
+          this.waitDone += real * k;
+          real = 0;
+          break;
+        }
+        real -= left / k;
+        this.fireSilence(step);
+        fired = true;
+        continue;
+      }
+      if (this.atPaywall()) break;
       const p = this.pending;
+      // по клику пауз нет, но скачок времени мира игрок должен увидеть
+      if (this.mode === 'click' && !p.jumpShown && p.delayMs >= TIME_JUMP_LABEL_H * 3_600_000) {
+        p.jumpShown = true;
+        const label: Pending = { ...p, kind: 'sys', text: jumpLabel(p.delayMs), unlock: [], chapter: undefined };
+        this.commit(label, Math.round(start + (dt - real / (this.fastTyping ? 4 : 1))));
+        fresh.push(this.messages[this.messages.length - 1]);
+      }
       // 1. пауза сюжета: ускоряется
       const delayLeft = p.delayMs - p.delayDone;
       if (delayLeft > 0) {
-        if (this.speed === Infinity) p.delayDone = p.delayMs;
+        if (this.speed === Infinity || this.mode === 'click') p.delayDone = p.delayMs;
         else {
           const k = this.speed / (this.fastTyping ? 4 : 1);
           const can = real * k;
@@ -378,8 +626,8 @@ export class Engine {
       fresh.push(this.messages[this.messages.length - 1]);
       this.advance();
     }
-    if (fresh.length) this.emit();
-    else if (this.pending) this.notify();
+    if (fresh.length || fired) this.emit();
+    else if ((this.pending && !this.atPaywall()) || this.silence) this.notify();
     return fresh;
   }
 
@@ -388,6 +636,7 @@ export class Engine {
     const choice = this.choices.find((c) => c.index === index);
     if (!choice) return;
     const thread = choice.thread ?? this.choiceThread ?? this.speaker;
+    this.record('choice', this.choices.indexOf(choice), choice.text);
     if (!choice.silent) {
       this.messages.push({ id: this.nextId++, thread, kind: 'out', text: choice.text, at: Date.now() });
       this.unlocked = [thread, ...this.unlocked.filter((t) => t !== thread)];
@@ -397,13 +646,29 @@ export class Engine {
     this.story.ChooseChoiceIndex(index);
     this.choices = [];
     this.choiceThread = null;
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
     this.advance();
     this.emit();
   }
 
-  /** Пропускает паузу сюжета. Набор текста остаётся живым. */
-  skipWait() {
-    if (this.pending) this.pending.delayDone = this.pending.delayMs;
+  /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора; у кнопок — следующее напоминание. */
+  skipNext() {
+    if (this.atPaywall()) return;
+    const p = this.pending;
+    if (!p) {
+      this.tick();
+      const step = this.nextSilence();
+      if (!step) return;
+      this.fireSilence(step);
+      this.tick();
+      this.emit();
+      return;
+    }
+    p.delayDone = p.delayMs;
+    p.gapDone = p.gapMs;
+    p.typingDone = p.typingMs;
     this.tick();
   }
 
@@ -420,15 +685,67 @@ export class Engine {
   }
 
   jump(knot: string) {
+    this.record('jump', null, knot);
     this.story.ChoosePathString(knot);
+    // переход к главе chN из отладки: граница считает её N-й, а не следующей по счёту
+    const no = knot.match(/^ch(\d+)$/);
+    if (no) this.chapterNo = Number(no[1]) - 1;
     this.pending = null;
     this.choices = [];
     this.choiceThread = null;
     this.ended = false;
     this.carryDelay = 0;
+    this.silence = null;
+    this.waitDone = 0;
+    this.lastRemind = null;
+    this.fork = null;
     this.messages.push({ id: this.nextId++, thread: this.lastThread || this.speaker || 'unknown', kind: 'sys', text: `переход к «${knot}»`, at: Date.now() });
     this.advance();
     this.emit();
+  }
+
+  /** Развилка, у которой стоит игрок; null — кнопок нет. */
+  currentKnot(): string | null {
+    return this.fork?.knot ?? null;
+  }
+
+  /** Журнал выборов с начала игры, по порядку. */
+  journal(): readonly LogEntry[] {
+    return this.log;
+  }
+
+  private record(kind: LogEntry['kind'], picked: number | null, text: string) {
+    const at = Date.now();
+    const vars: LogEntry['vars'] = {};
+    for (const name of this.varNames) {
+      const v = this.getVar(name);
+      // списки ink — объекты: в журнал идёт их текст, иначе файл не прочитать без inkjs
+      vars[name] = typeof v === 'number' || typeof v === 'boolean' || typeof v === 'string' ? v : String(v);
+    }
+    const fork = this.fork;
+    this.log.push({
+      kind,
+      at,
+      knot: fork?.knot ?? null,
+      chapter: this.chapter,
+      thread: this.choiceThread ?? this.lastThread,
+      picked,
+      text,
+      options: this.choices.map((c) => c.text),
+      waitMs: fork ? Math.max(0, at - fork.at) : 0,
+      reminders: fork?.reminders ?? 0,
+      vars,
+    });
+  }
+
+  /** Узел развилки по пути варианта в ink («shore.0.c-1», «ch2.night.0.3»): как узлы бота — knot или knot.stitch. */
+  private knotOf(path: string | undefined): string | null {
+    if (!path) return null;
+    const [knot, sub] = path.split('.');
+    const named = (this.story.mainContentContainer as unknown as { namedContent: Map<string, { namedContent: Map<string, unknown> }> }).namedContent;
+    const container = named.get(knot);
+    if (!container || !this.knots.includes(knot)) return null;
+    return sub && container.namedContent.has(sub) ? `${knot}.${sub}` : knot;
   }
 
   getVar(name: string): unknown {
@@ -436,6 +753,7 @@ export class Engine {
   }
 
   setVar(name: string, value: unknown) {
+    this.record('set', null, `${name} = ${String(value)}`);
     this.story.variablesState[name] = value;
     this.emit();
   }
@@ -450,8 +768,9 @@ export class Engine {
 
   view() {
     const p = this.pending;
+    const paywall = this.atPaywall();
     let status: { thread: string; phase: Phase; typing: boolean; pauseMs: number; realMs: number } | null = null;
-    if (p) {
+    if (p && !paywall) {
       const pauseMs = Math.max(0, p.delayMs - p.delayDone);
       const liveMs = Math.max(0, p.gapMs - p.gapDone) + Math.max(0, p.typingMs - p.typingDone);
       const phase: Phase = pauseMs > 0 ? 'pause' : p.gapDone < p.gapMs ? 'gap' : 'typing';
@@ -460,9 +779,17 @@ export class Engine {
         phase,
         typing: phase === 'typing' && p.typingMs > 0,
         pauseMs,
-        realMs: (this.speed === Infinity ? 0 : pauseMs / this.speed) + liveMs,
+        realMs: (this.speed === Infinity || this.mode === 'click' ? 0 : pauseMs / this.speed) + liveMs,
       };
     }
+    const step = this.nextSilence();
+    const silence = step
+      ? {
+          remind: step.remind,
+          leftMs: Math.max(0, step.ms - this.waitDone),
+          realMs: this.speed === Infinity ? null : Math.max(0, step.ms - this.waitDone) / this.speed,
+        }
+      : null;
     return {
       messages: this.messages,
       threads: this.unlocked,
@@ -470,10 +797,14 @@ export class Engine {
       choiceThreads: [...new Set(this.choices.map((c) => c.thread))],
       ended: this.ended,
       chapter: this.chapter,
+      /** История стоит на платной границе: номер закрытой главы, с 1. */
+      locked: paywall ? { chapter: this.chapterNo + 1, free: this.freeChapters! } : null,
       status,
+      silence,
       read: this.read,
       speed: this.speed,
       fastTyping: this.fastTyping,
+      mode: this.mode,
     };
   }
 
@@ -500,10 +831,19 @@ export class Engine {
       savedAt: this.lastTick,
       chapter: this.chapter,
       renamed: this.renamed,
+      mode: this.mode,
+      silence: this.silence,
+      waitDone: this.waitDone,
+      lastRemind: this.lastRemind,
+      log: this.log,
+      fork: this.fork,
+      startedAt: this.startedAt,
+      revision: this.revision,
+      chapterNo: this.chapterNo,
+      locked: this.atPaywall(),
     };
     try {
       localStorage.setItem(this.storageKey(), JSON.stringify(data));
-      localStorage.setItem('relay:speed', String(this.speed));
       localStorage.setItem('relay:fast', this.fastTyping ? '1' : '0');
     } catch {
       /* хранилище недоступно: играем без сохранения */
@@ -513,13 +853,17 @@ export class Engine {
   /** Восстанавливает прогресс. Время, прошедшее офлайн, догоняется в tick(). */
   restore(): boolean {
     try {
-      const s = localStorage.getItem('relay:speed');
-      if (s) this.speed = s === 'Infinity' ? Infinity : Number(s) || 60;
       this.fastTyping = localStorage.getItem('relay:fast') === '1';
       const raw = localStorage.getItem(this.storageKey());
       if (!raw) return false;
       const d = JSON.parse(raw) as SaveData;
       if ((d.v !== 1 && d.v !== 2) || d.storyId !== this.storyId) return false;
+      // состояние ink ссылается на узлы и счётчики своей ревизии: на другой оно молча собьётся
+      const saved = d.revision ?? 1;
+      if (saved !== this.revision) {
+        this.outdated = { from: saved, to: this.revision, mode: d.mode ?? DEFAULT_MODE };
+        return false;
+      }
       this.story.state.LoadJson(d.storyState);
       this.messages = d.messages;
       this.unlocked = d.unlocked;
@@ -533,7 +877,15 @@ export class Engine {
       this.nextId = d.nextId;
       this.carryDelay = d.carryDelay;
       this.chapter = d.chapter ?? '';
+      this.chapterNo = d.chapterNo ?? (this.chapter ? 1 : 0);
       this.renamed = d.renamed ?? {};
+      this.mode = d.mode ?? DEFAULT_MODE;
+      this.silence = d.silence ?? null;
+      this.waitDone = d.waitDone ?? 0;
+      this.lastRemind = d.lastRemind ?? null;
+      this.log = d.log ?? [];
+      this.fork = d.fork ?? null;
+      this.startedAt = d.startedAt ?? this.startedAt;
       for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();
       return true;
@@ -556,6 +908,23 @@ export function formatDuration(ms: number): string {
   const m = Math.floor(s / 60);
   if (m < 60) return `${m} мин ${s % 60} с`;
   return `${Math.floor(m / 60)} ч ${m % 60} мин`;
+}
+
+/** «спустя 3 часа», «спустя 2 дня» — без минут: метка про скачок мира, а не про точное время. */
+export function jumpLabel(ms: number): string {
+  const h = Math.max(1, Math.round(ms / 3_600_000));
+  if (h < 24) return `спустя ${h} ${plural(h, 'час', 'часа', 'часов')}`;
+  const d = Math.round(h / 24);
+  return `спустя ${d} ${plural(d, 'день', 'дня', 'дней')}`;
+}
+
+/** «1 глава», «2 главы», «5 глав». */
+export function plural(n: number, one: string, few: string, many: string): string {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+  return many;
 }
 
 /** Старые сохранения (v1) хранили один общий прогресс. Приводим к фазам. */

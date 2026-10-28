@@ -2,6 +2,8 @@
  * Главный экран показывает состояние каждой истории, но движок там не нужен:
  * сохранение движка лежит в localStorage готовым, читаем его напрямую.
  */
+import { DEFAULT_MODE, type Mode } from './engine';
+import type { Story } from './story';
 
 export interface Progress {
   /** Хотя бы одно сообщение пришло. */
@@ -12,7 +14,20 @@ export interface Progress {
   messages: number;
   /** Когда играли в последний раз. */
   savedAt: number;
+  /** В каком режиме идёт игра: сменить его можно только перезапуском. */
+  mode: Mode;
+  /** Ревизия сценария, под которую записано сохранение. */
+  revision: number;
+  /** Игрок прошёл бесплатные главы, и история стоит на платной границе. */
+  locked: boolean;
 }
+
+/** Нет поля revision в истории или в сохранении — это первая ревизия. */
+export const revisionOf = (story: Pick<Story, 'revision'>) => story.revision ?? 1;
+
+/** Сохранение от другой ревизии сценария: продолжить нельзя, история начнётся заново. */
+export const isOutdated = (progress: Progress | null, story: Pick<Story, 'revision'>) =>
+  !!progress && progress.revision !== revisionOf(story);
 
 const key = (storyId: string) => `relay:${storyId}`;
 
@@ -25,6 +40,9 @@ export function readProgress(storyId: string): Progress | null {
       ended?: boolean;
       chapter?: string;
       savedAt?: number;
+      mode?: Mode;
+      revision?: number;
+      locked?: boolean;
     };
     const messages = Array.isArray(d.messages) ? d.messages.length : 0;
     if (!messages) return null;
@@ -34,6 +52,9 @@ export function readProgress(storyId: string): Progress | null {
       chapter: d.chapter ?? '',
       messages,
       savedAt: d.savedAt ?? 0,
+      mode: d.mode ?? DEFAULT_MODE,
+      revision: d.revision ?? 1,
+      locked: !!d.locked,
     };
   } catch {
     return null;

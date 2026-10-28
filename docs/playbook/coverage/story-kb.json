@@ -1,0 +1,52 @@
+{
+  "rows": {
+    "#attn-contra": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    },
+    "#attn-superseded": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    },
+    "cron-wired-for-story:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    },
+    "nicklin-writing-for-games:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    },
+    "nicklin-writing-for-games:PAT-08#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    },
+    "video-three-things:attention§3": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия, исключения и уверенность сохранены"
+      }
+    }
+  }
+}

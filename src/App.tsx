@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { useGame, useLibrary, useRouter, type Story } from './engine';
+import { useGame, useLibrary, useRouter, type Mode, type Story } from './engine';
 import { HomeScreen } from './ui/HomeScreen';
 import { StoryScreen } from './ui/StoryScreen';
 import { ChatsScreen } from './ui/ChatsScreen';
@@ -7,6 +7,8 @@ import { ChatScreen } from './ui/ChatScreen';
 import { DebugSheet } from './ui/DebugSheet';
 import { ErrorScreen } from './ui/ErrorScreen';
 import { Notice } from './ui/Notice';
+import { RevisionNotice } from './ui/RevisionNotice';
+import { Paywall } from './ui/Paywall';
 
 /** Связывание: вся логика в engine, всё оформление в ui. Здесь только маршруты. */
 export function App() {
@@ -17,8 +19,9 @@ export function App() {
     return (
       <div className="phone">
         <HomeScreen
-          stories={library.stories}
+          stories={library.catalog}
           progressOf={library.progress}
+          paywallOf={library.paywall}
           onOpen={openStory}
           onUpload={library.add}
         />
@@ -41,7 +44,8 @@ export function App() {
         <StoryScreen
           story={story}
           progress={library.progress(story.id)}
-          onPlay={() => play(story.id)}
+          free={library.paywall(story)}
+          onPlay={(mode) => play(story.id, mode)}
           onBack={goHome}
           onReset={() => library.reset(story.id)}
           onDelete={
@@ -63,6 +67,7 @@ export function App() {
       story={story}
       stories={library.stories}
       thread={route.thread ?? null}
+      mode={route.mode}
       onThreadChange={rememberChat}
       onBack={() => openStory(story.id)}
       onHome={goHome}
@@ -76,6 +81,7 @@ function GameShell({
   story,
   stories,
   thread,
+  mode,
   onThreadChange,
   onBack,
   onHome,
@@ -85,6 +91,8 @@ function GameShell({
   stories: Story[];
   /** Чат, открытый в прошлый раз: восстанавливаем после перезагрузки. */
   thread: string | null;
+  /** Режим новой игры с экрана истории. */
+  mode?: Mode;
   onThreadChange: (id: string, thread: string | null) => void;
   onBack: () => void;
   onHome: () => void;
@@ -94,11 +102,17 @@ function GameShell({
     (next: string | null) => onThreadChange(story.id, next),
     [onThreadChange, story.id],
   );
-  const game = useGame(story, thread, remember);
+  const game = useGame(story, thread, remember, mode);
   const [debug, setDebug] = useState(false);
+  const locked = game.view?.locked;
+  const paywall = (inList: boolean) =>
+    locked ? <Paywall chapter={locked.chapter} title={story.chapters?.[locked.chapter - 1]?.title} inList={inList} /> : undefined;
 
   return (
     <div className="phone">
+      {game.outdated && (
+        <RevisionNotice from={game.outdated.from} to={game.outdated.to} done onClose={game.hideOutdated} />
+      )}
       {game.notice && game.engine && (
         <Notice
           msg={game.notice}
@@ -117,6 +131,7 @@ function GameShell({
             onBack={() => game.openChat(null)}
             onOpen={game.openChat}
             onDebug={() => setDebug(true)}
+            paywall={paywall(false)}
           />
         ) : (
           <ChatsScreen
@@ -126,6 +141,9 @@ function GameShell({
             backLabel={story.title}
             onBack={onBack}
             onDebug={() => setDebug(true)}
+            notices={game.notices}
+            onNotices={game.setNotices}
+            paywall={paywall(true)}
           />
         )
       ) : (
@@ -140,6 +158,9 @@ function GameShell({
           onSelectStory={onSelectStory}
           onHome={onHome}
           onClose={() => setDebug(false)}
+          freeChapters={game.freeChapters}
+          chaptersOpen={game.chaptersOpen}
+          onChaptersOpen={game.setChaptersOpen}
         />
       )}
     </div>
