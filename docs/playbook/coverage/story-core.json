@@ -1,0 +1,164 @@
+{
+  "rows": {
+    "ashwell-standard-patterns:RED-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "cron-wired-for-story:RED-15": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "failbetter-qbn:P-02#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "failbetter-qbn:P-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "inkle-ingold:contra-7": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "maass-fire-in-fiction:GREEN-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "maass-fire-in-fiction:PAT-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "maass-fire-in-fiction:RED-12": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "mckee-story:P-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "// ценность отменён A-06, смысл сохранён"
+      }
+    },
+    "mckee-story:P-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "meaningful-choice:P-14#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "mystery-fair-play:RED-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "порог 60% заменён ключами C-54"
+      }
+    },
+    "procedural-storytelling:P-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "procedural-storytelling:RED-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "R-07": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "skolnick-video-game-storytelling:LESSON-11": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "skolnick-video-game-storytelling:P-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "truby-anatomy-of-story:GREEN-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "truby-anatomy-of-story:RED-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и исключения сохранены"
+      }
+    },
+    "truby-anatomy-of-story:RED-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "«две главы подряд» в заголовке, порог через C-45 и story:cast"
+      }
+    }
+  }
+}
