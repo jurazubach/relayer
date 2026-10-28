@@ -19,7 +19,7 @@ export function App() {
     return (
       <div className="phone">
         <HomeScreen
-          stories={library.stories}
+          stories={library.catalog}
           progressOf={library.progress}
           paywallOf={library.paywall}
           onOpen={openStory}

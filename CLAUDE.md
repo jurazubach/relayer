@@ -75,6 +75,7 @@ npx playwright show-trace test-results/*/trace.zip
 | `?fresh=1` | стереть прогресс перед запуском |
 | `?fast=1` | без пауз сюжета, набор текста ×4 |
 | `?mode=click` \| `realtime` | режим новой игры, если она начинается не с экрана истории |
+| `?all=1` | показать на главном скрытые истории (`hidden: true` в `meta.json`) |
 
 Например: `http://localhost:5173/?story=the-number&fresh=1&fast=1`.
 
@@ -143,9 +144,13 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 
 | папка | на карточке | ≈ минут |
 |---|---|---|
-| `src/stories/the-number/` | THE NUMBER (без серии) | 25 |
-| `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно | 40 |
+| `src/stories/the-number/` | THE NUMBER (без серии) — скрыта | 25 |
+| `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно — скрыта | 40 |
 | `src/stories/chuzhoy-golos/` | Векскомб · Чужой голос | 90 |
+
+Скрытые (`hidden: true` в `meta.json`, решение автора 28.10: в работе только «Чужой голос») не видны
+на главном и не едут в `dist/stories/` на Pages; открываются по `?story=<id>`, а `story:*`, линт и тесты
+видят их как обычно.
 
 Над названием мелко — `series`, крупно — `title`; в сценарии `# title:` повторяет их через « · ».
 Флаги в примерах опираются на `the-number`, e2e — на фикстуру `examples/e2e.story.json`. Всё в историях вымышлено: никаких

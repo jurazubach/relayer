@@ -87,6 +87,7 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       teasers: Array.isArray(file.teasers)
         ? file.teasers.filter((t) => typeof t === 'string' && t.trim()).map((t) => t.trim())
         : undefined,
+      ...(file.hidden === true ? { hidden: true } : {}),
       cover: file.cover ?? DEFAULT_COVER,
       ink,
       includes,

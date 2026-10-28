@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { FLAGS, readLocal, writeLocal } from './flags';
-import { BUILTIN } from './library';
+import { BUILTIN, isHidden } from './library';
 import type { Mode } from './engine';
 import { clearProgress } from './progress';
 
@@ -21,6 +21,8 @@ function initialRoute(): Route {
   if (FLAGS.screen === 'home') return { screen: 'home' };
   try {
     const saved = JSON.parse(readLocal(ROUTE_KEY) ?? 'null') as Route | null;
+    // скрытую историю открывает только ?story=: сохранённый с прошлого раза маршрут ведёт на главный
+    if (saved && saved.screen !== 'home' && saved.id && isHidden(saved.id)) return { screen: 'home' };
     if (saved && (saved.screen === 'home' || saved.id)) return saved;
   } catch {
     /* сохранённого маршрута нет */
