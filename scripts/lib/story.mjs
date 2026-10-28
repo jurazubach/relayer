@@ -87,10 +87,29 @@ function resolvePath(ref, dir) {
 }
 
 /**
- * Все истории каталога, по алфавиту имён. Если у одного id есть и папка, и .json — берётся папка:
- * .json рядом с ней — собранная копия (story:pack).
+ * Сборка сайта: npm run build зовёт story:pack из postbuild. Только там скрытые истории
+ * (hidden: true в meta.json) не попадают в dist/stories/ для Pages; story:pack руками, проверки
+ * и команды story:* видят все — скрытость касается только каталога игрока.
  */
-export function listStories(dir = STORIES_DIR) {
+export const SITE_BUILD = process.env.npm_lifecycle_event === 'postbuild';
+
+/** Скрыта ли история из каталога игрока: поле hidden в meta.json папки или в .json. */
+export function isHiddenStory(path) {
+  const file = statSync(path).isDirectory() ? join(path, 'meta.json') : path;
+  if (!existsSync(file)) return false;
+  try {
+    return JSON.parse(readFileSync(file, 'utf8')).hidden === true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Все истории каталога, по алфавиту имён. Если у одного id есть и папка, и .json — берётся папка:
+ * .json рядом с ней — собранная копия (story:pack). hidden: false — без скрытых (по умолчанию так
+ * только при сборке сайта).
+ */
+export function listStories(dir = STORIES_DIR, { hidden = !SITE_BUILD } = {}) {
   if (!existsSync(dir)) return [];
   const byId = new Map();
   for (const name of readdirSync(dir).sort()) {
@@ -102,7 +121,8 @@ export function listStories(dir = STORIES_DIR) {
       if (!byId.has(id)) byId.set(id, full);
     }
   }
-  return [...byId.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1)).map(([, p]) => p);
+  const all = [...byId.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1)).map(([, p]) => p);
+  return hidden ? all : all.filter((p) => !isHiddenStory(p));
 }
 
 /** Пути из аргументов или весь каталог. */

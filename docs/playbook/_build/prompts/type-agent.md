@@ -9,7 +9,8 @@
 - `name`;
 - `description` — «Вызывается скиллами …», без пользовательских фраз: автор зовёт скиллы, а не агентов;
 - `model: opus`;
-- `tools` — минимум для роли;
+- `tools` — минимум для роли, **без `Agent`/`Task`**: вложенный запуск агентов работает, запрет сам не действует (`claude-code-format.md` §2.3, §9);
+- пишущий агент — `permissionMode: acceptEdits`; ограничение путей записи — хуком `PreToolUse` по `tool_input.file_path` и `agent_type` (в `hooks:` агента или в `.claude/settings.json`), а не надеждой на `tools`;
 - `skills:` — если `claude-code-format.md` подтверждает предзагрузку.
 
 ## Тело

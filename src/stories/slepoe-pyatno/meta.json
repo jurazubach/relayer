@@ -3,6 +3,7 @@
   "version": 1,
   "id": "slepoe-pyatno",
   "revision": 1,
+  "hidden": true,
   "series": "01:42",
   "title": "Слепое пятно",
   "tagline": "Ночная смена, чужой коммит и взлом, который вернулся через шесть недель",

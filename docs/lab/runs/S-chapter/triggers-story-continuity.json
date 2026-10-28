@@ -1,0 +1,1192 @@
+{
+  "date": "2026-10-28T15:10:20.300Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.312",
+  "runs": 3,
+  "focus": null,
+  "file": "docs/lab/triggers/story-continuity.json",
+  "group": null,
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "seconds": 122,
+  "cost_usd": 0.4181658,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-brainstorm",
+      "story-branch",
+      "story-desk",
+      "story-fix",
+      "story-playtest",
+      "story-review",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "chapter-write",
+      "story-brainstorm",
+      "story-branch",
+      "story-cast",
+      "story-choices",
+      "story-continuity",
+      "story-core",
+      "story-desk",
+      "story-endings",
+      "story-fix",
+      "story-mystery",
+      "story-opening",
+      "story-pace",
+      "story-pauses",
+      "story-plan",
+      "story-playtest",
+      "story-review",
+      "story-time",
+      "story-voice"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 57,
+    "passed": 57,
+    "rate": 1,
+    "errors": 0,
+    "denied": 3,
+    "failed_runs": 3
+  },
+  "skills": [
+    {
+      "skill": "chapter-write",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-brainstorm",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-branch",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-cast",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-continuity",
+      "expected": 36,
+      "hits": 36,
+      "foreign": 21,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-core",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-endings",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Финал решает скрытый счётчик, и игрок не понимает, почему получил плохую концовку"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    },
+    {
+      "skill": "story-fix",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-mystery",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-opening",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pace",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pauses",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-plan",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-playtest",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-review",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-time",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Сколько напоминаний должен прислать персонаж, если игрок не отвечает ночью?"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    },
+    {
+      "skill": "story-voice",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Глеб в пятой главе говорит про ключ, хотя ему об этом никто не писал — откуда он знает?",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Игрок может не заходить в чат с соседкой, а потом кнопка называет её имя, как будто он с ней знаком",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "После ветки со сторожем общая сцена не стыкуется: сторож снова представляется, хотя уже писал",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "В одном месте фургон приехал в 23:10, а в ветке Тамары — в 23:40. Проверь, где ещё время расходится",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу завести facts.md с хронологией, что на самом деле было той ночью. С чего начать?",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Чаты живут каждый сам по себе, сведения из одного никак не используются в другом",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь, не знает ли кто-то из персонажей лишнего на разных путях",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Игрок назвался Глебу курьером, а в седьмой главе Глеб зовёт его журналистом — откуда?",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "в хабе можно пройти разговоры в любом порядке и тогда реплики ссылаются на то чего игрок ещё не слышал",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сцены сходятся в один узел, а там текст повторяет то, что игрок уже видел в другой ветке",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как сделать, чтобы вторая часть помнила, чем кончилась первая, и не противоречила ей?",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Персонаж упоминает разговор, который был только в другом чате",
+      "checks": [
+        {
+          "expect": "story-continuity",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-continuity",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Кнопки в развилке ничего не меняют, на любой ответ одна и та же реплика",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Улики раскиданы так, что виновника угадывают с первой главы",
+      "checks": [
+        {
+          "expect": "story-mystery",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Слишком много контактов в первой главе, игрок путает, кто есть кто",
+      "checks": [
+        {
+          "expect": "story-cast",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Тамара и Полина пишут одинаково, голоса не различить",
+      "checks": [
+        {
+          "expect": "story-voice",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "После паузы игрок возвращается и не понимает, о чём вообще был разговор",
+      "checks": [
+        {
+          "expect": "story-pauses",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-pauses",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Почини e2e-тест, который падает на экране списка чатов",
+      "checks": [
+        {
+          "expect": "none",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 npm run test:e2e 2>&1 | tail -80",
+              "id": "toolu_01ESmooxTdCKMKiLqgbcqJud",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 npm run test:e2e 2>&1 | tail -80)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_015SmYZ33ni9o3pthUwRmogb",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 npm run test:e2e -- --reporter=line 2>&1 | tail -60",
+              "id": "toolu_018dj2ew996RaVCEHU1K1vMx",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 npm run test:e2e -- --reporter=line 2>&1 | tail -60)"
+        }
+      ]
+    },
+    {
+      "text": "Сколько напоминаний должен прислать персонаж, если игрок не отвечает ночью?",
+      "checks": [
+        {
+          "expect": "!story-continuity",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал решает скрытый счётчик, и игрок не понимает, почему получил плохую концовку",
+      "checks": [
+        {
+          "expect": "!story-continuity",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-continuity.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [
+    {
+      "phrase": "Почини e2e-тест, который падает на экране списка чатов",
+      "run": 1,
+      "tool": "Bash",
+      "command": "HEADLESS=1 npm run test:e2e 2>&1 | tail -80",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини e2e-тест, который падает на экране списка чатов",
+      "run": 2,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини e2e-тест, который падает на экране списка чатов",
+      "run": 3,
+      "tool": "Bash",
+      "command": "HEADLESS=1 npm run test:e2e -- --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    }
+  ],
+  "skipped": [],
+  "fails": [],
+  "ok": true
+}

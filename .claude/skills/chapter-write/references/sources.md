@@ -1,0 +1,97 @@
+# Источники `chapter-write`
+
+Сгенерировано `npm run story:coverage -- --sources chapter-write --write`, руками не править.
+Список ID — это уровень L1, а не покрытие: строка покрыта, когда в reference есть блок с её ID в заголовке
+(L2) или знание исполняемо (L3). Отменённое (`superseded`) не переносится; «частично» — берётся часть
+«в силе» (`docs/playbook/superseded.md`).
+
+## chapter-write/facts-anchor.md
+
+### TH-26 · якоря фактов для модели
+- `dille-ultimate-guide:LESSON-01` — Закладывай развязку в начале: кульминация не должна удивлять (`docs/books/_clean/dille-ultimate-guide/lessons.md:7` · K-R-91)
+- `dille-ultimate-guide:LESSON-09` — Сначала напиши правду целиком, потом режь её на сообщения (`docs/books/_clean/dille-ultimate-guide/lessons.md:71` · K-R-91)
+- `dille-ultimate-guide:P-04` — Веди библию правды отдельно от реплик (`docs/books/_clean/dille-ultimate-guide/principles.md:28` · K-R-91)
+- `dille-ultimate-guide:P-04#нюанс` — нюанс к P-04 (`docs/books/_clean/dille-ultimate-guide/principles.md:156`)
+- `dille-ultimate-guide:RED-04` — Время или факт в реплике расходится с хронологией (`docs/books/_clean/dille-ultimate-guide/flags.md:22` · K-R-91)
+- `mystery-fair-play:RED-03` — Ключевой факт приходит в той же реплике, что и ответ (`docs/books/_clean/mystery-fair-play/flags.md:23` · K-R-91)
+- `procedural-storytelling:GREEN-05` — Ранний выбор о себе ( alias , cover ) возвращается через главы (`docs/books/_clean/procedural-storytelling/flags.md:13` · K-R-85)
+- `procedural-storytelling:LESSON-08` — Ставь модели якоря фактов: контекст кончается, и она импровизирует (`docs/books/_clean/procedural-storytelling/lessons.md:63` · K-R-85)
+- `procedural-storytelling:P-15` — Веди реестр выбранных фактов и запрещай противоречия (`docs/books/_clean/procedural-storytelling/principles.md:124` · K-R-85)
+- `schell-art-of-game-design:GREEN-06` — Реплики с прямым обращением к игроку учащаются к финалу (`docs/books/_clean/schell-art-of-game-design/flags.md:14` · K-R-85)
+- `schell-art-of-game-design:P-08` — Сокращай дистанцию: от «они» к «ты» и к «я» (`docs/books/_clean/schell-art-of-game-design/principles.md:66` · K-R-85)
+- `schell-art-of-game-design:P-08#нюанс` — нюанс к P-08 (`docs/books/_clean/schell-art-of-game-design/principles.md:239`)
+- `schell-art-of-game-design:RED-13` — Обращение к игроку без источника знания (`docs/books/_clean/schell-art-of-game-design/flags.md:34` · K-R-85)
+- `skolnick-video-game-storytelling:P-12` — Проверяй правдоподобие: связность и верность (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:111` · K-R-85)
+
+## chapter-write/ink-idioms.md
+
+### TH-24 · ink-идиомы и наши теги
+- `bateman-game-writing:P-17` — Собирай реплики из кусков только с согласованием (`docs/books/_clean/bateman-game-writing/principles.md:146` · K-R-119)
+- `bateman-game-writing:PAT-09` — Сшитая реплика с согласованием (interchangeable content) (`docs/books/_clean/bateman-game-writing/patterns.md:254`)
+- `bateman-game-writing:RED-09` — В подставленной фразе не согласован род или число (P-17) (`docs/books/_clean/bateman-game-writing/flags.md:29` · K-R-119)
+- `bateman-game-writing:SYS-5` — Система 5. Взаимозаменяемые реплики (Adams) (`docs/books/_clean/bateman-game-writing/principles.md:251`)
+- `emshort-structures:P-11` — Сначала пиши общую реплику на все случаи, потом частные поверх неё (`docs/books/_clean/emshort-structures/principles.md:96` · K-R-35)
+- `emshort-structures:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/emshort-structures/principles.md:161`)
+- `inkle-ingold:LESSON-13` — Не выноси часть текста из ink в свой формат: её станет меньше (`docs/books/_clean/inkle-ingold/lessons.md:117`)
+- `inkle-ingold:PAT-01` — Выбор со своим ответом и сборкой (weave: choices and gathers, плетение: выборы и сборки) (`docs/books/_clean/inkle-ingold/patterns.md:7` · K-R-43)
+- `inkle-ingold:PAT-01#нюанс` — нюанс к PAT-01 (`docs/books/_clean/inkle-ingold/patterns.md:443`)
+- `inkle-ingold:PAT-02` — Вставка выбора в монолог (breaking up text, разбивка текста) (`docs/books/_clean/inkle-ingold/patterns.md:43`)
+- `inkle-ingold:PAT-02#нюанс` — нюанс к PAT-02 (`docs/books/_clean/inkle-ingold/patterns.md:444`)
+- `inkle-ingold:PAT-08` — Общий вариант через поток (threads, потоки <- ) (`docs/books/_clean/inkle-ingold/patterns.md:252`)
+- `inkle-ingold:PAT-08#нюанс` — нюанс к PAT-08 (`docs/books/_clean/inkle-ingold/patterns.md:450`)
+- `inkle-ingold:RED-11` — Одна и та же кнопка написана копиями в нескольких узлах (`docs/books/_clean/inkle-ingold/flags.md:32`)
+- `inkle-ingold:SYS-1` — SYS-1. Weave (плетение): выборы, сборки, метки, уровни вложенности (`docs/books/_clean/inkle-ingold/patterns.md:330`)
+- `procedural-storytelling:LESSON-01` — Не генерируй сюжет: генерируй кастинг сцены под персонажей (`docs/books/_clean/procedural-storytelling/lessons.md:7` · K-R-119)
+- `procedural-storytelling:LESSON-02` — Настрой строгость условий: слишком узкие прячут сцену, слишком широкие стирают характер (`docs/books/_clean/procedural-storytelling/lessons.md:15`)
+- `procedural-storytelling:P-11` — Варьируй мелочи, а повороты пиши руками (`docs/books/_clean/procedural-storytelling/principles.md:88` · K-R-119)
+- `procedural-storytelling:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/procedural-storytelling/principles.md:243`)
+- `procedural-storytelling:PAT-01` — Каскад от частного к общему (salience, most specific rule wins) (`docs/books/_clean/procedural-storytelling/patterns.md:5`)
+- `procedural-storytelling:PAT-01#нюанс` — нюанс к PAT-01 (`docs/books/_clean/procedural-storytelling/patterns.md:255`)
+- `procedural-storytelling:PAT-06` — Перемешанные проходные реплики (простой генератор) (`docs/books/_clean/procedural-storytelling/patterns.md:183` · K-R-119)
+- `procedural-storytelling:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/procedural-storytelling/patterns.md:271`)
+- `procedural-storytelling:RED-09` — Перемешанные {~…} в узлах с поворотом или финалом (`docs/books/_clean/procedural-storytelling/flags.md:28` · K-R-119)
+- `R-27` — Начинай каждую главу одним узлом с chapter и входи в главу только через него. Всё прошлое передавай через VAR . Первые 1–3 строки главы зависят от выборов… (`docs/playbook/rules.md:188` · K-R-27)
+- `R-118` — Не строй сюжет на картинке и на функциях, которых движок не умеет: photo — заглушка с подписью, а список «Чего движок пока НЕ умеет» из промпта не используй. (`docs/playbook/rules.md:616` · K-R-118)
+
+## chapter-write/scene.md
+
+### TH-25 · сцена с «поэтому»: причинность при письме
+- `cron-wired-for-story:contra-7` — Только нужное или фактура мира? (`docs/books/_clean/cron-wired-for-story/for-relayer.md:116`)
+- `cron-wired-for-story:P-04` — Прогоняй каждый узел и каждую кнопку через тест «And so?» («и что?») (`docs/books/_clean/cron-wired-for-story/principles.md:50` · K-R-29)
+- `cron-wired-for-story:P-04#нюанс` — нюанс к P-04 (`docs/books/_clean/cron-wired-for-story/principles.md:278`)
+- `cron-wired-for-story:P-09` — Сцепляй сцены через «поэтому», а не через «потом» (`docs/books/_clean/cron-wired-for-story/principles.md:104` · K-R-27)
+- `cron-wired-for-story:P-09#нюанс` — нюанс к P-09 (`docs/books/_clean/cron-wired-for-story/principles.md:281`)
+- `cron-wired-for-story:PAT-03` — Сцепка «поэтому» на стыке глав (`docs/books/_clean/cron-wired-for-story/patterns.md:78`)
+- `cron-wired-for-story:PAT-09` — Узел «план → перемена» (сцена по Крон в одном узле ink) (`docs/books/_clean/cron-wired-for-story/patterns.md:259` · K-R-29)
+- `cron-wired-for-story:RED-05` — Кнопки развилки не меняют ни ветку, ни переменную, ни ответ, который запомнят (`docs/books/_clean/cron-wired-for-story/flags.md:25` · K-R-29)
+- `cron-wired-for-story:RED-21` — Деталь без одной из четырёх функций (последствие, стратегия, борьба, ясность мира) (`docs/books/_clean/cron-wired-for-story/flags.md:73`)
+- `cron-wired-for-story:SYS-2` — S-2. Ядро истории до сюжета (метод Story Genius , развитие идей книги) (`docs/books/_clean/cron-wired-for-story/principles.md:233`)
+- `cron-wired-for-story:SYS-3` — S-3. Деталь должна работать (тест «And so?» на уровне детали) (`docs/books/_clean/cron-wired-for-story/principles.md:245`)
+- `edgerton-hooked:P-11` — Покажи место одним штрихом, который работает на сюжет (`docs/books/_clean/edgerton-hooked/principles.md:97`)
+- `edgerton-hooked:P-11#нюанс` — нюанс к P-11 (`docs/books/_clean/edgerton-hooked/principles.md:193`)
+- `maass-fire-in-fiction:contra-2` — Вырежи сцену без поворота ( P-07 ) · messenger-genre:P-11 (мир, который не двигает сюжет, в дозе),… (`docs/books/_clean/maass-fire-in-fiction/for-relayer.md:110`)
+- `maass-fire-in-fiction:P-07` — Найди в каждом узле поворот или вырежи узел (`docs/books/_clean/maass-fire-in-fiction/principles.md:74` · K-R-29)
+- `maass-fire-in-fiction:P-07#нюанс` — нюанс к P-07 (`docs/books/_clean/maass-fire-in-fiction/principles.md:241`)
+- `maass-fire-in-fiction:P-08` — Давай сцене цель и сталкивай знаки «получится» и «нет» (`docs/books/_clean/maass-fire-in-fiction/principles.md:81`)
+- `maass-fire-in-fiction:RED-05` — Узел без поворота: ничего не меняется ни снаружи, ни в собеседнике (`docs/books/_clean/maass-fire-in-fiction/flags.md:25` · K-R-29)
+- `maass-fire-in-fiction:RED-14` — Первое сообщение после паузы ≥ 6h — приветствие без новости (`docs/books/_clean/maass-fire-in-fiction/flags.md:34` · K-R-29)
+- `maass-fire-in-fiction:RED-16` — Контакт три узла подряд выдаёт одну и ту же пару чувств (`docs/books/_clean/maass-fire-in-fiction/flags.md:36` · K-R-29)
+- `mckee-story:GREEN-01` — Над узлом-сценой можно написать // ценность: X, + → − и это правда (`docs/books/_clean/mckee-story/flags.md:9` · K-R-29)
+- `mckee-story:GREEN-04` — Соседние сцены главы заканчиваются разными знаками (`docs/books/_clean/mckee-story/flags.md:12` · K-R-29)
+- `mckee-story:LESSON-04` — Не опускай сцены подряд в одну сторону (`docs/books/_clean/mckee-story/lessons.md:41` · K-R-29)
+- `mckee-story:RED-02` — Узел-не-событие (nonevent): реплики есть, ценность не меняется (`docs/books/_clean/mckee-story/flags.md:22` · K-R-29)
+- `mckee-story:RED-07` — Три и больше сцен подряд с одним знаком (`docs/books/_clean/mckee-story/flags.md:27` · K-R-29)
+- `mckee-story:RED-15` — Пауза ≥ 1 ч стоит после сцены без поворота или после реплики-согласия (`docs/books/_clean/mckee-story/flags.md:35`)
+- `schell-art-of-game-design:LESSON-11` — Передышку делать длиннее пика и включать только после спада (`docs/books/_clean/schell-art-of-game-design/lessons.md:88` · K-R-29)
+- `schell-art-of-game-design:RED-12` — Три и больше узла-угрозы подряд без разрядки (`docs/books/_clean/schell-art-of-game-design/flags.md:33` · K-R-29)
+- `skolnick-video-game-storytelling:P-01` — Строй каждую сцену на столкновении желаний (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:14` · K-R-02)
+- `skolnick-video-game-storytelling:P-01#нюанс` — нюанс к P-01 (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:198`)
+- `snyder-save-the-cat:P-16` — Меняй заряд в каждой сцене и держи в ней конфликт (`docs/books/_clean/snyder-save-the-cat/principles.md:136` · K-R-29)
+- `snyder-save-the-cat:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/snyder-save-the-cat/principles.md:300`)
+- `snyder-save-the-cat:PAT-04` — Доска: четыре ряда карточек-узлов (The Board) (`docs/books/_clean/snyder-save-the-cat/patterns.md:98` · K-R-29)
+- `snyder-save-the-cat:PAT-04#нюанс` — нюанс к PAT-04 (`docs/books/_clean/snyder-save-the-cat/patterns.md:336`)
+- `snyder-save-the-cat:RED-06` — Три узла подряд без смены заряда (или без маркера // ± ) (`docs/books/_clean/snyder-save-the-cat/flags.md:27` · K-R-29)
+- `vogler-writers-journey:P-16` — Включай трикстера, когда три сцены подряд идут на одной ноте (`docs/books/_clean/vogler-writers-journey/principles.md:124` · K-R-29)
+- `vogler-writers-journey:P-16#нюанс` — нюанс к P-16 (`docs/books/_clean/vogler-writers-journey/principles.md:212`)
+- `yorke-into-the-woods:RED-05` — Узел без перемены: ни ~ , ни unlock / rename / photo , ни развилки в разные узлы (`docs/books/_clean/yorke-into-the-woods/flags.md:24` · K-R-29)
+- `yorke-into-the-woods:SYS-2` — Система 2. Сцена как маленькая история (фрактальность) (`docs/books/_clean/yorke-into-the-woods/patterns.md:342`)

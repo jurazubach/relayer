@@ -1,6 +1,6 @@
 import { test, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { DEMO_PATH, FIXTURE, FIXTURE_PATH, fixtureOnHome } from './fixture';
+import { DEMO_PATH, FIXTURE, FIXTURE_PATH, FRESH, fixtureOnHome } from './fixture';
 
 /**
  * Не проверка, а съёмка: кладёт скриншоты в screenshots/<устройство>/,
@@ -15,6 +15,11 @@ const shot = (page: Page, name: string) =>
 
 // тег @shots: npm run test:e2e гоняет все спеки, кроме этого (--grep-invert @shots)
 test('снимки экранов', { tag: '@shots' }, async ({ page }) => {
+  // каталог, каким его видит игрок: без загрузок и без скрытых историй (hidden: true)
+  await page.goto(FRESH);
+  await page.waitForTimeout(400);
+  await shot(page, '0-home-catalog');
+
   await fixtureOnHome(page);
   await page.waitForTimeout(400);
   await shot(page, '1-home');

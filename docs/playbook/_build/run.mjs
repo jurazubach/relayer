@@ -35,7 +35,8 @@ const MAX_ATTEMPTS = 3;
 const WAVES = ['w0-foundation', 'w1-slice', 'w2-diagnosis', 'w3-repair', 'w4-creation', 'w5-release', 'w6-final'];
 // общие файлы правят многие задачи — их пересечение не мешает параллельности, конфликты решает слияние
 const SHARED = ['package.json', 'CLAUDE.md', 'README.md', '.gitignore', 'docs/capabilities.json', 'docs/lab/journal.md', 'docs/playbook/local-lessons.md'];
-const LIMIT_RE = /usage limit|rate[ _-]?limit|limit reached|quota|overloaded_error|credit balance|5-hour limit/i;
+// без голого rate_limit: событие rate_limit_event с allowed_warning идёт в каждом потоке и не значит упор
+const LIMIT_RE = /usage limit|rate limit exceeded|rate_limit_error|limit reached|quota exceeded|overloaded_error|credit balance|5-hour limit|weekly limit|out of extra usage/i;
 const COAUTHOR = 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>';
 
 mkdirSync(LOGS, { recursive: true });
@@ -70,13 +71,19 @@ function inbox(id, text) {
 
 function sh(cmd, cwd, { env = {}, timeoutMs = 60 * 60 * 1000, log } = {}) {
   return new Promise((res) => {
-    const child = spawn('/bin/bash', ['-c', cmd], { cwd, env: { ...process.env, ...env } });
+    // своя группа процессов: по таймауту убиваем и внуков (node под npm), иначе они доживают и код теряется
+    const child = spawn('/bin/bash', ['-c', cmd], { cwd, env: { ...process.env, ...env }, detached: true });
     let out = '';
     const onData = (b) => { out += b.toString(); if (log) appendFileSync(log, b); };
     child.stdout.on('data', onData);
     child.stderr.on('data', onData);
-    const timer = setTimeout(() => { out += `\n[таймаут ${Math.round(timeoutMs / 60000)} мин]`; child.kill('SIGKILL'); }, timeoutMs);
-    child.on('close', (code) => { clearTimeout(timer); res({ code: code ?? 1, out }); });
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; try { process.kill(-child.pid, 'SIGKILL'); } catch { child.kill('SIGKILL'); } }, timeoutMs);
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      if (timedOut) { const mark = `\n[таймаут ${Math.round(timeoutMs / 60000)} мин]\n`; out += mark; if (log) appendFileSync(log, mark); }
+      res({ code: code ?? 1, out });
+    });
   });
 }
 const git = (a, cwd = ROOT) => sh(`git ${a}`, cwd, { timeoutMs: 5 * 60 * 1000 });
@@ -85,6 +92,16 @@ const git = (a, cwd = ROOT) => sh(`git ${a}`, cwd, { timeoutMs: 5 * 60 * 1000 })
 function lock() { let p = Promise.resolve(); return (fn) => { const r = p.then(fn, fn); p = r.catch(() => {}); return r; }; }
 const gitLock = lock();
 const e2eLock = lock();
+// живые прогоны claude -p (срабатывание, мутанты) порт не делят — их ограничивает только нагрузка на API
+function sem(n) {
+  let active = 0; const q = [];
+  return (fn) => new Promise((res, rej) => {
+    const go = () => { active++; Promise.resolve().then(fn).then(res, rej).finally(() => { active--; if (q.length) q.shift()(); }); };
+    if (active < n) go(); else q.push(go);
+  });
+}
+const llmLock = sem(3);
+const LIVE_RE = /lab:triggers|skills:test -- --skill|skills:test --skill/;
 
 let limited = false;
 function runAgent(prompt, cwd, logName, timeoutMin) {
@@ -203,9 +220,13 @@ async function accept(task, dir, tag) {
   const log = join(LOGS, `${task.id}.accept.${tag}.log`);
   writeFileSync(log, '');
   for (const cmd of task.accept) {
+    // экономный режим (решение автора 26.10): живые прогоны — только после сборки; ревью и сверка меряют их сами при нужде
+    if (LIVE_RE.test(cmd) && /^(review|align|merge)/.test(tag)) { appendFileSync(log, `\n$ ${cmd}\n(пропущено: живой прогон на шаге ${tag})\n`); continue; }
     appendFileSync(log, `\n$ ${cmd}\n`);
-    const run = () => sh(cmd, dir, { env: { HEADLESS: '1', CI: '1' }, timeoutMs: 40 * 60 * 1000, log });
-    const r = /test:e2e|lab:triggers|skills:test/.test(cmd) ? await e2eLock(run) : await run();
+    // полный тест срабатывания на итоге волны идёт дольше 40 минут — ему таймаут задачи
+    const long = /lab:triggers/.test(cmd) && !/--skill/.test(cmd);
+    const run = () => sh(cmd, dir, { env: { HEADLESS: '1', CI: '1' }, timeoutMs: (long ? (task.timeoutMin ?? 120) : 40) * 60 * 1000, log });
+    const r = /test:e2e/.test(cmd) ? await e2eLock(run) : /lab:triggers|skills:test/.test(cmd) ? await llmLock(run) : await run();
     if (r.code !== 0) return { ok: false, cmd, out: r.out.slice(-6000) };
   }
   return { ok: true };

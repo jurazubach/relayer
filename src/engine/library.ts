@@ -1,5 +1,6 @@
 import { parseStoryFile } from './bundle';
 import { plural, type Mode } from './engine';
+import { FLAGS } from './flags';
 import { readProgress, type Progress } from './progress';
 import type { Story, StoryFile } from './story';
 import { readUploads, removeUpload, saveUpload } from './uploads';
@@ -57,9 +58,19 @@ export function allStories(uploads: Story[] = readUploads()): Story[] {
   return [...BUILTIN, ...uploads.filter((s) => !isBuiltin(s.id))];
 }
 
+/**
+ * Что видит игрок на главном: без историй с hidden: true. Скрытые не удалены — их читают
+ * команды story:*, а в игре они открываются по ?story=<id>; ?all=1 возвращает их на главный.
+ */
+export function catalogStories(stories: Story[], all: boolean = FLAGS.all): Story[] {
+  return all ? stories : stories.filter((s) => !s.hidden);
+}
+
 export function findStory(id: string, uploads: Story[] = readUploads()): Story | undefined {
   return allStories(uploads).find((s) => s.id === id);
 }
+
+export const isHidden = (id: string, all: boolean = FLAGS.all) => !all && !!findStory(id)?.hidden;
 
 export type AddResult = { story: Story } | { error: string };
 
