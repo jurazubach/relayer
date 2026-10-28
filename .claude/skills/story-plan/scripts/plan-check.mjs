@@ -152,9 +152,8 @@ export async function measure(ref, { runs = T.value('bot.runs'), time = true, fr
   if (free) {
     try {
       const lint = await lintStory(story, T, { only: ['C-39'], runs, seed: 1 });
-      const tree = parseStory(story);
-      const inCh = new Set(tree.knots.filter((k) => k.chapter === free).map((k) => k.id));
-      const miss = lint.findings.filter((f) => /без крючка/.test(f.message) && (inCh.has(f.node) || new RegExp(`глава ${free}\\b`).test(f.message)));
+      // C-39 (а): глава закрыта без крючка — находка с ключом C-39.end_hook и номером закрытой главы
+      const miss = lint.findings.filter((f) => f.key === 'C-39.end_hook' && f.chapter === free);
       m.free = { after: free, hook: !miss.length, message: miss[0]?.message ?? null };
     } catch { m.errors.push('нет данных: story:lint --only C-39'); }
   }
