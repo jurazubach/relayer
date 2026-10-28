@@ -15,7 +15,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-compare.mjs (--story <id> |
   готовность    plan-check: формат, check:story, ошибки story:lint --plan
   финалы        число по меткам, доли, перекос (C-40.dominant_share), редкие (C-40.rare_share)
   финал первым  переменные финала копятся до последней главы (skill.plan.final_vars.min_share)
-  хребет, река  skill.plan.spine.min_share, skill.plan.river
+  хребет, река  skill.plan.spine.min_share и max_share, skill.plan.river
   развилки      дорогие против skill.plan.branches (на историю и на главу)
   говорящие     сколько контактов пишут в главе 1 и в самой людной главе
   время         реальное (story.length.target_h, story.length.max_h) и по клику; тёмная ночь (skill.plan.dark_night_h)
@@ -70,7 +70,7 @@ const metric = (r) => {
     'lint: ошибок · предупр.': `${lint.filter((x) => x.level === 'error').length} · ${lint.filter((x) => x.level === 'warning').length}`,
     'финалы': m.endings ? `${m.endings.list.filter((x) => x.declared).length}: ${m.endings.list.map((x) => `${pct(x.share)}${x.dominant ? '!' : x.rare ? '?' : ''}`).join('/')}` : '—',
     'финал первым': dec.length ? `${dec.filter((x) => !x.low).length} из ${dec.length} копятся${dec.some((x) => x.low) ? ' ⚠' : ''}` : (m.final_vars?.length ? 'только кнопка' : '—'),
-    'хребет': m.spine ? `${pct(m.spine.share)}${m.spine.low ? ' ⚠' : ''}` : '—',
+    'хребет': m.spine ? `${pct(m.spine.share)}${m.spine.low ? ' ⚠' : m.spine.high ? ' коридор?' : ''}` : '—',
     'редкие узлы': m.river ? `${pct(m.river.share)}${m.river.high ? ' ⚠' : ''}` : '—',
     'дорогие развилки': m.branches ? `${m.branches.total} (${bd.min}–${bd.max})${m.branches.over ? ' ⚠' : ''}${m.branches.over_chapters.length ? ` гл.${m.branches.over_chapters.join(',')}⚠` : ''}` : '—',
     'говорят: гл.1 · максимум': m.contacts ? `${(m.contacts[1] ?? []).length} · ${busiest}` : '—',

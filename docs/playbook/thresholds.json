@@ -9627,6 +9627,24 @@
       }
     ]
   },
+  "skill.plan.spine.max_share": {
+    "value": 0.6,
+    "unit": "доля узлов, через которые проходят все прогоны бота",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "ashwell-standard-patterns:RED-01: больше 60% узлов на 100% и мало настоящих развилок — коридор с сортировкой в конце"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён на ревью: верхняя граница хребта в plan-check.mjs (коридор), раньше число стояло в тексте flags.md"
+      }
+    ]
+  },
   "skill.plan.spine.events": {
     "value": {
       "short": 3,

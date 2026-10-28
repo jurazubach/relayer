@@ -23,7 +23,8 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-check.mjs (--story <id> | -
   бот           npm run check:story: тупики, недостижимые узлы, длина прохождения
   структура     npm run story:lint -- --plan: C-01…C-07, C-09…C-13, C-19, C-21, C-25, C-40, C-43, C-45, C-52, C-53
   финалы        npm run story:endings: доли, кто решает (C-40.dominant_share, C-40.rare_share)
-  хребет        доля узлов, которые проходят все прогоны (skill.plan.spine.min_share, bateman-game-writing:P-01)
+  хребет        доля узлов, которые проходят все прогоны: ниже skill.plan.spine.min_share — клубок
+                (bateman-game-writing:P-01), выше skill.plan.spine.max_share — коридор (ashwell-standard-patterns:RED-01)
   река          доля узлов кроме финалов, куда попадает меньше skill.plan.river.rare_visits прогонов
                 (skill.plan.river.max_rare_share, failbetter-qbn:P-06)
   развилки      дорогие (кнопки ведут в разные узлы, не в финалы) против skill.plan.branches: на историю и на главу
@@ -129,7 +130,7 @@ export async function measure(ref, { runs = T.value('bot.runs'), time = true, fr
     const spine = all.filter((n) => b.visits.get(n) === b.runs);
     const body = all.filter((n) => !endingNodes.has(n));
     const rare = body.filter((n) => b.visits.get(n) / b.runs < T.value('skill.plan.river').rare_visits);
-    m.spine = { share: all.length ? spine.length / all.length : 0, nodes: spine.length, total: all.length, low: all.length && spine.length / all.length < T.value('skill.plan.spine.min_share') };
+    m.spine = { share: all.length ? spine.length / all.length : 0, nodes: spine.length, total: all.length, low: all.length && spine.length / all.length < T.value('skill.plan.spine.min_share'), high: all.length && spine.length / all.length > T.value('skill.plan.spine.max_share') };
     m.river = { rare: rare.slice(0, 8), share: body.length ? rare.length / body.length : 0, high: body.length && rare.length / body.length > T.value('skill.plan.river').max_rare_share };
     const forks = expensiveForks(b.tree);
     const per = new Map();
@@ -195,7 +196,7 @@ if (isMain) {
     console.log(`     решают: ${m.endings.deciders.join(', ') || '— (без условий)'}${m.endings.distributors.length ? ` · распределитель ${m.endings.distributors.join(', ')}` : ''}`);
   }
   if (m.final_vars?.length) console.log(`   финал первым: ${m.final_vars.map((x) => (x.last_only ? `${x.name} — кнопка последней главы` : `${x.name} копится до последней главы в ${pct(x.share)}${x.low ? ' ⚠' : ''}`)).join(' · ')} (skill.plan.final_vars.min_share)`);
-  if (m.spine) console.log(`   хребет: ${m.spine.nodes} из ${m.spine.total} узлов видят все прогоны (${pct(m.spine.share)})${m.spine.low ? ' ⚠ меньше skill.plan.spine.min_share — клубок' : ''}`);
+  if (m.spine) console.log(`   хребет: ${m.spine.nodes} из ${m.spine.total} узлов видят все прогоны (${pct(m.spine.share)})${m.spine.low ? ' ⚠ меньше skill.plan.spine.min_share — клубок' : m.spine.high ? ` · больше skill.plan.spine.max_share — коридор, если дорогих развилок почти нет и переменные читает только финал (ashwell-standard-patterns:RED-01)` : ''}`);
   if (m.river) console.log(`   река: редких узлов ${pct(m.river.share)}${m.river.high ? ` ⚠ больше skill.plan.river.max_rare_share: ${m.river.rare.join(', ')}` : ''}`);
   if (m.branches) {
     const bd = T.value('skill.plan.branches');

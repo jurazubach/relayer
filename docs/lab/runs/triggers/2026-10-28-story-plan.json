@@ -1,0 +1,3426 @@
+{
+  "date": "2026-10-28T14:25:35.673Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.312",
+  "runs": 3,
+  "focus": "story-plan",
+  "file": null,
+  "group": [
+    "story-plan",
+    "story-endings",
+    "story-time",
+    "story-desk",
+    "story-brainstorm"
+  ],
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "seconds": 710,
+  "cost_usd": 1.8369968,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-brainstorm",
+      "story-desk",
+      "story-playtest",
+      "story-review",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "story-brainstorm",
+      "story-cast",
+      "story-choices",
+      "story-continuity",
+      "story-desk",
+      "story-endings",
+      "story-mystery",
+      "story-opening",
+      "story-pace",
+      "story-pauses",
+      "story-plan",
+      "story-playtest",
+      "story-review",
+      "story-time",
+      "story-voice"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 222,
+    "passed": 215,
+    "rate": 0.9684684684684685,
+    "errors": 0,
+    "denied": 6,
+    "failed_runs": 6
+  },
+  "skills": [
+    {
+      "skill": "story-brainstorm",
+      "expected": 44,
+      "hits": 43,
+      "foreign": 178,
+      "false": 4,
+      "bypass": 0,
+      "denied": 1,
+      "missed_to": {
+        "none": 1
+      },
+      "false_from": [
+        "Собери ядро: ставка, роль игрока, противник — задай мне вопросы с вариантами",
+        "Куда может свернуть сюжет после того, как сосед признаётся во лжи?"
+      ],
+      "hit_rate": 0.9772727272727273,
+      "false_rate": 0.02247191011235955
+    },
+    {
+      "skill": "story-cast",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-continuity",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 45,
+      "hits": 42,
+      "foreign": 177,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {
+        "none": 3
+      },
+      "false_from": [],
+      "hit_rate": 0.9333333333333333,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-endings",
+      "expected": 44,
+      "hits": 44,
+      "foreign": 178,
+      "false": 0,
+      "bypass": 0,
+      "denied": 1,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-mystery",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-opening",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pace",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pauses",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-plan",
+      "expected": 39,
+      "hits": 38,
+      "foreign": 183,
+      "false": 0,
+      "bypass": 2,
+      "denied": 0,
+      "missed_to": {
+        "story-time": 1
+      },
+      "false_from": [],
+      "hit_rate": 0.9743589743589743,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-playtest",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-review",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-time",
+      "expected": 44,
+      "hits": 42,
+      "foreign": 178,
+      "false": 1,
+      "bypass": 1,
+      "denied": 1,
+      "missed_to": {
+        "none": 2
+      },
+      "false_from": [
+        "Распиши паузы по главам: где длинные, где короткие, чтобы работало и по клику, и в реальном времени"
+      ],
+      "hit_rate": 0.9545454545454546,
+      "false_rate": 0.0056179775280898875
+    },
+    {
+      "skill": "story-voice",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 222,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    }
+  ],
+  "phrases": [
+    {
+      "text": "У меня есть идея: курьер находит в посылке чужой телефон. Что из этого может получиться?",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу историю про ночную смену в морге, но не знаю, с чего начать",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "накидай несколько разных вариантов, куда развернуть идею про соседа, который пишет из квартиры напротив",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Придумай мне сюжет для новой истории в мессенджере",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Есть смутная мысль: старый номер бабушки вдруг начинает отвечать. Какие тут могут быть направления?",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Ни один из вариантов не нравится, предложи что-то совсем другое",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Дай ещё варианты, эти три слишком похожи друг на друга",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "хочу сделать хоррор в чате, но идеи нет вообще — помоги придумать",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как из фразы «двое переписываются из-за ошибки в приложении знакомств» сделать историю? Покажи несколько разных подходов",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Возьми героя из второго варианта и мир из третьего — что получится?",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Покажи, как начиналась бы каждая из идей: пара сообщений и первая кнопка",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "grep -rlE 'Направлени[ея] [0-9А-Г]|логлайн' docs --include=*.md 2>/dev/null | grep -v books | head; ls /private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-S-plan/ 2>/dev/null",
+              "id": "toolu_01CJjRhJq9qv1UjoJr1McDjP",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (grep -rlE 'Направлени[ея] [0-9А-Г]|логлайн' docs --include=*.md 2>/dev/null | grep -v books | head; ls /private/tmp/cla…)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Придумай новую историю, непохожую на те, что уже есть в каталоге",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "positive",
+          "file": "story-brainstorm.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что сейчас с the-number, на каком мы шаге?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я неделю не открывал проект, напомни, где мы остановились",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Запиши решение: героиня не может уйти с острова, это теперь ядро",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Отложи идею с радиоэфиром из завтрашнего дня на потом, вдруг пригодится в другой истории",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Слушай, я передумал: пусть её напарник будет ей отцом, а не начальником. Что теперь придётся переделывать?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "После теста поменяли план — какие главы и документы теперь устарели?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Подруга хочет написать четвёртую главу, как нам вести историю вдвоём и не мешать друг другу?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня две истории в работе, переключись на slepoe-pyatno",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я отклонил замечание про длинный монолог в сцене шторма, зафиксируй, чтобы ревью его больше не поднимало",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Дописал последнюю главу, а первые две теперь выглядят беднее остальных — что с ними делать?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "покажи последние решения по истории и что у нас открытыми вопросами висит",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где у нас список отложенных идей по всем историям?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Финал решается скрытым порогом доверия, игрок не понимает, почему так вышло",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Почти все прохождения заканчиваются одним и тем же финалом, остальные никто не видит",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "В последней главе всё решает проверка переменных, а игрок ничего не выбирает — это нормально?",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Плохой финал получился в три строки, как наказание. Как сделать его полноценным?",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "После последней кнопки игрок ждёт эпилог полдня — это слишком долго?",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сколько финалов делать и как их разметить, чтобы бот их различал?",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал никак не вспоминает, что игрок делал по ходу истории, будто всё было зря",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу, чтобы перед финальной развилкой игрок понимал, хватит ли у него улик",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "концовка тянется: после решения ещё двадцать сообщений разбора",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь финалы в the-number",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как закончить историю, чтобы последнее сообщение перекликалось с первым?",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-endings"
+          ],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "grep -rniE \"рифм|перекличк|кольц|bookend|зеркал.{0,20}(перв|начал)|первое сообщение.{0,40}финал|финал.{0,60}перв(ое|ую|ой) (сообщ|реплик|сцен)\" docs/playbook docs/style.md .claude/skills/story-endings 2>/dev/null | head -40",
+              "id": "toolu_01MonyQrCnFnPhWZ6XDb3cmD",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (grep -rniE \"рифм|перекличк|кольц|bookend|зеркал.{0,20}(перв|начал)|первое сообщение.{0,40}финал|финал.{0,60}перв(ое|ую|…)"
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Один из финалов недостижим, бот туда ни разу не попал",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Героиня в конце спрашивает игрока «что мне делать?» — и на этом всё. Финал кажется слабым",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "positive",
+          "file": "story-endings.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Ядро готово, теперь разверни его в план: сколько глав, где развилки, где финалы",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сделай скелет истории до текста — по строке на сцену, с настоящими выборами",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как разложить историю по главам и в каком порядке их писать: с первой или с финала?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сравни два варианта плана числами, какой выбрать?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "граф получается почти линейный, хочу структуру поинтереснее ещё до того, как писать главы",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "ветки разрослись, текста уже на три истории — как это упорядочить на уровне плана?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где поставить платную границу в плане и на каком крючке?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Распиши паузы по главам: где длинные, где короткие, чтобы работало и по клику, и в реальном времени",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "В середине истории не хватает опоры, ревью сказало — нет поворота. Как вставить?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Спланируй главы под три задуманных финала: в каких главах копятся переменные и где развилка к финалам",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сколько глав и сцен нужно для истории на 20 минут?",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Тестеры прошли первые две главы — пора пересобрать план перед главами 3–5",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "positive",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Есть идея про метеостанцию, накидай несколько направлений",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал решает скрытая проверка, игрок не понимает, почему так вышло",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "История в реальном времени идёт четыре дня — это не слишком долго?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где мы сейчас с историей и что дальше по циклу?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Собери ядро: ставка, роль игрока, противник — задай мне вопросы с вариантами",
+      "checks": [
+        {
+          "expect": "!story-plan",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Напиши главу 2 начисто по плану",
+      "checks": [
+        {
+          "expect": "!story-plan",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [
+            "story-plan"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "grep -rn \"plan.md\\|skeleton.ink\" .claude/skills/story-plan/SKILL.md | head -5; find . -path ./node_modules -prune -o \\( -name 'plan.md' -o -name 'skeleton.ink' \\) -print 2>/dev/null | grep -v node_modules | head; git branch -a | head -30",
+              "id": "toolu_01LMwyEnKfqoB6tyKZGiXmmv",
+              "reason": "asyncAgent"
+            },
+            {
+              "tool": "Bash",
+              "command": "git -C /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-plan ls-files | grep -i -E \"plan\\.md|skeleton\\.ink\"",
+              "id": "toolu_01QirCrKuJf7pmVYjudFCRU9",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×2 (grep -rn \"plan.md\\|skeleton.ink\" .claude/skills/story-plan/SKILL.md | head -5; find . -path ./node_modules -prune -o \\(… · git -C /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-plan ls-files | grep -i -E \"plan\\.md|skeleton\\.ink\")"
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-plan",
+            "story-plan"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "find . -path ./node_modules -prune -o \\( -name 'plan*.md' -o -name 'skeleton*.ink' \\) -print | grep -v '.claude/skills' ; grep -n -i 'глав\\|chapter\\|начисто\\|clean' .claude/skills/story-plan/SKILL.md | head -40",
+              "id": "toolu_01UiFQkS7WFKexWH2RrBAxJP",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (find . -path ./node_modules -prune -o \\( -name 'plan*.md' -o -name 'skeleton*.ink' \\) -print | grep -v '.claude/skills'…)"
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-plan",
+            "story-plan"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Куда может свернуть сюжет после того, как сосед признаётся во лжи?",
+      "checks": [
+        {
+          "expect": "!story-plan",
+          "kind": "negative",
+          "file": "story-plan.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "for s in the-number chuzhoy-golos slepoe-pyatno; do echo \"== $s\"; node -e 'const m=require(\"./src/stories/'$s'/meta.json\");for(const c of m.characters)console.log(\"-\",c.id,\"|\",c.name,\"|\",(c.role||c.bio||\"\").slice(0,150))'; done; echo; sed -n 1,40p src/stories/the-number/ch04.ink",
+              "id": "toolu_01AeGvd7wRFfLWskB2VJDfGt",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (for s in the-number chuzhoy-golos slepoe-pyatno; do echo \"== $s\"; node -e 'const m=require(\"./src/stories/'$s'/meta.jso…)"
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Skill"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Персонаж перед уходом пишет «вернусь через час» — так нормально?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Если игрок не отвечает полдня, что делает героиня? Сколько раз ей напоминать о себе?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "А как эта глава будет читаться в режиме по клику?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что будет, если сообщение придёт игроку в три часа ночи?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Skill"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "grep -rniE \"night|ноч|quiet|getHours|23|07:00\" src/engine/*.ts docs/capabilities.json | grep -viE \"^\\s*$\" | head -40",
+              "id": "toolu_01CRTAPpDHL9YbNTbsGndvG2",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": null,
+          "invalid": "отказ в правах: Bash ×1 (grep -rniE \"night|ноч|quiet|getHours|23|07:00\" src/engine/*.ts docs/capabilities.json | grep -viE \"^\\s*$\" | head -40)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-time"
+          ],
+          "tools": [
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 3
+        }
+      ]
+    },
+    {
+      "text": "История идёт почти неделю, это не слишком долго? Сколько дней нормально?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "героиня пишет «доброе утро» через минуту после «спокойной ночи»",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Персонаж обижается, что игрок долго не отвечал, — это ок?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня в тексте «у тебя пять минут, иначе всё», а от времени ответа ничего не зависит",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "пауза на шесть часов без объяснения, тестер подумал что игра зависла",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь напоминания во второй главе: сколько раз героиня напомнит, если игрок молчит у кнопки?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "на карточке 30 минут, а по факту история идёт три дня — как посчитать честно?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Как проверить главу с паузами в реальном времени, не ожидая часами?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Можно ли герою писать ночью, если игрок наверняка спит?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "positive",
+          "file": "story-time.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня есть идея: девушка находит чужой телефон в такси. Что из этого может выйти?",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Накидай пару направлений для истории про ночную смену на метеостанции",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-brainstorm",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что сейчас с историей, на каком мы шаге и что дальше?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я вернулся через неделю, напомни, на чём остановились",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал решается скрытой проверкой, игрок не понимает, почему так вышло",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Персонаж пишет «буду через два часа» — так можно?",
+      "checks": [
+        {
+          "expect": "story-time",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-time",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сделай скелет истории на пять глав",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "routing",
+          "file": "_routing.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-plan",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [
+    {
+      "phrase": "Покажи, как начиналась бы каждая из идей: пара сообщений и первая кнопка",
+      "run": 2,
+      "tool": "Bash",
+      "command": "grep -rlE 'Направлени[ея] [0-9А-Г]|логлайн' docs --include=*.md 2>/dev/null | grep -v books | head; ls /private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-S-plan/ 2>/dev/null",
+      "blocking": true
+    },
+    {
+      "phrase": "Как закончить историю, чтобы последнее сообщение перекликалось с первым?",
+      "run": 2,
+      "tool": "Bash",
+      "command": "grep -rniE \"рифм|перекличк|кольц|bookend|зеркал.{0,20}(перв|начал)|первое сообщение.{0,40}финал|финал.{0,60}перв(ое|ую|ой) (сообщ|реплик|сцен)\" docs/playbook docs/style.md .claude/skills/story-endings 2>/dev/null | head -40",
+      "blocking": true
+    },
+    {
+      "phrase": "Напиши главу 2 начисто по плану",
+      "run": 1,
+      "tool": "Bash",
+      "command": "grep -rn \"plan.md\\|skeleton.ink\" .claude/skills/story-plan/SKILL.md | head -5; find . -path ./node_modules -prune -o \\( -name 'plan.md' -o -name 'skeleton.ink' \\) -print 2>/dev/null | grep -v node_modules | head; git branch -a | head -30",
+      "blocking": true
+    },
+    {
+      "phrase": "Напиши главу 2 начисто по плану",
+      "run": 1,
+      "tool": "Bash",
+      "command": "git -C /Users/y.zubach/dev/jurazubach/relayer/.worktrees/S-plan ls-files | grep -i -E \"plan\\.md|skeleton\\.ink\"",
+      "blocking": true
+    },
+    {
+      "phrase": "Напиши главу 2 начисто по плану",
+      "run": 2,
+      "tool": "Bash",
+      "command": "find . -path ./node_modules -prune -o \\( -name 'plan*.md' -o -name 'skeleton*.ink' \\) -print | grep -v '.claude/skills' ; grep -n -i 'глав\\|chapter\\|начисто\\|clean' .claude/skills/story-plan/SKILL.md | head -40",
+      "blocking": true
+    },
+    {
+      "phrase": "Куда может свернуть сюжет после того, как сосед признаётся во лжи?",
+      "run": 1,
+      "tool": "Bash",
+      "command": "for s in the-number chuzhoy-golos slepoe-pyatno; do echo \"== $s\"; node -e 'const m=require(\"./src/stories/'$s'/meta.json\");for(const c of m.characters)console.log(\"-\",c.id,\"|\",c.name,\"|\",(c.role||c.bio||\"\").slice(0,150))'; done; echo; sed -n 1,40p src/stories/the-number/ch04.ink",
+      "blocking": true
+    },
+    {
+      "phrase": "Что будет, если сообщение придёт игроку в три часа ночи?",
+      "run": 1,
+      "tool": "Bash",
+      "command": "grep -rniE \"night|ноч|quiet|getHours|23|07:00\" src/engine/*.ts docs/capabilities.json | grep -viE \"^\\s*$\" | head -40",
+      "blocking": true
+    }
+  ],
+  "skipped": [],
+  "fails": [],
+  "ok": true
+}

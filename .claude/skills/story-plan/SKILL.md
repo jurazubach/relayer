@@ -34,7 +34,7 @@ metadata:
 
 1. **Состояние.** `npm run story:status -- --all`, затем прочитай `docs/stories/<id>/STATUS.md` и `decisions.md`.
    Историю не угадывай — спроси. Нет ядра D-NN — сначала `story-core`. Шаг дальше `skeleton` — скажи, что новая
-   версия плана устареет главы (`story-desk`).
+   версия плана сделает написанные главы устаревшими (`story-desk`).
 2. **Рамка.** Длина по клику и в днях, жанр, роль игрока — из ядра. Объём опор и глав по длине —
    [references/beats.md](references/beats.md) (R-10); какая структура — [references/decisions-structure.md](references/decisions-structure.md).
 3. **Финалы первым.** Строкой «этот финал получает игрок, который…» и переменные, которые финал читает:
