@@ -3,6 +3,7 @@
 // строк совпадают с ней; текст правила R/C/A — у `npm run story:rule`, здесь только ссылка.
 import { buildMatrix } from '../../../../scripts/kb/coverage.mjs';
 import { plain } from '../../../../scripts/kb/kb-rows.mjs';
+import { loadThresholds } from '../../../../scripts/lib/thresholds.mjs';
 
 const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/kb-search.mjs <запрос> [--kind P,PAT,…] [--alias <алиас>] [--owner <скилл>]
                                                       [--full] [--limit N] [--json]
@@ -23,7 +24,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/kb-search.mjs <запрос> [--
   --alias    только один разбор
   --owner    только строки, которыми владеет скилл
   --full     полный текст строки (по умолчанию — суть в одну строку)
-  --limit N  сколько строк показать (по умолчанию 15)
+  --limit N  сколько строк показать (по умолчанию skill.kb.search.limit)
   --json     всё данными
   --help     эта справка`;
 
@@ -37,7 +38,7 @@ const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : nu
 const query = args.filter((a, i) => !a.startsWith('--') && !VALUE_FLAGS.includes(args[i - 1])).join(' ').trim();
 const full = args.includes('--full');
 const asJson = args.includes('--json');
-const limit = Number(opt('--limit') ?? 15);
+const limit = Number(opt('--limit') ?? loadThresholds().value('skill.kb.search.limit'));
 
 let res;
 try {

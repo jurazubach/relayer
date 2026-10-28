@@ -9825,5 +9825,81 @@
         "change": "заведён: приём есть в стольких поздних главах и нет в ранних — повод переписать ранние"
       }
     ]
+  },
+  "skill.kb.mentor.advice_max": {
+    "value": 3,
+    "unit": "советов",
+    "op": ">",
+    "level": "warning",
+    "basis": "our_estimate",
+    "sources": [
+      "nicklin-writing-for-games:SYS-1 (критический отклик: поток советов автор перестаёт слушать)",
+      "story-kb/references/systems/scene-review.md, стадия 4"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-kb (сверка)",
+        "change": "заведён: советов в разборе сцены наставником (было числом в тексте story-kb)"
+      }
+    ]
+  },
+  "skill.kb.mentor.advice_options": {
+    "value": 2,
+    "unit": "варианта",
+    "op": "<",
+    "level": "warning",
+    "basis": "our_estimate",
+    "sources": [
+      "INTENT.md: ИИ обязан предлагать варианты и объяснять"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-kb (сверка)",
+        "change": "заведён: вариантов у каждого совета наставника (было числом в тексте story-kb)"
+      }
+    ]
+  },
+  "skill.kb.search.limit": {
+    "value": 15,
+    "unit": "строк",
+    "op": ">",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "story-kb/scripts/kb-search.mjs: строк в выводе по умолчанию"
+    ],
+    "checks": [
+      "story-kb/scripts/kb-search.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-kb (сверка)",
+        "change": "заведён: было числом по умолчанию в kb-search.mjs"
+      }
+    ]
+  },
+  "skill.kb.search.narrow_over": {
+    "value": 30,
+    "unit": "строк",
+    "op": ">",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "story-kb/references/decisions-kb.md: когда сужать поиск"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-kb (сверка)",
+        "change": "заведён: было числом в decisions-kb.md"
+      }
+    ]
   }
 }
