@@ -26,8 +26,11 @@ const ROOT = resolve(PIPE, '..', '..', '..');
 const RT = process.env.BUILD_RT ? resolve(process.env.BUILD_RT) : join(PIPE, 'runtime');
 const LOGS = join(RT, 'logs');
 const WT = join(ROOT, '.worktrees');
-const MAIN_BRANCH = process.env.BUILD_MAIN || 'build/main';
-const MAIN_WT = join(WT, MAIN_BRANCH === 'build/main' ? '_main' : '_' + MAIN_BRANCH.replace(/\W+/g, '-'));
+// решение автора 28.10: результат идёт сразу в master (рабочая копия — корень репозитория), без ветки build/main
+const MAIN_BRANCH = process.env.BUILD_MAIN || 'master';
+const MAIN_WT = MAIN_BRANCH === 'master' ? ROOT : join(WT, MAIN_BRANCH === 'build/main' ? '_main' : '_' + MAIN_BRANCH.replace(/\W+/g, '-'));
+// после каждого слияния в master — пуш (деплой на Pages); BUILD_PUSH=0 выключает
+const PUSH = MAIN_BRANCH === 'master' && process.env.BUILD_PUSH !== '0';
 const TASKS = process.env.BUILD_TASKS ? resolve(process.env.BUILD_TASKS) : join(PIPE, 'tasks.json');
 const MODEL = 'claude-opus-5-5';
 const IDLE_MS = 25 * 60 * 1000;
@@ -145,7 +148,7 @@ async function ensureMain() {
       if (t.code !== 0) event(`⚠ тег stories-v1 не создан: ${t.out.trim().slice(0, 200)}`);
     }
     if ((await git(`rev-parse --verify --quiet refs/heads/${MAIN_BRANCH}`)).code !== 0) await git(`branch ${MAIN_BRANCH} ${process.env.BUILD_BASE || 'master'}`);
-    if (!existsSync(MAIN_WT)) {
+    if (MAIN_WT !== ROOT && !existsSync(MAIN_WT)) {
       mkdirSync(WT, { recursive: true });
       const r = await git(`worktree add "${MAIN_WT}" ${MAIN_BRANCH}`);
       if (r.code !== 0) throw new Error('не удалось создать worktree build/main:\n' + r.out);
@@ -158,7 +161,12 @@ function linkModules(dir) {
   if (!existsSync(target) && existsSync(join(ROOT, 'node_modules'))) symlinkSync(join(ROOT, 'node_modules'), target, 'dir');
 }
 const wtPath = (id) => join(WT, id);
-const branch = (id) => `${MAIN_BRANCH === 'build/main' ? 'build/t' : MAIN_BRANCH + '-t'}/${id}`;
+const branch = (id) => `${MAIN_BRANCH === 'build/main' || MAIN_BRANCH === 'master' ? 'build/t' : MAIN_BRANCH + '-t'}/${id}`;
+async function publish(what) {
+  if (!PUSH) return;
+  const r = await gitLock(() => git('push origin master'));
+  event(r.code === 0 ? `⬆ master запушен (${what})` : `⚠ push master не прошёл (${what}): ${r.out.trim().slice(-200)}`);
+}
 
 async function ensureTaskWorktree(id) {
   return gitLock(async () => {
@@ -329,6 +337,8 @@ async function runTask(task) {
   saveState();
   event(`✓ ${task.id} готово · ${task.title}${v2.startsWith('drift-minor') ? ' (мелкий дрейф поправлен)' : ''}`);
   await gitLock(() => git(`worktree remove --force "${wt.dir}"`));
+  await gitLock(() => git(`branch -D ${branch(task.id)}`));
+  await publish(task.id);
 }
 
 async function merge(task, dir) {
@@ -362,6 +372,7 @@ async function runCheckpoint(task) {
   const r = await runAgent(fill(tpl, task) + extra, MAIN_WT, `${task.id}.checkpoint.${s.attempts}.log`, task.timeoutMin ?? 90);
   if (r.limit) return pauseForLimit(task);
   await commitAll(MAIN_WT, `${task.id}: итог волны ${task.wave}`);
+  await publish(task.id);
   const v = verdict(join(MAIN_WT, 'docs/playbook/_build/reports', task.id, 'checkpoint.md')) ?? '?';
   s.status = 'done';
   s.verdict = v;

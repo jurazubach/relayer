@@ -10,7 +10,7 @@
 - `docs/playbook/build-plan.md` — принципы (§1), контракты (§4, §6), раздел задачи;
 - `docs/playbook/superseded.md`, если есть;
 - отчёты `{{report_dir}}/build.md` и `review.md`;
-- дифф `git diff build/main...HEAD`.
+- дифф `git diff master...HEAD`.
 
 # Что проверить
 

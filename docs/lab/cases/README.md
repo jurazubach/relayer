@@ -6,7 +6,7 @@
 
 | история | файл | записей | строк |
 |---|---|---|---|
-| Векскомб · Чужой голос | [chuzhoy-golos.md](chuzhoy-golos.md) | 1216 | 3435 |
+| Векскомб · Чужой голос | [chuzhoy-golos.md](chuzhoy-golos.md) | 1212 | 3425 |
 | 01:42 · Слепое пятно | [slepoe-pyatno.md](slepoe-pyatno.md) | 157 | 552 |
 | THE NUMBER | [the-number.md](the-number.md) | 267 | 900 |
 
@@ -30,21 +30,21 @@
 | inkle-ingold | 109 | 53 | 1 | 0 |
 | maass-fire-in-fiction | 48 | 13 | 1 | 0 |
 | mckee-story | 78 | 30 | 1 | 0 |
-| meaningful-choice | 167 | 40 | 2 | 1 |
+| meaningful-choice | 166 | 40 | 2 | 1 |
 | messenger-genre | 48 | 8 | 1 | 0 |
 | mobile-interactive-stories | 95 | 10 | 1 | 1 |
 | mystery-fair-play | 236 | 15 | 1 | 0 |
 | narrative-postmortems | 53 | 24 | 1 | 0 |
-| narrative-testing | 99 | 41 | 1 | 0 |
+| narrative-testing | 98 | 41 | 1 | 0 |
 | nicklin-writing-for-games | 59 | 34 | 1 | 0 |
 | procedural-storytelling | 16 | 20 | 1 | 1 |
 | schell-art-of-game-design | 248 | 18 | 1 | 0 |
 | serial-hooks | 193 | 19 | 1 | 0 |
-| sheldon-character-storytelling | 78 | 20 | 1 | 1 |
-| skolnick-video-game-storytelling | 174 | 10 | 1 | 1 |
+| sheldon-character-storytelling | 78 | 19 | 1 | 1 |
+| skolnick-video-game-storytelling | 167 | 10 | 1 | 1 |
 | snyder-save-the-cat | 134 | 20 | 1 | 0 |
 | truby-anatomy-of-story | 109 | 6 | 1 | 0 |
 | video-three-things | 105 | 71 | 2 | 0 |
 | vogler-writers-journey | 21 | 12 | 1 | 1 |
 | yorke-into-the-woods | 112 | 14 | 2 | 0 |
-| **всего** | **3891** | **732** | **34** | **7** |
+| **всего** | **3882** | **731** | **34** | **7** |
