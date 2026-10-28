@@ -1,10 +1,10 @@
 {
-  "date": "2026-10-28T13:42:53.248Z",
+  "date": "2026-10-28T13:39:51.474Z",
   "model": "claude-opus-5-5",
   "claude_code": "2.1.312",
   "runs": 3,
   "focus": null,
-  "file": "docs/lab/triggers/story-branch.json",
+  "file": "docs/lab/triggers/story-core.json",
   "group": null,
   "thresholds": {
     "lab.triggers.runs_per_phrase": 5,
@@ -29,13 +29,12 @@
       "lab.denials.max_invalid_share": "thresholds.json"
     }
   },
-  "seconds": 87,
-  "cost_usd": null,
+  "seconds": 99,
+  "cost_usd": 0.34869000000000006,
   "env": {
     "skills": [
       "skill-budget-audit",
       "story-brainstorm",
-      "story-branch",
       "story-desk",
       "story-fix",
       "story-playtest",
@@ -66,10 +65,10 @@
     ],
     "project": [
       "story-brainstorm",
-      "story-branch",
       "story-cast",
       "story-choices",
       "story-continuity",
+      "story-core",
       "story-desk",
       "story-endings",
       "story-fix",
@@ -85,19 +84,19 @@
     "warnings": []
   },
   "summary": {
-    "checks": 54,
-    "passed": 54,
+    "checks": 57,
+    "passed": 57,
     "rate": 1,
     "errors": 0,
-    "denied": 0,
-    "failed_runs": 0
+    "denied": 3,
+    "failed_runs": 3
   },
   "skills": [
     {
       "skill": "story-brainstorm",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -107,23 +106,10 @@
       "false_rate": 0
     },
     {
-      "skill": "story-branch",
-      "expected": 36,
-      "hits": 36,
-      "foreign": 18,
-      "false": 0,
-      "bypass": 0,
-      "denied": 0,
-      "missed_to": {},
-      "false_from": [],
-      "hit_rate": 1,
-      "false_rate": 0
-    },
-    {
       "skill": "story-cast",
       "expected": 3,
       "hits": 3,
-      "foreign": 51,
+      "foreign": 54,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -134,22 +120,9 @@
     },
     {
       "skill": "story-choices",
-      "expected": 3,
-      "hits": 3,
-      "foreign": 51,
-      "false": 0,
-      "bypass": 0,
-      "denied": 0,
-      "missed_to": {},
-      "false_from": [],
-      "hit_rate": 1,
-      "false_rate": 0
-    },
-    {
-      "skill": "story-continuity",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -159,10 +132,36 @@
       "false_rate": 0
     },
     {
+      "skill": "story-continuity",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-core",
+      "expected": 39,
+      "hits": 39,
+      "foreign": 18,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
       "skill": "story-desk",
       "expected": 3,
       "hits": 3,
-      "foreign": 51,
+      "foreign": 54,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -175,7 +174,7 @@
       "skill": "story-endings",
       "expected": 3,
       "hits": 3,
-      "foreign": 51,
+      "foreign": 54,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -188,7 +187,7 @@
       "skill": "story-fix",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -201,7 +200,7 @@
       "skill": "story-mystery",
       "expected": 3,
       "hits": 3,
-      "foreign": 51,
+      "foreign": 54,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -212,22 +211,22 @@
     },
     {
       "skill": "story-opening",
-      "expected": 0,
-      "hits": 0,
+      "expected": 3,
+      "hits": 3,
       "foreign": 54,
       "false": 0,
       "bypass": 0,
       "denied": 0,
       "missed_to": {},
       "false_from": [],
-      "hit_rate": null,
+      "hit_rate": 1,
       "false_rate": 0
     },
     {
       "skill": "story-pace",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -240,7 +239,7 @@
       "skill": "story-pauses",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -253,7 +252,7 @@
       "skill": "story-playtest",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -264,22 +263,9 @@
     },
     {
       "skill": "story-review",
-      "expected": 3,
-      "hits": 3,
-      "foreign": 51,
-      "false": 0,
-      "bypass": 0,
-      "denied": 0,
-      "missed_to": {},
-      "false_from": [],
-      "hit_rate": 1,
-      "false_rate": 0
-    },
-    {
-      "skill": "story-time",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -289,10 +275,23 @@
       "false_rate": 0
     },
     {
+      "skill": "story-time",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
       "skill": "story-voice",
       "expected": 0,
       "hits": 0,
-      "foreign": 54,
+      "foreign": 57,
       "false": 0,
       "bypass": 0,
       "denied": 0,
@@ -304,17 +303,17 @@
   ],
   "phrases": [
     {
-      "text": "Граф почти линейный, предложи, где развести ветки",
+      "text": "Сформулируй ядро: о чём история, какая ставка и кто противник",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -323,7 +322,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -332,7 +331,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -343,17 +342,17 @@
       ]
     },
     {
-      "text": "Куда может свернуть сюжет после того, как смотритель находит пустую лодку?",
+      "text": "Выбрал направление про ночную копировальню. Что дальше: что на кону, кто против, чего хочет сам игрок?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -362,7 +361,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -371,7 +370,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -382,17 +381,17 @@
       ]
     },
     {
-      "text": "Хочу добавить ещё одну ветку в четвёртую главу — потянем или это перебор?",
+      "text": "Противник у меня картонный: просто злой и шлёт угрозы. Как сделать его живым?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -401,7 +400,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -410,7 +409,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -421,17 +420,17 @@
       ]
     },
     {
-      "text": "Что может случиться дальше после сцены на мосту? Дай несколько вариантов",
+      "text": "Не могу сформулировать, о чём моя история. Помоги с логлайном",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -440,7 +439,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -449,7 +448,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -460,17 +459,17 @@
       ]
     },
     {
-      "text": "У меня вся история идёт по одной дорожке, где можно дать игроку по-настоящему свернуть?",
+      "text": "Какой главный вопрос должен держать игрока до финала в истории про пропавшего брата?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -479,7 +478,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -488,7 +487,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -499,17 +498,17 @@
       ]
     },
     {
-      "text": "Сколько дорогих веток я ещё могу себе позволить в этой истории?",
+      "text": "А чего вообще хочет игрок в этой истории? Сейчас он просто помогает героине",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -518,7 +517,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -527,7 +526,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -538,17 +537,17 @@
       ]
     },
     {
-      "text": "Предложи поворот для середины: сейчас любой путь приводит к одному и тому же",
+      "text": "Какие оси и переменные завести, пока скелета ещё нет?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -557,7 +556,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -566,7 +565,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -577,17 +576,17 @@
       ]
     },
     {
-      "text": "Если игрок откажется ехать на остров, куда это может повести историю?",
+      "text": "ставка какая-то абстрактная — «город в опасности». как сделать, чтобы игроку было не всё равно?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -596,7 +595,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -605,7 +604,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -616,17 +615,17 @@
       ]
     },
     {
-      "text": "Хочу пятый финал, где брат уезжает один. Во что это обойдётся?",
+      "text": "О чём на самом деле эта история, какая у неё тема? Хочу, чтобы выборы были про одно и то же",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -635,7 +634,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -644,7 +643,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -655,17 +654,17 @@
       ]
     },
     {
-      "text": "не вижу, как развивать сюжет после второй главы, подкинь варианты с последствиями",
+      "text": "Задай мне вопросы по замыслу с вариантами ответа — сам я не знаю, что выбрать",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -674,7 +673,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -683,7 +682,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -694,17 +693,17 @@
       ]
     },
     {
-      "text": "все ветки сливаются в одну, сюжет как рельсы — что можно сделать со структурой?",
+      "text": "Напиши шапку истории: логлайн, главный вопрос, ставку и оси",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -713,7 +712,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -722,7 +721,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -733,17 +732,17 @@
       ]
     },
     {
-      "text": "Где в плане поставить развилку, после которой у игрока будут разные собеседники и разные концовки?",
+      "text": "Герой ничего не хочет, конфликт размытый, всё держится на загадке — что не так с замыслом?",
       "checks": [
         {
-          "expect": "story-branch",
+          "expect": "story-core",
           "kind": "positive",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -752,7 +751,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -761,7 +760,7 @@
           "turns": null
         },
         {
-          "skill": "story-branch",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -772,17 +771,17 @@
       ]
     },
     {
-      "text": "Кнопки в третьей главе ничего не меняют, на все варианты один ответ",
+      "text": "Сюжет занимает три дня жизни героини — как разложить эти дни мира по главам до плана?",
       "checks": [
         {
-          "expect": "story-choices",
-          "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
+          "expect": "story-core",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-choices",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -791,7 +790,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -800,85 +799,7 @@
           "turns": null
         },
         {
-          "skill": "story-choices",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        }
-      ]
-    },
-    {
-      "text": "Финал решается скрытым порогом доверия, игрок не понимает, почему так вышло",
-      "checks": [
-        {
-          "expect": "story-endings",
-          "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
-        }
-      ],
-      "runs": [
-        {
-          "skill": "story-endings",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        },
-        {
-          "skill": "story-endings",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        },
-        {
-          "skill": "story-endings",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        }
-      ]
-    },
-    {
-      "text": "Разгадку можно угадать с первой главы, улики слишком явные",
-      "checks": [
-        {
-          "expect": "story-mystery",
-          "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
-        }
-      ],
-      "runs": [
-        {
-          "skill": "story-mystery",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        },
-        {
-          "skill": "story-mystery",
-          "bypass": [],
-          "tools": [
-            "Skill"
-          ],
-          "denials": [],
-          "turns": null
-        },
-        {
-          "skill": "story-mystery",
+          "skill": "story-core",
           "bypass": [],
           "tools": [
             "Skill"
@@ -894,7 +815,7 @@
         {
           "expect": "story-cast",
           "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
@@ -928,12 +849,129 @@
       ]
     },
     {
-      "text": "Запиши, что мы выбрали вариант с отказом, а остальные идеи отложи на потом",
+      "text": "Начало не цепляет: первое сообщение «привет, ты тут?»",
+      "checks": [
+        {
+          "expect": "story-opening",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-core.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал решается скрытой проверкой доверия, игрок не понимает, почему так вышло",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-core.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Разгадку угадывают с первой главы, улики слишком явные",
+      "checks": [
+        {
+          "expect": "story-mystery",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-core.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Запиши решение: героиня не может уйти с острова, это теперь ядро",
       "checks": [
         {
           "expect": "story-desk",
           "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
@@ -967,17 +1005,17 @@
       ]
     },
     {
-      "text": "Проверь всю историю целиком, где слабые места?",
+      "text": "Персонаж пишет «буду через два часа» — так можно?",
       "checks": [
         {
-          "expect": "story-review",
+          "expect": "story-time",
           "kind": "negative",
-          "file": "docs/lab/triggers/story-branch.json"
+          "file": "docs/lab/triggers/story-core.json"
         }
       ],
       "runs": [
         {
-          "skill": "story-review",
+          "skill": "story-time",
           "bypass": [],
           "tools": [
             "Skill"
@@ -986,7 +1024,7 @@
           "turns": null
         },
         {
-          "skill": "story-review",
+          "skill": "story-time",
           "bypass": [],
           "tools": [
             "Skill"
@@ -995,7 +1033,7 @@
           "turns": null
         },
         {
-          "skill": "story-review",
+          "skill": "story-time",
           "bypass": [],
           "tools": [
             "Skill"
@@ -1004,9 +1042,103 @@
           "turns": null
         }
       ]
+    },
+    {
+      "text": "Почини падающий e2e-тест на экране чатов",
+      "checks": [
+        {
+          "expect": "none",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-core.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01KgAw4RzZFhewJi4S7Jtg6P",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_019wQryfzm7Bp89ktHbA3Cst",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 npm run test:e2e -- --project=phone 2>&1 | tail -60",
+              "id": "toolu_01KSqcUijz1PiibNPFTd74qz",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 npm run test:e2e -- --project=phone 2>&1 | tail -60)"
+        }
+      ]
     }
   ],
-  "denials": [],
+  "denials": [
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 1,
+      "tool": "Bash",
+      "command": "ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 2,
+      "tool": "Bash",
+      "command": "ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 3,
+      "tool": "Bash",
+      "command": "HEADLESS=1 npm run test:e2e -- --project=phone 2>&1 | tail -60",
+      "blocking": true
+    }
+  ],
   "skipped": [],
   "fails": [],
   "ok": true
