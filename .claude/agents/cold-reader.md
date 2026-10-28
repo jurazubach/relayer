@@ -32,7 +32,7 @@ hooks:
 | по клику: время, «доброе утро» через секунду | `story-time` | `click` | `.claude/skills/story-time/references/modes.md` |
 | угадать следующее, случайный срез (`--last N`) | `story-mystery`, `story-playtest` | `guess` | `.claude/skills/story-mystery/references/fair-play.md` |
 | голоса вслепую: имена заменены буквами | `story-voice` | `voices` | `.claude/skills/story-voice/references/blind-test.md` |
-| ревью истории целиком | `story-review` (когда появится) | по его заданию | — |
+| ревью истории целиком | `story-review` | `opening` или `guess`, точки и профили — от `select-lenses.mjs` | `.claude/skills/story-review/references/routing.md` |
 
 Режимы словами автора: начало — `opening`, возвращение — `return`, по клику — `click`, угадать — `guess`,
 голоса — `voices`. Профили: торопливый — `hurried`, внимательный — `attentive`, скептик — `skeptic`, отвлечённый —

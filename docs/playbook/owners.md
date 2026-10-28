@@ -199,7 +199,7 @@
 | C-03 | невидимая переменная | `story-choices` | `echo.md` | `story-endings` |
 | C-04 | дальность отклика | `story-choices` | `echo.md` | — |
 | C-05 | глава без последствий | `story-choices` | `echo.md` | `story-branch` |
-| C-06 | что читает распределитель финала | `story-endings` | `decisions-endings.md` (`endings.mjs`) | `story-plan/endings-plan.md` |
+| C-06 | что читает распределитель финала | `story-endings` | `decisions-endings.md` (`endings-map.mjs`) | `story-plan/endings-plan.md` |
 | C-07 | финал цитирует путь | `story-endings` | `patterns-endings.md` | — |
 | C-08 | цена не видна | `story-choices` | `cost.md` | `story-endings` (F-09) |
 | C-09 | хрупкие условия и лишние переменные | `story-choices` | `echo.md` | `story-core/axes.md` |
