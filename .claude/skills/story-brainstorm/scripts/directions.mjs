@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { compile } from '../../../../scripts/lib/compile.mjs';
 import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
+import { returnDeadline } from '../../../../scripts/lib/lexicon.mjs';
 import { runCli, table } from '../../../../scripts/story/core/cli.mjs';
 
 export const STATE_DIR = 'docs/stories';
@@ -43,7 +44,8 @@ node \${CLAUDE_SKILL_DIR}/scripts/directions.mjs --template [--idea "<сырая
   · направление прошлых раундов (показанное или отвергнутое) не повторяется в новом раунде так же близко;
   · режим «далеко» (Б-4): каждое новое отличается от всех прошлых по каждой оси из «не то»;
   · трейлер компилируется, до первой кнопки skill.brainstorm.trailer.messages сообщений, кнопок ≥ 2,
-    теги только ready из docs/capabilities.json, имена собственные — среди контактов (R-117).
+    теги только ready из docs/capabilities.json, имена собственные — среди контактов (R-117),
+    без срока паузы (A-01, dict.return_deadline).
 
   --axes       первый проход: только число, оси и различие (без логлайна, «что трудно» и трейлера)
   --exclude    что уже показано и отвергнуто по осям: список для режима «ещё» и Б-4
@@ -142,6 +144,8 @@ export function checkTrailer(src, { readyTags, partialTags }) {
     return out;
   }
   out.messages = lines.length;
+  // A-01: персонаж не называет срок паузы — тот же словарь, что у story:lint
+  for (const l of lines) if (returnDeadline(l)) out.errors.push(`срок паузы в трейлере (A-01, dict.return_deadline): «${l.slice(0, 40)}»`);
   out.choices = story.currentChoices.length;
   out.tags = [...new Set([...src.matchAll(/#\s*([a-z]+)\b/g)].map((m) => m[1]))];
   for (const t of out.tags) {
