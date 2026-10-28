@@ -83,6 +83,16 @@
   `chapter-lint` (the-number гл. 2, slepoe-pyatno гл. 1, chuzhoy-golos гл. 5 — числа совпали со `story:lint`),
   `ink-compile --story` (все три ✓), `--md` на всех references ✓.
 
+### Попытка 2
+
+- Приёмка конвейера упала на `lab:triggers` с `spawn ENOEXEC`: в момент прогона обновлялся бинарник `claude`
+  (симлинк в `~/.nvm/.../bin/claude` пересоздан в 16:31). Скилл и скрипт не менялись; сбой окружения разовый.
+- `node scripts/lab/triggers.mjs --check-env` — ✓ окружение чистое (21 проектный скилл).
+- `npm run lab:triggers -- --skill chapter-write --runs 3 --min build --jobs 3` — ✓ пороги пройдены;
+  `chapter-write` 100% (36/36), ложных 0% (0/218), 571 с (`docs/lab/runs/triggers/2026-10-28-chapter-write.json`).
+  `--jobs 3`, чтобы уложиться в 10 минут на вызов; с умолчанием (2) прогон дольше, но тот же.
+- `skill-check … --min-refs 8 --min-scripts 3` — ✓ 0 предупреждений; `story:coverage --skill chapter-write --min L2` — ✓.
+
 ## Открыто
 
 - **Живой прогон написания главы** не делался: `claude -p` проверял права и замеры, но не текст главы. Качество
