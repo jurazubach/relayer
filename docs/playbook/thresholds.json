@@ -389,6 +389,187 @@
       }
     ]
   },
+  "story.branch.expensive.msgs": {
+    "value": 10,
+    "unit": "сообщений в области кнопки",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "meaningful-choice:P-15",
+      "ashwell-standard-patterns:P-10",
+      "narrative-postmortems:P-06"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-core.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: с какого объёма кнопка — дорогая ветка, а не окраска (сцена в 10 сообщений, наша оценка); кроме объёма дорогой делают свой финал и свой контакт"
+      }
+    ]
+  },
+  "story.branch.budget.min": {
+    "value": 3,
+    "unit": "дорогих развилок на историю",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15",
+      "meaningful-choice:LESSON-10",
+      "R-26"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: нижняя граница бюджета дорогих веток (3–5 на историю от 50 сообщений, meaningful-choice:P-15#нюанс)"
+      }
+    ]
+  },
+  "story.branch.budget.max": {
+    "value": 5,
+    "unit": "дорогих развилок на историю",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15",
+      "meaningful-choice:LESSON-10",
+      "messenger-genre:LESSON-02",
+      "emshort-structures:RED-07"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: потолок бюджета дорогих веток; сверх него новая ветка — только вместо старой"
+      }
+    ]
+  },
+  "story.branch.budget.short": {
+    "value": 1,
+    "unit": "дорогих развилок на короткую историю",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15 (нюанс: «5: одна развилка»)",
+      "meaningful-choice:PAT-05 (нюанс)"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: бюджет короткой истории (меньше story.branch.budget.short_msgs сообщений)"
+      }
+    ]
+  },
+  "story.branch.budget.short_msgs": {
+    "value": 50,
+    "unit": "сообщений в истории",
+    "op": "<",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15 (нюанс: «5: одна развилка; 50: 3–5 дорогих веток»)",
+      "meaningful-choice:PAT-05 (нюанс)"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-core.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: история короче — бюджет story.branch.budget.short, а не story.branch.budget.min…max"
+      }
+    ]
+  },
+  "story.branch.seen_share.min": {
+    "value": 0.3,
+    "unit": "доля текста за прохождение",
+    "op": "<",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "R-37",
+      "ashwell-standard-patterns:contra-5",
+      "narrative-testing:P-13"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: нижняя граница R-37 (≈30 % текста за одно прохождение) ключом"
+      }
+    ]
+  },
+  "story.branch.seen_share.max": {
+    "value": 0.6,
+    "unit": "доля текста за прохождение",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-37",
+      "choiceofgames-design:P-22",
+      "choiceofgames-design:RED-20"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: верхняя граница R-37 (0,6 — выборы почти ничего не меняют) ключом"
+      }
+    ]
+  },
+  "story.branch.fan.merge_hops": {
+    "value": 2,
+    "unit": "переходов до слияния",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "emshort-structures:RED-07"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: веер в середине — ветки не сходятся за столько узлов (главы 2…N-1)"
+      }
+    ]
+  },
   "engine.click.time_jump_label": {
     "value": 1,
     "unit": "ч",
