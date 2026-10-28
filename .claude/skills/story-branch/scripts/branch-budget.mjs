@@ -11,7 +11,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/branch-budget.mjs [--story <id|�
               или своим контактом) против бюджета story.branch.budget.min…story.branch.budget.max; история короче
               story.branch.budget.short_msgs сообщений — story.branch.budget.short
   доля текста сколько сообщений истории видит одно прохождение бота в среднем, против story.branch.seen_share.min и
-              story.branch.seen_share.max (R-37)
+              story.branch.seen_share.max (R-37); у короткой истории не сравнивается (narrative-testing:P-13)
   редкая      дорогая кнопка, которую нажимают меньше C-15.rare_branch_share игроков (R-37, ashwell-standard-patterns:P-10)
   веер        развилка в главах 2…N-1, где кнопка не сходится с соседними дольше story.branch.fan.merge_hops переходов
               (emshort-structures:RED-07)
@@ -73,7 +73,7 @@ try {
     report.push({
       id: a.id, path: a.path, minutes: a.minutes, chapters: a.chapters, total_msgs: a.totalMsgs, runs: a.runs,
       budget, used, left: budget.max - used, status: used > budget.max ? 'сверх' : used < budget.min ? 'мало' : 'в бюджете',
-      seen_share: a.seenShare, seen_status: a.seenShare == null ? null : a.seenShare < K.seenMin ? 'мало' : a.seenShare > K.seenMax ? 'много' : 'норма',
+      seen_share: a.seenShare, seen_status: a.seenShare == null ? null : budget.short ? 'короткая — не сравнивается' : a.seenShare < K.seenMin ? 'мало' : a.seenShare > K.seenMax ? 'много' : 'норма',
       spent, rare, fan, by_chapter: byChapter, what_if: what,
     });
   }

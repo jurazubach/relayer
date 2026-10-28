@@ -15,7 +15,7 @@
 | 4 | решение D-NN «ветка» и новая версия плана в `STATUS.md` | `story-desk` (`decision-add.mjs --kind ветка --set-plan plans/plan-vN.md`) | через `story-desk` |
 | 5 | отвергнутые варианты меню — в банк идей | `story-desk` (`idea-park.mjs --kind развилка`) | через `story-desk` |
 
-После шага 4 — что устарело (главы, написанные по старому плану): `story-desk`, `stale-check.mjs --if plan`.
+Перед шагом 4 — что устареет со сменой плана (главы, написанные по старому): `story-desk`, `stale-check.mjs --if plan`.
 
 ## Что меняется в `plan-vN.md`
 
