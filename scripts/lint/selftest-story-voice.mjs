@@ -27,6 +27,16 @@ export function register(test, { has, hasNot, lint, keys }) {
     await hasNot(`VAR gender = 0\n-> a\n=== a ===\n{gender == 1: ты прав #from:ann}\n* [да] -> END\n* [нет] -> END`, 'C-14.gender', { only: ['C-14'] });
   });
 
+  // T-19: «сам / сама» в кнопке игрока (основа мутантов, B08); «он сам» и «я возьму один» — не род игрока
+  test('C-14: кнопка «Дай, я напишу ей сама» и «Сама справлюсь» задают род; «Он сам виноват» — нет', async () => {
+    const btn = (t) => `-> a\n=== a ===\nну? #from:ann\n* [${t} #to:ann]\n* [Нет #to:ann]\n- -> END`;
+    await has(btn('Дай, я напишу ей сама'), 'C-14.gender', { only: ['C-14'] });
+    await has(btn('Сама справлюсь'), 'C-14.gender', { only: ['C-14'] });
+    await hasNot(btn('Он сам виноват'), 'C-14.gender', { only: ['C-14'] });
+    await hasNot(btn('Я возьму один'), 'C-14.gender', { only: ['C-14'] });
+    await hasNot(btn('Дай номер, я ей напишу'), 'C-14.gender', { only: ['C-14'] });
+  });
+
   test('C-48: имя из characters в любом падеже — не новое слово; чужое имя — находка', async () => {
     const meta = { characters: [{ id: 'ann', name: 'Аня' }, { id: 'ray', name: 'Рэй Колдуэлл' }, { id: 'dina', name: 'Дина' }] };
     await hasNot(two('отдай ключ Дине, а потом напиши Рэю #from:ann'), 'C-48.unknown', { only: ['C-48'], meta });

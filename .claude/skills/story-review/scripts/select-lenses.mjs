@@ -150,7 +150,7 @@ function task(ctx, row, symptom) {
 /** Точки холодного читателя: конец главы 1 (кто пишет, зачем) и середина (что дальше, кому не веришь). */
 function coldPoints(ctx, s) {
   const ref = ctx.mode === 'plan' ? rel(ctx.skeleton) : ctx.ref;
-  const cmd = (until, mode, profile) => `npm run -s story:cold-read -- --story ${ref} --until ${until} --mode ${mode} --profile ${profile} --ask --json`;
+  const cmd = (until, mode, profile) => `npm run -s story:cold-read -- --story ${ref} --until ${until} --mode ${mode} --profile ${profile} --ask`;
   const out = [];
   const tree = ctx.tree;
   const ends = findEndings(tree).endings;

@@ -18,6 +18,10 @@ human-*.md. Строка находки — общий формат (references/
     запускали) — в основной список идут только сверенные (LOCAL-04);
   — дубли (тот же узел и та же проверка, или тот же узел и тип без проверки) сливает, источники складывает;
     два разных источника (замер, модель, человек) поднимают находку на ступень;
+  — потолки P (skill.review.p_cap, LOCAL-16): «скучно» без человека — не выше boring, если глава держится
+    (P1 остаётся, когда замер подтвердил линзу, а холодный читатель в той же главе «отложил бы»); голоса,
+    неразличимые только по форме (C-44 без слепого теста и человека), — не выше voice_form; хвост после
+    последней кнопки и скрытый порог финала (C-42, C-06, C-02) — тип «непонятно», без потолка «скучно»;
   — отклонённое автором (decisions.md, вид «отклонено», узел и хэш) прячет, пока хэш узла тот же;
   — человек против замера: по «скучно» и «не верю» прав человек, по структуре — замер, один тестер против
     замера — «нужен третий» (lab.playtest.repeat_min);
@@ -31,6 +35,10 @@ human-*.md. Строка находки — общий формат (references/
 const keyOf = (f) => `${[...f.nodes].sort().join(',') || f.quote || f.place}|${f.checks[0] ?? f.type}`;
 const BASE_OF_KIND = { cold: 'модель', qa: 'модель', human: 'человек', lens: null, other: null };
 const STRUCTURE = new Set(['баг', 'нестыковка']);
+// LOCAL-16: исход, которого игрок не узнает, — «непонятно», а не «скучно»: хвост после последней кнопки (C-42),
+// скрытый порог распределителя (C-06) и счётчик вслепую (C-02). Линза ставила «скучно», и находка оседала в P2
+const UNCLEAR_CHECKS = new Set(['C-42', 'C-06', 'C-02']);
+const RETYPE_FROM = new Set(['скучно', 'не верю']);
 
 /** Сколько людей сказали одно и то же: «человек · 2 из 3», «2 тестера». */
 function people(f) {
@@ -97,13 +105,32 @@ await runCli(HELP, async (args) => {
     if (typeRank(it.type) < typeRank(was.type)) was.type = it.type;
   }
   const list = [...merged.values()];
+  const cap = T().value('skill.review.p_cap');
   for (const it of list) {
     it.chapter ??= it.nodes.length ? chapterOf(ctx.tree, it.nodes[0]) : null;
+    if (it.checks.some((c) => UNCLEAR_CHECKS.has(c)) && RETYPE_FROM.has(it.type)) {
+      it.note = `тип «${it.type}» → «непонятно»: игрок не узнает исход (${it.checks.join(', ')}, LOCAL-16)`;
+      it.type = 'непонятно';
+      it.candidate = false;
+    }
     if (it.bases.length > 1 && it.p > 1) { it.p -= 1; it.raised = `два источника: ${it.bases.join(' + ')}`; }
-    // «Скучно» до людей — только кандидат (build-plan.md §13): без человека не выше P2, что бы ни поставила линза.
-    if (it.type === 'скучно' && !it.bases.includes('человек')) {
+  }
+  // глава не держится: холодный читатель в ней «теряю» или «отложил бы» (cold-*.md, тип «скучно»)
+  const drops = new Set(list.filter((x) => x.type === 'скучно' && x.sources.some((s) => s.startsWith('cold-')) && x.chapter != null).map((x) => x.chapter));
+  for (const it of list) {
+    const human = it.bases.includes('человек');
+    // «Скучно» до людей — только кандидат (build-plan.md §13): не выше boring, если глава держится. Не держится —
+    // линза поставила P1, замер его подтвердил, а читатель в той же главе бросил бы: тогда P1 остаётся (LOCAL-16).
+    if (it.type === 'скучно' && !human) {
       it.candidate = true;
-      if (it.p < 2) { it.p = 2; it.note = 'скучно без человека — кандидат, не выше P2 (contradictions.md)'; }
+      const holds = !(it.p === 1 && it.bases.includes('замер') && drops.has(it.chapter));
+      if (holds && it.p < cap.boring) { it.p = cap.boring; it.note = `скучно без человека — кандидат, не выше P${cap.boring}: глава держится (priority.md)`; }
+      else if (!holds) it.note = 'скучно без человека, но глава не держится: замер и холодный читатель в той же главе — P1 (priority.md)';
+    }
+    // голоса по форме (C-44: расстояние профилей) без слепого теста — регистр и содержание могут их различать
+    if (it.checks.includes('C-44') && !human && !/слеп/i.test(`${it.bracket} ${it.raw}`) && it.p < cap.voice_form) {
+      it.p = cap.voice_form;
+      it.note = `голоса различаются только по форме (C-44 без слепого теста) — не выше P${cap.voice_form} (priority.md)`;
     }
   }
 

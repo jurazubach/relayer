@@ -319,23 +319,6 @@
       "path": "docs/lab/mutants/m19-paid-boundary-no-hook"
     },
     {
-      "id": "m20-wide-fork",
-      "zone": "story-choices",
-      "check": "C-12",
-      "node": "ch1_who",
-      "broken": "шесть кнопок в одной развилке: на экране телефона это прокрутка",
-      "lint": [
-        "C-12"
-      ],
-      "lint_auto": true,
-      "catches": [
-        "inkle-ingold:RED-07",
-        "failbetter-qbn:RED-07",
-        "C-12"
-      ],
-      "path": "docs/lab/mutants/m20-wide-fork"
-    },
-    {
       "id": "m21-long-message",
       "zone": "story-voice",
       "check": "C-34",
@@ -351,22 +334,6 @@
         "C-34"
       ],
       "path": "docs/lab/mutants/m21-long-message"
-    },
-    {
-      "id": "m22-pause-over-day",
-      "zone": "story-time",
-      "check": "C-31",
-      "node": "ch3",
-      "broken": "пауза перед главой 3 — 30 часов: дольше предела в сутки",
-      "lint": [
-        "C-31"
-      ],
-      "lint_auto": true,
-      "catches": [
-        "serial-hooks:RED-07",
-        "C-31"
-      ],
-      "path": "docs/lab/mutants/m22-pause-over-day"
     },
     {
       "id": "m23-greeting-after-pause",
@@ -387,24 +354,6 @@
       "path": "docs/lab/mutants/m23-greeting-after-pause"
     },
     {
-      "id": "m24-silent-ignored",
-      "zone": "story-choices",
-      "check": "C-11",
-      "node": "ch1_who",
-      "broken": "«Промолчать» никто не замечает: ни реакции, ни переменной",
-      "lint": [
-        "C-11"
-      ],
-      "lint_auto": true,
-      "catches": [
-        "choiceofgames-design:RED-04",
-        "inkle-ingold:RED-03",
-        "nicklin-writing-for-games:RED-06",
-        "C-11"
-      ],
-      "path": "docs/lab/mutants/m24-silent-ignored"
-    },
-    {
       "id": "m25-wrong-responder",
       "zone": "story-choices",
       "check": "C-10",
@@ -418,6 +367,66 @@
         "C-10"
       ],
       "path": "docs/lab/mutants/m25-wrong-responder"
+    },
+    {
+      "id": "m26-backstory-opening",
+      "zone": "story-opening",
+      "check": "C-47",
+      "node": "ch1",
+      "broken": "до первой кнопки Ника рассказывает историю станции блоком: четыре реплики о прошлом подряд, а инцидент отодвинут",
+      "lint": [
+        "C-23"
+      ],
+      "lint_auto": true,
+      "catches": [
+        "edgerton-hooked:RED-03",
+        "cron-wired-for-story:RED-17",
+        "C-47",
+        "C-23"
+      ],
+      "path": "docs/lab/mutants/m26-backstory-opening"
+    },
+    {
+      "id": "m27-broadcast-interrupt",
+      "zone": "story-cast",
+      "check": "C-50",
+      "node": "ch1_who",
+      "broken": "между вопросом Ники «дать тебе её номер?» и кнопками ответа встаёт рассылка метеопоста, которому ответить нельзя: вопрос уезжает вверх",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "messenger-genre:RED-14",
+        "C-50"
+      ],
+      "path": "docs/lab/mutants/m27-broadcast-interrupt"
+    },
+    {
+      "id": "m28-met-twice",
+      "zone": "story-continuity",
+      "check": "C-51",
+      "node": "epilogue",
+      "broken": "в эпилоге Мира представляется заново («мы не знакомы») и тем, кто переписывался с ней в главах 2–3: знакомство без условия",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "inkle-ingold:RED-04",
+        "C-51"
+      ],
+      "path": "docs/lab/mutants/m28-met-twice"
+    },
+    {
+      "id": "m29-clue-no-gate",
+      "zone": "story-mystery",
+      "check": "C-54",
+      "node": "ch4_truth",
+      "broken": "иней на ботинках Льва впервые всплывает в главе 4, в строке прямо перед раскрытием: между последней уликой и разгадкой нет выбора",
+      "lint": [],
+      "lint_auto": true,
+      "catches": [
+        "mystery-fair-play:RED-03",
+        "C-54"
+      ],
+      "path": "docs/lab/mutants/m29-clue-no-gate"
     }
   ]
 }

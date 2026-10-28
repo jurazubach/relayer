@@ -578,6 +578,16 @@ test('C-32 п. 7: «не ответил» закрывает вариант ил
   await has(src(['  ~ door = true', '  ты пропал, сколько можно']), 'C-32.no_answer_reproach', { only: ['C-32'] });
 });
 
+// T-19: словари по просьбам волны диагноза — срок прописью, плата не срок; дело в процессе целым словом
+test('словари: dict.world_deadline видит срок прописью и не берёт плату; dict.pause_reason — «бегу», а не «бегунок»', () => {
+  const w = T.re('dict.world_deadline');
+  for (const x of ['через десять минут он сгорит', 'через пару часов придут', 'через час закроют', 'к 06:00', 'до утра', '$500 до пятницы']) assert.ok(w.test(x), x);
+  for (const x of ['£12 в час', 'плачу $20 за смену', 'часик посижу']) assert.ok(!w.test(x), x);
+  const p = T.re('dict.pause_reason');
+  for (const x of ['бегу на склад', 'я в пути', 'лечу домой', 'я на аукционе, позже']) assert.ok(p.test(x), x);
+  for (const x of ['бегунок заело', 'приду', 'измена']) assert.ok(!p.test(x), x);
+});
+
 test('thresholds.json: author_decision и deferred:E-NN проходят схему, кривые — нет', () => {
   const ok = { value: 1, unit: 'ч', level: 'warning', basis: 'author_decision', sources: ['superseded.md A-05'], checks: ['C-31'], calibrated_on: null, history: [{ date: '2026-10-25', task: 'T', change: 'x' }], deferred: 'E-02' };
   assert.deepEqual(validateThresholds({ 'story.x': ok }), []);

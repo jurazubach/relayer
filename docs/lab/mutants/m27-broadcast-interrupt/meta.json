@@ -1,7 +1,7 @@
 {
   "format": "relayer-story",
   "version": 1,
-  "id": "m24-silent-ignored",
+  "id": "m27-broadcast-interrupt",
   "revision": 1,
   "series": "Вешний",
   "title": "Холодная комната",
@@ -45,7 +45,7 @@
   "characters": [
     {
       "name": "Ты",
-      "role": "подруга Ники",
+      "role": "на связи с Никой",
       "about": "Далеко, на материке. Ника пишет только тебе."
     },
     {

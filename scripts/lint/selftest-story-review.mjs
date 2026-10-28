@@ -104,4 +104,34 @@ export function register(test, { lint }) {
       rmSync(join(CACHE_DIR, 'pier-test'), { recursive: true, force: true });
     }
   });
+
+  // LOCAL-16: хвост после кнопки — «непонятно» без потолка; «скучно» P1 держится, только если глава не держится;
+  // голоса по форме без слепого теста — не выше skill.review.p_cap.voice_form
+  test('story-review: merge-findings — потолки P по priority.md (skill.review.p_cap, LOCAL-16)', async () => {
+    const { CACHE_DIR, T } = await core();
+    const cap = T().value('skill.review.p_cap');
+    const dir = mkdtempSync(join(tmpdir(), 'review-cap-'));
+    const file = join(dir, 'pier-cap.ink');
+    writeFileSync(file, STORY);
+    const lens = (name, lines) => `линза: ${name} · история: pier-cap · режим: полный\n\nнаходки:\n${lines.join('\n')}\n\nложные (story:lint → почему не находка):\n—\n`;
+    try {
+      const cache = JSON.parse(cli('review-cache.mjs', ['--story', file, '--json']));
+      const run = join(fileURLToPath(new URL('../../', import.meta.url)), cache.dir);
+      writeFileSync(join(run, 'lens-story-endings.md'), lens('story-endings', ['P1 · скучно · pier (гл. 1) · после последней кнопки часы без событий · F-02 · [C-42 · замер · высокая]']));
+      writeFileSync(join(run, 'lens-story-voice.md'), lens('story-voice', ['P1 · не верю · ch1 (гл. 1) · Олег и Порт пишут одной формой · F-01 · [C-44 · замер · средняя]']));
+      writeFileSync(join(run, 'lens-story-pace.md'), lens('story-pace', ['P1 · скучно · pier (гл. 1) · тридцать строк без хода · F-05 · [C-35 · замер · высокая]']));
+      let m = JSON.parse(cli('merge-findings.mjs', ['--story', file, '--json']));
+      const tail = m.items.find((i) => i.checks.includes('C-42'));
+      assert.equal(tail.type, 'непонятно', 'хвост после кнопки — непонятно');
+      assert.equal(tail.p, 1, 'хвост без потолка «скучно»');
+      assert.equal(m.items.find((i) => i.checks.includes('C-44')).p, Math.max(1, cap.voice_form), 'голос по форме');
+      assert.equal(m.items.find((i) => i.checks.includes('C-35')).p, cap.boring, 'скучно без читателя — кандидат');
+      writeFileSync(join(run, 'cold-middle-skeptic.md'), 'cold-reader · pier-cap · guess\n\nнаходки:\nP3 · скучно · «шаг 3 по пирсу» · Итог: отложил бы · → story-pace · [модель · симуляция · низкая]\n');
+      m = JSON.parse(cli('merge-findings.mjs', ['--story', file, '--json']));
+      assert.equal(m.items.find((i) => i.checks.includes('C-35')).p, 1, 'глава не держится: замер + читатель отложил бы — P1');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+      rmSync(join(CACHE_DIR, 'pier-cap'), { recursive: true, force: true });
+    }
+  });
 }
