@@ -5,7 +5,7 @@
 
 | модуль | что даёт |
 |---|---|
-| `story.mjs` | `loadStory(id \| путь)` — папка `meta.json` + `story.ink` с `INCLUDE`, `.json` (с `includes` от `story:pack` или одним `ink`), голый `.ink`; `storyFromJson`, `listStories()`, `storyRefs(args)`, `parseStory(story)`, `compileInput(story)`. Раскладка и сборка: `splitInk`, `glueStory`, `packStory`, `unpackStory`, `writeFolder`, `layoutProblems`, `sameRuntime` |
+| `story.mjs` | `loadStory(id \| путь)` — папка `meta.json` + `story.ink` с `INCLUDE`, `.json` (с `includes` от `story:pack` или одним `ink`), голый `.ink`; `storyFromJson`, `listStories(dir, { hidden })` (скрытые `hidden: true` пропускает только сборка сайта: `SITE_BUILD` — запуск из `postbuild`), `isHiddenStory(path)`, `storyRefs(args)`, `parseStory(story)`, `compileInput(story)`. Раскладка и сборка: `splitInk`, `glueStory`, `packStory`, `unpackStory`, `writeFolder`, `layoutProblems`, `sameRuntime` |
 | `ink.mjs` | `parseInk(src \| файлы)` — дерево; `nodeIds`, `findEndings`, `allMarks`, `walk`, `stripComments`, `resolveTarget`, `splitTags`, `parseTag`, `parseDelay`, `tokenize` |
 | `compile.mjs` | `compile(src \| {main, files})` → `{ ok, json, errors, warnings, newStory() }`; ошибки `{ file, line, message, excerpt }`, `formatMessages()` |
 | `bot.mjs` | `play(json, { strategy, rng, nodes, maxSteps, log, trackVars, setup, mode })` → журнал и итоги; стратегия видит только кнопки и может вернуть `NO_ANSWER` — тогда напоминания `#remind` и ветка «не ответил» (события `remind`, `stall`, `choice.noAnswer`), как в engine.ts; `strategies` (random, first, last, scripted, unresponsive), `splitChoices`, `choiceRole`, `noAnswer(choices)`, `reminderSeries(events)`, `seeded(seed)` |
