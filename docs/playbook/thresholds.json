@@ -6382,6 +6382,274 @@
       }
     ]
   },
+  "C-49.known_chapter": {
+    "value": 1,
+    "unit": "глава, до конца которой имя из synopsis уже звучит в тексте",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "video-three-things:P-10: имена из описания впервые появляются в первой главе",
+      "rules.md R-11"
+    ],
+    "calibrated_on": "2026-10-28: три истории каталога — имя пропавшего героя-завязки звучит в главе 1 у других контактов, это не спойлер",
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (б) не считает спойлером имя, которое игрок слышит в главе 1"
+      }
+    ]
+  },
+  "C-49.teasers": {
+    "value": {
+      "min": 2,
+      "max": 3
+    },
+    "unit": "затравки на карточке",
+    "op": null,
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "README.md «teasers»: 2–3 крючка",
+      "src/engine/library.ts storyTeasers: карточка показывает первые три"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (ж) число затравок"
+      }
+    ]
+  },
+  "C-49.teaser_chapter": {
+    "value": 1,
+    "unit": "глава",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "README.md «teasers»: из завязки и первой главы, без поворотов после главы 1",
+      "edgerton-hooked:PAT-06#нюанс",
+      "video-three-things:RED-08"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (ж) имя или число затравки впервые звучит после этой главы — спойлер"
+      }
+    ]
+  },
+  "C-49.teaser_ground": {
+    "value": 0.5,
+    "unit": "доля значимых основ затравки в карточке и тексте главы 1",
+    "op": "<",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: затравка — пересказ завязки и главы 1; меньше половины основ из них — затравка о другом (поздние главы или чужая история)",
+      "README.md «teasers»"
+    ],
+    "calibrated_on": "2026-10-28: три истории каталога — у всех затравок доля выше",
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (ж) затравка не опирается на завязку и главу 1"
+      }
+    ]
+  },
+  "C-49.teaser_style": {
+    "value": 0,
+    "unit": "нарушений docs/style.md в затравке",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "docs/style.md ST-01, ST-05, ST-60, ST-61, ST-66, §11",
+      "capabilities.json storyfile: затравки — пузырями на карточке"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (ж) затравка — пузырь, к ней те же запреты, что к реплике"
+      }
+    ]
+  },
+  "C-49.endings_min": {
+    "value": 2,
+    "unit": "финала, если карточка обещает несколько",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "dille-ultimate-guide:attention§5: «семь финалов» должно быть правдой для обычного игрока",
+      "rules.md R-11"
+    ],
+    "calibrated_on": "2026-10-28: the-number — «Несколько финалов» при одном // финал:; chuzhoy-golos — «Семь финалов»",
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (з) обещание финалов в features сверяется с числом финалов, а не со словами в репликах"
+      }
+    ]
+  },
+  "C-49.endings_word": {
+    "value": "(?<!\\p{L})(финал|концовк|исход)\\p{L}*",
+    "unit": "regex",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: так в features называют финалы",
+      "checks.md C-49 (з)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (з) пункт features про финалы"
+      }
+    ]
+  },
+  "C-49.teaser_chars": {
+    "value": 90,
+    "unit": "знаков затравки",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "docs/style.md ST-01: одно сообщение — одна мысль (то же число, что C-34.long_chars)",
+      "README.md «teasers»: до двух строк каждый"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: (ж) длина затравки-пузыря; свой ключ, потому что ключи C-34 принадлежат C-34"
+      }
+    ]
+  },
+  "skill.release.lint_errors": {
+    "value": 0,
+    "unit": "ошибок story:lint",
+    "op": ">",
+    "level": "error",
+    "basis": "author_decision",
+    "sources": [
+      "build-plan.md §5 story-release: гейт — lint без ошибок",
+      "flow-review.md шаг 10"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: гейт выпуска (release-gate.mjs)"
+      }
+    ]
+  },
+  "skill.release.boundary.hook_lines": {
+    "value": 5,
+    "unit": "последних входящих бесплатной главы",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "yorke-into-the-woods:RED-14: последние 5 входящих главы 1",
+      "checks.md C-32 п. 4 (C-32.ch2_window)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: окно крючка на платной границе (boundary-check.mjs)"
+      }
+    ]
+  },
+  "skill.release.boundary.payoff_lines": {
+    "value": 5,
+    "unit": "первых входящих платной главы",
+    "op": "≤",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "mckee-story:attention§5: обещание конца главы выплачивается в первых 5 сообщениях следующей",
+      "yorke-into-the-woods:LESSON-01: в первых 5 входящих главы 2 есть событие"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: окно выплаты на платной границе (boundary-check.mjs)"
+      }
+    ]
+  },
+  "skill.release.boundary.pause_max_min": {
+    "value": 30,
+    "unit": "мин от открытия платной главы до выплаты крючка",
+    "op": ">",
+    "level": "warning",
+    "basis": "our_estimate",
+    "sources": [
+      "INTENT.md «Платная граница»: крючок сбывается сразу после неё",
+      "наша оценка: дольше получаса после оплаты — уже не «сразу»; движок ставит границу до паузы строки #chapter (capabilities.json paywall)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: пауза между границей и выплатой (boundary-check.mjs)"
+      }
+    ]
+  },
+  "skill.release.boundary.reach_share": {
+    "value": 0.9,
+    "unit": "доля прохождений, дошедших до границы",
+    "op": "<",
+    "level": "warning",
+    "basis": "our_estimate",
+    "sources": [
+      "INTENT.md: бесплатный путь не наказывается",
+      "наша оценка: граница — одна для всех; если десятая часть прохождений кончается раньше неё, бесплатная часть — отдельная история с финалом"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: кто доходит до платной границы (boundary-check.mjs)"
+      }
+    ]
+  },
+  "skill.release.card.minutes_step": {
+    "value": 5,
+    "unit": "мин — шаг округления minutes",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: «≈ 25 мин» честнее «≈ 23 мин» — медиана бота не точнее шага",
+      "README.md minutes"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-release",
+        "change": "заведён: предложение minutes для карточки (durations.mjs)"
+      }
+    ]
+  },
   "C-50.gap": {
     "value": 3,
     "unit": "сообщений до ответа адресата",
