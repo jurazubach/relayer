@@ -10302,6 +10302,78 @@
       }
     ]
   },
+  "skill.chapter.tail_msgs": {
+    "value": 20,
+    "unit": "сообщений конца прошлой главы на путь",
+    "op": null,
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "flow-review.md §C chapter-write: chapter-context.mjs — последние 20 сообщений предыдущей главы по каждому пути"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-chapter",
+        "change": "заведён: сколько видимых сообщений конца прошлой главы chapter-context.mjs даёт писателю на каждый путь"
+      }
+    ]
+  },
+  "skill.chapter.context_runs": {
+    "value": 40,
+    "unit": "прохождений бота",
+    "op": null,
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "build-plan.md §1: числа считают команды; персоны first/last/silent/unresponsive + случайные — наша оценка, сколько нужно, чтобы увидеть разные концы главы"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-chapter",
+        "change": "заведён: прогонов бота, из которых chapter-context.mjs собирает разные концы прошлой главы"
+      }
+    ]
+  },
+  "skill.chapter.tail_paths_max": {
+    "value": 6,
+    "unit": "разных концов прошлой главы",
+    "op": null,
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: больше путей писатель не держит в голове; остальные — числом и в --json"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-chapter",
+        "change": "заведён: сколько разных концов прошлой главы chapter-context.mjs печатает целиком"
+      }
+    ]
+  },
+  "skill.chapter.style_samples": {
+    "value": 4,
+    "unit": "образца и антиобразца на тему",
+    "op": null,
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "docs/style.md §12–13: образцы SG-NN и антиобразцы AS-NN по темам; наша оценка, сколько вставлять перед письмом"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-chapter",
+        "change": "заведён: сколько образцов SG и антиобразцов AS style-sample.mjs печатает по теме"
+      }
+    ]
+  },
   "skill.brainstorm.directions.count": {
     "value": {
       "min": 3,

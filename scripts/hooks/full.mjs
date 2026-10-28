@@ -6,7 +6,8 @@ const HELP = `node scripts/hooks/full.mjs [<id> …] [--json] [--hints] [--all]
 
 Полный режим проверки: check:story (компиляция, тупики, недостижимые узлы) и story:lint
 со всеми прогонами бота (lint.runs.full). Зовут по окончании главы — вручную или скиллом;
-после каждой правки работает быстрый режим (scripts/hooks/post-edit.mjs).
+после каждой правки работает быстрый режим (scripts/hooks/post-edit.mjs). История с узлом beta_stop
+(часть глав) проверяется с story:lint --partial.
 
   <id> …    истории по id из src/stories; без id — изменённые в рабочей копии git
   --json    результат одним JSON в stdout
@@ -45,6 +46,7 @@ function format(r) {
     ? `${c.error ? '✗' : '✓'} ${r.id}: ошибок ${c.error}, предупреждений ${c.warning}, подсказок ${c.hint}`
     : `✗ ${r.id}: не компилируется, lint не запускался`;
   const lines = [head];
+  if (r.partial) lines.push('  часть истории: есть beta_stop — story:lint --partial (проверки целой истории пропущены)');
   for (const level of ['error', 'warning', 'hint']) {
     if (level === 'hint' && !flags.has('--hints')) continue;
     const groups = Map.groupBy(r.findings.filter((f) => f.level === level), (f) => f.check);

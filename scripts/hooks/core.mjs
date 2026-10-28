@@ -3,7 +3,7 @@
 // получить вторую правду о том, что такое «тупик».
 import { spawnSync, execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { closeSync, existsSync, mkdirSync, mkdtempSync, openSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { closeSync, existsSync, mkdirSync, mkdtempSync, openSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -59,6 +59,23 @@ export function changedSince(before, after) {
 
 export const storyExists = (id) => existsSync(join(ROOT, STORIES, id)) || existsSync(join(ROOT, STORIES, `${id}.json`));
 
+const BETA_STOP_RE = /^[ \t]*={2,}[ \t]*beta_stop\b/m;
+
+/**
+ * Часть истории: главы 1–N с узлом beta_stop (набор для теста, главы 1–2 до главы 3). Без --partial lint
+ * считает обрыв части тупиком сюжета и требует всего, что бывает только в целой истории (C-01, C-06, C-40…).
+ */
+export function isPartial(id, root = ROOT) {
+  const dir = join(root, STORIES, id);
+  try {
+    if (existsSync(dir)) return readdirSync(dir).filter((f) => f.endsWith('.ink')).some((f) => BETA_STOP_RE.test(readFileSync(join(dir, f), 'utf8')));
+    const data = JSON.parse(readFileSync(join(root, STORIES, `${id}.json`), 'utf8'));
+    return [data.ink ?? '', ...Object.values(data.includes ?? {})].some((t) => BETA_STOP_RE.test(String(t)));
+  } catch {
+    return false;
+  }
+}
+
 /** Состояние хуков одной сессии: снимок файлов и находки, о которых модели уже сказали. */
 export function sessionState(sessionId) {
   const dir = join(tmpdir(), 'relayer-hooks');
@@ -93,9 +110,10 @@ function runJson(script, args) {
 
 /**
  * Проверка одной истории. quick — story:lint --quick (lint.runs.quick прогонов), иначе полный lint.
+ * partial — story:lint --partial; по умолчанию сам, если в истории есть узел beta_stop (isPartial).
  * Находки приводятся к одному виду: { level, check, where, message, threshold? }.
  */
-export function checkStory(id, { quick = true } = {}) {
+export function checkStory(id, { quick = true, partial = isPartial(id) } = {}) {
   const findings = [];
   // seed 1, как у story:lint: одинаковый сценарий — одинаковые находки, и «новые» не мигают от случайности бота
   const cs = runJson(join(ROOT, 'scripts/check-story.mjs'), [id, '--seed', '1']);
@@ -120,9 +138,10 @@ export function checkStory(id, { quick = true } = {}) {
 
   const lintScript = join(ROOT, 'scripts/lint/lint.mjs');
   // быстрый режим — story:lint --changed --quick --summary: сводка не длиннее skill.hook.max_output_chars
-  let lint = runJson(lintScript, quick ? [id, '--changed', '--quick', '--summary'] : [id]);
+  const part = partial ? ['--partial'] : [];
+  let lint = runJson(lintScript, quick ? [id, '--changed', '--quick', '--summary', ...part] : [id, ...part]);
   // правку откатили к версии из git — --changed историю не видит, а прежние находки нельзя счесть исправленными
-  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [id, '--quick', '--summary']);
+  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [id, '--quick', '--summary', ...part]);
   if (!lint.json) {
     findings.push({ level: 'error', check: 'story:lint', where: 'история', message: firstLines(lint.stderr) || 'story:lint не запустился' });
   }
@@ -134,7 +153,7 @@ export function checkStory(id, { quick = true } = {}) {
   }
   // из сводки — только счётчики по проверкам: находки хук отбирает сам (новые поимённо, прежние числом)
   const byCheck = lint.json?.summary?.split('\n').find((l) => l.startsWith('  по проверкам:'))?.trim() ?? null;
-  return { id, compiled: true, findings, byCheck, stats: { runs: s.runs, nodes: s.nodes.total } };
+  return { id, compiled: true, partial, findings, byCheck, stats: { runs: s.runs, nodes: s.nodes.total } };
 }
 
 export const fingerprint = (f) => `${f.check}|${f.where}|${f.message}`;
