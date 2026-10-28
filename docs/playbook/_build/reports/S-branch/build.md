@@ -96,3 +96,15 @@
   живой истории проверится на ревью.
 - **Автору:** порог дорогой ветки `story.branch.expensive.msgs` — наша оценка; если по ощущению «дорогими»
   выходят сцены-реакции — поднять.
+
+## Попытка 2
+
+- Замечание «не удалось слить после двух попыток»: королева слила S-branch в `build/main` вручную (43e4b44,
+  конфликт был в `CLAUDE.md`; теперь он сливается объединением). Ветка подтянута fast-forward до `build/main`,
+  содержимое скилла не менялось, конфликтов нет.
+- `skill-check.mjs story-branch --min-refs 8 --min-scripts 2` — ок, 0 предупреждений.
+- `story:coverage -- --skill story-branch --min L2` — все кластеры не ниже L2.
+- `lab:triggers` по своему файлу фраз (`--file docs/lab/triggers/story-branch.json --runs 3 --min build`):
+  попадания 36/36, ложных 0, отказов 0 → `docs/lab/runs/S-branch/triggers-own-attempt2.json`.
+  Полный `--skill story-branch` (345 запусков с соседями и маршрутами) в 10 минут переднего плана не влезает —
+  как и в первой попытке (просьба 5 в `requests.md`).
