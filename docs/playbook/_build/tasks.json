@@ -180,9 +180,10 @@
       "writes": [
         "scripts/lint/**",
         "docs/playbook/thresholds.json",
-        "package.json"
+        "package.json",
+        "docs/playbook/claude-code-format.md"
       ],
-      "spec": "Сделай `npm run story:lint` по `docs/playbook/checks.md` и плану §10, T-03:\n- **`docs/playbook/thresholds.json`** — единственное место порогов. Ключ — ID проверки. Поля: `value`, `unit`, `level`, `basis` (`source` / `our_estimate`), `sources[]`, `calibrated_on`, `history[]`. Учти правки T-05: R-63, R-67 и новые правила.\n- **Проверки первой волны** (таблица «Первая волна» в `checks.md`): C-01, C-03, C-06, C-10, C-11, C-12, C-20, C-21, C-26, C-28, C-30, C-31, C-34, C-35, C-40. Каждая — отдельный модуль `scripts/lint/checks/C-NN.mjs` на `scripts/lib`.\n- **Уровни:** ошибка / предупреждение / подсказка. Подавление — `// намеренно: C-NN причина`.\n- **Валидатор разметки** (C-53): неизвестная метка, ось без `VAR`, `reveal` на несуществующую переменную, `намеренно` без ID.\n- **Флаги:** `--json`, `--story <id>`, `--only C-NN,…`, `--partial` (история из части глав с узлом `beta_stop`), `--changed --quick`, `--plan` (скелет `skeleton.ink`).\n- **Вывод для человека:** `уровень · C-NN · узел · сообщение · порог (опора)`.\n\nОшибки на трёх текущих историях допустимы, но код выхода — по флагу `--strict`. Без флага ошибки печатаются, а выход 0, чтобы не ломать общую приёмку. Добавь самопроверку `npm run test:lint` на синтетических примерах с дефектами.",
+      "spec": "Сделай `npm run story:lint` по `docs/playbook/checks.md` и плану §10, T-03:\n- **`docs/playbook/thresholds.json`** — единственное место порогов. Ключ — ID проверки. Поля: `value`, `unit`, `level`, `basis` (`source` / `our_estimate`), `sources[]`, `calibrated_on`, `history[]`. Учти правки T-05: R-63, R-67 и новые правила.\n- **Проверки первой волны** (таблица «Первая волна» в `checks.md`): C-01, C-03, C-06, C-10, C-11, C-12, C-20, C-21, C-26, C-28, C-30, C-31, C-34, C-35, C-40. Каждая — отдельный модуль `scripts/lint/checks/C-NN.mjs` на `scripts/lib`.\n- **Уровни:** ошибка / предупреждение / подсказка. Подавление — `// намеренно: C-NN причина`.\n- **Валидатор разметки** (C-53): неизвестная метка, ось без `VAR`, `reveal` на несуществующую переменную, `намеренно` без ID.\n- **Флаги:** `--json`, `--story <id>`, `--only C-NN,…`, `--partial` (история из части глав с узлом `beta_stop`), `--changed --quick`, `--plan` (скелет `skeleton.ink`).\n- **Вывод для человека:** `уровень · C-NN · узел · сообщение · порог (опора)`.\n\nОшибки на трёх текущих историях допустимы, но код выхода — по флагу `--strict`. Без флага ошибки печатаются, а выход 0, чтобы не ломать общую приёмку. Добавь самопроверку `npm run test:lint` на синтетических примерах с дефектами.\n\nДобавь в `thresholds.json` и ключи конвейера, которые сейчас числами записаны в `docs/playbook/claude-code-format.md` §4.2 и §9 (прогоны на фразу в тесте срабатывания, длина `description`, длина ядра `SKILL.md`, лимит вывода хука) — с префиксами `lab.*` и `skill.*`; в документе замени числа ключами. Плюс `lab.triggers.min_share` и `lab.triggers.max_false` (наша оценка) и `lab.fidelity.min_share` для ревью верности.\n\nПо просьбе T-05 (`reports/T-05/requests.md` п. 5) — ключи для чисел, которые свод записал словами:\n- длина истории: цель 48 ч, потолок 72 ч (R-67, C-31);\n- пауза не больше 24 ч; после последней кнопки — 15 мин (R-67, R-110, C-42);\n- напоминания не больше 2 (R-120, C-32 п. 6);\n- `engine.click.time_jump_label` — порог метки «спустя N» в режиме «по клику» (R-122): **1 ч**, `basis: our_estimate` (решение королевы: скачок мира от часа без метки читается как мгновенный ответ, короче — естественная заминка переписки);\n- сон → утро не меньше 5 ч (R-67, R-121, C-32 п. 5);\n- расхождение карточки с замером — в полтора раза (C-31, наша оценка).\nТам же словари «срок возвращения», «упрёк за отсутствие», «прожитое ожидание», «время игрока» из «Общих данных» `checks.md`; словарь угрозы для передышек C-38; валидатор разметки по таблице C-53. Если порог не привязан к одному ID проверки — ключ вида `story.length.target_h` с полем `checks: [C-31]`.\n\nПо итогам T-01: числа ботов (`maxSteps` в `scripts/lib/bot.mjs`, число прогонов `check-story`, пороги `story-graph`) — тоже ключами в `thresholds.json`, код читает их оттуда.\n\n**Решение королевы о финалах (C-40):** финал — метка `// финал: <имя>` на пути, а не узел `END`. Находка C-40 — путь бота, дошедший до конца истории (`END`, или `DONE` в узле, после которого история кончается), не пройдя ни одной метки `// финал:`. Общий узел `END` после размеченных веток — норма, не находка. `DONE` внутри функций и тредов концом истории не считается. Однострочные условия `{a: x | y}` на ветки не разбираются: если проверке нужны ветки внутри строки — просьба в `requests.md`, `scripts/lib` вне твоих путей.",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -192,7 +193,8 @@
       "inputs": [
         "docs/playbook/checks.md",
         "docs/playbook/rules.md",
-        "scripts/lib/*"
+        "scripts/lib/*",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 150
     },
@@ -208,7 +210,7 @@
         "scripts/story/**",
         "package.json"
       ],
-      "spec": "Сделай команды из плана §10, T-04 (у всех `--help`, `--json`, `--story <id>`):\n- **`story:trace`** — прохождения с видимой перепиской, маршрутом и переменными.\n  - Персоны: случайная, молчун, первая кнопка, последняя кнопка, отказ, любопытный, доверчивый, подозрительный, отвлечённый (уходит на каждой паузе от 30 минут и возвращается к пачке), неотвечающий (не отвечает и проверяет напоминания и ветку «не ответил»).\n  - Флаги: `--mode click|realtime`, `--partial`, `--start <узел> --set var=…`, `--from-save <файл>`, `--visible` (только то, что видит игрок, без ink).\n- **`story:vars`** — переменные: где пишется → где читается; мёртвые; невидимые (читаются только скрытой проверкой).\n- **`story:sessions`** — расписание в обоих режимах, сессии, микросессии, суммарное реальное время против `minutes` карточки, пауза после последней кнопки. Без привязки к часам игрока.\n- **`story:cast`** — контакты: глава появления, реплики, кнопки к нему, главы присутствия, уровень по метрикам (ось / сторона / источник / фон / эпизодический — правила вывода опиши в `--help`).\n- **`story:endings`** — финалы по меткам `// финал:` или `END`, распределение по персонам, какие переменные их решают.\n\nВсё на `scripts/lib`. Добавь самопроверку `npm run test:story-cmd`.",
+      "spec": "Сделай команды из плана §10, T-04 (у всех `--help`, `--json`, `--story <id>`):\n- **`story:trace`** — прохождения с видимой перепиской, маршрутом и переменными.\n  - Персоны: случайная, молчун, первая кнопка, последняя кнопка, отказ, любопытный, доверчивый, подозрительный, отвлечённый (уходит на каждой паузе от 30 минут и возвращается к пачке), неотвечающий (не отвечает и проверяет напоминания и ветку «не ответил»).\n  - Флаги: `--mode click|realtime`, `--partial`, `--start <узел> --set var=…`, `--from-save <файл>`, `--visible` (только то, что видит игрок, без ink).\n- **`story:vars`** — переменные: где пишется → где читается; мёртвые; невидимые (читаются только скрытой проверкой).\n- **`story:sessions`** — расписание в обоих режимах, сессии, микросессии, суммарное реальное время против `minutes` карточки, пауза после последней кнопки. Без привязки к часам игрока.\n- **`story:cast`** — контакты: глава появления, реплики, кнопки к нему, главы присутствия, уровень по метрикам (ось / сторона / источник / фон / эпизодический — правила вывода опиши в `--help`).\n- **`story:endings`** — финалы по меткам `// финал:` или `END`, распределение по персонам, какие переменные их решают.\n\nВсё на `scripts/lib`. Добавь самопроверку `npm run test:story-cmd`.\n\nПо просьбе T-05 (п. 6): персона «неотвечающий» сравнивается с персоной, которая в той же развилке жмёт `#silent` (C-32 п. 7): `story:trace --compare silent` или аналог — исходы и переменные должны совпадать или «не ответил» мягче (решение автора: отсутствие не наказывается сильнее, чем осознанное молчание). Пока движок не знает напоминаний (E-02), «неотвечающий» в «реальном времени» идёт по `#silent`, если он есть.\n\nДо E-02 «неотвечающий» проверяется только по кнопке молчания (`#silent`), полная проверка напоминаний — после E-02 (E-02 расширит `scripts/lib/bot.mjs`).",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -218,7 +220,8 @@
       "inputs": [
         "scripts/lib/*",
         "docs/playbook/build-plan.md §3, §10",
-        "docs/playbook/skills.md §1 (K-01…K-04)"
+        "docs/playbook/skills.md §1 (K-01…K-04)",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 150
     },
@@ -241,15 +244,17 @@
         "README.md",
         "CLAUDE.md",
         "docs/capabilities.json",
-        "e2e/**"
+        "e2e/**",
+        "scripts/kb/story-terms.mjs"
       ],
-      "spec": "Переведи истории на папки (план §10, T-02):\n- **Исходник:** `src/stories/<id>/story.ink` + `meta.json`: описание, `characters`, `chapters`, `cover`; новые поля `revision`, `minutes` (по клику), `days` (реальное время), `free_chapters`.\n- **Главы** — отдельными файлами через `INCLUDE`, если inkjs в браузере их собирает. Проверь. Если нет — склеивать в сборке.\n- **`npm run story:pack`** — собирает один `.json` для загрузки, Pages и теста на телефоне. `story:unpack` раскладывает существующие истории.\n- **Разложи три истории.**\n- **Каталог** (`library.ts`, glob) читает папки. Загрузка `.json` и `.ink` через «Загрузить историю» работает как раньше.\n- **`scripts/lib/story.mjs`** читает обе формы.\n- **Тип `Story`, README, `CLAUDE.md`** («Как добавить историю»), `docs/capabilities.json` (`storyfile`) — в том же коммите.\n- **Проверки:** `story:pack -- --check` — разложить и собрать без потерь.",
+      "spec": "Переведи истории на папки (план §10, T-02):\n- **Исходник:** `src/stories/<id>/story.ink` + `meta.json`: описание, `characters`, `chapters`, `cover`; новые поля `revision`, `minutes` (по клику), `days` (реальное время), `free_chapters`.\n- **Главы** — отдельными файлами через `INCLUDE`, если inkjs в браузере их собирает. Проверь. Если нет — склеивать в сборке.\n- **`npm run story:pack`** — собирает один `.json` для загрузки, Pages и теста на телефоне. `story:unpack` раскладывает существующие истории.\n- **Разложи три истории.**\n- **Каталог** (`library.ts`, glob) читает папки. Загрузка `.json` и `.ink` через «Загрузить историю» работает как раньше.\n- **`scripts/lib/story.mjs`** читает обе формы.\n- **Тип `Story`, README, `CLAUDE.md`** («Как добавить историю»), `docs/capabilities.json` (`storyfile`) — в том же коммите.\n- **Проверки:** `story:pack -- --check` — разложить и собрать без потерь.\n\nПо просьбе T-05 (`reports/T-05/requests.md` п. 4): в `characters` нужны служебные поля, которые игрок не видит на экране истории, — голос (`rules.md` R-75) и функция по главам (R-76), например `voice` и `arc` (или общий объект `_author`). `StoryScreen` их не показывает: иначе «виновная с главы 8» станет спойлером. Опиши их в README и в типе `Story`.\n\nПо итогам T-01 (`reports/T-01/align.md`, `requests.md`):\n- если рядом лежат папка и `.json` с одним id, источник — папка, `.json` — копия от `story:pack`; одинаково для `check:story`, `scripts/lib` и сайта;\n- шапку держать в главном `story.ink`, узлы главного файла — до `INCLUDE` (иначе разъедется нумерация глав); записать в README;\n- `scripts/lib/` и `npm run test:lib` — в `CLAUDE.md` (структура и «Проверка перед коммитом»).\n\nПосле T-07: словарь чистки `scripts/kb/story-terms.mjs` собирается из `src/stories/*.json`. Переведи его на папки (через `scripts/lib/story.mjs`) и проверь, что `npm run kb:clean -- --verify` проходит после раскладки.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet",
-        "npm run story:pack -- --check"
+        "npm run story:pack -- --check",
+        "npm run kb:clean -- --quiet && npm run kb:clean -- --verify"
       ],
       "inputs": [
         "src/engine/story.ts",
@@ -328,7 +333,7 @@
         "docs/playbook/clusters.json",
         "package.json"
       ],
-      "spec": "Сделай `npm run story:coverage` по `flow-review.md` §C («Устройство story:coverage»):\n- **Строки** — единицы знания: `алиас:P/PAT/GREEN/RED/LESSON-NN`, нюансы (`#нюанс`), авторские системы (`SYS`), противоречия (`contra`), разделы `attention`, `R`, `C`, `F`, `LOCAL`.\n- **Кластеры тем** — `docs/playbook/clusters.json`. Первичная разметка — по ссылкам в `for-relayer.md` §6 и `rules.md` «Источники»; владелец кластера — из `owners.md`.\n- **Уровни:**\n  - L0 — нигде;\n  - L1 — только в `sources.md`, покрытием не считается;\n  - L2 — в reference скилла есть блок с якорем и ключевыми терминами;\n  - L3 — исполняемо: проверка `story:lint`, развилка, пример ink или мутант.\n- **Статусы:** `used`, `merged-into`, `rejected:<причина из фиксированного списка>`, `superseded:<ссылка>`, `deferred:<E-NN>`.\n- **Флаги:**\n  - `--skill <имя>` — часть матрицы для скилла;\n  - `--skill <имя> --min L2` — код выхода 1, если кластеры скилла ниже уровня;\n  - `--sources <имя>` — сгенерировать `sources.md` скилла;\n  - `--affected <ID>`;\n  - `--fidelity-sample <имя> 20` — выдать случайные пары «источник ↔ reference» для проверки ревьюером.\n\nПока скиллов нет, всё в L0: это нормально. Самопроверка — `npm run test:coverage`.",
+      "spec": "Сделай `npm run story:coverage` по `flow-review.md` §C («Устройство story:coverage»):\n- **Строки** — единицы знания: `алиас:P/PAT/GREEN/RED/LESSON-NN`, нюансы (`#нюанс`), авторские системы (`SYS`), противоречия (`contra`), разделы `attention`, `R`, `C`, `F`, `LOCAL`.\n- **Кластеры тем** — `docs/playbook/clusters.json`. Первичная разметка — по ссылкам в `for-relayer.md` §6 и `rules.md` «Источники»; владелец кластера — из `owners.md`.\n- **Уровни:**\n  - L0 — нигде;\n  - L1 — только в `sources.md`, покрытием не считается;\n  - L2 — в reference скилла есть блок с якорем и ключевыми терминами;\n  - L3 — исполняемо: проверка `story:lint`, развилка, пример ink или мутант.\n- **Статусы:** `used`, `merged-into`, `rejected:<причина из фиксированного списка>`, `superseded:<ссылка>`, `deferred:<E-NN>`.\n- **Флаги:**\n  - `--skill <имя>` — часть матрицы для скилла;\n  - `--skill <имя> --min L2` — код выхода 1, если кластеры скилла ниже уровня;\n  - `--sources <имя>` — сгенерировать `sources.md` скилла;\n  - `--affected <ID>`;\n  - `--fidelity-sample <имя> 20` — выдать случайные пары «источник ↔ reference» для проверки ревьюером.\n\nПока скиллов нет, всё в L0: это нормально. Самопроверка — `npm run test:coverage`.\n\nПо итогам T-10 (`reports/T-10/requests.md` п. 4): колонки `owner_skill` и `target` бери из `docs/playbook/owners.md` — строки R/C/F/якорей по ID, строки базы по кластеру TH-NN из колонки «опора»; строка без кластера — в отчёт как «без владельца». Проверку уникальности владельцев из `owners.md` §8 сделай постоянной командой `npm run story:coverage -- --owners-check` (или отдельным скриптом) и добавь её в самопроверку.",
       "accept": [
         "npm run story:coverage -- --summary",
         "npm run test:coverage"
@@ -339,6 +344,39 @@
         "docs/playbook/attention-merged.md"
       ],
       "timeoutMin": 150
+    },
+    {
+      "id": "T-10b",
+      "wave": "w0-foundation",
+      "type": "doc",
+      "title": "Владельцы для строк базы без владельца, покрытие без потерь",
+      "deps": [
+        "T-09"
+      ],
+      "writes": [
+        "docs/playbook/owners.md",
+        "docs/playbook/clusters.json",
+        "docs/playbook/coverage.json",
+        "scripts/kb/coverage.mjs",
+        "scripts/kb/coverage*.mjs",
+        "CLAUDE.md",
+        "docs/playbook/flow-review.md"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/T-09/unowned.md",
+        "docs/playbook/_build/reports/T-09/requests.md",
+        "docs/playbook/_build/reports/T-09/build.md",
+        "docs/playbook/owners.md",
+        "docs/playbook/build-plan.md §5",
+        "docs/books/_clean/* (`npm run kb:clean -- --quiet`)",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "npm run story:coverage -- --owners-check",
+        "npm run story:coverage -- --summary",
+        "npm run test:coverage"
+      ],
+      "spec": "T-09 нашёл 291 строку базы без владельца (`reports/T-09/unowned.md`), а у `story-desk` — ноль строк. Знания не должны теряться (INTENT: «покрытие закрыто по уровням»).\n1. **Каждой из 291 строки — владелец.** Прочитай строку в `docs/books/_clean/<алиас>/` и реши: какому кластеру TH-NN и скиллу из `build-plan.md` §5 она принадлежит (дописать ID в «опору» TH-NN в `owners.md` §5 или `manual.th` в `docs/playbook/clusters.json`), либо закрыть её статусом из фиксированного списка (`merged-into:<ID>`, `rejected:duplicate:<кластер>`, `superseded:A-NN`, `deferred:E-NN` и др. из `story:coverage --help`) с причиной в `coverage.json`. `rejected` без веской причины не ставь: лучше владелец.\n2. **`story-desk`** (состояние истории, процесс, несколько авторов, Б-1, Б-5, Б-6) — назначь ему строки процесса, версий и тестирования из `narrative-testing`, `narrative-postmortems`, `dille-ultimate-guide`, `bateman-game-writing` (план §5), чтобы его часть матрицы не была пустой.\n3. **`story:coverage -- --summary` выходит с кодом 1**, если есть строки без владельца или с дублями владельцев — тогда приёмка W0 и F-final поймает потерю знаний.\n4. `owners.md` §8 — ссылка на `npm run story:coverage -- --owners-check` вместо встроенного `node -e`.\n5. `CLAUDE.md`: `npm run story:coverage` и `npm run test:coverage` в «Команды» и «Проверку перед коммитом».\n6. `flow-review.md` §C «Подсчёт»: поправь число строк (объявлено 1843, восемь ссылок — на несуществующие ID; список в `reports/T-09/requests.md` п. 4).\nВ отчёте — таблица: сколько строк каким скиллам ушло, сколько закрыто статусами и почему."
     },
     {
       "id": "T-11",
@@ -354,7 +392,7 @@
         "scripts/hooks/**",
         ".claude/settings.json"
       ],
-      "spec": "Добавь хуки проекта по `docs/playbook/claude-code-format.md`:\n- **`PostToolUse` на правку `src/stories/**`** — быстрый режим: `check:story` по изменённой истории и `story:lint --changed --quick`. Ошибки возвращаются модели так, чтобы она их увидела, вывод короткий. Полный режим (`scripts/hooks/full.mjs`) вызывается вручную или скиллом по окончании главы.\n- **`SessionStart`** — `npm run story:status -- --all`, коротко.\n\nНе ломай настройки T-00 в `.claude/settings.json`: добавляй, а не перезаписывай. Проверь хуки экспериментом через `claude -p`: правка ink → видна ошибка.",
+      "spec": "Добавь хуки проекта по `docs/playbook/claude-code-format.md`:\n- **`PostToolUse` на правку `src/stories/**`** — быстрый режим: `check:story` по изменённой истории и `story:lint --changed --quick`. Ошибки возвращаются модели так, чтобы она их увидела, вывод короткий. Полный режим (`scripts/hooks/full.mjs`) вызывается вручную или скиллом по окончании главы.\n- **`SessionStart`** — `npm run story:status -- --all`, коротко.\n\nНе ломай настройки T-00 в `.claude/settings.json`: добавляй, а не перезаписывай. Проверь хуки экспериментом через `claude -p`: правка ink → видна ошибка.\n\nУточнения королевы по итогам T-00 (`claude-code-format.md` §3, §9):\n- матчер `PostToolUse` — `Write|Edit|MultiEdit` **и** `Bash`: правка `src/stories/**` через Bash тоже должна ловиться (для Bash смотри, менялись ли файлы историй: `git status --porcelain src/stories`);\n- модели ошибки возвращай через `hookSpecificOutput.additionalContext` (или exit 2 + stderr) — обычный stdout модель не видит; вывод короче 10 000 знаков;\n- по `agent_type` во входе хука можно выбирать быстрый режим для `chapter-writer`;\n- `SessionStart` — матчер `startup|resume|clear|compact`, чтобы статус возвращался и после сжатия.\nВ отчёте — протокол эксперимента: правка ink через Edit и через Bash, в обоих случаях модель видит ошибку.",
       "accept": [
         "node -e \"JSON.parse(require('fs').readFileSync('.claude/settings.json','utf8'))\"",
         "node scripts/hooks/full.mjs --help"
@@ -377,7 +415,7 @@
         "docs/lab/triggers/**",
         "package.json"
       ],
-      "spec": "Сделай `npm run lab:triggers`:\n- **Фразы:** `docs/lab/triggers/<скилл>.json` — `{ \"positive\": [фразы], \"negative\": [фразы] }`. Плюс `docs/lab/triggers/_routing.json`: фраза → ожидаемый скилл или `none`.\n- **Прогон:** скрипт гоняет каждую фразу через `claude -p --model claude-opus-5-5 --output-format stream-json --verbose` из корня репозитория, 3 прогона на фразу (`--runs N`). По потоку определяет, какой скилл вызван: Skill tool или чтение `SKILL.md` — как установлено в `claude-code-format.md`.\n- **Результат:** доля попаданий по скиллу, ложные срабатывания, таблица и `--json`. Записывает в `docs/lab/runs/triggers/<дата>.json`.\n- **Флаги:** `--skill <имя>` — только фразы этого скилла и его соседей; `--min <доля>` — код выхода. Параллельность ограничь (2–3 одновременно).\n\nПока скиллов нет, прогон на пустом наборе проходит. Сделай шаблон файла фраз и пример.",
+      "spec": "Сделай `npm run lab:triggers`:\n- **Фразы:** `docs/lab/triggers/<скилл>.json` — `{ \"positive\": [фразы], \"negative\": [фразы] }`. Плюс `docs/lab/triggers/_routing.json`: фраза → ожидаемый скилл или `none`.\n- **Прогон:** скрипт гоняет каждую фразу через `claude -p --model claude-opus-5-5 --output-format stream-json --verbose` из корня репозитория, 3 прогона на фразу (`--runs N`). По потоку определяет, какой скилл вызван, как установлено в `claude-code-format.md` §4.2: срабатывание — первый `tool_use` `Skill` без `parent_tool_use_id`. Чтение `SKILL.md` через Read/Bash — отдельная колонка «обход», не попадание. Запуск с `--no-session-persistence --strict-mcp-config`; перед прогоном сверь `init.skills` с ожидаемым набором проектных скиллов и предупреди, если в листинге чужие.\n- **Результат:** доля попаданий по скиллу, ложные срабатывания, таблица и `--json`. Записывает в `docs/lab/runs/triggers/<дата>.json`.\n- **Флаги:** `--skill <имя>` — только фразы этого скилла и его соседей; `--min <доля>` — код выхода. Параллельность ограничь (2–3 одновременно).\n\nПока скиллов нет, прогон на пустом наборе проходит. Сделай шаблон файла фраз и пример.\n\nЧисла прогона (сколько прогонов на фразу, порог доли попаданий, допустимая доля ложных) — ключи `lab.triggers.*` в `docs/playbook/thresholds.json`, если файл уже есть; иначе дефолты в коде с пометкой и просьбой в `requests.md`.",
       "accept": [
         "npm run lab:triggers -- --help"
       ],
@@ -401,14 +439,15 @@
         "scripts/lab/**",
         "package.json"
       ],
-      "spec": "Сделай набор мутантов: 20–25 историй-копий с внесёнными дефектами и ключом (план §10, T-13).\n- **Основа** — маленькая чистая история, специально написанная тобой на 3–4 главы, с разметкой. Не наши истории.\n- **Каждый мутант:** `docs/lab/mutants/<id>/` (`story.ink` + `meta.json`) и запись в `docs/lab/mutants/key.json` — зона скилла, C-NN, узел, что сломано.\n- **Дефекты:**\n  - ставка за кнопкой;\n  - мёртвая переменная;\n  - невидимый порог финала;\n  - монолог на 15 реплик;\n  - эпилог из 12 сообщений с часовыми паузами;\n  - контакт с одной репликой;\n  - 7 контактов в первой главе;\n  - срок в реплике перед паузой;\n  - «доброе утро» через 10 секунд в режиме «по клику»;\n  - упрёк за отсутствие без `#silent`;\n  - напоминание без продолжения;\n  - финал без метки;\n  - улика после разгадки;\n  - кнопки с одинаковым ответом;\n  - пауза без крючка;\n  - голоса двух контактов неотличимы;\n  - нестыковка факта между ветками;\n  - первая кнопка на 12-м сообщении;\n  - платная граница без крючка (если есть поле).\n- **`npm run skills:test`:**\n  - без скиллов — проверяет, что `story:lint` ловит мутантов своей зоны;\n  - `--skill <имя>` — запускает скилл через `claude -p` на мутантах его зоны и сверяет находки с ключом.\n\n  Отчёт — полнота по зонам.",
+      "spec": "Сделай набор мутантов: 20–25 историй-копий с внесёнными дефектами и ключом (план §10, T-13).\n- **Основа** — маленькая чистая история, специально написанная тобой на 3–4 главы, с разметкой. Не наши истории.\n- **Каждый мутант:** `docs/lab/mutants/<id>/` (`story.ink` + `meta.json`) и запись в `docs/lab/mutants/key.json` — зона скилла, C-NN, узел, что сломано.\n- **Дефекты:**\n  - ставка за кнопкой;\n  - мёртвая переменная;\n  - невидимый порог финала;\n  - монолог на 15 реплик;\n  - эпилог из 12 сообщений с часовыми паузами;\n  - контакт с одной репликой;\n  - 7 контактов в первой главе;\n  - срок в реплике перед паузой;\n  - «доброе утро» через 10 секунд в режиме «по клику»;\n  - упрёк за отсутствие без `#silent`;\n  - напоминание без продолжения;\n  - финал без метки;\n  - улика после разгадки;\n  - кнопки с одинаковым ответом;\n  - пауза без крючка;\n  - голоса двух контактов неотличимы;\n  - нестыковка факта между ветками;\n  - первая кнопка на 12-м сообщении;\n  - платная граница без крючка (если есть поле).\n- **`npm run skills:test`:**\n  - без скиллов — проверяет, что `story:lint` ловит мутантов своей зоны;\n  - `--skill <имя>` — запускает скилл через `claude -p` на мутантах его зоны и сверяет находки с ключом.\n\n  Отчёт — полнота по зонам.\n\nПо просьбе T-09 (п. 5): `story:coverage` засчитывает RED на L3 только с мутантом и ищет полный ID строки в `docs/lab/mutants/**`. В ключе каждого мутанта — `\"catches\": [\"алиас:RED-NN\", \"C-NN\"]` полными ID.",
       "accept": [
         "npm run skills:test -- --lint-only"
       ],
       "inputs": [
         "docs/playbook/checks.md",
         "scripts/lint/*",
-        "docs/playbook/build-plan.md §13"
+        "docs/playbook/build-plan.md §13",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 150
     },
@@ -419,13 +458,22 @@
       "type": "code",
       "deps": [
         "T-03a",
-        "T-04a"
+        "T-04a",
+        "T-06",
+        "T-08"
       ],
       "writes": [
         "scripts/lint/**",
-        "docs/playbook/thresholds.json"
+        "docs/playbook/thresholds.json",
+        "docs/playbook/claude-code-format.md",
+        "docs/playbook/attention-merged.md",
+        "docs/style.md",
+        "docs/playbook/checks.md",
+        "docs/capabilities.json",
+        "docs/PROMPT.md",
+        "docs/playbook/rules.md"
       ],
-      "spec": "Допиши в `story:lint` все остальные проверки `checks.md`, которых нет в первой волне (C-02, C-04, C-05, C-07…C-09, C-13…C-19, C-22…C-25, C-27, C-29, C-32, C-33, C-36…C-39, C-41…C-52, C-54), с учётом правок T-05. Пороги — в `thresholds.json`.\n- Проверки, которым нужна модель (голоса, смысл), реализуй как метрики-кандидаты с уровнем «подсказка» и пометкой `модель`.\n- Проверки, которые невозможны без фичи движка, пометь `deferred:E-NN` в `thresholds.json`.\n\nОбнови `npm run test:lint`.",
+      "spec": "Допиши в `story:lint` все остальные проверки `checks.md`, которых нет в первой волне (C-02, C-04, C-05, C-07…C-09, C-13…C-19, C-22…C-25, C-27, C-29, C-32, C-33, C-36…C-39, C-41…C-52, C-54), с учётом правок T-05. Пороги — в `thresholds.json`.\n- Проверки, которым нужна модель (голоса, смысл), реализуй как метрики-кандидаты с уровнем «подсказка» и пометкой `модель`.\n- Проверки, которые невозможны без фичи движка, пометь `deferred:E-NN` в `thresholds.json`.\n\nОбнови `npm run test:lint`.\n\n## Доделать за T-03a, если там этого нет\n\nT-03a стартовал раньше, чем королева дописала его задание. Проверь `thresholds.json` и `scripts/lint` и доделай то, чего нет:\n\nДобавь в `thresholds.json` и ключи конвейера, которые сейчас числами записаны в `docs/playbook/claude-code-format.md` §4.2 и §9 (прогоны на фразу в тесте срабатывания, длина `description`, длина ядра `SKILL.md`, лимит вывода хука) — с префиксами `lab.*` и `skill.*`; в документе замени числа ключами. Плюс `lab.triggers.min_share` и `lab.triggers.max_false` (наша оценка) и `lab.fidelity.min_share` для ревью верности.\n\nПо просьбе T-05 (`reports/T-05/requests.md` п. 5) — ключи для чисел, которые свод записал словами:\n- длина истории: цель 48 ч, потолок 72 ч (R-67, C-31);\n- пауза не больше 24 ч; после последней кнопки — 15 мин (R-67, R-110, C-42);\n- напоминания не больше 2 (R-120, C-32 п. 6);\n- `engine.click.time_jump_label` — порог метки «спустя N» в режиме «по клику» (R-122): **1 ч**, `basis: our_estimate` (решение королевы: скачок мира от часа без метки читается как мгновенный ответ, короче — естественная заминка переписки);\n- сон → утро не меньше 5 ч (R-67, R-121, C-32 п. 5);\n- расхождение карточки с замером — в полтора раза (C-31, наша оценка).\nТам же словари «срок возвращения», «упрёк за отсутствие», «прожитое ожидание», «время игрока» из «Общих данных» `checks.md`; словарь угрозы для передышек C-38; валидатор разметки по таблице C-53. Если порог не привязан к одному ID проверки — ключ вида `story.length.target_h` с полем `checks: [C-31]`.\n\nПо итогам T-01: числа ботов (`maxSteps` в `scripts/lib/bot.mjs`, число прогонов `check-story`, пороги `story-graph`) — тоже ключами в `thresholds.json`, код читает их оттуда.\n\n**Решение королевы о финалах (C-40):** финал — метка `// финал: <имя>` на пути, а не узел `END`. Находка C-40 — путь бота, дошедший до конца истории (`END`, или `DONE` в узле, после которого история кончается), не пройдя ни одной метки `// финал:`. Общий узел `END` после размеченных веток — норма, не находка. `DONE` внутри функций и тредов концом истории не считается. Однострочные условия `{a: x | y}` на ветки не разбираются: если проверке нужны ветки внутри строки — просьба в `requests.md`, `scripts/lib` вне твоих путей.\n\n## Числа → ключи во всех сводных документах (решение королевы)\n\n`thresholds.json` — единственное место чисел. Сделай проход «числа → ключи»:\n- `docs/playbook/attention-merged.md` §6 (`#attn-load`): 64 ключа-кандидата (просьба T-08, `reports/T-08/requests.md` п. 1) — завести в `thresholds.json` (опора: `ист.` → `source`, `оц.` → `our_estimate`; `pause.max`, `story.realtime`, `tail.after_last_button`, `reading.per_day` — `basis: author_decision` с ссылкой на A-05), а в документе оставить ключи; числа в остальных разделах файла — тоже ключами там, где ключ есть;\n- `docs/style.md` (T-06) и `docs/playbook/claude-code-format.md` — числа-пороги заменить ключами (факты о лимитах самого Claude Code — не пороги, их оставить);\n- `rules.md` и `checks.md` — это исходный текст свода: числа в нём не вырезать, но у каждого порога проверки в `checks.md` поставить ключ рядом (`` `C-31` → `story.length.max_h` ``), чтобы было видно, где правда.\nЕсли ключ T-03a назван иначе, чем кандидат T-08, — одно имя, таблица соответствия в отчёте.\n\nПо просьбе T-10 (п. 5): `owners.md` назначает `story:lint` владельцем C-52, C-53 и порогов `#attn-load`. В выводе линта у находки — колонка «кто чинит»: скилл-владелец проверки из `owners.md` §3 (в `--json` поле `owner`).\n\n## Просьбы T-03a (`reports/T-03a/requests.md`) — сделать здесь\n1. (перенесено в T-03c: узел строки перед `-> END` в `scripts/lib/bot.mjs`)\n2. `docs/capabilities.json` и `docs/PROMPT.md` — раздел о разметке C-53 (шапка из 4 строк, `// reveal:`, `// намеренно: C-NN причина`, `// финал: <имя>`), затем `npm run prompt -- --quiet`.\n3. `CLAUDE.md`: `npm run story:lint` (флаги) и `npm run test:lint` в «Команды» и «Проверку перед коммитом»; `scripts/lint/` и `docs/playbook/thresholds.json` — в «Устройство».\n4. `checks.md`: словари — в `thresholds.json` (`dict.*`); «ошибка — код 1» → «`story:lint --strict`»; C-38 → `dict.threat`; у порогов — ключи рядом (см. выше).\n5. `rules.md`: R-67, R-110, R-120, R-121, R-122 — рядом с числами ключи `story.*` и `engine.click.time_jump_label`.\n6. **Решение королевы про «Заметки»:** `#from:notes` — служебный контакт (внешняя память игрока), а не персонаж. C-21 и другие проверки контактов не считают служебные контакты: список `dict.service_contacts` (`notes`) в `thresholds.json` плюс любой персонаж с `service: true` в `meta.json` (если T-02 завёл такое поле — используй его имя).\n7. `story:lint --summary` — счётчики по проверкам и топ находок для хука T-11; длина — не больше `skill.hook.max_output_chars`.",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -434,9 +482,97 @@
       ],
       "inputs": [
         "docs/playbook/checks.md",
-        "scripts/lint/*"
+        "scripts/lint/*",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180
+    },
+    {
+      "id": "T-03c",
+      "wave": "w0-foundation",
+      "type": "code",
+      "title": "Единые пороги, словари и время игрока для story:lint и story:*",
+      "deps": [
+        "T-03b",
+        "T-04b"
+      ],
+      "writes": [
+        "scripts/lib/**",
+        "scripts/story/**",
+        "scripts/lint/**",
+        "docs/playbook/thresholds.json",
+        "CLAUDE.md",
+        "package.json",
+        "scripts/lab/**",
+        "docs/lab/mutants/**",
+        "docs/playbook/clusters.json"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/T-03a/requests.md",
+        "docs/playbook/_build/reports/T-04a/requests.md",
+        "docs/playbook/_build/reports/T-04a/align.md",
+        "docs/playbook/checks.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы",
+        "docs/playbook/_build/reports/T-13/requests.md"
+      ],
+      "accept": [
+        "npm run build",
+        "npm run check:story",
+        "npm run test:lib",
+        "npm run test:lint",
+        "npm run test:story-cmd",
+        "npm run story:lint",
+        "npm run story:trace -- --help",
+        "npm run skills:test -- --lint-only",
+        "npm run test:lab:mutants",
+        "npm run test:coverage"
+      ],
+      "spec": "Параллельные T-03a и T-04a завели одно и то же дважды. Сведи к одному источнику, не меняя поведения команд (сравни вывод `story:lint --json`, `story:trace`, `story:sessions`, `story:cast`, `story:endings` на трёх историях до и после; расхождения — только ожидаемые, с объяснением в отчёте):\n1. **Пороги.** Перенеси ключи `scripts/story/core/thresholds.default.json` (24 ключа: `bot.*`, `trace.*`, `sessions.*`, `click.*`, `cast.*`, `endings.*`, `vars.*`) в `docs/playbook/thresholds.json` с единицей, опорой и источниками; запасной файл удали. `click.jump_label` = существующий `engine.click.time_jump_label` (одно имя). Один загрузчик порогов — в `scripts/lib/` (`thresholds.mjs`), им пользуются и `scripts/lint`, и `scripts/story`.\n2. **Словари.** `scripts/story/core/lexicon.mjs` и словари `story:lint` (`dict.*` в `thresholds.json`) — один источник: `thresholds.json` `dict.*` + загрузчик в `scripts/lib/lexicon.mjs`. Персоночные словари (что персона считает «доверчивым» ответом) могут остаться в `scripts/story`.\n3. **Время игрока.** Одна формула (набор по `engine.typing` + зазоры + `#delay`) в `scripts/lib/` — для `story:lint`, `story:trace`, `story:sessions`, `story:diff`. Сейчас их две (`scripts/story/core/timeline.mjs` и `scripts/lint/journal.mjs`).\n4. **`scripts/lib/bot.mjs`, `play()`:** строка перед `-> END` получает узел предыдущей строки (после последнего `Continue()` у inkjs пусты `previousPointer` и `currentPathString`). Запоминай указатель до `Continue()` или бери узел по разнице `VisitCountAtPathString`. Убери обходы по тексту в `scripts/lint/journal.mjs` и по `visited` в `story:endings`, если они станут не нужны.\n5. **`scripts/lib/ink.mjs`:** однострочное условие с переходом `{x == 1: -> a}` разбирай как условную ветку, а не как реплику плюс безусловный `divert`. Убери обход `isInlineDivert()` в `scripts/story/core/vars-index.mjs`. Проверь C-03 и C-06 до и после.\n6. **`noAnswer()`** из `scripts/story/core/personas.mjs` перенеси в `scripts/lib/bot.mjs` (персона «неотвечающий»), чтобы E-02 подключил напоминания в своей зоне `scripts/lib/**`.\n7. **`CLAUDE.md`:** команды `story:trace`, `story:vars`, `story:sessions`, `story:cast`, `story:endings`, `test:story-cmd` (и `story:diff`, `story:rule`, `story:status`, `story:cold-read` после T-04b) — в «Команды»; `scripts/story/` — в «Устройство».\nДобавь тесты на пункты 4 и 5 в `npm run test:lib`.\n8. **`scripts/lint/lint.mjs`:** `process.exit(...)` сразу после `console.log` обрезает `--json` в трубе на 64 КБ. Замени на `process.exitCode = …` (как в `scripts/story/core/cli.mjs`); проверь `node scripts/lint/lint.mjs <самая большая история> --json | node -e 'JSON.parse(require(\"fs\").readFileSync(0))'`. Пройди так же все `scripts/**/*.mjs` с `--json`.\n9. **Мутанты (T-13, `reports/T-13/requests.md` п. 1–3 и `align.md`):**\n   - `C-26`: прощание перед паузой — последняя входящая реплика, пропуская `#sys` «… не в сети» (иначе стиль ST-60 прячет прощание); после правки — `C-26` в поле `lint` у `m19` в `scripts/lab/mutants-spec.mjs`;\n   - `C-11`: `#silent` без `~` и без реплики, чей переход совпадает с соседней кнопкой, — «без следа»;\n   - `C-53`: неразмеченные цели распределителя финалов, а не только узлы с `-> END`;\n   - поле `lint_auto: false` у мутанта, которого `story:lint` по определению не ловит (задача скилла), и учёт его в `lintVerdict`;\n   - в ключе каждого мутанта — `\"catches\": [\"алиас:RED-NN\", \"C-NN\"]` полными ID (просьба T-09: `story:coverage` засчитывает RED на L3 только так);\n   - пересобери `npm run skills:test -- --build`; полнота линта не ниже прежней.\n10. `CLAUDE.md`: `npm run skills:test` и `npm run test:lab:mutants` — в «Команды» и «Проверку перед коммитом».\n11. **Основа мутантов под новые проверки T-03b.** После T-03b `npm run skills:test -- --lint-only` падает: «основа не чистая» — `docs/lab/mutants/_base` ловят C-07 (финалы `end_deal`, `end_stop` не ссылаются на решения игрока), C-14 (пол игрока в `ch2_end`), C-16 (ответ угадывается по позиции кнопки, `ch4_choice` очевиден), C-51 (`mira` говорит одинаково знакомому и незнакомому), C-54 (до `ch4_truth` доходят меньше чем с 2 уликами). Исправь основу через `scripts/lab/mutants-spec.mjs` (основа — чистая история с хорошими практиками, а не набор дефектов), пересобери мутантов, проверь, что каждый мутант по-прежнему ловится своей проверкой. Если находка — ложное срабатывание проверки, а не дефект основы, — чини проверку и запиши в отчёте.\n12. После любых правок документов свода — `npm run story:coverage -- --build-clusters`, иначе `test:coverage` падает на «clusters.json отстал»."
+    },
+    {
+      "id": "T-03d",
+      "wave": "w0-foundation",
+      "type": "code",
+      "title": "Калибровка шумных проверок и чистые мутанты перед базовым снимком",
+      "deps": [
+        "T-03c"
+      ],
+      "writes": [
+        "scripts/lint/**",
+        "scripts/lab/**",
+        "docs/lab/mutants/**",
+        "scripts/kb/coverage.mjs",
+        "docs/playbook/clusters.json",
+        "docs/playbook/thresholds.json",
+        "scripts/check-story.mjs",
+        "scripts/story-graph.mjs",
+        "scripts/hooks/**",
+        "scripts/kb/**",
+        "docs/playbook/checks.md",
+        "docs/playbook/rules.md",
+        "scripts/story/**"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/T-03b/build.md",
+        "docs/playbook/_build/reports/T-03b/align.md",
+        "docs/playbook/_build/reports/T-03b/requests.md",
+        "docs/playbook/_build/reports/T-03c/build.md",
+        "docs/playbook/checks.md",
+        "docs/lab/mutants/key.json",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы",
+        "docs/playbook/_build/reports/T-03c/requests.md"
+      ],
+      "accept": [
+        "npm run build",
+        "npm run check:story",
+        "npm run story:lint",
+        "npm run test:lint",
+        "npm run test:lib",
+        "npm run test:coverage",
+        "npm run skills:test -- --lint-only",
+        "npm run test:lab:mutants"
+      ],
+      "spec": "Перед базовым снимком (T-15, Э1) линт не должен запоминать шум как норму. Доделай то, что T-03b и T-03c оставили открытым (прочитай их отчёты; уже сделанное не переделывай):\n1. **Шумные проверки** (`reports/T-03b/align.md`): C-27 (больше сотни подсказок на одну историю), C-17 (медиана с начала истории вместо окна главы), C-24 (совпадение одного корня ставки вместо двух). Перекалибруй по `checks.md`: на каждой — что ловилось до, что после, на трёх историях и мутантах; запись в `history` порога (`thresholds.json`) с причиной. Цель — находка значит дефект, а не шум; мутанты зоны по-прежнему ловятся.\n2. **Мутанты:** основа `docs/lab/mutants/_base` чистая под всеми проверками (если T-03c не закончил), `m10` сведён с проверкой, которая его ловит (C-47 против ключа C-32 — реши, что верно, и поправь ключ или проверку), `npm run skills:test -- --lint-only` зелёный.\n3. **`clusters.json`:** сборщик (`scripts/kb/coverage.mjs`, `--build-clusters`) съедает `_` в ключах (`story.length.target h`) — почини и пересобери.\n4. **Числа ботов:** `scripts/check-story.mjs`, `scripts/story-graph.mjs` читают `bot.runs`, `bot.max_runs`, `bot.max_lines`, `bot.graph_runs`, `bot.graph_max_lines` из `thresholds.json` через общий загрузчик `scripts/lib` (если T-03c не сделал).\n5. **Хук T-11:** быстрый режим вызывает `story:lint --changed --quick --summary`, вывод в пределах `skill.hook.max_output_chars`.\n**Решение королевы о 9 расхождениях T-08 / `checks.md`** (таблица в `reports/T-03b/build.md`): оставлены значения проверок, откалиброванные на трёх историях; в `docs/playbook/attention-merged.md` §6 ключи уже указывают на них — ничего не меняй, только убедись, что в `thresholds.json` у этих ключей в `history` есть строка «расхождение с кандидатом T-08: оставлено значение проверки, решение королевы».\n6. **Просьбы T-03c (`reports/T-03c/requests.md` п. 1–6):** `check-story.mjs` и `scripts/hooks/full.mjs` — `process.exitCode` вместо `process.exit` (обрезка `--json` в трубе), `maxSteps` → `bot.max_lines`; импорты `scripts/kb/coverage.mjs`, `scripts/hooks/core.mjs` → `scripts/lib/thresholds.mjs`, затем удалить переадресацию `scripts/lint/thresholds.mjs`; `checks.md` — описания C-24 (`story.stake.min_roots`), C-26, C-11, C-53 и строка про словари (`dict.*`, `scripts/lib/lexicon.mjs`); `rules.md` R-122 → `engine.click.time_jump_label`; затем `--build-clusters`.\n7. **Ключи проверок называются `C-NN.*`.** Ключ, который T-03c завёл как `story.stake.min_roots`, — переименуй в `C-24.min_roots` (`story.*` — только общие определения истории). То же для других ключей проверок под `story.*`, если найдёшь.\n8. `scripts/lab/triggers.mjs`: `jobs`, `maxTurns`, `timeout` — ключами `lab.triggers.*`. Ключ `vars.silent_chapters`: сделай метку «молчит больше N глав» в `story:vars` или убери ключ."
     },
     {
       "id": "T-16",
@@ -455,7 +591,8 @@
       ],
       "inputs": [
         "docs/playbook/flow-review.md раздел A",
-        "docs/playbook/build-plan.md §2, §3, §7"
+        "docs/playbook/build-plan.md §2, §3, §7",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 60
     },
@@ -467,18 +604,22 @@
       "deps": [
         "T-02",
         "T-03b",
-        "T-04a"
+        "T-04a",
+        "T-03c",
+        "T-03d"
       ],
       "writes": [
         "docs/lab/baseline.md",
         "docs/lab/journal.md",
         "docs/lab/runs/**"
       ],
-      "spec": "Сделай базовый снимок (план §13, Э1). Прогони по трём историям `story:lint`, `story:trace` (все персоны, оба режима), `story:sessions`, `story:cast`, `story:endings`, `story:vars`. Запиши:\n- `docs/lab/baseline.md` — таблица метрик по историям и кратко главное;\n- сырые выводы — в `docs/lab/runs/T-15/`;\n- первую запись `docs/lab/journal.md`.\n\nСверь с `docs/playbook/story-findings.md`: какие находки уже ловятся командами, а какие нет.",
+      "spec": "Сделай базовый снимок (план §13, Э1). Прогони по трём историям `story:lint`, `story:trace` (все персоны, оба режима), `story:sessions`, `story:cast`, `story:endings`, `story:vars`. Запиши:\n- `docs/lab/baseline.md` — таблица метрик по историям и кратко главное;\n- сырые выводы — в `docs/lab/runs/T-15/`;\n- первую запись `docs/lab/journal.md`.\n\nСверь с `docs/playbook/story-findings.md`: какие находки уже ловятся командами, а какие нет.\n\nИзвестное: `days` у «Чужого голоса» выше потолка длины — это находка C-31 (пауз слишком много или они длинные). Чинить паузы в сценарии, а не цифру на карточке.",
       "accept": [
         "test -s docs/lab/baseline.md"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 90
     },
     {
@@ -505,7 +646,10 @@
         "T-13",
         "T-03b",
         "T-16",
-        "T-15"
+        "T-15",
+        "T-03c",
+        "T-10b",
+        "T-03d"
       ],
       "writes": [],
       "spec": "Ревью волны 0: основа (библиотека, формат, проверки, команды, покрытие, стиль, свод).",
@@ -538,11 +682,11 @@
         ".claude/skills/story-desk/**",
         "docs/lab/triggers/story-desk.json"
       ],
-      "spec": "Собери скилл `story-desk` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** состояние работы над историей в `docs/stories/<id>/` (STATUS, decisions, ideas, plans, reviews, playtests — план §7). Шаги Б-1, Б-5, Б-6, несколько историй и авторов, банк идей, что устарело при смене ядра. Команда `story:status` уже есть — опирайся на неё. Скрипты: `decision-add`, `idea-park`, `stale-check`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, narrative-postmortems, dille-ultimate-guide, bateman-game-writing.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-desk`) с поправками плана §5. Минимум references: 6, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-desk.json`.",
+      "spec": "Собери скилл `story-desk` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** состояние работы над историей в `docs/stories/<id>/` (STATUS, decisions, ideas, plans, reviews, playtests — план §7). Шаги Б-1, Б-5, Б-6, несколько историй и авторов, банк идей, что устарело при смене ядра. Команда `story:status` уже есть — опирайся на неё. Скрипты: `decision-add`, `idea-park`, `stale-check`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, narrative-postmortems, dille-ultimate-guide, bateman-game-writing.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-desk`) с поправками плана §5. Минимум references: 6, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-desk.json`.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-desk --min-refs 6 --min-scripts 3",
         "npm run story:coverage -- --skill story-desk --min L2",
-        "npm run lab:triggers -- --skill story-desk --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-desk --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-desk)",
@@ -550,7 +694,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-desk"
@@ -565,14 +710,32 @@
       ],
       "writes": [
         ".claude/skills/story-choices/**",
-        "docs/lab/triggers/story-choices.json"
+        "docs/lab/triggers/story-choices.json",
+        "docs/playbook/thresholds.json",
+        "scripts/lint/checks/C-01.mjs",
+        "scripts/lint/checks/C-02.mjs",
+        "scripts/lint/checks/C-03.mjs",
+        "scripts/lint/checks/C-04.mjs",
+        "scripts/lint/checks/C-05.mjs",
+        "scripts/lint/checks/C-08.mjs",
+        "scripts/lint/checks/C-09.mjs",
+        "scripts/lint/checks/C-10.mjs",
+        "scripts/lint/checks/C-11.mjs",
+        "scripts/lint/checks/C-12.mjs",
+        "scripts/lint/checks/C-13.mjs",
+        "scripts/lint/checks/C-15.mjs",
+        "scripts/lint/checks/C-16.mjs",
+        "scripts/lint/checks/C-17.mjs",
+        "scripts/lint/checks/C-18.mjs",
+        "scripts/lint/checks/C-19.mjs"
       ],
-      "spec": "Собери скилл `story-choices` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** выбор ощущается: профиль кнопок, молчание и отказ, переменные и эхо, хабы, выбор между людьми (`people-choice.md`). Главная боль автора — «выбор не ощущается». Это вертикальный срез: сделай его образцом для остальных скиллов\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-01, C-02, C-03, C-04, C-05, C-08, C-09, C-10, C-11, C-12, C-13, C-15, C-17, C-18, C-19. **Ремонтными приёмами:** F-07, F-08, F-11, F-14. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): meaningful-choice, choiceofgames-design, emshort-structures, ashwell-standard-patterns, failbetter-qbn, mobile-interactive-stories.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-choices`) с поправками плана §5. Минимум references: 12, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-choices.json`.",
+      "spec": "Собери скилл `story-choices` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** выбор ощущается: профиль кнопок, молчание и отказ, переменные и эхо, хабы, выбор между людьми (`people-choice.md`). Главная боль автора — «выбор не ощущается». Это вертикальный срез: сделай его образцом для остальных скиллов\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-01, C-02, C-03, C-04, C-05, C-08, C-09, C-10, C-11, C-12, C-13, C-15, C-16, C-17, C-18, C-19. **Ремонтными приёмами:** F-07, F-08, F-11, F-14. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): meaningful-choice, choiceofgames-design, emshort-structures, ashwell-standard-patterns, failbetter-qbn, mobile-interactive-stories.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-choices`) с поправками плана §5. Минимум references: 12, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-choices.json`.\n\nНа этом скилле калибруются `lab.mutants.skill_min_recall` и строгость сопоставления находки с мутантом (`matchFinding`: узел или только C-NN) — с записью в `history` порога.\n\nМатрица покрытия у этого скилла большая. Порядок: сначала закрой дубли статусами (`merged-into`, `rejected:duplicate:<кластер>`), потом пиши блоки по оставшимся кластерам. Формальных блоков ради `--min L2` не пиши: ревьюер сверит смысл.\n\nПосле W0: C-16 (перекос выбора к финалу по позиции кнопки) — твой (`owners.md` §3). `dict.refusal` — отказ не только в начале кнопки (C-11, мутант m24; просьба T-15).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-choices --min-refs 12 --min-scripts 3 --fixes F-07,F-08,F-11,F-14",
         "npm run story:coverage -- --skill story-choices --min L2",
-        "npm run lab:triggers -- --skill story-choices --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-choices"
+        "npm run lab:triggers -- --skill story-choices --runs 3 --min build",
+        "npm run skills:test -- --skill story-choices",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-choices)",
@@ -580,9 +743,10 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
-      "timeoutMin": 180,
+      "timeoutMin": 300,
       "skill": "story-choices"
     },
     {
@@ -595,14 +759,19 @@
         "S-desk"
       ],
       "writes": [
-        "docs/lab/**",
-        "docs/playbook/local-lessons.md"
+        "docs/lab/journal.md",
+        "docs/lab/runs/X-E2mini",
+        "docs/lab/runs/X-E2mini/**",
+        "docs/playbook/local-lessons.md",
+        "docs/playbook/story-findings.md"
       ],
-      "spec": "Проверь вертикальный срез:\n1. Запусти `story-choices` через `claude -p` естественной фразой автора («кнопки в истории ничего не меняют, посмотри») на `slepoe-pyatno` — отложенная история, её кейсы скиллу не показывать.\n2. Запусти `npm run skills:test -- --skill story-choices`.\n3. Сверь находки с `docs/lab/cases/slepoe-pyatno.md` и `docs/playbook/story-findings.md`: полнота, точность (по твоему суждению как автора в пределах `INTENT.md`, помечено «оценка королевы»), устойчивость двух прогонов.\n4. Проверь, что `story-desk` ведёт состояние (`docs/stories/slepoe-pyatno/`).\n\nИтог:\n- запись в журнале;\n- уроки `LOCAL-NN`;\n- список правок для шаблона скилла (`prompts/type-skill.md`) и для `story-choices` — конкретно, это решает королева.",
+      "spec": "Проверь вертикальный срез:\n1. Запусти `story-choices` через `claude -p` естественной фразой автора («кнопки в истории ничего не меняют, посмотри») на `slepoe-pyatno` — отложенная история, её кейсы скиллу не показывать.\n2. Запусти `npm run skills:test -- --skill story-choices`.\n3. Сверь находки с `docs/lab/cases/slepoe-pyatno.md` и `docs/playbook/story-findings.md`: полнота, точность (по твоему суждению как автора в пределах `INTENT.md`, помечено «оценка королевы»), устойчивость двух прогонов.\n4. Проверь, что `story-desk` ведёт состояние (`docs/stories/slepoe-pyatno/`).\n\nИтог:\n- запись в журнале;\n- уроки `LOCAL-NN`;\n- список правок для шаблона скилла (`prompts/type-skill.md`) и для `story-choices` — конкретно, это решает королева.\n\nПосле W0: заведи `docs/playbook/local-lessons.md` (если нет) — LOCAL-01/02 из базового снимка T-15 (`docs/lab/baseline.md`, «Главное») и уроки этого эксперимента. В `story-findings.md` строки «по полю `ink` из `src/stories/*.json`» замени на `src/stories/<id>/chNN.ink` (сверяешь находки по нему).",
       "accept": [
         "test -s docs/lab/journal.md"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 150
     },
     {
@@ -616,17 +785,123 @@
         "X-E2mini"
       ],
       "writes": [],
-      "spec": "Ревью вертикального среза: годится ли `story-choices` как образец, что поправить в шаблонах до массовой сборки скиллов.",
+      "spec": "Ревью вертикального среза: годится ли `story-choices` как образец, что поправить в шаблонах до массовой сборки скиллов.\n\nВ глубокой выборке обязательно: `npm run story:coverage -- --fidelity-sample story-choices 20` — сверь пары и запиши `--record`. Если L2 на всех кластерах story-choices оказался недостижим честно (формальные блоки), предложи королеве шлюз: L2 для кластеров с RED/C, L1 для остальных.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "npm run story:lint",
         "npm run skills:test -- --skill story-choices",
-        "npm run lab:triggers -- --skill story-choices --runs 3"
+        "npm run lab:triggers -- --skill story-choices --runs 3",
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
       "timeoutMin": 90,
       "pauseAfter": true
+    },
+    {
+      "id": "S-choices-v2",
+      "wave": "w2-diagnosis",
+      "type": "skill",
+      "title": "Образец v2: story-choices и story-desk по итогам среза, состояние трёх историй",
+      "deps": [
+        "W1"
+      ],
+      "writes": [
+        ".claude/skills/story-choices/**",
+        ".claude/skills/story-desk/**",
+        "docs/playbook/owners.md",
+        "docs/playbook/clusters.json",
+        "docs/playbook/coverage.json",
+        "scripts/lint/checks/C-04.mjs",
+        "scripts/lint/checks/C-10.mjs",
+        "scripts/lint/checks/C-12.mjs",
+        "scripts/lab/mutants-spec.mjs",
+        "docs/lab/mutants/**",
+        "docs/lab/triggers/story-choices.json",
+        "docs/stories/**",
+        "scripts/lint/selftest-story-choices.mjs"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/W1/checkpoint.md",
+        "docs/playbook/_build/reports/X-E2mini/build.md («Правки story-choices»)",
+        "docs/playbook/_build/reports/S-choices/review.md («Замечания»)",
+        "docs/playbook/local-lessons.md",
+        "docs/lab/runs/X-E2mini/",
+        "prompts/type-skill.md (текущий шаблон)",
+        "docs/playbook/owners.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "node docs/playbook/_build/checks/skill-check.mjs story-choices --min-refs 12 --min-scripts 3 --fixes F-07,F-08,F-11,F-14",
+        "node docs/playbook/_build/checks/skill-check.mjs story-desk --min-refs 6 --min-scripts 3",
+        "npm run story:coverage -- --skill story-choices --min L2",
+        "npm run story:coverage -- --skill story-desk --min L2",
+        "npm run skills:test -- --skill story-choices",
+        "npm run lab:triggers -- --skill story-choices --runs 3 --min build",
+        "npm run test:lint",
+        "npm run story:status -- --all"
+      ],
+      "timeoutMin": 300,
+      "spec": "Девять сборщиков волны 2 будут копировать `story-choices` как образец, а он v1 и нарушает текущий шаблон (`prompts/type-skill.md` в конвейере, суть ниже). Подними оба скилла среза до версии 2:\n1. **`story-choices`:** девять правок из `reports/X-E2mini/build.md` («Правки `story-choices`»; п. 1 уже сделан на W1) — `docs/style.md` читается в шаге, где пишется реплика или пример ink; обязательная сверка каждой находки замера с ink и правилом перед отчётом (LOCAL-04); формат находки строкой первым; раздел «Состояние» (отчёт в `docs/stories/<id>/reviews/<дата>-story-choices.md` + строка для `STATUS.md` через `story-desk`); команды в `SKILL.md` по одной, без `cd`, пайпов, `;`, `&&`, `>`, `$?` (составные получают отказ в правах).\n2. **References:** одна тема — не больше двух файлов (сейчас эхо разнесено по пяти). Слей, сохранив блоки покрытия (ID в заголовке). В `SKILL.md` — карта references одной таблицей «развилка → файл».\n3. **Чужое знание:** строки с `owner_via: cluster|refs`, которые по смыслу чужие (паузы с причиной → `story-time`/`story-pauses`; стена текста и коридор → `story-pace`; скрытый порог финала → `story-endings`; регистры письма → `story-voice`; список — ревью S-choices, «Замечания»), перенеси в «опору» нужного TH-NN в `owners.md` §5; блоки в references `story-choices` стань ссылками на владельца. `npm run story:coverage -- --build-clusters`.\n4. **Уроки:** блоки `### LOCAL-05 · …`, `LOCAL-06`, `LOCAL-09` в `lessons*.md` `story-choices`, `### LOCAL-10` в `lessons.md` `story-desk` — вывод урока без примеров из истории. R-36 в `hubs.md` — условие редкой ветки ключом (`C-15.rare_branch_msgs` — заведи, или существующий).\n5. **Проверки C-04, C-10, C-12** (просьбы X-E2mini): C-04 — переход в узел с текстом считается откликом; C-10 — «ответил не тот» (кнопка адресату, отвечает другой) + мутант в `mutants-spec.mjs`; C-12 на последнем заходе хаба — проверь на трёх историях. Тесты — в `npm run test:lint`.\n6. **Срабатывание:** в `description` — «пустые кнопки», «развилки» словами автора; фраза «Проверь развилки во второй главе, кажется там пустые кнопки» сейчас не срабатывает 3 из 3. Добавь её в `docs/lab/triggers/story-choices.json` и перемерь.\n7. **`story-desk`:** LOCAL-10 — предлагать черновик ядра на выбор (а не только спрашивать), находки скиллов — в `reviews/`. `stale-check` п. 3: первое ядро без `заменяет:` не делает главы устаревшими.\n8. **Состояние трёх историй каталога (решение королевы):** заведи `docs/stories/<id>/` для `the-number`, `slepoe-pyatno`, `chuzhoy-golos` через `story-desk` (`story-status.mjs --init`) на шаге `review`: ядро — черновик D-01 «ядро v0, восстановлено из текста» (ставка, вопрос, оси, логлайн — из текста истории, пометка «черновик, одобрено королевой»), план — нет, открытые вопросы — из `docs/lab/baseline.md` «Главное». Хук и скиллы перестанут упираться в «нет STATUS.md».\n9. **Живой прогон:** `claude -p --model claude-opus-5-5` фразой автора, без `--allowedTools`, из корня — `permission_denials` в `result` = 0 на командах шагов. Результат и число отказов — в отчёт.\n10. `metadata.version: 2` и «Версия: 2», `sources.md` обоих — `npm run story:coverage -- --sources <имя> --write --compact`."
+    },
+    {
+      "id": "T-17",
+      "wave": "w2-diagnosis",
+      "type": "code",
+      "title": "Отказы в правах в lab:triggers и skills:test",
+      "deps": [
+        "W1"
+      ],
+      "writes": [
+        "scripts/lab/skills-test.mjs",
+        "scripts/lab/triggers.mjs",
+        "scripts/lab/triggers-lib.mjs",
+        "scripts/lab/mutants-lib.mjs",
+        "scripts/lab/triggers.test.mjs",
+        "scripts/lab/mutants.test.mjs"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/W1/checkpoint.md («Правки» п. 4)",
+        "docs/playbook/local-lessons.md (LOCAL-03)",
+        "docs/playbook/claude-code-format.md §4.2",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "npm run test:lab:triggers",
+        "npm run test:lab:mutants",
+        "npm run lab:triggers -- --help",
+        "npm run skills:test -- --lint-only"
+      ],
+      "spec": "Отказ в правах — тихий: скилл деградирует в «модель», а `skills:test` всё равно засчитывает попадание (LOCAL-03, W1 стык 1). Сделай так, чтобы такие прогоны не проходили незамеченными:\n- `scripts/lab/skills-test.mjs` и `scripts/lab/triggers.mjs` сохраняют `permission_denials` из события `result` каждого прогона `claude -p` (имя инструмента, команда);\n- прогон с отказом на `Bash` или `Skill` — недействительный (`failed_runs`, отдельная колонка «отказы»), а не попадание и не промах; итог печатает число отказов, `--json` — список;\n- `--control` у `skills:test` сохраняет находки основы целиком (просьба X-E2mini);\n- тесты на синтетическом потоке: отказ на Bash → прогон недействительный; отказ на Write при чтении — нет (запись запрещена намеренно).\nЧисла — ключами `lab.*` в `thresholds.json`."
+    },
+    {
+      "id": "T-18",
+      "wave": "w2-diagnosis",
+      "type": "code",
+      "title": "C-15 и C-19 считают редкую ветку и отросток хаба (R-36)",
+      "deps": [
+        "S-choices-v2"
+      ],
+      "writes": [
+        "scripts/lint/checks/C-15.mjs",
+        "scripts/lint/checks/C-19.mjs",
+        "scripts/lint/selftest-t18.mjs",
+        ".claude/skills/story-choices/references/contradictions.md"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/S-choices-v2/requests.md",
+        "docs/playbook/_build/reports/S-choices-v2/align.md",
+        "docs/playbook/checks.md (C-15, C-19)",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "npm run test:lint",
+        "npm run story:lint",
+        "npm run skills:test -- --lint-only"
+      ],
+      "spec": "Просьбы S-choices-v2: ключи R-36 заведены, но проверки их не считают.\n- C-15: `C-15.rare_branch_share` + `C-15.rare_branch_msgs` — ветка, куда попадает меньше доли игроков (по журналу бота), длиннее порога сообщений → находка.\n- C-19: `C-19.spur_msgs` — отросток хаба длиннее порога ставит флаг, который читается не дальше чем через главу → находка.\n- `contra-9`: ключи долей `C-15.echo_required_share`, `C-15.echo_skip_share` (our_estimate) и возврат ссылки на них в `.claude/skills/story-choices/references/contradictions.md`.\n- В `checks.md` у ключей снять пометку «проверка пока не считает» (точечно, общий файл).\nТесты — в `scripts/lint/selftest-t18.mjs` (`register(test, helpers)`, подключается сам). Прогон на трёх историях — до и после, в отчёт."
     },
     {
       "id": "S-opening",
@@ -634,18 +909,28 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-opening/**",
-        "docs/lab/triggers/story-opening.json"
+        "docs/lab/triggers/story-opening.json",
+        "scripts/lint/checks/C-20.mjs",
+        "scripts/lint/checks/C-22.mjs",
+        "scripts/lint/checks/C-23.mjs",
+        "scripts/lint/checks/C-24.mjs",
+        "scripts/lint/checks/C-25.mjs",
+        "scripts/lint/selftest-story-opening.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-opening` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** первые 30 секунд, 3 минуты и глава 1: понятно ли, кто пишет, почему мне, что случилось, ставка в стволе. Боль автора — «начало не цепляет и непонятно»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-20, C-22, C-23, C-24, C-25. **Ремонтными приёмами:** F-04. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): edgerton-hooked, video-three-things, cron-wired-for-story, snyder-save-the-cat, attention-today, chat-fiction-apps.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-opening`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-opening.json`.",
+      "spec": "Собери скилл `story-opening` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** первые 30 секунд, 3 минуты и глава 1: понятно ли, кто пишет, почему мне, что случилось, ставка в стволе. Боль автора — «начало не цепляет и непонятно»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-20, C-22, C-23, C-24, C-25. **Ремонтными приёмами:** F-04. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): edgerton-hooked, video-three-things, cron-wired-for-story, snyder-save-the-cat, attention-today, chat-fiction-apps.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-opening`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-opening.json`.\n\nМатрица покрытия у этого скилла большая. Порядок: сначала закрой дубли статусами (`merged-into`, `rejected:duplicate:<кластер>`), потом пиши блоки по оставшимся кластерам. Формальных блоков ради `--min L2` не пиши: ревьюер сверит смысл.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-opening --min-refs 9 --min-scripts 2 --fixes F-04",
         "npm run story:coverage -- --skill story-opening --min L2",
-        "npm run lab:triggers -- --skill story-opening --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-opening"
+        "npm run lab:triggers -- --skill story-opening --runs 3 --min build",
+        "npm run skills:test -- --skill story-opening",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-opening)",
@@ -653,9 +938,10 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
-      "timeoutMin": 180,
+      "timeoutMin": 300,
       "skill": "story-opening"
     },
     {
@@ -664,18 +950,26 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-pace/**",
-        "docs/lab/triggers/story-pace.json"
+        "docs/lab/triggers/story-pace.json",
+        "scripts/lint/checks/C-35.mjs",
+        "scripts/lint/checks/C-36.mjs",
+        "scripts/lint/checks/C-38.mjs",
+        "scripts/lint/selftest-story-pace.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-pace` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** ритм внутри сессии: серии без кнопки, монологи, затишье, середина, повторы, пропорции глав. «Скучно» — только кандидат с пометкой; окончательно решают живые люди. Боль — «где игроку станет скучно»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-34, C-35, C-36, C-38, C-46. **Ремонтными приёмами:** F-05, F-06. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): maass-fire-in-fiction, schell-art-of-game-design, mckee-story, yorke-into-the-woods, attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-pace`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-pace.json`.",
+      "spec": "Собери скилл `story-pace` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** ритм внутри сессии: серии без кнопки, монологи, затишье, середина, повторы, пропорции глав. «Скучно» — только кандидат с пометкой; окончательно решают живые люди. Боль — «где игроку станет скучно»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-35, C-36, C-38. **Ремонтными приёмами:** F-05, F-06. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): maass-fire-in-fiction, schell-art-of-game-design, mckee-story, yorke-into-the-woods, attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-pace`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-pace.json`.\n\nПосле W0: C-35 называет узел самой длинной серии (просьба T-15).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-pace --min-refs 9 --min-scripts 2 --fixes F-05,F-06",
         "npm run story:coverage -- --skill story-pace --min L2",
-        "npm run lab:triggers -- --skill story-pace --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-pace"
+        "npm run lab:triggers -- --skill story-pace --runs 3 --min build",
+        "npm run skills:test -- --skill story-pace",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-pace)",
@@ -683,7 +977,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-pace"
@@ -694,18 +989,31 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-pauses/**",
-        "docs/lab/triggers/story-pauses.json"
+        "docs/lab/triggers/story-pauses.json",
+        "scripts/lint/checks/C-26.mjs",
+        "scripts/lint/checks/C-28.mjs",
+        "scripts/lint/checks/C-29.mjs",
+        "scripts/lint/checks/C-30.mjs",
+        "scripts/lint/checks/C-33.mjs",
+        "scripts/lint/checks/C-39.mjs",
+        "scripts/story/sessions.mjs",
+        "scripts/lint/selftest-story-pauses.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-pauses` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** крючок перед паузой и возвращение после неё, пачка непрочитанных, заметки как внешняя память игрока, стык глав. Время и режимы — у `story-time`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-26, C-27, C-28, C-29, C-30, C-39. **Ремонтными приёмами:** F-01, F-02, F-03. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): serial-hooks, messenger-genre, chat-fiction-apps, attention-today, failbetter-qbn.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-pauses`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-pauses.json`.",
+      "spec": "Собери скилл `story-pauses` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** крючок перед паузой и возвращение после неё, пачка непрочитанных, заметки как внешняя память игрока, стык глав. Время и режимы — у `story-time`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-26, C-28, C-29, C-30, C-33, C-39. **Ремонтными приёмами:** F-01, F-02, F-03. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): serial-hooks, messenger-genre, chat-fiction-apps, attention-today, failbetter-qbn.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-pauses`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-pauses.json`.\n\nМатрица покрытия у этого скилла большая. Порядок: сначала закрой дубли статусами (`merged-into`, `rejected:duplicate:<кластер>`), потом пиши блоки по оставшимся кластерам. Формальных блоков ради `--min L2` не пиши: ревьюер сверит смысл.\n\nПосле W0: `story:sessions --persona distracted` показывает пачку непрочитанного при возвращении (просьба T-15).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-pauses --min-refs 8 --min-scripts 2 --fixes F-01,F-02,F-03",
         "npm run story:coverage -- --skill story-pauses --min L2",
-        "npm run lab:triggers -- --skill story-pauses --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-pauses"
+        "npm run lab:triggers -- --skill story-pauses --runs 3 --min build",
+        "npm run skills:test -- --skill story-pauses",
+        "npm run test:lint",
+        "npm run test:story-cmd"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-pauses)",
@@ -713,9 +1021,10 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
-      "timeoutMin": 180,
+      "timeoutMin": 300,
       "skill": "story-pauses"
     },
     {
@@ -724,18 +1033,29 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-time/**",
-        "docs/lab/triggers/story-time.json"
+        "docs/lab/triggers/story-time.json",
+        "scripts/lint/checks/C-27.mjs",
+        "scripts/lint/checks/C-31.mjs",
+        "scripts/lint/checks/C-32.mjs",
+        "scripts/lint/checks/C-37.mjs",
+        "scripts/lint/selftest-story-time.mjs",
+        "docs/playbook/owners.md",
+        "docs/playbook/clusters.json",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-time` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** два режима (реальное время и «по клику»), напоминания при молчании игрока (1–2, без упрёков, потом история идёт дальше), время мира против часов игрока, длина истории в реальном времени, кнопка «пропустить» для тестов. Скрипты: `promise-scan`, `clock-scan`, `guilt-scan`, `click-transcript`. Решения автора — `INTENT.md`, они выше базы\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-31, C-32, C-33, C-37. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): messenger-genre, serial-hooks, attention-today, inkle-ingold, chat-fiction-apps, schell-art-of-game-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-time`) с поправками плана §5. Минимум references: 9, scripts: 4.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-time.json`.",
+      "spec": "Собери скилл `story-time` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** два режима (реальное время и «по клику»), напоминания при молчании игрока (1–2, без упрёков, потом история идёт дальше), время мира против часов игрока, длина истории в реальном времени, кнопка «пропустить» для тестов. Скрипты: `promise-scan`, `clock-scan`, `guilt-scan`, `click-transcript`. Решения автора — `INTENT.md`, они выше базы\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-27, C-31, C-32, C-37. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): messenger-genre, serial-hooks, attention-today, inkle-ingold, chat-fiction-apps, schell-art-of-game-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-time`) с поправками плана §5. Минимум references: 9, scripts: 4.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-time.json`.\n\nРешения королевы (сверка T-08): исход «срока молчания» в реальном времени равен исходу `#silent` и наступает только после 1–2 напоминаний (A-03); скрипт поиска упрёков (`guilt-scan` или как назовёшь) отличает реакцию персонажа на нажатый `#silent` (разрешено, это ответ на выбор) от упрёка за отсутствие после паузы или напоминания (запрещено). «4–6 возвращений в сутки» и «минут чтения в день» — нагрузка по реальным суткам, а не привязка к часам игрока: `clock-scan` не должен их путать.\n\nПосле W0: C-27 (пауза без причины, срок возвращения) — твой, C-33 — у `story-pauses` (`owners.md` §3).\n\nПеренеси в «опору» своих TH-46/TH-47 в `owners.md` строки `attention-today:RED-07` и `narrative-postmortems:LESSON-08` (сейчас по кластеру лежат у `story-choices`), затем `npm run story:coverage -- --build-clusters`.\n\nПосле E-02: синтаксис напоминаний — скрытые варианты `* [#remind:40m] реплика` перед сборкой `- (ask)` и `* [#noanswer]` (capabilities `remind`, `noanswer`); C-32 п. 6–7 уже в линте. Скилл должен ловить развилку с ждущим собеседником без напоминаний и предлагать их текст (по `docs/style.md`, ST-66).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-time --min-refs 9 --min-scripts 4",
         "npm run story:coverage -- --skill story-time --min L2",
-        "npm run lab:triggers -- --skill story-time --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-time"
+        "npm run lab:triggers -- --skill story-time --runs 3 --min build",
+        "npm run skills:test -- --skill story-time",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-time)",
@@ -743,7 +1063,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-time"
@@ -754,18 +1075,31 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-endings/**",
-        "docs/lab/triggers/story-endings.json"
+        "docs/lab/triggers/story-endings.json",
+        "scripts/lint/checks/C-06.mjs",
+        "scripts/lint/checks/C-07.mjs",
+        "scripts/lint/checks/C-40.mjs",
+        "scripts/lint/checks/C-41.mjs",
+        "scripts/lint/checks/C-42.mjs",
+        "scripts/lint/checks/C-43.mjs",
+        "scripts/story/endings.mjs",
+        "scripts/lint/selftest-story-endings.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-endings` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** финалы: распределитель, видимость порога, финал цитирует путь, перекос, развязка и хвост после последней кнопки\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-06, C-07, C-16, C-40, C-41, C-42, C-43. **Ремонтными приёмами:** F-09, F-10, F-12. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): meaningful-choice, narrative-postmortems, yorke-into-the-woods, snyder-save-the-cat, messenger-genre.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-endings`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-endings.json`.",
+      "spec": "Собери скилл `story-endings` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** финалы: распределитель, видимость порога, финал цитирует путь, перекос, развязка и хвост после последней кнопки\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-06, C-07, C-40, C-41, C-42, C-43. **Ремонтными приёмами:** F-09, F-10, F-12. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): meaningful-choice, narrative-postmortems, yorke-into-the-woods, snyder-save-the-cat, messenger-genre.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-endings`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-endings.json`.\n\nПосле W1 (исправляет ошибочную правку W0): `VAR ending` в THE NUMBER — исход ночи главы 1 (`ch01.ink`, читают его только главы 1–2), а не финал; в истории один `END`, и «финалов 1» верно. Не считай переменную финалом без разметки `// финал:` или распределителя. Настоящий дефект — карточка обещает несколько финалов (`meta.json`), это C-49 у `story-release` и материал X-E7: пусть `story:endings` пишет «один финал, карточка обещает несколько», если видит такое обещание.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-endings --min-refs 8 --min-scripts 2 --fixes F-09,F-10,F-12",
         "npm run story:coverage -- --skill story-endings --min L2",
-        "npm run lab:triggers -- --skill story-endings --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-endings"
+        "npm run lab:triggers -- --skill story-endings --runs 3 --min build",
+        "npm run skills:test -- --skill story-endings",
+        "npm run test:lint",
+        "npm run test:story-cmd"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-endings)",
@@ -773,7 +1107,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-endings"
@@ -784,18 +1119,26 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-cast/**",
-        "docs/lab/triggers/story-cast.json"
+        "docs/lab/triggers/story-cast.json",
+        "scripts/lint/checks/C-21.mjs",
+        "scripts/lint/checks/C-45.mjs",
+        "scripts/lint/checks/C-50.mjs",
+        "scripts/lint/selftest-story-cast.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-cast` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** состав персонажей: сколько контактов и когда открывать, уровни (ось, сторона, источник, фон, эпизодический), функции, фоновые чаты, дуги (`arcs.md`). Боль автора — «слишком много чатов»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-21, C-45, C-50. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): sheldon-character-storytelling, truby-anatomy-of-story, nicklin-writing-for-games, vogler-writers-journey, skolnick-video-game-storytelling, bateman-game-writing.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-cast`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-cast.json`.",
+      "spec": "Собери скилл `story-cast` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** состав персонажей: сколько контактов и когда открывать, уровни (ось, сторона, источник, фон, эпизодический), функции, фоновые чаты, дуги (`arcs.md`). Боль автора — «слишком много чатов»\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-21, C-45, C-50. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): sheldon-character-storytelling, truby-anatomy-of-story, nicklin-writing-for-games, vogler-writers-journey, skolnick-video-game-storytelling, bateman-game-writing.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-cast`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-cast.json`.\n\nРешение королевы о двойном счёте C-10 / C-50 (S-choices-v2): C-10 `wrong_responder` держит кнопку-вопрос или обращение по имени к контакту, на которое ответил другой; C-50 на тех же местах молчит (не дублирует), а ловит остальное «ответ ушёл в пустоту». Поправь C-50 (`scripts/lint/checks/C-50.mjs`), тест — в `scripts/lint/selftest-story-cast.mjs`.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-cast --min-refs 8 --min-scripts 2",
         "npm run story:coverage -- --skill story-cast --min L2",
-        "npm run lab:triggers -- --skill story-cast --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-cast"
+        "npm run lab:triggers -- --skill story-cast --runs 3 --min build",
+        "npm run skills:test -- --skill story-cast",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-cast)",
@@ -803,7 +1146,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-cast"
@@ -814,18 +1158,30 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-voice/**",
-        "docs/lab/triggers/story-voice.json"
+        "docs/lab/triggers/story-voice.json",
+        "scripts/lint/checks/C-14.mjs",
+        "scripts/lint/checks/C-34.mjs",
+        "scripts/lint/checks/C-44.mjs",
+        "scripts/lint/checks/C-46.mjs",
+        "scripts/lint/checks/C-47.mjs",
+        "scripts/lint/checks/C-48.mjs",
+        "docs/playbook/rules.md",
+        "scripts/lint/selftest-story-voice.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-voice` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** голоса персонажей и редактура реплик по `docs/style.md`, юмор (`humor.md`), слепой тест голосов. Скрипты: `voice-stats`, `blind-sample`, `style-diff` (глава против образцов `style.md`)\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-14, C-44, C-47, C-48. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): sheldon-character-storytelling, nicklin-writing-for-games, bateman-game-writing, messenger-genre, chat-fiction-apps.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-voice`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-voice.json`.",
+      "spec": "Собери скилл `story-voice` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** голоса персонажей и редактура реплик по `docs/style.md`, юмор (`humor.md`), слепой тест голосов. Скрипты: `voice-stats`, `blind-sample`, `style-diff` (глава против образцов `style.md`)\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-14, C-34, C-44, C-46, C-47, C-48. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): sheldon-character-storytelling, nicklin-writing-for-games, bateman-game-writing, messenger-genre, chat-fiction-apps.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-voice`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-voice.json`.\n\nПосле W0: образцы — `SG-NN`, антиобразцы — `AS-NN`, положения — `ST-NN`, формат разбора — `docs/style.md` §14.3. C-48: имя из `characters` в любом падеже («Дине» — это Дина) — не новое имя. C-14: цитаты и «легенда игрока» не задают род игрока ложно (просьба T-15). Во вступление `rules.md` — строка о `docs/style.md`: «как звучит — style.md; при расхождении чисел прав `thresholds.json`» (просьба T-06 п. 1).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-voice --min-refs 8 --min-scripts 3",
         "npm run story:coverage -- --skill story-voice --min L2",
-        "npm run lab:triggers -- --skill story-voice --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-voice"
+        "npm run lab:triggers -- --skill story-voice --runs 3 --min build",
+        "npm run skills:test -- --skill story-voice",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-voice)",
@@ -833,7 +1189,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-voice"
@@ -844,18 +1201,24 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-continuity/**",
-        "docs/lab/triggers/story-continuity.json"
+        "docs/lab/triggers/story-continuity.json",
+        "scripts/lint/checks/C-51.mjs",
+        "scripts/lint/selftest-story-continuity.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-continuity` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** кто что знает на каждом пути, сведения между чатами, защита слияний веток, хронология, `facts.md` истории. Позже — канон серии (`canon.md`, без фичи движка — только описание)\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-49, C-51. **Ремонтными приёмами:** F-13. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): inkle-ingold, procedural-storytelling, dille-ultimate-guide, emshort-structures.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-continuity`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-continuity.json`.",
+      "spec": "Собери скилл `story-continuity` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** кто что знает на каждом пути, сведения между чатами, защита слияний веток, хронология, `facts.md` истории. Позже — канон серии (`canon.md`, без фичи движка — только описание)\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-51. **Ремонтными приёмами:** F-13. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): inkle-ingold, procedural-storytelling, dille-ultimate-guide, emshort-structures.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-continuity`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-continuity.json`.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-continuity --min-refs 8 --min-scripts 2 --fixes F-13",
         "npm run story:coverage -- --skill story-continuity --min L2",
-        "npm run lab:triggers -- --skill story-continuity --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-continuity"
+        "npm run lab:triggers -- --skill story-continuity --runs 3 --min build",
+        "npm run skills:test -- --skill story-continuity",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-continuity)",
@@ -863,7 +1226,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-continuity"
@@ -874,18 +1238,24 @@
       "wave": "w2-diagnosis",
       "type": "skill",
       "deps": [
-        "W1"
+        "W1",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-mystery/**",
-        "docs/lab/triggers/story-mystery.json"
+        "docs/lab/triggers/story-mystery.json",
+        "scripts/lint/checks/C-54.mjs",
+        "scripts/lint/selftest-story-mystery.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-mystery` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** честная загадка: улики на общем стволе, порядок раскрытий, можно ли угадать, ложные следы. Метка `// reveal:` и переменные `clue_*`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-54. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): mystery-fair-play, truby-anatomy-of-story, mckee-story.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-mystery`) с поправками плана §5. Минимум references: 8, scripts: 1.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-mystery.json`.",
+      "spec": "Собери скилл `story-mystery` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** честная загадка: улики на общем стволе, порядок раскрытий, можно ли угадать, ложные следы. Метка `// reveal:` и переменные `clue_*`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** C-54. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): mystery-fair-play, truby-anatomy-of-story, mckee-story.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-mystery`) с поправками плана §5. Минимум references: 8, scripts: 1.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-mystery.json`.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-mystery --min-refs 8 --min-scripts 1",
         "npm run story:coverage -- --skill story-mystery --min L2",
-        "npm run lab:triggers -- --skill story-mystery --runs 3 --min 0.6",
-        "npm run skills:test -- --skill story-mystery"
+        "npm run lab:triggers -- --skill story-mystery --runs 3 --min build",
+        "npm run skills:test -- --skill story-mystery",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-mystery)",
@@ -893,7 +1263,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-mystery"
@@ -905,17 +1276,23 @@
       "type": "skill",
       "deps": [
         "W1",
-        "S-opening"
+        "S-opening",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-playtest/**",
-        "docs/lab/triggers/story-playtest.json"
+        "docs/lab/triggers/story-playtest.json",
+        "scripts/story/cold-read.mjs",
+        "scripts/story/cold-reader-protocol.md",
+        "scripts/lint/selftest-story-playtest.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-playtest` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** тест игроками в двух видах — симулированный (основной сейчас) и живой (позже, у автора). **Симулированная панель:** 4–6 профилей холодных читателей (торопливый, внимательный, скептик, отвлечённый — читает пачками после пауз, неотвечающий) поверх `story:trace` и `story:cold-read`, в обоих режимах; сводка в том же формате, что и для живых людей, с пометкой «симуляция». **Живой тест:** `playtest-kit` (`.json` с `beta_stop`, бриф, 3 открытых вопроса и пересказ, режим тестера), сводка отзывов по узлам с колонками «сколько человек» и «сходится ли с замером», Б-2. Плюс протокол холодного читателя `references/cold-reader.md`: замени им заглушку `scripts/story/cold-reader-protocol.md` через просьбу в `requests.md`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, attention-today, inkle-ingold.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-playtest`) с поправками плана §5. Минимум references: 7, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-playtest.json`.",
+      "spec": "Собери скилл `story-playtest` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** тест игроками в двух видах — симулированный (основной сейчас) и живой (позже, у автора). **Симулированная панель:** 4–6 профилей холодных читателей (торопливый, внимательный, скептик, отвлечённый — читает пачками после пауз, неотвечающий) поверх `story:trace` и `story:cold-read`, в обоих режимах; сводка в том же формате, что и для живых людей, с пометкой «симуляция». **Живой тест:** `playtest-kit` (`.json` с `beta_stop`, бриф, 3 открытых вопроса и пересказ, режим тестера), сводка отзывов по узлам с колонками «сколько человек» и «сходится ли с замером», Б-2. Плюс протокол холодного читателя `references/cold-reader.md`: замени им заглушку `scripts/story/cold-reader-protocol.md` через просьбу в `requests.md`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, attention-today, inkle-ingold.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-playtest`) с поправками плана §5. Минимум references: 7, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-playtest.json`.\n\nПротокол холодного читателя (`references/cold-reader.md`) сохраняет четыре раздела, которые разбирает `scripts/story/cold-read.mjs`: `## Роль`, `## Режим: <opening|return|click|guess|voices>`, `## Контроль`, `## Формат ответа`. Холодный читатель — только Opus (решение автора, `superseded.md` A-07): советы «второй прогон на другой модели» не брать.\n\nПосле W0: (1) протокол холодного читателя — профили из `INTENT.md`: торопливый, внимательный, скептик, отвлечённый, неотвечающий (отдельными разделами/флагом `--profile`), иначе один доброжелательный читатель «не отложил бы телефон» во всех трёх историях и не различает «скучно»; (2) контрольный вопрос К3 — без «что ещё у тебя в контексте»; (3) `checkIsolation` в `scripts/story/cold-read.mjs` вырезает из сохраняемого ответа строки об окружении Claude Code (почта, рабочая папка).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-playtest --min-refs 7 --min-scripts 3",
         "npm run story:coverage -- --skill story-playtest --min L2",
-        "npm run lab:triggers -- --skill story-playtest --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-playtest --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-playtest)",
@@ -923,7 +1300,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-playtest"
@@ -948,12 +1326,14 @@
       "writes": [
         ".claude/agents/story-auditor.md"
       ],
-      "spec": "Собери агента `story-auditor` (план §6): прогоняет один диагностический скилл изолированно, только чтение. Получает узлы из `story:lint`, а не весь ink. Таблица «линза → скилл → references». Проверь на одной истории с одной линзой.",
+      "spec": "Собери агента `story-auditor` (план §6): прогоняет один диагностический скилл изолированно, только чтение. Получает узлы из `story:lint`, а не весь ink. Таблица «линза → скилл → references». Проверь на одной истории с одной линзой.\n\nПоправка T-00 (`claude-code-format.md` §9): `story-auditor` остаётся агентом, не форк-скиллом. `tools: Read, Bash, Skill` — без `Agent`. `story-review` передаёт ему имя диагностического скилла, агент вызывает его через `Skill` и возвращает находки в общем формате. Диагностические скиллы нужны и в главной сессии, поэтому `context: fork` им не ставить.",
       "accept": [
         "node docs/playbook/_build/checks/agent-check.mjs story-auditor"
       ],
-      "inputs": [],
-      "timeoutMin": 90
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "timeoutMin": 180
     },
     {
       "id": "A-cold",
@@ -965,15 +1345,22 @@
       ],
       "writes": [
         ".claude/agents/cold-reader.md",
-        "scripts/story/cold-reader-protocol.md"
+        "scripts/story/cold-reader-protocol.md",
+        "scripts/story/selftest.mjs",
+        "scripts/story/README.md",
+        "scripts/story/cold-read.mjs",
+        ".claude/skills/story-playtest/references/cold-reader.md",
+        ".claude/skills/story-playtest/scripts/digest.mjs"
       ],
-      "spec": "Собери агента `cold-reader` (план §6).\n- Основной путь — `npm run story:cold-read --ask`: `claude -p` из пустого каталога. Агент — запасной путь для случаев, когда скиллу удобнее агент: без инструментов, переписка в промпте.\n- Протокол — из `story-playtest/references/cold-reader.md`: перенеси его в `scripts/story/cold-reader-protocol.md`, чтобы команда и агент работали одинаково.\n- Режимы: начало, возвращение, по клику, угадать, голоса.\n- Проверка изоляции на одной истории.",
+      "spec": "Собери агента `cold-reader` (план §6) с поправкой T-00 (`claude-code-format.md` §2.4, §4.1, §9): честного агента без контекста нет — агент получает CLAUDE.md, индекс памяти и git status, поэтому **изоляцию даёт только команда** `npm run story:cold-read --ask` (`claude -p` из пустого каталога без инструментов).\n- Решение королевы: агент `cold-reader` — тонкая обёртка для скиллов, которым удобнее запустить холодного читателя в фоне. `tools: Bash` (только `npm run story:cold-read`, ограничь хуком `PreToolUse` в `hooks:` агента), `omitClaudeMd: true`, `model: opus`. Сам он историю, ink, `docs/` и `src/stories/` не читает: запускает команду с нужным режимом и возвращает ответ читателя как есть, в общем формате.\n- Протокол — один: `.claude/skills/story-playtest/references/cold-reader.md`. Команда `story:cold-read` и агент читают его; заглушку `scripts/story/cold-reader-protocol.md` удали, самопроверку `scripts/story/selftest.mjs` переведи на протокол скилла, в `scripts/story/README.md` опиши `--profile` и `--last` (просьбы S-playtest 1–2).\n- Режимы: начало, возвращение, по клику, угадать, голоса.\n- Проверка изоляции на одной истории: контрольный вопрос «кто виновник / какой последний узел» через команду с `--ask`. Результат в отчёт.\n\nКонтракт команды (T-04b): `npm run story:cold-read -- --story <id> --until <узел> --mode <режим> --ask --json`; код 1 — изоляция нарушена, 2 — ошибка запуска; свой протокол — `--protocol <файл>` с разделами `## Роль`, `## Режим: <opening|return|click|guess|voices>`, `## Контроль`, `## Формат ответа`.\n\nПосле W0: профили читателя (`--profile`) и вырезание строк окружения делает S-playtest; агент передаёт профиль в команду.\n\nРешение королевы (вопрос S-playtest): «Итог» холодного читателя — не бинарный, а шкала интереса по точкам (после первых сообщений, на первой кнопке, перед паузой, после возвращения): «держит / ровно / теряю» с причиной одной строкой. Правка — «Формат ответа» в `cold-reader.md` и разбор в `.claude/skills/story-playtest/scripts/digest.mjs`. Это даёт кандидатов «скучно» по месту, а не по истории целиком.",
       "accept": [
         "node docs/playbook/_build/checks/agent-check.mjs cold-reader",
-        "npm run story:cold-read -- --story the-number --mode opening --until ch1"
+        "npm run story:cold-read -- --story the-number --mode opening --until hub"
       ],
-      "inputs": [],
-      "timeoutMin": 90
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "timeoutMin": 180
     },
     {
       "id": "S-review",
@@ -983,17 +1370,21 @@
       "deps": [
         "A-auditor",
         "A-cold",
-        "S-playtest"
+        "S-playtest",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-review/**",
-        "docs/lab/triggers/story-review.json"
+        "docs/lab/triggers/story-review.json",
+        "scripts/lint/selftest-story-review.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-review` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** вход «посмотри историю / что не так»: `story:lint` → `select-lenses` по разметке и метрикам → параллельно `story-auditor` по линзам и холодный читатель → `merge-findings` → отчёт с приоритетами (сначала непонятное, потом скучное). Плюс QA «шесть списков» (`qa-six.md`), конфликты ревью и тестеров (`conflicts.md`, Б-3), ревью плана `--plan` (Б-7). Отклонённые находки не всплывают, пока узел не изменился\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** F-15. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, narrative-postmortems, schell-art-of-game-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-review`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-review.json`.",
+      "spec": "Собери скилл `story-review` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** вход «посмотри историю / что не так»: `story:lint` → `select-lenses` по разметке и метрикам → параллельно `story-auditor` по линзам и холодный читатель → `merge-findings` → отчёт с приоритетами (сначала непонятное, потом скучное). Плюс QA «шесть списков» (`qa-six.md`), конфликты ревью и тестеров (`conflicts.md`, Б-3), ревью плана `--plan` (Б-7). Отклонённые находки не всплывают, пока узел не изменился\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): narrative-testing, narrative-postmortems, schell-art-of-game-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-review`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-review.json`.\n\nПосле W0: на три истории линт даёт больше тысячи находок — автору это не прочесть. Отчёт автору: приоритет P1…P3, не больше `skill.review.top_per_chapter` находок на главу (ключ заведи в `thresholds.json`, `our_estimate`), остальное — в приложение. Каждая находка — с «почему это важно» в режиме «объясни».\n\nПосле W1: твои строки матрицы — и LOCAL-02, 03, 04, 07, 08 (TH-28): блоки `### LOCAL-NN · …` в `lessons.md` (вывод урока без примеров из истории), иначе `--min L2` упадёт.",
       "accept": [
-        "node docs/playbook/_build/checks/skill-check.mjs story-review --min-refs 8 --min-scripts 3 --fixes F-15",
+        "node docs/playbook/_build/checks/skill-check.mjs story-review --min-refs 8 --min-scripts 3",
         "npm run story:coverage -- --skill story-review --min L2",
-        "npm run lab:triggers -- --skill story-review --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-review --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-review)",
@@ -1001,7 +1392,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-review"
@@ -1019,16 +1411,23 @@
         "docs/capabilities.json",
         "CLAUDE.md",
         "README.md",
-        "e2e/**"
+        "e2e/**",
+        "docs/playbook/thresholds.json",
+        "scripts/build-prompt.mjs",
+        "docs/PROMPT.md",
+        ".claude/settings.json",
+        "src/stories/the-number/meta.json"
       ],
-      "spec": "Фича E-01 (план §11, `INTENT.md`):\n- выбор режима на экране истории; сменить его можно только перезапуском истории (предупреждение);\n- **реальное время** — паузы ×1;\n- **«по клику»** — без пауз, со системной меткой при сюжетном скачке больше порога («спустя N»; порог — в `thresholds.json` или константа с комментарием, если `thresholds.json` в движок не грузится);\n- **отладка:** кнопка «пропустить до следующего» в отладочной шторке. Дефолт `speed = 60` убрать: он отладочный;\n- в `capabilities.json` — фича `mode` и обновлённые `delay` и `debug`; `testid` — в `CLAUDE.md`; e2e на фикстуре.",
+      "spec": "Фича E-01 (план §11, `INTENT.md`):\n- выбор режима на экране истории; сменить его можно только перезапуском истории (предупреждение);\n- **реальное время** — паузы ×1;\n- **«по клику»** — без пауз, со системной меткой при сюжетном скачке больше порога («спустя N»; порог — ключ `engine.click.time_jump_label` в `docs/playbook/thresholds.json`, решение королевы — 1 ч (`our_estimate`); если `thresholds.json` в движок не грузится, константа с комментарием и ссылкой на ключ, а тест сверяет их);\n- **отладка:** кнопка «пропустить до следующего» в отладочной шторке. Дефолт `speed = 60` убрать: он отладочный;\n- в `capabilities.json` — фича `mode` и обновлённые `delay` и `debug`; `testid` — в `CLAUDE.md`; e2e на фикстуре.\n\nПри правке констант набора в `src/engine/engine.ts` обнови `engine.typing` в `docs/playbook/thresholds.json` (ключ завёл T-03a).\n\nПо итогам T-02 (`reports/T-02/requests.md` п. 1–2):\n- **Карточка — два числа** (A-05): `sizeLabel` в `StoryTile` и `StoryScreen` показывает минуты по клику и дни в реальном времени из `meta.json` (`minutes`, `days`), например «≈ 35 мин по клику · ≈ 2 дня в реальном времени». Если выбран режим — можно подсветить его число, но оба видны до выбора.\n- **Образец в `scripts/build-prompt.mjs`** (из него собирается `docs/PROMPT.md`): новая форма истории — `days`, `revision`, `free_chapters`, служебные `voice` и `arc` у персонажей (поле `voice` не связано с тегом `#voice`), выбор режима. `npm run prompt -- --quiet`.\n\nПо просьбе T-03b (п. 3): поле героя `service?: boolean` (служебный контакт: заметки, пульт, банк) — в тип `Character` (`src/engine/story.ts`), README и `docs/capabilities.json` (`storyfile`); экран истории служебных героев не показывает в списке героев.\n\nПосле W0:\n- **`.claude/settings.json` → `permissions.allow`** (не трогая остального): `Bash(npm run story:*)`, `Bash(npm run check:story*)`, `Bash(node scripts/hooks/full.mjs *)`, `Bash(node scripts/story/*)`. Только команды чтения и подсчёта: в живой сессии модель не могла выполнить команду, которую советует хук.\n- **Короткая версия стиля** (`docs/style.md` §1) — в `docs/PROMPT.md` через `scripts/build-prompt.mjs` (просьба T-06 п. 3).\n- **Служебные контакты THE NUMBER:** `nimbus` и `parking` объявлены только в `# contact:`. Если по тексту это служебные отправители (сервис, штрафстоянка), заведи их в `characters` `meta.json` с `service: true` — линт перестанет шуметь C-17/C-50. Если персонажи — заведи как персонажей.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 180
     },
     {
@@ -1045,17 +1444,31 @@
         "CLAUDE.md",
         "README.md",
         "e2e/**",
-        "scripts/lib/**"
+        "scripts/lib/**",
+        "docs/playbook/rules.md",
+        "docs/playbook/checks.md",
+        "docs/playbook/thresholds.json",
+        "scripts/story/**",
+        "docs/playbook/flow-example.md",
+        "examples/**",
+        "package.json",
+        "scripts/lint/checks/C-32.mjs",
+        "scripts/lint/selftest.mjs"
       ],
-      "spec": "Фича E-02 (`INTENT.md`):\n- **Напоминания.** Если игрок не ответил на выбор, персонаж напоминает 1–2 раза по интервалам из сценария. Предложи синтаксис тега, например `#remind:2h` на строке напоминания или блок напоминаний у выбора. После последнего напоминания история продолжается без ответа по ветке «не ответил» (например, выбор по умолчанию, `#silent` или отдельная ветка — реши и опиши).\n- **Режим «по клику»:** напоминаний нет, игрок отвечает сам.\n- **Уведомления** выключаются внутри игры.\n- **Без привязки к часам игрока.**\n- **Реестр** `capabilities.json` (`ready`), README, `docs/PROMPT.md` через `npm run prompt`.\n- **`scripts/lib/bot.mjs`** понимает новый синтаксис: персона «неотвечающий».\n- **E2e** на фикстуре.",
+      "spec": "Фича E-02 (`INTENT.md`):\n- **Напоминания.** Если игрок не ответил на выбор, персонаж напоминает 1–2 раза по интервалам из сценария. Предложи синтаксис тега, например `#remind:2h` на строке напоминания или блок напоминаний у выбора. После последнего напоминания история продолжается без ответа по ветке «не ответил» (например, выбор по умолчанию, `#silent` или отдельная ветка — реши и опиши).\n- **Режим «по клику»:** напоминаний нет, игрок отвечает сам.\n- **Уведомления** выключаются внутри игры.\n- **Без привязки к часам игрока.**\n- **Реестр** `capabilities.json` (`ready`), README, `docs/PROMPT.md` через `npm run prompt`.\n- **`scripts/lib/bot.mjs`** понимает новый синтаксис: персона «неотвечающий».\n- **E2e** на фикстуре.\n\nРешения королевы в пределах `INTENT.md` (свод R-120 и C-32 на них опирается): по умолчанию «не ответил» идёт в `#silent`, если он есть у выбора, иначе — в ветку или выбор по умолчанию, который задаёт сценарий; в «по клику» напоминаний нет, кнопка ждёт. Напоминание — реплика персонажа без упрёка и без срока (A-01, A-03 в `docs/playbook/superseded.md`). Если движку удобнее иначе — опиши и поправь R-120 и C-32 в `docs/playbook/rules.md` / `checks.md` и запиши в отчёте.\n\nПосле T-03c персона «неотвечающий» (`noAnswer()`) живёт в `scripts/lib/bot.mjs`: подключи к ней ветку «не ответил» и события напоминаний, чтобы `story:trace --compare silent` сравнивал по-настоящему разные ветки и проверял C-32 п. 6.\n\nКогда напоминания станут `ready`: снять `lint_auto: false` с мутантов m10 и m11 (`scripts/lab/mutants-spec.mjs`), их `lint` — `C-32`; пересобрать `npm run skills:test -- --build`.\n\nПосле W0: C-32 п. 6–7 (напоминания у точки выбора, дословный повтор, продолжение после последнего) — в `scripts/lint/checks/C-32.mjs`; снять `deferred:E-02` у `story.reminders.max` и `C-32.no_answer` в `thresholds.json`; `story:trace --compare silent` начинает сравнивать по-настоящему. В `docs/playbook/flow-example.md` — настоящий синтаксис напоминаний вместо комментария-заглушки (просьба T-16 п. 3). `dict.pause_reason` — на границы слова («иду» не должно ловить «приду»), с записью в `history` и проверкой на мутантах.\n\nПо просьбам E-01: в `examples/*.story.json` — `days` и пауза ≥ `engine.click.time_jump_label` (чтобы метка «спустя N» была видна в демо); `e2e/modes.ts` → `modes.spec.ts`, `test:e2e` гоняет все спеки, кроме снимков.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet",
-        "npm run test:lib"
+        "npm run test:lib",
+        "npm run test:lint",
+        "npm run test:story-cmd",
+        "npm run skills:test -- --lint-only"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 180
     },
     {
@@ -1079,7 +1492,9 @@
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 150
     },
     {
@@ -1089,18 +1504,26 @@
       "type": "experiment",
       "deps": [
         "S-review",
-        "E-03"
+        "E-03",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
-        "docs/lab/**",
+        "docs/lab/journal.md",
+        "docs/lab/mutants/**",
+        "docs/lab/runs/X-E2",
+        "docs/lab/runs/X-E2/**",
         "docs/playbook/local-lessons.md",
-        "docs/playbook/thresholds.json"
+        "docs/playbook/thresholds.json",
+        "scripts/lab/mutants-spec.mjs"
       ],
-      "spec": "Эксперимент Э2 (план §13).\n1. **Калибровка** — `story-review` на `the-number` и `chuzhoy-golos` через `claude -p` естественными фразами.\n2. **Проверка** — на `slepoe-pyatno`, без её кейсов в контексте.\n3. **Полнота** по 28 находкам `story-findings.md` (совпадение узла) и по мутантам (`npm run skills:test` для всех диагностических скиллов).\n4. **Точность** — оценка в роли автора, с пометкой.\n5. **Устойчивость** — два прогона, пересечение.\n6. **Пороги** — менять только записью в журнале с проверкой на отложенной истории и мутантах.\n\nИтог: журнал, `LOCAL-NN`, список правок скиллов.",
+      "spec": "Эксперимент Э2 (план §13).\n1. **Калибровка** — `story-review` на `the-number` и `chuzhoy-golos` через `claude -p` естественными фразами.\n2. **Проверка** — на `slepoe-pyatno`, без её кейсов в контексте.\n3. **Полнота** по 28 находкам `story-findings.md` (совпадение узла) и по мутантам (`npm run skills:test` для всех диагностических скиллов).\n4. **Точность** — оценка в роли автора, с пометкой.\n5. **Устойчивость** — два прогона, пересечение.\n6. **Пороги** — менять только записью в журнале с проверкой на отложенной истории и мутантах.\n\nИтог: журнал, `LOCAL-NN`, список правок скиллов.\n\nПосле W1:\n- **Отложенная история — «Чужой голос»**, калибровка — на THE NUMBER и «Слепом пятне» («Слепое пятно» уже видно скиллам через LOCAL-04…06, 10 и прогоны X-E2mini). Проверка — в слепой копии по рецепту `docs/lab/runs/X-E2mini/README.md`, без `local-lessons.md`, кейсов и находок отложенной истории.\n- **Устойчивость** — не меньше `lab.stability_runs` прогонов (ключ заведи, `our_estimate`, минимум 3).\n- **Ключ дефектов основы мутантов** (LOCAL-07: модель находит в `_base` настоящие дефекты `ch3_call`, `clue_badge`, `ch3_end`) — до прогона: почини основу или занеси её дефекты в ключ, чтобы они не считались ложными.\n- **База сравнения по мутантам** — `docs/lab/runs/W1/mutants-story-choices-allow-fixed.json` (после правки прав), а не прогоны до неё. Прогоны с `permission_denials` — недействительны (T-17).\n\nНедействительные прогоны (`failed_runs`, `denied_runs` — T-17) разбирай отдельно от полноты; пороги не меняй, пока доля недействительных выше `lab.denials.max_invalid_share`.",
       "accept": [
         "test -s docs/lab/journal.md"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 240
     },
     {
@@ -1125,7 +1548,10 @@
         "E-01",
         "E-02",
         "E-03",
-        "X-E2"
+        "X-E2",
+        "S-choices-v2",
+        "T-17",
+        "T-18"
       ],
       "writes": [],
       "spec": "Ревью волны диагноза: согласованность 10 диагностических скиллов, оркестратор, агенты, режимы и напоминания в движке, итоги Э2.",
@@ -1137,11 +1563,92 @@
         "npm run story:lint",
         "npm run skills:test",
         "npm run lab:triggers -- --runs 3",
-        "npm run story:coverage -- --summary"
+        "npm run story:coverage -- --summary",
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
       "timeoutMin": 120,
       "pauseAfter": true
+    },
+    {
+      "id": "T-19",
+      "wave": "w3-repair",
+      "type": "code",
+      "title": "Долг свода: просьбы волны диагноза (ключи, тексты проверок, словари, приоритеты, фразы срабатывания)",
+      "deps": [
+        "W2"
+      ],
+      "writes": [
+        ".claude/agents/cold-reader.md",
+        ".claude/skills/story-opening/SKILL.md",
+        ".claude/skills/story-review/references/priority.md",
+        ".claude/skills/story-review/scripts/**",
+        ".claude/skills/story-time/SKILL.md",
+        "CLAUDE.md",
+        "docs/lab/mutants/**",
+        "docs/lab/triggers/README.md",
+        "docs/lab/triggers/_env.json",
+        "docs/lab/triggers/_example.json",
+        "docs/lab/triggers/_routing.json",
+        "docs/lab/triggers/_template.json",
+        "docs/lab/triggers/story-cast.json",
+        "docs/lab/triggers/story-choices.json",
+        "docs/lab/triggers/story-continuity.json",
+        "docs/lab/triggers/story-desk.json",
+        "docs/lab/triggers/story-endings.json",
+        "docs/lab/triggers/story-mystery.json",
+        "docs/lab/triggers/story-opening.json",
+        "docs/lab/triggers/story-pace.json",
+        "docs/lab/triggers/story-pauses.json",
+        "docs/lab/triggers/story-playtest.json",
+        "docs/lab/triggers/story-review.json",
+        "docs/lab/triggers/story-time.json",
+        "docs/lab/triggers/story-voice.json",
+        "docs/playbook/checks.md",
+        "docs/playbook/clusters.json",
+        "docs/playbook/owners.md",
+        "docs/playbook/rules.md",
+        "docs/playbook/thresholds.json",
+        "docs/style.md",
+        "scripts/lab/mutants-spec.mjs",
+        "scripts/lab/triggers-lib.mjs",
+        "scripts/lint/checks/C-22.mjs",
+        "scripts/lint/checks/C-23.mjs",
+        "scripts/lint/checks/C-24.mjs",
+        "scripts/lint/checks/C-25.mjs",
+        "scripts/lint/checks/C-26.mjs",
+        "scripts/lint/checks/C-27.mjs",
+        "scripts/lint/checks/C-28.mjs",
+        "scripts/lint/checks/C-29.mjs",
+        "scripts/lint/checks/C-32.mjs",
+        "scripts/lint/core.mjs",
+        "scripts/lint/journal.mjs",
+        "scripts/lint/lint.mjs",
+        "scripts/lint/selftest-t19.mjs",
+        "scripts/lint/selftest-wave2.mjs",
+        "scripts/lint/selftest.mjs",
+        "scripts/lint/static.mjs"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/W2/checkpoint.md («Просьбы исполнителей», «Правки» пп. 4, 6, 7, 8)",
+        "docs/playbook/_build/reports/*/requests.md волны w2-diagnosis",
+        "docs/playbook/local-lessons.md (LOCAL-11…16)",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "npm run test:lint",
+        "npm run test:story-cmd",
+        "npm run story:coverage -- --summary",
+        "npm run skills:test -- --lint-only",
+        "npm run test:lab:triggers",
+        "npm run test:lab:mutants",
+        "npm run prompt -- --quiet",
+        "npm run build"
+      ],
+      "timeoutMin": 200,
+      "spec": "В w3–w6 нет задачи, которой разрешено выполнять просьбы исполнителей волны диагноза к своду и общим инструментам; 13 сверок из 20 вышли `drift-minor` из-за них. Закрой долг по своду просьб в `reports/W2/checkpoint.md` («Просьбы исполнителей», пп. 2–4, 7, 8, 10, 11) и правкам 4, 6, 7, 8:\n1. **Числа словами → ключи** `thresholds.json` (R-70, R-73, R-30, ST-01, AS-43 и др. из свода просьб); устаревшая ST-66 в `docs/style.md` — под синтаксис напоминаний E-02.\n2. **Тексты проверок в `checks.md`** под то, что модули считают на деле: C-22…C-29, C-32 п. 7 (свод просьб).\n3. **Словари** `dict.world_deadline`, `dict.pause_reason` (границы слова), `dict.gender_role.self`.\n4. **`cold-reader`:** вызов `--ask` без `--json` (LOCAL-13: большой `--json` агент дочитывал через node/python и получал отказ).\n5. **Приоритеты:** общая таблица приоритетов линз в `.claude/skills/story-review/references/priority.md`, потолки P в `merge-findings.mjs` по LOCAL-16; «скучно (кандидат)» может быть P1, если глава не держится (CG-04, CG-03 занижены в Э2).\n6. **Фразы срабатывания** `docs/lab/triggers/*.json`: фразы с несуществующими историями («про маяк», «про паром») — без имени истории или с id каталога (66 недействительных из 750); перепроверь фразы мимо `story-opening` и `story-time` («А как эта глава будет читаться в режиме по клику?», «Как протестировать паузы, не ожидая часами?», «привет, ты тут?»); слова «по клику», «пропустить до следующего», «первое сообщение» — в description `story-time`/`story-opening` (SKILL.md, только frontmatter и строка «симптом → скилл»). Перемерь `npm run lab:triggers -- --skill story-time --runs 3` и `--skill story-opening`.\n7. **`scripts/lab/triggers-lib.mjs` → `denialText()`:** каждая команда до ~120 знаков, не больше 5 + «…ещё N».\n8. **Мутанты (решение королевы):** не поднимать предел ради количества — сначала замени дублирующих мутантов (у `story-choices` 5, у `story-time` 5 — оставь по 2–3 самых разных), освободившиеся места отдай просимым мутантам зон без мутанта (S-opening, S-cast, S-continuity C-51, S-mystery, S-playtest); если всё равно тесно — `lab.mutants.count.max` до 30 с записью в `history`. Пересобери `skills:test -- --build`, полнота линта не ниже прежней.\n9. **Таблица «симптом → скилл»** в `CLAUDE.md` — строки всех 13 собранных скиллов.\n10. `owners.md`: 12 строк `merged-into` от S-opening — кто ставит статусы, впиши правило (владелец строки, через `--record`)."
     },
     {
       "id": "S-fix",
@@ -1149,17 +1656,21 @@
       "wave": "w3-repair",
       "type": "skill",
       "deps": [
-        "W2"
+        "W2",
+        "S-choices-v2",
+        "T-17"
       ],
       "writes": [
         ".claude/skills/story-fix/**",
-        "docs/lab/triggers/story-fix.json"
+        "docs/lab/triggers/story-fix.json",
+        "scripts/lint/selftest-story-fix.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-fix` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** применяет одобренные находки приёмами скиллов-владельцев (`fixes/F-NN` у них), общая безопасность правок (улики, мотивы, переменные, переходы, разметка), `text-diff` (реплики до и после), полный `story:lint` до и после, режим `--compress` (сжать до N минут или в одну сессию). Одобрение: в конвейере его даёт королева в пределах `INTENT.md`, в жизни — автор\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-fix`) с поправками плана §5. Минимум references: 6, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-fix.json`.",
+      "spec": "Собери скилл `story-fix` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** применяет одобренные находки приёмами скиллов-владельцев (`fixes/F-NN` у них), общая безопасность правок (улики, мотивы, переменные, переходы, разметка), `text-diff` (реплики до и после), полный `story:lint` до и после, режим `--compress` (сжать до N минут или в одну сессию). Одобрение: в конвейере его даёт королева в пределах `INTENT.md`, в жизни — автор\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-fix`) с поправками плана §5. Минимум references: 6, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-fix.json`.\n\nПосле W2: режим «объясни» и одобрение по одному пункту — применять только находки, которые выбрал автор (в конвейере — королева), брать варианты А/Б/В с ink до/после прямо из отчёта линзы, без пересочинения; после правки — `story:diff` до/после и повтор линзы на изменённых узлах.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-fix --min-refs 6 --min-scripts 3",
         "npm run story:coverage -- --skill story-fix --min L2",
-        "npm run lab:triggers -- --skill story-fix --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-fix --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-fix)",
@@ -1167,7 +1678,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-fix"
@@ -1178,20 +1690,31 @@
       "wave": "w3-repair",
       "type": "experiment",
       "deps": [
-        "S-fix"
+        "S-fix",
+        "T-19"
       ],
       "writes": [
-        "docs/lab/**",
+        ".claude/skills/story-choices/**",
+        ".claude/skills/story-endings/**",
+        ".claude/skills/story-fix/**",
+        ".claude/skills/story-pace/**",
+        ".claude/skills/story-pauses/**",
+        ".claude/skills/story-time/**",
+        "docs/lab/journal.md",
+        "docs/lab/runs/X-E3",
+        "docs/lab/runs/X-E3/**",
         "docs/playbook/local-lessons.md",
-        "src/stories/chuzhoy-golos/**",
-        "docs/stories/chuzhoy-golos/**"
+        "docs/stories/chuzhoy-golos/**",
+        "src/stories/chuzhoy-golos/**"
       ],
-      "spec": "Эксперимент Э3 (план §13). На копии «Чужого голоса» (оригинал — под тегом `stories-v1`):\n1. `story-review` → выбрать находки по топ-10 `story-findings.md`: начало, 7 контактов в первой главе, эпилоги без кнопок, видимость порога финала, мёртвые переменные.\n2. Применить через `story-fix`.\n3. Сравнить `story:diff`, отложенные метрики, которых `story-fix` не видел, и холодного читателя до и после.\n\nЖивых тестеров не тратить. Итог: журнал, `LOCAL-NN`, правки скиллов.",
+      "spec": "Эксперимент Э3 (план §13). На копии «Чужого голоса» (оригинал — под тегом `stories-v1`):\n1. `story-review` → выбрать находки по топ-10 `story-findings.md`: начало, 7 контактов в первой главе, эпилоги без кнопок, видимость порога финала, мёртвые переменные.\n2. Применить через `story-fix`.\n3. Сравнить `story:diff`, отложенные метрики, которых `story-fix` не видел, и холодного читателя до и после.\n\nЖивых тестеров не тратить. Итог: журнал, `LOCAL-NN`, правки скиллов.\n\nБаза сравнения — `npm run story:diff -- 2b1b509 .` (ревизия базового снимка T-15), а не тег `stories-v1`: у тега старое `days`, и C-31 мерился бы по карточке.\n\nПосле W2: к топ-находкам ремонта добавь **напоминания**: в развилках, где собеседник ждёт ответа, — 1–2 `#remind` (своими словами, без упрёка и срока) и `#noanswer`/`#silent` с исходом не хуже (C-32, R-120; список даёт `story-time` → `guilt-scan.mjs`, «ждёт без напоминаний»); проверка — `npm run story:trace -- --compare silent` и `npm run story:lint -- --only C-32`. Это единственное решение автора, которого пока нет ни в одной истории. Правки скиллов по итогам эксперимента вноси сам в их папки (пути разрешены).",
       "accept": [
         "test -s docs/lab/journal.md",
         "npm run check:story"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 240
     },
     {
@@ -1201,7 +1724,8 @@
       "type": "checkpoint",
       "deps": [
         "S-fix",
-        "X-E3"
+        "X-E3",
+        "T-19"
       ],
       "writes": [],
       "spec": "Ревью ремонта: безопасность правок, качество приёмов F-NN у владельцев, итоги Э3.",
@@ -1209,7 +1733,10 @@
         "npm run build",
         "npm run check:story",
         "npm run story:lint",
-        "npm run skills:test"
+        "npm run skills:test",
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
       "timeoutMin": 90,
@@ -1221,17 +1748,21 @@
       "wave": "w4-creation",
       "type": "skill",
       "deps": [
-        "W3"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-brainstorm/**",
-        "docs/lab/triggers/story-brainstorm.json"
+        "docs/lab/triggers/story-brainstorm.json",
+        "scripts/lint/selftest-story-brainstorm.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-brainstorm` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** из сырой идеи — 3–5 направлений, различных минимум по трём осям (роль игрока, герой, ядро-правило, ставка, противник, структура, жанровое обещание). Двухпроходная генерация: сначала таблица осей, потом текст. Трейлер на 5 сообщений с первой кнопкой для каждого направления. Режим «ещё» исключает показанное и отвергнутое. Банк идей (`ideas-bank`), Б-4, вымысел (`fiction.md`). Автор не умеет строить сюжеты: колонка «что трудно» объясняет, что это значит для него\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): video-three-things, snyder-save-the-cat, truby-anatomy-of-story, vogler-writers-journey, edgerton-hooked, procedural-storytelling, chat-fiction-apps, mobile-interactive-stories, messenger-genre, cron-wired-for-story.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-brainstorm`) с поправками плана §5. Минимум references: 9, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-brainstorm.json`.",
+      "spec": "Собери скилл `story-brainstorm` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** из сырой идеи — 3–5 направлений, различных минимум по трём осям (роль игрока, герой, ядро-правило, ставка, противник, структура, жанровое обещание). Двухпроходная генерация: сначала таблица осей, потом текст. Трейлер на 5 сообщений с первой кнопкой для каждого направления. Режим «ещё» исключает показанное и отвергнутое. Банк идей (`ideas-bank`), Б-4, вымысел (`fiction.md`). Автор не умеет строить сюжеты: колонка «что трудно» объясняет, что это значит для него\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): video-three-things, snyder-save-the-cat, truby-anatomy-of-story, vogler-writers-journey, edgerton-hooked, procedural-storytelling, chat-fiction-apps, mobile-interactive-stories, messenger-genre, cron-wired-for-story.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-brainstorm`) с поправками плана §5. Минимум references: 9, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-brainstorm.json`.\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-brainstorm --min-refs 9 --min-scripts 3",
         "npm run story:coverage -- --skill story-brainstorm --min L2",
-        "npm run lab:triggers -- --skill story-brainstorm --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-brainstorm --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-brainstorm)",
@@ -1239,7 +1770,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-brainstorm"
@@ -1250,18 +1782,21 @@
       "wave": "w4-creation",
       "type": "skill",
       "deps": [
-        "W3",
-        "S-brainstorm"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-core/**",
-        "docs/lab/triggers/story-core.json"
+        "docs/lab/triggers/story-core.json",
+        "scripts/lint/selftest-story-core.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-core` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** фиксирует ядро: ставка со сроком, главный вопрос, оси, роль игрока, противник (`antagonist.md`), тема (`theme.md`), время мира (`time-model.md`, без часов игрока), состав и карточки персонажей. Вопросы автору — с вариантами ответа. Запись D-NN в `decisions.md`. Если есть скрытая правда — карта улик через `story-mystery`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): truby-anatomy-of-story, mckee-story, edgerton-hooked, snyder-save-the-cat, sheldon-character-storytelling, skolnick-video-game-storytelling, meaningful-choice.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-core`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-core.json`.",
+      "spec": "Собери скилл `story-core` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** фиксирует ядро: ставка со сроком, главный вопрос, оси, роль игрока, противник (`antagonist.md`), тема (`theme.md`), время мира (`time-model.md`, без часов игрока), состав и карточки персонажей. Вопросы автору — с вариантами ответа. Запись D-NN в `decisions.md`. Если есть скрытая правда — карта улик через `story-mystery`\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): truby-anatomy-of-story, mckee-story, edgerton-hooked, snyder-save-the-cat, sheldon-character-storytelling, skolnick-video-game-storytelling, meaningful-choice.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-core`) с поправками плана §5. Минимум references: 9, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-core.json`.\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-core --min-refs 9 --min-scripts 2",
         "npm run story:coverage -- --skill story-core --min L2",
-        "npm run lab:triggers -- --skill story-core --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-core --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-core)",
@@ -1269,7 +1804,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-core"
@@ -1280,17 +1816,21 @@
       "wave": "w4-creation",
       "type": "skill",
       "deps": [
-        "W3"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-branch/**",
-        "docs/lab/triggers/story-branch.json"
+        "docs/lab/triggers/story-branch.json",
+        "scripts/lint/selftest-story-branch.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-branch` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** куда свернуть в любой точке: варианты (развилка, поворот, ложный след, отказ, молчание) с влиянием на оси, финалы и чаты, цена в тексте, бюджет дорогих веток (`branch-budget`). После решения — новая версия плана и запись D-NN. Б-4\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): ashwell-standard-patterns, emshort-structures, inkle-ingold, mckee-story, vogler-writers-journey, serial-hooks, mystery-fair-play, meaningful-choice, choiceofgames-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-branch`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-branch.json`.",
+      "spec": "Собери скилл `story-branch` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** куда свернуть в любой точке: варианты (развилка, поворот, ложный след, отказ, молчание) с влиянием на оси, финалы и чаты, цена в тексте, бюджет дорогих веток (`branch-budget`). После решения — новая версия плана и запись D-NN. Б-4\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): ashwell-standard-patterns, emshort-structures, inkle-ingold, mckee-story, vogler-writers-journey, serial-hooks, mystery-fair-play, meaningful-choice, choiceofgames-design.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-branch`) с поправками плана §5. Минимум references: 8, scripts: 2.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-branch.json`.\n\nГлавная боль автора, на которую отвечает скилл: «граф почти линейный, ветки сходятся, кнопки ничего не меняют». Варианты развилок показывай с их влиянием на оси, финалы и состав чатов, и с ценой (бюджет дорогих веток).\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-branch --min-refs 8 --min-scripts 2",
         "npm run story:coverage -- --skill story-branch --min L2",
-        "npm run lab:triggers -- --skill story-branch --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-branch --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-branch)",
@@ -1298,7 +1838,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-branch"
@@ -1309,18 +1850,21 @@
       "wave": "w4-creation",
       "type": "skill",
       "deps": [
-        "W3",
-        "S-core"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-plan/**",
-        "docs/lab/triggers/story-plan.json"
+        "docs/lab/triggers/story-plan.json",
+        "scripts/lint/selftest-story-plan.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-plan` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** скелет `skeleton.ink` всей истории до текста (по строке на сцену, настоящие выборы, переменные и финалы), структуры ветвления, распределитель финалов, расписание пауз в обоих режимах, платная граница (ставит, на сильном крючке), порядок производства (`process.md`: скелет → главы 1–2 → тест → главы 3–N). Скрипты: `plan-check` (`story:lint --plan`), `plan-compare` (числами), шаблон скелета\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): ashwell-standard-patterns, yorke-into-the-woods, snyder-save-the-cat, failbetter-qbn, inkle-ingold, choiceofgames-design, narrative-testing, dille-ultimate-guide.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-plan`) с поправками плана §5. Минимум references: 9, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-plan.json`.",
+      "spec": "Собери скилл `story-plan` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** скелет `skeleton.ink` всей истории до текста (по строке на сцену, настоящие выборы, переменные и финалы), структуры ветвления, распределитель финалов, расписание пауз в обоих режимах, платная граница (ставит, на сильном крючке), порядок производства (`process.md`: скелет → главы 1–2 → тест → главы 3–N). Скрипты: `plan-check` (`story:lint --plan`), `plan-compare` (числами), шаблон скелета\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** F-15. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): ashwell-standard-patterns, yorke-into-the-woods, snyder-save-the-cat, failbetter-qbn, inkle-ingold, choiceofgames-design, narrative-testing, dille-ultimate-guide.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-plan`) с поправками плана §5. Минимум references: 9, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-plan.json`.\n\nМатрица покрытия у этого скилла большая. Порядок: сначала закрой дубли статусами (`merged-into`, `rejected:duplicate:<кластер>`), потом пиши блоки по оставшимся кластерам. Формальных блоков ради `--min L2` не пиши: ревьюер сверит смысл.\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
-        "node docs/playbook/_build/checks/skill-check.mjs story-plan --min-refs 9 --min-scripts 3",
+        "node docs/playbook/_build/checks/skill-check.mjs story-plan --min-refs 9 --min-scripts 3 --fixes F-15",
         "npm run story:coverage -- --skill story-plan --min L2",
-        "npm run lab:triggers -- --skill story-plan --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-plan --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-plan)",
@@ -1328,9 +1872,10 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
-      "timeoutMin": 180,
+      "timeoutMin": 300,
       "skill": "story-plan"
     },
     {
@@ -1339,18 +1884,23 @@
       "wave": "w4-creation",
       "type": "skill",
       "deps": [
-        "W3",
-        "S-plan"
+        "S-plan",
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/chapter-write/**",
-        "docs/lab/triggers/chapter-write.json"
+        "docs/lab/triggers/chapter-write.json",
+        "scripts/hooks/**",
+        "scripts/lint/selftest-chapter-write.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `chapter-write` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** глава на ink по одобренному плану: `chapter-context` (шапка, план главы, карточки, `facts.md`, концы прошлой главы по путям), `docs/style.md`, оба режима, напоминания, якоря фактов (`facts-anchor.md`), разметка. Проверки после главы — полный хук и нужные диагностические скиллы\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): inkle-ingold, messenger-genre, chat-fiction-apps, nicklin-writing-for-games, procedural-storytelling, attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `chapter-write`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/chapter-write.json`.",
+      "spec": "Собери скилл `chapter-write` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** глава на ink по одобренному плану: `chapter-context` (шапка, план главы, карточки, `facts.md`, концы прошлой главы по путям), `docs/style.md`, оба режима, напоминания, якоря фактов (`facts-anchor.md`), разметка. Проверки после главы — полный хук и нужные диагностические скиллы\n- Модуль: его вызывают входы или главная сессия по таблице «симптом → скилл». Описание — симптомы.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): inkle-ingold, messenger-genre, chat-fiction-apps, nicklin-writing-for-games, procedural-storytelling, attention-today.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `chapter-write`) с поправками плана §5. Минимум references: 8, scripts: 3.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/chapter-write.json`.\n\nПосле W0: проверка после главы — `node scripts/hooks/full.mjs <id>`; для истории с `beta_stop` — режим `partial` в `MODE_BY_AGENT` (`scripts/hooks/`).\n\nПосле E-02: движок без `#remind`/`#noanswer` оставляет кнопку ждать вечно (так безопасно для старых историй), но решение автора (INTENT) — персонаж напоминает 1–2 раза, потом история идёт дальше. Значит, в каждой развилке, где собеседник ждёт ответа, в реальном времени нужны 1–2 `#remind` (своими словами, без упрёка и без срока) и `#noanswer` (или `#silent`, исход не хуже). Синтаксис — `docs/capabilities.json` (`remind`, `noanswer`).",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs chapter-write --min-refs 8 --min-scripts 3",
         "npm run story:coverage -- --skill chapter-write --min L2",
-        "npm run lab:triggers -- --skill chapter-write --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill chapter-write --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (chapter-write)",
@@ -1358,7 +1908,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "chapter-write"
@@ -1380,8 +1931,10 @@
       "accept": [
         "node docs/playbook/_build/checks/agent-check.mjs story-architect"
       ],
-      "inputs": [],
-      "timeoutMin": 120
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "timeoutMin": 180
     },
     {
       "id": "A-writer",
@@ -1398,8 +1951,10 @@
       "accept": [
         "node docs/playbook/_build/checks/agent-check.mjs chapter-writer"
       ],
-      "inputs": [],
-      "timeoutMin": 120
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "timeoutMin": 180
     },
     {
       "id": "E-04",
@@ -1413,16 +1968,20 @@
         "src/**",
         "docs/capabilities.json",
         "CLAUDE.md",
-        "e2e/**"
+        "e2e/**",
+        "examples/e2e.story.json",
+        "examples/demo.story.json"
       ],
-      "spec": "Фича E-04: поле `revision` у истории. Сохранение помнит ревизию; несовместимое сохранение сбрасывается с предупреждением. Реестр, e2e.",
+      "spec": "Фича E-04: поле `revision` у истории. Сохранение помнит ревизию; несовместимое сохранение сбрасывается с предупреждением. Реестр, e2e.\n\nНет `revision` в сохранении или в истории — значит 1.\n\nНовые поля формата — сразу в `examples/e2e.story.json` и `examples/demo.story.json`.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 150
     },
     {
@@ -1438,69 +1997,21 @@
         "docs/capabilities.json",
         "CLAUDE.md",
         "README.md",
-        "e2e/**"
+        "e2e/**",
+        "examples/e2e.story.json",
+        "examples/demo.story.json"
       ],
-      "spec": "Фича E-05: `free_chapters` в `meta.json`. Главы после границы закрыты, с понятным экраном «продолжение платное»; механизма покупки пока нет — заглушка. Для отладки — открыть всё. Граница только на стыке глав. Реестр, `testid`, e2e.",
+      "spec": "Фича E-05: `free_chapters` в `meta.json`. Главы после границы закрыты, с понятным экраном «продолжение платное»; механизма покупки пока нет — заглушка. Для отладки — открыть всё. Граница только на стыке глав. Реестр, `testid`, e2e.\n\nНовые поля формата — сразу в `examples/e2e.story.json` и `examples/demo.story.json`.\n\nКарточки главного экрана переделаны по просьбе автора (задача королевы Q-cards: на всю ширину, затравки без спойлеров, главы, время, персонажи). Закрытые главы и платную границу показывай в этой новой вёрстке, не возвращая старую.",
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
         "npm run prompt -- --quiet"
       ],
-      "inputs": [],
+      "inputs": [
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "timeoutMin": 150
-    },
-    {
-      "id": "X-E4",
-      "title": "Э4: новая история по циклу",
-      "wave": "w4-creation",
-      "type": "experiment",
-      "deps": [
-        "A-architect",
-        "A-writer",
-        "S-brainstorm",
-        "S-core",
-        "S-branch",
-        "S-plan",
-        "S-chapter",
-        "S-review",
-        "S-fix",
-        "S-desk",
-        "E-03"
-      ],
-      "writes": [
-        "docs/lab/**",
-        "docs/playbook/local-lessons.md",
-        "src/stories/**",
-        "docs/stories/**"
-      ],
-      "spec": "Эксперимент Э4 (план §13): новая история на 10–15 минут «по клику» и 1–2 дня в реальном времени, полностью по циклу плана §2 через `claude -p` естественными фразами автора.\n- Идея — одна фраза: «мне пишет человек из будущего, и мои ответы меняют его мир» (сюжет вымышленный, без чужих франшиз).\n- Решения автора на развилках принимай сам в пределах `INTENT.md` и записывай в `decisions.md` с пометкой «решение королевы».\n- Цикл: направления → ядро → планы (агент) → развилка → скелет → главы 1–2 → ревью → правки → тест симулированной панелью `story-playtest` (живого теста нет) → переписывание по итогам (Б-2) → главы 3–N → полное ревью → выпуск в виде `story:pack`.\n\nМеряй:\n- сработало ли всё само;\n- сколько ручных вмешательств понадобилось;\n- метрики `story:lint` и прочих команд;\n- холодного читателя.\n\nИтог: журнал, `LOCAL-NN`, правки скиллов.",
-      "accept": [
-        "npm run check:story",
-        "npm run build",
-        "test -s docs/lab/journal.md"
-      ],
-      "inputs": [],
-      "timeoutMin": 360
-    },
-    {
-      "id": "X-E6",
-      "title": "Э6: два режима и напоминания на симулированной панели",
-      "wave": "w4-creation",
-      "type": "experiment",
-      "deps": [
-        "X-E4"
-      ],
-      "writes": [
-        "docs/lab/**",
-        "docs/playbook/local-lessons.md"
-      ],
-      "spec": "Эксперимент Э6 без живых людей. Новая история из Э4 и одна наша (`the-number`):\n1. **Режим «по клику»** — симулированная панель `story-playtest` читает видимую переписку подряд: понятно ли, сколько прошло времени, нет ли «доброго утра» через секунду, монотонности, ссылок на время, которого не было.\n2. **Реальное время** — панель читает пачками, как вернувшийся после паузы («отвлечённый»): понятна ли первая реплика после паузы, есть ли крючок.\n3. **Персона «неотвечающий»** — сработали ли напоминания (E-02), пошла ли история дальше, нет ли упрёков.\n4. **Сравни режимы** по ответам панели и метрикам (`story:sessions`, `story-time`).\n\nИтог: журнал, `LOCAL-NN`, правки скиллов `story-time` и `story-pauses` и стиля.",
-      "accept": [
-        "test -s docs/lab/journal.md"
-      ],
-      "inputs": [],
-      "timeoutMin": 180
     },
     {
       "id": "W4",
@@ -1516,12 +2027,10 @@
         "A-architect",
         "A-writer",
         "E-04",
-        "E-05",
-        "X-E4",
-        "X-E6"
+        "E-05"
       ],
       "writes": [],
-      "spec": "Ревью создания: цикл от идеи до выпуска, качество направлений и планов, главы, итоги Э4.",
+      "spec": "Ревью создания: цикл от идеи до выпуска, качество направлений и планов, главы, итоги Э4.\n\nРешение автора (28.10): Э4 (новая история) и Э6 отменены — работаем только с «Чужим голосом»; проверка режимов из Э6 перенесена в X-E7. Итог волны создания — по скиллам и агентам, без эксперимента.",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -1529,7 +2038,9 @@
         "npm run prompt -- --quiet",
         "npm run story:lint",
         "npm run skills:test",
-        "npm run lab:triggers -- --runs 3"
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
       "timeoutMin": 120,
@@ -1541,17 +2052,24 @@
       "wave": "w5-release",
       "type": "skill",
       "deps": [
-        "W4"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-release/**",
-        "docs/lab/triggers/story-release.json"
+        "docs/lab/triggers/story-release.json",
+        "scripts/lint/checks/C-49.mjs",
+        "scripts/lint/selftest-story-release.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-release` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** гейт выпуска (все главы, `story:lint` без ошибок, вторая волна теста), карточка с двумя длительностями, ревизия, платная граница (проверяет: `boundary-check`), этика и монетизация (`ethics.md` — единственный источник), `story:pack`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): chat-fiction-apps, mobile-interactive-stories, serial-hooks, messenger-genre, meaningful-choice.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-release`) с поправками плана §5. Минимум references: 8, scripts: 4.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-release.json`.",
+      "spec": "Собери скилл `story-release` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** гейт выпуска (все главы, `story:lint` без ошибок, вторая волна теста), карточка с двумя длительностями, ревизия, платная граница (проверяет: `boundary-check`), этика и монетизация (`ethics.md` — единственный источник), `story:pack`\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** C-49. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): chat-fiction-apps, mobile-interactive-stories, serial-hooks, messenger-genre, meaningful-choice.\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-release`) с поправками плана §5. Минимум references: 8, scripts: 4.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-release.json`.\n\nКарточка истории (после Q-cards): затравки без спойлеров — поле в `meta.json` (имя — в README и `docs/capabilities.json` → `storyfile`), числа глав, персонажей и два времени. `story-release` проверяет затравки на спойлеры (только завязка и первая глава) и на стиль `docs/style.md`.\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-release --min-refs 8 --min-scripts 4",
         "npm run story:coverage -- --skill story-release --min L2",
-        "npm run lab:triggers -- --skill story-release --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-release --runs 3 --min build",
+        "npm run skills:test -- --skill story-release",
+        "npm run test:lint"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-release)",
@@ -1559,7 +2077,8 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-release"
@@ -1570,17 +2089,22 @@
       "wave": "w5-release",
       "type": "skill",
       "deps": [
-        "W4"
+        "S-choices-v2",
+        "T-17",
+        "W2"
       ],
       "writes": [
         ".claude/skills/story-kb/**",
-        "docs/lab/triggers/story-kb.json"
+        "docs/lab/triggers/story-kb.json",
+        "scripts/kb/**",
+        "scripts/lint/selftest-story-kb.mjs",
+        "CLAUDE.md"
       ],
-      "spec": "Собери скилл `story-kb` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** вопросы к базе со ссылками и противоречиями; наставник: разбор сцены автора, упражнения. «Объясни» внутри правки берёт `explain.md` владельца, а не этот скилл\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. Сверь с `docs/playbook/owners.md`.\n- **Разборы-источники** (очищенные, целиком): все 30 разборов (index.md).\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-kb`) с поправками плана §5. Минимум references: 5, scripts: 1.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-kb.json`.",
+      "spec": "Собери скилл `story-kb` по контракту плана §4 и `prompts/type-skill.md`.\n\n- **Роль:** вопросы к базе со ссылками и противоречиями; наставник: разбор сцены автора, упражнения. «Объясни» внутри правки берёт `explain.md` владельца, а не этот скилл\n- Пользовательский вход: описание — фразы автора.\n- **Владеет проверками:** —. **Ремонтными приёмами:** —. По `docs/playbook/owners.md` §3–4 (сверено королевой после W0); при расхождении прав `owners.md`.\n- **Разборы-источники** (очищенные, целиком): все 30 разборов (index.md).\n- **Перечень references и scripts** — `docs/playbook/flow-review.md` §C (раздел `story-kb`) с поправками плана §5. Минимум references: 5, scripts: 1.\n- **Закрой свои кластеры** покрытия до L2, проверяемые — до L3.\n- **Фразы срабатывания** — `docs/lab/triggers/story-kb.json`.\n\nПосле W0 (просьба T-10b п. 1): нюанс наследует владельца родителя при любом способе назначения (`scripts/kb/`), `npm run test:coverage` зелёный.\n\nПорядок ускорен королевой по просьбе автора: эта задача идёт параллельно с соседями волны, не дожидаясь их. Форматы, на которые ты опираешься (направления, ядро, план, скелет), — `docs/playbook/build-plan.md` §2, §7, §9 и `.claude/skills/story-desk/references/state-format.md`; если соседний скилл уже слит в `build/main` — бери его формат. Расхождения форматов сведёт итог волны.",
       "accept": [
         "node docs/playbook/_build/checks/skill-check.mjs story-kb --min-refs 5 --min-scripts 1",
         "npm run story:coverage -- --skill story-kb --min L2",
-        "npm run lab:triggers -- --skill story-kb --runs 3 --min 0.6"
+        "npm run lab:triggers -- --skill story-kb --runs 3 --min build"
       ],
       "inputs": [
         "docs/playbook/flow-review.md §C (story-kb)",
@@ -1588,37 +2112,78 @@
         "docs/playbook/rules.md",
         "docs/playbook/checks.md",
         "docs/playbook/attention-merged.md",
-        "docs/style.md"
+        "docs/style.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 180,
       "skill": "story-kb"
     },
     {
-      "id": "X-E7",
-      "title": "Переработка трёх историй новыми скиллами",
+      "id": "E-07",
       "wave": "w5-release",
-      "type": "experiment",
+      "type": "engine",
+      "title": "Скрыть THE NUMBER и «Слепое пятно» из каталога",
       "deps": [
-        "S-release",
-        "S-kb"
+        "W2"
       ],
       "writes": [
-        "src/stories/**",
-        "docs/stories/**",
-        "docs/lab/**",
-        "docs/playbook/local-lessons.md"
+        "src/engine/**",
+        "src/ui/**",
+        "src/stories/the-number/meta.json",
+        "src/stories/slepoe-pyatno/meta.json",
+        "docs/capabilities.json",
+        "README.md",
+        "CLAUDE.md",
+        "e2e/**",
+        "scripts/lib/story.mjs"
       ],
-      "spec": "Финальная проверка всей системы на реальном материале. Три наши истории (`the-number`, `slepoe-pyatno`, `chuzhoy-golos`; оригиналы — под тегом `stories-v1`) проведи через цикл скиллов так, как это делал бы автор естественными фразами в `claude -p`:\n1. `story-desk`: завести состояние каждой истории в `docs/stories/<id>/`.\n2. `story-review` целиком.\n3. Решить, что чинить (`story-fix`), а что переписать: можно смело переписывать главы и сцены через `story-plan`, `story-branch` и `chapter-write`, если ревью показывает, что так лучше. Привести к `docs/style.md`, двум режимам, напоминаниям, нормам длины.\n4. Симулированная панель `story-playtest` до и после.\n5. Гейт `story-release`: карточка с двумя длительностями, ревизия, `story:pack`.\n\nРешения за автора принимай в пределах `INTENT.md` и записывай в `decisions.md` каждой истории.\n\nМеряй до и после: `story:diff`, `story:lint` (ошибки — до нуля), профиль кнопок (боль «выбор не ощущается»), контакты в первой главе (боль «много чатов»), холодный читатель на начале (боль «непонятно»), кандидаты скуки.\n\nИтог: журнал, `LOCAL-NN`, финальные правки скиллов, если они нужны. Истории должны проходить `check:story`, `build` и e2e.",
+      "inputs": [
+        "docs/playbook/_build/INTENT.md",
+        "CLAUDE.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
       "accept": [
         "npm run build",
         "npm run check:story",
         "HEADLESS=1 npm run test:e2e",
-        "npm run story:lint"
+        "npm run prompt -- --quiet",
+        "npm run story:pack -- --check",
+        "SINGLE=1 npm run build"
+      ],
+      "spec": "Решение автора (28.10): в работе только «Чужой голос», его отдадут друзьям на тест. THE NUMBER и «Слепое пятно» — скрыть из каталога на главном экране, но не удалять: их читают команды `story:*`, линт, базовый снимок и тесты.\n- Необязательное поле `hidden: true` в `meta.json` истории (тип `Story`, `docs/capabilities.json` → `storyfile`, README). Скрытая история не показывается на главном, не попадает в `dist/stories/` для Pages (`story:pack` её пропускает при сборке сайта — реши, как, и опиши) и открывается только флагом `?story=<id>` или `?all=1` (для разработки; флаг — в таблицу параметров CLAUDE.md).\n- Поставь `hidden: true` у `the-number` и `slepoe-pyatno`. Текст их сценариев не трогай.\n- Команды `story:*`, `check:story`, линт и `scripts/lib` продолжают видеть все истории (скрытость — только для каталога игрока).\n- e2e на фикстуре: скрытая история не видна на главном, открывается по `?story=`; снимок главного — одна карточка «Чужого голоса» плюс загрузка.\n- Таблица «Истории в каталоге» в CLAUDE.md — пометка «скрыта»."
+    },
+    {
+      "id": "X-E7",
+      "title": "Переработка «Чужого голоса» полным циклом скиллов",
+      "wave": "w5-release",
+      "type": "experiment",
+      "deps": [
+        "S-release",
+        "S-kb",
+        "W4"
+      ],
+      "writes": [
+        "docs/lab/journal.md",
+        "docs/lab/runs/X-E7",
+        "docs/lab/runs/X-E7/**",
+        "docs/playbook/local-lessons.md",
+        "docs/stories/chuzhoy-golos/**",
+        "src/stories/chuzhoy-golos/**"
+      ],
+      "spec": "**Решение автора (28.10): переработать только «Чужой голос» (`chuzhoy-golos`). THE NUMBER и «Слепое пятно» не трогать вообще** — ни текст, ни `meta.json`, ни состояние в `docs/stories/`.\n\nФинальная проверка всей системы на реальном материале. «Чужой голос» (`chuzhoy-golos`; оригинал — под тегом `stories-v1`, после Э3 — в `build/main`) проведи через цикл скиллов поверх результата Э3 так, как это делал бы автор естественными фразами в `claude -p`:\n1. `story-desk`: завести состояние истории в `docs/stories/<id>/`.\n2. `story-review` целиком.\n3. Решить, что чинить (`story-fix`), а что переписать: можно смело переписывать главы и сцены через `story-plan`, `story-branch` и `chapter-write`, если ревью показывает, что так лучше. Привести к `docs/style.md`, двум режимам, напоминаниям, нормам длины.\n4. Симулированная панель `story-playtest` до и после.\n5. Гейт `story-release`: карточка с двумя длительностями, ревизия, `story:pack`.\n\nРешения за автора принимай в пределах `INTENT.md` и записывай в `decisions.md` истории.\n\nМеряй до и после: `story:diff`, `story:lint` (ошибки — до нуля), профиль кнопок (боль «выбор не ощущается»), контакты в первой главе (боль «много чатов»), холодный читатель на начале (боль «непонятно»), кандидаты скуки.\n\nИтог: журнал, `LOCAL-NN`, финальные правки скиллов, если они нужны. Истории должны проходить `check:story`, `build` и e2e.\n\nИзвестное: `days` у «Чужого голоса» выше потолка длины — это находка C-31 (пауз слишком много или они длинные). Чинить паузы в сценарии, а не цифру на карточке.\n\nЗаводя состояние `docs/stories/<id>/` для уже написанной истории, учти `stale-check.mjs` п. 3 из `story-desk`: на первом ядре все главы окажутся «устаревшими». Запиши ядро и план так, чтобы главы, написанные до них, не считались устаревшими (или отметь сверку D-NN), — см. `references/staleness.md`.\n\nКарточка истории (после Q-cards): затравки без спойлеров — поле в `meta.json` (имя — в README и `docs/capabilities.json` → `storyfile`), числа глав, персонажей и два времени. `story-release` проверяет затравки на спойлеры (только завязка и первая глава) и на стиль `docs/style.md`.\n\nБаг THE NUMBER: в `ch01.ink`, узел `intruder` — реплика без `#from:theo` (найдено S-choices-v2). Починить в переработке.\n\nПосле E-02: движок без `#remind`/`#noanswer` оставляет кнопку ждать вечно (так безопасно для старых историй), но решение автора (INTENT) — персонаж напоминает 1–2 раза, потом история идёт дальше. Значит, в каждой развилке, где собеседник ждёт ответа, в реальном времени нужны 1–2 `#remind` (своими словами, без упрёка и без срока) и `#noanswer` (или `#silent`, исход не хуже). Синтаксис — `docs/capabilities.json` (`remind`, `noanswer`).\n\nПосле W2: каждая развилка, где собеседник ждёт, получает 1–2 `#remind` своими словами без упрёка и срока и `#noanswer`/`#silent`; приёмка проверяет C-32.\n\n## Режимы и напоминания (бывший Э6, решение автора 28.10)\nПеред тем как отдать историю друзьям на тест, проверь на симулированной панели `story-playtest` (профили INTENT) оба режима «Чужого голоса»:\n1. **«По клику»** — панель читает видимую переписку подряд: понятно ли, сколько прошло времени (метки «спустя N»), нет ли «доброго утра» через секунду, монотонности, ссылок на время, которого не было.\n2. **Реальное время** — панель читает пачками, как вернувшийся после паузы («отвлечённый»): понятна ли первая реплика после паузы, есть ли крючок.\n3. **Персона «неотвечающий»** — сработали ли напоминания (E-02), пошла ли история дальше, нет ли упрёков.\n4. Сравни режимы по ответам панели и метрикам; правки — в историю.\n\n## Пакет для живого теста друзьями (решение автора 28.10)\nАвтор отдаст «Чужой голос» друзьям. Собери `story-playtest` → `playtest-kit`: `.json` истории (`npm run story:pack`), короткий бриф тестеру (как играть в двух режимах, что делать, если пропал, как выгрузить журнал выборов из отладки), 3 открытых вопроса + просьба пересказать сюжет. Положи в `docs/stories/chuzhoy-golos/playtests/wave-1/`, путь — в отчёт и в журнал.",
+      "accept": [
+        "npm run build",
+        "npm run check:story",
+        "HEADLESS=1 npm run test:e2e",
+        "npm run story:lint -- --story chuzhoy-golos",
+        "npm run story:lint -- --story chuzhoy-golos --only C-32 --strict",
+        "git diff --quiet build/main HEAD -- src/stories/the-number/*.ink src/stories/slepoe-pyatno/*.ink"
       ],
       "inputs": [
         "docs/playbook/story-findings.md",
         "docs/lab/cases/*",
-        "docs/lab/baseline.md"
+        "docs/lab/baseline.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
       ],
       "timeoutMin": 360
     },
@@ -1630,15 +2195,18 @@
       "deps": [
         "S-release",
         "S-kb",
-        "X-E7"
+        "X-E7",
+        "E-07"
       ],
       "writes": [],
       "spec": "Ревью выпуска, базы знаний и переработки трёх историй (Э7): цикл работает на реальном материале, боли автора закрыты.",
       "accept": [
         "npm run build",
         "npm run check:story",
-        "npm run lab:triggers -- --runs 3",
-        "npm run story:coverage -- --summary"
+        "npm run story:coverage -- --summary",
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
       "timeoutMin": 90,
@@ -1655,9 +2223,12 @@
       "writes": [
         "CLAUDE.md",
         "README.md",
-        "docs/playbook/build-plan.md"
+        "docs/playbook/build-plan.md",
+        "docs/playbook/story-findings.md",
+        "docs/playbook/REVIEW.md",
+        "docs/playbook/flow-example.md"
       ],
-      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.",
+      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.\n\nПо просьбе T-02 (п. 3): ссылки «по полю `ink` из `src/stories/*.json`» в `docs/playbook/story-findings.md` и `REVIEW.md` перевести на новую форму (`src/stories/<id>/chNN.ink:строка` или `story:pack -- --flat`).\n\nСверь `docs/playbook/flow-example.md` (T-16) с тем, что построено: имена скриптов скиллов, ремонтных приёмов F-NN, команд и флагов. Пример писался до скиллов и называет скрипты по `flow-review.md` §C; расхождения поправь в примере.\n\nПо просьбе T-03b (п. 9): таблица согласования порогов в `docs/playbook/REVIEW.md` — числа заменить ключами `thresholds.json` (таблица соответствия — `reports/T-03b/build.md`).",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -1684,10 +2255,13 @@
         "npm run story:lint",
         "npm run skills:test",
         "npm run story:coverage -- --summary",
-        "npm run lab:triggers -- --runs 3"
+        "npm run lab:triggers -- --runs 3",
+        "npm run test:hooks",
+        "npm run test:lab:mutants",
+        "npm run story:pack -- --check"
       ],
       "inputs": [],
-      "timeoutMin": 120,
+      "timeoutMin": 200,
       "pauseAfter": true
     }
   ]
