@@ -24,6 +24,14 @@
         "note": "суть, исключение для окраски, запись без чтения, масштаб сохранены"
       }
     },
+    "ashwell-standard-patterns:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "попытка 2: условия, исключение и масштаб сохранены, числа ключами"
+      }
+    },
     "ashwell-standard-patterns:SYS-1": {
       "fidelity": {
         "ok": true,
@@ -54,6 +62,14 @@
         "date": "2026-10-28",
         "by": "review",
         "note": "счётчик характера сохранён; «когда не работает» добавлено со ссылкой на mystery-fair-play:contra-6"
+      }
+    },
+    "emshort-structures:P-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "попытка 2: условия, исключение и масштаб сохранены, числа ключами"
       }
     },
     "emshort-structures:P-05": {
@@ -120,6 +136,14 @@
         "note": "порог ключом C-15.rare_node, правка сохранена"
       }
     },
+    "R-32": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "попытка 2: условия, исключение и масштаб сохранены, числа ключами"
+      }
+    },
     "serial-hooks:PAT-10#нюанс": {
       "fidelity": {
         "ok": true,
@@ -134,6 +158,14 @@
         "date": "2026-10-28",
         "by": "review",
         "note": "порог ключом C-15.rare_button, правка сохранена"
+      }
+    },
+    "snyder-save-the-cat:RED-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "попытка 2: условия, исключение и масштаб сохранены, числа ключами"
       }
     },
     "vogler-writers-journey:P-07#нюанс": {
