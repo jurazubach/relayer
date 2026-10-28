@@ -389,6 +389,187 @@
       }
     ]
   },
+  "story.branch.expensive.msgs": {
+    "value": 10,
+    "unit": "сообщений в области кнопки",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "meaningful-choice:P-15",
+      "ashwell-standard-patterns:P-10",
+      "narrative-postmortems:P-06"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-core.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: с какого объёма кнопка — дорогая ветка, а не окраска (сцена в 10 сообщений, наша оценка); кроме объёма дорогой делают свой финал и свой контакт"
+      }
+    ]
+  },
+  "story.branch.budget.min": {
+    "value": 3,
+    "unit": "дорогих развилок на историю",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15",
+      "meaningful-choice:LESSON-10",
+      "R-26"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: нижняя граница бюджета дорогих веток (3–5 на историю от 50 сообщений, meaningful-choice:P-15#нюанс)"
+      }
+    ]
+  },
+  "story.branch.budget.max": {
+    "value": 5,
+    "unit": "дорогих развилок на историю",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15",
+      "meaningful-choice:LESSON-10",
+      "messenger-genre:LESSON-02",
+      "emshort-structures:RED-07"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: потолок бюджета дорогих веток; сверх него новая ветка — только вместо старой"
+      }
+    ]
+  },
+  "story.branch.budget.short": {
+    "value": 1,
+    "unit": "дорогих развилок на короткую историю",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15 (нюанс: «5: одна развилка»)",
+      "meaningful-choice:PAT-05 (нюанс)"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: бюджет короткой истории (меньше story.branch.budget.short_msgs сообщений)"
+      }
+    ]
+  },
+  "story.branch.budget.short_msgs": {
+    "value": 50,
+    "unit": "сообщений в истории",
+    "op": "<",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "meaningful-choice:P-15 (нюанс: «5: одна развилка; 50: 3–5 дорогих веток»)",
+      "meaningful-choice:PAT-05 (нюанс)"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-core.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: история короче — бюджет story.branch.budget.short, а не story.branch.budget.min…max"
+      }
+    ]
+  },
+  "story.branch.seen_share.min": {
+    "value": 0.3,
+    "unit": "доля текста за прохождение",
+    "op": "<",
+    "level": "hint",
+    "basis": "our_estimate",
+    "sources": [
+      "R-37",
+      "ashwell-standard-patterns:contra-5",
+      "narrative-testing:P-13"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: нижняя граница R-37 (≈30 % текста за одно прохождение) ключом"
+      }
+    ]
+  },
+  "story.branch.seen_share.max": {
+    "value": 0.6,
+    "unit": "доля текста за прохождение",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-37",
+      "choiceofgames-design:P-22",
+      "choiceofgames-design:RED-20"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: верхняя граница R-37 (0,6 — выборы почти ничего не меняют) ключом"
+      }
+    ]
+  },
+  "story.branch.fan.merge_hops": {
+    "value": 2,
+    "unit": "переходов до слияния",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "emshort-structures:RED-07"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-budget.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-branch",
+        "change": "заведён: веер в середине — ветки не сходятся за столько узлов (главы 2…N-1)"
+      }
+    ]
+  },
   "engine.click.time_jump_label": {
     "value": 1,
     "unit": "ч",
@@ -9835,6 +10016,289 @@
         "date": "2026-10-25",
         "task": "W0 (королева)",
         "change": "заведён вместо числа в промпте сборщика и skill-check.mjs"
+      }
+    ]
+  },
+  "skill.plan.variants": {
+    "value": {
+      "min": 2,
+      "max": 3
+    },
+    "unit": "варианта плана на одно ядро",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "build-plan.md §2, шаг 3: 2–3 плана, каждый как skeleton.ink, сравнение числами"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: сколько вариантов скелета сравнивает plan-compare.mjs"
+      }
+    ]
+  },
+  "skill.plan.skeleton.run_lines": {
+    "value": 3,
+    "unit": "строк подряд без кнопки и перехода в узле скелета",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "failbetter-qbn:P-01: пока каркас не прошёл бота, в узлах не больше 3 реплик — дальше это уже проза"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: признак «проза в скелете» (skeleton.mjs --check)"
+      }
+    ]
+  },
+  "skill.plan.spine.min_share": {
+    "value": 0.3,
+    "unit": "доля узлов, через которые проходят все прогоны бота",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "bateman-game-writing:P-01: если узлов с долей прохождений 100% меньше 30% от всех, история рискует развалиться на клубок"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: доля хребта в plan-compare.mjs"
+      }
+    ]
+  },
+  "skill.plan.spine.max_share": {
+    "value": 0.6,
+    "unit": "доля узлов, через которые проходят все прогоны бота",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "ashwell-standard-patterns:RED-01: больше 60% узлов на 100% и мало настоящих развилок — коридор с сортировкой в конце"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён на ревью: верхняя граница хребта в plan-check.mjs (коридор), раньше число стояло в тексте flags.md"
+      }
+    ]
+  },
+  "skill.plan.spine.events": {
+    "value": {
+      "short": 3,
+      "min": 5,
+      "max": 10,
+      "merge_within": 2
+    },
+    "unit": "событий хребта; узлов до схождения ветки",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "R-25: хребет из 5–10 событий (в короткой истории — 3), ветки сводятся не дальше чем через два узла"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: числа правила о хребте — ключом, а не в тексте скилла"
+      }
+    ]
+  },
+  "skill.plan.river": {
+    "value": {
+      "rare_visits": 0.1,
+      "max_rare_share": 0.1
+    },
+    "unit": "доля прогонов в узле / доля редких узлов (кроме финалов)",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "failbetter-qbn:P-06: доля узлов с посещаемостью < 10% (кроме финалов) больше 10% — предупреждение"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: «река, а не дерево» в plan-compare.mjs"
+      }
+    ]
+  },
+  "skill.plan.branches": {
+    "value": {
+      "min": 3,
+      "max": 5,
+      "per_chapter": 2
+    },
+    "unit": "дорогих развилок (кнопки ведут в разные узлы) на историю / на главу",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "flow-review.md §A, шаг 3: число дорогих веток против бюджета 3–5",
+      "rules.md, правило о вариативности состоянием (владелец story-branch): на главу 1–2 развилки в разные узлы"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: бюджет дорогих развилок в plan-compare.mjs; свести с ключом бюджета story-branch, когда он появится"
+      }
+    ]
+  },
+  "skill.plan.final_vars.min_share": {
+    "value": 0.3,
+    "unit": "доля прогонов, где переменная финала меняется до последней главы",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "yorke-into-the-woods:P-10: каждая переменная из условий финала меняется до последнего #chapter хотя бы в 30% прохождений бота (Y14)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: «финал первым» в plan-check.mjs"
+      }
+    ]
+  },
+  "skill.plan.dark_night_h": {
+    "value": 2,
+    "unit": "ч паузы после потери в конце предпоследней главы",
+    "op": "<",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-33: после потери в конце предпоследней главы — одна длинная пауза от 2 часов",
+      "snyder-save-the-cat:P-12: суммарный #delay от «всё потеряно» до третьего акта ≥ 7200 с"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: тёмная ночь в schedule.mjs"
+      }
+    ]
+  },
+  "skill.plan.chapter.buttons": {
+    "value": {
+      "min": 3,
+      "max": 6
+    },
+    "unit": "нажатий кнопок за главу на срединном пути",
+    "op": null,
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "R-42: главы короткие, 3–6 кнопок, 1–3 захода"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: кнопки по главам в schedule.mjs"
+      }
+    ]
+  },
+  "skill.plan.chapter.lines_max": {
+    "value": 120,
+    "unit": "строк ink в главе (начисто, не в скелете)",
+    "op": ">",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "R-42: не больше 120 строк, около 400–1200 слов (наша оценка)"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: длина главы для плана глав (chapter-formula.md)"
+      }
+    ]
+  },
+  "skill.plan.chapter.guest_min": {
+    "value": 20,
+    "unit": "мин чтения главы, с которых оправдан гость главы",
+    "op": "<",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "yorke-into-the-woods/principles.md, нюанс к паттерну «гость главы»: гость оправдан от 20 минут на главу, короче — «ещё один контакт»"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: когда в плане главы оправдан гость (chapter-formula.md)"
+      }
+    ]
+  },
+  "skill.plan.beats": {
+    "value": {
+      "short_max_min": 10,
+      "short_beats": 4,
+      "mid_max_min": 25,
+      "mid_beats": 3,
+      "mid_chapters_max": 3,
+      "long_beats_min": 5,
+      "long_beats_max": 10
+    },
+    "unit": "опор по длине истории (мин по клику)",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "R-10: до 10 минут — четыре опоры в одной главе; 15–25 минут — до трёх глав и три опоры; от 25 минут — пять–десять опор"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: объём опор по длине — ключом (chapter-formula.md, decisions-plan.md)"
+      }
+    ]
+  },
+  "skill.plan.scenes": {
+    "value": {
+      "min": 8,
+      "max": 12
+    },
+    "unit": "сцен в плане до текста",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "choiceofgames-design:P-17: список сцен на 8–12 пунктов с условиями ветвления до текста"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-plan",
+        "change": "заведён: размер плана до текста (process.md)"
       }
     ]
   },

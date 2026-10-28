@@ -1,0 +1,983 @@
+{
+  "date": "2026-10-28T13:23:20.987Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.312",
+  "runs": 3,
+  "focus": null,
+  "file": "docs/lab/triggers/story-branch.json",
+  "group": null,
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "seconds": 168,
+  "cost_usd": null,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-branch",
+      "story-desk",
+      "story-playtest",
+      "story-review",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "story-branch",
+      "story-cast",
+      "story-choices",
+      "story-continuity",
+      "story-desk",
+      "story-endings",
+      "story-mystery",
+      "story-opening",
+      "story-pace",
+      "story-pauses",
+      "story-playtest",
+      "story-review",
+      "story-time",
+      "story-voice"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 54,
+    "passed": 54,
+    "rate": 1,
+    "errors": 0,
+    "denied": 0,
+    "failed_runs": 0
+  },
+  "skills": [
+    {
+      "skill": "story-branch",
+      "expected": 36,
+      "hits": 36,
+      "foreign": 18,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-cast",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-continuity",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-endings",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-mystery",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-opening",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pace",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pauses",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-playtest",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-review",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 51,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-time",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-voice",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Граф почти линейный, предложи, где развести ветки",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Куда может свернуть сюжет после того, как смотритель находит пустую лодку?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу добавить ещё одну ветку в четвёртую главу — потянем или это перебор?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что может случиться дальше после сцены на мосту? Дай несколько вариантов",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня вся история идёт по одной дорожке, где можно дать игроку по-настоящему свернуть?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Сколько дорогих веток я ещё могу себе позволить в этой истории?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Предложи поворот для середины: сейчас любой путь приводит к одному и тому же",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Если игрок откажется ехать на остров, куда это может повести историю?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Хочу пятый финал, где брат уезжает один. Во что это обойдётся?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "не вижу, как развивать сюжет после второй главы, подкинь варианты с последствиями",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "все ветки сливаются в одну, сюжет как рельсы — что можно сделать со структурой?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где в плане поставить развилку, после которой у игрока будут разные собеседники и разные концовки?",
+      "checks": [
+        {
+          "expect": "story-branch",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-branch",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Кнопки в третьей главе ничего не меняют, на все варианты один ответ",
+      "checks": [
+        {
+          "expect": "story-choices",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Финал решается скрытым порогом доверия, игрок не понимает, почему так вышло",
+      "checks": [
+        {
+          "expect": "story-endings",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-endings",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Разгадку можно угадать с первой главы, улики слишком явные",
+      "checks": [
+        {
+          "expect": "story-mystery",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-mystery",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Чатов слишком много, игрок путается, кто есть кто",
+      "checks": [
+        {
+          "expect": "story-cast",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-cast",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Запиши, что мы выбрали вариант с отказом, а остальные идеи отложи на потом",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Проверь всю историю целиком, где слабые места?",
+      "checks": [
+        {
+          "expect": "story-review",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-branch.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [],
+  "skipped": [],
+  "fails": [],
+  "ok": true
+}

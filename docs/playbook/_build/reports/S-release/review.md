@@ -12,7 +12,7 @@
 - `references/teasers.md`: «2–3» в заголовке и в пункте «Число» — число вне `thresholds.json` рядом с ключом
   `C-49.teasers`; оставил ключ, а «первые три» объяснил через `library.ts` `storyTeasers`.
 - Выборка верности (20 пар, seed 49602355) записана в `docs/playbook/coverage/story-release.json`, by=review.
-- Сырые прогоны ревью: `docs/lab/runs/triggers/2026-10-28-2.json`, `…/2026-10-28-story-release-2.json`,
+- Сырые прогоны ревью: `docs/lab/runs/triggers/2026-10-28-story-release-3.json` (до слияния — `2026-10-28-2.json`), `…/2026-10-28-story-release-2.json`,
   `docs/lab/runs/mutants/2026-10-28-story-release.json`.
 
 ## Доделать (если fail)

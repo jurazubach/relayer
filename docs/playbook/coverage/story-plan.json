@@ -1,0 +1,168 @@
+{
+  "rows": {
+    "ashwell-standard-patterns:P-14": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "суть, проверка и обратный нюанс сохранены; 10% — ключом skill.plan.river"
+      }
+    },
+    "ashwell-standard-patterns:PAT-02": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "когда нет, цена, нюанс об откате сохранены"
+      }
+    },
+    "ashwell-standard-patterns:PAT-05": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия и шов сохранены; «для бота — два финала» пересказано как горлышко — мелкий сдвиг"
+      }
+    },
+    "ashwell-standard-patterns:PAT-08": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "когда нет, цена, нюанс про карту сохранены"
+      }
+    },
+    "ashwell-standard-patterns:RED-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "условия сохранены; порог 60% на ревью вынесен в skill.plan.spine.max_share"
+      }
+    },
+    "bateman-game-writing:P-19": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "приём и уверенность (одна строка рецензии) сохранены"
+      }
+    },
+    "bateman-game-writing:PAT-01#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "масштаб 5/50 сохранён, причина добавлена"
+      }
+    },
+    "failbetter-qbn:LESSON-04": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "класс C, неизмеримость эффекта и вывод сохранены"
+      }
+    },
+    "failbetter-qbn:P-06#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "«редкое достижимо намеренно» и масштаб сохранены"
+      }
+    },
+    "failbetter-qbn:SYS-4": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "шаги, вход/выход, если пропустить, короткая форма сохранены"
+      }
+    },
+    "inkle-ingold:P-10#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "граница weave/узел и масштаб сохранены"
+      }
+    },
+    "inkle-ingold:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "все шаги, если пропустить, ошибка понимания и короткая форма сохранены"
+      }
+    },
+    "procedural-storytelling:SYS-5": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "элементы, строгость, перенос сохранены"
+      }
+    },
+    "R-09": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "порядок и спор сохранены"
+      }
+    },
+    "R-10": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "все пороги ключами skill.plan.beats, исключение-сезон сохранено"
+      }
+    },
+    "sheldon-character-storytelling:PAT-03#нюанс": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "оба запрета и масштаб сохранены"
+      }
+    },
+    "skolnick-video-game-storytelling:PAT-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "повороты, цена, ловушки и исключение миниатюры сохранены"
+      }
+    },
+    "snyder-save-the-cat:PAT-03": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "цена, ловушки сохранены; не сказано, что адаптация под пилот не проверена — мелочь"
+      }
+    },
+    "snyder-save-the-cat:PAT-11#нюанс": {
+      "status": "merged-into:snyder-save-the-cat:PAT-11",
+      "note": "строка нюанса повторяет сам паттерн (заголовок и «когда применять / когда нет» PAT-11); содержание — в блоке snyder-save-the-cat:PAT-11 (beats.md)"
+    },
+    "vogler-writers-journey:PAT-01": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "когда применять и не применять сохранены; схема глав — в нюансе про сезон"
+      }
+    },
+    "yorke-into-the-woods:P-06": {
+      "fidelity": {
+        "ok": true,
+        "date": "2026-10-28",
+        "by": "review",
+        "note": "фрактальная форма и пример главы сохранены; проверка — C-39 (б)"
+      }
+    }
+  }
+}

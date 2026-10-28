@@ -1,0 +1,1319 @@
+{
+  "date": "2026-10-28T12:52:19.063Z",
+  "model": "claude-opus-5-5",
+  "claude_code": "2.1.312",
+  "runs": 3,
+  "focus": null,
+  "file": "docs/lab/triggers/story-desk.json",
+  "group": null,
+  "thresholds": {
+    "lab.triggers.runs_per_phrase": 5,
+    "lab.triggers.min_share": 0.8,
+    "lab.triggers.max_false": 0.2,
+    "lab.triggers.jobs": 2,
+    "lab.triggers.max_turns": 3,
+    "lab.triggers.timeout_s": 240,
+    "lab.denials.blocking_tools": [
+      "Bash",
+      "Skill"
+    ],
+    "lab.denials.max_invalid_share": 0.2,
+    "source": {
+      "lab.triggers.runs_per_phrase": "thresholds.json",
+      "lab.triggers.min_share": "thresholds.json",
+      "lab.triggers.max_false": "thresholds.json",
+      "lab.triggers.jobs": "thresholds.json",
+      "lab.triggers.max_turns": "thresholds.json",
+      "lab.triggers.timeout_s": "thresholds.json",
+      "lab.denials.blocking_tools": "thresholds.json",
+      "lab.denials.max_invalid_share": "thresholds.json"
+    }
+  },
+  "min": null,
+  "seconds": 213,
+  "cost_usd": 2.3942016,
+  "env": {
+    "skills": [
+      "skill-budget-audit",
+      "story-branch",
+      "story-desk",
+      "story-playtest",
+      "story-review",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring",
+      "anthropic-skills:skill-creator"
+    ],
+    "project": [
+      "story-branch",
+      "story-cast",
+      "story-choices",
+      "story-continuity",
+      "story-desk",
+      "story-endings",
+      "story-mystery",
+      "story-opening",
+      "story-pace",
+      "story-pauses",
+      "story-playtest",
+      "story-review",
+      "story-time",
+      "story-voice"
+    ],
+    "warnings": []
+  },
+  "summary": {
+    "checks": 57,
+    "passed": 45,
+    "rate": 0.7894736842105263,
+    "errors": 0,
+    "denied": 6,
+    "failed_runs": 6
+  },
+  "skills": [
+    {
+      "skill": "*",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 19,
+      "false": 0,
+      "bypass": 3,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-brainstorm",
+      "expected": 3,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {
+        "none": 3
+      },
+      "false_from": [],
+      "hit_rate": 0,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-branch",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 2,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-cast",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-choices",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Кнопки во второй главе ничего не меняют, выбор не ощущается"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    },
+    {
+      "skill": "story-continuity",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-core",
+      "expected": 2,
+      "hits": 0,
+      "foreign": 55,
+      "false": 0,
+      "bypass": 0,
+      "denied": 1,
+      "missed_to": {
+        "none": 2
+      },
+      "false_from": [],
+      "hit_rate": 0,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-desk",
+      "expected": 35,
+      "hits": 33,
+      "foreign": 22,
+      "false": 0,
+      "bypass": 1,
+      "denied": 1,
+      "missed_to": {
+        "none": 2
+      },
+      "false_from": [],
+      "hit_rate": 0.9428571428571428,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-endings",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-kb",
+      "expected": 3,
+      "hits": 0,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {
+        "none": 3
+      },
+      "false_from": [],
+      "hit_rate": 0,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-mystery",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-opening",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Придумай, что персонаж напишет первым сообщением, чтобы сразу зацепить"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    },
+    {
+      "skill": "story-pace",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-pauses",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-plan",
+      "expected": 2,
+      "hits": 0,
+      "foreign": 55,
+      "false": 0,
+      "bypass": 0,
+      "denied": 1,
+      "missed_to": {
+        "none": 2
+      },
+      "false_from": [],
+      "hit_rate": 0,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-playtest",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-review",
+      "expected": 3,
+      "hits": 3,
+      "foreign": 54,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": 1,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-time",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 0,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [],
+      "hit_rate": null,
+      "false_rate": 0
+    },
+    {
+      "skill": "story-voice",
+      "expected": 0,
+      "hits": 0,
+      "foreign": 57,
+      "false": 3,
+      "bypass": 0,
+      "denied": 0,
+      "missed_to": {},
+      "false_from": [
+        "Все персонажи пишут одинаково, голоса не различить"
+      ],
+      "hit_rate": null,
+      "false_rate": 0.05263157894736842
+    }
+  ],
+  "phrases": [
+    {
+      "text": "Что сейчас с the-number, на каком мы шаге?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я неделю не открывал проект, напомни, где мы остановились",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Запиши решение: героиня не может уйти с острова, это теперь ядро",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Отложи идею с радиоэфиром из завтрашнего дня на потом, вдруг пригодится в другой истории",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Слушай, я передумал: пусть её напарник будет ей отцом, а не начальником. Что теперь придётся переделывать?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "После теста поменяли план — какие главы и документы теперь устарели?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Подруга хочет написать четвёртую главу, как нам вести историю вдвоём и не мешать друг другу?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "У меня две истории в работе, переключись на slepoe-pyatno",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Я отклонил замечание про длинный монолог в сцене шторма, зафиксируй, чтобы ревью его больше не поднимало",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Дописал последнюю главу, а первые две теперь выглядят беднее остальных — что с ними делать?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "покажи последние решения по истории и что у нас открытыми вопросами висит",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-desk",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Где у нас список отложенных идей по всем историям?",
+      "checks": [
+        {
+          "expect": "story-desk",
+          "kind": "positive",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "wc -l docs/stories/*/ideas.md; head -40 .claude/skills/story-desk/references/ideas-bank.md; for f in docs/stories/*/ideas.md; do echo \"== $f\"; cat \"$f\"; done",
+              "id": "toolu_01ASy9bkMKeYcwUNg61xbHF4",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (wc -l docs/stories/*/ideas.md; head -40 .claude/skills/story-desk/references/ideas-bank.md; for f in docs/stories/*/ide…)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Накидай пару направлений для истории про ночную смену на метеостанции",
+      "checks": [
+        {
+          "expect": "story-brainstorm",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [],
+          "denials": [],
+          "turns": 1
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [],
+          "denials": [],
+          "turns": 1
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [],
+          "denials": [],
+          "turns": 1
+        }
+      ]
+    },
+    {
+      "text": "Разверни выбранное ядро в план на пять глав",
+      "checks": [
+        {
+          "expect": "story-plan",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "cat docs/stories/the-number/decisions.md; for s in chuzhoy-golos slepoe-pyatno; do head -20 docs/stories/$s/decisions.md; done; grep -rl \"story-plan\" docs/playbook .claude | head",
+              "id": "toolu_01XKfkWvF88nhg1PBPRgDHma",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (cat docs/stories/the-number/decisions.md; for s in chuzhoy-golos slepoe-pyatno; do head -20 docs/stories/$s/decisions.m…)"
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "*",
+            "*",
+            "story-branch"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "story-branch"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Проверь всю историю целиком, где слабые места?",
+      "checks": [
+        {
+          "expect": "story-review",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-review",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Что в базе говорят про честные загадки?",
+      "checks": [
+        {
+          "expect": "story-kb",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Read",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Какая ставка у героя и кто ему противостоит? Помоги собрать ядро",
+      "checks": [
+        {
+          "expect": "story-core",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [
+            "*",
+            "story-desk"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        },
+        {
+          "skill": null,
+          "bypass": [
+            "*",
+            "story-desk"
+          ],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "cd src/stories/the-number; cat meta.json; wc -l *.ink; cat docs 2>/dev/null; cat ../../../docs/stories/the-number/ideas.md",
+              "id": "toolu_01B9mhjeKXn6fk26hCg2yW46",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (cd src/stories/the-number; cat meta.json; wc -l *.ink; cat docs 2>/dev/null; cat ../../../docs/stories/the-number/ideas…)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [],
+          "turns": 4
+        }
+      ]
+    },
+    {
+      "text": "Почини падающий e2e-тест на экране чатов",
+      "checks": [
+        {
+          "expect": "none",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Bash",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "HEADLESS=1 npx playwright test --project=phone --grep-invert @shots 2>&1 | tail -60",
+              "id": "toolu_01XoLhmNEUDzo2PXxZs1DX9Y",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (HEADLESS=1 npx playwright test --project=phone --grep-invert @shots 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Read",
+            "Read"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01Qc1pCG7B2biw2GGVXWAG22",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)"
+        },
+        {
+          "skill": null,
+          "bypass": [],
+          "tools": [
+            "Bash",
+            "Read",
+            "Read",
+            "Bash"
+          ],
+          "denials": [
+            {
+              "tool": "Bash",
+              "command": "ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+              "id": "toolu_01MQ6xRdmVuGcA8QxJ2FsK5o",
+              "reason": "asyncAgent"
+            }
+          ],
+          "turns": 4,
+          "invalid": "отказ в правах: Bash ×1 (ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)"
+        }
+      ]
+    },
+    {
+      "text": "Кнопки во второй главе ничего не меняют, выбор не ощущается",
+      "checks": [
+        {
+          "expect": "!story-desk",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-choices",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Придумай, что персонаж напишет первым сообщением, чтобы сразу зацепить",
+      "checks": [
+        {
+          "expect": "!story-desk",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-opening",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    },
+    {
+      "text": "Все персонажи пишут одинаково, голоса не различить",
+      "checks": [
+        {
+          "expect": "!story-desk",
+          "kind": "negative",
+          "file": "docs/lab/triggers/story-desk.json"
+        }
+      ],
+      "runs": [
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        },
+        {
+          "skill": "story-voice",
+          "bypass": [],
+          "tools": [
+            "Skill"
+          ],
+          "denials": [],
+          "turns": null
+        }
+      ]
+    }
+  ],
+  "denials": [
+    {
+      "phrase": "Где у нас список отложенных идей по всем историям?",
+      "run": 1,
+      "tool": "Bash",
+      "command": "wc -l docs/stories/*/ideas.md; head -40 .claude/skills/story-desk/references/ideas-bank.md; for f in docs/stories/*/ideas.md; do echo \"== $f\"; cat \"$f\"; done",
+      "blocking": true
+    },
+    {
+      "phrase": "Разверни выбранное ядро в план на пять глав",
+      "run": 1,
+      "tool": "Bash",
+      "command": "cat docs/stories/the-number/decisions.md; for s in chuzhoy-golos slepoe-pyatno; do head -20 docs/stories/$s/decisions.md; done; grep -rl \"story-plan\" docs/playbook .claude | head",
+      "blocking": true
+    },
+    {
+      "phrase": "Какая ставка у героя и кто ему противостоит? Помоги собрать ядро",
+      "run": 2,
+      "tool": "Bash",
+      "command": "cd src/stories/the-number; cat meta.json; wc -l *.ink; cat docs 2>/dev/null; cat ../../../docs/stories/the-number/ideas.md",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 1,
+      "tool": "Bash",
+      "command": "HEADLESS=1 npx playwright test --project=phone --grep-invert @shots 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 2,
+      "tool": "Bash",
+      "command": "ls e2e && HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    },
+    {
+      "phrase": "Почини падающий e2e-тест на экране чатов",
+      "run": 3,
+      "tool": "Bash",
+      "command": "ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60",
+      "blocking": true
+    }
+  ],
+  "skipped": [],
+  "fails": [],
+  "ok": true
+}
