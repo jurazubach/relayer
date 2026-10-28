@@ -5,13 +5,13 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { appendFileSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { changedSince, clip, MAX_CHARS, ROOT, storyOfPath, storySnapshot } from './core.mjs';
+import { changedSince, clip, isPartial, MAX_CHARS, ROOT, storyOfPath, storySnapshot } from './core.mjs';
 
 const HELP = `npm run test:hooks [-- --only <подстрока>]
 
 Самопроверка scripts/hooks: storyOfPath, снимок git status src/stories, обрезка вывода,
 post-edit.mjs на входе хука (Edit по файлу истории, Bash со снимком, правка мимо историй,
-повтор без новых ошибок), session-start.mjs и full.mjs. Пробная история создаётся во временной
+повтор без новых ошибок, часть истории с beta_stop), session-start.mjs и full.mjs. Пробная история создаётся во временной
 папке src/stories/zz-hooktest-<pid>/ и удаляется в конце. claude -p здесь не запускается.
 
   --only <текст>  только тесты, в названии которых есть текст
@@ -126,6 +126,19 @@ const tests = [
     assert.match(bad.stdout, /не компилируется/);
     const unknown = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), 'no-such-story'], { cwd: ROOT, encoding: 'utf8' });
     assert.equal(unknown.status, 2);
+  }],
+  ['partial: история с beta_stop — story:lint --partial в хуке и в full', () => {
+    writeFileSync(INK, GOOD);
+    assert.equal(isPartial(ID), false);
+    writeFileSync(INK, GOOD.replace('Ладно. #from:lia\n-> END', 'Ладно. #from:lia\n-> beta_stop\n\n=== beta_stop\nПродолжение следует. #sys\n-> END'));
+    assert.equal(isPartial(ID), true);
+    const text = context(hook('post-edit.mjs', { session_id: SESSION, tool_name: 'Edit', tool_input: { file_path: INK }, agent_type: 'chapter-writer' }));
+    assert.match(text, /часть истории до beta_stop/);
+    assert.doesNotMatch(text, /флаг --partial, но/);
+    assert.match(text, new RegExp(`✓ ${ID}: компилируется`));
+    const full = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), ID, '--json'], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(JSON.parse(full.stdout).stories[0].partial, true);
+    writeFileSync(INK, GOOD);
   }],
   ['RELAYER_HOOKS=off выключает хук', () => {
     const r = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/post-edit.mjs')], { cwd: ROOT, input: JSON.stringify({ tool_name: 'Edit', tool_input: { file_path: INK } }), encoding: 'utf8', env: { ...process.env, RELAYER_HOOKS: 'off' } });

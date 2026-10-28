@@ -2,13 +2,14 @@
 // Модели ответ уходит через hookSpecificOutput.additionalContext: обычный stdout она не видит
 // (claude-code-format.md §3.3). Код выхода всегда 0 — правка уже сделана, блокировать нечего.
 import { readFileSync } from 'node:fs';
-import { changedSince, checkStory, clip, counts, findingLine, fingerprint, MAX_FINDINGS, sessionState, storyExists, storyOfPath, storySnapshot } from './core.mjs';
+import { changedSince, checkStory, clip, counts, findingLine, fingerprint, isPartial, MAX_FINDINGS, sessionState, storyExists, storyOfPath, storySnapshot } from './core.mjs';
 
 const HELP = `node scripts/hooks/post-edit.mjs < вход-хука.json
 
 Хук PostToolUse из .claude/settings.json. Читает JSON хука со stdin и, если правка задела
 src/stories/<id>/ (Write, Edit, MultiEdit — по tool_input.file_path; Bash — по git status
 src/stories), гоняет быстрый режим: check:story по истории и story:lint --changed --quick --summary.
+История с узлом beta_stop (часть глав, набор для теста) проверяется с --partial: обрыв части — не тупик.
 Модели возвращает короткий отчёт в hookSpecificOutput.additionalContext: новые ошибки целиком,
 о прежних — только число. Полный отчёт — node scripts/hooks/full.mjs <id>.
 
@@ -20,7 +21,14 @@ if (process.env.RELAYER_HOOKS === 'off') process.exit(0);
 
 // Режим по agent_type: агент главы правит часто, ему — только быстрый. Главной сессии и прочим тоже
 // быстрый: полный прогон дорог для каждой правки, его зовут по окончании главы (full.mjs).
+// partial — быстрый с story:lint --partial: агент главы пишет главы 1–2 с заглушкой beta_stop, и без него
+// хук ругался бы на «финал» в заглушке и на всё, что бывает только в целой истории. Включается сам по
+// узлу beta_stop (isPartial), для любого агента.
 const MODE_BY_AGENT = { 'chapter-writer': 'quick' };
+const modeFor = (agent, id) => {
+  const mode = MODE_BY_AGENT[agent] ?? 'quick';
+  return mode === 'quick' && isPartial(id) ? 'partial' : mode;
+};
 
 let input = {};
 try { input = JSON.parse(readFileSync(0, 'utf8') || '{}'); } catch { process.exit(0); }
@@ -39,12 +47,17 @@ if (tool === 'Bash') {
 if (snapshot) state.data.snapshot = snapshot;
 if (!ids.length) { state.save(); process.exit(0); }
 
-const mode = MODE_BY_AGENT[input.agent_type] ?? 'quick';
 const parts = [];
-for (const id of ids) parts.push(report(checkStory(id, { quick: mode === 'quick' })));
+const modes = new Set();
+for (const id of ids) {
+  const mode = modeFor(input.agent_type, id);
+  modes.add(mode);
+  parts.push(report(checkStory(id, { quick: mode !== 'full', partial: mode === 'partial' })));
+}
 state.save();
 
-const text = clip(`Хук проверки историй после ${tool} (быстрый режим):\n${parts.join('\n')}`);
+const MODE_RU = { quick: 'быстрый режим', partial: 'быстрый режим, часть истории до beta_stop', full: 'полный режим' };
+const text = clip(`Хук проверки историй после ${tool} (${[...modes].map((m) => MODE_RU[m]).join('; ')}):\n${parts.join('\n')}`);
 console.log(JSON.stringify({ hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: text } }));
 
 function report(res) {
