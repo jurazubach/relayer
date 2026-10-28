@@ -109,6 +109,8 @@ runCli(HELP, async (args) => {
   // шапка против ядра, оси против VAR
   if (ink) {
     const head = parseStory(ink).head ?? {};
+    // ядра нет, а шапка есть (история до цикла, мутант): шапка — материал для ядра v0, а не ядро
+    if (!core.source && Object.keys(head).length) add('info', 'R-01', 'шапка', `шапка ink есть (${Object.keys(head).map((k) => `// ${k}:`).join(', ')}) — восстановить из неё ядро v0 и дорешать остальные поля`);
     for (const d of CORE_FIELDS.filter((x) => x.head)) {
       if (!(d.key in head)) add('warn', 'C-53', 'шапка', `в ink нет // ${d.key}: (шапка из ${T.value('C-53.header_lines')} строк, A-06)`);
       else if (f[d.key] && norm(head[d.key]) !== norm(f[d.key])) add('warn', 'R-01', 'шапка', `// ${d.key}: в ink расходится с ядром ${core.id ?? ''}: «${head[d.key].slice(0, 60)}» ≠ «${f[d.key].slice(0, 60)}»`);
