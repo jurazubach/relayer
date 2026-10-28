@@ -62,11 +62,17 @@ runCli(HELP, async (args) => {
       const sessions = p?.middle?.sessions ?? [];
       const firstOf = new Map();
       for (const x of sessions) if (!firstOf.has(x.chapter)) firstOf.set(x.chapter, x);
+      // глава внутри сессии (без паузы на стыке) своей сессии не открывает — её начало считаем суммой глав до неё
+      let sum = 0;
       measured = {
         card: st?.card ?? null,
         real_s: p?.real?.median ?? null,
         click_s: p?.click?.median ?? null,
-        chapters: (p?.middle?.chapters ?? []).map((c) => ({ chapter: c.chapter, start_s: firstOf.get(c.chapter)?.at ?? null, seam_pause_s: firstOf.get(c.chapter)?.pauseBefore ?? null, real_s: c.real, click_s: c.click })),
+        chapters: (p?.middle?.chapters ?? []).map((c) => {
+          const start = firstOf.get(c.chapter)?.at ?? sum;
+          sum = start + (c.real ?? 0);
+          return { chapter: c.chapter, start_s: start, seam_pause_s: firstOf.get(c.chapter)?.pauseBefore ?? null, real_s: c.real, click_s: c.click };
+        }),
       };
       for (const r of rows) {
         const m = measured.chapters.find((c) => c.chapter === r.chapter);
