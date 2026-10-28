@@ -9751,6 +9751,218 @@
       }
     ]
   },
+  "skill.brainstorm.directions.count": {
+    "value": {
+      "min": 3,
+      "max": 5
+    },
+    "unit": "направлений в раунде",
+    "op": null,
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "build-plan.md §2: из сырой идеи — 3–5 направлений",
+      "flow-review.md §A шаг 1"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: сколько направлений показывать в раунде story-brainstorm (directions.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.directions.axes_min_diff": {
+    "value": 3,
+    "unit": "осей",
+    "op": "<",
+    "level": "error",
+    "basis": "source",
+    "sources": [
+      "build-plan.md §2: направления разные минимум по трём осям",
+      "flow-review.md §A шаг 1: модель склонна выдавать перефразировки одной идеи",
+      "procedural-storytelling:P-04: заметные различия, а не формальная уникальность"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: два направления раунда расходятся меньше чем по стольким осям — это перефразировка (directions.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.directions.far_count": {
+    "value": 2,
+    "unit": "направлений",
+    "op": null,
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "build-plan.md §2 Б-4: автор отверг все варианты — дать 2 далёких варианта",
+      "flow-review.md §B Б-4"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: сколько далёких направлений даёт раунд после отказа от всех (Б-4)"
+      }
+    ]
+  },
+  "skill.brainstorm.axes.same_overlap": {
+    "value": 0.5,
+    "unit": "доля общих основ метки оси",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: метка оси — 1–4 слова; половина общих основ («свидетель ночной» / «ночной свидетель») — то же значение оси"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: когда две метки одной оси считаются одним значением (directions.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.trailer.messages": {
+    "value": 5,
+    "unit": "сообщений до первой кнопки",
+    "op": "≠",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "build-plan.md §2: трейлер на 5 сообщений с первой кнопкой",
+      "chat-fiction-apps:P-07: первые пять строк работают как трейлер",
+      "cron-wired-for-story:PAT-01: первый экран-тройка"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: длина трейлера направления до первой кнопки (directions.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.logline.max_words": {
+    "value": 35,
+    "unit": "слов",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "snyder-save-the-cat:GREEN-01: логлайн до 35 слов",
+      "flow-review.md §C story-brainstorm: premise-check.mjs"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: длина логлайна направления (premise-check.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.rule.max_words": {
+    "value": 6,
+    "unit": "слов",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "rules.md R-04: правило мира не длиннее шести слов",
+      "video-three-things:P-01, P-02"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: длина одного ядра-правила (premise-check.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.rule.max_rules": {
+    "value": 3,
+    "unit": "правил",
+    "op": ">",
+    "level": "warning",
+    "basis": "source",
+    "sources": [
+      "rules.md R-04: 1–3 простых правила мира",
+      "video-three-things:P-01: 1–3 сильные вещи"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: сколько правил в ядре направления (premise-check.mjs)"
+      }
+    ]
+  },
+  "skill.brainstorm.bank.similar_min": {
+    "value": 0.3,
+    "unit": "доля общих основ",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "наша оценка: идея в банке и новая идея делят треть значимых основ — показать автору как похожую"
+    ],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: порог похожести идеи на банк и каталог (ideas-bank.mjs)"
+      }
+    ]
+  },
+  "dict.logline_irony": {
+    "value": "(^|[^\\p{L}])(но|а|хотя|однако|только|зато|пока)([^\\p{L}]|$)|=",
+    "unit": "regex",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "story-brainstorm premise-check.mjs: форма логлайна «ты — X, пишет Y, но Z» (правило — у story-core)",
+      "snyder-save-the-cat:GREEN-01: в логлайне есть «но / а / хотя / =»"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: противопоставление (ирония) в логлайне — premise-check.mjs скилла story-brainstorm"
+      }
+    ]
+  },
+  "dict.rule_event": {
+    "value": "(^|[^\\p{L}])\\p{L}{2,}(ал|ял|ел|ил|ыл|ул|ла|ли|лся|лась|лись)([^\\p{L}]|$)|вчера|однажды|в ту ночь",
+    "unit": "regex",
+    "level": null,
+    "basis": "source",
+    "sources": [
+      "rules.md R-04: ядро — правило («номер получает чужие коды»), а не событие («Рэй пропал»)",
+      "video-three-things:P-02"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-28",
+        "task": "S-brainstorm",
+        "change": "заведён: прошедшее время и разовое событие в ядре-правиле — кандидат «это событие, а не правило» (premise-check.mjs)"
+      }
+    ]
+  },
   "story.rewrite.early_chapters": {
     "value": 2,
     "unit": "главы",
