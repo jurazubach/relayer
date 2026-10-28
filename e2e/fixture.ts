@@ -16,6 +16,7 @@ interface StoryJson {
   minutes?: number;
   teasers?: string[];
   chapters?: { title: string }[];
+  hidden?: boolean;
   characters?: { id?: string; name: string; service?: boolean }[];
 }
 
@@ -28,11 +29,11 @@ export const DEMO_PATH = 'examples/demo.story.json';
 export const DEMO = readStory(DEMO_PATH);
 
 /**
- * Любая встроенная история — для проверок, которым нужна именно встроенная
- * (вытеснение загруженной копии, главы через INCLUDE). Какая — неважно, тексты берём из её файлов.
+ * Встроенные истории — для проверок, которым нужна именно встроенная
+ * (вытеснение загруженной копии, главы через INCLUDE, скрытые). Какая — неважно, тексты берём из её файлов.
  * Истории каталога — папки src/stories/<id>/ с meta.json; одиночный <id>.json тоже считается.
  */
-export const BUILTIN: (StoryJson & { chapterFiles: number }) | undefined = readdirSync('src/stories')
+const CATALOG: (StoryJson & { chapterFiles: number })[] = readdirSync('src/stories')
   .sort()
   .flatMap((name) => {
     const folder = `src/stories/${name}`;
@@ -44,7 +45,14 @@ export const BUILTIN: (StoryJson & { chapterFiles: number }) | undefined = readd
     return name.endsWith('.json') && !existsSync(`src/stories/${alias}`) ? [{ ...readStory(folder), alias, chapterFiles: 0 }] : [];
   })
   // как в library.ts: без id в файле история получает алиас по имени папки или файла
-  .map(({ alias, ...story }) => ({ ...story, id: story.id || alias }))[0];
+  .map(({ alias, ...story }) => ({ ...story, id: story.id || alias }));
+
+/** Видимая на главном, если такая есть: часть проверок ищет её карточку. */
+export const BUILTIN = CATALOG.find((s) => !s.hidden) ?? CATALOG[0];
+
+/** Встроенные с hidden: true: на главном их нет, открываются по ?story=. */
+export const HIDDEN = CATALOG.filter((s) => s.hidden);
+export const VISIBLE = CATALOG.filter((s) => !s.hidden);
 
 /** Без пауз сюжета и с чистого листа: иначе эпизод идёт настоящими минутами. */
 export const FRESH = '/?screen=home&fast=1&fresh=1';

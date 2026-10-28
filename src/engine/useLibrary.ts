@@ -1,12 +1,14 @@
 import { useCallback, useMemo, useState } from 'react';
-import { addStoryFromFile, allStories, readUploads, removeUpload } from './library';
+import { addStoryFromFile, allStories, catalogStories, readUploads, removeUpload } from './library';
 import { closedChapters, writeChaptersOpen } from './paywall';
 import { clearProgress, readProgress, type Progress } from './progress';
 import type { Story } from './story';
 
 export interface Library {
-  /** Встроенные и загруженные истории одним списком. */
+  /** Встроенные и загруженные истории одним списком, скрытые тоже: их открывают по ?story=. */
   stories: Story[];
+  /** То, что показывает главный: без скрытых (hidden: true), если нет ?all=1. */
+  catalog: Story[];
   find: (id: string) => Story | undefined;
   progress: (id: string) => Progress | null;
   /** Сколько глав бесплатно, если продолжение ещё закрыто; null — закрытых глав нет. */
@@ -26,6 +28,7 @@ export function useLibrary(onAdded?: (story: Story) => void): Library {
   const [stamp, setStamp] = useState(0);
 
   const stories = useMemo(() => allStories(uploads), [uploads]);
+  const catalog = useMemo(() => catalogStories(stories), [stories]);
 
   const add = useCallback(
     async (file: File) => {
@@ -40,6 +43,7 @@ export function useLibrary(onAdded?: (story: Story) => void): Library {
 
   return {
     stories,
+    catalog,
     find: useCallback((id: string) => stories.find((s) => s.id === id), [stories]),
     // stamp в зависимостях нарочно: после сброса прогресса функция должна стать новой
     progress: useCallback((id: string) => readProgress(id), [stamp]),
