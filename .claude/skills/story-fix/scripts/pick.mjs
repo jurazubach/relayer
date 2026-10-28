@@ -53,7 +53,7 @@ if (!takeArg) {
   process.exit(findings.length ? 0 : 1);
 }
 
-const picks = String(takeArg).split(',').map((s) => s.trim()).filter(Boolean).map((s) => { const [n, k] = s.split(':'); return { n: Number(n), key: (k ?? '').toUpperCase() }; });
+const picks = String(takeArg).split(',').map((s) => s.trim()).filter(Boolean).map((s) => { const [n, k] = s.split(':'); return { n: Number(n), key: (k ?? '').toUpperCase().replace('A', 'А').replace('B', 'Б').replace('C', 'В') }; });
 const chosen = [];
 for (const p of picks) {
   const x = findings.find((f) => f.n === p.n);
