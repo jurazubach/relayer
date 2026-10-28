@@ -1,8 +1,11 @@
+// логлайн: незнакомец из интернета пишет свидетелям чужим голосом, чтобы до слушания доказать, что смерть Лили не случайность
+// вопрос: что случилось с Лили на карьере — и с Денни два года назад — и кто считает до трёх на записи
+// ставка: через 4 дня слушание у коронера: смерть Лили закроют как несчастный случай
+// оси: ellie_trust, judith_trust, maya_trust, proof, jess_bond
 # title: Векскомб · Чужой голос
 # contact: ellie, Элли, amber
 # contact: jess, Джесс, pink
 # contact: connor, Коннор, orange
-# contact: kieran, Киран, indigo
 # contact: tom, Том, cyan
 # contact: beth, Бет, purple
 # contact: owen, Оуэн Брайт, blue
@@ -35,7 +38,6 @@ VAR owen_weakened = false
 VAR confronted_night = false
 VAR unknown_blocked = false
 VAR told_judith_ellie = false
-VAR knows_tox = false
 VAR note_connor = false
 VAR note_beth = false
 VAR note_threat = false
@@ -82,6 +84,7 @@ VAR owen_deal = false
 VAR jess_confessed = 0
 VAR jess_promised = false
 VAR maya_stopped = false
+VAR maya_posts = false
 VAR judith_waits = true
 VAR ellie_testifies = false
 VAR final_choice = ""

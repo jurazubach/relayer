@@ -1,0 +1,4 @@
+src/stories/chuzhoy-golos · неотвечающий против #silent · realtime
+  seed 1: развилок 91, «не ответил» в 0 (из них с #silent рядом 0, без #silent 0), история стоит в 91
+   ℹ «не ответил» рядом с #silent не встретился — сравнивать не с чем
+   ℹ кнопка ждёт (нет напоминаний и срока #noanswer): ch1 ×2, ch1_terms ×3, ch1_hub ×5, ch1_kt, ch1_owen, ch1_jess ×4, ch1_evening ×2, ch1_ellie_lie и ещё 65

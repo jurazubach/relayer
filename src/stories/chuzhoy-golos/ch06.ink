@@ -102,12 +102,17 @@
 
 === ch6_cut ===
 Во втором вырезано. Кто резал? #from:maya #delay:3m
+- (ask)
 * [Элли. Там были она и Коннор #to:maya]
     ~ maya_trust += 1
     Спасибо, что не врёшь. #from:maya #delay:30s
 * [Не знаю #to:maya]
     ~ maya_trust -= 1
     Знаешь. #from:maya #delay:30s
+* [#remind:20m] Мне нужно только имя.
+    -> ask
+* [#noanswer]
+    Ладно. Догадаюсь сама. #from:maya
 - -> ch6_files_done
 
 === ch6_ask_ellie ===

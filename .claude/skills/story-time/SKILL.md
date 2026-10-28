@@ -4,7 +4,7 @@ description: "Персонаж пишет «буду через час»; игр
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 1
+  version: 2
 ---
 
 # story-time — время истории в двух режимах
@@ -117,4 +117,4 @@ P1 · непонятно · <узел> · симптом · правка (F-NN) 
 R-NN`, `алиас:ID` из [references/sources.md](references/sources.md), класс урока), **как сделать самому** —
 упражнение из [references/explain.md](references/explain.md).
 
-Версия: 1
+Версия: 2 (Э3, X-E3: бюджет времени напоминаний и «#silent-поступок», LOCAL-18)

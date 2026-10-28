@@ -23,12 +23,18 @@
 }
 доброе #from:ellie #delay:30m
 я в школе. как вчера?
+- (ask)
 * {note_connor} [У меня записано: к воде вы пошли вместе в 00:30. Вернулась ты одна и мокрая #to:ellie #label:Показать запись из заметок]
     -> ch2_ellie_full
 * [Коннор говорит, ты ушла не в 23:30 #to:ellie]
     -> ch2_ellie_partial
 * [Ничего нового #to:ellie #label:Не поднимать тему]
     -> ch2_ellie_none
+* [#remind:15m] у нас перемена. мне любое: да, нет, ничего
+    -> ask
+* [#noanswer]
+    звонок. потом #from:ellie
+    -> ch2_judith_intro
 
 === ch2_ellie_night ===
 да #from:ellie #delay:20m
@@ -68,7 +74,14 @@
 * [Не знаю, правильно ли это #to:ellie]
     я тоже #from:ellie #delay:20s
     но больше некому
-- -> ch2_judith
+-
+{
+- ellie_trust >= 2:
+    мне давно никто не верил на слово. а ты веришь #from:ellie #delay:15s
+- ellie_trust <= 0:
+    ты мне не очень веришь. я понимаю. я бы тоже не верила #from:ellie #delay:15s
+}
+-> ch2_judith
 
 === ch2_judith ===
 * {cover == "student"} [Здравствуйте. Я {alias}, провожу опрос о безопасности на вечеринках. Можно задать несколько вопросов о карьере Холлоуэй? #to:judith]
@@ -94,7 +107,6 @@
     -> ch2_judith_who
 
 === ch2_judith_med ===
-~ knows_tox = true
 Раз уж Вы честны со мной. #from:judith #delay:1m
 Токсикология: только алкоголь. Никаких таблеток.
 На запястье был синяк. Коронер написал: от падения.
@@ -105,6 +117,7 @@
 
 === ch2_judith_who ===
 Кто Вас попросил? #from:judith #delay:30s
+- (ask)
 * [Элли Вэнс #to:judith]
     ~ told_judith_ellie = true
     ~ judith_trust += 2
@@ -116,6 +129,10 @@
 * [Промолчать #to:judith #silent]
     ~ judith_trust -= 1
     Kind regards, J. Marsh. #from:judith #delay:2m
+* [#remind:30m] Мне важно знать, с кем я говорю о дочери.
+    -> ask
+* [#noanswer]
+    Я спрошу ещё раз. Kind regards, J. Marsh. #from:judith
 - -> ch2_denny
 
 === ch2_denny ===
@@ -124,12 +141,11 @@
 погиб там 2 года назад
 я не хочу об этом
 {
-- knows_tox: -> ch2_beth
+- ch2_judith_med: -> ch2_beth
 }
 -> ch2_article
 
 === ch2_article ===
-~ knows_tox = true
 вот ещё #from:ellie #delay:5m
 Exeter Express: «Предварительное заседание по делу Лили Марш, 17 лет. Токсикология: только алкоголь. Синяк на запястье объяснён падением. Слушание назначено на пятницу» #photo
 -> ch2_beth

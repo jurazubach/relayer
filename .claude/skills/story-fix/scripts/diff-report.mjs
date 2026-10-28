@@ -2,9 +2,10 @@
 // (story:diff), с разделением «ушло — правка сработала», «появилось у правленых узлов» и «появилось в чужом
 // месте» — регрессия, которую правка могла задеть в другой ветке (flow-review.md, шаг 7).
 import { parseCli, storyJson } from './fix-core.mjs';
+import { appendFileSync } from 'node:fs';
 
 const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/diff-report.mjs --story <id> [--from <реф>] [--to <реф>] [--nodes a,b]
-       [--only lint,trace,sessions,endings] [--quick] [--partial] [--md] [--json]
+       [--only lint,trace,sessions,endings] [--quick] [--partial] [--md] [--out <файл>] [--json]
 
 Отчёт «до и после» для story-fix (diff-for-author.md). Числа — npm run story:diff -- <от> <до> --story <id> --json:
 
@@ -22,6 +23,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/diff-report.mjs --story <id> [--
   --quick        lint --quick и меньше прогонов — для черновой правки; итог — без --quick
   --partial      набор с beta_stop
   --md           markdown для отчёта docs/stories/<id>/reviews/<дата>-story-fix.md
+  --out <файл>   дописать вывод в конец файла (отчёт правки), а не печатать: без cp из чужой папки
   --json         данными
   --help         эта справка
 
@@ -108,5 +110,9 @@ if (!changed.length) out.push(li('ничего: финалы, время и се
 for (const e of noData) out.push(li(e));
 out.push('', h('строка для STATUS.md'), li(status));
 if (moreErrors) out.push('', `✗ ошибок story:lint стало больше — правку не сдавать`);
-console.log(out.join('\n'));
+if (args.get('out')) {
+  // в claude -p вывод длиннее лимита ложится в служебную папку, а cp оттуда получает отказ (LOCAL-20)
+  appendFileSync(String(args.get('out')), `${out.join('\n')}\n`);
+  console.log(`дописано в ${args.get('out')}: ${out.length} строк`);
+} else console.log(out.join('\n'));
 process.exit(moreErrors ? 1 : 0);
