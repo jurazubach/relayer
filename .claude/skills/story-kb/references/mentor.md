@@ -74,7 +74,11 @@ VAR covered = false
     спасибо. так и думала #from:ulya #delay:2m
     Остап печатает… #sys:ostap #delay:10s
     Остап не в сети #sys:ostap #delay:30s
-- -> END
+-
+{ covered:
+    с меня кофе #from:ostap #delay:2m
+}
+-> END
 ```
 
 ## nicklin-writing-for-games:PAT-08#нюанс · Уговор, который всегда успешен, — не выбор
