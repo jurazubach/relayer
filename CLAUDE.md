@@ -147,7 +147,7 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 |---|---|---|
 | `src/stories/the-number/` | THE NUMBER (без серии) — скрыта | 25 |
 | `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно — скрыта | 40 |
-| `src/stories/chuzhoy-golos/` | Векскомб · Чужой голос | 90 |
+| `src/stories/chuzhoy-golos/` | Векскомб · Чужой голос | 30 |
 
 Скрытые (`hidden: true` в `meta.json`, решение автора 28.10: в работе только «Чужой голос») не видны
 на главном и не едут в `dist/stories/` на Pages; открываются по `?story=<id>`, а `story:*`, линт и тесты

@@ -609,6 +609,8 @@ for (const path of listStories()) {
     const tree = parseStory(story);
     const ids = new Set(nodeIds(tree));
     const functions = new Set(tree.functions.map((f) => f.id));
+    // метки сборок и вариантов (- (ask) у напоминаний #remind) — тоже цели переходов внутри своего узла
+    for (const k of tree.knots) walk(k.items, (it) => { if (it.label) ids.add(`${k.id.split('.')[0]}.${it.label}`); });
     for (const k of tree.knots) {
       walk(k.items, (it) => {
         if (it.type !== 'divert' || it.kind === 'return' || it.target === 'END' || it.target === 'DONE') return;

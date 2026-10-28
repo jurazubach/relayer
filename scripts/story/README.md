@@ -43,7 +43,7 @@
 ## Холодный читатель (`story:cold-read`)
 
 ```bash
-npm run story:cold-read -- --story <id> --until <узел> --mode <режим> [--profile <профиль>] [--last N] --ask --json
+npm run story:cold-read -- --story <id> --until <узел> --mode <режим> [--profile <профиль>] [--last N] --ask [--json]
 ```
 
 Без `--ask` команда печатает только переписку (сводку и маршрут — в stderr, ключ — в `--json`). С `--ask` —
