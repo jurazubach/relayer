@@ -56,12 +56,15 @@ runCli(HELP, async (args) => {
   // логлайн
   if (f['логлайн']) {
     const l = f['логлайн'];
-    if (!/(^|[\s,])(но|а|хотя|однако)([\s,]|$)|=/iu.test(l)) add('warn', 'R-02', 'логлайн', 'нет противопоставления («но», «а», «хотя», «=»): нет иронии — нет истории');
+    // словарь и порог общие со story-brainstorm (premise-check.mjs): одна форма логлайна на весь цикл
+    const irony = maybe('dict.logline_irony');
+    const ironyRe = irony ? new RegExp(irony, 'iu') : /(^|[\s,])(но|а|хотя|однако)([\s,]|$)|=/iu;
+    if (!ironyRe.test(l)) add('warn', 'R-02', 'логлайн', 'нет противопоставления (словарь dict.logline_irony: «но», «а», «хотя», «=»): нет иронии — нет истории');
     if (!/(^|[^\p{L}])(ты|тебе|тебя|тобой|игрок)([^\p{L}]|$)/iu.test(l)) add('warn', 'R-02', 'логлайн', 'не названа роль игрока («ты — …»)');
     const words = l.split(/\s+/).filter(Boolean).length;
-    const max = maybe('core.logline.max_words');
-    if (max == null) add('info', 'R-02', 'логлайн', `${words} слов; порог — нет ключа core.logline.max_words (длина по R-02: npm run story:rule R-02)`);
-    else if (words > max) add('warn', 'R-02', 'логлайн', `${words} слов > core.logline.max_words = ${max}`);
+    const max = maybe('skill.brainstorm.logline.max_words');
+    if (max == null) add('info', 'R-02', 'логлайн', `${words} слов; порог — нет ключа skill.brainstorm.logline.max_words (длина по R-02: npm run story:rule R-02)`);
+    else if (words > max) add('warn', 'R-02', 'логлайн', `${words} слов > skill.brainstorm.logline.max_words = ${max}`);
   }
   // вопрос
   if (f['вопрос']) {

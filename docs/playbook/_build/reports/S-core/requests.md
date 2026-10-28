@@ -1,19 +1,11 @@
 # S-core · просьбы за пределы путей задачи
 
-## 1. `docs/playbook/thresholds.json` — ключ длины логлайна
+## 1. ~~`docs/playbook/thresholds.json` — ключ длины логлайна~~ (снято сверкой)
 
-- **Что:** добавить ключ `core.logline.max_words` рядом с прочими ключами ядра (или в начало группы `story.*`):
-  ```json
-  "core.logline.max_words": {
-    "value": 35, "unit": "слов", "op": ">", "level": "warning", "basis": "source",
-    "sources": ["rules.md R-02: логлайн одной фразой до 35 слов", "snyder-save-the-cat:P-01"],
-    "calibrated_on": null,
-    "history": [{ "date": "2026-10-28", "who": "S-core", "what": "ключ для core-check.mjs (story-core)" }]
-  }
-  ```
-- **Зачем:** `core-check.mjs` считает слова логлайна, но порога в реестре нет, а число в скрипте — запрещено.
-  Сейчас скрипт пишет «нет ключа core.logline.max_words» и показывает только счёт. Ключ есть — проверка включится
-  сама, правка скрипта не нужна.
+- Нового ключа `core.logline.max_words` не заводить: в `build/main` уже есть `skill.brainstorm.logline.max_words`
+  и `dict.logline_irony` (S-brainstorm). `core-check.mjs` читает их; до слияния с `build/main` пишет «нет ключа».
+- При сведении волны: ключ про R-02 — общий для двух скиллов; если королева захочет нейтральное имя
+  (`story.logline.max_words`), переименовать в обоих скриптах сразу.
 
 ## 2. `docs/playbook/owners.md` — имена файлов `story-core`
 
