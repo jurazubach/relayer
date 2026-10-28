@@ -1,0 +1,676 @@
+{
+ "stories": [
+  {
+   "id": "chuzhoy-golos",
+   "path": "src/stories/chuzhoy-golos",
+   "source": "end",
+   "final": [
+    "fin_herself",
+    "fin_unproven",
+    "fin_scapegoat",
+    "fin_puppet",
+    "fin_revenge",
+    "fin_silence"
+   ],
+   "distributors": [
+    "ch10_route"
+   ],
+   "unmarked": [],
+   "runs": 1602,
+   "personas": {
+    "random": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 127,
+      "fin_scapegoat": 16,
+      "fin_silence": 10,
+      "fin_unproven": 28,
+      "fin_herself": 5,
+      "fin_truth": 13,
+      "fin_puppet": 1
+     }
+    },
+    "silent": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 200
+     }
+    },
+    "first": {
+     "runs": 1,
+     "counts": {
+      "fin_truth": 1
+     }
+    },
+    "last": {
+     "runs": 1,
+     "counts": {
+      "fin_revenge": 1
+     }
+    },
+    "refuse": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 200
+     }
+    },
+    "curious": {
+     "runs": 200,
+     "counts": {
+      "fin_scapegoat": 106,
+      "fin_revenge": 94
+     }
+    },
+    "trusting": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 111,
+      "fin_unproven": 70,
+      "fin_herself": 19
+     }
+    },
+    "suspicious": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 143,
+      "fin_scapegoat": 20,
+      "fin_silence": 12,
+      "fin_truth": 16,
+      "fin_unproven": 6,
+      "fin_puppet": 3
+     }
+    },
+    "distracted": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 127,
+      "fin_scapegoat": 16,
+      "fin_silence": 10,
+      "fin_unproven": 28,
+      "fin_herself": 5,
+      "fin_truth": 13,
+      "fin_puppet": 1
+     }
+    },
+    "unresponsive": {
+     "runs": 200,
+     "counts": {
+      "fin_revenge": 127,
+      "fin_scapegoat": 16,
+      "fin_silence": 10,
+      "fin_unproven": 28,
+      "fin_herself": 5,
+      "fin_truth": 13,
+      "fin_puppet": 1
+     }
+    }
+   },
+   "endings": [
+    {
+     "name": "fin_truth",
+     "node": "fin_truth",
+     "declared": true,
+     "line": 215,
+     "runs": 56,
+     "share": 0.03495630461922597,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 13,
+      "silent": 0,
+      "first": 1,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 0,
+      "suspicious": 16,
+      "distracted": 13,
+      "unresponsive": 13
+     },
+     "staticVars": [
+      "final_choice",
+      "proof"
+     ],
+     "derivedVars": [
+      "bill_found→proof",
+      "ladder_known→proof",
+      "owen_turned→proof",
+      "fake_note_caught→proof",
+      "jess_confessed→proof"
+     ],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "truth",
+       "n": 56
+      }
+     ]
+    },
+    {
+     "name": "fin_herself",
+     "node": "fin_herself",
+     "declared": true,
+     "line": 290,
+     "runs": 34,
+     "share": 0.02122347066167291,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 5,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 19,
+      "suspicious": 0,
+      "distracted": 5,
+      "unresponsive": 5
+     },
+     "staticVars": [
+      "final_choice",
+      "jess_confessed",
+      "jess_bond"
+     ],
+     "derivedVars": [
+      "jess_suspicious→jess_bond"
+     ],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "herself",
+       "n": 34
+      }
+     ]
+    },
+    {
+     "name": "fin_unproven",
+     "node": "fin_unproven",
+     "declared": true,
+     "line": 330,
+     "runs": 160,
+     "share": 0.09987515605493133,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 28,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 70,
+      "suspicious": 6,
+      "distracted": 28,
+      "unresponsive": 28
+     },
+     "staticVars": [],
+     "derivedVars": [],
+     "decidedIn": [],
+     "endingVar": [
+      {
+       "value": "unproven",
+       "n": 160
+      }
+     ]
+    },
+    {
+     "name": "fin_scapegoat",
+     "node": "fin_scapegoat",
+     "declared": true,
+     "line": 385,
+     "runs": 174,
+     "share": 0.10861423220973783,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 16,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 106,
+      "trusting": 0,
+      "suspicious": 20,
+      "distracted": 16,
+      "unresponsive": 16
+     },
+     "staticVars": [
+      "final_choice",
+      "fake_note_caught",
+      "jess_confessed"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "scapegoat",
+       "n": 174
+      }
+     ]
+    },
+    {
+     "name": "fin_puppet",
+     "node": "fin_puppet",
+     "declared": true,
+     "line": 420,
+     "runs": 6,
+     "share": 0.003745318352059925,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 1,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 0,
+      "suspicious": 3,
+      "distracted": 1,
+      "unresponsive": 1
+     },
+     "staticVars": [
+      "final_choice"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "puppet",
+       "n": 6
+      }
+     ]
+    },
+    {
+     "name": "fin_revenge",
+     "node": "fin_revenge",
+     "declared": true,
+     "line": 450,
+     "runs": 1130,
+     "share": 0.7053682896379525,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 127,
+      "silent": 200,
+      "first": 0,
+      "last": 1,
+      "refuse": 200,
+      "curious": 94,
+      "trusting": 111,
+      "suspicious": 143,
+      "distracted": 127,
+      "unresponsive": 127
+     },
+     "staticVars": [],
+     "derivedVars": [],
+     "decidedIn": [],
+     "endingVar": [
+      {
+       "value": "revenge",
+       "n": 1130
+      }
+     ]
+    },
+    {
+     "name": "fin_silence",
+     "node": "fin_silence",
+     "declared": true,
+     "line": 492,
+     "runs": 42,
+     "share": 0.026217228464419477,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 10,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 0,
+      "suspicious": 12,
+      "distracted": 10,
+      "unresponsive": 10
+     },
+     "staticVars": [
+      "final_choice",
+      "judith_waits"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "silence",
+       "n": 42
+      }
+     ]
+    }
+   ],
+   "deciders": [
+    {
+     "name": "final_choice",
+     "gain": 0.24312500000000004,
+     "accuracy": 0.94875,
+     "values": [
+      {
+       "value": "",
+       "ending": "fin_revenge",
+       "share": 1,
+       "runs": 1129
+      },
+      {
+       "value": "owen",
+       "ending": "fin_scapegoat",
+       "share": 0.9666666666666667,
+       "runs": 180
+      },
+      {
+       "value": "mercy",
+       "ending": "fin_unproven",
+       "share": 0.8394160583941606,
+       "runs": 137
+      },
+      {
+       "value": "silent",
+       "ending": "fin_unproven",
+       "share": 0.45454545454545453,
+       "runs": 99
+      },
+      {
+       "value": "truth",
+       "ending": "fin_truth",
+       "share": 1,
+       "runs": 55
+      }
+     ]
+    },
+    {
+     "name": "proof",
+     "gain": 0.14812500000000006,
+     "accuracy": 0.85375,
+     "values": [
+      {
+       "value": 0,
+       "ending": "fin_revenge",
+       "share": 1,
+       "runs": 1129
+      },
+      {
+       "value": 6,
+       "ending": "fin_scapegoat",
+       "share": 0.5186567164179104,
+       "runs": 268
+      },
+      {
+       "value": 5,
+       "ending": "fin_unproven",
+       "share": 0.44680851063829785,
+       "runs": 94
+      },
+      {
+       "value": 3,
+       "ending": "fin_unproven",
+       "share": 0.6190476190476191,
+       "runs": 63
+      },
+      {
+       "value": 4,
+       "ending": "fin_truth",
+       "share": 0.3076923076923077,
+       "runs": 26
+      },
+      {
+       "value": 2,
+       "ending": "fin_unproven",
+       "share": 0.45,
+       "runs": 20
+      }
+     ]
+    },
+    {
+     "name": "maya_stopped",
+     "gain": 0.09750000000000003,
+     "accuracy": 0.803125,
+     "values": [
+      {
+       "value": false,
+       "ending": "fin_revenge",
+       "share": 0.9292181069958848,
+       "runs": 1215
+      },
+      {
+       "value": true,
+       "ending": "fin_scapegoat",
+       "share": 0.4051948051948052,
+       "runs": 385
+      }
+     ]
+    },
+    {
+     "name": "ellie_testifies",
+     "gain": 0.05812500000000009,
+     "accuracy": 0.76375,
+     "values": [
+      {
+       "value": false,
+       "ending": "fin_revenge",
+       "share": 0.8204941860465116,
+       "runs": 1376
+      },
+      {
+       "value": true,
+       "ending": "fin_unproven",
+       "share": 0.41517857142857145,
+       "runs": 224
+      }
+     ]
+    },
+    {
+     "name": "c10_maya_door",
+     "gain": 0.016875000000000084,
+     "accuracy": 0.7225,
+     "values": [
+      {
+       "value": false,
+       "ending": "fin_revenge",
+       "share": 0.7331168831168832,
+       "runs": 1540
+      },
+      {
+       "value": true,
+       "ending": "fin_unproven",
+       "share": 0.45,
+       "runs": 60
+      }
+     ]
+    }
+   ],
+   "hints": [
+    "⚠ финал «fin_revenge» забирает 71% прохождений (C-40.dominant_share = 0.5)",
+    "ℹ финал «fin_puppet» выпал в 0% — достижим ли он целенаправленно? (C-40.rare_share = 0.02)"
+   ],
+   "frame": {
+    "first": {
+     "who": "ellie",
+     "kind": "in",
+     "text": "привет! это по объявлению"
+    },
+    "endings": {
+     "fin_revenge": [
+      {
+       "who": "tom",
+       "kind": "in",
+       "text": "это я нажал «опубликовать». оба раза."
+      },
+      {
+       "who": "maya",
+       "kind": "in",
+       "text": "Дэн бы сказал, что я дура."
+      },
+      {
+       "who": "maya",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_scapegoat": [
+      {
+       "who": "bank",
+       "kind": "in",
+       "text": "Элли В. перевела вам £12.00 · «спасибо x»"
+      },
+      {
+       "who": "judith",
+       "kind": "in",
+       "text": "В ночь, когда его арестовали, я впервые с июня спала. Спасибо Вам."
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_silence": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "я так и не сказал им про лестницу. сорян"
+      },
+      {
+       "who": "jess",
+       "kind": "in",
+       "text": "привет!! вы ещё делаете опросы? 🙂"
+      },
+      {
+       "who": "jess",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_unproven": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "я сказал про лестницу. им всё равно"
+      },
+      {
+       "who": "judith",
+       "kind": "in",
+       "text": "Сегодня я отключила её номер."
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_herself": [
+      {
+       "who": "beth",
+       "kind": "in",
+       "text": "я отдала им скрин 00:53. элли разрешила"
+      },
+      {
+       "who": "judith",
+       "kind": "in",
+       "text": "Лилиан бы её выслушала. Я выслушала."
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_truth": [
+      {
+       "who": "beth",
+       "kind": "in",
+       "text": "я отдала им скрин 00:53. элли разрешила"
+      },
+      {
+       "who": "bank",
+       "kind": "in",
+       "text": "Элли В. перевела вам £12.00 · «последний час. спасибо x»"
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "fin_puppet": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "я так и не сказал им про лестницу. сорян"
+      },
+      {
+       "who": "lily",
+       "kind": "in",
+       "text": "кстати. спасибо!!"
+      },
+      {
+       "who": "lily",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ]
+    }
+   },
+   "card": {
+    "text": "Семь финалов, и ни один не спасает всех",
+    "count": 7,
+    "several": true
+   },
+   "endingVar": {
+    "chapters": [
+     6,
+     10
+    ],
+    "isFinal": true
+   },
+   "thresholds": [
+    {
+     "key": "C-40.dominant_share",
+     "value": 0.5,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "C-40.rare_share",
+     "value": 0.02,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "endings.top_vars",
+     "value": 5,
+     "unit": "переменных",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "our_estimate"
+    }
+   ]
+  }
+ ]
+}

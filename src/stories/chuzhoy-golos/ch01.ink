@@ -7,6 +7,7 @@ remote research assistant, только переписка, £12 в час
 спасибо за отклик #delay:4s
 сначала один вопрос #delay:8s
 ты же не из девона?
+- (ask)
 * [Нет, далеко #to:ellie]
     хорошо #from:ellie
 * [А это важно? #to:ellie]
@@ -15,8 +16,15 @@ remote research assistant, только переписка, £12 в час
     ~ ellie_trust -= 1
     нет. честно нет #from:ellie
     могу заплатить вперёд
+* [#remind:10m] это одно слово. да или нет
+    -> ask
+* [#noanswer]
+    ладно. будем считать что нет #from:ellie
 - прости #from:ellie #delay:6s
 важно чтобы тут тебя никто не знал
+через 4 дня слушание у коронера #delay:6s
+в июне на карьере погибла девушка
+после слушания всё. закроют как несчастный случай
 работа простая #delay:10s
 я даю 6 номеров
 ты пишешь им как студент
@@ -24,6 +32,7 @@ remote research assistant, только переписка, £12 в час
 за ответы ваучер £10. ваучеры куплю я
 со мной они не разговаривают #delay:12s
 с тобой будут
+- (ask2)
 * [Ок, давай #to:ellie]
     ~ ellie_trust += 1
     -> ch1_terms
@@ -31,13 +40,17 @@ remote research assistant, только переписка, £12 в час
     -> ch1_party
 * [Это странно. Я пас #to:ellie]
     -> ch1_refuse
+* [#remind:15m] оплата с первого сообщения. если что
+    -> ask2
+* [#noanswer]
+    объясню, почему так #from:ellie
+    -> ch1_party
 
 === ch1_party ===
-была девушка #from:ellie #delay:40s
+её звали лили #from:ellie #delay:40s
 в газетах всё есть
 полиция закрыла за 9 дней #delay:8s
-слушание у коронера через 4 дня
-после него всё
+слушание — последнее, что ещё можно сделать
 * [Ладно. Берусь #to:ellie]
     ~ ellie_trust += 1
     -> ch1_terms
@@ -63,15 +76,22 @@ remote research assistant, только переписка, £12 в час
 === ch1_terms ===
 спасибо #from:ellie #delay:6s
 как тебя подписать? настоящее имя не нужно
+- (ask_name)
 * [Сэм #to:ellie]
     ~ alias = "Сэм"
 * [Алекс #to:ellie]
     ~ alias = "Алекс"
 * [Джордан #to:ellie]
     ~ alias = "Джордан"
+* [#remind:10m] любое имя. просто чтобы им было к кому обращаться
+    -> ask_name
+* [#noanswer]
+    ~ alias = "Сэм"
+    ладно, выберу сама #from:ellie
 - ок, {alias} #from:ellie
 и ещё #delay:5s
 ты пишешь как студент, как я предложила? или говоришь как есть?
+- (ask_cover)
 * [Студент. Как договорились #to:ellie]
     ~ cover = "student"
     ~ opener = "Здравствуйте! Я " + alias + ", студент. Делаю опрос о безопасности на вечеринках. 5 вопросов, ваучер £10. Можно?"
@@ -81,6 +101,12 @@ remote research assistant, только переписка, £12 в час
     ~ opener = "Здравствуйте, я " + alias + ". Помогаю знакомой понять, что случилось на карьере в июне. Можно пару вопросов?"
     тогда тебе никто не ответит #from:ellie
     но как знаешь
+* [#remind:10m] первое сообщение я напишу за тебя. мне надо знать как
+    -> ask_cover
+* [#noanswer]
+    ~ cover = "student"
+    ~ opener = "Здравствуйте! Я " + alias + ", студент. Делаю опрос о безопасности на вечеринках. 5 вопросов, ваучер £10. Можно?"
+    тогда как я предложила #from:ellie
 - вот номера #from:ellie #delay:15s
 Скрин участников чата «Shortest Night 🔥»: Коннор Пайк, Джесс Холлис, Киран Лоу, Том Эйкерс, Бет Солтер, Оуэн Брайт. Строка «Lily 💧» серая. Внизу: «Элли вышла из чата» #photo
 оуэну брайту НЕ пиши #delay:8s
@@ -103,8 +129,7 @@ remote research assistant, только переписка, £12 в час
 === ch1_hub ===
 * [{opener} #to:jess #label:Написать Джесс]
     -> ch1_jess
-* [{opener} #to:kieran #label:Написать Кирану и Тому]
-    {opener} #me:tom
+* [{opener} #to:tom #label:Написать Тому]
     -> ch1_kt
 * [{opener} #to:beth #label:Написать Бет]
     ~ beth_written = true
@@ -126,6 +151,7 @@ remote research assistant, только переписка, £12 в час
 карьер вообще-то самое опасное #delay:6s
 там девочка погибла в июне
 вы же знаете?
+- (ask)
 * [Нет. Расскажи #to:jess]
     лили. мы вместе гребли #from:jess #delay:20s
     утонула после вечеринки. все говорят пьяная
@@ -135,6 +161,11 @@ remote research assistant, только переписка, £12 в час
 * [А ты там была? #to:jess]
     ~ jess_push += 1
     ну да. все были #from:jess #delay:15s
+* [#remind:15m] лили марш. её во всех новостях показывали
+    -> ask
+* [#noanswer]
+    ладно я сама скажу #from:jess
+    лили. мы вместе гребли
 - я была на той вечеринке #from:jess #delay:8s
 лили и элли весь вечер грызлись
 все видели
@@ -166,11 +197,6 @@ remote research assistant, только переписка, £12 в час
 
 === ch1_kt ===
 Прочитано #sys:tom #delay:2m
-кто это? #from:kieran #delay:3m
-* {cover == "student"} [Студент. Опрос про вечеринки #to:kieran]
-* {cover == "honest"} [Помогаю подруге Лили #to:kieran]
-* [Промолчать #to:kieran #silent]
-- Киран не в сети #sys:kieran #delay:5m
 -> ch1_hub
 
 === ch1_beth ===
@@ -196,6 +222,7 @@ remote research assistant, только переписка, £12 в час
 === ch1_evening ===
 я тут #from:ellie #delay:1h
 кто-нибудь ответил?
+- (ask)
 * [Джесс. Говорит, вы с Лили ругались весь вечер #to:ellie]
     -> ch1_ellie_lie
 * {owen_contacted} [Оуэн ответил. Очень дружелюбно #to:ellie]
@@ -211,6 +238,11 @@ remote research assistant, только переписка, £12 в час
     а джесс? она всегда отвечает
     ** [Джесс говорит, вы с Лили ругались весь вечер #to:ellie]
         -> ch1_ellie_lie
+* [#remind:20m] мне хоть что-нибудь. даже «никто»
+    -> ask
+* [#noanswer]
+    джесс наверно уже всем рассказала, что мы с лили ругались #from:ellie
+    -> ch1_ellie_lie
 
 === ch1_ellie_lie ===
 да мы поругались но это было раньше #from:ellie #delay:1m
@@ -250,12 +282,18 @@ remote research assistant, только переписка, £12 в час
 я со смены #from:connor #delay:1h
 чё за опрос
 ваучер реально дадут или это скам
+- (ask)
 * [Дадут. Пять вопросов #to:connor]
     -> ch1_connor_soft
 * [Два вопроса — и ваучер твой #to:connor]
     -> ch1_connor_soft
 * [Ты знал Лили Марш? #to:connor]
     -> ch1_connor_direct
+* [#remind:15m] алё. я в автобусе, на пару вопросов норм
+    -> ask
+* [#noanswer]
+    ладно. всё равно еду #from:connor
+    -> ch1_connor_soft
 
 === ch1_connor_direct ===
 ~ connor_blocked = true
@@ -298,6 +336,7 @@ remote research assistant, только переписка, £12 в час
     спасибо что делаешь это
     -> ch1_unknown
 
+// намеренно: C-32 D-02 — «не ответил» не блокирует номер за игрока, поэтому пути расходятся с #silent «Заблокировать»
 === ch1_unknown ===
 {cover == "student":Вы не студент.|Вы не из Векскомба.} #from:unknown #delay:7h
 Прекратите писать людям о Лилиан.
@@ -308,5 +347,6 @@ remote research assistant, только переписка, £12 в час
 * [Заблокировать #to:unknown #silent #label:Заблокировать номер]
     ~ unknown_blocked = true
     Номер заблокирован #sys:unknown
+* [#noanswer:1h]
 - -> ch2
 

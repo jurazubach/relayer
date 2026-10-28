@@ -11,6 +11,7 @@
 Кадр 2: тот же уступ. Сбоку видно Элли и Коннора #photo
 Кадр 3: тёмный экран. Голос Оуэна за кадром: «давай, прыгай». Под ним что-то тихое, не разобрать #photo
 что показывать? #delay:30s
+- (ask)
 * [Всё как есть #to:ellie]
     -> ch5_files
 * [Вырежи кадры с тобой и Коннором #to:ellie]
@@ -20,6 +21,16 @@
         -> ch5_files
     ** [Нет. Оставь всё #to:ellie]
         -> ch5_files
+    ** [#noanswer:20m]
+        ~ cut_frames = true
+        -> ch5_files
+* [#remind:30m] слушание в 10. файлы надо отдать до него
+    -> ask
+* [#remind:30m] кадр 2 я пересмотрела раз пять. там видно моё лицо
+    -> ask
+* [#noanswer]
+    ладно. решу сама #from:ellie
+    -> ch5_files
 
 === ch5_files ===
 {cut_frames:
@@ -35,6 +46,9 @@
 === ch5_owen ===
 Доброе утро 🙂 #from:owen #delay:5h
 Давай по-взрослому
+{called_bluff:
+    Доказательств больше не просишь? 🙂 Правильно #delay:10s
+}
 Файлы у тебя. Я знаю
 Отправь их мне — и про Элли никто ничего не узнает #delay:10s
 Слушание в 10
@@ -66,7 +80,8 @@
     Если у Вас есть что-то ещё от него, пришлите. #delay:30s
     Скрин Оуэна: «Жаль будет, если старая история про Денни вдруг всплывёт. Особенно для Элли» #me:unknown
 }
-Слушание отложено. #from:unknown #delay:2h
+Два часа спустя #sys:unknown #delay:5s
+Слушание отложено. #from:unknown #delay:1m
 Коронер передал материалы в полицию.
 Оуэна вызвали на допрос. #delay:30s
 {cut_frames:
@@ -76,11 +91,15 @@
 - else:
     ~ act1 = "adjourned"
 }
-меня вызвали давать показания #from:ellie #delay:1h
+меня вызвали давать показания #from:ellie #delay:5m
 про денни
 {ellie_reaction == "judge":даже если ты думаешь что я не заслуживаю|я скажу правду}
-{connor_ally:
-    я тоже пойду #from:connor #delay:30m
+* [Не бойся #to:ellie]
+    боюсь. но пойду #from:ellie #delay:1m
+* [Я с тобой #to:ellie]
+    знаю #from:ellie #delay:1m
+- {connor_ally:
+    я тоже пойду #from:connor #delay:5m
     хватит
 }
 -> season_hook
@@ -97,65 +116,82 @@
 ок #from:ellie #delay:10m
 я иду туда сама
 {cut_frames:с оригиналом. без вырезок|с файлами. со всеми}
-слушание отложили #from:ellie #delay:3h
+Два часа спустя #sys:ellie #delay:5s
+слушание отложили #from:ellie #delay:1m
 меня допросят. оуэна тоже
 мне страшно. но уже не так
--> season_hook
+* [Я рядом #to:ellie]
+    знаю. поэтому и не так #from:ellie #delay:1m
+* [Промолчать #to:ellie #silent]
+- -> season_hook
 
 === end_ellie_together ===
 ~ act1 = "ellie_together"
 тогда будь на связи #from:ellie #delay:5m
 пока я там
 пиши мне что-нибудь
-я захожу #from:ellie #delay:1h
+я захожу #from:ellie #delay:10m
 * [Я тут #to:ellie]
 * [Говори правду. Всю #to:ellie]
-- меня вызвали #from:ellie #delay:40m
-я сказала про денни #delay:20m
+- меня вызвали #from:ellie #delay:10m
+я сказала про денни #delay:5m
 и про ту ночь
-слушание отложили. файлы забрала полиция #delay:30m
+слушание отложили. файлы забрала полиция #delay:10m
 спасибо. правда
 -> season_hook
 
 === end_ellie_hides ===
 ~ act1 = "ellie_hides"
-я удалила файлы #from:ellie #delay:30m
+я удалила файлы #from:ellie #delay:10m
 у тебя есть копия. делай что хочешь
 только без моего имени
-вердикт: несчастный случай #from:ellie #delay:3h
--> season_hook
+Два часа спустя #sys:ellie #delay:5s
+вердикт: несчастный случай #from:ellie #delay:1m
+* [Это твои файлы. Твоё право #to:ellie]
+    знаю. легче не стало #from:ellie #delay:1m
+* [Промолчать #to:ellie #silent]
+- -> season_hook
 
 === end_owen ===
 ~ act1 = "owen"
 Умница 🙂 #from:owen #delay:1m
-вердикт несчастный случай #from:ellie #delay:3h
+Два часа спустя #sys:ellie #delay:5s
+вердикт несчастный случай #from:ellie #delay:1m
 почему у оуэна мои файлы #delay:1m
 он прислал мне кадр. со мной #delay:20s
-{owen_knows >= 2:
-    Будешь в наших краях — заходи 🙂 #from:owen #delay:2h
+* [Он обещал оставить тебя в покое #to:ellie]
+    он соврал. он всегда врёт #from:ellie #delay:1m
+* [Прости #to:ellie]
+    не знаю #from:ellie #delay:2m
+- {owen_knows >= 2:
+    Будешь в наших краях — заходи 🙂 #from:owen #delay:5m
 }
 {owen_weakened:
-    коннор пошёл в полицию сам #from:ellie #delay:2h
+    коннор пошёл в полицию сам #from:ellie #delay:10m
     без записи ему никто не верит
 }
 -> season_hook
 
 === end_silence ===
-ты тут? #from:ellie #delay:40m
-слушание через час #delay:20m
-ладно. сама #delay:10m
+ты тут? #from:ellie #delay:10m
+слушание через час #delay:10m
+ладно. сама #delay:5m
+Два часа спустя #sys:ellie #delay:5s
 {ellie_trust >= 3:
     ~ act1 = "ellie_alone_truth"
-    я иду с файлами #delay:30s
-    слушание отложили #from:ellie #delay:3h
+    я ходила с файлами #from:ellie #delay:1m
+    слушание отложили
     оуэна вызвали на допрос. меня тоже
 - else:
     ~ act1 = "ellie_alone_owen"
-    я отдала карту оуэну #from:ellie #delay:2h
+    я отдала карту оуэну #from:ellie #delay:1m
     он обещал
-    вердикт: несчастный случай #delay:1h
+    вердикт: несчастный случай #delay:30s
 }
--> season_hook
+* [Ты пошла одна #to:ellie]
+    {ellie_trust >= 3:да. и дошла|да. и не дошла} #from:ellie #delay:1m
+* [Промолчать #to:ellie #silent]
+- -> season_hook
 
 === season_hook ===
 Это ведь ты задаёшь людям вопросы про карьер? #from:maya #delay:6h

@@ -1,9 +1,10 @@
 // Реплики до и после правки для автора: что игрок читал в узле и что прочтёт теперь, в виде переписки.
 // Данные — story:diff --text (те же узлы и строки); здесь только подача: «было» и «стало» блоками, без −/+.
 import { parseCli, storyJson } from './fix-core.mjs';
+import { appendFileSync } from 'node:fs';
 
 const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/text-diff.mjs --story <id> [--from <реф>] [--to <реф>] [--node <узел> | --nodes a,b]
-       [--md] [--json]
+       [--md] [--out <файл>] [--json]
 
 Дифф для автора (story-fix, diff-for-author.md): по каждому изменённому узлу — «было» и «стало» как переписка,
 с именами контактов, кнопками в [ ] и условиями в ‹ ›. Числа и узлы — из npm run story:diff -- <от> <до> --text.
@@ -14,6 +15,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/text-diff.mjs --story <id> [--fr
   --node <узел>   только этот узел и его stitch'и, целиком (как story:diff --node)
   --nodes a,b     только эти узлы (одобренные находки); остальные изменённые — счётом в конце
   --md            markdown для отчёта docs/stories/<id>/reviews/<дата>-story-fix.md
+  --out <файл>    дописать вывод в конец файла (отчёт правки), а не печатать: без cp из чужой папки
   --json          данными: { story, nodes: [{ id, chapter, status, removed, added, before[], after[] }] }
   --help          эта справка
 
@@ -66,4 +68,8 @@ for (const n of shown) {
 }
 if (rest.length) out.push(`${md ? '' : '⚠ '}изменены и другие узлы, не из --nodes: ${rest.map((n) => `${n.id} (−${n.removed} +${n.added})`).join(', ')} — правка вышла за одобренное?`, '');
 out.push(`итого: узлов ${shown.length}${rest.length ? ` (+${rest.length} вне списка)` : ''} · реплик убрано ${sum(shown, 'removed')}, добавлено ${sum(shown, 'added')}`);
-console.log(out.join('\n'));
+if (args.get('out')) {
+  // в claude -p вывод длиннее лимита ложится в служебную папку, а cp оттуда получает отказ (LOCAL-20)
+  appendFileSync(String(args.get('out')), `${out.join('\n')}\n`);
+  console.log(`дописано в ${args.get('out')}: ${out.length} строк`);
+} else console.log(out.join('\n'));

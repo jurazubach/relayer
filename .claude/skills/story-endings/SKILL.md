@@ -4,7 +4,7 @@ description: "Финал решает скрытая проверка, игро�
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 1
+  version: 2
 ---
 
 # story-endings — чтобы финал был итогом пути
@@ -40,7 +40,8 @@ F-10, F-12. Числа — только из команд, пороги — кл
 3. **Замер:** `npm run -s story:lint -- --story <id> --only C-06,C-07,C-40,C-41,C-42,C-43` (папка вне каталога —
    путь вместо id; длинно — тот же вызов с `--summary`).
 4. **Порог и сводка:** `node ${CLAUDE_SKILL_DIR}/scripts/threshold-visibility.mjs --story <id>` — ✗ «не звучит» →
-   F-09, «нет в сводке» → F-10, ◆ последний выбор, Σ итог. Развилки — [references/decisions-threshold.md](references/decisions-threshold.md).
+   F-09, «нет в сводке» → F-10, ◆ последний выбор, Σ итог, ⚠ «последний выбор не решает» — ранний флаг
+   перекрывает кнопку (LOCAL-17). Развилки — [references/decisions-threshold.md](references/decisions-threshold.md).
 5. **Хвост:** `node ${CLAUDE_SKILL_DIR}/scripts/tail.mjs --story <id>` — хвост, ожидание, люди, длина финала против
    соседей (те же прогоны, что у C-41, C-42) → [references/resolution.md](references/resolution.md), F-12.
 6. **Путь и рамка:** `npm run -s story:endings -- --story <id> --frame` — первое входящее рядом с последними
@@ -111,4 +112,4 @@ P1 · непонятно · <узел> · симптом · правка (F-NN) 
 из [references/sources.md](references/sources.md), класс урока), **как сделать самому** — упражнение из
 [references/explain.md](references/explain.md).
 
-Версия: 1
+Версия: 2 (Э3, X-E3: перекрытие последнего выбора в threshold-visibility.mjs, LOCAL-17)

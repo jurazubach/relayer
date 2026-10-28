@@ -68,9 +68,14 @@
 он думает что у меня что-то есть #delay:20s
 что-то её
 пожалуйста #delay:1m
+- (ask)
 * [Я тут #to:ellie]
     ~ ellie_trust += 1
 * [Что он сказал? #to:ellie]
+* [#remind:15m] я на остановке у его дома. автобус только через час
+    -> ask
+* [#noanswer]
+    ладно. напишу как есть #from:ellie
 - -> ch4_confess
 
 === ch4_confess ===

@@ -1,0 +1,1321 @@
+diff --git a/docs/stories/chuzhoy-golos/decisions.md b/docs/stories/chuzhoy-golos/decisions.md
+index 78aa34a..8d5ef9b 100644
+--- a/docs/stories/chuzhoy-golos/decisions.md
++++ b/docs/stories/chuzhoy-golos/decisions.md
+@@ -11,3 +11,9 @@
+ - логлайн: Незнакомец из интернета пишет свидетелям чужим голосом, чтобы до слушания доказать, что смерть Лили не случайность, — пока город не узнал, кто он.
+ - финалы: семь (fin_truth … fin_silence), распределитель ch10_route
+ - статус: черновик ядра v0 — описывает написанное; правка ядра — новое D-NN с «заменяет: D-01» (story-core)
++
++## D-02 · 2026-10-28 · королева — C-32 п. 7 в ch1_unknown — намеренно: «не ответил» не блокирует номер за игрока
++
++- вид: автор
++- почему: «Заблокировать номер» — поступок с #silent; ветка #noanswer:1h не совершает его за отсутствующего игрока (LOCAL-18), поэтому «не ответил» и #silent ведут по разным путям, и C-32 п. 7 даёт ⚠ в обе стороны. Это не штраф за отсутствие: «не ответил» = «Кто это?» без блокировки, доверие не теряется
++- опора: C-32, R-120, A-03
+diff --git a/src/stories/chuzhoy-golos/ch01.ink b/src/stories/chuzhoy-golos/ch01.ink
+index fdb36be..4c3aaff 100644
+--- a/src/stories/chuzhoy-golos/ch01.ink
++++ b/src/stories/chuzhoy-golos/ch01.ink
+@@ -7,6 +7,7 @@ remote research assistant, только переписка, £12 в час
+ спасибо за отклик #delay:4s
+ сначала один вопрос #delay:8s
+ ты же не из девона?
++- (ask)
+ * [Нет, далеко #to:ellie]
+     хорошо #from:ellie
+ * [А это важно? #to:ellie]
+@@ -15,8 +16,15 @@ remote research assistant, только переписка, £12 в час
+     ~ ellie_trust -= 1
+     нет. честно нет #from:ellie
+     могу заплатить вперёд
++* [#remind:10m] это одно слово. да или нет
++    -> ask
++* [#noanswer]
++    ладно. будем считать что нет #from:ellie
+ - прости #from:ellie #delay:6s
+ важно чтобы тут тебя никто не знал
++через 4 дня слушание у коронера #delay:6s
++в июне на карьере погибла девушка
++после слушания всё. закроют как несчастный случай
+ работа простая #delay:10s
+ я даю 6 номеров
+ ты пишешь им как студент
+@@ -24,6 +32,7 @@ remote research assistant, только переписка, £12 в час
+ за ответы ваучер £10. ваучеры куплю я
+ со мной они не разговаривают #delay:12s
+ с тобой будут
++- (ask2)
+ * [Ок, давай #to:ellie]
+     ~ ellie_trust += 1
+     -> ch1_terms
+@@ -31,13 +40,17 @@ remote research assistant, только переписка, £12 в час
+     -> ch1_party
+ * [Это странно. Я пас #to:ellie]
+     -> ch1_refuse
++* [#remind:15m] оплата с первого сообщения. если что
++    -> ask2
++* [#noanswer]
++    объясню, почему так #from:ellie
++    -> ch1_party
+ 
+ === ch1_party ===
+-была девушка #from:ellie #delay:40s
++её звали лили #from:ellie #delay:40s
+ в газетах всё есть
+ полиция закрыла за 9 дней #delay:8s
+-слушание у коронера через 4 дня
+-после него всё
++слушание — последнее, что ещё можно сделать
+ * [Ладно. Берусь #to:ellie]
+     ~ ellie_trust += 1
+     -> ch1_terms
+@@ -63,15 +76,22 @@ remote research assistant, только переписка, £12 в час
+ === ch1_terms ===
+ спасибо #from:ellie #delay:6s
+ как тебя подписать? настоящее имя не нужно
++- (ask_name)
+ * [Сэм #to:ellie]
+     ~ alias = "Сэм"
+ * [Алекс #to:ellie]
+     ~ alias = "Алекс"
+ * [Джордан #to:ellie]
+     ~ alias = "Джордан"
++* [#remind:10m] любое имя. просто чтобы им было к кому обращаться
++    -> ask_name
++* [#noanswer]
++    ~ alias = "Сэм"
++    ладно, выберу сама #from:ellie
+ - ок, {alias} #from:ellie
+ и ещё #delay:5s
+ ты пишешь как студент, как я предложила? или говоришь как есть?
++- (ask_cover)
+ * [Студент. Как договорились #to:ellie]
+     ~ cover = "student"
+     ~ opener = "Здравствуйте! Я " + alias + ", студент. Делаю опрос о безопасности на вечеринках. 5 вопросов, ваучер £10. Можно?"
+@@ -81,6 +101,12 @@ remote research assistant, только переписка, £12 в час
+     ~ opener = "Здравствуйте, я " + alias + ". Помогаю знакомой понять, что случилось на карьере в июне. Можно пару вопросов?"
+     тогда тебе никто не ответит #from:ellie
+     но как знаешь
++* [#remind:10m] первое сообщение я напишу за тебя. мне надо знать как
++    -> ask_cover
++* [#noanswer]
++    ~ cover = "student"
++    ~ opener = "Здравствуйте! Я " + alias + ", студент. Делаю опрос о безопасности на вечеринках. 5 вопросов, ваучер £10. Можно?"
++    тогда как я предложила #from:ellie
+ - вот номера #from:ellie #delay:15s
+ Скрин участников чата «Shortest Night 🔥»: Коннор Пайк, Джесс Холлис, Киран Лоу, Том Эйкерс, Бет Солтер, Оуэн Брайт. Строка «Lily 💧» серая. Внизу: «Элли вышла из чата» #photo
+ оуэну брайту НЕ пиши #delay:8s
+@@ -103,8 +129,7 @@ remote research assistant, только переписка, £12 в час
+ === ch1_hub ===
+ * [{opener} #to:jess #label:Написать Джесс]
+     -> ch1_jess
+-* [{opener} #to:kieran #label:Написать Кирану и Тому]
+-    {opener} #me:tom
++* [{opener} #to:tom #label:Написать Тому]
+     -> ch1_kt
+ * [{opener} #to:beth #label:Написать Бет]
+     ~ beth_written = true
+@@ -126,6 +151,7 @@ remote research assistant, только переписка, £12 в час
+ карьер вообще-то самое опасное #delay:6s
+ там девочка погибла в июне
+ вы же знаете?
++- (ask)
+ * [Нет. Расскажи #to:jess]
+     лили. мы вместе гребли #from:jess #delay:20s
+     утонула после вечеринки. все говорят пьяная
+@@ -135,6 +161,11 @@ remote research assistant, только переписка, £12 в час
+ * [А ты там была? #to:jess]
+     ~ jess_push += 1
+     ну да. все были #from:jess #delay:15s
++* [#remind:15m] лили марш. её во всех новостях показывали
++    -> ask
++* [#noanswer]
++    ладно я сама скажу #from:jess
++    лили. мы вместе гребли
+ - я была на той вечеринке #from:jess #delay:8s
+ лили и элли весь вечер грызлись
+ все видели
+@@ -166,11 +197,6 @@ remote research assistant, только переписка, £12 в час
+ 
+ === ch1_kt ===
+ Прочитано #sys:tom #delay:2m
+-кто это? #from:kieran #delay:3m
+-* {cover == "student"} [Студент. Опрос про вечеринки #to:kieran]
+-* {cover == "honest"} [Помогаю подруге Лили #to:kieran]
+-* [Промолчать #to:kieran #silent]
+-- Киран не в сети #sys:kieran #delay:5m
+ -> ch1_hub
+ 
+ === ch1_beth ===
+@@ -196,6 +222,7 @@ remote research assistant, только переписка, £12 в час
+ === ch1_evening ===
+ я тут #from:ellie #delay:1h
+ кто-нибудь ответил?
++- (ask)
+ * [Джесс. Говорит, вы с Лили ругались весь вечер #to:ellie]
+     -> ch1_ellie_lie
+ * {owen_contacted} [Оуэн ответил. Очень дружелюбно #to:ellie]
+@@ -211,6 +238,11 @@ remote research assistant, только переписка, £12 в час
+     а джесс? она всегда отвечает
+     ** [Джесс говорит, вы с Лили ругались весь вечер #to:ellie]
+         -> ch1_ellie_lie
++* [#remind:20m] мне хоть что-нибудь. даже «никто»
++    -> ask
++* [#noanswer]
++    джесс наверно уже всем рассказала, что мы с лили ругались #from:ellie
++    -> ch1_ellie_lie
+ 
+ === ch1_ellie_lie ===
+ да мы поругались но это было раньше #from:ellie #delay:1m
+@@ -250,12 +282,18 @@ remote research assistant, только переписка, £12 в час
+ я со смены #from:connor #delay:1h
+ чё за опрос
+ ваучер реально дадут или это скам
++- (ask)
+ * [Дадут. Пять вопросов #to:connor]
+     -> ch1_connor_soft
+ * [Два вопроса — и ваучер твой #to:connor]
+     -> ch1_connor_soft
+ * [Ты знал Лили Марш? #to:connor]
+     -> ch1_connor_direct
++* [#remind:15m] алё. я в автобусе, на пару вопросов норм
++    -> ask
++* [#noanswer]
++    ладно. всё равно еду #from:connor
++    -> ch1_connor_soft
+ 
+ === ch1_connor_direct ===
+ ~ connor_blocked = true
+@@ -298,6 +336,7 @@ remote research assistant, только переписка, £12 в час
+     спасибо что делаешь это
+     -> ch1_unknown
+ 
++// намеренно: C-32 D-02 — «не ответил» не блокирует номер за игрока, поэтому пути расходятся с #silent «Заблокировать»
+ === ch1_unknown ===
+ {cover == "student":Вы не студент.|Вы не из Векскомба.} #from:unknown #delay:7h
+ Прекратите писать людям о Лилиан.
+@@ -308,5 +347,6 @@ remote research assistant, только переписка, £12 в час
+ * [Заблокировать #to:unknown #silent #label:Заблокировать номер]
+     ~ unknown_blocked = true
+     Номер заблокирован #sys:unknown
++* [#noanswer:1h]
+ - -> ch2
+ 
+diff --git a/src/stories/chuzhoy-golos/ch02.ink b/src/stories/chuzhoy-golos/ch02.ink
+index 02e3b2b..d0f4824 100644
+--- a/src/stories/chuzhoy-golos/ch02.ink
++++ b/src/stories/chuzhoy-golos/ch02.ink
+@@ -23,12 +23,18 @@
+ }
+ доброе #from:ellie #delay:30m
+ я в школе. как вчера?
++- (ask)
+ * {note_connor} [У меня записано: к воде вы пошли вместе в 00:30. Вернулась ты одна и мокрая #to:ellie #label:Показать запись из заметок]
+     -> ch2_ellie_full
+ * [Коннор говорит, ты ушла не в 23:30 #to:ellie]
+     -> ch2_ellie_partial
+ * [Ничего нового #to:ellie #label:Не поднимать тему]
+     -> ch2_ellie_none
++* [#remind:15m] у нас перемена. мне любое: да, нет, ничего
++    -> ask
++* [#noanswer]
++    звонок. потом #from:ellie
++    -> ch2_judith_intro
+ 
+ === ch2_ellie_night ===
+ да #from:ellie #delay:20m
+@@ -68,7 +74,14 @@
+ * [Не знаю, правильно ли это #to:ellie]
+     я тоже #from:ellie #delay:20s
+     но больше некому
+-- -> ch2_judith
++-
++{
++- ellie_trust >= 2:
++    мне давно никто не верил на слово. а ты веришь #from:ellie #delay:15s
++- ellie_trust <= 0:
++    ты мне не очень веришь. я понимаю. я бы тоже не верила #from:ellie #delay:15s
++}
++-> ch2_judith
+ 
+ === ch2_judith ===
+ * {cover == "student"} [Здравствуйте. Я {alias}, провожу опрос о безопасности на вечеринках. Можно задать несколько вопросов о карьере Холлоуэй? #to:judith]
+@@ -94,7 +107,6 @@
+     -> ch2_judith_who
+ 
+ === ch2_judith_med ===
+-~ knows_tox = true
+ Раз уж Вы честны со мной. #from:judith #delay:1m
+ Токсикология: только алкоголь. Никаких таблеток.
+ На запястье был синяк. Коронер написал: от падения.
+@@ -105,6 +117,7 @@
+ 
+ === ch2_judith_who ===
+ Кто Вас попросил? #from:judith #delay:30s
++- (ask)
+ * [Элли Вэнс #to:judith]
+     ~ told_judith_ellie = true
+     ~ judith_trust += 2
+@@ -116,6 +129,10 @@
+ * [Промолчать #to:judith #silent]
+     ~ judith_trust -= 1
+     Kind regards, J. Marsh. #from:judith #delay:2m
++* [#remind:30m] Мне важно знать, с кем я говорю о дочери.
++    -> ask
++* [#noanswer]
++    Я спрошу ещё раз. Kind regards, J. Marsh. #from:judith
+ - -> ch2_denny
+ 
+ === ch2_denny ===
+@@ -124,12 +141,11 @@
+ погиб там 2 года назад
+ я не хочу об этом
+ {
+-- knows_tox: -> ch2_beth
++- ch2_judith_med: -> ch2_beth
+ }
+ -> ch2_article
+ 
+ === ch2_article ===
+-~ knows_tox = true
+ вот ещё #from:ellie #delay:5m
+ Exeter Express: «Предварительное заседание по делу Лили Марш, 17 лет. Токсикология: только алкоголь. Синяк на запястье объяснён падением. Слушание назначено на пятницу» #photo
+ -> ch2_beth
+diff --git a/src/stories/chuzhoy-golos/ch03.ink b/src/stories/chuzhoy-golos/ch03.ink
+index 3613e44..4512e6a 100644
+--- a/src/stories/chuzhoy-golos/ch03.ink
++++ b/src/stories/chuzhoy-golos/ch03.ink
+@@ -21,8 +21,12 @@
+     -> ch3_owen
+ 
+ === ch3_why ===
++- (ask)
+ * [Потому что тебе никто не верит #to:ellie]
+ * [Потому что хочу знать, что случилось #to:ellie]
++* [#remind:10m] мне никто ничего не делает бесплатно. вот и спрашиваю
++    -> ask
++* [#noanswer]
+ - ок #from:ellie #delay:1m
+ спасибо
+ -> ch3_owen
+diff --git a/src/stories/chuzhoy-golos/ch04.ink b/src/stories/chuzhoy-golos/ch04.ink
+index cb0bb98..1d9398a 100644
+--- a/src/stories/chuzhoy-golos/ch04.ink
++++ b/src/stories/chuzhoy-golos/ch04.ink
+@@ -68,9 +68,14 @@
+ он думает что у меня что-то есть #delay:20s
+ что-то её
+ пожалуйста #delay:1m
++- (ask)
+ * [Я тут #to:ellie]
+     ~ ellie_trust += 1
+ * [Что он сказал? #to:ellie]
++* [#remind:15m] я на остановке у его дома. автобус только через час
++    -> ask
++* [#noanswer]
++    ладно. напишу как есть #from:ellie
+ - -> ch4_confess
+ 
+ === ch4_confess ===
+diff --git a/src/stories/chuzhoy-golos/ch05.ink b/src/stories/chuzhoy-golos/ch05.ink
+index 109afc5..7246bb4 100644
+--- a/src/stories/chuzhoy-golos/ch05.ink
++++ b/src/stories/chuzhoy-golos/ch05.ink
+@@ -11,6 +11,7 @@
+ Кадр 2: тот же уступ. Сбоку видно Элли и Коннора #photo
+ Кадр 3: тёмный экран. Голос Оуэна за кадром: «давай, прыгай». Под ним что-то тихое, не разобрать #photo
+ что показывать? #delay:30s
++- (ask)
+ * [Всё как есть #to:ellie]
+     -> ch5_files
+ * [Вырежи кадры с тобой и Коннором #to:ellie]
+@@ -20,6 +21,16 @@
+         -> ch5_files
+     ** [Нет. Оставь всё #to:ellie]
+         -> ch5_files
++    ** [#noanswer:20m]
++        ~ cut_frames = true
++        -> ch5_files
++* [#remind:30m] слушание в 10. файлы надо отдать до него
++    -> ask
++* [#remind:30m] кадр 2 я пересмотрела раз пять. там видно моё лицо
++    -> ask
++* [#noanswer]
++    ладно. решу сама #from:ellie
++    -> ch5_files
+ 
+ === ch5_files ===
+ {cut_frames:
+@@ -35,6 +46,9 @@
+ === ch5_owen ===
+ Доброе утро 🙂 #from:owen #delay:5h
+ Давай по-взрослому
++{called_bluff:
++    Доказательств больше не просишь? 🙂 Правильно #delay:10s
++}
+ Файлы у тебя. Я знаю
+ Отправь их мне — и про Элли никто ничего не узнает #delay:10s
+ Слушание в 10
+@@ -66,7 +80,8 @@
+     Если у Вас есть что-то ещё от него, пришлите. #delay:30s
+     Скрин Оуэна: «Жаль будет, если старая история про Денни вдруг всплывёт. Особенно для Элли» #me:unknown
+ }
+-Слушание отложено. #from:unknown #delay:2h
++Два часа спустя #sys:unknown #delay:5s
++Слушание отложено. #from:unknown #delay:1m
+ Коронер передал материалы в полицию.
+ Оуэна вызвали на допрос. #delay:30s
+ {cut_frames:
+@@ -76,11 +91,15 @@
+ - else:
+     ~ act1 = "adjourned"
+ }
+-меня вызвали давать показания #from:ellie #delay:1h
++меня вызвали давать показания #from:ellie #delay:5m
+ про денни
+ {ellie_reaction == "judge":даже если ты думаешь что я не заслуживаю|я скажу правду}
+-{connor_ally:
+-    я тоже пойду #from:connor #delay:30m
++* [Не бойся #to:ellie]
++    боюсь. но пойду #from:ellie #delay:1m
++* [Я с тобой #to:ellie]
++    знаю #from:ellie #delay:1m
++- {connor_ally:
++    я тоже пойду #from:connor #delay:5m
+     хватит
+ }
+ -> season_hook
+@@ -97,65 +116,82 @@
+ ок #from:ellie #delay:10m
+ я иду туда сама
+ {cut_frames:с оригиналом. без вырезок|с файлами. со всеми}
+-слушание отложили #from:ellie #delay:3h
++Два часа спустя #sys:ellie #delay:5s
++слушание отложили #from:ellie #delay:1m
+ меня допросят. оуэна тоже
+ мне страшно. но уже не так
+--> season_hook
++* [Я рядом #to:ellie]
++    знаю. поэтому и не так #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++- -> season_hook
+ 
+ === end_ellie_together ===
+ ~ act1 = "ellie_together"
+ тогда будь на связи #from:ellie #delay:5m
+ пока я там
+ пиши мне что-нибудь
+-я захожу #from:ellie #delay:1h
++я захожу #from:ellie #delay:10m
+ * [Я тут #to:ellie]
+ * [Говори правду. Всю #to:ellie]
+-- меня вызвали #from:ellie #delay:40m
+-я сказала про денни #delay:20m
++- меня вызвали #from:ellie #delay:10m
++я сказала про денни #delay:5m
+ и про ту ночь
+-слушание отложили. файлы забрала полиция #delay:30m
++слушание отложили. файлы забрала полиция #delay:10m
+ спасибо. правда
+ -> season_hook
+ 
+ === end_ellie_hides ===
+ ~ act1 = "ellie_hides"
+-я удалила файлы #from:ellie #delay:30m
++я удалила файлы #from:ellie #delay:10m
+ у тебя есть копия. делай что хочешь
+ только без моего имени
+-вердикт: несчастный случай #from:ellie #delay:3h
+--> season_hook
++Два часа спустя #sys:ellie #delay:5s
++вердикт: несчастный случай #from:ellie #delay:1m
++* [Это твои файлы. Твоё право #to:ellie]
++    знаю. легче не стало #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++- -> season_hook
+ 
+ === end_owen ===
+ ~ act1 = "owen"
+ Умница 🙂 #from:owen #delay:1m
+-вердикт несчастный случай #from:ellie #delay:3h
++Два часа спустя #sys:ellie #delay:5s
++вердикт несчастный случай #from:ellie #delay:1m
+ почему у оуэна мои файлы #delay:1m
+ он прислал мне кадр. со мной #delay:20s
+-{owen_knows >= 2:
+-    Будешь в наших краях — заходи 🙂 #from:owen #delay:2h
++* [Он обещал оставить тебя в покое #to:ellie]
++    он соврал. он всегда врёт #from:ellie #delay:1m
++* [Прости #to:ellie]
++    не знаю #from:ellie #delay:2m
++- {owen_knows >= 2:
++    Будешь в наших краях — заходи 🙂 #from:owen #delay:5m
+ }
+ {owen_weakened:
+-    коннор пошёл в полицию сам #from:ellie #delay:2h
++    коннор пошёл в полицию сам #from:ellie #delay:10m
+     без записи ему никто не верит
+ }
+ -> season_hook
+ 
+ === end_silence ===
+-ты тут? #from:ellie #delay:40m
+-слушание через час #delay:20m
+-ладно. сама #delay:10m
++ты тут? #from:ellie #delay:10m
++слушание через час #delay:10m
++ладно. сама #delay:5m
++Два часа спустя #sys:ellie #delay:5s
+ {ellie_trust >= 3:
+     ~ act1 = "ellie_alone_truth"
+-    я иду с файлами #delay:30s
+-    слушание отложили #from:ellie #delay:3h
++    я ходила с файлами #from:ellie #delay:1m
++    слушание отложили
+     оуэна вызвали на допрос. меня тоже
+ - else:
+     ~ act1 = "ellie_alone_owen"
+-    я отдала карту оуэну #from:ellie #delay:2h
++    я отдала карту оуэну #from:ellie #delay:1m
+     он обещал
+-    вердикт: несчастный случай #delay:1h
++    вердикт: несчастный случай #delay:30s
+ }
+--> season_hook
++* [Ты пошла одна #to:ellie]
++    {ellie_trust >= 3:да. и дошла|да. и не дошла} #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++- -> season_hook
+ 
+ === season_hook ===
+ Это ведь ты задаёшь людям вопросы про карьер? #from:maya #delay:6h
+diff --git a/src/stories/chuzhoy-golos/ch06.ink b/src/stories/chuzhoy-golos/ch06.ink
+index 1f18605..0b33d03 100644
+--- a/src/stories/chuzhoy-golos/ch06.ink
++++ b/src/stories/chuzhoy-golos/ch06.ink
+@@ -102,12 +102,17 @@
+ 
+ === ch6_cut ===
+ Во втором вырезано. Кто резал? #from:maya #delay:3m
++- (ask)
+ * [Элли. Там были она и Коннор #to:maya]
+     ~ maya_trust += 1
+     Спасибо, что не врёшь. #from:maya #delay:30s
+ * [Не знаю #to:maya]
+     ~ maya_trust -= 1
+     Знаешь. #from:maya #delay:30s
++* [#remind:20m] Мне нужно только имя.
++    -> ask
++* [#noanswer]
++    Ладно. Догадаюсь сама. #from:maya
+ - -> ch6_files_done
+ 
+ === ch6_ask_ellie ===
+diff --git a/src/stories/chuzhoy-golos/ch07.ink b/src/stories/chuzhoy-golos/ch07.ink
+index 3d72ef2..4d8b9aa 100644
+--- a/src/stories/chuzhoy-golos/ch07.ink
++++ b/src/stories/chuzhoy-golos/ch07.ink
+@@ -28,6 +28,7 @@
+     у нашей калитки какая-то девушка сидит в машине уже час #from:ellie #delay:3m
+     это она? #delay:20s
+ }
++- (ask)
+ * {whisper_known} [Спроси её, как она звала Денни #to:maya #label:Предложить Мае проверку]
+     ~ c7_ellie_out = true
+     ~ maya_trust += 1
+@@ -52,6 +53,10 @@
+     Не вышла. Те, кому нечего скрывать, выходят. #from:maya #delay:30m
+ * [Мая, уезжай. Ты пугаешь не того человека #to:maya]
+     Того. #from:maya #delay:1m
++* [#remind:15m] она вышла из машины. стоит у калитки. мне выходить?
++    -> ask
++* [#noanswer]
++    не выхожу. сижу на лестнице. она так и стоит #from:ellie
+ - -> ch7_connor
+ 
+ === ch7_connor ===
+diff --git a/src/stories/chuzhoy-golos/ch09.ink b/src/stories/chuzhoy-golos/ch09.ink
+index 53ef0b6..d2b473b 100644
+--- a/src/stories/chuzhoy-golos/ch09.ink
++++ b/src/stories/chuzhoy-golos/ch09.ink
+@@ -23,6 +23,7 @@
+ }
+ Джессика придёт в восемь. Как каждый вторник. #delay:30s
+ Что мне делать? #delay:10s
++- (ask)
+ * [Ведите себя как обычно. Ни слова #to:judith]
+     Она ушла. Я налила ей чай. #from:judith #delay:2h
+     Я не знаю, как я это сделала. #delay:30s
+@@ -33,6 +34,13 @@
+ * [Отмените. Скажитесь больной #to:judith]
+     Хорошо. #from:judith #delay:2m
+     Она ответила: «выздоравливайте!!» #delay:40m
++* [#remind:20m] Она придёт в восемь. Я хочу знать, что ей говорить.
++    -> ask
++* [#remind:20m] Я поставила чайник. Как каждый вторник.
++    -> ask
++* [#noanswer]
++    Я решила ничего не менять. #from:judith
++    Она ушла. Я налила ей чай. #delay:2h
+ -
+ * [777 — это Бет Солтер. 188 — сестра Денни, Мая Кин #to:judith]
+     Значит, всё сходится. #from:judith #delay:2m
+@@ -147,8 +155,7 @@
+ * [Промолчать #to:owen #silent]
+     подумай до утра #from:owen #delay:30m
+ -
+-* {knows_tox} [Оуэн: около 01:00 драка на уступе, Лили упала в воду и плыла. На тропе стояла Джесс. Синяк на запястье — его рука #to:notes #label:Сохранить в заметки]
+-* {not knows_tox} [Оуэн: около 01:00 драка на уступе, Лили упала в воду и плыла. На тропе стояла Джесс #to:notes #label:Сохранить в заметки]
++* [Оуэн: около 01:00 драка на уступе, Лили упала в воду и плыла. На тропе стояла Джесс. Синяк на запястье — его рука #to:notes #label:Сохранить в заметки]
+ * [Не сохранять #to:notes #silent]
+ - -> ch9_maya
+ 
+diff --git a/src/stories/chuzhoy-golos/ch10.ink b/src/stories/chuzhoy-golos/ch10.ink
+index ba8cb2c..253c3a8 100644
+--- a/src/stories/chuzhoy-golos/ch10.ink
++++ b/src/stories/chuzhoy-golos/ch10.ink
+@@ -87,32 +87,63 @@
+ }
+ Я у лодочной станции. Она только что вышла с воды. #from:maya #delay:15m
+ В 7:30 я выкладываю {whisper_known:запись|всё, что знаю} и её имя. #delay:30s
+-Скажи одно слово — и я подожду. #delay:30s
+-* [Подожди. В восемь она идёт к Джудит. Сама #to:maya]
+-    {
+-    - maya_trust >= 3 || (jess_confessed == 2 && maya_trust >= 0):
+-        ~ maya_stopped = true
+-        До девяти. #from:maya #delay:3m
+-        -> ch10_owen
+-    - else:
+-        Сама она два года не шла. #from:maya #delay:3m
+-        -> ch10_maya_go
+-    }
++{
++- maya_trust >= 3:
++    От тебя я пока слышала только правду. #delay:20s
++    Скажи одно слово — и я подожду. #delay:30s
++- maya_trust >= 0:
++    Обещаний мне мало. Если она тебе сама что-то сказала — скажи мне. Тогда подожду. #delay:30s
++- else:
++    Тебя я уже слушала. Уговаривать не трать время. #delay:30s
++}
++- (ask)
++* {jess_confessed != 2} [Подожди. В восемь она идёт к Джудит. Сама #to:maya]
++    -> ch10_maya_wait
++* {jess_confessed == 2} [Подожди. Она мне всё рассказала. В восемь идёт к Джудит #to:maya]
++    -> ch10_maya_wait
+ * [Делай, что считаешь нужным #to:maya]
+-    -> fin_revenge
++    ~ maya_posts = true
++    -> ch10_maya_go
+ * [Промолчать #to:maya #silent]
+     -> ch10_maya_go
++* [#remind:10m] Она грузит лодку на прицеп. Мне нужно одно слово.
++    -> ask
++* [#remind:10m] Пост готов. Я сижу в машине.
++    -> ask
++
++=== ch10_maya_wait ===
++{
++- maya_trust >= 3 || (jess_confessed == 2 && maya_trust >= 0):
++    ~ maya_stopped = true
++    До девяти. #from:maya #delay:3m
++    -> ch10_owen
++- else:
++    Сама она два года не шла. #from:maya #delay:3m
++    -> ch10_maya_go
++}
+ 
+ === ch10_maya_go ===
+ {
+-- tom_hold:
++- tom_hold && not maya_posts:
+     ~ c10_maya_door = true
+     пост маи я не пропустил. как обещал. #from:tom #delay:20m
+     Твой админ не пропустил. Ладно. #from:maya #delay:2m
+     Я в машине у дома Марш. #delay:30s
+     -> ch10_owen
+ }
+--> fin_revenge
++~ maya_posts = true
++{tom_hold:
++    пост маи я не пропустил. она выложила его у себя. его уже переслали все. #from:tom #delay:20m
++- else:
++    пост маи вышел. держать не стал. #from:tom #delay:20m
++}
++{
++- whisper_known:
++    Пост Маи Кин: очищенная дорожка и подпись «Это голос Джесс Холлис. Она столкнула моего брата. И она знает, как умерла Лили Марш»{maya_files == 2 && not cut_frames: + кадр, где у края видна Элли} #photo #from:maya #delay:1m
++- else:
++    Пост Маи Кин: «Джесс Холлис стояла наверху, когда погиб мой брат. И она знает, как умерла Лили Марш» #photo #from:maya #delay:1m
++}
++-> ch10_owen
+ 
+ === ch10_owen ===
+ {
+@@ -154,6 +185,7 @@
+     скажу всё что знаю #delay:30s
+ }
+ что мне делать #delay:30s
++- (ask)
+ * [Скажи. Всё #to:ellie]
+     ~ ellie_testifies = true
+     ок #from:ellie #delay:1m
+@@ -162,15 +194,73 @@
+     ок. спасибо #from:ellie #delay:1m
+ * [Промолчать #to:ellie #silent]
+     ~ ellie_testifies = ellie_block_told
++* [#remind:10m] я у участка. стою у двери
++    -> ask
++* [#remind:10m] вышел полицейский покурить. смотрит на меня
++    -> ask
+ - -> ch10_door
+ 
+ === ch10_door ===
+-я у двери #from:jess #delay:5m
++~ proof = 0
++{ bill_found:
++    ~ proof += 1
++}
++{ ladder_known:
++    ~ proof += 1
++}
++{ owen_turned:
++    ~ proof += 1
++}
++{ fake_note_caught:
++    ~ proof += 1
++}
++{ jess_confessed == 2:
++    ~ proof += 2
++}
++{maya_posts:
++    у лодочной люди. все уже видели пост #from:jess #delay:5m
++    я всё равно у двери #delay:20s
++- else:
++    я у двери #from:jess #delay:5m
++}
+ считаю до трёх #delay:20s
++{jess_confessed == 2:
++    {jess_bond >= 2:
++        если вы скажете «сама» — я смогу #delay:20s
++    - else:
++        не знаю, кому из вас я сейчас верю #delay:20s
++    }
++}
++{ladder_known:
++    если надо — скажу им про лестницу. 01:15, свет. как было #from:connor #delay:30s
++}
+ Она у двери. Я вижу её в окно. #from:judith #delay:40s
+ {judith_waits:
+     Я жду Вас. #delay:20s
+ }
++{bill_found:
++    Счёт у меня на столе. В 01:19 Лилиан звонила ей. #delay:20s
++- else:
++    Счёта у меня нет. Конверт за июнь я так и не открыла. #delay:20s
++}
++{owen_turned:
++    Оуэн Брайт скажет, что видел её на тропе. #delay:20s
++}
++{fake_note_caught:
++    Записку про Оуэна писала не Лилиан. #delay:20s
++- else:
++    Записку про Оуэна пересылает весь город. Я не знаю, чья она. #delay:20s
++}
++{
++- proof >= 3:
++    С этим полиция её выслушает. #delay:30s
++- else:
++    Этого мало. Ей скажут «недостаточно», и она уйдёт. #delay:30s
++    Пересказ им не нужен. Нужно, чтобы она сказала сама. Или тот, кто видел. #delay:20s
++}
++{maya_posts:
++    Пост Маи уже у всех в телефонах. Если она сейчас уйдёт, второй раз не придёт. #delay:20s
++}
+ {c10_maya_door:
+     Я вижу её. Стоит у двери Марш. #from:maya #delay:30s
+ }
+@@ -185,27 +275,12 @@
+ - -> ch10_route
+ 
+ === ch10_route ===
+-~ proof = 0
+-{ bill_found:
+-    ~ proof += 1
+-}
+-{ ladder_known:
+-    ~ proof += 1
+-}
+-{ owen_turned:
+-    ~ proof += 1
+-}
+-{ fake_note_caught:
+-    ~ proof += 1
+-}
+-{ jess_confessed == 2:
+-    ~ proof += 2
+-}
+ {
+ - final_choice == "truth" && proof >= 3: -> fin_truth
++- (final_choice == "mercy" || final_choice == "silent") && jess_confessed == 2 && jess_bond >= 2: -> fin_herself
+ - final_choice == "owen" && (fake_note_caught || jess_confessed == 2): -> fin_scapegoat
+ - final_choice == "owen": -> fin_puppet
+-- (final_choice == "mercy" || final_choice == "silent") && jess_confessed == 2 && jess_bond >= 2: -> fin_herself
++- maya_posts: -> fin_revenge
+ - final_choice == "silent" && judith_waits: -> fin_silence
+ - else: -> fin_unproven
+ }
+@@ -215,27 +290,34 @@
+ === fin_truth ===
+ ~ ending = "truth"
+ Открываю. #from:judith #delay:3m
+-Она сидит на кухне. Я показала ей счёт. #delay:40m
++Она сидит на кухне. Я показала ей счёт. #delay:5m
+ {jess_confessed == 2:
+     Она рассказала всё. То же, что Вам. И положила на стол телефон Лилиан. #delay:2m
+ - else:
+     Она долго молчала. Потом рассказала. И сказала, где телефон. #delay:2m
+ }
+ Я позвонила в полицию сама. #delay:1m
+-Лилиан выплыла. Поднялась по старой лестнице и позвонила Джессике. #delay:1h
++Лилиан выплыла. Поднялась по старой лестнице и позвонила Джессике. #delay:5m
+ Джессика спустилась к ней на полку. Взяла за руку. Лилиан вырвалась, поскользнулась и упала. #delay:30s
+ Джессика забрала её телефон и ушла. Никого не позвала. #delay:30s
+ А за двадцать минут до этого Оуэн Брайт столкнул её с уступа. И ушёл, видя, что она плывёт. #delay:30s
+-вы ей всё отдали #from:jess #delay:30m
++{maya_posts:
++    Пост Маи я видела. Полиции он не помог. Но и не помешал. #delay:30s
++}
++вы ей всё отдали #from:jess #delay:3m
+ правильно #delay:30s
++* [Ты постучала #to:jess]
++    на счёт три #from:jess #delay:1m
++* [Промолчать #to:jess #silent]
++-
+ {
+ - owen_turned:
+-    сказал всё. меня оставили до вечера #from:owen #delay:1h
++    сказал всё. меня оставили до вечера #from:owen #delay:2m
+     {hart_exposed:
+         и за харта тоже спросили #delay:20s
+     }
+ - else:
+-    Мне предъявили. За Денни. И за уступ. #from:owen #delay:1h
++    Мне предъявили. За Денни. И за уступ. #from:owen #delay:2m
+     {hart_exposed:
+         И за Харта. #delay:20s
+     }
+@@ -244,18 +326,21 @@
+     карту изъяли #delay:20s
+ }
+ {ellie_testifies:
+-    я сказала им про блок. они записали. и всё. никто не кричал #from:ellie #delay:1h
++    я сказала им про блок. они записали. и всё. никто не кричал #from:ellie #delay:2m
+ }
+-джудит прислала мне скрины с её телефона #from:ellie #delay:30m
++джудит прислала мне скрины с её телефона #from:ellie #delay:1m
+ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой. карта будет в твоей куртке» · 00:46 «разблокируй. я не злюсь. я просто не могу одна» · Не доставлено #photo #delay:20s
+ она не злилась #delay:1m
+ -> fin_ellie_ref ->
+-Джудит Марш позвонила мне. Сама. #from:maya #delay:2h
++* [Она тебя ждала #to:ellie]
++    знаю. теперь знаю #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++-
++Джудит Марш позвонила мне. Сама. #from:maya #delay:2m
+ Дэна толкнула пятнадцатилетняя девочка, в которую он был влюблён. На счёт три. #delay:30s
+-Я два года ненавидела не тех. #delay:30s
+-Дэн бы её простил. Я пока нет. Подожду суда. #delay:30s
+-Три недели спустя #sys:judith #delay:2h
+-Джессике предъявили обвинение в непредумышленном убийстве. Ей семнадцать, дело будет в суде для несовершеннолетних. #from:judith #delay:1m
++Я два года ненавидела не тех. Подожду суда. #delay:30s
++Три недели спустя #sys:judith #delay:5s
++Джессике предъявили обвинение в непредумышленном убийстве. Ей семнадцать, дело будет в суде для несовершеннолетних. #from:judith #delay:30s
+ Оуэну Брайту — воспрепятствование правосудию и нападение. #delay:30s
+ {note_threat:
+     И запугивание свидетеля. Ваш скрин пригодился. #delay:20s
+@@ -280,9 +365,9 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ -> fin_coda ->
+ {
+ - ellie_trust >= 2:
+-    Элли В. перевела вам £12.00 · «последний час. спасибо x» #from:bank #delay:1h
++    Элли В. перевела вам £12.00 · «последний час. спасибо x» #from:bank #delay:1m
+ - else:
+-    Лилиан выплыла. Она всегда выплывала. #from:judith #delay:1h
++    Лилиан выплыла. Она всегда выплывала. #from:judith #delay:1m
+ }
+ Конец #sys:judith
+ -> END
+@@ -293,37 +378,42 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ два #delay:5s
+ три #delay:40s
+ она открыла #delay:2m
+-Она принесла пирог. И телефон Лилиан в её чехле. #from:judith #delay:1h
++Она принесла пирог. И телефон Лилиан в её чехле. #from:judith #delay:10m
+ Она рассказала всё. Сама. Я не задала ни одного вопроса. #delay:30s
+ Лилиан выплыла. Поднялась по лестнице. Позвонила ей. #delay:30s
+ Джессика держала её за руку, когда она упала с полки. И ушла. С её телефоном. #delay:30s
+ А до этого Оуэн столкнул её с уступа и смотрел, как она плывёт. И тоже ушёл. #delay:30s
+-Мы сидели на кухне до полудня. #delay:30s
+-Потом я позвонила в полицию. Она ждала со мной. #delay:30s
+-джудит позвала меня. впервые с июня. я иду #from:ellie #delay:1h
+-она показала мне её телефон #from:ellie #delay:2h
++Сейчас я позвоню в полицию. Она ждёт со мной. #delay:30s
++* [Скажите ей, что я рядом #to:judith]
++    Сказала. Она кивнула. #from:judith #delay:1m
++* [Вы её простите? #to:judith]
++    Не сегодня. Но я её выслушала. #from:judith #delay:1m
++- джудит позвала меня. впервые с июня #from:ellie #delay:3m
++она показала мне её телефон #delay:1m
+ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой. карта будет в твоей куртке» · 00:46 «разблокируй. я не злюсь. я просто не могу одна» · Не доставлено #photo #delay:20s
+ она не злилась #delay:1m
+ -> fin_ellie_ref ->
++* [Она тебя ждала #to:ellie]
++    знаю. теперь знаю #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++-
+ {
+ - owen_turned:
+-    сказал всё. меня оставили до вечера #from:owen #delay:1h
++    сказал всё. меня оставили до вечера #from:owen #delay:2m
+ - else:
+-    Мне предъявили. За Денни. И за уступ. #from:owen #delay:1h
++    Мне предъявили. За Денни. И за уступ. #from:owen #delay:2m
+ }
+-Она пришла сама. Для Дэна это ничего не меняет. #from:maya #delay:1h
+-Для меня — немного. #delay:30s
+-Три недели спустя #sys:judith #delay:2h
+-Джессике предъявили обвинение в непредумышленном убийстве. Суд учтёт, что она пришла сама. #from:judith #delay:1m
++Она пришла сама. Для Дэна это ничего не меняет. Для меня — немного. #from:maya #delay:1m
++Три недели спустя #sys:judith #delay:5s
++Джессике предъявили обвинение в непредумышленном убийстве. Суд учтёт, что она пришла сама. #from:judith #delay:30s
+ Оуэну Брайту — воспрепятствование правосудию и нападение. #delay:30s
+ {hart_exposed:
+     И то, что он выдавал себя за полицейского. #delay:20s
+ }
+ Дело Денни Кина открыто заново. #delay:30s
+-Элли получила предупреждение за ложные показания. Ей было пятнадцать. #delay:30s
+-я досчитала #from:jess #delay:1h
+ -> fin_coda ->
+-Лилиан бы её выслушала. Я выслушала. #from:judith #delay:1h
++я досчитала #from:jess #delay:1m
++Лилиан бы её выслушала. Я выслушала. #from:judith #delay:1m
+ Конец #sys:judith
+ -> END
+ 
+@@ -332,53 +422,56 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ {
+ - final_choice == "truth":
+     Открываю. #from:judith #delay:3m
+-    Я показала ей счёт. #delay:40m
++    Я показала ей счёт. #delay:3m
+     Она сказала: «она позвонила. я не пошла». И ушла. #delay:30s
+-    Я отнесла счёт в полицию. #delay:2h
++    Я отнесла счёт в полицию. #delay:2m
+     Звонок на четырнадцать секунд. У неё адвокат. «Недостаточно для обвинения». #delay:30s
+ - final_choice == "mercy":
+     я не могу #from:jess #delay:3m
+     простите #delay:30s
+-    Она постояла у двери и ушла. #from:judith #delay:20m
+-    я выбросила его. с пирса #from:jess #delay:40m
++    Она постояла у двери и ушла. #from:judith #delay:2m
++    я выбросила его. с пирса #from:jess #delay:3m
+     её телефон #delay:30s
+     оуэн столкнул её с уступа. она выплыла и позвонила мне #delay:1m
+     я держала её за руку. на полке. она вырвалась. вот и всё #delay:1m
+ - else:
+-    Я спросила её сама. #from:judith #delay:30m
++    Я спросила её сама. #from:judith #delay:3m
+     Она сказала, что в ту ночь спала. И ушла. #delay:30s
+ }
++* [Вы сделали всё, что могли #to:judith]
++    Не всё. Я знаю, что знаю. Этого мало. #from:judith #delay:1m
++* [Промолчать #to:judith #silent]
++    Kind regards, J. Marsh. #from:judith #delay:2m
++-
+ {
+ - world == "open":
+-    Обвинение мне предъявили. По Денни. Про Лили не спрашивали #from:owen #delay:2h
++    Обвинение мне предъявили. По Денни. Про Лили не спрашивали #from:owen #delay:3m
+ - final_choice == "truth":
+-    Твои файлы теперь у полиции. Дело Денни открыли. Мне есть чем заняться #from:owen #delay:2h
++    Твои файлы теперь у полиции. Дело Денни открыли. Мне есть чем заняться #from:owen #delay:3m
+ - else:
+-    Всё закончилось. По Денни меня никто не тронет 🙂 #from:owen #delay:2h
++    Всё закончилось. По Денни меня никто не тронет 🙂 #from:owen #delay:3m
+ }
+ {world == "open" && not owen_turned:
+-    меня опять вызвали. оуэн сказал что это мой голос #from:ellie #delay:1h
+-    мне поверили. не сразу #delay:30s
++    меня опять вызвали. оуэн сказал что это мой голос. мне поверили. не сразу #from:ellie #delay:1m
+ }
+ {ellie_testifies:
+-    я сказала им про блок. сама. легче не стало. но стало честно #from:ellie #delay:1h
++    я сказала им про блок. сама. легче не стало. но стало честно #from:ellie #delay:1m
+ - else:
+-    про блок я так никому и не сказала. теперь это моё #from:ellie #delay:1h
++    про блок я так никому и не сказала. теперь это моё #from:ellie #delay:1m
+ }
+ {maya_target == "jess":
+-    Я знаю, кто. И она знает, что я знаю. Этого мало. #from:maya #delay:1h
++    Я знаю, кто. И она знает, что я знаю. Этого мало. #from:maya #delay:1m
+ - else:
+-    Значит, опять «несчастный случай». #from:maya #delay:1h
++    Значит, опять «несчастный случай». #from:maya #delay:1m
+ }
+-Три недели спустя #sys:judith #delay:2h
+-Джессика больше не приходит по вторникам. #from:judith #delay:1m
+-Лилиан звонила ей в 01:19. Я это знаю. Мне этого не доказать. #delay:30s
++Три недели спустя #sys:judith #delay:5s
++Джессика больше не приходит по вторникам. #from:judith #delay:30s
+ {final_choice != "mercy":
+-    оуэн столкнул её с уступа. она выплыла и позвонила мне #from:jess #delay:1h
++    оуэн столкнул её с уступа. она выплыла и позвонила мне #from:jess #delay:1m
+     на полке я держала её за руку. она вырвалась. вы ведь это хотели знать #delay:30s
+ }
+ -> fin_coda ->
+-Сегодня я отключила её номер. #from:judith #delay:1h
++Сегодня я отключила её номер. #from:judith #delay:1m
+ Конец #sys:judith
+ -> END
+ 
+@@ -386,34 +479,38 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ ~ ending = "scapegoat"
+ Значит, Оуэн. #from:judith #delay:3m
+ Я отнесу записку в полицию. #delay:30s
+-Джессика пришла. Я отдала ей вещи Лилиан. Как обещала. #delay:30m
+-почему #from:jess #delay:40m
+-спасибо #delay:2m
++{maya_posts:
++    Пост Маи я тоже видела. Полиция выбрала записку. #delay:30s
++}
++Джессика пришла. Я отдала ей вещи Лилиан. Как обещала. #delay:10m
++почему #from:jess #delay:3m
++спасибо #delay:1m
++* [Не за что #to:jess]
++    есть за что. вы не знаете #from:jess #delay:1m
++* [Промолчать #to:jess #silent]
++-
+ {owen_deal:
+-    Мы договаривались. #from:owen #delay:2h
++    Мы договаривались. #from:owen #delay:3m
+     Я её не убивал. Ты знаешь. #delay:30s
+ - else:
+-    Я её не убивал. Ты знаешь. #from:owen #delay:2h
++    Я её не убивал. Ты знаешь. #from:owen #delay:3m
+ }
+-Пять месяцев спустя #sys:judith #delay:2h
+-Оуэна Брайта осудили за смерть Лилиан. И за то, что он скрыл правду о Денни Кине. #from:judith #delay:1m
++Пять месяцев спустя #sys:judith #delay:5s
++Оуэна Брайта осудили за смерть Лилиан. И за то, что он скрыл правду о Денни Кине. #from:judith #delay:30s
+ Он говорил, что на тропе была Джессика. Суд счёл это местью. #delay:30s
+-«Слово человека, который два года лгал о Денни». #delay:20s
+ Голос на записи «не установлен». #delay:20s
+ -> fin_ellie_owen ->
+ {maya_target == "jess":
+-    Брайт сел. За Лили или нет — он сел. #from:maya #delay:1h
+-    Дэну этого хватит. Мне — нет. #delay:30s
++    Брайт сел. За Лили или нет — он сел. Дэну этого хватит. Мне — нет. #from:maya #delay:1m
+ - else:
+-    Брайт сел. Я два года этого ждала. #from:maya #delay:1h
++    Брайт сел. Я два года этого ждала. #from:maya #delay:1m
+ }
+-она выплыла после него. на полке я держала её за руку. вы это знаете #from:jess #delay:1h
+-я больше не считаю. рулевой теперь другая #delay:30s
++она выплыла после него. на полке я держала её за руку. я больше не считаю #from:jess #delay:1m
+ -> fin_coda ->
+ {ellie_trust >= 2:
+-    Элли В. перевела вам £12.00 · «спасибо x» #from:bank #delay:30m
++    Элли В. перевела вам £12.00 · «спасибо x» #from:bank #delay:1m
+ }
+-В ночь, когда его арестовали, я впервые с июня спала. Спасибо Вам. #from:judith #delay:1h
++В ночь, когда его арестовали, я впервые с июня спала. Спасибо Вам. #from:judith #delay:1m
+ Конец #sys:judith
+ -> END
+ 
+@@ -421,10 +518,16 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ ~ ending = "puppet"
+ Значит, Оуэн. #from:judith #delay:3m
+ Я отнесу записку в полицию. #delay:30s
+-Джессика пришла. Я отдала ей вещи Лилиан. Как обещала. #delay:30m
+-Я её не убивал. #from:owen #delay:2h
+-Ладно. #delay:1h
+-Пять месяцев спустя #sys:maya #delay:2h
++{maya_posts:
++    Пост Маи я тоже видела. Полиция выбрала записку. #delay:30s
++}
++Джессика пришла. Я отдала ей вещи Лилиан. Как обещала. #delay:10m
++Я её не убивал. #from:owen #delay:3m
++* [Тогда кто? #to:owen]
++    Ты знаешь. Мне всё равно никто не поверит 🙂 #from:owen #delay:2m
++* [Промолчать #to:owen #silent]
++    Ладно. #from:owen #delay:2m
++- Пять месяцев спустя #sys:maya #delay:5s
+ -> fin_ellie_owen ->
+ {
+ - whisper_known:
+@@ -443,90 +546,100 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+     ему никто не поверил #delay:30s
+ }
+ -> fin_coda ->
+-кстати. спасибо!! #from:lily #delay:1h
++кстати. спасибо!! #from:lily #delay:1m
+ Конец #sys:lily
+ -> END
+ 
+ === fin_revenge ===
+ ~ ending = "revenge"
+-{tom_hold:
+-    пост маи я не пропустил. она выложила его у себя. к восьми его переслали все. #from:tom #delay:30m
+-- else:
+-    пост маи вышел. держать не стал. #from:tom #delay:30m
+-}
+ {
+-- whisper_known:
+-    Пост Маи Кин: очищенная дорожка и подпись «Это голос Джесс Холлис. Она столкнула моего брата. И она знает, как умерла Лили Марш»{maya_files == 2 && not cut_frames: + кадр, где у края видна Элли} #photo #from:maya #delay:1m
++- final_choice == "truth":
++    Я открыла. {bill_found:Сказала ей про звонок в 01:19.|Сказала, что всё знаю.} #from:judith #delay:2m
++    Она обернулась на калитку. Там люди с телефонами. #delay:30s
++- final_choice == "mercy":
++    вы сказали «сама». я правда хотела #from:jess #delay:2m
++    У калитки люди с телефонами. Она стоит и не стучит. #from:judith #delay:1m
+ - else:
+-    Пост Маи Кин: «Джесс Холлис стояла наверху, когда погиб мой брат. И она знает, как умерла Лили Марш» #photo #from:maya #delay:1m
+-}
+-все пишут #from:jess #delay:10m
+-у лодочной люди #delay:30s
+-я не пойду к джудит #delay:1m
+-я выбросила её телефон. с пирса #delay:50m
+-я держала её за руку. на полке. она вырвалась. теперь это неважно #delay:2m
+-Я узнала из группы. Как все. #from:judith #delay:30m
+-Она не пришла. #delay:30s
++    У калитки люди с телефонами. Она стоит и не стучит. #from:judith #delay:2m
++}
++не могу #from:jess #delay:1m
++они снимают #delay:30s
++я ухожу #delay:30s
++я выбросила её телефон. с пирса #delay:2m
++Она ушла. Остальное я узнала из группы. Как все. #from:judith #delay:3m
++* [Джесс, вернись #to:jess]
++    поздно. я держала её за руку. на полке. она вырвалась #from:jess #delay:3m
++* [Промолчать #to:jess #silent]
++    я держала её за руку. на полке. она вырвалась. теперь это неважно #from:jess #delay:5m
++-
+ {
+ - whisper_known && maya_files == 2 && not cut_frames:
+-    там и я. опять #from:ellie #delay:1h
++    там и я. опять #from:ellie #delay:3m
+     мама увозит меня к тёте в эксетер #delay:30s
+ - else:
+-    у дома холлисов человек тридцать. снимают на телефоны #from:ellie #delay:1h
++    у дома холлисов человек тридцать. снимают на телефоны #from:ellie #delay:3m
+     я не хочу так #delay:30s
+ }
+-Теперь ненавидят всех. Даже честно. #from:owen #delay:1h
+-Три недели спустя #sys:maya #delay:2h
+-Холлисы уехали из города. Ночью. #from:maya #delay:1m
+-Дело против неё остановили. Пост «скомпрометировал доказательства». Телефон на дне у пирса. #delay:30s
+-Брайт на допросе сказал, что подрался с Лили на уступе и ушёл. Что она плыла. #delay:30s
+-Ему предъявили обвинение. По Дэну. #delay:30s
+-Мне вынесли предупреждение за травлю. С работы уволили. #delay:30s
+-Все знают. #delay:30s
+-Ничего не изменилось. #delay:20s
++* [Ты тут ни при чём #to:ellie]
++    при чём. все мы #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++- Теперь ненавидят всех. Даже честно. #from:owen #delay:2m
++Три недели спустя #sys:maya #delay:5s
++Холлисы уехали из города. Ночью. #from:maya #delay:30s
++Дело против неё остановили: пост «скомпрометировал доказательства». #delay:30s
++Брайт сказал на допросе: подрался с Лили на уступе и ушёл. Она плыла. #delay:30s
++Ему предъявили обвинение. По Дэну. Мне — предупреждение за травлю. #delay:30s
+ -> fin_coda ->
+-Дэн бы сказал, что я дура. #from:maya #delay:1h
++Все знают. Ничего не изменилось. Дэн бы сказал, что я дура. #from:maya #delay:1m
+ Конец #sys:maya
+ -> END
+ 
+ === fin_silence ===
+ ~ ending = "silence"
+-Я жду Вас. #from:judith #delay:5m
+-Она на кухне. Я режу пирог. #delay:20m
+-Она ушла. Я ничего не сказала. #delay:1h
++Я жду Вас. #from:judith #delay:3m
++Она на кухне. Я режу пирог. #delay:2m
++Она ушла. Я ничего не сказала. #delay:2m
+ Вы не написали. #delay:30s
++* [Простите #to:judith]
++    Вам не за что. Вы ведь ничего не сделали. #from:judith #delay:1m
++* [Промолчать #to:judith #silent]
++    Kind regards, J. Marsh. #from:judith #delay:1m
++-
+ {
+ - world == "open" && not owen_turned:
+-    Допрос был. Про Денни. Про Лили меня не спрашивали 🙂 #from:owen #delay:1h
++    Допрос был. Про Денни. Про Лили меня не спрашивали 🙂 #from:owen #delay:3m
+     Голос на записи — Элли. Так я им и сказал 🙂 #delay:30s
+ - world == "open":
+-    Допрос был. Про Денни. Про Лили меня не спрашивали #from:owen #delay:1h
++    Допрос был. Про Денни. Про Лили меня не спрашивали #from:owen #delay:3m
+     про джесс я сказал. без тебя мне не поверили #delay:30s
+ - else:
+-    Всё закончилось 🙂 #from:owen #delay:1h
++    Всё закончилось 🙂 #from:owen #delay:3m
+ }
+-ты ведь что-то знаешь. да? #from:ellie #delay:1h
+-ладно #delay:1h
++ты ведь что-то знаешь. да? #from:ellie #delay:3m
++* [Знаю. Не сейчас #to:ellie]
++    ладно #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++    ладно #from:ellie #delay:2m
++-
+ {world == "hidden":
+-    у тебя до сих пор та запись. единственная. делай что хочешь #delay:30s
++    у тебя до сих пор та запись. единственная. делай что хочешь #from:ellie #delay:30s
+ }
+ {maya_stopped:
+-    До девяти, как договаривались. Сейчас девять. #from:maya #delay:30m
+-    Ты молчишь. #delay:30s
+-    Дальше — без тебя. #delay:30s
++    До девяти, как договаривались. Сейчас девять. #from:maya #delay:2m
++    Ты молчишь. Дальше — без тебя. #delay:30s
+ - else:
+-    Ладно. Спасибо за запись. #from:maya #delay:30m
++    Ладно. Спасибо за запись. #from:maya #delay:2m
+ }
+-Три недели спустя #sys:jess #delay:2h
++Три недели спустя #sys:jess #delay:5s
+ {jess_confessed == 2:
+-    спасибо что ничего не сказали #from:jess #delay:1m
++    спасибо что ничего не сказали #from:jess #delay:30s
+ - else:
+-    оуэн столкнул её с уступа. она выплыла и позвонила мне #from:jess #delay:1m
++    оуэн столкнул её с уступа. она выплыла и позвонила мне #from:jess #delay:30s
+     на полке я держала её за руку. она поскользнулась. вы же поняли #delay:30s
+ }
+-Джессика приходит по вторникам. Я открываю. Не знаю, зачем. #from:judith #delay:1h
++Джессика приходит по вторникам. Я открываю. Не знаю, зачем. #from:judith #delay:1m
+ -> fin_coda ->
+-привет!! вы ещё делаете опросы? 🙂 #from:jess #delay:1h
++привет!! вы ещё делаете опросы? 🙂 #from:jess #delay:1m
+ Конец #sys:jess
+ -> END
+ 
+@@ -544,39 +657,40 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
+ 
+ // туннель: Элли в финалах, где посадили Оуэна
+ === fin_ellie_owen ===
+-все извинились. даже мама #from:ellie #delay:1h
++все извинились. даже мама #from:ellie #delay:2m
+ {ellie_testifies:
+     про блок я им сказала. записали и забыли. всем был нужен оуэн #delay:30s
+ - else:
+     про блок никто не спросил. это осталось у меня #delay:30s
+ }
+-->->
++* [Как ты? #to:ellie]
++    хожу в школу. со мной здороваются. странно #from:ellie #delay:1m
++* [Промолчать #to:ellie #silent]
++- ->->
+ 
+-// туннель: сквозные закрытия
++// туннель: сквозные закрытия — один-два голоса, остальное сказано в самом финале
+ === fin_coda ===
+ {
+ - ending == "truth" || ending == "herself":
+-    я сказал им про лестницу. и что это я сказал оуэну где она. теперь всё #from:connor #delay:1h
+-    я удалил пост wexcombe watch. четыре месяца спустя. #from:tom #delay:1h
+-    я отдала им скрин 00:53. элли разрешила #from:beth #delay:1h
++    я сказал им про лестницу. и что это я сказал оуэну где она. теперь всё #from:connor #delay:1m
+ - ending == "revenge":
+-    я сказал про лестницу. им всё равно #from:connor #delay:1h
++    я сказал про лестницу. им всё равно #from:connor #delay:1m
+     {tom_hold:
+-        я её пост не пропустил. не помогло. #from:tom #delay:1h
++        я её пост не пропустил. не помогло. #from:tom #delay:30s
+     - else:
+-        это я нажал «опубликовать». оба раза. #from:tom #delay:1h
++        это я нажал «опубликовать». оба раза. #from:tom #delay:30s
+     }
+ - ending == "unproven":
+-    я сказал про лестницу. им всё равно #from:connor #delay:1h
++    я сказал про лестницу. им всё равно #from:connor #delay:1m
+ - else:
+-    я так и не сказал им про лестницу. сорян #from:connor #delay:1h
++    я так и не сказал им про лестницу. сорян #from:connor #delay:1m
+ }
+ {hart_fooled && owen_knows >= 2:
+     {
+     - ending == "silence" || ending == "unproven":
+-        Будешь в наших краях — заходи. Я теперь знаю, кого ждать 🙂 #from:owen #delay:1h
++        Будешь в наших краях — заходи. Я теперь знаю, кого ждать 🙂 #from:owen #delay:1m
+     - else:
+-        Оуэн рассказал полиции, что знает, кто Вы. Ему сказали, что это не его дело. #from:judith #delay:1h
++        Оуэн рассказал полиции, что знает, кто Вы. Ему сказали, что это не его дело. #from:judith #delay:1m
+     }
+ }
+ ->->
+diff --git a/src/stories/chuzhoy-golos/meta.json b/src/stories/chuzhoy-golos/meta.json
+index 4fb22f1..24eb368 100644
+--- a/src/stories/chuzhoy-golos/meta.json
++++ b/src/stories/chuzhoy-golos/meta.json
+@@ -6,9 +6,9 @@
+   "series": "Векскомб",
+   "title": "Чужой голос",
+   "tagline": "£12 в час за то, чтобы писать свидетелям чужим голосом",
+-  "synopsis": "Векскомб, городок на побережье Девона. В июне в затопленном карьере нашли семнадцатилетнюю Лили Марш, и полиция закрыла дело за девять дней: алкоголь, ночь, скользкие камни. До слушания у коронера осталось пять дней.\n\nЭлли, лучшая подруга Лили, нанимает незнакомца из интернета. Работа простая: писать свидетелям под видом студента, который проводит опрос. С Элли в городе никто не разговаривает. С тобой будут. Пока не узнают, кто ты.\n\nПосле слушания тебе пишет сестра мальчика, который погиб на том же карьере два года назад. На записи, которая осталась у тебя, кто-то считает до трёх.",
+-  "minutes": 90,
+-  "days": 7.3,
++  "synopsis": "Векскомб, городок на побережье Девона. В июне в затопленном карьере нашли семнадцатилетнюю Лили Марш, и полиция закрыла дело за девять дней: алкоголь, ночь, скользкие камни. До слушания у коронера осталось четыре дня.\n\nЭлли, лучшая подруга Лили, нанимает незнакомца из интернета. Работа простая: писать свидетелям под видом студента, который проводит опрос. С Элли в городе никто не разговаривает. С тобой будут. Пока не узнают, кто ты.\n\nПосле слушания тебе пишет сестра мальчика, который погиб на том же карьере два года назад. На записи, которая осталась у тебя, кто-то считает до трёх.",
++  "minutes": 30,
++  "days": 6.8,
+   "cover": {
+     "from": "#1f3b4d",
+     "to": "#0a1116",
+@@ -144,6 +144,12 @@
+       "name": "Сержант Харт",
+       "role": "полиция Девона",
+       "about": "Очень вежлив и очень торопится."
++    },
++    {
++      "id": "bank",
++      "name": "Банк",
++      "role": "переводы от Элли",
++      "service": true
+     }
+   ]
+ }
+diff --git a/src/stories/chuzhoy-golos/story.ink b/src/stories/chuzhoy-golos/story.ink
+index 5ec2a18..3f6269a 100644
+--- a/src/stories/chuzhoy-golos/story.ink
++++ b/src/stories/chuzhoy-golos/story.ink
+@@ -1,8 +1,11 @@
++// логлайн: незнакомец из интернета пишет свидетелям чужим голосом, чтобы до слушания доказать, что смерть Лили не случайность
++// вопрос: что случилось с Лили на карьере — и с Денни два года назад — и кто считает до трёх на записи
++// ставка: через 4 дня слушание у коронера: смерть Лили закроют как несчастный случай
++// оси: ellie_trust, judith_trust, maya_trust, proof, jess_bond
+ # title: Векскомб · Чужой голос
+ # contact: ellie, Элли, amber
+ # contact: jess, Джесс, pink
+ # contact: connor, Коннор, orange
+-# contact: kieran, Киран, indigo
+ # contact: tom, Том, cyan
+ # contact: beth, Бет, purple
+ # contact: owen, Оуэн Брайт, blue
+@@ -35,7 +38,6 @@ VAR owen_weakened = false
+ VAR confronted_night = false
+ VAR unknown_blocked = false
+ VAR told_judith_ellie = false
+-VAR knows_tox = false
+ VAR note_connor = false
+ VAR note_beth = false
+ VAR note_threat = false
+@@ -82,6 +84,7 @@ VAR owen_deal = false
+ VAR jess_confessed = 0
+ VAR jess_promised = false
+ VAR maya_stopped = false
++VAR maya_posts = false
+ VAR judith_waits = true
+ VAR ellie_testifies = false
+ VAR final_choice = ""
