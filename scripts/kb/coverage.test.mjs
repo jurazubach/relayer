@@ -9,6 +9,7 @@ import { buildMatrix, loadKnowledge, main, sourcesMd, affected, fidelitySample, 
 import { statusError } from './kb-status.mjs';
 import { parseOpora } from './kb-owners.mjs';
 import { aliasResolver, plain } from './kb-rows.mjs';
+import { assignOwners } from './kb-clusters.mjs';
 
 const LONG = 'Смотритель переправы отвечает только на прямой вопрос, а паромщик молчит до третьего гудка. ';
 
@@ -545,4 +546,27 @@ test('настоящая база: owners.md §8, clusters.json свежий, р
   const ths = new Set(res.matrix.map((x) => x.th).filter(Boolean));
   for (const th of ths) assert.ok(res.kb.units.has(th), th);
   assert.ok(res.matrix.some((x) => x.status.startsWith('superseded:')), 'отменённое из superseded.md');
+});
+
+test('нюанс наследует владельца родителя, как бы тот его ни получил', () => {
+  // Родитель без своей опоры получает тему по ссылкам в тексте: раньше нюанс оставался без владельца.
+  const rows = [
+    { id: 'gamma-reed:P-01', kind: 'P', alias: 'gamma-reed', title: 'камыш', text: 'см. `gamma-reed:P-02`' },
+    { id: 'gamma-reed:P-02', kind: 'P', alias: 'gamma-reed', title: 'ветер', text: '' },
+    { id: 'gamma-reed:P-01#нюанс', kind: 'nuance', alias: 'gamma-reed', parent: 'gamma-reed:P-01', title: 'нюанс к P-01', text: '' },
+    { id: 'gamma-reed:P-02#нюанс', kind: 'nuance', alias: 'gamma-reed', parent: 'gamma-reed:P-02', title: 'нюанс к P-02', text: '' },
+  ];
+  // Нюанс идёт в списке раньше родителя: порядок разбора не должен на это влиять.
+  rows.unshift(rows.pop(), rows.pop());
+  const opora = new Map([['gamma-reed:P-02', { th: 'TH-07' }], ['gamma-reed:P-02#нюанс', { th: 'TH-08' }]]);
+  const units = new Map([
+    ['TH-07', { owner: 'story-gamma', file: 'reed.md' }],
+    ['TH-08', { owner: 'story-delta', file: 'wind.md' }],
+  ]);
+  const out = assignOwners({ rows, clusters: [], opora, units });
+  assert.equal(out.get('gamma-reed:P-01').via, 'refs');
+  assert.equal(out.get('gamma-reed:P-01#нюанс').owner_skill, 'story-gamma', 'родитель по ссылкам');
+  assert.equal(out.get('gamma-reed:P-01#нюанс').via, 'parent');
+  assert.equal(out.get('gamma-reed:P-01#нюанс').target, 'story-gamma/reed.md#gamma-reed:P-01#нюанс');
+  assert.equal(out.get('gamma-reed:P-02#нюанс').owner_skill, 'story-delta', 'своя опора нюанса сильнее родителя');
 });

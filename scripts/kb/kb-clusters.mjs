@@ -121,7 +121,10 @@ export function assignOwners({ rows, clusters, opora, units, manual = {} }) {
     const owner = unit?.owner || null;
     out.set(r.id, { cluster, th: th ?? null, via: owner ? via : null, owner_skill: owner, target: owner ? targetOf(unit, r.id) : null });
   };
-  for (const r of rows) {
+  // Нюанс без своей опоры берёт владельца родителя, как бы тот его ни получил (по кластеру, ссылкам,
+  // вручную), поэтому родители разбираются раньше нюансов.
+  const ordered = [...rows.filter((r) => r.kind !== 'nuance'), ...rows.filter((r) => r.kind === 'nuance')];
+  for (const r of ordered) {
     const c = clusterOf.get(r.id);
     const cluster = c?.id ?? r.id;
     if (manual.th?.[r.id]) {
@@ -135,6 +138,10 @@ export function assignOwners({ rows, clusters, opora, units, manual = {} }) {
     const d = direct(r.id);
     if (d) {
       put(r, cluster, d.th, 'opora');
+      continue;
+    }
+    if (r.kind === 'nuance' && out.get(r.parent)?.th) {
+      put(r, cluster, out.get(r.parent).th, 'parent');
       continue;
     }
     if (c && clusterTh.get(c.id)) {
