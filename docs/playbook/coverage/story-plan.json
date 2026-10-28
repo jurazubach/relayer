@@ -1,0 +1,8 @@
+{
+  "rows": {
+    "snyder-save-the-cat:PAT-11#нюанс": {
+      "status": "merged-into:snyder-save-the-cat:PAT-11",
+      "note": "строка нюанса повторяет сам паттерн (заголовок и «когда применять / когда нет» PAT-11); содержание — в блоке snyder-save-the-cat:PAT-11 (beats.md)"
+    }
+  }
+}
