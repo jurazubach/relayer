@@ -24,26 +24,38 @@ export function nodeGraph(tree) {
 }
 
 /**
- * Финальные узлы: без кнопок, и все выходы (кроме туннелей) ведут в END или в другие финальные узлы —
+ * Финальные узлы: без кнопок (или с кнопками-реакциями и выходами сразу в END), и все выходы (кроме туннелей) ведут в END или в другие финальные узлы —
  * до неподвижной точки (checks.md, «Финальный узел»). Распределитель — узел, выходы которого ведут
  * хотя бы в два разных финальных узла.
  */
 export function finalNodes(tree, g = nodeGraph(tree)) {
-  const final = new Set();
-  let changed = true;
-  while (changed) {
-    changed = false;
-    for (const [id, n] of g) {
-      if (final.has(id) || n.choices || !n.exits.size) continue;
-      if ([...n.exits].every((t) => TERMINAL.has(t) || final.has(t))) { final.add(id); changed = true; }
+  // распределитель не финал, и узлы над ним тоже: неподвижная точка считается заново без распределителей,
+  // пока их набор не перестанет расти (иначе финалом становится всё, что ведёт к распределителю)
+  let distributors = new Set();
+  let final;
+  for (let round = 0; round < 20; round++) {
+    final = new Set();
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const [id, n] of g) {
+        if (final.has(id) || distributors.has(id) || !n.exits.size) continue;
+        if (![...n.exits].every((t) => TERMINAL.has(t) || final.has(t))) continue;
+        // кнопка-реакция в эпилоге финала не делает его развилкой: узел с кнопками финальный, если все его
+        // выходы — сразу END (туннели эпилога не в счёт). Цепочку реакций выше по графу не поднимаем: два узла
+        // с кнопками, которые сходятся в один хвост, — не два финала
+        if (n.choices && ![...n.exits].every((t) => TERMINAL.has(t))) continue;
+        final.add(id); changed = true;
+      }
     }
-  }
-  // узел без кнопок, который разводит по двум финалам, по неподвижной точке тоже «финальный»,
-  // но это распределитель (определение — checks.md «Общие данные»): из финалов его убираем
-  const distributors = new Set();
-  for (const [id, n] of g) {
-    const to = [...n.exits].filter((t) => final.has(t));
-    if (new Set(to).size >= 2) distributors.add(id);
+    // узел, который разводит по двум финалам, — распределитель (определение — checks.md «Общие данные»)
+    const found = new Set();
+    for (const [id, n] of g) {
+      if (new Set([...n.exits].filter((t) => final.has(t))).size >= 2) found.add(id);
+    }
+    const same = found.size === distributors.size && [...found].every((id) => distributors.has(id));
+    distributors = found;
+    if (same) break;
   }
   for (const id of distributors) final.delete(id);
   return { final, distributors, graph: g };

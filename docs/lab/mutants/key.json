@@ -427,6 +427,24 @@
         "C-54"
       ],
       "path": "docs/lab/mutants/m29-clue-no-gate"
+    },
+    {
+      "id": "m30-early-flag-first-rule",
+      "zone": "story-endings",
+      "check": "C-06",
+      "node": "ch4_choice",
+      "broken": "последняя кнопка пишет выбор, но первое правило распределителя смотрит ранний флаг asked_mira из глав 1–3: кто спрашивал Миру, тот получает «сделку», что бы ни нажал у вертолёта (LOCAL-17)",
+      "lint": [
+        "C-40"
+      ],
+      "lint_auto": false,
+      "lint_why": "C-06 видит, что последняя кнопка пишет переменную и распределитель её читает; что раннее правило перекрывает её, прямо ловит только threshold-visibility.mjs скилла (перекрытие последнего выбора), а линт — симптом C-40: все кнопки ведут в один финал",
+      "catches": [
+        "ashwell-standard-patterns:RED-06",
+        "C-06",
+        "C-40"
+      ],
+      "path": "docs/lab/mutants/m30-early-flag-first-rule"
     }
   ]
 }

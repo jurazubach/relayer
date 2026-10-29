@@ -1,0 +1,5062 @@
+{
+ "stories": [
+  {
+   "id": "chuzhoy-golos",
+   "path": "src/stories/chuzhoy-golos",
+   "card": {
+    "minutes": 40,
+    "days": 2
+   },
+   "personas": [
+    {
+     "persona": "random",
+     "runs": 400,
+     "real": {
+      "median": 162769.71199999997,
+      "min": 157906.05299999993,
+      "max": 167681.133
+     },
+     "click": {
+      "median": 2295.935000000001,
+      "min": 2045.5259999999996,
+      "max": 2558.972
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 130
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4822,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 390,
+      "route": [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       2,
+       2,
+       1,
+       0,
+       2,
+       0,
+       1,
+       2,
+       0,
+       1,
+       2,
+       0,
+       0,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       3,
+       0,
+       0,
+       0,
+       1,
+       0,
+       1,
+       2,
+       1,
+       1,
+       0,
+       0,
+       0,
+       0,
+       2,
+       0,
+       0,
+       2,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       2,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       0,
+       3,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3,
+       0
+      ],
+      "ending": "herself",
+      "real": 162769.71199999997,
+      "click": 2279.7120000000004,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 54,
+        "incoming": 52,
+        "choices": 12,
+        "active": 1688.0289999999995,
+        "tail": false,
+        "last": "Элли В. перевела вам £12.00 · «час 1»",
+        "hook": [
+         "первое сообщение"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1688.0289999999998
+       },
+       {
+        "n": 2,
+        "at": 3788.0289999999995,
+        "pauseBefore": 2100,
+        "chapter": 1,
+        "knot": "ch1_connor",
+        "lines": 10,
+        "incoming": 7,
+        "choices": 2,
+        "active": 199.611,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 3987.6399999999994
+       },
+       {
+        "n": 3,
+        "at": 6687.639999999999,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 18,
+        "incoming": 16,
+        "choices": 3,
+        "active": 776.5619999999998,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 7464.202
+       },
+       {
+        "n": 4,
+        "at": 25464.202,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 45,
+        "incoming": 41,
+        "choices": 8,
+        "active": 4241.307,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 29705.509000000002
+       },
+       {
+        "n": 5,
+        "at": 35105.509000000005,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 58,
+        "incoming": 51,
+        "choices": 9,
+        "active": 5735.0059999999985,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 40840.514999999985
+       },
+       {
+        "n": 6,
+        "at": 46240.514999999985,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 56,
+        "incoming": 52,
+        "choices": 9,
+        "active": 3418.2190000000005,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 49658.73399999998
+       },
+       {
+        "n": 7,
+        "at": 67658.73399999998,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 35,
+        "incoming": 31,
+        "choices": 5,
+        "active": 2578.191,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 70236.92499999996
+       },
+       {
+        "n": 8,
+        "at": 72036.92499999996,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_owen",
+        "lines": 12,
+        "incoming": 11,
+        "choices": 2,
+        "active": 1235.962,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 73272.88699999996
+       },
+       {
+        "n": 9,
+        "at": 78672.88699999996,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 54,
+        "incoming": 48,
+        "choices": 9,
+        "active": 8157.877999999999,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 86830.76499999993
+       },
+       {
+        "n": 10,
+        "at": 92230.76499999993,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 58,
+        "incoming": 53,
+        "choices": 10,
+        "active": 7309.884000000002,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 99540.64899999995
+       },
+       {
+        "n": 11,
+        "at": 104940.64899999995,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 47,
+        "incoming": 43,
+        "choices": 10,
+        "active": 6204.241,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 111144.88999999997
+       },
+       {
+        "n": 12,
+        "at": 129144.88999999997,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 82,
+        "incoming": 73,
+        "choices": 10,
+        "active": 12803.643,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 141948.53300000002
+       },
+       {
+        "n": 13,
+        "at": 159948.53300000002,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 81,
+        "incoming": 78,
+        "choices": 12,
+        "active": 2821.179,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 162769.71199999997
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 3813,
+        "real": 3987.6399999999994,
+        "click": 317.63999999999993
+       },
+       {
+        "chapter": 2,
+        "pauses": 25550,
+        "real": 25717.868999999995,
+        "click": 197.86899999999991
+       },
+       {
+        "chapter": 3,
+        "pauses": 10986,
+        "real": 11135.006000000007,
+        "click": 225.00599999999997
+       },
+       {
+        "chapter": 4,
+        "pauses": 8650,
+        "real": 8818.218999999997,
+        "click": 178.21900000000002
+       },
+       {
+        "chapter": 5,
+        "pauses": 23475,
+        "real": 23614.153000000002,
+        "click": 159.15300000000005
+       },
+       {
+        "chapter": 6,
+        "pauses": 13390,
+        "real": 13557.878000000002,
+        "click": 227.87800000000001
+       },
+       {
+        "chapter": 7,
+        "pauses": 12530,
+        "real": 12709.883999999996,
+        "click": 179.884
+       },
+       {
+        "chapter": 8,
+        "pauses": 11460,
+        "real": 11604.241,
+        "click": 154.24099999999996
+       },
+       {
+        "chapter": 9,
+        "pauses": 30950,
+        "real": 31216.162000000004,
+        "click": 306.162
+       },
+       {
+        "chapter": 10,
+        "pauses": 20175,
+        "real": 20408.65999999999,
+        "click": 333.66
+       }
+      ],
+      "tail": {
+       "lines": 12,
+       "incoming": 10,
+       "delay": 120,
+       "senders": [
+        "judith",
+        "ellie",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "silent",
+     "runs": 400,
+     "real": {
+      "median": 158465.52599999995,
+      "min": 158464.67699999994,
+      "max": 158465.75099999993
+     },
+     "click": {
+      "median": 2115.5259999999994,
+      "min": 2114.6769999999997,
+      "max": 2115.7509999999997
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 80
+     },
+     "sessions": {
+      "median": 12,
+      "micro": 0,
+      "body": 4400,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 56,
+      "route": [
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       0,
+       1,
+       0,
+       0,
+       2,
+       0,
+       2,
+       2,
+       0,
+       1,
+       1,
+       1,
+       0,
+       2,
+       2,
+       1,
+       1,
+       1,
+       0,
+       0,
+       3,
+       2,
+       2,
+       0,
+       1,
+       0,
+       1,
+       2,
+       1,
+       0,
+       0,
+       1,
+       0,
+       2,
+       2,
+       2,
+       0,
+       2,
+       0,
+       1,
+       1,
+       3,
+       0,
+       2,
+       2,
+       1,
+       1,
+       0,
+       2,
+       3,
+       1,
+       1,
+       1,
+       3,
+       2,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       0,
+       0,
+       0,
+       2,
+       1,
+       2,
+       0,
+       2,
+       0
+      ],
+      "ending": "silence",
+      "real": 158465.52599999995,
+      "click": 2115.5259999999994,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 63,
+        "incoming": 60,
+        "choices": 13,
+        "active": 1789.5889999999997,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1789.589
+       },
+       {
+        "n": 2,
+        "at": 4489.589,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 13,
+        "incoming": 11,
+        "choices": 2,
+        "active": 704.0909999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 5193.680000000001
+       },
+       {
+        "n": 3,
+        "at": 23193.68,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 46,
+        "incoming": 42,
+        "choices": 9,
+        "active": 4275.557000000001,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 27469.23699999999
+       },
+       {
+        "n": 4,
+        "at": 32869.236999999994,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 67,
+        "incoming": 60,
+        "choices": 11,
+        "active": 5894.660999999997,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 38763.89799999999
+       },
+       {
+        "n": 5,
+        "at": 44163.89799999999,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 47,
+        "incoming": 41,
+        "choices": 6,
+        "active": 4041.6149999999993,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 48205.512999999984
+       },
+       {
+        "n": 6,
+        "at": 66205.51299999999,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 27,
+        "incoming": 23,
+        "choices": 4,
+        "active": 2172.1059999999998,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 68377.61899999999
+       },
+       {
+        "n": 7,
+        "at": 70177.61899999999,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_silence",
+        "lines": 11,
+        "incoming": 9,
+        "choices": 2,
+        "active": 848.6159999999999,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 71026.23499999997
+       },
+       {
+        "n": 8,
+        "at": 76426.23499999997,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 57,
+        "incoming": 52,
+        "choices": 9,
+        "active": 7714.886999999998,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 84141.12199999997
+       },
+       {
+        "n": 9,
+        "at": 89541.12199999997,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 50,
+        "incoming": 45,
+        "choices": 8,
+        "active": 6565.243,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 96106.36499999999
+       },
+       {
+        "n": 10,
+        "at": 101506.36499999999,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 48,
+        "incoming": 44,
+        "choices": 11,
+        "active": 7113.627999999998,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 108619.99300000003
+       },
+       {
+        "n": 11,
+        "at": 126619.99300000003,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 69,
+        "incoming": 60,
+        "choices": 10,
+        "active": 11585.447999999999,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 138205.44100000005
+       },
+       {
+        "n": 12,
+        "at": 156205.44100000005,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 64,
+        "incoming": 61,
+        "choices": 10,
+        "active": 2260.0849999999987,
+        "tail": false,
+        "last": "Конец",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 158465.52599999995
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 1617,
+        "real": 1789.589,
+        "click": 329.5889999999998
+       },
+       {
+        "chapter": 2,
+        "pauses": 25520,
+        "real": 25679.64799999999,
+        "click": 189.6479999999999
+       },
+       {
+        "chapter": 3,
+        "pauses": 11126,
+        "real": 11294.661000000002,
+        "click": 274.66099999999983
+       },
+       {
+        "chapter": 4,
+        "pauses": 9310,
+        "real": 9441.614999999998,
+        "click": 141.61500000000004
+       },
+       {
+        "chapter": 5,
+        "pauses": 22715,
+        "real": 22820.72200000001,
+        "click": 125.72200000000004
+       },
+       {
+        "chapter": 6,
+        "pauses": 12930,
+        "real": 13114.886999999999,
+        "click": 244.88699999999997
+       },
+       {
+        "chapter": 7,
+        "pauses": 11810,
+        "real": 11965.243,
+        "click": 155.24300000000002
+       },
+       {
+        "chapter": 8,
+        "pauses": 12370,
+        "real": 12513.627999999997,
+        "click": 163.62799999999993
+       },
+       {
+        "chapter": 9,
+        "pauses": 29770,
+        "real": 29997.967,
+        "click": 257.96700000000004
+       },
+       {
+        "chapter": 10,
+        "pauses": 19680,
+        "real": 19847.565999999988,
+        "click": 232.566
+       }
+      ],
+      "tail": {
+       "lines": 8,
+       "incoming": 6,
+       "delay": 80,
+       "senders": [
+        "judith",
+        "maya",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "first",
+     "runs": 400,
+     "real": {
+      "median": 167127.63699999996,
+      "min": 167127.63699999996,
+      "max": 167127.63699999996
+     },
+     "click": {
+      "median": 2427.637000000001,
+      "min": 2427.637000000001,
+      "max": 2427.637000000001
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 95,
+      "max": 95
+     },
+     "sessions": {
+      "median": 14,
+      "micro": 0,
+      "body": 5200,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 201,
+      "route": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "ending": "scapegoat",
+      "real": 167127.63699999996,
+      "click": 2427.637000000001,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 56,
+        "incoming": 54,
+        "choices": 12,
+        "active": 1707.3569999999997,
+        "tail": false,
+        "last": "Элли В. перевела вам £12.00 · «час 1»",
+        "hook": [
+         "первое сообщение"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1707.357
+       },
+       {
+        "n": 2,
+        "at": 3807.357,
+        "pauseBefore": 2100,
+        "chapter": 1,
+        "knot": "ch1_connor",
+        "lines": 12,
+        "incoming": 9,
+        "choices": 2,
+        "active": 226.855,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 4034.212
+       },
+       {
+        "n": 3,
+        "at": 6734.212,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 19,
+        "incoming": 17,
+        "choices": 3,
+        "active": 779.3389999999998,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 7513.551
+       },
+       {
+        "n": 4,
+        "at": 25513.551,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 51,
+        "incoming": 47,
+        "choices": 8,
+        "active": 4240.742,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 29754.29299999999
+       },
+       {
+        "n": 5,
+        "at": 35154.29299999999,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 64,
+        "incoming": 57,
+        "choices": 10,
+        "active": 5919.452999999999,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 41073.74599999996
+       },
+       {
+        "n": 6,
+        "at": 46473.74599999996,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 56,
+        "incoming": 52,
+        "choices": 9,
+        "active": 3237.4670000000006,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 49711.21299999995
+       },
+       {
+        "n": 7,
+        "at": 67711.21299999996,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 36,
+        "incoming": 32,
+        "choices": 5,
+        "active": 2195.136,
+        "tail": false,
+        "last": "Джудит не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 69906.34899999991
+       },
+       {
+        "n": 8,
+        "at": 71706.34899999991,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_coroner",
+        "lines": 13,
+        "incoming": 12,
+        "choices": 2,
+        "active": 1125.4110000000003,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 72831.75999999991
+       },
+       {
+        "n": 9,
+        "at": 78231.75999999991,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 60,
+        "incoming": 54,
+        "choices": 8,
+        "active": 7777.812999999998,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 86009.57299999992
+       },
+       {
+        "n": 10,
+        "at": 91409.57299999992,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 63,
+        "incoming": 59,
+        "choices": 10,
+        "active": 7774.119999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 99183.69299999991
+       },
+       {
+        "n": 11,
+        "at": 104583.69299999991,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 58,
+        "incoming": 50,
+        "choices": 11,
+        "active": 8260.735999999999,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 112844.42899999992
+       },
+       {
+        "n": 12,
+        "at": 130844.42899999992,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 11,
+        "incoming": 9,
+        "choices": 1,
+        "active": 438.25499999999994,
+        "tail": false,
+        "last": "Джудит Марш не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 131282.68399999992
+       },
+       {
+        "n": 13,
+        "at": 133082.68399999992,
+        "pauseBefore": 1800,
+        "chapter": 9,
+        "knot": "ch9_bill",
+        "lines": 90,
+        "incoming": 82,
+        "choices": 11,
+        "active": 13566.756000000005,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 146649.43999999997
+       },
+       {
+        "n": 14,
+        "at": 164649.43999999997,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 72,
+        "incoming": 69,
+        "choices": 10,
+        "active": 2478.1969999999997,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 167127.63699999996
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 3848,
+        "real": 4034.212,
+        "click": 329.212
+       },
+       {
+        "chapter": 2,
+        "pauses": 25530,
+        "real": 25720.08099999999,
+        "click": 220.08099999999993
+       },
+       {
+        "chapter": 3,
+        "pauses": 11152,
+        "real": 11319.453000000009,
+        "click": 259.4529999999999
+       },
+       {
+        "chapter": 4,
+        "pauses": 8470,
+        "real": 8637.466999999997,
+        "click": 177.467
+       },
+       {
+        "chapter": 5,
+        "pauses": 22975,
+        "real": 23120.547000000017,
+        "click": 165.54700000000003
+       },
+       {
+        "chapter": 6,
+        "pauses": 12990,
+        "real": 13177.813000000002,
+        "click": 247.813
+       },
+       {
+        "chapter": 7,
+        "pauses": 12980,
+        "real": 13174.119999999995,
+        "click": 194.11999999999995
+       },
+       {
+        "chapter": 8,
+        "pauses": 13500,
+        "real": 13660.735999999999,
+        "click": 190.7359999999999
+       },
+       {
+        "chapter": 9,
+        "pauses": 33520,
+        "real": 33805.011,
+        "click": 325.01099999999997
+       },
+       {
+        "chapter": 10,
+        "pauses": 20245,
+        "real": 20478.19699999999,
+        "click": 318.19699999999995
+       }
+      ],
+      "tail": {
+       "lines": 10,
+       "incoming": 8,
+       "delay": 95,
+       "senders": [
+        "owen",
+        "judith",
+        "ellie",
+        "jess",
+        "connor",
+        "bank"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "last",
+     "runs": 400,
+     "real": {
+      "median": 158977.47599999997,
+      "min": 158977.47599999997,
+      "max": 158977.47599999997
+     },
+     "click": {
+      "median": 2167.4759999999997,
+      "min": 2167.4759999999997,
+      "max": 2167.4759999999997
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 100,
+      "max": 100
+     },
+     "sessions": {
+      "median": 12,
+      "micro": 0,
+      "body": 4400,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 201,
+      "route": [
+       1,
+       1,
+       1,
+       2,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       2,
+       2,
+       1,
+       1,
+       2,
+       1,
+       1,
+       2,
+       2,
+       1,
+       1,
+       1,
+       1,
+       1,
+       3,
+       2,
+       2,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       1,
+       1,
+       3,
+       2,
+       2,
+       2,
+       1,
+       2,
+       2,
+       2,
+       1,
+       3,
+       1,
+       2,
+       2,
+       1,
+       1,
+       2,
+       2,
+       3,
+       1,
+       1,
+       1,
+       3,
+       2,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       2,
+       2,
+       2,
+       1,
+       3,
+       1
+      ],
+      "ending": "revenge",
+      "real": 158977.47599999997,
+      "click": 2167.4759999999997,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 64,
+        "incoming": 61,
+        "choices": 12,
+        "active": 1753.2169999999996,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1753.2169999999999
+       },
+       {
+        "n": 2,
+        "at": 4453.217,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 13,
+        "incoming": 11,
+        "choices": 2,
+        "active": 704.0909999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 5157.308000000001
+       },
+       {
+        "n": 3,
+        "at": 23157.308,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 47,
+        "incoming": 43,
+        "choices": 9,
+        "active": 4309.06,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 27466.36799999999
+       },
+       {
+        "n": 4,
+        "at": 32866.367999999995,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 69,
+        "incoming": 62,
+        "choices": 11,
+        "active": 5910.279999999997,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 38776.64799999998
+       },
+       {
+        "n": 5,
+        "at": 44176.64799999998,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 47,
+        "incoming": 41,
+        "choices": 6,
+        "active": 4039.637999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 48216.28599999998
+       },
+       {
+        "n": 6,
+        "at": 66216.28599999998,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 29,
+        "incoming": 25,
+        "choices": 4,
+        "active": 2438.208,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 68654.49399999998
+       },
+       {
+        "n": 7,
+        "at": 70454.49399999998,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_silence",
+        "lines": 13,
+        "incoming": 11,
+        "choices": 2,
+        "active": 885.949,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 71340.44299999996
+       },
+       {
+        "n": 8,
+        "at": 76740.44299999996,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 53,
+        "incoming": 50,
+        "choices": 9,
+        "active": 7651.06,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 84391.50299999994
+       },
+       {
+        "n": 9,
+        "at": 89791.50299999994,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 50,
+        "incoming": 45,
+        "choices": 8,
+        "active": 6565.095,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 96356.59799999994
+       },
+       {
+        "n": 10,
+        "at": 101756.59799999994,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 50,
+        "incoming": 46,
+        "choices": 11,
+        "active": 7288.905999999998,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 109045.50399999999
+       },
+       {
+        "n": 11,
+        "at": 127045.50399999999,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 67,
+        "incoming": 58,
+        "choices": 9,
+        "active": 11357.350999999999,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 138402.85499999998
+       },
+       {
+        "n": 12,
+        "at": 156402.85499999998,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 67,
+        "incoming": 64,
+        "choices": 10,
+        "active": 2574.621,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 158977.47599999997
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 1572,
+        "real": 1753.2169999999999,
+        "click": 348.217
+       },
+       {
+        "chapter": 2,
+        "pauses": 25550,
+        "real": 25713.150999999994,
+        "click": 193.15099999999995
+       },
+       {
+        "chapter": 3,
+        "pauses": 11136,
+        "real": 11310.280000000002,
+        "click": 290.27999999999986
+       },
+       {
+        "chapter": 4,
+        "pauses": 9310,
+        "real": 9439.637999999997,
+        "click": 139.63800000000003
+       },
+       {
+        "chapter": 5,
+        "pauses": 23005,
+        "real": 23124.157,
+        "click": 139.15700000000004
+       },
+       {
+        "chapter": 6,
+        "pauses": 12875,
+        "real": 13051.060000000001,
+        "click": 216.06000000000003
+       },
+       {
+        "chapter": 7,
+        "pauses": 11810,
+        "real": 11965.095,
+        "click": 155.095
+       },
+       {
+        "chapter": 8,
+        "pauses": 12540,
+        "real": 12688.905999999999,
+        "click": 168.90599999999992
+       },
+       {
+        "chapter": 9,
+        "pauses": 29850,
+        "real": 30071.581000000002,
+        "click": 251.581
+       },
+       {
+        "chapter": 10,
+        "pauses": 19680,
+        "real": 19860.39099999999,
+        "click": 265.391
+       }
+      ],
+      "tail": {
+       "lines": 10,
+       "incoming": 8,
+       "delay": 100,
+       "senders": [
+        "jess",
+        "ellie",
+        "maya",
+        "connor",
+        "tom"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "refuse",
+     "runs": 400,
+     "real": {
+      "median": 160280.35799999977,
+      "min": 156272.2409999998,
+      "max": 163818.21299999993
+     },
+     "click": {
+      "median": 2162.734,
+      "min": 2042.5539999999994,
+      "max": 2276.1389999999997
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 80
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4665,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 295,
+      "route": [
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       1,
+       1,
+       0,
+       1,
+       1,
+       0,
+       2,
+       1,
+       0,
+       1,
+       0,
+       0,
+       1,
+       2,
+       0,
+       1,
+       1,
+       1,
+       0,
+       3,
+       2,
+       0,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       0,
+       1,
+       3,
+       1,
+       0,
+       2,
+       0,
+       2,
+       0,
+       0,
+       1,
+       1,
+       2,
+       0,
+       2,
+       2,
+       1,
+       0,
+       0,
+       1,
+       2,
+       0,
+       2,
+       1,
+       3,
+       0,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       2,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       2,
+       1,
+       2,
+       1
+      ],
+      "ending": "silence",
+      "real": 160280.35799999977,
+      "click": 2185.358000000001,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 62,
+        "incoming": 59,
+        "choices": 12,
+        "active": 1723.4879999999996,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1723.4879999999998
+       },
+       {
+        "n": 2,
+        "at": 4423.488,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 13,
+        "incoming": 11,
+        "choices": 2,
+        "active": 704.0909999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 5127.5790000000015
+       },
+       {
+        "n": 3,
+        "at": 23127.579,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 51,
+        "incoming": 47,
+        "choices": 9,
+        "active": 4280.593000000001,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 27408.171999999995
+       },
+       {
+        "n": 4,
+        "at": 32808.172,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 68,
+        "incoming": 61,
+        "choices": 11,
+        "active": 6168.132999999996,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 38976.30499999997
+       },
+       {
+        "n": 5,
+        "at": 44376.30499999997,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 47,
+        "incoming": 42,
+        "choices": 6,
+        "active": 2861.831,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 47238.13599999996
+       },
+       {
+        "n": 6,
+        "at": 65238.13599999997,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 28,
+        "incoming": 24,
+        "choices": 4,
+        "active": 2416.92,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 67655.05599999995
+       },
+       {
+        "n": 7,
+        "at": 69455.05599999995,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_silence",
+        "lines": 12,
+        "incoming": 10,
+        "choices": 2,
+        "active": 851.3459999999999,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 70306.40199999993
+       },
+       {
+        "n": 8,
+        "at": 75706.40199999993,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 60,
+        "incoming": 57,
+        "choices": 9,
+        "active": 8054.422999999999,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 83760.82499999992
+       },
+       {
+        "n": 9,
+        "at": 89160.82499999992,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 64,
+        "incoming": 59,
+        "choices": 10,
+        "active": 7412.999999999998,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 96573.82499999992
+       },
+       {
+        "n": 10,
+        "at": 101973.82499999992,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 54,
+        "incoming": 48,
+        "choices": 11,
+        "active": 8219.858,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 110193.68299999992
+       },
+       {
+        "n": 11,
+        "at": 128193.68299999992,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 79,
+        "incoming": 70,
+        "choices": 11,
+        "active": 12323.838000000002,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 140517.5209999999
+       },
+       {
+        "n": 12,
+        "at": 158517.5209999999,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 54,
+        "incoming": 51,
+        "choices": 8,
+        "active": 1762.8370000000004,
+        "tail": false,
+        "last": "Конец",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 160280.35799999977
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 1547,
+        "real": 1723.4879999999998,
+        "click": 338.48799999999994
+       },
+       {
+        "chapter": 2,
+        "pauses": 25510,
+        "real": 25684.683999999997,
+        "click": 204.68399999999994
+       },
+       {
+        "chapter": 3,
+        "pauses": 11396,
+        "real": 11568.133000000002,
+        "click": 288.13299999999987
+       },
+       {
+        "chapter": 4,
+        "pauses": 8130,
+        "real": 8261.830999999998,
+        "click": 141.83100000000002
+       },
+       {
+        "chapter": 5,
+        "pauses": 22955,
+        "real": 23068.266000000003,
+        "click": 133.26600000000002
+       },
+       {
+        "chapter": 6,
+        "pauses": 13260,
+        "real": 13454.422999999999,
+        "click": 234.42299999999997
+       },
+       {
+        "chapter": 7,
+        "pauses": 12620,
+        "real": 12813,
+        "click": 192.99999999999997
+       },
+       {
+        "chapter": 8,
+        "pauses": 13470,
+        "real": 13619.857999999998,
+        "click": 169.85799999999998
+       },
+       {
+        "chapter": 9,
+        "pauses": 30100,
+        "real": 30323.83799999999,
+        "click": 253.83799999999997
+       },
+       {
+        "chapter": 10,
+        "pauses": 19600,
+        "real": 19762.83699999999,
+        "click": 227.83700000000005
+       }
+      ],
+      "tail": {
+       "lines": 8,
+       "incoming": 6,
+       "delay": 80,
+       "senders": [
+        "judith",
+        "maya",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "curious",
+     "runs": 400,
+     "real": {
+      "median": 165002.57099999988,
+      "min": 160848.21099999984,
+      "max": 169300.76899999983
+     },
+     "click": {
+      "median": 2370.8350000000014,
+      "min": 2213.2110000000002,
+      "max": 2486.1940000000013
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 95,
+      "max": 95
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4943,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 247,
+      "route": [
+       1,
+       1,
+       1,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       2,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       1,
+       1,
+       1,
+       0,
+       1,
+       2,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       2,
+       2,
+       2,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       2,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       2,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       2,
+       1,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0
+      ],
+      "ending": "scapegoat",
+      "real": 165002.57099999988,
+      "click": 2442.5710000000017,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 59,
+        "incoming": 57,
+        "choices": 11,
+        "active": 1708.6219999999996,
+        "tail": false,
+        "last": "Элли В. перевела вам £12.00 · «час 1»",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 1708.622
+       },
+       {
+        "n": 2,
+        "at": 3808.6220000000003,
+        "pauseBefore": 2100,
+        "chapter": 1,
+        "knot": "ch1_connor",
+        "lines": 12,
+        "incoming": 9,
+        "choices": 2,
+        "active": 225.556,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 4034.1780000000003
+       },
+       {
+        "n": 3,
+        "at": 6734.178000000001,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 19,
+        "incoming": 17,
+        "choices": 3,
+        "active": 789.2479999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 7523.426
+       },
+       {
+        "n": 4,
+        "at": 25523.426,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 58,
+        "incoming": 54,
+        "choices": 9,
+        "active": 4405.83,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 29929.255999999994
+       },
+       {
+        "n": 5,
+        "at": 35329.255999999994,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 66,
+        "incoming": 59,
+        "choices": 10,
+        "active": 5963.867999999998,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 41293.12399999996
+       },
+       {
+        "n": 6,
+        "at": 46693.12399999996,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 61,
+        "incoming": 57,
+        "choices": 10,
+        "active": 3497.1940000000004,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 50190.31799999998
+       },
+       {
+        "n": 7,
+        "at": 68190.31799999998,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 36,
+        "incoming": 33,
+        "choices": 5,
+        "active": 2426.976,
+        "tail": false,
+        "last": "Джудит не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 70617.29399999995
+       },
+       {
+        "n": 8,
+        "at": 72417.29399999995,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_coroner",
+        "lines": 15,
+        "incoming": 14,
+        "choices": 2,
+        "active": 1194.4810000000002,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 73611.77499999994
+       },
+       {
+        "n": 9,
+        "at": 79011.77499999994,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 57,
+        "incoming": 54,
+        "choices": 9,
+        "active": 8824.563,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 87836.33799999993
+       },
+       {
+        "n": 10,
+        "at": 93236.33799999993,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 59,
+        "incoming": 55,
+        "choices": 10,
+        "active": 7796.683,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 101033.02099999992
+       },
+       {
+        "n": 11,
+        "at": 106433.02099999992,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 48,
+        "incoming": 42,
+        "choices": 10,
+        "active": 6364.265,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 112797.28599999995
+       },
+       {
+        "n": 12,
+        "at": 130797.28599999995,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 85,
+        "incoming": 76,
+        "choices": 10,
+        "active": 12984.934000000003,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 143782.21999999997
+       },
+       {
+        "n": 13,
+        "at": 161782.21999999997,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 82,
+        "incoming": 79,
+        "choices": 12,
+        "active": 3220.351000000001,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 165002.57099999988
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 3838,
+        "real": 4034.1780000000003,
+        "click": 359.178
+       },
+       {
+        "chapter": 2,
+        "pauses": 25685,
+        "real": 25895.077999999994,
+        "click": 240.07799999999995
+       },
+       {
+        "chapter": 3,
+        "pauses": 11192,
+        "real": 11363.868000000006,
+        "click": 263.86799999999994
+       },
+       {
+        "chapter": 4,
+        "pauses": 8710,
+        "real": 8897.193999999994,
+        "click": 197.194
+       },
+       {
+        "chapter": 5,
+        "pauses": 23265,
+        "real": 23421.457000000013,
+        "click": 176.45700000000002
+       },
+       {
+        "chapter": 6,
+        "pauses": 14035,
+        "real": 14224.563,
+        "click": 219.56300000000005
+       },
+       {
+        "chapter": 7,
+        "pauses": 13010,
+        "real": 13196.682999999995,
+        "click": 186.683
+       },
+       {
+        "chapter": 8,
+        "pauses": 11620,
+        "real": 11764.265000000001,
+        "click": 154.26499999999996
+       },
+       {
+        "chapter": 9,
+        "pauses": 31420,
+        "real": 31699.163999999997,
+        "click": 319.16400000000004
+       },
+       {
+        "chapter": 10,
+        "pauses": 20265,
+        "real": 20506.12099999999,
+        "click": 326.1209999999999
+       }
+      ],
+      "tail": {
+       "lines": 10,
+       "incoming": 8,
+       "delay": 95,
+       "senders": [
+        "owen",
+        "judith",
+        "ellie",
+        "jess",
+        "connor",
+        "bank"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "trusting",
+     "runs": 400,
+     "real": {
+      "median": 162443.6059999999,
+      "min": 158240.70100000003,
+      "max": 167151.37899999993
+     },
+     "click": {
+      "median": 2245.802999999999,
+      "min": 2047.7159999999992,
+      "max": 2493.6050000000005
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 130
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4984,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 377,
+      "route": [
+       1,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       2,
+       0,
+       1,
+       1,
+       2,
+       2,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       2,
+       0,
+       0,
+       2,
+       1,
+       1,
+       0,
+       2,
+       0,
+       1,
+       2,
+       2,
+       2,
+       0,
+       1,
+       0,
+       1,
+       1,
+       1,
+       1,
+       0,
+       0,
+       0,
+       0,
+       2,
+       0,
+       0,
+       0,
+       1,
+       2,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       1,
+       1,
+       1,
+       3,
+       1,
+       0,
+       1,
+       0,
+       2,
+       2,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       0,
+       1,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       0,
+       1,
+       2,
+       1,
+       1,
+       3,
+       1
+      ],
+      "ending": "herself",
+      "real": 162443.6059999999,
+      "click": 2398.6059999999998,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 58,
+        "incoming": 56,
+        "choices": 12,
+        "active": 1715.3869999999995,
+        "tail": false,
+        "last": "завтра его не поймать, у него смены с утра",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 1715.387
+       },
+       {
+        "n": 2,
+        "at": 3815.3869999999997,
+        "pauseBefore": 2100,
+        "chapter": 1,
+        "knot": "ch1_connor",
+        "lines": 19,
+        "incoming": 16,
+        "choices": 4,
+        "active": 245.433,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 4060.8199999999997
+       },
+       {
+        "n": 3,
+        "at": 6760.82,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 16,
+        "incoming": 14,
+        "choices": 2,
+        "active": 116.90400000000001,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 6877.723999999998
+       },
+       {
+        "n": 4,
+        "at": 24877.724,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 40,
+        "incoming": 36,
+        "choices": 8,
+        "active": 4153.042999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 29030.767
+       },
+       {
+        "n": 5,
+        "at": 34430.767,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 68,
+        "incoming": 61,
+        "choices": 12,
+        "active": 5863.599999999997,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 40294.366999999984
+       },
+       {
+        "n": 6,
+        "at": 45694.366999999984,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 46,
+        "incoming": 41,
+        "choices": 6,
+        "active": 4039.481999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 49733.84899999998
+       },
+       {
+        "n": 7,
+        "at": 67733.84899999999,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 30,
+        "incoming": 26,
+        "choices": 4,
+        "active": 2259.714,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 69993.56299999998
+       },
+       {
+        "n": 8,
+        "at": 71793.56299999998,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_owen",
+        "lines": 12,
+        "incoming": 11,
+        "choices": 2,
+        "active": 1235.962,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 73029.52499999998
+       },
+       {
+        "n": 9,
+        "at": 78429.52499999998,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 59,
+        "incoming": 54,
+        "choices": 10,
+        "active": 7888.772999999999,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 86318.29799999997
+       },
+       {
+        "n": 10,
+        "at": 91718.29799999997,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 52,
+        "incoming": 46,
+        "choices": 10,
+        "active": 6814.946,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 98533.24399999998
+       },
+       {
+        "n": 11,
+        "at": 103933.24399999998,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 52,
+        "incoming": 47,
+        "choices": 11,
+        "active": 7080.433999999998,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 111013.67800000003
+       },
+       {
+        "n": 12,
+        "at": 129013.67800000003,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 83,
+        "incoming": 74,
+        "choices": 10,
+        "active": 12615.328,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 141629.00600000002
+       },
+       {
+        "n": 13,
+        "at": 159629.00600000002,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 82,
+        "incoming": 79,
+        "choices": 12,
+        "active": 2814.6,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 162443.6059999999
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 3854,
+        "real": 4060.8199999999997,
+        "click": 415.8199999999999
+       },
+       {
+        "chapter": 2,
+        "pauses": 24820,
+        "real": 24969.947,
+        "click": 189.94699999999992
+       },
+       {
+        "chapter": 3,
+        "pauses": 11092,
+        "real": 11263.60000000001,
+        "click": 283.5999999999998
+       },
+       {
+        "chapter": 4,
+        "pauses": 9310,
+        "real": 9439.481999999996,
+        "click": 139.48200000000003
+       },
+       {
+        "chapter": 5,
+        "pauses": 23175,
+        "real": 23295.676000000003,
+        "click": 140.67600000000002
+       },
+       {
+        "chapter": 6,
+        "pauses": 13100,
+        "real": 13288.773,
+        "click": 248.773
+       },
+       {
+        "chapter": 7,
+        "pauses": 12060,
+        "real": 12214.946000000002,
+        "click": 154.946
+       },
+       {
+        "chapter": 8,
+        "pauses": 12330,
+        "real": 12480.434000000001,
+        "click": 180.43399999999994
+       },
+       {
+        "chapter": 9,
+        "pauses": 30760,
+        "real": 31027.847,
+        "click": 297.847
+       },
+       {
+        "chapter": 10,
+        "pauses": 20165,
+        "real": 20402.08099999999,
+        "click": 347.08099999999996
+       }
+      ],
+      "tail": {
+       "lines": 13,
+       "incoming": 11,
+       "delay": 130,
+       "senders": [
+        "judith",
+        "ellie",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "suspicious",
+     "runs": 400,
+     "real": {
+      "median": 162132.0039999999,
+      "min": 157502.83199999994,
+      "max": 166672.65999999983
+     },
+     "click": {
+      "median": 2323.4070000000006,
+      "min": 2120.120999999999,
+      "max": 2527.9429999999998
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 120
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4628,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 95,
+      "route": [
+       1,
+       1,
+       0,
+       2,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       1,
+       2,
+       1,
+       0,
+       0,
+       1,
+       1,
+       0,
+       1,
+       1,
+       1,
+       0,
+       2,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       1,
+       2,
+       0,
+       0,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       3,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       0,
+       2,
+       0,
+       2,
+       0,
+       1,
+       2,
+       1,
+       3,
+       0,
+       0,
+       0,
+       1,
+       0,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       0,
+       1,
+       0,
+       1,
+       1,
+       1,
+       2,
+       1,
+       1,
+       0,
+       0
+      ],
+      "ending": "truth",
+      "real": 162132.0039999999,
+      "click": 2427.003999999999,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 64,
+        "incoming": 61,
+        "choices": 12,
+        "active": 1763.6439999999996,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1763.644
+       },
+       {
+        "n": 2,
+        "at": 4463.644,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 19,
+        "incoming": 17,
+        "choices": 3,
+        "active": 789.6359999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 5253.28
+       },
+       {
+        "n": 3,
+        "at": 23253.28,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 47,
+        "incoming": 43,
+        "choices": 8,
+        "active": 4217.995,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 27471.274999999994
+       },
+       {
+        "n": 4,
+        "at": 32871.274999999994,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 70,
+        "incoming": 63,
+        "choices": 11,
+        "active": 6097.763999999996,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 38969.03899999997
+       },
+       {
+        "n": 5,
+        "at": 44369.03899999997,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 62,
+        "incoming": 58,
+        "choices": 10,
+        "active": 3671.6920000000005,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 48040.73099999996
+       },
+       {
+        "n": 6,
+        "at": 66040.73099999997,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 38,
+        "incoming": 35,
+        "choices": 5,
+        "active": 2333.3920000000003,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 68374.12299999995
+       },
+       {
+        "n": 7,
+        "at": 70174.12299999995,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_ellie_hides",
+        "lines": 9,
+        "incoming": 8,
+        "choices": 2,
+        "active": 786.8129999999999,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 70960.93599999993
+       },
+       {
+        "n": 8,
+        "at": 76360.93599999993,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 59,
+        "incoming": 55,
+        "choices": 8,
+        "active": 7613.972,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 83974.90799999991
+       },
+       {
+        "n": 9,
+        "at": 89374.90799999991,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 58,
+        "incoming": 53,
+        "choices": 10,
+        "active": 7289.8600000000015,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 96664.76799999987
+       },
+       {
+        "n": 10,
+        "at": 102064.76799999987,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 52,
+        "incoming": 48,
+        "choices": 12,
+        "active": 8540.016,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 110604.78399999991
+       },
+       {
+        "n": 11,
+        "at": 128604.78399999991,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 83,
+        "incoming": 74,
+        "choices": 12,
+        "active": 13094.499000000003,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 141699.28299999994
+       },
+       {
+        "n": 12,
+        "at": 159699.28299999994,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 75,
+        "incoming": 72,
+        "choices": 11,
+        "active": 2432.721,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 162132.0039999999
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 1582,
+        "real": 1763.644,
+        "click": 338.644
+       },
+       {
+        "chapter": 2,
+        "pauses": 25525,
+        "real": 25707.630999999994,
+        "click": 212.63099999999991
+       },
+       {
+        "chapter": 3,
+        "pauses": 11316,
+        "real": 11497.764000000005,
+        "click": 287.7639999999999
+       },
+       {
+        "chapter": 4,
+        "pauses": 8890,
+        "real": 9071.691999999997,
+        "click": 191.69199999999998
+       },
+       {
+        "chapter": 5,
+        "pauses": 22775,
+        "real": 22920.20500000001,
+        "click": 165.20499999999998
+       },
+       {
+        "chapter": 6,
+        "pauses": 12830,
+        "real": 13013.971999999998,
+        "click": 223.9720000000001
+       },
+       {
+        "chapter": 7,
+        "pauses": 12510,
+        "real": 12689.859999999999,
+        "click": 179.86
+       },
+       {
+        "chapter": 8,
+        "pauses": 13780,
+        "real": 13940.016000000003,
+        "click": 180.01599999999996
+       },
+       {
+        "chapter": 9,
+        "pauses": 30860,
+        "real": 31094.49899999999,
+        "click": 274.49899999999997
+       },
+       {
+        "chapter": 10,
+        "pauses": 20185,
+        "real": 20432.72099999998,
+        "click": 372.72099999999995
+       }
+      ],
+      "tail": {
+       "lines": 9,
+       "incoming": 7,
+       "delay": 80,
+       "senders": [
+        "ellie",
+        "judith",
+        "connor",
+        "bank"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "distracted",
+     "runs": 400,
+     "real": {
+      "median": 162769.71199999997,
+      "min": 157906.05299999993,
+      "max": 167681.133
+     },
+     "click": {
+      "median": 2295.935000000001,
+      "min": 2045.5259999999996,
+      "max": 2558.972
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 80,
+      "max": 130
+     },
+     "sessions": {
+      "median": 13,
+      "micro": 0,
+      "body": 4822,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": {
+      "count": 4822,
+      "perRun": 12,
+      "median": 4,
+      "p90": 6,
+      "max": 10,
+      "maxKnot": "ch9_bill",
+      "maxChapter": 9,
+      "notices": 3
+     },
+     "middle": {
+      "seed": 390,
+      "route": [
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       2,
+       2,
+       1,
+       0,
+       2,
+       0,
+       1,
+       2,
+       0,
+       1,
+       2,
+       0,
+       0,
+       1,
+       1,
+       0,
+       0,
+       0,
+       1,
+       3,
+       0,
+       0,
+       0,
+       1,
+       0,
+       1,
+       2,
+       1,
+       1,
+       0,
+       0,
+       0,
+       0,
+       2,
+       0,
+       0,
+       2,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       2,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       0,
+       3,
+       1,
+       0,
+       0,
+       1,
+       0,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       1,
+       1,
+       1,
+       0,
+       1,
+       0,
+       0,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3,
+       0
+      ],
+      "ending": "herself",
+      "real": 162769.71199999997,
+      "click": 2279.7120000000004,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 54,
+        "incoming": 52,
+        "choices": 12,
+        "active": 1688.0289999999995,
+        "tail": false,
+        "last": "Элли В. перевела вам £12.00 · «час 1»",
+        "hook": [
+         "первое сообщение"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 1688.0289999999998
+       },
+       {
+        "n": 2,
+        "at": 3788.0289999999995,
+        "pauseBefore": 2100,
+        "chapter": 1,
+        "knot": "ch1_connor",
+        "lines": 10,
+        "incoming": 7,
+        "choices": 2,
+        "active": 199.611,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 3987.6399999999994
+       },
+       {
+        "n": 3,
+        "at": 6687.639999999999,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 18,
+        "incoming": 16,
+        "choices": 3,
+        "active": 776.5619999999998,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 7464.202
+       },
+       {
+        "n": 4,
+        "at": 25464.202,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 45,
+        "incoming": 41,
+        "choices": 8,
+        "active": 4241.307,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 29705.509000000002
+       },
+       {
+        "n": 5,
+        "at": 35105.509000000005,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 58,
+        "incoming": 51,
+        "choices": 9,
+        "active": 5735.0059999999985,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 40840.514999999985
+       },
+       {
+        "n": 6,
+        "at": 46240.514999999985,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 56,
+        "incoming": 52,
+        "choices": 9,
+        "active": 3418.2190000000005,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 49658.73399999998
+       },
+       {
+        "n": 7,
+        "at": 67658.73399999998,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 35,
+        "incoming": 31,
+        "choices": 5,
+        "active": 2578.191,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 70236.92499999996
+       },
+       {
+        "n": 8,
+        "at": 72036.92499999996,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_owen",
+        "lines": 12,
+        "incoming": 11,
+        "choices": 2,
+        "active": 1235.962,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 73272.88699999996
+       },
+       {
+        "n": 9,
+        "at": 78672.88699999996,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 54,
+        "incoming": 48,
+        "choices": 9,
+        "active": 8157.877999999999,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 86830.76499999993
+       },
+       {
+        "n": 10,
+        "at": 92230.76499999993,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 58,
+        "incoming": 53,
+        "choices": 10,
+        "active": 7309.884000000002,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 99540.64899999995
+       },
+       {
+        "n": 11,
+        "at": 104940.64899999995,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 47,
+        "incoming": 43,
+        "choices": 10,
+        "active": 6204.241,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 111144.88999999997
+       },
+       {
+        "n": 12,
+        "at": 129144.88999999997,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 82,
+        "incoming": 73,
+        "choices": 10,
+        "active": 12803.643,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 141948.53300000002
+       },
+       {
+        "n": 13,
+        "at": 159948.53300000002,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 81,
+        "incoming": 78,
+        "choices": 12,
+        "active": 2821.179,
+        "tail": false,
+        "last": "Конец",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 162769.71199999997
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 3813,
+        "real": 3987.6399999999994,
+        "click": 317.63999999999993
+       },
+       {
+        "chapter": 2,
+        "pauses": 25550,
+        "real": 25717.868999999995,
+        "click": 197.86899999999991
+       },
+       {
+        "chapter": 3,
+        "pauses": 10986,
+        "real": 11135.006000000007,
+        "click": 225.00599999999997
+       },
+       {
+        "chapter": 4,
+        "pauses": 8650,
+        "real": 8818.218999999997,
+        "click": 178.21900000000002
+       },
+       {
+        "chapter": 5,
+        "pauses": 23475,
+        "real": 23614.153000000002,
+        "click": 159.15300000000005
+       },
+       {
+        "chapter": 6,
+        "pauses": 13390,
+        "real": 13557.878000000002,
+        "click": 227.87800000000001
+       },
+       {
+        "chapter": 7,
+        "pauses": 12530,
+        "real": 12709.883999999996,
+        "click": 179.884
+       },
+       {
+        "chapter": 8,
+        "pauses": 11460,
+        "real": 11604.241,
+        "click": 154.24099999999996
+       },
+       {
+        "chapter": 9,
+        "pauses": 30950,
+        "real": 31216.162000000004,
+        "click": 306.162
+       },
+       {
+        "chapter": 10,
+        "pauses": 20175,
+        "real": 20408.65999999999,
+        "click": 333.66
+       }
+      ],
+      "tail": {
+       "lines": 12,
+       "incoming": 10,
+       "delay": 120,
+       "senders": [
+        "judith",
+        "ellie",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    },
+    {
+     "persona": "unresponsive",
+     "runs": 400,
+     "real": {
+      "median": 180825.562,
+      "min": 180825.562,
+      "max": 180825.562
+     },
+     "click": {
+      "median": 1860.562,
+      "min": 1860.562,
+      "max": 1860.562
+     },
+     "maxPause": {
+      "median": 18000,
+      "max": 18000,
+      "knot": "ch2_unknown"
+     },
+     "tail": {
+      "median": 60,
+      "max": 60
+     },
+     "sessions": {
+      "median": 12,
+      "micro": 0,
+      "body": 4400,
+      "microShare": 0,
+      "microExample": null
+     },
+     "batches": null,
+     "middle": {
+      "seed": 201,
+      "route": [
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1
+      ],
+      "ending": "silence",
+      "real": 180825.562,
+      "click": 1860.562,
+      "sessions": [
+       {
+        "n": 1,
+        "at": 0,
+        "pauseBefore": 0,
+        "chapter": 1,
+        "knot": "ch1",
+        "lines": 51,
+        "incoming": 48,
+        "choices": 10,
+        "active": 1366.3699999999997,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 6106.370000000001
+       },
+       {
+        "n": 2,
+        "at": 8806.369999999999,
+        "pauseBefore": 2700,
+        "chapter": 2,
+        "knot": "ch2",
+        "lines": 10,
+        "incoming": 8,
+        "choices": 1,
+        "active": 61.48300000000001,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 9467.853000000001
+       },
+       {
+        "n": 3,
+        "at": 27467.853000000003,
+        "pauseBefore": 18000,
+        "chapter": 2,
+        "knot": "ch2_unknown",
+        "lines": 40,
+        "incoming": 37,
+        "choices": 8,
+        "active": 3534.745999999999,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 34482.599
+       },
+       {
+        "n": 4,
+        "at": 39882.599,
+        "pauseBefore": 5400,
+        "chapter": 3,
+        "knot": "ch3",
+        "lines": 56,
+        "incoming": 49,
+        "choices": 9,
+        "active": 3326.0619999999994,
+        "tail": false,
+        "last": "Оуэн не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 47288.66099999999
+       },
+       {
+        "n": 5,
+        "at": 52688.66099999999,
+        "pauseBefore": 5400,
+        "chapter": 4,
+        "knot": "ch4",
+        "lines": 41,
+        "incoming": 36,
+        "choices": 7,
+        "active": 3181.3100000000004,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 58329.971000000005
+       },
+       {
+        "n": 6,
+        "at": 76329.971,
+        "pauseBefore": 18000,
+        "chapter": 5,
+        "knot": "ch5",
+        "lines": 27,
+        "incoming": 24,
+        "choices": 4,
+        "active": 1054.588,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [],
+        "closed": false,
+        "label": "",
+        "end": 80204.559
+       },
+       {
+        "n": 7,
+        "at": 82004.559,
+        "pauseBefore": 1800,
+        "chapter": 5,
+        "knot": "end_silence",
+        "lines": 10,
+        "incoming": 9,
+        "choices": 2,
+        "active": 520.524,
+        "tail": false,
+        "last": "Мая не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 82885.08299999998
+       },
+       {
+        "n": 8,
+        "at": 88285.08299999998,
+        "pauseBefore": 5400,
+        "chapter": 6,
+        "knot": "ch6",
+        "lines": 50,
+        "incoming": 47,
+        "choices": 9,
+        "active": 5981.107000000001,
+        "tail": false,
+        "last": "Ладно. Найду сама.",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": true,
+        "label": "крючок",
+        "end": 97506.18999999996
+       },
+       {
+        "n": 9,
+        "at": 102906.18999999996,
+        "pauseBefore": 5400,
+        "chapter": 7,
+        "knot": "ch7",
+        "lines": 43,
+        "incoming": 37,
+        "choices": 8,
+        "active": 5037.411,
+        "tail": false,
+        "last": "Элли не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 111843.60099999994
+       },
+       {
+        "n": 10,
+        "at": 117243.60099999994,
+        "pauseBefore": 5400,
+        "chapter": 8,
+        "knot": "ch8",
+        "lines": 38,
+        "incoming": 34,
+        "choices": 10,
+        "active": 5561.221,
+        "tail": false,
+        "last": "Коннор не в сети",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 126224.82199999996
+       },
+       {
+        "n": 11,
+        "at": 144224.82199999996,
+        "pauseBefore": 18000,
+        "chapter": 9,
+        "knot": "ch9",
+        "lines": 67,
+        "incoming": 58,
+        "choices": 9,
+        "active": 7332.075000000002,
+        "tail": false,
+        "last": "Джесс не в сети",
+        "hook": [
+         "обещание"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 155276.89700000008
+       },
+       {
+        "n": 12,
+        "at": 173276.89700000008,
+        "pauseBefore": 18000,
+        "chapter": 10,
+        "knot": "ch10",
+        "lines": 72,
+        "incoming": 69,
+        "choices": 10,
+        "active": 2208.664999999999,
+        "tail": false,
+        "last": "Конец",
+        "hook": [
+         "вопрос"
+        ],
+        "closed": false,
+        "label": "крючок",
+        "end": 180825.562
+       }
+      ],
+      "jumps": [
+       {
+        "knot": "ch2_unknown",
+        "chapter": 2,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch3",
+        "chapter": 3,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch4",
+        "chapter": 4,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch5",
+        "chapter": 5,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch6",
+        "chapter": 6,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch7",
+        "chapter": 7,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch8",
+        "chapter": 8,
+        "delay": 5400,
+        "label": "спустя 1 ч 30 мин"
+       },
+       {
+        "knot": "ch9",
+        "chapter": 9,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       },
+       {
+        "knot": "ch10",
+        "chapter": 10,
+        "delay": 18000,
+        "label": "спустя 5 ч"
+       }
+      ],
+      "chapters": [
+       {
+        "chapter": 1,
+        "pauses": 1220,
+        "real": 1366.3699999999997,
+        "click": 266.3699999999999
+       },
+       {
+        "chapter": 2,
+        "pauses": 24163,
+        "real": 24296.229000000003,
+        "click": 171.22899999999993
+       },
+       {
+        "chapter": 3,
+        "pauses": 8586,
+        "real": 8726.062,
+        "click": 226.06199999999998
+       },
+       {
+        "chapter": 4,
+        "pauses": 8470,
+        "real": 8581.309999999998,
+        "click": 121.31
+       },
+       {
+        "chapter": 5,
+        "pauses": 21265,
+        "real": 21375.11200000001,
+        "click": 130.112
+       },
+       {
+        "chapter": 6,
+        "pauses": 11220,
+        "real": 11381.106999999998,
+        "click": 191.10700000000006
+       },
+       {
+        "chapter": 7,
+        "pauses": 10310,
+        "real": 10437.410999999996,
+        "click": 127.411
+       },
+       {
+        "chapter": 8,
+        "pauses": 10850,
+        "real": 10961.220999999996,
+        "click": 121.221
+       },
+       {
+        "chapter": 9,
+        "pauses": 25530,
+        "real": 25745.798,
+        "click": 245.79799999999992
+       },
+       {
+        "chapter": 10,
+        "pauses": 19610,
+        "real": 19794.94199999999,
+        "click": 259.942
+       }
+      ],
+      "tail": {
+       "lines": 7,
+       "incoming": 5,
+       "delay": 60,
+       "senders": [
+        "maya",
+        "judith",
+        "connor",
+        "jess"
+       ]
+      }
+     }
+    }
+   ],
+   "problems": {
+    "random": [],
+    "silent": [],
+    "first": [],
+    "last": [],
+    "refuse": [],
+    "curious": [],
+    "trusting": [],
+    "suspicious": [],
+    "distracted": [
+     "⚠ пачка при возвращении: p90 — 6 строк до кнопки (C-28.pack = 5; наибольшая — 10 в ch9_bill)"
+    ],
+    "unresponsive": [
+     "⚠ история идёт 50 ч 14 мин — больше цели (story.length.target_h = 48 ч)"
+    ]
+   }
+  }
+ ]
+}

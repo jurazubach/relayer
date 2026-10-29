@@ -1,0 +1,622 @@
+{
+ "stories": [
+  {
+   "id": "chuzhoy-golos",
+   "path": "src/stories/chuzhoy-golos",
+   "source": "mark",
+   "final": [
+    "fin_truth",
+    "fin_herself",
+    "fin_unproven",
+    "fin_scapegoat",
+    "fin_revenge",
+    "fin_silence"
+   ],
+   "distributors": [
+    "ch10_route"
+   ],
+   "unmarked": [],
+   "runs": 1602,
+   "personas": {
+    "random": {
+     "runs": 200,
+     "counts": {
+      "truth": 62,
+      "silence": 26,
+      "unproven": 41,
+      "scapegoat": 41,
+      "herself": 28,
+      "revenge": 2
+     }
+    },
+    "silent": {
+     "runs": 200,
+     "counts": {
+      "silence": 200
+     }
+    },
+    "first": {
+     "runs": 1,
+     "counts": {
+      "scapegoat": 1
+     }
+    },
+    "last": {
+     "runs": 1,
+     "counts": {
+      "revenge": 1
+     }
+    },
+    "refuse": {
+     "runs": 200,
+     "counts": {
+      "silence": 200
+     }
+    },
+    "curious": {
+     "runs": 200,
+     "counts": {
+      "scapegoat": 200
+     }
+    },
+    "trusting": {
+     "runs": 200,
+     "counts": {
+      "herself": 74,
+      "revenge": 23,
+      "unproven": 103
+     }
+    },
+    "suspicious": {
+     "runs": 200,
+     "counts": {
+      "scapegoat": 71,
+      "silence": 48,
+      "truth": 52,
+      "unproven": 18,
+      "herself": 11
+     }
+    },
+    "distracted": {
+     "runs": 200,
+     "counts": {
+      "truth": 62,
+      "silence": 26,
+      "unproven": 41,
+      "scapegoat": 41,
+      "herself": 28,
+      "revenge": 2
+     }
+    },
+    "unresponsive": {
+     "runs": 200,
+     "counts": {
+      "silence": 200
+     }
+    }
+   },
+   "endings": [
+    {
+     "name": "truth",
+     "node": "fin_truth",
+     "declared": true,
+     "line": 346,
+     "runs": 176,
+     "share": 0.10986267166042447,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 62,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 0,
+      "suspicious": 52,
+      "distracted": 62,
+      "unresponsive": 0
+     },
+     "staticVars": [
+      "final_choice",
+      "proof"
+     ],
+     "derivedVars": [
+      "clue_bill→proof",
+      "note_ladder→proof",
+      "owen_turned→proof",
+      "fake_note_caught→proof",
+      "jess_confessed→proof"
+     ],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "truth",
+       "n": 176
+      }
+     ]
+    },
+    {
+     "name": "herself",
+     "node": "fin_herself",
+     "declared": true,
+     "line": 390,
+     "runs": 141,
+     "share": 0.08801498127340825,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 28,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 74,
+      "suspicious": 11,
+      "distracted": 28,
+      "unresponsive": 0
+     },
+     "staticVars": [
+      "final_choice",
+      "jess_confessed",
+      "jess_bond"
+     ],
+     "derivedVars": [
+      "jess_suspicious→jess_bond"
+     ],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "herself",
+       "n": 141
+      }
+     ]
+    },
+    {
+     "name": "unproven",
+     "node": "fin_unproven",
+     "declared": true,
+     "line": 419,
+     "runs": 203,
+     "share": 0.12671660424469414,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 41,
+      "silent": 0,
+      "first": 0,
+      "last": 0,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 103,
+      "suspicious": 18,
+      "distracted": 41,
+      "unresponsive": 0
+     },
+     "staticVars": [
+      "final_choice"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "unproven",
+       "n": 203
+      }
+     ]
+    },
+    {
+     "name": "scapegoat",
+     "node": "fin_scapegoat",
+     "declared": true,
+     "line": 456,
+     "runs": 354,
+     "share": 0.2209737827715356,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 41,
+      "silent": 0,
+      "first": 1,
+      "last": 0,
+      "refuse": 0,
+      "curious": 200,
+      "trusting": 0,
+      "suspicious": 71,
+      "distracted": 41,
+      "unresponsive": 0
+     },
+     "staticVars": [
+      "final_choice"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "scapegoat",
+       "n": 354
+      }
+     ]
+    },
+    {
+     "name": "revenge",
+     "node": "fin_revenge",
+     "declared": true,
+     "line": 494,
+     "runs": 28,
+     "share": 0.017478152309612985,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 2,
+      "silent": 0,
+      "first": 0,
+      "last": 1,
+      "refuse": 0,
+      "curious": 0,
+      "trusting": 23,
+      "suspicious": 0,
+      "distracted": 2,
+      "unresponsive": 0
+     },
+     "staticVars": [
+      "final_choice",
+      "maya_post",
+      "jess_confessed"
+     ],
+     "derivedVars": [
+      "tom_hold→maya_post",
+      "maya_go→maya_post"
+     ],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "revenge",
+       "n": 28
+      }
+     ]
+    },
+    {
+     "name": "silence",
+     "node": "fin_silence",
+     "declared": true,
+     "line": 521,
+     "runs": 700,
+     "share": 0.4369538077403246,
+     "chapters": [
+      10
+     ],
+     "byPersona": {
+      "random": 26,
+      "silent": 200,
+      "first": 0,
+      "last": 0,
+      "refuse": 200,
+      "curious": 0,
+      "trusting": 0,
+      "suspicious": 48,
+      "distracted": 26,
+      "unresponsive": 200
+     },
+     "staticVars": [
+      "judith_waits"
+     ],
+     "derivedVars": [],
+     "decidedIn": [
+      "ch10_route"
+     ],
+     "endingVar": [
+      {
+       "value": "silence",
+       "n": 700
+      }
+     ]
+    }
+   ],
+   "deciders": [
+    {
+     "name": "final_choice",
+     "gain": 0.42625,
+     "accuracy": 0.86375,
+     "values": [
+      {
+       "value": "silent",
+       "ending": "silence",
+       "share": 0.9138381201044387,
+       "runs": 766
+      },
+      {
+       "value": "owen",
+       "ending": "scapegoat",
+       "share": 1,
+       "runs": 353
+      },
+      {
+       "value": "mercy",
+       "ending": "unproven",
+       "share": 0.5134228187919463,
+       "runs": 298
+      },
+      {
+       "value": "truth",
+       "ending": "truth",
+       "share": 0.9617486338797814,
+       "runs": 183
+      }
+     ]
+    },
+    {
+     "name": "maya_post",
+     "gain": 0.1875,
+     "accuracy": 0.625,
+     "values": [
+      {
+       "value": 1,
+       "ending": "silence",
+       "share": 0.7860696517412935,
+       "runs": 804
+      },
+      {
+       "value": 2,
+       "ending": "scapegoat",
+       "share": 0.540084388185654,
+       "runs": 474
+      },
+      {
+       "value": 0,
+       "ending": "unproven",
+       "share": 0.34782608695652173,
+       "runs": 322
+      }
+     ]
+    },
+    {
+     "name": "c2_answered_unknown",
+     "gain": 0.16062500000000002,
+     "accuracy": 0.598125,
+     "values": [
+      {
+       "value": false,
+       "ending": "silence",
+       "share": 0.7548543689320388,
+       "runs": 824
+      },
+      {
+       "value": true,
+       "ending": "scapegoat",
+       "share": 0.43170103092783507,
+       "runs": 776
+      }
+     ]
+    },
+    {
+     "name": "act1",
+     "gain": 0.155625,
+     "accuracy": 0.593125,
+     "values": [
+      {
+       "value": "ellie_alone_truth",
+       "ending": "silence",
+       "share": 0.7642857142857142,
+       "runs": 420
+      },
+      {
+       "value": "ellie_alone_owen",
+       "ending": "silence",
+       "share": 0.8123393316195373,
+       "runs": 389
+      },
+      {
+       "value": "owen",
+       "ending": "unproven",
+       "share": 0.2833333333333333,
+       "runs": 360
+      },
+      {
+       "value": "ellie_hides",
+       "ending": "scapegoat",
+       "share": 0.4230769230769231,
+       "runs": 156
+      },
+      {
+       "value": "ellie_together",
+       "ending": "scapegoat",
+       "share": 0.5588235294117647,
+       "runs": 102
+      },
+      {
+       "value": "ellie_truth",
+       "ending": "scapegoat",
+       "share": 0.4444444444444444,
+       "runs": 72
+      }
+     ]
+    },
+    {
+     "name": "judith_waits",
+     "gain": 0.15500000000000003,
+     "accuracy": 0.5925,
+     "values": [
+      {
+       "value": true,
+       "ending": "silence",
+       "share": 0.611353711790393,
+       "runs": 1145
+      },
+      {
+       "value": false,
+       "ending": "scapegoat",
+       "share": 0.545054945054945,
+       "runs": 455
+      }
+     ]
+    }
+   ],
+   "hints": [
+    "ℹ финал «revenge» выпал в 2% — достижим ли он целенаправленно? (C-40.rare_share = 0.02)"
+   ],
+   "frame": {
+    "first": {
+     "who": "ellie",
+     "kind": "in",
+     "text": "в июне на карьере утонула лили. моя лучшая подруга"
+    },
+    "endings": {
+     "truth": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "сказал им про лестницу. и что это я сказал оуэну где она"
+      },
+      {
+       "who": "bank",
+       "kind": "in",
+       "text": "Элли В. перевела вам £12.00 · «последний час. спасибо x»"
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "silence": [
+      {
+       "who": "owen",
+       "kind": "in",
+       "text": "Будешь в наших краях — заходи. Я теперь знаю, кого ждать 🙂"
+      },
+      {
+       "who": "jess",
+       "kind": "in",
+       "text": "привет!! вы ещё делаете опросы? 🙂"
+      },
+      {
+       "who": "jess",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "unproven": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "про лестницу сказал. им всё равно"
+      },
+      {
+       "who": "judith",
+       "kind": "in",
+       "text": "Сегодня я отключила её номер."
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "scapegoat": [
+      {
+       "who": "judith",
+       "kind": "in",
+       "text": "В ночь, когда его арестовали, я впервые с июня спала."
+      },
+      {
+       "who": "bank",
+       "kind": "in",
+       "text": "Элли В. перевела вам £12.00 · «спасибо x»"
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "herself": [
+      {
+       "who": "connor",
+       "kind": "in",
+       "text": "сказал им про лестницу. и что это я сказал оуэну где она"
+      },
+      {
+       "who": "jess",
+       "kind": "in",
+       "text": "я досчитала"
+      },
+      {
+       "who": "judith",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ],
+     "revenge": [
+      {
+       "who": "tom",
+       "kind": "in",
+       "text": "это я нажал «опубликовать». оба раза."
+      },
+      {
+       "who": "maya",
+       "kind": "in",
+       "text": "Все знают. Ничего не изменилось."
+      },
+      {
+       "who": "maya",
+       "kind": "sys",
+       "text": "Конец"
+      }
+     ]
+    }
+   },
+   "card": {
+    "text": "Шесть финалов, и ни один не спасает всех",
+    "count": 6,
+    "several": true
+   },
+   "endingVar": {
+    "chapters": [
+     6,
+     10
+    ],
+    "isFinal": true
+   },
+   "thresholds": [
+    {
+     "key": "C-40.dominant_share",
+     "value": 0.5,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "C-40.rare_share",
+     "value": 0.02,
+     "unit": "доля прогонов",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "source"
+    },
+    {
+     "key": "endings.top_vars",
+     "value": 5,
+     "unit": "переменных",
+     "from": "docs/playbook/thresholds.json",
+     "basis": "our_estimate"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,7413 @@
+{
+ "stories": [
+  {
+   "id": "chuzhoy-golos",
+   "path": "src/stories/chuzhoy-golos",
+   "chapters": 10,
+   "final": [
+    "fin_truth",
+    "fin_herself",
+    "fin_unproven",
+    "fin_scapegoat",
+    "fin_puppet",
+    "fin_revenge",
+    "fin_silence"
+   ],
+   "distributors": [
+    "ch10_route"
+   ],
+   "counts": {
+    "мёртвая": 0,
+    "невидимая": 8,
+    "только финал": 2,
+    "не пишется": 0,
+    "молчит": 9
+   },
+   "vars": [
+    {
+     "name": "alias",
+     "init": "\"Сэм\"",
+     "writes": [
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": 91,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch2_judith",
+       "chapter": 2,
+       "line": 87,
+       "file": "ch02.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch2_judith",
+       "chapter": 2,
+       "line": 88,
+       "file": "ch02.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": 167,
+       "file": "ch08.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": 361,
+       "file": "ch10.ink",
+       "kind": "текст"
+      }
+     ],
+     "ownReads": 8,
+     "visibleReads": 5,
+     "hiddenReads": 3,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": 1,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "cover",
+     "init": "\"student\"",
+     "writes": [
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_unknown",
+       "chapter": 1,
+       "line": 341,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch2_judith",
+       "chapter": 2,
+       "line": 87,
+       "file": "ch02.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch2_judith",
+       "chapter": 2,
+       "line": 88,
+       "file": "ch02.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch2_judith",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": 317,
+       "file": "ch06.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 7,
+     "visibleReads": 6,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": 1,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "opener",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_terms",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": 130,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": 132,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": 134,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": 137,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_connor",
+       "chapter": 1,
+       "line": 266,
+       "file": "ch01.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch1_connor_skip",
+       "chapter": 1,
+       "line": 275,
+       "file": "ch01.ink",
+       "kind": "текст"
+      }
+     ],
+     "ownReads": 6,
+     "visibleReads": 6,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": 1,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ellie_trust",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_party",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_evening",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_ellie_lie",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch2_ellie_full",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_hook",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch3",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_fake",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch4_please",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ellie_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ellie_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ellie_talk",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_ellie_block",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_ellie_late",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_beth",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_beth",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_ellie",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": 192,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      }
+     ],
+     "ownReads": 8,
+     "visibleReads": 19,
+     "hiddenReads": 14,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [
+      "owen_contacted",
+      "quit_job",
+      "act1",
+      "found_jacket_self"
+     ],
+     "feeds": [
+      "act1"
+     ],
+     "flags": []
+    },
+    {
+     "name": "judith_trust",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch2_judith_who",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch2_judith_who",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      },
+      {
+       "node": "ch4_reveal",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_reveal",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_show_judith",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 2,
+     "firstRead": 8,
+     "firstVisible": 8,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "jess_push",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch1_jess",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_jess",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_jess",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "jess_done",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_jess",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch1_jess_sus",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": 139,
+       "file": "ch01.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": 1,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "jess_suspicious",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_jess_sus",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_fake",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": 255,
+       "file": "ch09.ink",
+       "kind": "текст",
+       "via": "jess_bond"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "jess_bond"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "jess_bond"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "jess_bond"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "jess_bond"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 4,
+     "hiddenReads": 3,
+     "firstWrite": 1,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "jess_bond"
+     ],
+     "flags": []
+    },
+    {
+     "name": "jess_rumor",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_rumor",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": 98,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "jess_clues"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 233,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "jess_clues"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 2,
+     "hiddenReads": 1,
+     "firstWrite": 2,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "jess_clues"
+     ],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "beth_written",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_hub",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_beth",
+       "chapter": 2,
+       "line": 155,
+       "file": "ch02.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch9_beth",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "connor_told",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_connor_soft",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "connor_blocked",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_connor_direct",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_connor",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch8_connor",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "ellie_alibi"
+      }
+     ],
+     "ownReads": 4,
+     "visibleReads": 3,
+     "hiddenReads": 2,
+     "firstWrite": 1,
+     "firstRead": 3,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "ellie_alibi"
+     ],
+     "flags": []
+    },
+    {
+     "name": "connor_ally",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3_connor",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_bluff",
+       "chapter": 4,
+       "line": 127,
+       "file": "ch04.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_connor",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch5_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "owen_weakened"
+      },
+      {
+       "node": "end_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "owen_weakened"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "ellie_alibi"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 6,
+     "hiddenReads": 0,
+     "firstWrite": 3,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "owen_weakened",
+      "ellie_alibi"
+     ],
+     "flags": []
+    },
+    {
+     "name": "connor_to_owen",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3_connor",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_hook",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 3,
+     "firstRead": 3,
+     "firstVisible": 3,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "connor_jacket",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3_cc_body",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_jacket",
+       "chapter": 4,
+       "line": 139,
+       "file": "ch04.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "found_jacket_self"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 3,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "found_jacket_self"
+     ],
+     "flags": []
+    },
+    {
+     "name": "owen_contacted",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_owen",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch1_evening",
+       "chapter": 1,
+       "line": 228,
+       "file": "ch01.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch3_owen",
+       "chapter": 3,
+       "line": 35,
+       "file": "ch03.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": 192,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 9,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 1,
+     "firstVisible": 1,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "ellie_trust"
+     ],
+     "flags": []
+    },
+    {
+     "name": "owen_knows",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch1_owen",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      },
+      {
+       "node": "ch3_owen_probe",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_owen_probe",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": 203,
+       "file": "ch08.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      }
+     ],
+     "ownReads": 6,
+     "visibleReads": 10,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "hart_exposed"
+     ],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "owen_weakened",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_bluff",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": false,
+     "derivedFrom": [
+      "connor_ally"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "confronted_night",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_confront",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_ellie",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "unknown_blocked",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_unknown",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 1,
+     "hiddenReads": 1,
+     "firstWrite": 1,
+     "firstRead": 4,
+     "firstVisible": 6,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "told_judith_ellie",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_judith_who",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_reveal",
+       "chapter": 4,
+       "line": 38,
+       "file": "ch04.ink",
+       "kind": "текст"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 2,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "note_connor",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch1_connor_soft",
+       "chapter": 1,
+       "line": null,
+       "file": "ch01.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch2_ellie",
+       "chapter": 2,
+       "line": 27,
+       "file": "ch02.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": 318,
+       "file": "ch08.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 1,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "note_beth",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch2_beth",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch4_jacket",
+       "chapter": 4,
+       "line": 139,
+       "file": "ch04.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": 253,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "found_jacket_self"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 3,
+     "hiddenReads": 0,
+     "firstWrite": 2,
+     "firstRead": 4,
+     "firstVisible": 4,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "found_jacket_self"
+     ],
+     "flags": []
+    },
+    {
+     "name": "note_threat",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_threat",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "end_coroner",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": 117,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 3,
+     "hiddenReads": 0,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "quit_job",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch3_fake",
+       "chapter": 3,
+       "line": 92,
+       "file": "ch03.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch3_connor_relay",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4_blocked",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch4_ellie",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_ellie_talk",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "exposed_fake"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": 192,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 10,
+     "hiddenReads": 4,
+     "firstWrite": 3,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "exposed_fake",
+      "ellie_trust"
+     ],
+     "flags": []
+    },
+    {
+     "name": "exposed_fake",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch3_fake",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      },
+      {
+       "node": "ch3_fake",
+       "chapter": 3,
+       "line": null,
+       "file": "ch03.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "jess_clues"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 233,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "jess_clues"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 2,
+     "hiddenReads": 1,
+     "firstWrite": 3,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [
+      "quit_job"
+     ],
+     "feeds": [
+      "jess_clues"
+     ],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "called_bluff",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_bluff",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ellie_reaction",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      },
+      {
+       "node": "ch4_confess",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "end_coroner",
+       "chapter": 5,
+       "line": 96,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "end_ellie",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_ellie_ref",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_ellie_ref",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_ellie_ref",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 4,
+     "hiddenReads": 1,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "found_jacket_self",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_jacket",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": 192,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 8,
+     "hiddenReads": 1,
+     "firstWrite": 4,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [
+      "note_beth",
+      "connor_jacket"
+     ],
+     "feeds": [
+      "ellie_trust"
+     ],
+     "flags": []
+    },
+    {
+     "name": "cut_frames",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch5",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5_files",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_coroner",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "end_ellie_truth",
+       "chapter": 5,
+       "line": 118,
+       "file": "ch05.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": 142,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      }
+     ],
+     "ownReads": 8,
+     "visibleReads": 18,
+     "hiddenReads": 15,
+     "firstWrite": 5,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "act1"
+     ],
+     "flags": []
+    },
+    {
+     "name": "judith_revealed",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch4_reveal",
+       "chapter": 4,
+       "line": null,
+       "file": "ch04.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch5_final",
+       "chapter": 5,
+       "line": 65,
+       "file": "ch05.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 3,
+     "hiddenReads": 0,
+     "firstWrite": 4,
+     "firstRead": 5,
+     "firstVisible": 5,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ending",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "код"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "act1"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      }
+     ],
+     "ownReads": 6,
+     "visibleReads": 16,
+     "hiddenReads": 15,
+     "firstWrite": 6,
+     "firstRead": 6,
+     "firstVisible": 6,
+     "readByFinal": false,
+     "derivedFrom": [
+      "act1"
+     ],
+     "feeds": [
+      "act1"
+     ],
+     "flags": []
+    },
+    {
+     "name": "act1",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "end_coroner",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_coroner",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_ellie_truth",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_ellie_together",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_ellie_hides",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_owen",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "функция",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход",
+       "via": "ending"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "код",
+       "via": "ending"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ending"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ending"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ending"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ending"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch2_judith_intro",
+       "chapter": 2,
+       "line": null,
+       "file": "ch02.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": null,
+       "file": "ch05.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "end_silence",
+       "chapter": 5,
+       "line": 192,
+       "file": "ch05.ink",
+       "kind": "текст",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "ch7_ellie",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "переход",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "ellie_trust"
+      }
+     ],
+     "ownReads": 25,
+     "visibleReads": 23,
+     "hiddenReads": 16,
+     "firstWrite": 5,
+     "firstRead": 2,
+     "firstVisible": 2,
+     "readByFinal": true,
+     "derivedFrom": [
+      "cut_frames",
+      "ellie_trust",
+      "ending"
+     ],
+     "feeds": [
+      "ending",
+      "ellie_trust"
+     ],
+     "flags": []
+    },
+    {
+     "name": "world",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch8",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "via": "sync_world"
+      },
+      {
+       "node": "ch10",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "via": "sync_world"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_jess",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart_check",
+       "chapter": 8,
+       "line": 217,
+       "file": "ch08.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_owen_silent",
+       "chapter": 9,
+       "line": 128,
+       "file": "ch09.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch9_owen_turn",
+       "chapter": 9,
+       "line": 148,
+       "file": "ch09.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch9_owen_turn",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": 181,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": 32,
+       "file": "ch07.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 192,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 235,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": 89,
+       "file": "ch10.ink",
+       "kind": "текст",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      }
+     ],
+     "ownReads": 25,
+     "visibleReads": 40,
+     "hiddenReads": 1,
+     "firstWrite": 6,
+     "firstRead": 6,
+     "firstVisible": 6,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "whisper_known",
+      "hart_exposed"
+     ],
+     "flags": []
+    },
+    {
+     "name": "maya_trust",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_cut",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_cut",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_maya_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_show",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_maya_told",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_maya_pull",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_stopped"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 6,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": true,
+     "derivedFrom": [
+      "note_she",
+      "whisper_known",
+      "tom_proof"
+     ],
+     "feeds": [
+      "maya_stopped"
+     ],
+     "flags": []
+    },
+    {
+     "name": "maya_files",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6_files_done",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": 142,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": 32,
+       "file": "ch07.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 192,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 235,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": 89,
+       "file": "ch10.ink",
+       "kind": "текст",
+       "via": "whisper_known"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "whisper_known"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 16,
+     "hiddenReads": 1,
+     "firstWrite": 6,
+     "firstRead": 6,
+     "firstVisible": 6,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "whisper_known"
+     ],
+     "flags": []
+    },
+    {
+     "name": "maya_target",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_alibi",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_maya_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_show_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_maya_told",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_show_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": 155,
+       "file": "ch07.ink",
+       "kind": "текст",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": 186,
+       "file": "ch07.ink",
+       "kind": "кнопка",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": 188,
+       "file": "ch07.ink",
+       "kind": "кнопка",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch8_show_ellie",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "c7_post_ellie"
+      },
+      {
+       "node": "ch8_beth_gate",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход",
+       "via": "c7_post_ellie"
+      }
+     ],
+     "ownReads": 9,
+     "visibleReads": 14,
+     "hiddenReads": 2,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": true,
+     "derivedFrom": [
+      "whisper_known",
+      "tom_proof"
+     ],
+     "feeds": [
+      "c7_post_ellie"
+     ],
+     "flags": []
+    },
+    {
+     "name": "whisper_known",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6_hook",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": 32,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 192,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 235,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": 89,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "c7_ellie_out"
+      },
+      {
+       "node": "ch7_maya_pull",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch8_show_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      }
+     ],
+     "ownReads": 12,
+     "visibleReads": 25,
+     "hiddenReads": 2,
+     "firstWrite": 6,
+     "firstRead": 6,
+     "firstVisible": 6,
+     "readByFinal": true,
+     "derivedFrom": [
+      "maya_files",
+      "world"
+     ],
+     "feeds": [
+      "c7_ellie_out",
+      "maya_trust",
+      "maya_target"
+     ],
+     "flags": []
+    },
+    {
+     "name": "note_she",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_story",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_story_note",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": 9,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": 47,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_maya_pull",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "jess_clues"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 233,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "jess_clues"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 8,
+     "hiddenReads": 1,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "maya_trust",
+      "jess_clues"
+     ],
+     "flags": []
+    },
+    {
+     "name": "jess_warned",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_jess",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_maya",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "jess_bond",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7_jess_caught",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_jess_caught",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch10_dawn",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_full",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": 255,
+       "file": "ch09.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch9_hook",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "jess_promised"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "jess_promised"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 4,
+     "hiddenReads": 3,
+     "firstWrite": 6,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [
+      "jess_suspicious"
+     ],
+     "feeds": [
+      "jess_promised"
+     ],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "jess_clues",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch6_jess",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_maya_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_jess_caught",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_finder",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_jess_a",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_dj",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_owen_turn",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_beth",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 233,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 1,
+     "hiddenReads": 1,
+     "firstWrite": 6,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [
+      "jess_rumor",
+      "note_she",
+      "exposed_fake"
+     ],
+     "feeds": [],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "ellie_water",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_ellie_talk",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": 6,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [
+      "ellie_warned"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ellie_warned",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_ellie_talk",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7",
+       "chapter": 7,
+       "line": 6,
+       "file": "ch07.ink",
+       "kind": "кнопка",
+       "via": "ellie_water"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "ellie_alibi"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 5,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "ellie_water",
+      "ellie_alibi"
+     ],
+     "flags": []
+    },
+    {
+     "name": "ellie_alibi",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 7,
+     "firstRead": 8,
+     "firstVisible": 8,
+     "readByFinal": false,
+     "derivedFrom": [
+      "connor_ally",
+      "connor_blocked",
+      "c7_ellie_out",
+      "ellie_warned"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "owen_reply",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_owen",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": 203,
+       "file": "ch08.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "hart_exposed"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 7,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 8,
+     "firstVisible": 8,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "hart_exposed"
+     ],
+     "flags": []
+    },
+    {
+     "name": "judith_guarded",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6_judith",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_morning",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "c9_jess_warned"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "c9_jess_warned"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 4,
+     "hiddenReads": 0,
+     "firstWrite": 6,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "c9_jess_warned"
+     ],
+     "flags": [
+      "молчит"
+     ]
+    },
+    {
+     "name": "tom_proof",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": 217,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": 241,
+       "file": "ch08.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch8_show_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_target"
+      },
+      {
+       "node": "ch7_maya_pull",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      },
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_trust"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 15,
+     "hiddenReads": 1,
+     "firstWrite": 7,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "maya_target",
+      "maya_trust"
+     ],
+     "flags": []
+    },
+    {
+     "name": "note_minute",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": 219,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 7,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "tom_hold",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "c10_maya_door"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 4,
+     "hiddenReads": 0,
+     "firstWrite": 7,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "c10_maya_door"
+     ],
+     "flags": [
+      "только финал",
+      "молчит"
+     ]
+    },
+    {
+     "name": "maya_posted",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_maya_pull",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_show_ellie",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_beth_gate",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch8_ellie_after",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход",
+       "via": "c8_ellie_late"
+      },
+      {
+       "node": "ch8_after_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход",
+       "via": "c8_ellie_late"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 4,
+     "hiddenReads": 3,
+     "firstWrite": 7,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [
+      "c8_ellie_late"
+     ],
+     "flags": []
+    },
+    {
+     "name": "jess_exposed",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_jess_caught",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_jess_a",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_jess_b",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 7,
+     "firstRead": 8,
+     "firstVisible": 8,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ellie_block_told",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_ellie_block",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch8_beth",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_beth",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_ellie_end",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "код"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 2,
+     "hiddenReads": 1,
+     "firstWrite": 7,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "note_shown_to",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch8_show",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_show",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_show",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_show",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_jess",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_jess",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_judith",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": 114,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 5,
+     "visibleReads": 4,
+     "hiddenReads": 1,
+     "firstWrite": 8,
+     "firstRead": 8,
+     "firstVisible": 8,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "fake_note_caught",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_finder",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_ellie_sees",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_show_judith",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_fake",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_fake",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 233,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "proof"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "proof"
+      }
+     ],
+     "ownReads": 6,
+     "visibleReads": 3,
+     "hiddenReads": 5,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "proof"
+     ],
+     "flags": []
+    },
+    {
+     "name": "bill_asked",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_show_judith",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_judith",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch9_morning",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "bill_found",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_bill_day",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_bill_late",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 190,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 229,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": 257,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_ellie_end",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": 557,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch9_hook",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "jess_promised"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "jess_promised"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "proof"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "proof"
+      }
+     ],
+     "ownReads": 10,
+     "visibleReads": 8,
+     "hiddenReads": 6,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "jess_promised",
+      "proof"
+     ],
+     "flags": []
+    },
+    {
+     "name": "hart_fooled",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_coda",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 3,
+     "hiddenReads": 0,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "hart_exposed",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_hart_check",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      },
+      {
+       "node": "ch8_hart_check",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 4,
+     "visibleReads": 4,
+     "hiddenReads": 0,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [
+      "owen_knows",
+      "owen_reply",
+      "world"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ladder_known",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_connor_ladder",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_owen",
+       "chapter": 9,
+       "line": 112,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": 171,
+       "file": "ch10.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 188,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 190,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 231,
+       "file": "ch09.ink",
+       "kind": "кнопка",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_judith",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": 171,
+       "file": "ch10.ink",
+       "kind": "кнопка",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": 176,
+       "file": "ch10.ink",
+       "kind": "текст",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "owen_turned"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "proof"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "proof"
+      }
+     ],
+     "ownReads": 4,
+     "visibleReads": 16,
+     "hiddenReads": 5,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "owen_turned",
+      "proof"
+     ],
+     "flags": []
+    },
+    {
+     "name": "owen_turned",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_owen_turn",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 188,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_maya",
+       "chapter": 9,
+       "line": 190,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "код"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 231,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_judith",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": 171,
+       "file": "ch10.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": 176,
+       "file": "ch10.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_herself",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "proof"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "proof"
+      }
+     ],
+     "ownReads": 15,
+     "visibleReads": 13,
+     "hiddenReads": 4,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [
+      "ladder_known"
+     ],
+     "feeds": [
+      "proof"
+     ],
+     "flags": []
+    },
+    {
+     "name": "owen_deal",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_owen_turn",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 9,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "только финал"
+     ]
+    },
+    {
+     "name": "jess_confessed",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch10_dawn",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_full",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_dawn",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": 100,
+       "file": "ch10.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": 102,
+       "file": "ch10.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_denny",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "c10_dawn"
+      },
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "maya_stopped"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "proof"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "proof"
+      }
+     ],
+     "ownReads": 10,
+     "visibleReads": 10,
+     "hiddenReads": 4,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "c10_dawn",
+      "maya_stopped",
+      "proof"
+     ],
+     "flags": []
+    },
+    {
+     "name": "jess_promised",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_hook",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 1,
+     "hiddenReads": 1,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [
+      "bill_found",
+      "c9_jess_warned",
+      "jess_bond"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "maya_stopped",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch10_maya_wait",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "fin_silence",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [
+      "maya_trust",
+      "jess_confessed"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "maya_posts",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch10_maya",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_scapegoat",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_puppet",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика",
+       "via": "c10_maya_door"
+      }
+     ],
+     "ownReads": 7,
+     "visibleReads": 7,
+     "hiddenReads": 1,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [
+      "c10_maya_door"
+     ],
+     "flags": []
+    },
+    {
+     "name": "judith_waits",
+     "init": "true",
+     "writes": [
+      {
+       "node": "ch10_judith",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 1,
+     "hiddenReads": 1,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "ellie_testifies",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_ellie",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "fin_truth",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_ellie_owen",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 3,
+     "visibleReads": 3,
+     "hiddenReads": 0,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "final_choice",
+     "init": "\"\"",
+     "writes": [
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_unproven",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "fin_revenge",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 11,
+     "visibleReads": 6,
+     "hiddenReads": 5,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "proof",
+     "init": "0",
+     "writes": [
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      },
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch10_route",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 1,
+     "hiddenReads": 1,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": true,
+     "derivedFrom": [
+      "bill_found",
+      "ladder_known",
+      "owen_turned",
+      "fake_note_caught",
+      "jess_confessed"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "c6_morning",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch6",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      },
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch6_ask_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch6_ellie",
+       "chapter": 6,
+       "line": null,
+       "file": "ch06.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 0,
+     "hiddenReads": 2,
+     "firstWrite": 6,
+     "firstRead": 6,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "c7_ellie_out",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      },
+      {
+       "node": "ch7_gate",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_connor",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_connor_talk",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика",
+       "via": "ellie_alibi"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 7,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [
+      "whisper_known"
+     ],
+     "feeds": [
+      "ellie_alibi"
+     ],
+     "flags": []
+    },
+    {
+     "name": "c7_post_ellie",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch7_post",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch7_tom",
+       "chapter": 7,
+       "line": 155,
+       "file": "ch07.ink",
+       "kind": "текст"
+      },
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": 186,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_tom_queue",
+       "chapter": 7,
+       "line": 188,
+       "file": "ch07.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch7_jess",
+       "chapter": 7,
+       "line": null,
+       "file": "ch07.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_show_ellie",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_maya",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch8_beth_gate",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch8_ellie_after",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход",
+       "via": "c8_ellie_late"
+      },
+      {
+       "node": "ch8_after_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход",
+       "via": "c8_ellie_late"
+      }
+     ],
+     "ownReads": 7,
+     "visibleReads": 6,
+     "hiddenReads": 3,
+     "firstWrite": 7,
+     "firstRead": 7,
+     "firstVisible": 7,
+     "readByFinal": false,
+     "derivedFrom": [
+      "maya_target"
+     ],
+     "feeds": [
+      "c8_ellie_late"
+     ],
+     "flags": []
+    },
+    {
+     "name": "c8_ellie_late",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_show_ellie",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch8_ellie_after",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход"
+      },
+      {
+       "node": "ch8_after_hart",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 0,
+     "hiddenReads": 2,
+     "firstWrite": 8,
+     "firstRead": 8,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [
+      "maya_posted",
+      "c7_post_ellie"
+     ],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "c8_beth_done",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch8_beth",
+       "chapter": 8,
+       "line": null,
+       "file": "ch08.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_beth_gate",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 8,
+     "firstRead": 9,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "c9_jess_warned",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_bill",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      },
+      {
+       "node": "ch9_morning",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_jess_conf",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_hook",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика",
+       "via": "jess_promised"
+      },
+      {
+       "node": "ch10_split",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "переход",
+       "via": "jess_promised"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 3,
+     "hiddenReads": 1,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [
+      "judith_guarded"
+     ],
+     "feeds": [
+      "jess_promised"
+     ],
+     "flags": []
+    },
+    {
+     "name": "c9_bill_day",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_morning",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_after_maya",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "переход"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 0,
+     "hiddenReads": 1,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": null,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": [
+      "невидимая"
+     ]
+    },
+    {
+     "name": "c9_has_ev",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 237,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch9_jess",
+       "chapter": 9,
+       "line": 240,
+       "file": "ch09.ink",
+       "kind": "кнопка"
+      }
+     ],
+     "ownReads": 2,
+     "visibleReads": 2,
+     "hiddenReads": 0,
+     "firstWrite": 9,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "c10_dawn",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch10_dawn",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch9_denny",
+       "chapter": 9,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 10,
+     "firstRead": 9,
+     "firstVisible": 9,
+     "readByFinal": false,
+     "derivedFrom": [
+      "jess_confessed"
+     ],
+     "feeds": [],
+     "flags": []
+    },
+    {
+     "name": "c10_maya_door",
+     "init": "false",
+     "writes": [
+      {
+       "node": "ch10_maya_go",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink"
+      }
+     ],
+     "reads": [
+      {
+       "node": "ch10_door",
+       "chapter": 10,
+       "line": null,
+       "file": "ch10.ink",
+       "kind": "реплика"
+      }
+     ],
+     "ownReads": 1,
+     "visibleReads": 1,
+     "hiddenReads": 0,
+     "firstWrite": 10,
+     "firstRead": 10,
+     "firstVisible": 10,
+     "readByFinal": false,
+     "derivedFrom": [
+      "tom_hold",
+      "maya_posts"
+     ],
+     "feeds": [],
+     "flags": []
+    }
+   ]
+  }
+ ]
+}

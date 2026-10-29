@@ -358,11 +358,12 @@ test('endings: три финала по меткам, два в одном уз�
   assert.ok(j.stories[0].deciders.some((d) => d.name === 'hidden'));
 });
 
-test('endings: финалы трёх историй находятся без меток', () => {
+test('endings: финалы трёх историй — без меток по END, у «Чужого голоса» по меткам «// финал:»', () => {
   const want = {
     'the-number': ['new_client'],
     'slepoe-pyatno': ['end_backdoor', 'end_burned', 'end_complicit', 'end_contained', 'end_locked', 'end_phished', 'end_quiet'],
-    'chuzhoy-golos': ['fin_herself', 'fin_puppet', 'fin_revenge', 'fin_scapegoat', 'fin_silence', 'fin_truth', 'fin_unproven'],
+    // после Э7 (X-E7): разметка §9, шесть финалов — fin_puppet слит в scapegoat (D-05)
+    'chuzhoy-golos': ['herself', 'revenge', 'scapegoat', 'silence', 'truth', 'unproven'],
   };
   for (const [id, names] of Object.entries(want)) {
     const p = prepare(id);

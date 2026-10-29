@@ -1,7 +1,7 @@
-// логлайн: незнакомец из интернета пишет свидетелям чужим голосом, чтобы до слушания доказать, что смерть Лили не случайность
-// вопрос: что случилось с Лили на карьере — и с Денни два года назад — и кто считает до трёх на записи
-// ставка: через 4 дня слушание у коронера: смерть Лили закроют как несчастный случай
-// оси: ellie_trust, judith_trust, maya_trust, proof, jess_bond
+// логлайн: Ты — незнакомец из интернета, который за £12 в час пишет свидетелям чужим голосом, чтобы до слушания в пятницу доказать, что смерть Лили не случайность, — пока город не узнал, кто ты.
+// вопрос: Что случилось с Лили на карьере — и с Денни два года назад — и кто считает до трёх на записи?
+// ставка: Слушание у коронера в пятницу в десять утра, послезавтра: смерть Лили закроют как несчастный случай; игрок пишет свидетелям под чужой легендой, и город перестанет с ним говорить, как только узнает, кто он.
+// оси: ellie_trust (верит ли Элли игроку и верит ли игрок ей), jess_bond (признается ли Джесс сама), proof (что доказано у двери Джудит)
 # title: Векскомб · Чужой голос
 # contact: ellie, Элли, amber
 # contact: jess, Джесс, pink
@@ -19,11 +19,9 @@
 
 VAR alias = "Сэм"
 VAR cover = "student"
-VAR opener = ""
 VAR ellie_trust = 0
 VAR judith_trust = 0
 VAR jess_push = 0
-VAR jess_done = false
 VAR jess_suspicious = false
 VAR jess_rumor = false
 VAR beth_written = false
@@ -32,7 +30,6 @@ VAR connor_blocked = false
 VAR connor_ally = false
 VAR connor_to_owen = false
 VAR connor_jacket = false
-VAR owen_contacted = false
 VAR owen_knows = 0
 VAR owen_weakened = false
 VAR confronted_night = false
@@ -66,7 +63,6 @@ VAR ellie_warned = false
 VAR ellie_alibi = false
 VAR owen_reply = ""
 VAR judith_guarded = false
-VAR tom_proof = false
 VAR note_minute = false
 VAR tom_hold = false
 VAR maya_posted = false
@@ -75,32 +71,57 @@ VAR ellie_block_told = false
 VAR note_shown_to = ""
 VAR fake_note_caught = false
 VAR bill_asked = false
-VAR bill_found = false
 VAR hart_fooled = false
 VAR hart_exposed = false
-VAR ladder_known = false
 VAR owen_turned = false
 VAR owen_deal = false
 VAR jess_confessed = 0
 VAR jess_promised = false
 VAR maya_stopped = false
-VAR maya_posts = false
 VAR judith_waits = true
 VAR ellie_testifies = false
 VAR final_choice = ""
 VAR proof = 0
 
+// ---- улики к узлам раскрытия (// reveal:, C-54) ----
+VAR clue_whisper = false
+VAR clue_watch = false
+VAR clue_ladder = false
+VAR clue_bill = false
+VAR clue_owen_saw = false
+
+// ---- переработка X-E7 (план v1) ----
+VAR note_jess = false
+VAR note_lie = false
+VAR note_rumor = false
+VAR clue_count = false
+VAR maya_sent = false
+VAR note_ladder = false
+VAR jess_alarmed = false
+VAR maya_post = 0
+VAR maya_go = false
+VAR maya_at_door = false
+VAR judith_promised = false
+VAR c2_told_night = false
+VAR c2_asked_accident = false
+VAR c2_answered_unknown = false
+VAR c3_wait = 0
+VAR c3_owen_doubt = false
+VAR c3_owen_tip = false
+VAR c3_note_cc = false
+VAR ch4_waited = false
+VAR c5_waited = false
+VAR c9_waited = false
+VAR c9_waited_long = false
+VAR c10_asked_phone = false
+VAR c10_pressed = false
+
 // ---- служебные флаги глав ----
-VAR c6_morning = false
 VAR c7_ellie_out = false
 VAR c7_post_ellie = false
 VAR c8_ellie_late = false
 VAR c8_beth_done = false
-VAR c9_jess_warned = false
-VAR c9_bill_day = false
-VAR c9_has_ev = false
 VAR c10_dawn = false
-VAR c10_maya_door = false
 
 -> ch1
 

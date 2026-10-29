@@ -1,0 +1,2497 @@
+{
+  "ok": true,
+  "strict": false,
+  "runs": 400,
+  "seed": 1,
+  "stories": [
+    {
+      "id": "chuzhoy-golos",
+      "path": "src/stories/chuzhoy-golos",
+      "mode": "full",
+      "findings": [
+        {
+          "check": "C-02",
+          "level": "hint",
+          "key": "C-02.ratio_visible",
+          "node": "ch6_jess",
+          "chapter": 6,
+          "message": "«jess_clues»: 16 записей на 2 чтения (видимых 2) — игрок копит, не зная сколько",
+          "threshold": "> 4 записей на чтение (ashwell-standard-patterns:RED-05, procedural-storytelling:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "writes": 16,
+            "reads": 2,
+            "visible": 2
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch1_jess_sus",
+          "chapter": 1,
+          "message": "«jess_suspicious» меняется в главе 1, первый отклик игрок видит в главе 3 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 1,
+            "to": 3
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch3_owen_probe",
+          "chapter": 3,
+          "message": "«owen_knows» меняется в главе 3, первый отклик игрок видит в главе 5 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 3,
+            "to": 5
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "«unknown_blocked» меняется в главе 2, первый отклик игрок видит в главе 4 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 2,
+            "to": 4
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "«told_judith_ellie» меняется в главе 2, первый отклик игрок видит в главе 4 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 2,
+            "to": 4
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch5_maya",
+          "chapter": 5,
+          "message": "«maya_trust» меняется в главе 5, первый отклик игрок видит в главе 7 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 5,
+            "to": 7
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch1_jess_sus",
+          "chapter": 1,
+          "message": "«jess_bond» меняется в главе 1, первый отклик игрок видит в главе 3 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 1,
+            "to": 3
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch6_owen",
+          "chapter": 6,
+          "message": "«owen_reply» меняется в главе 6, первый отклик игрок видит в главе 8 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 6,
+            "to": 8
+          }
+        },
+        {
+          "check": "C-04",
+          "level": "hint",
+          "key": "C-04.gap_hint",
+          "node": "ch6_judith_jess",
+          "chapter": 6,
+          "message": "«judith_guarded» меняется в главе 6, первый отклик игрок видит в главе 8 — добавь колбэк между ними",
+          "threshold": "≥ 2 главы (наша оценка; ashwell-standard-patterns/attention.md, emshort-structures/attention.md (≤ 1 главы))",
+          "owner": "story-choices",
+          "data": {
+            "from": 6,
+            "to": 8
+          }
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch9_maya",
+          "chapter": 9,
+          "message": "ch9_maya: условие «not clue_whisper && not clue_owen_saw && clue_bill» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch9_maya",
+          "chapter": 9,
+          "message": "ch9_maya: условие «not clue_whisper && not clue_owen_saw && not clue_bill && clue_watch» из 4 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch9_ellie",
+          "chapter": 9,
+          "message": "ch9_ellie: условие «jess_confessed >= 1 || clue_whisper || jess_clues >= 3» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch10_split",
+          "chapter": 10,
+          "message": "ch10_split: условие «jess_promised || jess_bond >= 2 || (clue_bill && owen_turned)» из 4 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch10_wait",
+          "chapter": 10,
+          "message": "ch10_wait: условие «maya_trust >= 3 || (jess_confessed == 2 && maya_trust >= 0)» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.free_final",
+          "node": "ch10_tom",
+          "chapter": 10,
+          "message": "ch10_tom: «maya_post», которую читает финал, ставится в ветке «tom_hold && not maya_go» — игрок получает её, ничего не сделав",
+          "threshold": "> 0 записей (narrative-postmortems:RED-04, procedural-storytelling:RED-12)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch10_tom",
+          "chapter": 10,
+          "message": "ch10_tom: условие «maya_post == 2 && maya_files == 2 && not cut_frames» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch10_route",
+          "chapter": 10,
+          "message": "ch10_route: условие «final_choice == \"mercy\" && jess_confessed == 2 && jess_bond >= 2» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "ch10_route",
+          "chapter": 10,
+          "message": "ch10_route: условие «final_choice == \"mercy\" && jess_confessed != 2 && maya_post == 2» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.ops",
+          "node": "fin_revenge",
+          "chapter": 10,
+          "message": "fin_revenge: условие «clue_whisper && maya_files == 2 && not cut_frames» из 3 частей — замени стадией",
+          "threshold": "≥ 2 оператора && / || в условии (failbetter-qbn:RED-03, choiceofgames-design:RED-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.through_vars",
+          "node": null,
+          "chapter": null,
+          "message": "64 сквозные переменные (запись и чтение в разных главах) — автор их не удержит: alias, cover, ellie_trust, judith_trust, jess_suspicious, jess_rumor, connor_told, connor_blocked…",
+          "threshold": "> 8 сквозных переменных (наша оценка; rules.md R-39, narrative-postmortems)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-09",
+          "level": "hint",
+          "key": "C-09.single_read_share",
+          "node": null,
+          "chapter": null,
+          "message": "29 % переменных прочитаны не больше одного раза: jess_push, jess_suspicious, connor_jacket, confronted_night, told_judith_ellie, called_bluff…",
+          "threshold": "> 20 % доля переменных (наша оценка; failbetter-qbn, narrative-postmortems)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-11",
+          "level": "hint",
+          "key": "C-11.silent_unnoticed",
+          "node": "ch1_end",
+          "chapter": null,
+          "message": "«Промолчать» никто не заметил: 7 из 39 #silent без реакции и следа (ch1_end, ch3_hook, ch6_story, ch7_alibi, ch8_finder, ch8_hart_check …)",
+          "threshold": "> 0 мест (inkle-ingold:RED-03)",
+          "owner": "story-choices",
+          "data": {
+            "unnoticed": 7,
+            "silent": 39,
+            "nodes": [
+              "ch1_end",
+              "ch3_hook",
+              "ch6_story",
+              "ch7_alibi",
+              "ch8_finder",
+              "ch8_hart_check",
+              "ch10_owen"
+            ]
+          }
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "ch1_jess",
+          "chapter": 1,
+          "message": "ch1_jess: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "ch9_judith",
+          "chapter": 9,
+          "message": "ch9_judith: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-12",
+          "level": "hint",
+          "key": "C-12.single",
+          "node": "ch1_connor",
+          "chapter": 1,
+          "message": "ch1_connor: одна кнопка без условия — выбора нет",
+          "threshold": "= 1 кнопка (narrative-testing:RED-27)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-13",
+          "level": "warning",
+          "key": "C-13.words_share",
+          "node": null,
+          "chapter": null,
+          "message": "22 % кнопок длиннее нормы в словах (75 из 344)",
+          "threshold": "> 15 % доля кнопок истории (messenger-genre:RED-08, narrative-testing:RED-26)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-15",
+          "level": "hint",
+          "key": "C-15.rare_button",
+          "node": "ch9_maya",
+          "chapter": 9,
+          "message": "вариант «Это Джесс Холлис. Заявку в Wexcombe Watc…» показан в 1 % прохождений",
+          "threshold": "< 1 % доля прохождений (narrative-testing:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-15",
+          "level": "hint",
+          "key": "C-15.no_else",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "ch2: блок из 2 веток без else",
+          "threshold": "> 0 блоков (procedural-storytelling:RED-05)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-15",
+          "level": "hint",
+          "key": "C-15.no_else",
+          "node": "ch2_school",
+          "chapter": 2,
+          "message": "ch2_school: блок из 2 веток без else",
+          "threshold": "> 0 блоков (procedural-storytelling:RED-05)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-15",
+          "level": "hint",
+          "key": "C-15.no_else",
+          "node": "ch7_connor",
+          "chapter": 7,
+          "message": "ch7_connor: блок из 2 веток без else",
+          "threshold": "> 0 блоков (procedural-storytelling:RED-05)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-15",
+          "level": "hint",
+          "key": "C-15.echo_skip_share",
+          "node": "ch5_owen",
+          "chapter": 5,
+          "message": "отклик на owen_weakened в ch5_owen: узел проходят 100 % прогонов, а owen_weakened пишут 3 % — реплику увидят единицы; сцену дай внутри редкой ветки",
+          "threshold": "< 5 % доля прогонов, где переменная пишется (наша оценка; meaningful-choice:contra-9, meaningful-choice:LESSON-01)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-16",
+          "level": "warning",
+          "key": "C-16.persona_share",
+          "node": null,
+          "chapter": null,
+          "message": "«почти всегда первая кнопка» в 95 % даёт «scapegoat» — правильный ответ угадывается по позиции",
+          "threshold": "≥ 90 % доля прогонов персоны (narrative-testing:PAT-04, narrative-testing:RED-28)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.spokes_max",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor: 7 вариантов",
+          "threshold": "> 4 варианта (failbetter-qbn:P-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Джесс говорит, ты вернулась мокрая» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Пока тишина» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Это правда?» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Слухи сейчас про всех» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "ch6_ask",
+          "chapter": 6,
+          "message": "хаб ch6_ask: выход «Отправляю все три» доступен сразу и без условия — можно уйти, ничего не спросив; нет ни + , ни выхода по счётчику",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch6_ask",
+          "chapter": 6,
+          "message": "хаб ch6_ask закрывается кнопкой «Только третий. Остальное не моё» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch6_ask",
+          "chapter": 6,
+          "message": "хаб ch6_ask закрывается кнопкой «Нет. Запись не моя» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.no_exit",
+          "node": "ch9_judith",
+          "chapter": 9,
+          "message": "хаб ch9_judith: выход «От сожжённых страниц что-то осталось?» доступен сразу и без условия — можно уйти, ничего не спросив; нет ни + , ни выхода по счётчику",
+          "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.spokes_min",
+          "node": "ch9_judith",
+          "chapter": 9,
+          "message": "хаб ch9_judith: 2 вариантов",
+          "threshold": "< 3 варианта (failbetter-qbn:P-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch9_judith",
+          "chapter": 9,
+          "message": "хаб ch9_judith закрывается кнопкой «От сожжённых страниц что-то осталось?» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1_cover",
+          "chapter": 1,
+          "message": "ch1_cover: 8 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1_end",
+          "chapter": 2,
+          "message": "ch1_end: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch2_judith_talk",
+          "chapter": 2,
+          "message": "ch2_judith_talk: 5 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch2_judith_med",
+          "chapter": 2,
+          "message": "ch2_judith_med: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1_lie",
+          "chapter": 1,
+          "message": "ch1_lie: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1_skip",
+          "chapter": 2,
+          "message": "ch1_skip: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch6_hook",
+          "chapter": 7,
+          "message": "ch6_hook: 6 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch4_ellie",
+          "chapter": 4,
+          "message": "ch4_ellie: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch1_ellie_lie",
+          "chapter": 1,
+          "message": "ch1_ellie_lie: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch2_truth",
+          "chapter": 2,
+          "message": "ch2_truth: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "fin_truth",
+          "chapter": 10,
+          "message": "fin_truth: 7 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch4_please",
+          "chapter": 4,
+          "message": "ch4_please: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch6_owen",
+          "chapter": 6,
+          "message": "ch6_owen: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch3_hook",
+          "chapter": 4,
+          "message": "ch3_hook: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.scene",
+          "node": "ch9_turn",
+          "chapter": 9,
+          "message": "ch9_turn: 4 новых имён и терминов за сцену без пояснения",
+          "threshold": "> 3 новых за сцену (attention-today:RED-03, rules.md R-18)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch1_cover",
+          "chapter": 1,
+          "message": "«Скрин участников чата «Shortest Night 🔥»: Коннор,…»: 4 новых в одной реплике (Оуэн, Lily, скрин, вышла)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch2_hook",
+          "chapter": 2,
+          "message": "«Wexcombe Mercury: «Слушание по делу Лили Марш — в …»: 4 новых в одной реплике (Лили, Марш, Кин, Wexcombe)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch2_hook",
+          "chapter": 2,
+          "message": "«Скрин из «Wexcombe Community Noticeboard». Wexcomb…»: 4 новых в одной реплике (Community, Noticeboard, Watch, Ниже)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch9_receipt",
+          "chapter": 9,
+          "message": "«Детализация номера 07700 900521, 22 июня: 00:24 SM…»: 5 новых в одной реплике (07700900521, 188, 650, 777, 314)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch6_hook",
+          "chapter": 6,
+          "message": "«Я слышала её голос на дознании по Дэну. «Он пришёл…»: 3 новых в одной реплике (Дэну, слышала, дознании)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "fin_truth",
+          "chapter": 10,
+          "message": "«На полке Джессика взяла её за руку. Лилиан вырвала…»: 3 новых в одной реплике (полке, взяла, упала)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-23",
+          "level": "hint",
+          "key": "attn.opening.incident.msg",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "инцидент только на 5-м входящем («ты же не из девона?») — первые сообщения без события",
+          "threshold": "attn.opening.incident.msg (наша оценка; edgerton-hooked:attention§4, snyder-save-the-cat:attention§4)",
+          "owner": "story-opening",
+          "model": true
+        },
+        {
+          "check": "C-27",
+          "level": "hint",
+          "key": "C-27.unexplained",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "пауза 20 мин в ch7 не объяснена: игрок решит, что история сломалась",
+          "threshold": "= 0 причин в 3 строках до паузы (rules.md R-63, failbetter-qbn:RED-06)",
+          "owner": "story-time"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "после паузы 5 ч в ch2_unknown нет отсылки к крючку («Вы не из Векскомба.»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "после паузы 1 ч 30 мин в ch4 нет отсылки к крючку («Вы не остановились.»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "ch9",
+          "chapter": 9,
+          "message": "после паузы 5 ч в ch9 нет отсылки к крючку («Я открыла конверт за июнь.»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-28",
+          "level": "hint",
+          "key": "C-28.link",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "после паузы 5 ч в ch2_unknown нет отсылки к крючку («Это не опрос.»)",
+          "threshold": "= 0 общих корней (attention-today:A6)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "заход у ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "заход у ch2_unknown: 72,3 мин, 47 сообщений, 9 кнопок, кончается «Элли не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "заход у ch3: 98,6 мин, 56 сообщений, 10 кнопок, кончается «Оуэн не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "заход у ch4: 56 мин, 44 сообщений, 7 кнопок, кончается «Элли не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch6",
+          "chapter": 6,
+          "message": "заход у ch6: 132 мин, 55 сообщений, 9 кнопок, кончается «Ладно. Найду сама.»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "заход у ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch8",
+          "chapter": 8,
+          "message": "заход у ch8: 121,7 мин, 47 сообщений, 11 кнопок, кончается «Коннор не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch9",
+          "chapter": 9,
+          "message": "заход у ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch9_bill",
+          "chapter": 9,
+          "message": "заход у ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "заход у ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch9_bill",
+          "chapter": 9,
+          "message": "заход у ch9_bill: 200,7 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.max_msgs",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "заход у ch2_unknown: 69,7 мин, 40 сообщений, 8 кнопок, кончается «Элли не в сети»",
+          "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
+          "owner": "story-pauses"
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "глава 1: 1 заходов дольше коридора (ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "глава 2: 3 заходов дольше коридора (ch2: 11,4 мин, 12 сообщений, 2 кнопок, кончается «Элли не в сети»; ch2_unknown: 72,3 мин, 47 сообщений, 9 кнопок, кончается «Элли не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch2: 11,4 мин, 12 сообщений, 2 кнопок, кончается «Элли не в сети»",
+              "ch2_unknown: 72,3 мин, 47 сообщений, 9 кнопок, кончается «Элли не в сети»",
+              "ch2_unknown: 69,7 мин, 40 сообщений, 8 кнопок, кончается «Элли не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "глава 3: 1 заходов дольше коридора (ch3: 98,6 мин, 56 сообщений, 10 кнопок, кончается «Оуэн не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch3: 98,6 мин, 56 сообщений, 10 кнопок, кончается «Оуэн не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "глава 4: 1 заходов дольше коридора (ch4: 56 мин, 44 сообщений, 7 кнопок, кончается «Элли не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch4: 56 мин, 44 сообщений, 7 кнопок, кончается «Элли не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "глава 5: 8 заходов дольше коридора (ch5: 39,4 мин, 27 сообщений, 4 кнопок, кончается «Элли не в сети»; end_owen: 15,5 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch5: 39,4 мин, 27 сообщений, 4 кнопок, кончается «Элли не в сети»",
+              "end_owen: 15,5 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_ellie_hides: 13,2 мин, 9 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_coroner: 19,9 мин, 14 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_silence: 13,8 мин, 11 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_silence: 14,1 мин, 9 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_ellie_truth: 13,2 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_ellie_together: 12,7 мин, 11 сообщений, 1 кнопок, кончается «Мая не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch6",
+          "chapter": 6,
+          "message": "глава 6: 1 заходов дольше коридора (ch6: 132 мин, 55 сообщений, 9 кнопок, кончается «Ладно. Найду сама.»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch6: 132 мин, 55 сообщений, 9 кнопок, кончается «Ладно. Найду сама.»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "глава 7: 1 заходов дольше коридора (ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch8",
+          "chapter": 8,
+          "message": "глава 8: 1 заходов дольше коридора (ch8: 121,7 мин, 47 сообщений, 11 кнопок, кончается «Коннор не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch8: 121,7 мин, 47 сообщений, 11 кнопок, кончается «Коннор не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch9",
+          "chapter": 9,
+          "message": "глава 9: 3 заходов дольше коридора (ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»; ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
+              "ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+              "ch9_bill: 200,7 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»"
+            ]
+          }
+        },
+        {
+          "check": "C-33",
+          "level": "hint",
+          "key": "C-33.active_max_min",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "глава 10: 1 заходов дольше коридора (ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»)",
+          "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
+          "owner": "story-pauses",
+          "data": {
+            "sessions": [
+              "ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»"
+            ]
+          }
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch1_jess",
+          "chapter": 1,
+          "message": "ch1_jess: jess пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_ellie_partial",
+          "chapter": 2,
+          "message": "ch2_ellie_partial: ellie пишет 7 реплик без ответа игрока, начало в ch2_rumor, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_school",
+          "chapter": 2,
+          "message": "ch2_school: ellie пишет 9 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_judith_talk",
+          "chapter": 2,
+          "message": "ch2_judith_talk: judith пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_judith_med",
+          "chapter": 2,
+          "message": "ch2_judith_med: judith пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_hook",
+          "chapter": 2,
+          "message": "ch2_hook: ellie пишет 8 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch4_confess",
+          "chapter": 4,
+          "message": "ch4_confess: ellie пишет 8 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch4_pocket",
+          "chapter": 4,
+          "message": "ch4_pocket: ellie пишет 9 реплик без ответа игрока, начало в ch4_jacket, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch6_story",
+          "chapter": 6,
+          "message": "ch6_story: maya пишет 8 реплик без ответа игрока, начало в ch6, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch7_tom",
+          "chapter": 7,
+          "message": "ch7_tom: tom пишет 7 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_turn",
+          "chapter": 9,
+          "message": "ch9_turn: owen пишет 10 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_denny",
+          "chapter": 9,
+          "message": "ch9_denny: jess пишет 7 реплик без ответа игрока, начало в ch10, узлов 3",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_ellie",
+          "chapter": 9,
+          "message": "ch9_ellie: ellie пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch10_judith",
+          "chapter": 10,
+          "message": "ch10_judith: judith пишет 8 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "ch1: ellie пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "ch2_judith_who: judith пишет 8 реплик без ответа игрока, начало в ch2_judith_med, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch4_blocked",
+          "chapter": 4,
+          "message": "ch4_blocked: ellie пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch7_block",
+          "chapter": 7,
+          "message": "ch7_block: ellie пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch8_hart_files",
+          "chapter": 8,
+          "message": "ch8_hart_files: hart пишет 6 реплик без ответа игрока, начало в ch8_hart, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch5_owen",
+          "chapter": 5,
+          "message": "ch5_owen: owen пишет 7 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_judith",
+          "chapter": 9,
+          "message": "ch9_judith: judith пишет 8 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch8_ellie_sees",
+          "chapter": 8,
+          "message": "ch8_ellie_sees: ellie пишет 7 реплик без ответа игрока, начало в ch8_ellie_late, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_owen",
+          "chapter": 9,
+          "message": "ch9_owen: owen пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_receipt",
+          "chapter": 9,
+          "message": "ch9_receipt: judith пишет 7 реплик без ответа игрока, начало в ch9_judith, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch1_connor",
+          "chapter": 1,
+          "message": "ch1_connor: connor пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch2_truth",
+          "chapter": 2,
+          "message": "ch2_truth: ellie пишет 8 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch4_reveal",
+          "chapter": 4,
+          "message": "ch4_reveal: unknown пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch8_judith",
+          "chapter": 8,
+          "message": "ch8_judith: judith пишет 6 реплик без ответа игрока, начало в ch8_hart_check, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch5_judith",
+          "chapter": 5,
+          "message": "ch5_judith: unknown пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch6_hook",
+          "chapter": 6,
+          "message": "ch6_hook: maya пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch6_judith_jess",
+          "chapter": 6,
+          "message": "ch6_judith_jess: judith пишет 6 реплик без ответа игрока, начало в ch6_judith, узлов 2",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "глава 1: 8 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch1, ch1_cover, ch1_jess, ch1_lie)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch2_night",
+          "chapter": 2,
+          "message": "глава 2: 9 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch2_night, ch2_school, ch2_judith_talk, ch2_judith_med)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "глава 3: 8 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch3, ch3_beth, ch3_fake, ch3_connor_relay)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch4_confess",
+          "chapter": 4,
+          "message": "глава 4: 3 места, где подряд идут реплики без цифры, имени, цитаты и фото (ch4_confess, ch4_jacket, ch4_pocket)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "глава 5: 12 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch5, ch5_judith, end_owen, ch5_maya)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch6_ask",
+          "chapter": 6,
+          "message": "глава 6: 8 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch6_ask, ch6_ellie_talk, ch6_hook, ch6_cut)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "глава 7: 11 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch7, ch7_queue, ch7_caught, ch7_block)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch8",
+          "chapter": 8,
+          "message": "глава 8: 11 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch8, ch8_show_maya, ch8_hart, ch8_judith)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch9_bill",
+          "chapter": 9,
+          "message": "глава 9: 15 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch9_bill, ch9_owen, ch9_turn, ch9_maya)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-36",
+          "level": "hint",
+          "key": "C-36.vague",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "глава 10: 17 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch10, ch10_full, ch10_judith, ch10_owen)",
+          "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
+          "owner": "story-pace",
+          "model": true
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.last_tempo",
+          "node": null,
+          "chapter": 10,
+          "message": "в финальной главе паузы не короче, чем в середине: темп не растёт",
+          "threshold": "≥ 1 отношение медианы пауз последней главы к медиане середины (serial-hooks:S6, snyder-save-the-cat:B7)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.pause_spread",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "ch10: 5 пауз одной длины подряд — ритм не дышит",
+          "threshold": "< 2 раз (max / min) (messenger-genre:§2, messenger-genre:RED-04)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch2",
+          "chapter": 2,
+          "message": "крючок главы 1 не подхвачен в начале главы 2",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch3",
+          "chapter": 3,
+          "message": "крючок главы 2 не подхвачен в начале главы 3",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch4",
+          "chapter": 4,
+          "message": "крючок главы 3 не подхвачен в начале главы 4",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "крючок главы 4 не подхвачен в начале главы 5",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "крючок главы 6 не подхвачен в начале главы 7",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch8",
+          "chapter": 8,
+          "message": "крючок главы 7 не подхвачен в начале главы 8",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-39",
+          "level": "hint",
+          "key": "C-39.link",
+          "node": "ch9",
+          "chapter": 9,
+          "message": "крючок главы 8 не подхвачен в начале главы 9",
+          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
+          "owner": "story-pauses",
+          "model": true
+        },
+        {
+          "check": "C-41",
+          "level": "hint",
+          "key": "C-41.ending_ratio",
+          "node": null,
+          "chapter": null,
+          "message": "финал «unproven» в 2 раза короче самого длинного (5 против 10 сообщений после последней кнопки)",
+          "threshold": "< 60 % доля самого длинного финала (inkle-ingold:§7)",
+          "owner": "story-endings"
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.distance",
+          "node": null,
+          "chapter": null,
+          "message": "ellie и connor пишут похоже (расстояние 0,07): слов, со строчной, с точкой, «!», эмодзи",
+          "threshold": "< 15 % нормированное расстояние профилей (наша оценка; sheldon-character-storytelling (0,15), nicklin-writing-for-games)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.distance",
+          "node": null,
+          "chapter": null,
+          "message": "unknown и judith пишут похоже (расстояние 0,07): слов, со строчной, с точкой, «!», эмодзи",
+          "threshold": "< 15 % нормированное расстояние профилей (наша оценка; sheldon-character-storytelling (0,15), nicklin-writing-for-games)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.distance",
+          "node": null,
+          "chapter": null,
+          "message": "judith и maya пишут похоже (расстояние 0,09): слов, со строчной, с точкой, «!», эмодзи",
+          "threshold": "< 15 % нормированное расстояние профилей (наша оценка; sheldon-character-storytelling (0,15), nicklin-writing-for-games)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch5",
+          "chapter": 5,
+          "message": "ellie: 1 строка вне профиля голоса (например, «если вырежу нас с коннором, оригинал всё…»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch7_caught",
+          "chapter": 7,
+          "message": "jess: 2 строки вне профиля голоса (например, «что?? нет!!»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch8_night",
+          "chapter": 8,
+          "message": "connor: 1 строка вне профиля голоса (например, «про свет пока никому. если она вылезла с…»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "judith: 7 строк вне профиля голоса (например, «Кто Вас попросил?»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch8_show_owen",
+          "chapter": 8,
+          "message": "owen: 2 строки вне профиля голоса (например, «Передай тому, кто пишет с её номера: я т…»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch5_maya",
+          "chapter": 5,
+          "message": "maya: 11 строк вне профиля голоса (например, «Это ведь ты задаёшь вопросы про карьер?»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-44",
+          "level": "hint",
+          "key": "C-44.outlier_features",
+          "node": "ch7_tom",
+          "chapter": 7,
+          "message": "tom: 1 строка вне профиля голоса (например, «{cover == \"honest\":»)",
+          "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой tom появляется в 2 главах из 10",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой beth появляется в 2 главах из 10",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой lily появляется в 1 главе из 10",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.chapters",
+          "node": null,
+          "chapter": null,
+          "message": "герой hart появляется в 1 главе из 10",
+          "threshold": "< 3 главы (sheldon-character-storytelling:RED-02)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.speakers_min",
+          "node": null,
+          "chapter": 2,
+          "message": "глава 2: 2 заметных говорящих",
+          "threshold": "< 3 говорящих в главе (nicklin-writing-for-games)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.speakers_max",
+          "node": null,
+          "chapter": 8,
+          "message": "глава 8: 7 заметных говорящих",
+          "threshold": "> 6 говорящих в главе (nicklin-writing-for-games)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.speakers_max",
+          "node": null,
+          "chapter": 10,
+          "message": "глава 10: 7 заметных говорящих",
+          "threshold": "> 6 говорящих в главе (nicklin-writing-for-games)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 2,
+          "message": "judith в главе 2 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 3,
+          "message": "ellie в главе 3 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 5,
+          "message": "ellie в главе 5 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 9,
+          "message": "ellie в главе 9 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 1,
+          "message": "connor в главе 1 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-45",
+          "level": "hint",
+          "key": "C-45.reactive",
+          "node": null,
+          "chapter": 8,
+          "message": "judith в главе 8 только отвечает: пишет лишь после кнопки к нему",
+          "threshold": "≥ 10 реплик в главе (sheldon-character-storytelling:RED-03, truby-anatomy-of-story:RED-06)",
+          "owner": "story-cast"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.copy_long",
+          "node": "ch4_reveal",
+          "chapter": 4,
+          "message": "строка «Страница дневника, почерк Лили: «если чт…» скопирована в ch4_reveal, ch6_judith — вынеси в туннель или поток",
+          "threshold": "> 60 знаков (bateman-game-writing:RED-15, emshort-structures:RED-15)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.copy_nodes",
+          "node": "end_ellie_hides",
+          "chapter": 5,
+          "message": "строка «вердикт: несчастный случай» скопирована в end_ellie_hides, end_owen, end_silence — вынеси в туннель или поток",
+          "threshold": "≥ 3 узла (mobile-interactive-stories:RED-08)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "ch1_cover",
+          "chapter": 1,
+          "message": "кнопка «Хорошо» повторяется в ch1_cover, ch9_hook",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "ch1_ellie_lie",
+          "chapter": 1,
+          "message": "кнопка «Привет. Я {alias}, делаю учебный опрос п…» повторяется в ch1_ellie_lie, ch1_skip",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "ch1_ellie_lie",
+          "chapter": 1,
+          "message": "кнопка «Привет. Я {alias}, помогаю знакомой разо…» повторяется в ch1_ellie_lie, ch1_skip",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "end_ellie_together",
+          "chapter": 5,
+          "message": "кнопка «Я тут» повторяется в end_ellie_together, ch10",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.button_nodes",
+          "node": "ch6_cut",
+          "chapter": 6,
+          "message": "кнопка «Не знаю» повторяется в ch6_cut, ch9_hook",
+          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
+          "owner": "story-voice"
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.forms",
+          "node": "ch9_hook",
+          "chapter": 9,
+          "message": "judith зовёт Джесс и «Джессике», «Джессика»",
+          "threshold": "> 0 форм имени (attention-today:RED-06, narrative-testing:RED-09)",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "глава 2: «Вэнс», «Mercury», «Community», «Noticeboard» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Вэнс",
+              "Mercury",
+              "Community",
+              "Noticeboard"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch3_owen",
+          "chapter": 3,
+          "message": "глава 3: «Пайк», «Бристоле», «Англии» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Пайк",
+              "Бристоле",
+              "Англии"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch5_owen",
+          "chapter": 5,
+          "message": "глава 5: «Англии» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Англии"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch6_hook",
+          "chapter": 6,
+          "message": "глава 6: «Вэнс» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Вэнс"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch7",
+          "chapter": 7,
+          "message": "глава 7: «Пайк», «Вэнс» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Пайк",
+              "Вэнс"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.unknown",
+          "node": "ch8_hart",
+          "chapter": 8,
+          "message": "глава 8: «Дэниела», «Великобритании» — не контакты и не известные места; проверь, что они вымышленные",
+          "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
+          "owner": "story-voice",
+          "model": true,
+          "data": {
+            "words": [
+              "Дэниела",
+              "Великобритании"
+            ]
+          }
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.rename",
+          "node": "ch8_ellie_sees",
+          "chapter": 8,
+          "message": "lily переименован в «Lily 💧», но имя не прозвучало («она никогда не писала «оуэн бр…»)",
+          "threshold": "= 0 упоминаний имени до #rename (messenger-genre («запоздалое имя»))",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-48",
+          "level": "hint",
+          "key": "C-48.rename",
+          "node": "ch8_show_judith",
+          "chapter": 8,
+          "message": "lily переименован в «Lily 💧», но имя не прозвучало («Я до сих пор плачу за него. Не…»)",
+          "threshold": "= 0 упоминаний имени до #rename (messenger-genre («запоздалое имя»))",
+          "owner": "story-voice",
+          "model": true
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.facts",
+          "node": "ch9_receipt",
+          "chapter": 9,
+          "message": "ch9_receipt: время 0:14 в «Детализация номера 07700 90052…» — нет в хронологии facts.md",
+          "threshold": "> 0 расхождений с facts.md (dille-ultimate-guide:RED-04, narrative-testing:RED-10)",
+          "owner": "story-release",
+          "model": true
+        },
+        {
+          "check": "C-49",
+          "level": "hint",
+          "key": "C-49.facts",
+          "node": null,
+          "chapter": null,
+          "message": "таблица фактов: 13 слов-якорей стоят рядом с разными числами (перев…: 12, 00, 200; вперё…: 12, 00; вауче…: 10, 5; вопро…: 5, 10) — для сверки с хронологией, полная таблица в --json",
+          "threshold": "> 0 расхождений с facts.md (dille-ultimate-guide:RED-04, narrative-testing:RED-10)",
+          "owner": "story-release",
+          "model": true,
+          "data": {
+            "table": [
+              {
+                "anchor": "перев",
+                "numbers": [
+                  "12",
+                  "00",
+                  "200"
+                ],
+                "knots": [
+                  "fin_scapegoat",
+                  "ch6_owen"
+                ]
+              },
+              {
+                "anchor": "вперё",
+                "numbers": [
+                  "12",
+                  "00"
+                ],
+                "knots": [
+                  "ch1"
+                ]
+              },
+              {
+                "anchor": "вауче",
+                "numbers": [
+                  "10",
+                  "5"
+                ],
+                "knots": [
+                  "ch1_skip",
+                  "ch1_jess"
+                ]
+              },
+              {
+                "anchor": "вопро",
+                "numbers": [
+                  "5",
+                  "10"
+                ],
+                "knots": [
+                  "ch1_jess",
+                  "ch1_skip"
+                ]
+              },
+              {
+                "anchor": "отпра",
+                "numbers": [
+                  "3",
+                  "1"
+                ],
+                "knots": [
+                  "ch8_hart_files",
+                  "ch6_hook"
+                ]
+              },
+              {
+                "anchor": "поряд",
+                "numbers": [
+                  "200",
+                  "00"
+                ],
+                "knots": [
+                  "ch6_owen"
+                ]
+              },
+              {
+                "anchor": "детал",
+                "numbers": [
+                  "07700",
+                  "900521"
+                ],
+                "knots": [
+                  "ch9_receipt"
+                ]
+              },
+              {
+                "anchor": "номер",
+                "numbers": [
+                  "07700",
+                  "900521",
+                  "22"
+                ],
+                "knots": [
+                  "ch9_receipt"
+                ]
+              },
+              {
+                "anchor": "июня:",
+                "numbers": [
+                  "07700",
+                  "900521",
+                  "22",
+                  "188"
+                ],
+                "knots": [
+                  "ch9_receipt"
+                ]
+              },
+              {
+                "anchor": "запис",
+                "numbers": [
+                  "650",
+                  "314"
+                ],
+                "knots": [
+                  "ch9_receipt"
+                ]
+              },
+              {
+                "anchor": "whisp",
+                "numbers": [
+                  "1",
+                  "2"
+                ],
+                "knots": [
+                  "ch9_ellie",
+                  "fin_revenge"
+                ]
+              },
+              {
+                "anchor": "после",
+                "numbers": [
+                  "12",
+                  "00"
+                ],
+                "knots": [
+                  "fin_truth"
+                ]
+              },
+              {
+                "anchor": "спаси",
+                "numbers": [
+                  "00",
+                  "12"
+                ],
+                "knots": [
+                  "fin_scapegoat"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "check": "C-52",
+          "level": "hint",
+          "key": "C-52.loop",
+          "node": "ch9_gap",
+          "chapter": 9,
+          "message": "ch9_gap посещён 5 раз за прогон — доли финалов искажены петлёй",
+          "threshold": "> 2 посещения узла за прогон (narrative-testing:RED-30, inkle-ingold:LESSON-05)",
+          "owner": "story:lint"
+        },
+        {
+          "check": "C-53",
+          "level": "hint",
+          "key": "C-53.axis_use",
+          "node": null,
+          "chapter": null,
+          "message": "ось «ellie_trust»: её не читает ни один распределитель финала",
+          "threshold": "= 0 записей кнопками / чтений распределителем (checks.md C-53: пишутся кнопками и читаются распределителем финала (C-06))",
+          "owner": "story:lint"
+        },
+        {
+          "check": "C-53",
+          "level": "hint",
+          "key": "C-53.axis_use",
+          "node": null,
+          "chapter": null,
+          "message": "ось «proof»: её не меняет ни одна кнопка",
+          "threshold": "= 0 записей кнопками / чтений распределителем (checks.md C-53: пишутся кнопками и читаются распределителем финала (C-06))",
+          "owner": "story:lint"
+        }
+      ],
+      "suppressed": [
+        {
+          "check": "C-01",
+          "level": "error",
+          "key": "C-01.dead",
+          "node": "ch5_owen",
+          "chapter": 5,
+          "message": "переменная «c5_waited» записывается 11 раз (ch5_owen, ch5_judith, ch5_judith_owen, ch5_final, end_ellie_truth) и нигде не читается — выбор игрока не оставляет следа",
+          "threshold": "= 0 чтений (ashwell-standard-patterns:RED-04, meaningful-choice:RED-02)",
+          "owner": "story-choices",
+          "data": {
+            "var": "c5_waited",
+            "writes": 11,
+            "nodes": [
+              "ch5_owen",
+              "ch5_judith",
+              "ch5_judith_owen",
+              "ch5_final",
+              "end_ellie_truth",
+              "end_ellie_hides",
+              "end_silence",
+              "ch5_maya"
+            ]
+          },
+          "suppressed": "c5_waited читается в динамических тегах #delay:{c5_waited:…} (ch5_judith, ch5_final, end_silence, ch5_maya), линт не видит чтение внутри тега"
+        },
+        {
+          "check": "C-02",
+          "level": "warning",
+          "key": "C-02.ratio",
+          "node": "ch9_gap",
+          "chapter": 9,
+          "message": "«c9_waited_long»: 5 записей на 1 чтение, игроку о нём не говорят — озвучь промежуточный порог",
+          "threshold": "> 4 записей на чтение (ashwell-standard-patterns:RED-05, sheldon-character-storytelling:RED-01)",
+          "owner": "story-choices",
+          "data": {
+            "writes": 5,
+            "reads": 1,
+            "visible": 0
+          },
+          "suppressed": "c9_waited_long — служебный учёт ожидания у кнопки для длины паузы, а не состояние, которое копит игрок"
+        },
+        {
+          "check": "C-11",
+          "level": "warning",
+          "key": "C-11.refusal_hops",
+          "node": "ch1",
+          "chapter": 1,
+          "message": "отказ «Нет, далеко» в ch1 нигде не запомнен и сходится с «Это какой-то развод?»",
+          "threshold": "≤ 2 перехода (choiceofgames-design:RED-04, snyder-save-the-cat:RED-08)",
+          "owner": "story-choices",
+          "suppressed": "«Нет, далеко» — ответ на вопрос, а не отказ; сходится с «развод?» по сюжету"
+        },
+        {
+          "check": "C-15",
+          "level": "warning",
+          "key": "C-15.never",
+          "node": "ch1_lie",
+          "chapter": 1,
+          "message": "вариант «Пока ничего» не показан ни разу за 400 прохождений — условие {not ch1_jess.talk} перекрыто или недостижимо",
+          "threshold": "= 0 показов за все прогоны (choiceofgames-design:RED-08, emshort-structures:RED-10)",
+          "owner": "story-choices",
+          "suppressed": "«Пока ничего» видит только тот, кто промолчал у первого сообщения Джесс (#noanswer)"
+        },
+        {
+          "check": "C-16",
+          "level": "warning",
+          "key": "C-16.button_share",
+          "node": "ch10_door",
+          "chapter": 10,
+          "message": "ch10_door: «Откройте. И вот всё, что у меня есть» почти всегда ведёт в «truth» (96 %), «Скажи ей сама. Сейчас» — в 0 %: ответ очевиден",
+          "threshold": "≥ 80 % доля прогонов кнопки (mobile-interactive-stories:RED-02, mckee-story:RED-09 (70 / 10))",
+          "owner": "story-choices",
+          "suppressed": "исход решает кнопка у двери (план §4), «Это был Оуэн» всегда ведёт к Оуэну"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "ch9_beth",
+          "chapter": 9,
+          "message": "ch9_beth: в главе 9 до выбора от beth 5 сообщений, от ellie 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices",
+          "suppressed": "это не выбор между людьми: улику Бет либо пересылают Элли, либо нет, — знакомство с Элли тут ничего не предрешает"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "ch1_skip",
+          "chapter": 1,
+          "message": "ch1_skip: в главе 1 до выбора от ellie 41 сообщений, от connor 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices",
+          "suppressed": "не выбор между людьми: «Завтра» откладывает первое сообщение Коннору, а не берёт сторону Элли; Коннор по плану — незнакомец до этой кнопки"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "ch1_skip",
+          "chapter": 1,
+          "message": "ch1_skip: в главе 1 до выбора от ellie 42 сообщений, от connor 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices",
+          "suppressed": "не выбор между людьми: «Завтра» откладывает первое сообщение Коннору, а не берёт сторону Элли; Коннор по плану — незнакомец до этой кнопки"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "ch4_owen",
+          "chapter": 4,
+          "message": "ch4_owen: в главе 4 до выбора от unknown 15 сообщений, от owen 4 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices",
+          "suppressed": "выбор не между людьми: Джудит здесь — куда сохранить угрозу Оуэна, а не сторона против него; Оуэна игрок знает с гл. 3"
+        },
+        {
+          "check": "C-17",
+          "level": "warning",
+          "key": "C-17.ratio",
+          "node": "ch1_skip",
+          "chapter": 1,
+          "message": "ch1_skip: в главе 1 до выбора от ellie 40 сообщений, от connor 0 — дилемма предрешена",
+          "threshold": "> 2 раз (наша оценка; narrative-postmortems:RED-05, ashwell-standard-patterns:LESSON-08)",
+          "owner": "story-choices",
+          "suppressed": "не выбор между людьми: «Завтра» откладывает первое сообщение Коннору, а не берёт сторону Элли; Коннор по плану — незнакомец до этой кнопки"
+        },
+        {
+          "check": "C-18",
+          "level": "warning",
+          "key": "C-18.share",
+          "node": "ch7_ellie",
+          "chapter": 7,
+          "message": "кнопка «А она писала?» в ch7_ellie в 92 % случаев ведёт туда же, куда «В 00:52 Лили писала Бет про твою куртку.…»: выбор отменяется скрыто",
+          "threshold": "> 30 % доля нажатий (mobile-interactive-stories:RED-01)",
+          "owner": "story-choices",
+          "suppressed": "кнопки взаимоисключающие (note_beth): без записи признание даёт только доверие Элли, иначе она уходит в «телефон сел»"
+        },
+        {
+          "check": "C-22",
+          "level": "hint",
+          "key": "C-22.line",
+          "node": "ch4_reveal",
+          "chapter": 4,
+          "message": "«На её запястье был синяк. Это не падение.»: 3 новых в одной реплике (запястье, синяк, падение)",
+          "threshold": "> 2 новых в реплике (attention-today/attention.md)",
+          "owner": "story-opening",
+          "model": true,
+          "suppressed": "«Вам» — вежливое обращение Джудит с заглавной (так же у Харта), а не имя и не термин"
+        },
+        {
+          "check": "C-22",
+          "level": "warning",
+          "key": "C-22.spine",
+          "node": "ch4_reveal",
+          "chapter": 4,
+          "message": "«Вам» звучит на всех путях, а пояснение — только в ch4_reveal (его видят не все)",
+          "threshold": "< 1 доля прогонов в узле пояснения (bateman-game-writing:§2, bateman-game-writing:RED-01)",
+          "owner": "story-opening",
+          "model": true,
+          "suppressed": "«Вам» — вежливое обращение Джудит с заглавной (так же у Харта), а не имя и не термин"
+        },
+        {
+          "check": "C-32",
+          "level": "warning",
+          "key": "C-32.no_answer",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "ch2_unknown: «не ответил» ведёт к финалу в fin_truth, а #silent той же развилки — в fin_unproven: отсутствие не должно стоить дороже молчания",
+          "threshold": "> 0 вариантов, потерянных «неотвечающим» (rules.md R-74, rules.md R-120)",
+          "owner": "story-time",
+          "suppressed": "D-02 — «не ответил» не блокирует номер за игрока, поэтому пути расходятся с #silent «Заблокировать»"
+        },
+        {
+          "check": "C-43",
+          "level": "hint",
+          "key": "C-43.open_loop",
+          "node": "fin_silence",
+          "chapter": 10,
+          "message": "финал fin_silence оставляет открытую петлю: «{cover == \"honest\":привет!! вы ещё помог…»",
+          "threshold": "> 0 открытых петель (serial-hooks:S11, serial-hooks:RED-12)",
+          "owner": "story-endings",
+          "suppressed": "последняя реплика Джесс зеркалит первое сообщение игрока (план §3), ответа не ждёт"
+        },
+        {
+          "check": "C-46",
+          "level": "warning",
+          "key": "C-46.path_repeat",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "строка «Kind regards, J. Marsh.» показана дважды за прохождение (ch2_judith_who, ch5_judith, ch6_judith_jess, ch9_diary, ch9_hook)",
+          "threshold": "≥ 2 показа за прогон (inkle-ingold:RED-09, narrative-testing:RED-16)",
+          "owner": "story-voice",
+          "suppressed": "подпись — «Kind regards, J. Marsh.» — примета голоса Джудит по плану v1; в главе 2 одна на путь, повторы в главах 4–10 нарочно"
+        },
+        {
+          "check": "C-46",
+          "level": "hint",
+          "key": "C-46.copy_nodes",
+          "node": "ch2_judith_who",
+          "chapter": 2,
+          "message": "строка «Kind regards, J. Marsh.» скопирована в ch2_judith_who, ch4_reveal, ch5_judith, ch6_judith_jess, ch9_diary — вынеси в туннель или поток",
+          "threshold": "≥ 3 узла (mobile-interactive-stories:RED-08)",
+          "owner": "story-voice",
+          "suppressed": "подпись — «Kind regards, J. Marsh.» — примета голоса Джудит по плану v1; в главе 2 одна на путь, повторы в главах 4–10 нарочно"
+        },
+        {
+          "check": "C-47",
+          "level": "hint",
+          "key": "style.sys_words",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "ch10: #sys «Воскресенье, до рассвета · На счёт три» — 7 слов",
+          "threshold": "> 6 слов в #sys (rules.md R-81, nicklin-writing-for-games:P-19)",
+          "owner": "story-voice",
+          "model": true,
+          "suppressed": "заголовок главы по плану §1 — день недели и время мира"
+        },
+        {
+          "check": "C-51",
+          "level": "warning",
+          "key": "C-51.unknown_fact",
+          "node": "ch7_block",
+          "chapter": 7,
+          "message": "«Элли заблокировала Лили» упомянуто в ch7_block («я её заблокировала») до того, как игрок о нём узнал (проход #394)",
+          "threshold": "> 0 прохождений (inkle-ingold:RED-05, procedural-storytelling:RED-06)",
+          "owner": "story-continuity",
+          "suppressed": "блок здесь и раскрывается: говорит сама Элли, раньше игрок о нём не знал"
+        },
+        {
+          "check": "C-51",
+          "level": "warning",
+          "key": "C-51.unknown_fact",
+          "node": "ch8",
+          "chapter": 8,
+          "message": "«свет на старой лестнице» упомянуто в ch8 («Её телефон я нашёл у карьера, …») до того, как игрок о нём узнал (проход #400)",
+          "threshold": "> 0 прохождений (inkle-ingold:RED-05, procedural-storytelling:RED-06)",
+          "owner": "story-continuity",
+          "suppressed": "«старой лестницы» здесь — место, где «нашли» телефон (ложь Джесс, facts.md: пятница ≈ 23:00), а не свет в 01:15: его игрок узнаёт от Коннора в ch8_connor_ladder"
+        },
+        {
+          "check": "C-51",
+          "level": "warning",
+          "key": "C-51.unknown_fact",
+          "node": "ch10_full",
+          "chapter": 10,
+          "message": "«Оуэн видел Джесс на тропе» упомянуто в ch10_full («я пришла на верхнюю тропу. вни…») до того, как игрок о нём узнал (проход #395)",
+          "threshold": "> 0 прохождений (inkle-ingold:RED-05, procedural-storytelling:RED-06)",
+          "owner": "story-continuity",
+          "suppressed": "«на тропе» говорит сама Джесс — это её признание, а не знание игрока"
+        }
+      ],
+      "skipped": [],
+      "counts": {
+        "error": 0,
+        "warning": 2,
+        "hint": 185
+      }
+    }
+  ]
+}
