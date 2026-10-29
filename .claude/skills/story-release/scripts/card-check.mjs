@@ -1,8 +1,9 @@
 // Карточка истории перед выпуском (скилл story-release, R-11, C-49, TH-95): что игрок видит до первой
-// реплики — серия и название, tagline, synopsis, затравки, features, число глав и героев, два времени.
+// реплики — серия и название, tagline, synopsis, затравки, features, число героев, два времени. Глав игрок не
+// видит (A-08): сверка chapters ↔ #chapter — внутренняя, для free_chapters, журнала и проверок.
 // Находки — из самой проверки C-49 на тех же прогонах, что у story:lint (числа совпадают с
 // `npm run story:lint -- --only C-49`), два времени — durations.mjs поверх story:sessions. Сверх линта —
-// поля карточки для глаз и счёт глав и героев так, как его делает карточка в приложении.
+// поля карточки для глаз, счёт героев так, как его делает карточка в приложении, и внутренний счёт глав.
 import { fileURLToPath } from 'node:url';
 import { loadStory, storyRefs } from '../../../../scripts/lib/story.mjs';
 import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
@@ -16,10 +17,11 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/card-check.mjs [<id>] [--story <
 
 Карточка истории (R-11, C-49): всё, что игрок видит до первой реплики, и чем оно расходится с ink.
   поля       series, title, tagline, synopsis, teasers, features — как есть, для глаз
-  счёт       главы: chapters в meta.json против строк #chapter; герои: characters с id без service (так
-             считает карточка) против контактов, которые пишут в чат
+  счёт       герои: characters с id без service (так считает карточка) против контактов, которые пишут в чат;
+             главы: chapters в meta.json против строк #chapter — внутренняя сверка (игрок глав не видит, A-08)
   C-49       находки проверки по пунктам: (а) числа, (б) спойлер героя, (в) роль игрока, (д) пересказ
-             начала, (е) features в тексте, (ж) затравки, (з) обещанные финалы; таблица фактов (г) — в --json
+             начала, (е) features в тексте, (ж) затравки, (з) обещанные финалы, (и) слово «глава» в карточке;
+             таблица фактов (г) — в --json
   время      minutes и days против медиан story:sessions (durations.mjs), что карточка покажет
   глазами    вопросы, которые не считает регулярка: действие игрока в tagline, жанр и конфликт в первой
              фразе, тяжёлые темы в features, затравки без поворотов после главы 1 (references/card.md)
@@ -37,7 +39,7 @@ const PART = [
   ['C-49.card_number', 'а'], ['C-49.spoiler_chapter', 'б'], ['C-49.no_role', 'в'], ['C-49.facts', 'г'],
   ['C-49.synopsis_overlap', 'д'], ['C-49.feature_absent', 'е'], ['C-49.feature_ch1', 'е'],
   ['C-49.teasers', 'ж'], ['C-49.teaser_chapter', 'ж'], ['C-49.teaser_ground', 'ж'], ['C-49.teaser_style', 'ж'],
-  ['C-49.endings_min', 'з'],
+  ['C-49.endings_min', 'з'], ['C-49.chapter_word', 'и'],
 ];
 const partOf = (key) => PART.find(([k]) => k === key)?.[1] ?? '?';
 
@@ -61,7 +63,7 @@ export async function cardCheck(ref, { runs, seed = 1, withDurations = true } = 
     },
   };
   const problems = [];
-  if (counts.chapters.card !== counts.chapters.ink) problems.push(`⚠ в chapters ${counts.chapters.card} глав, в ink строк #chapter ${counts.chapters.ink} — карточка покажет «${counts.chapters.card} глав»`);
+  if (counts.chapters.card !== counts.chapters.ink) problems.push(`⚠ в chapters ${counts.chapters.card} глав, в ink строк #chapter ${counts.chapters.ink} — сверка для автора: free_chapters, журнал выборов и проверки считают главы по chapters (игрок их не видит, A-08)`);
   if (counts.heroes.silent.length) problems.push(`⚠ на карточке герои, которые не пишут в чат: ${counts.heroes.silent.join(', ')} — их считают в «героев», а игрок их не встретит`);
   if (counts.heroes.missing.length) problems.push(`ℹ пишут в чат, а в characters их нет: ${counts.heroes.missing.join(', ')} — карточка их не посчитает (service: true, если это служебный контакт)`);
   for (const f of ['tagline', 'synopsis', 'features', 'minutes', 'days']) if (meta[f] == null) problems.push(`⚠ нет поля ${f}`);
@@ -84,7 +86,7 @@ function print(r) {
   console.log(`   synopsis: ${c.synopsis ?? '—'}`);
   for (const [i, t] of (c.teasers ?? []).entries()) console.log(`   затравка ${i + 1}: ${t}`);
   for (const f of c.features ?? []) console.log(`   · ${f}`);
-  console.log(`   счёт: глав ${r.counts.chapters.card} (в ink ${r.counts.chapters.ink}), героев ${r.counts.heroes.card}`);
+  console.log(`   счёт: героев ${r.counts.heroes.card}; глав для автора ${r.counts.chapters.card} (в ink ${r.counts.chapters.ink}, игрок их не видит)`);
   for (const p of r.problems) console.log(`   ${p}`);
   const shown = r.findings.filter((f) => f.part !== 'г');
   console.log(`\n   C-49: ${shown.length ? plural(shown.length, 'находка', 'находки', 'находок') : 'находок нет'}${r.findings.some((f) => f.part === 'г') ? ' (таблица фактов (г) — в --json)' : ''}`);

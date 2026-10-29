@@ -39,7 +39,7 @@
 | `story-review` | да | — | — | — | TH-28…TH-32 | — |
 | `story-opening` | | R-12…R-24 | C-20, C-22…C-25 | F-04 | TH-33…TH-36 | min-opening, check-30s, check-3m, check-ch1, check-ch2 |
 | `story-pace` | | R-29, R-30, R-60, R-61, R-80 | C-35, C-36, C-38 | F-05, F-06 | TH-37…TH-40 | — |
-| `story-pauses` | | R-62, R-64…R-66, R-68…R-73, R-100 | C-26, C-28…C-30, C-33, C-39 | F-01…F-03 | TH-41…TH-44 | min-pause, return-hook, return-first, return-recap, return-batch, return-dose |
+| `story-pauses` | | R-62, R-64…R-66, R-68…R-73, R-100 | C-26, C-28…C-30, C-33, C-39, C-55 | F-01…F-03 | TH-41…TH-44 | min-pause, return-hook, return-first, return-recap, return-batch, return-dose |
 | `story-time` | | R-63, R-67, R-74, R-114, R-120…R-122 | C-27, C-31, C-32, C-37 | — | TH-45…TH-52 | player, return-reason, return-silence, return-click, return-rhythm |
 | `story-choices` | | R-34, R-36, R-40, R-43…R-54, R-56…R-58, R-116 | C-01…C-05, C-08…C-13, C-15…C-19 | F-07, F-08, F-11, F-14 | TH-53…TH-59 | min-choice, min-state |
 | `story-endings` | | R-102…R-113 | C-06, C-07, C-40…C-43 | F-09, F-10, F-12 | TH-60…TH-63 | min-ending |
@@ -53,7 +53,7 @@
 | `story-kb` | да | — | — | — | TH-105…TH-108 | contra, superseded |
 | `story:lint` (инфраструктура, T-03) | — | — | C-52, C-53 | — | — | load |
 
-Итого: R — 122 (R-01…R-119 и R-120…R-122 из T-05), C — 54, F — 15, кластеров — 108, разделов attention — 30.
+Итого: R — 122 (R-01…R-119 и R-120…R-122 из T-05), C — 55 (C-55 из T-22), F — 15, кластеров — 108, разделов attention — 30.
 
 У `story-desk`, `story-review`, `story-fix`, `story-playtest` и `story-kb` нет своих R и C: это входы-оркестраторы.
 Их знание — процесс (состояние, ревью, правка, тест, база), оно в кластерах §5. Правило или проверку они
@@ -248,6 +248,7 @@
 | C-52 | служебные проверки бота | `story:lint` | `scripts/lib/`, `check:story` | `story-review/routing.md`, `story-playtest` (`--transcript`) |
 | C-53 | разметка комментариями (валидатор) | `story:lint` | валидатор разметки `build-plan.md` §9 | `story-plan/skeleton-format.md`, `chapter-write`, `story-review` |
 | C-54 | честная игра улик | `story-mystery` | `fair-play.md` (`clues.mjs`) | — |
+| C-55 | реплика после стыка глав (A-08) | `story-pauses` | `seams.md` | `story-release/free-boundary-gate.md` (кнопки до paywall), `chapter-write` |
 
 ## 4. Ремонтные приёмы `F-NN` (`skills.md` §6)
 

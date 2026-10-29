@@ -16,7 +16,7 @@ npm run graph               # карта сюжета: граф узлов, ре
 npm run story:pack          # папки историй → один .json для загрузки (dist/stories/); -- --check: без потерь
 npm run story:unpack        # история одним .json → папка src/stories/<id>/ с главами
 npm run test:lib            # самопроверка scripts/lib: синтетические примеры ink и три истории
-npm run story:lint          # проверки C-01…C-54 по checks.md (--strict, --summary, --changed --quick, --partial, --plan, --json)
+npm run story:lint          # проверки C-01…C-55 по checks.md (--strict, --summary, --changed --quick, --partial, --plan, --json)
 npm run test:lint           # самопроверка story:lint: дефект и чистый двойник на каждую проверку
 npm run story:trace         # прохождение персоной: переписка, маршрут, переменные, оба режима (--help)
 npm run story:vars          # переменные: где пишется → где читается, мёртвые и невидимые

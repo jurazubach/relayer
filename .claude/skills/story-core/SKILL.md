@@ -2,7 +2,7 @@
 name: story-core
 description: "Непонятно, о чём история: что на кону и к какому сроку, какой главный вопрос, кто противник и чего хочет, зачем пишут именно игроку, о чём тема; конфликт размытый, злодей картонный, герой ничего не хочет. Ядро до плана: ставка, вопрос, оси, роль игрока, противник, тема, время мира."
 user-invocable: false
-allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Edit(src/stories/**), Edit(docs/stories/**)
 metadata:
   version: 1
 ---
@@ -53,7 +53,8 @@ metadata:
 7. **Запись после одобрения:** `node ${CLAUDE_SKILL_DIR}/scripts/core-snapshot.mjs --story <id> --draft docs/stories/<id>/core-draft.md --who <кто>`
    (показ), затем тот же вызов с `--write`. Он пишет D-NN через `story-desk`, ставит «ядро: D-NN» в `STATUS.md`
    и печатает шапку ink. Смена ядра — `--replaces D-NN`; шаг `core` и «что устарело» — у `story-desk`.
-8. **Передача.** Шапка — в `story.ink` или `plans/skeleton.ink`; карточки — в `characters` (`story-cast`);
+8. **Передача.** Одобренную шапку впиши сам (`Edit`) в `src/stories/<id>/story.ink` или `plans/skeleton.ink`:
+   только четыре строки шапки, реплики и узлы не трогай; карточки — в `characters` (`story-cast`);
    дальше `story-plan`. Если ink уже есть — `core-check.mjs` ещё раз: шапка совпадает с D-NN.
 
 ## Карта references
@@ -99,8 +100,9 @@ metadata:
 
 ## Состояние
 
-`story-core` пишет только D-NN ядра (через `core-snapshot.mjs` → `decision-add.mjs`) и только после одобрения
-автора (в конвейере — королевы). Остальное отдаёт `story-desk`: строку для `STATUS.md` («ядро vN <дата>: D-NN,
+`story-core` пишет только D-NN ядра (через `core-snapshot.mjs` → `decision-add.mjs`), черновик ядра
+`docs/stories/<id>/core-draft.md` и шапку ink из одобренного D-NN — и только после одобрения автора (в конвейере —
+королевы). Остальное отдаёт `story-desk`: строку для `STATUS.md` («ядро vN <дата>: D-NN,
 открыто — …»), шаг `core`, отвергнутые варианты ставки, противника и темы — в `ideas.md` с причиной.
 
 ## Готово, когда

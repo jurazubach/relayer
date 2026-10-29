@@ -2,22 +2,24 @@
 // ли revision. Сохранение помнит ревизию; другая ревизия — прогресс сбрасывается с предупреждением
 // (capabilities.json revision). Поднимать её — только когда старое состояние ink не подходит к новому:
 // убраны или переименованы узлы, переменные, изменились выборы узла. Опечатку правят без неё.
-// Сравнение — с тегом прошлого выпуска <id>-rN (план §7) или с ревизией --from; история на ревизии берётся
-// так же, как у story:diff (scripts/story/core/revisions.mjs).
+// Сравнение — с тегом прошлого выпуска <id>-rN (план §7), с ревизией --from, а без них — с коммитом, где revision
+// в meta.json менялась последний раз: выпуск без тега иначе молчал бы, и правка после гейта ломала сохранения
+// тихо (W5, стык 1). История на ревизии берётся так же, как у story:diff (scripts/story/core/revisions.mjs).
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadStory, parseStory, storyRefs } from '../../../../scripts/lib/story.mjs';
+import { STORIES_DIR, loadStory, parseStory, storyRefs } from '../../../../scripts/lib/story.mjs';
 import { walk } from '../../../../scripts/lib/ink.mjs';
 import { describeRef, storyAt } from '../../../../scripts/story/core/revisions.mjs';
 
 const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/revision-check.mjs [<id>] [--story <id>,…] [--from <тег|коммит>] [--json]
 
 Ломает ли правка сохранения и что делать с revision (meta.json). Сравнивает историю с прошлым выпуском:
-по умолчанию — последний тег <id>-rN (git tag), иначе --from <ревизия>. Без тега и --from — первый выпуск:
-тег поставить после выпуска.
+--from <ревизия>, иначе последний тег <id>-rN (git tag), иначе последний коммит, где менялось revision в
+meta.json (с этой ревизией история и ушла к игрокам). revision ни разу не менялась и тега нет — первый
+выпуск: тег поставить после выпуска.
   ломает   убран или переименован узел или stitch; убрана переменная VAR или сменился её тип; у узла
            изменилось число выборов — старое состояние ink к новому тексту не подходит
   не ломает  новые узлы и переменные, правка текста реплик и кнопок
@@ -25,7 +27,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/revision-check.mjs [<id>] [--sto
 прогресс зря; ✓ всё сходится. Для журнала изменений — главы и узлы, которые поменялись.
 
   --story  история по id из src/stories (через запятую; по умолчанию все)
-  --from   тег, ветка или коммит прошлого выпуска вместо последнего <id>-rN
+  --from   тег, ветка или коммит прошлого выпуска вместо тега <id>-rN и коммита смены revision
   --json   всё данными
   --help   эта справка`;
 
@@ -37,6 +39,30 @@ export function lastReleaseTag(id) {
     const tags = git(['tag', '--list', `${id}-r*`]).split('\n').filter((t) => new RegExp(`^${id}-r\\d+$`).test(t));
     return tags.sort((a, b) => Number(b.split('-r').pop()) - Number(a.split('-r').pop()))[0] ?? null;
   } catch { return null; }
+}
+
+const metaRevision = (text) => { try { return JSON.parse(text).revision ?? 1; } catch { return null; } };
+
+/**
+ * Последний коммит, где revision истории стала такой, как сейчас в git: { sha, short, from, to } или null,
+ * если revision не менялась с появления истории. Номер читается из JSON, а не строкой лога: «revision» есть и
+ * в главах meta.json, и смена форматирования не должна считаться выпуском.
+ */
+export function lastRevisionCommit(id) {
+  for (const file of [`${STORIES_DIR}/${id}/meta.json`, `${STORIES_DIR}/${id}.json`]) {
+    let shas;
+    try { shas = git(['log', '--format=%H', '--', file]).split('\n').filter(Boolean); } catch { continue; }
+    if (!shas.length) continue;
+    const at = (sha) => { try { return metaRevision(git(['show', `${sha}:${file}`])); } catch { return null; } };
+    let newer = at(shas[0]);
+    for (let i = 0; i < shas.length - 1; i++) {
+      const older = at(shas[i + 1]);
+      if (older != null && newer != null && older !== newer) return { sha: shas[i], short: shas[i].slice(0, 7), from: older, to: newer };
+      newer = older;
+    }
+    return null;
+  }
+  return null;
 }
 
 /** Что из структуры ink помнит сохранение: узлы, переменные с типом, число выборов в узле, глава узла. */
@@ -74,9 +100,15 @@ export function compareShapes(before, after) {
 export function revisionCheck(ref, { from } = {}) {
   const now = loadStory(ref);
   const id = now.id;
-  const tag = from ?? lastReleaseTag(id);
   const after = shape(now);
-  if (!tag) return { id, path: now.path, from: null, revision: after.revision, verdict: 'first', message: `прошлого выпуска нет (тега ${id}-rN нет): после выпуска — git tag ${id}-r${after.revision}` };
+  let tag = from ?? lastReleaseTag(id);
+  let base = tag ? (from ? 'from' : 'tag') : null;
+  let bumped = null;
+  if (!tag) {
+    bumped = lastRevisionCommit(id);
+    if (bumped) { tag = bumped.short; base = 'revision'; }
+  }
+  if (!tag) return { id, path: now.path, from: null, base: null, revision: after.revision, verdict: 'first', message: `прошлого выпуска нет (ни тега ${id}-rN, ни смены revision в git): после выпуска — git tag ${id}-r${after.revision}` };
   const tmp = mkdtempSync(join(tmpdir(), 'relayer-revision-'));
   try {
     let rev;
@@ -97,14 +129,15 @@ export function revisionCheck(ref, { from } = {}) {
       needless: `revision поднята (${before.revision} → ${after.revision}), а сохранения не ломаются — игроки потеряют прогресс зря`,
       ok: raised ? `сохранения ломаются, revision поднята (${before.revision} → ${after.revision})` : `сохранения не ломаются, revision ${after.revision} — как была`,
     }[verdict];
-    return { id, path: now.path, from: tag, revision: after.revision, before: before.revision, verdict, message, ...diff, tag_next: `${id}-r${after.revision}` };
+    return { id, path: now.path, from: tag, base, ...(bumped ? { bumped } : {}), revision: after.revision, before: before.revision, verdict, message, ...diff, tag_next: `${id}-r${after.revision}` };
   } finally { rmSync(tmp, { recursive: true, force: true }); }
 }
 
 function print(r) {
   if (r.error) { console.log(`${r.path}: нет данных: ${r.error}`); process.exitCode = 1; return; }
   const mark = { first: 'ℹ', ok: '✓', needless: 'ℹ', bump: '✗', lower: '✗' }[r.verdict];
-  console.log(`${r.path} · ревизия ${r.revision}${r.from ? ` · против ${r.from}` : ''}`);
+  const against = r.base === 'revision' ? ` · против ${r.from} (тега нет; там revision ${r.bumped.from} → ${r.bumped.to})` : r.from ? ` · против ${r.from}` : '';
+  console.log(`${r.path} · ревизия ${r.revision}${against}`);
   console.log(`   ${mark} ${r.message}`);
   for (const b of r.breaks ?? []) console.log(`     ломает: ${b}`);
   if (r.chapters?.length) console.log(`   журнал: изменены главы ${r.chapters.join(', ')}; узлов новых ${r.added.length}, с правкой текста ${r.changed.length}`);

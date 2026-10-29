@@ -40,8 +40,9 @@ node \${CLAUDE_SKILL_DIR}/scripts/story-status.mjs --activate <id>
 
   --init <id>      завести ${STATE_DIR}/<id>/: STATUS.md по шаблону scripts/story/templates/STATUS.md,
                    пустые decisions.md и ideas.md; уже есть — ничего не трогает
-  --check          формат состояния: шаг из списка плана §7, одна активная история, ядро есть в
-                   decisions.md, файл плана существует, у каждой главы есть, кто её ведёт (Б-6)
+  --check          формат состояния: шаг из списка плана §7, ядро есть в decisions.md, файл плана существует,
+                   у каждой главы есть, кто её ведёт (Б-6); «активная: да» у двух историй и больше — ⚠, не ошибка:
+                   хук и story:status берут правленную последней, снимать флаг — только по слову автора
   --owners         главы истории → кто ведёт по STATUS.md («Кто что пишет») → последний автор в git
   --next           шаг сейчас → кто его ведёт → чем он закрывается → следующий шаг (цикл build-plan.md §2)
   --step <шаг>     записать шаг в STATUS.md (после согласия автора); шаги: ${STEPS.join(', ')}
@@ -158,11 +159,13 @@ runCli(HELP, async (args) => {
     const list = states.filter((s) => !only || s.id === only);
     const marked = states.filter((s) => s.status?.active);
     const res = list.map((s) => ({ id: s.id, ...checkOne(s, dir) }));
-    const global = marked.length > 1 ? [`«активная: да» у ${marked.length} историй: ${marked.map((s) => s.id).join(', ')}`] : [];
-    const bad = res.some((r) => r.errs.length) || global.length;
+    // две активные — законное состояние (автор ведёт одну и не трогает другую): хук при старте уже берёт
+    // правленную последней, а снятый без спроса флаг — решение за автора (W5, стык 4)
+    const global = marked.length > 1 ? [`«активная: да» у ${marked.length} историй: ${marked.map((s) => s.id).join(', ')} — story:status берёт правленную последней; снять флаг — только по слову автора (--activate <id>)`] : [];
+    const bad = res.some((r) => r.errs.length);
     if (json) { console.log(JSON.stringify({ dir, global, stories: res }, null, 1)); return bad ? 1 : 0; }
     if (!list.length) { console.log(`в ${dir}/ нет историй${only ? ` с id ${only}` : ''}`); return 0; }
-    for (const g of global) console.log(`✗ ${g}`);
+    for (const g of global) console.log(`⚠ ${g}`);
     for (const r of res) {
       console.log(`${r.errs.length ? '✗' : '✓'} ${r.id}`);
       for (const e of r.errs) console.log(`   ✗ ${e}`);

@@ -25,16 +25,23 @@ export const KINDS = {
   F: { what: 'ремонтный приём', file: 'skills.md' },
   LOCAL: { what: 'наш урок', file: 'local-lessons.md' },
   TH: { what: 'тема базы', file: 'owners.md' },
+  '#attn': { what: 'раздел внимания', file: 'attention-merged.md' },
 };
 
-/** «r61», «R-61», «c-035» → «R-61», «C-35»; не похоже на ID — null. */
+/**
+ * «r61», «R-61», «c-035» → «R-61», «C-35»; якорь внимания «#attn-return-silence» или без «#» (оболочка
+ * съедает «#» без кавычек) → «#attn-return-silence»; не похоже на ID — null.
+ */
 export function normalizeId(raw) {
-  const m = String(raw).trim().match(/^(LOCAL|TH|[RCAF])-?0*(\d+)$/i);
+  const s = String(raw).trim();
+  const a = s.match(/^#?(attn(?:-[a-z0-9]+)*)$/i);
+  if (a) return `#${a[1].toLowerCase()}`;
+  const m = s.match(/^(LOCAL|TH|[RCAF])-?0*(\d+)$/i);
   if (!m) return null;
   return `${m[1].toUpperCase()}-${m[2].padStart(2, '0')}`;
 }
 
-export const prefixOf = (id) => id.slice(0, id.lastIndexOf('-'));
+export const prefixOf = (id) => (id.startsWith('#attn') ? '#attn' : id.slice(0, id.lastIndexOf('-')));
 const token = (id) => new RegExp(`(^|[^\\w-])${id}(?![\\w-])`);
 
 /**
@@ -43,6 +50,7 @@ const token = (id) => new RegExp(`(^|[^\\w-])${id}(?![\\w-])`);
  */
 export function block(text, id) {
   const lines = text.split('\n');
+  if (id.startsWith('#attn')) return anchorBlock(lines, id);
   const esc = id.replace('-', '\\-');
   const starts = [
     new RegExp(`^#{2,4}\\s+\`?${esc}\\b`),
@@ -59,6 +67,17 @@ export function block(text, id) {
     if (h && (!head || h[1].length <= head)) break;
     if (!head && (/^\*\*[A-Z]+-\d+[.:\s]/.test(l) || /^[-*]\s+\*\*[A-Z]+-\d+\b/.test(l) || /^---\s*$/.test(l))) break;
   }
+  while (end > at && !lines[end - 1].trim()) end--;
+  return { line: at + 1, text: lines.slice(at, end).join('\n') };
+}
+
+/** Раздел attention-merged.md по якорю «{#attn-…}» в заголовке: до заголовка того же уровня или выше. */
+function anchorBlock(lines, id) {
+  const at = lines.findIndex((l) => /^#+\s/.test(l) && l.includes(`{${id}}`));
+  if (at < 0) return null;
+  const head = lines[at].match(/^#+/)[0].length;
+  let end = at + 1;
+  while (end < lines.length && !(lines[end].match(/^(#+)\s/)?.[1].length <= head)) end++;
   while (end > at && !lines[end - 1].trim()) end--;
   return { line: at + 1, text: lines.slice(at, end).join('\n') };
 }
@@ -137,7 +156,7 @@ export function titleOf(id) {
   const b = text && block(text, id);
   if (!b) return null;
   const first = b.text.split('\n')[0].replace(/^#+\s*/, '').replace(/^\*\*|\*\*$/g, '');
-  return first.replace(new RegExp(`^${id}\\.\\s*`), '');
+  return first.replace(new RegExp(`^${id}\\.\\s*`), '').replace(/\s*\{#attn[\w-]*\}$/, '');
 }
 
 /**

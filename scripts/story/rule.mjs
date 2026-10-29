@@ -1,11 +1,11 @@
 // story:rule — правило, проверка или решение по ID: текст из свода, пороги из thresholds.json, владелец, отмены.
 import { runCli } from './core/cli.mjs';
-import { KINDS, PLAYBOOK, lookupId, normalizeId, titleOf } from './core/playbook.mjs';
+import { KINDS, PLAYBOOK, lookupId, normalizeId, prefixOf, titleOf } from './core/playbook.mjs';
 
 const HELP = `npm run story:rule -- <ID> [<ID> …] [--brief] [--json]
 
 Текст по ID из свода — чтобы скилл подтягивал правило, а не пересказывал его по памяти (план §4):
-${Object.entries(KINDS).map(([p, k]) => `  ${(p + '-NN').padEnd(9)}${k.what} — ${PLAYBOOK}/${k.file}`).join('\n')}
+${Object.entries(KINDS).map(([p, k]) => `  ${(p === '#attn' ? '#attn-…' : `${p}-NN`).padEnd(9)}${k.what} — ${PLAYBOOK}/${k.file}`).join('\n')}
 
 К тексту добавляются:
   пороги     ключи thresholds.json: у проверки C-NN — C-NN.* и ключи с ней в «checks»,
@@ -14,8 +14,9 @@ ${Object.entries(KINDS).map(([p, k]) => `  ${(p + '-NN').padEnd(9)}${k.what} —
   отмена     строки superseded.md: что в ID изменено решением автора и чем заменено
   связи      у правила — проверки, которые на него ссылаются; у проверки — правила из её текста
 
-  <ID>       R-61, C-35, A-01, F-04, LOCAL-01, TH-88; можно несколько, через пробел или запятую;
-             регистр и ведущие нули не важны (r61 = R-61)
+  <ID>       R-61, C-35, A-01, F-04, LOCAL-01, TH-88, '#attn-return-silence'; можно несколько, через пробел
+             или запятую; регистр и ведущие нули не важны (r61 = R-61); якорь — в кавычках или без «#»
+             (attn-return-silence): без кавычек оболочка считает «#…» комментарием
   --brief    только первый абзац (формулировка) и пороги
   --json     всё данными
   --help     эта справка
@@ -38,6 +39,8 @@ function thresholdLine(t) {
 /** Формулировка: у правила — жирная первая строка, у проверки — заголовок и порог. */
 function briefText(e) {
   const lines = e.text.split('\n');
+  // раздел внимания: заголовок и первый абзац под ним
+  if (e.id.startsWith('#attn')) return [lines[0], ...e.text.split(/\n\s*\n/).slice(1, 2)].join('\n\n');
   if (!e.id.startsWith('C-')) return lines[0];
   const at = lines.findIndex((l) => /^- \*\*Порог/.test(l));
   if (at < 0) return lines[0];
@@ -84,9 +87,9 @@ runCli(HELP, async (args) => {
   const missing = [];
   for (const r of raw) {
     const id = normalizeId(r);
-    if (!id) { missing.push(`«${r}» не похоже на ID (R-NN, C-NN, A-NN, F-NN, LOCAL-NN, TH-NN)`); continue; }
+    if (!id) { missing.push(`«${r}» не похоже на ID (R-NN, C-NN, A-NN, F-NN, LOCAL-NN, TH-NN, #attn-…)`); continue; }
     const e = lookupId(id);
-    if (!e) { missing.push(`${id}: нет в ${PLAYBOOK}/${KINDS[id.slice(0, id.lastIndexOf('-'))].file} и owners.md`); continue; }
+    if (!e) { missing.push(`${id}: нет в ${PLAYBOOK}/${KINDS[prefixOf(id)].file} и owners.md`); continue; }
     found.push(e);
   }
   if (args.has('json')) console.log(JSON.stringify({ ids: found, missing }, null, 1));

@@ -28,8 +28,9 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/release-gate.mjs <id|путь> [
              reviews/<дата>-story-playtest.md о второй волне) не старше последней правки src/stories/<id>
   карточка   card-check.mjs: C-49, счёт глав и героев, два времени (durations.mjs)
   граница    boundary-check.mjs: крючок перед free_chapters и выплата сразу после
-  ревизия    revision-check.mjs: правка ломает сохранения — revision поднята
-  файл       pack.mjs: story:pack --check без потерь
+  ревизия    revision-check.mjs: правка ломает сохранения — revision поднята; без тега <id>-rN сравнение
+             с коммитом, где revision менялась последний раз
+  файл       pack.mjs: story:pack --check без потерь; hidden: true в meta.json — ℹ «на Pages не попадёт»
 Код выхода 1, если есть хоть один ✗.
 
   --skip     пропустить пункты (например, тест для истории вне каталога): шаг,главы,линт,тест,карточка,граница,ревизия,файл
@@ -158,6 +159,7 @@ export async function releaseGate(ref, { skip = [], runs } = {}, T = thresholds(
   if (on('файл')) {
     const p = packCheck(ref);
     add('файл', p.check.ok ? '✓' : '✗', p.check.ok ? 'story:pack --check без потерь; собрать — pack.mjs --write' : `story:pack --check: ${p.check.report?.stories?.flatMap((s) => s.problems ?? []).join('; ') ?? 'ошибка'}`, p);
+    if (story.meta?.hidden) add('скрыта', 'ℹ', 'hidden: true в meta.json — на главном не видна и в dist/stories/ на Pages не попадёт; игроку — файлом или ?story=<id>');
   }
 
   const verdict = items.some((i) => i.mark === '✗') ? 'нельзя' : items.some((i) => i.mark === '⚠') ? 'после решений' : 'можно';
