@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compile } from '../../../../scripts/lib/compile.mjs';
 import { play, seeded } from '../../../../scripts/lib/bot.mjs';
-import { nodeIds, resolveTarget } from '../../../../scripts/lib/ink.mjs';
+import { nodeIds } from '../../../../scripts/lib/ink.mjs';
 import { compileInput, loadStory, parseStory } from '../../../../scripts/lib/story.mjs';
 import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
 import { lintStory } from '../../../../scripts/lint/core.mjs';
@@ -47,32 +47,6 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-check.mjs (--story <id> | -
 
 const T = thresholds();
 const pct = (x) => `${Math.round(x * 100)}%`;
-
-/**
- * Развилки, где кнопки уходят в разные узлы (не в финалы). Бюджет дорогих развилок этим не считается — он
- * у expensiveBudget() скилла story-branch; функцию держит самопроверка selftest-story-plan.mjs (requests.md T-21).
- */
-export function expensiveForks(tree) {
-  const ids = new Set(nodeIds(tree));
-  const byId = new Map(tree.knots.map((k) => [k.id, k]));
-  const out = [];
-  const firstDivert = (items) => { for (const it of items ?? []) { if (it.type === 'divert') return it.target; const d = firstDivert(it.items); if (d) return d; } return null; };
-  const scan = (items, knot) => {
-    const buttons = (items ?? []).filter((it) => it.type === 'choice' && it.role === 'button');
-    if (buttons.length > 1) {
-      const targets = new Set();
-      for (const b of buttons) {
-        const t = firstDivert(b.items);
-        const id = t ? resolveTarget(t, knot.id, ids) : null;
-        if (id && id !== 'END' && byId.get(id)?.ending == null) targets.add(id);
-      }
-      if (targets.size > 1) out.push({ knot: knot.id, chapter: knot.chapter, targets: [...targets] });
-    }
-    for (const it of items ?? []) { if (it.items) scan(it.items, knot); for (const br of it.branches ?? []) scan(br.items, knot); }
-  };
-  for (const k of tree.knots) scan(k.items, k);
-  return out;
-}
 
 /** Посещения узлов и переменные по главам на прогонах бота (scripts/lib/bot.mjs). */
 export function botStats(story, runs) {
