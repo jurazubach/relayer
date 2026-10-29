@@ -1,4 +1,0 @@
-src/stories/chuzhoy-golos · неотвечающий против #silent · realtime
-  seed 1: развилок 92, с #silent 38, без #silent 54
-   ✓ во всех 38 развилках с #silent исходы и следующие варианты совпадают (до E-02 «не ответил» и есть #silent, поэтому совпадение ожидаемо)
-   ℹ «не ответил» некуда вести (нет #silent, напоминаний до E-02 нет): ch1 ×2, ch1_terms ×3, ch1_hub ×4, ch1_jess ×4, ch1_evening ×2, ch1_ellie_lie, ch1_connor_skip, ch1_connor_reply и ещё 32

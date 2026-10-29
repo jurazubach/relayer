@@ -1,1 +1,0 @@
-# Идеи · slepoe-pyatno
