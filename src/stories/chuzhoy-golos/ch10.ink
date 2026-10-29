@@ -200,6 +200,7 @@
     -> ask
 - -> ch10_door
 
+// reveal: clue_bill, clue_ladder, clue_owen_saw
 === ch10_door ===
 ~ proof = 0
 { bill_found:
@@ -287,6 +288,7 @@
 
 // ============ ФИНАЛЫ СЕЗОНА ============
 
+// финал: truth
 === fin_truth ===
 ~ ending = "truth"
 Открываю. #from:judith #delay:3m
@@ -372,6 +374,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:judith
 -> END
 
+// финал: herself
 === fin_herself ===
 ~ ending = "herself"
 раз #from:jess #delay:2m
@@ -417,6 +420,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:judith
 -> END
 
+// финал: unproven
 === fin_unproven ===
 ~ ending = "unproven"
 {
@@ -475,6 +479,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:judith
 -> END
 
+// финал: scapegoat
 === fin_scapegoat ===
 ~ ending = "scapegoat"
 Значит, Оуэн. #from:judith #delay:3m
@@ -514,6 +519,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:judith
 -> END
 
+// финал: puppet
 === fin_puppet ===
 ~ ending = "puppet"
 Значит, Оуэн. #from:judith #delay:3m
@@ -550,6 +556,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:lily
 -> END
 
+// финал: revenge
 === fin_revenge ===
 ~ ending = "revenge"
 {
@@ -594,6 +601,7 @@ Lily 💧 → Элли · 00:41 «элли» · 00:43 «не будь дурой
 Конец #sys:maya
 -> END
 
+// финал: silence
 === fin_silence ===
 ~ ending = "silence"
 Я жду Вас. #from:judith #delay:3m

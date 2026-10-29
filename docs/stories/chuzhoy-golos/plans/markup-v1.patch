@@ -1,0 +1,181 @@
+diff --git a/src/stories/chuzhoy-golos/story.ink b/src/stories/chuzhoy-golos/story.ink
+--- a/src/stories/chuzhoy-golos/story.ink
++++ b/src/stories/chuzhoy-golos/story.ink
+@@ -89,6 +89,13 @@
+ VAR ellie_testifies = false
+ VAR final_choice = ""
+ VAR proof = 0
++
++// ---- улики к узлам раскрытия (// reveal:, C-54) ----
++VAR clue_whisper = false
++VAR clue_watch = false
++VAR clue_ladder = false
++VAR clue_bill = false
++VAR clue_owen_saw = false
+
+ // ---- служебные флаги глав ----
+ VAR c6_morning = false
+diff --git a/src/stories/chuzhoy-golos/ch01.ink b/src/stories/chuzhoy-golos/ch01.ink
+--- a/src/stories/chuzhoy-golos/ch01.ink
++++ b/src/stories/chuzhoy-golos/ch01.ink
+@@ -244,6 +244,7 @@
+     джесс наверно уже всем рассказала, что мы с лили ругались #from:ellie
+     -> ch1_ellie_lie
+
++// намеренно: C-49 ложь — «в половине 12 я уже шла по трассе»; правда — ушла от воды в 00:40 (facts.md, «Ложь»)
+ === ch1_ellie_lie ===
+ да мы поругались но это было раньше #from:ellie #delay:1m
+ где-то в 11 она сказала что я веду себя как ребёнок
+diff --git a/src/stories/chuzhoy-golos/ch06.ink b/src/stories/chuzhoy-golos/ch06.ink
+--- a/src/stories/chuzhoy-golos/ch06.ink
++++ b/src/stories/chuzhoy-golos/ch06.ink
+@@ -358,6 +358,7 @@
+     Под его «давай, прыгай» есть второй голос. Дальше, у самого уступа. #delay:20s
+     Я подняла средние частоты. #delay:20s
+     Девичий. «на счёт три, дэн. раз. два». #delay:30s
++    ~ clue_whisper = true
+     Его звали «Дэн» только свои. #delay:20s
+     Мая отправила вам 1 файл #sys:maya #delay:10s
+     {maya_files == 2 && not cut_frames:
+@@ -369,6 +370,7 @@
+     Я записала на телефон. Из кармана. #delay:20s
+     Качество плохое. Но под его «давай, прыгай» есть второй голос. #delay:20s
+     Девичий. «на счёт три, дэн». #delay:30s
++    ~ clue_whisper = true
+     Его звали «Дэн» только свои. #delay:20s
+ - world == "owen":
+     ~ whisper_known = true
+@@ -376,6 +378,7 @@
+     Написал: «послушай внимательно, там её голос 🙂». #delay:20s
+     Я подняла средние частоты. Под его «давай, прыгай» есть второй голос. #delay:20s
+     Девичий. «на счёт три, дэн». #delay:30s
++    ~ clue_whisper = true
+     Его звали «Дэн» только свои. #delay:20s
+ - else:
+     Записи у меня нет. #from:maya #delay:1h
+diff --git a/src/stories/chuzhoy-golos/ch07.ink b/src/stories/chuzhoy-golos/ch07.ink
+--- a/src/stories/chuzhoy-golos/ch07.ink
++++ b/src/stories/chuzhoy-golos/ch07.ink
+@@ -159,5 +159,6 @@
+ набережная, 4 — дом холлисов. джесс холлис. #delay:30s
+ ~ tom_proof = true
++~ clue_watch = true
+ {cover == "honest":
+     и ещё. в посте написано «под видом студента». а вы людям писали честно. #delay:20s
+     текст переписали, чтобы вас выставить.
+diff --git a/src/stories/chuzhoy-golos/ch08.ink b/src/stories/chuzhoy-golos/ch08.ink
+--- a/src/stories/chuzhoy-golos/ch08.ink
++++ b/src/stories/chuzhoy-golos/ch08.ink
+@@ -328,6 +328,7 @@
+ слушай #from:connor #delay:1m
+ я никому не говорил #delay:20s
+ в 01:15 по старой лестнице кто-то лез. со светом #delay:30s
++~ clue_ladder = true
+ я думал пьяный. я был под своим же товаром #delay:20s
+ сегодня говорят её телефон нашли у старой лестницы #delay:2m
+ я думаю это была она #delay:40s
+diff --git a/src/stories/chuzhoy-golos/ch09.ink b/src/stories/chuzhoy-golos/ch09.ink
+--- a/src/stories/chuzhoy-golos/ch09.ink
++++ b/src/stories/chuzhoy-golos/ch09.ink
+@@ -17,6 +17,7 @@
+ 314 записан у меня в телефоне. #delay:20s
+ Джессика Холлис. #delay:20s
+ Лилиан звонила ей в 01:19. Четырнадцать секунд. #delay:40s
++~ clue_bill = true
+ {not judith_guarded:
+     ~ c9_jess_warned = true
+     Вчера вечером я написала Джессике, что Вы просили открыть счета. Простите. Я не думала. #delay:1m
+@@ -138,6 +139,7 @@
+ я схватил её за руку. она упала #delay:30s
+ она плыла. я видел. и ушёл #delay:40s
+ на верхней тропе стояла джесс #delay:1m
++~ clue_owen_saw = true
+ я сказал ей: ты ничего не видела. как тогда #delay:20s
+ как тогда — это денни. два года назад она стояла с ним наверху #delay:40s
+ это её голос на записи #delay:20s
+@@ -215,9 +217,11 @@
+ 650 — Элли. 314 записан у меня в телефоне. #delay:30s
+ Джессика Холлис. #delay:20s
+ Лилиан звонила ей в 01:19. Четырнадцать секунд. #delay:30s
++~ clue_bill = true
+ Она была у меня сегодня в восемь. Я налила ей чай. #delay:30s
+ -> ch9_fake -> ch9_dj -> ch9_jess
+
++// reveal: clue_whisper, clue_bill, clue_watch, clue_owen_saw
+ === ch9_jess ===
+ ~ c9_has_ev = bill_found || owen_turned || fake_note_caught || jess_clues >= 3 || whisper_known
+ {
+@@ -343,5 +347,6 @@
+ 314 — Джессика Холлис. #delay:40s
+ Лилиан звонила ей в 01:19. Четырнадцать секунд. #delay:30s
++~ clue_bill = true
+ Она была у меня сегодня в восемь. Я налила ей чай. #delay:30s
+ -> ch9_fake -> ch9_dj -> ch9_hook
+
+diff --git a/src/stories/chuzhoy-golos/ch10.ink b/src/stories/chuzhoy-golos/ch10.ink
+--- a/src/stories/chuzhoy-golos/ch10.ink
++++ b/src/stories/chuzhoy-golos/ch10.ink
+@@ -200,6 +200,7 @@
+     -> ask
+ - -> ch10_door
+
++// reveal: clue_bill, clue_ladder, clue_owen_saw
+ === ch10_door ===
+ ~ proof = 0
+ { bill_found:
+@@ -287,6 +288,7 @@
+
+ // ============ ФИНАЛЫ СЕЗОНА ============
+
++// финал: truth
+ === fin_truth ===
+ ~ ending = "truth"
+ Открываю. #from:judith #delay:3m
+@@ -372,6 +374,7 @@
+ Конец #sys:judith
+ -> END
+
++// финал: herself
+ === fin_herself ===
+ ~ ending = "herself"
+ раз #from:jess #delay:2m
+@@ -417,6 +420,7 @@
+ Конец #sys:judith
+ -> END
+
++// финал: unproven
+ === fin_unproven ===
+ ~ ending = "unproven"
+ {
+@@ -475,6 +479,7 @@
+ Конец #sys:judith
+ -> END
+
++// финал: scapegoat
+ === fin_scapegoat ===
+ ~ ending = "scapegoat"
+ Значит, Оуэн. #from:judith #delay:3m
+@@ -514,6 +519,7 @@
+ Конец #sys:judith
+ -> END
+
++// финал: puppet
+ === fin_puppet ===
+ ~ ending = "puppet"
+ Значит, Оуэн. #from:judith #delay:3m
+@@ -550,6 +556,7 @@
+ Конец #sys:lily
+ -> END
+
++// финал: revenge
+ === fin_revenge ===
+ ~ ending = "revenge"
+ {
+@@ -594,6 +601,7 @@
+ Конец #sys:maya
+ -> END
+
++// финал: silence
+ === fin_silence ===
+ ~ ending = "silence"
+ Я жду Вас. #from:judith #delay:3m
