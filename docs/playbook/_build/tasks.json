@@ -2359,12 +2359,65 @@
       "pauseAfter": true
     },
     {
+      "id": "T-22",
+      "wave": "w6-final",
+      "type": "code",
+      "title": "Хвосты W5: ревизия «Чужого голоса», хвосты «глав невидимых», права, срабатывание",
+      "deps": [
+        "W5"
+      ],
+      "writes": [
+        ".claude/skills/story-playtest/scripts/playtest-kit.mjs",
+        ".claude/skills/story-pauses/references/**",
+        ".claude/skills/story-opening/references/**",
+        ".claude/skills/story-time/references/**",
+        ".claude/skills/story-release/**",
+        ".claude/skills/story-fix/SKILL.md",
+        ".claude/skills/story-desk/**",
+        ".claude/skills/story-core/SKILL.md",
+        ".claude/skills/story-plan/SKILL.md",
+        ".claude/skills/story-brainstorm/SKILL.md",
+        ".claude/skills/story-kb/SKILL.md",
+        "scripts/lint/checks/C-49.mjs",
+        "scripts/lint/checks/C-55.mjs",
+        "scripts/lint/selftest-t22.mjs",
+        "docs/playbook/checks.md",
+        "docs/playbook/thresholds.json",
+        "docs/playbook/owners.md",
+        "scripts/story/**",
+        "docs/lab/triggers/story-brainstorm.json",
+        "docs/lab/triggers/story-branch.json",
+        "docs/lab/triggers/story-mystery.json",
+        "docs/lab/triggers/story-time.json",
+        "docs/lab/triggers/story-release.json",
+        "src/stories/chuzhoy-golos/meta.json",
+        "docs/stories/chuzhoy-golos/**"
+      ],
+      "inputs": [
+        "docs/playbook/_build/reports/W5/checkpoint.md («Стыки», «Правки» п. 1)",
+        "docs/playbook/_build/reports/E-08/requests.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы"
+      ],
+      "accept": [
+        "npm run test:lint",
+        "npm run test:story-cmd",
+        "npm run check:story",
+        "npm run story:lint -- --story chuzhoy-golos --strict",
+        "node .claude/skills/story-release/scripts/revision-check.mjs --story chuzhoy-golos",
+        "npm run story:pack -- --check",
+        "npm run build"
+      ],
+      "timeoutMin": 200,
+      "spec": "По `reports/W5/checkpoint.md`, «Правки» п. 1. **Срочно:** автор вот-вот раздаёт «Чужой голос» друзьям.\n1. **Ревизия.** Правка после гейта (коммит `0fe2955`) изменила сценарий при ревизии 2 — сохранения игроков ломаются тихо. `release-gate.mjs` / `revision-check.mjs`: без тега сравнивать с последним коммитом, где менялось `revision` в `meta.json`. `story-fix/SKILL.md`, последний шаг: «правка ink → `revision-check.mjs --story <id>`; ✗ — сказать автору, поднять только по одобрению». **«Чужой голос»: `revision` 2 → 3 (решение королевы: тестеры ещё не начинали) и пересобрать набор волны 1** (`docs/stories/chuzhoy-golos/playtests/wave-1/*.story.json` через `story-playtest` → `playtest-kit` или `story:pack`), запись D-NN в `decisions.md`. Приёмка: `revision-check --story chuzhoy-golos` ✓ без `--from`.\n2. **Хвосты «глав невидимых» (A-08, просьбы E-08 п. 1–6):** `playtest-kit.mjs` — точка анкеты по последней входящей реплике перед паузой стыка, «готово начало» вместо «главы 1–N»; шесть мест в references `story-pauses` / `story-opening` / `story-time` — заголовок главы игроку не виден; `card-check.mjs` — без «карточка покажет «N глав»» (сверка `chapters` ↔ `#chapter` остаётся внутренней); C-49 — новый пункт «слово «глава» / счёт глав в `tagline`, `synopsis`, `features`, `teasers`»; новая проверка **C-55** «за `#chapter` — реплика, а не кнопки» (ключ, `checks.md`, владелец в `owners.md`). Тесты C-49/C-55 — в `scripts/lint/selftest-t22.mjs`. Приёмка в отчёте: `playtest-kit --dry-run` на «Чужом голосе» без слова «глава» в записках.\n3. **Две активные истории:** `story-status.mjs --check` при двух «активная: да» — ⚠, а не ✗; `story-desk` (`decisions-desk.md`, `flags.md` К10) — «не снимать флаг без слова автора».\n4. **Права:** `story-core` и `story-plan` — `Edit(src/stories/**)`, `Edit(docs/stories/**)` в `allowed-tools`, как у `story-fix`; `story-release` — `Edit(src/stories/*/meta.json)`. Живой `claude -p` «запиши ядро в шапку» без `--allowedTools` — 0 отказов (в отчёт).\n5. **Срабатывание:** фраза `story-time.json:22` → позитивом в `story-release.json`; в description `story-brainstorm` — «поворот или твист для идеи»; перемер `lab:triggers --skill story-brainstorm`, `--skill story-release`, `--skill story-time` (по одному, в пределах 10 мин на вызов), итог — строкой в отчёт; двусмысленные фразы, которые 0 из 3, — снять.\n6. `story:rule` принимает `#attn-…`; в `story-kb/SKILL.md` ID с `#` — в кавычках."
+    },
+    {
       "id": "F-docs",
       "title": "CLAUDE.md, README: агенты, скиллы, команды, «симптом → скилл»",
       "wave": "w6-final",
       "type": "doc",
       "deps": [
-        "W5"
+        "W5",
+        "T-22"
       ],
       "writes": [
         "CLAUDE.md",
@@ -2374,14 +2427,13 @@
         "docs/playbook/REVIEW.md",
         "docs/playbook/flow-example.md"
       ],
-      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.\n\nПо просьбе T-02 (п. 3): ссылки «по полю `ink` из `src/stories/*.json`» в `docs/playbook/story-findings.md` и `REVIEW.md` перевести на новую форму (`src/stories/<id>/chNN.ink:строка` или `story:pack -- --flat`).\n\nСверь `docs/playbook/flow-example.md` (T-16) с тем, что построено: имена скриптов скиллов, ремонтных приёмов F-NN, команд и флагов. Пример писался до скиллов и называет скрипты по `flow-review.md` §C; расхождения поправь в примере.\n\nПо просьбе T-03b (п. 9): таблица согласования порогов в `docs/playbook/REVIEW.md` — числа заменить ключами `thresholds.json` (таблица соответствия — `reports/T-03b/build.md`).\n\n`docs/playbook/build-plan.md` §13 и чек-лист §15: строки про Э4 и Э6 пометить «отменено решением автора 28.10; режимы и напоминания — в X-E7 (переработка «Чужого голоса»)»; три истории → «Чужой голос», две другие скрыты (E-07).\n\nПосле E-08: в документации «главы» — внутренняя единица автора, игрок их не видит (решение автора 29.10).",
+      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.\n\nПо просьбе T-02 (п. 3): ссылки «по полю `ink` из `src/stories/*.json`» в `docs/playbook/story-findings.md` и `REVIEW.md` перевести на новую форму (`src/stories/<id>/chNN.ink:строка` или `story:pack -- --flat`).\n\nСверь `docs/playbook/flow-example.md` (T-16) с тем, что построено: имена скриптов скиллов, ремонтных приёмов F-NN, команд и флагов. Пример писался до скиллов и называет скрипты по `flow-review.md` §C; расхождения поправь в примере.\n\nПо просьбе T-03b (п. 9): таблица согласования порогов в `docs/playbook/REVIEW.md` — числа заменить ключами `thresholds.json` (таблица соответствия — `reports/T-03b/build.md`).\n\n`docs/playbook/build-plan.md` §13 и чек-лист §15: строки про Э4 и Э6 пометить «отменено решением автора 28.10; режимы и напоминания — в X-E7 (переработка «Чужого голоса»)»; три истории → «Чужой голос», две другие скрыты (E-07).\n\nПосле E-08: в документации «главы» — внутренняя единица автора, игрок их не видит (решение автора 29.10).\n\nПо итогу W5 (п. 4): в «Проверку перед коммитом» `CLAUDE.md` добавить `node .claude/skills/story-kb/scripts/kb-index.mjs --check && node .claude/skills/story-kb/scripts/kb-contradictions.mjs --check` и `npm run kb:clean -- --verify`. Тест срабатывания здесь не гонять — полный прогон один раз в F-final.",
       "accept": [
         "npm run build",
-        "npm run check:story",
-        "npm run lab:triggers -- --runs 3"
+        "npm run check:story"
       ],
       "inputs": [],
-      "timeoutMin": 90
+      "timeoutMin": 200
     },
     {
       "id": "F-final",
@@ -2392,7 +2444,7 @@
         "F-docs"
       ],
       "writes": [],
-      "spec": "Финальная сверка всего с `INTENT.md` и планом: что сделано, что нет, покрытие знаний, качество скиллов по выборке, открытые вопросы автору. Отчёт — `docs/playbook/_build/reports/F-final/checkpoint.md`.\n\nРешение автора (28.10): всё делается сразу в `master`, конвейер сливает и пушит каждую задачу (пуш = деплой на Pages). В `FINAL.md` вместо «как слить в master» — что задеплоено, ссылка на сайт и как откатить, если нужно (`git revert`).",
+      "spec": "Финальная сверка всего с `INTENT.md` и планом: что сделано, что нет, покрытие знаний, качество скиллов по выборке, открытые вопросы автору. Отчёт — `docs/playbook/_build/reports/F-final/checkpoint.md`.\n\nРешение автора (28.10): всё делается сразу в `master`, конвейер сливает и пушит каждую задачу (пуш = деплой на Pages). В `FINAL.md` вместо «как слить в master» — что задеплоено, ссылка на сайт и как откатить, если нужно (`git revert`).\n\nПолный тест срабатывания (`lab:triggers`, 21 скилл) — в отчёте F-final, по группам: `--skill <имя> --runs 3` по одному (каждый вызов в пределах 10 мин), сумма — в `FINAL.md`. В приёмке его нет (иначе таймаут на 1284 запусках).",
       "accept": [
         "npm run build",
         "npm run check:story",
@@ -2401,12 +2453,15 @@
         "npm run story:lint",
         "npm run skills:test",
         "npm run story:coverage -- --summary",
-        "npm run lab:triggers -- --runs 3",
         "npm run test:hooks",
         "npm run test:lab:mutants",
         "npm run story:pack -- --check",
         "npm run test:lib",
-        "npm run test:story-cmd"
+        "npm run test:story-cmd",
+        "node .claude/skills/story-kb/scripts/kb-index.mjs --check",
+        "node .claude/skills/story-kb/scripts/kb-contradictions.mjs --check",
+        "npm run kb:clean -- --quiet && npm run kb:clean -- --verify",
+        "npm run test:coverage"
       ],
       "inputs": [],
       "timeoutMin": 200,
