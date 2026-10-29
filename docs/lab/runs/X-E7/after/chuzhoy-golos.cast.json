@@ -34,12 +34,12 @@
      "id": "ellie",
      "name": "Элли",
      "level": "ось",
-     "why": "финал читает ellie_trust, ellie_reaction, ellie_block_told, ellie_testifies, cover, quit_job, found_jacket_self, cut_frames",
+     "why": "финал читает ellie_trust, ellie_reaction, ellie_water, ellie_block_told, ellie_testifies, cover, quit_job, found_jacket_self, cut_frames",
      "first": 1,
      "unlock": null,
-     "lines": 453,
-     "blocks": 215,
-     "buttons": 105,
+     "lines": 460,
+     "blocks": 223,
+     "buttons": 108,
      "chapters": [
       1,
       2,
@@ -64,6 +64,7 @@
       "cover",
       "alias",
       "confronted_night",
+      "c2_told_night",
       "quit_job",
       "found_jacket_self",
       "cut_frames"
@@ -71,6 +72,7 @@
      "finalVars": [
       "ellie_trust",
       "ellie_reaction",
+      "ellie_water",
       "ellie_block_told",
       "ellie_testifies",
       "cover",
@@ -80,10 +82,11 @@
      ],
      "notes": [],
      "under": {
-      "ellie_trust": 20,
+      "ellie_trust": 25,
       "cover": 2,
       "alias": 3,
       "confronted_night": 2,
+      "c2_told_night": 1,
       "quit_job": 1,
       "exposed_fake": 1,
       "ellie_reaction": 3,
@@ -97,7 +100,7 @@
       "ellie_testifies": 2
      },
      "played": {
-      "median": 190,
+      "median": 188,
       "share": 1
      }
     },
@@ -108,8 +111,8 @@
      "why": "финал читает judith_revealed, judith_waits, judith_promised",
      "first": 2,
      "unlock": 2,
-     "lines": 198,
-     "blocks": 96,
+     "lines": 204,
+     "blocks": 99,
      "buttons": 42,
      "chapters": [
       2,
@@ -126,6 +129,7 @@
       "judith_guarded",
       "judith_waits",
       "judith_promised",
+      "c2_asked_accident",
       "told_judith_ellie",
       "bill_asked"
      ],
@@ -136,6 +140,7 @@
      ],
      "notes": [],
      "under": {
+      "c2_asked_accident": 1,
       "told_judith_ellie": 1,
       "judith_trust": 2,
       "judith_guarded": 1,
@@ -149,7 +154,7 @@
       "final_choice": 2
      },
      "played": {
-      "median": 71,
+      "median": 75,
       "share": 1
      }
     },
@@ -157,11 +162,11 @@
      "id": "jess",
      "name": "Джесс",
      "level": "ось",
-     "why": "финал читает jess_suspicious, jess_bond, jess_clues, jess_confessed, jess_promised, jess_alarmed",
+     "why": "финал читает jess_suspicious, jess_bond, jess_clues, jess_confessed, jess_promised, jess_alarmed, c10_asked_phone, c10_pressed",
      "first": 1,
      "unlock": null,
-     "lines": 187,
-     "blocks": 111,
+     "lines": 191,
+     "blocks": 114,
      "buttons": 51,
      "chapters": [
       1,
@@ -184,7 +189,9 @@
       "jess_exposed",
       "jess_confessed",
       "jess_promised",
-      "jess_alarmed"
+      "jess_alarmed",
+      "c10_asked_phone",
+      "c10_pressed"
      ],
      "finalVars": [
       "jess_suspicious",
@@ -192,7 +199,9 @@
       "jess_clues",
       "jess_confessed",
       "jess_promised",
-      "jess_alarmed"
+      "jess_alarmed",
+      "c10_asked_phone",
+      "c10_pressed"
      ],
      "notes": [],
      "under": {
@@ -201,10 +210,12 @@
       "jess_warned": 1,
       "jess_clues": 4,
       "jess_promised": 1,
+      "c10_asked_phone": 1,
+      "c10_pressed": 4,
       "final_choice": 2
      },
      "played": {
-      "median": 90,
+      "median": 92,
       "share": 1
      }
     },
@@ -215,9 +226,9 @@
      "why": "финал читает maya_trust, maya_files, maya_target, maya_posted, maya_stopped, maya_post, maya_go, maya_at_door",
      "first": 5,
      "unlock": null,
-     "lines": 146,
-     "blocks": 80,
-     "buttons": 36,
+     "lines": 147,
+     "blocks": 81,
+     "buttons": 33,
      "chapters": [
       5,
       6,
@@ -250,8 +261,8 @@
      ],
      "notes": [],
      "under": {
-      "maya_trust": 15,
-      "maya_files": 4,
+      "maya_trust": 13,
+      "maya_files": 2,
       "jess_clues": 2,
       "c7_ellie_out": 1,
       "maya_target": 4,
@@ -271,9 +282,9 @@
      "why": "финал читает owen_knows, owen_reply, owen_turned, owen_deal",
      "first": 3,
      "unlock": null,
-     "lines": 119,
-     "blocks": 61,
-     "buttons": 37,
+     "lines": 134,
+     "blocks": 74,
+     "buttons": 38,
      "chapters": [
       3,
       4,
@@ -290,6 +301,8 @@
       "owen_reply",
       "owen_turned",
       "owen_deal",
+      "c3_owen_doubt",
+      "c3_owen_tip",
       "called_bluff"
      ],
      "finalVars": [
@@ -300,19 +313,22 @@
      ],
      "notes": [],
      "under": {
+      "c3_owen_doubt": 2,
+      "c3_owen_tip": 1,
       "owen_knows": 2,
       "exposed_fake": 1,
       "called_bluff": 1,
       "owen_weakened": 2,
       "owen_reply": 3,
       "note_shown_to": 1,
+      "c9_waited": 1,
       "owen_deal": 1,
       "owen_turned": 1,
       "note_ladder": 1,
       "clue_owen_saw": 1
      },
      "played": {
-      "median": 49,
+      "median": 54,
       "share": 1
      }
     },
@@ -323,8 +339,8 @@
      "why": "кнопок 23, глав 6 из 10",
      "first": 1,
      "unlock": null,
-     "lines": 85,
-     "blocks": 43,
+     "lines": 89,
+     "blocks": 48,
      "buttons": 23,
      "chapters": [
       1,
@@ -354,7 +370,7 @@
       "note_ladder": 1
      },
      "played": {
-      "median": 30,
+      "median": 31,
       "share": 1
      }
     },
@@ -362,11 +378,11 @@
      "id": "unknown",
      "name": "Неизвестный номер",
      "level": "источник",
-     "why": "реплик 35, кнопок 16",
+     "why": "реплик 40, кнопок 16",
      "first": 2,
      "unlock": null,
-     "lines": 35,
-     "blocks": 17,
+     "lines": 40,
+     "blocks": 18,
      "buttons": 16,
      "chapters": [
       2,
@@ -375,11 +391,13 @@
      ],
      "presence": 0.3,
      "vars": [
-      "unknown_blocked"
+      "unknown_blocked",
+      "c2_answered_unknown"
      ],
      "finalVars": [],
      "notes": [],
      "under": {
+      "c2_answered_unknown": 3,
       "unknown_blocked": 1,
       "judith_trust": 3,
       "note_threat": 1
@@ -429,11 +447,11 @@
      "id": "beth",
      "name": "Бет",
      "level": "фон",
-     "why": "реплик 16, кнопок 2, глав 2",
+     "why": "реплик 17, кнопок 2, глав 2",
      "first": 3,
      "unlock": null,
-     "lines": 16,
-     "blocks": 6,
+     "lines": 17,
+     "blocks": 8,
      "buttons": 2,
      "chapters": [
       3,
@@ -458,8 +476,8 @@
      "why": "одна глава",
      "first": 8,
      "unlock": null,
-     "lines": 13,
-     "blocks": 9,
+     "lines": 14,
+     "blocks": 10,
      "buttons": 7,
      "chapters": [
       8
@@ -552,6 +570,7 @@
       "note_connor",
       "note_rumor",
       "note_beth",
+      "c3_note_cc",
       "note_she"
      ],
      "finalVars": [
@@ -567,6 +586,7 @@
       "note_connor": 1,
       "note_rumor": 1,
       "note_beth": 1,
+      "c3_note_cc": 1,
       "note_threat": 1,
       "note_she": 1,
       "jess_clues": 2,

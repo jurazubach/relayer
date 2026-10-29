@@ -105,14 +105,14 @@
       {
        "node": "ch2_judith",
        "chapter": 2,
-       "line": 174,
+       "line": 192,
        "file": "ch02.ink",
        "kind": "текст"
       },
       {
        "node": "ch2_judith",
        "chapter": 2,
-       "line": 176,
+       "line": 194,
        "file": "ch02.ink",
        "kind": "текст"
       },
@@ -239,70 +239,70 @@
       {
        "node": "ch2_rumor",
        "chapter": 2,
-       "line": 69,
+       "line": 72,
        "file": "ch02.ink",
        "kind": "текст"
       },
       {
        "node": "ch2_unknown",
        "chapter": 2,
-       "line": 108,
+       "line": 126,
        "file": "ch02.ink",
        "kind": "текст"
       },
       {
        "node": "ch2_unknown",
        "chapter": 2,
-       "line": 114,
+       "line": 132,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_unknown",
        "chapter": 2,
-       "line": 118,
+       "line": 136,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_judith",
        "chapter": 2,
-       "line": 174,
+       "line": 192,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_judith",
        "chapter": 2,
-       "line": 176,
+       "line": 194,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_judith_talk",
        "chapter": 2,
-       "line": 196,
+       "line": 214,
        "file": "ch02.ink",
        "kind": "текст"
       },
       {
        "node": "ch2_judith_talk",
        "chapter": 2,
-       "line": 204,
+       "line": 222,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_judith_talk",
        "chapter": 2,
-       "line": 211,
+       "line": 229,
        "file": "ch02.ink",
        "kind": "переход"
       },
       {
        "node": "ch2_hook",
        "chapter": 2,
-       "line": 291,
+       "line": 309,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
@@ -379,7 +379,7 @@
       {
        "node": "ch2_school",
        "chapter": 2,
-       "line": 134,
+       "line": 152,
        "file": "ch02.ink",
        "kind": "текст",
        "via": "c2_answered_unknown"
@@ -1289,6 +1289,20 @@
        "kind": "переход"
       },
       {
+       "node": "ch2_ellie_partial",
+       "chapter": 2,
+       "line": 58,
+       "file": "ch02.ink",
+       "kind": "кнопка"
+      },
+      {
+       "node": "ch2_ellie_partial",
+       "chapter": 2,
+       "line": 60,
+       "file": "ch02.ink",
+       "kind": "кнопка"
+      },
+      {
        "node": "ch3_connor",
        "chapter": 3,
        "line": 194,
@@ -1304,8 +1318,8 @@
        "via": "confronted_night"
       }
      ],
-     "ownReads": 4,
-     "visibleReads": 3,
+     "ownReads": 6,
+     "visibleReads": 5,
      "hiddenReads": 2,
      "firstWrite": 1,
      "firstRead": 1,
@@ -7828,14 +7842,14 @@
       {
        "node": "ch2_rumor",
        "chapter": 2,
-       "line": 83,
+       "line": 86,
        "file": "ch02.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch2_rumor",
        "chapter": 2,
-       "line": 87,
+       "line": 90,
        "file": "ch02.ink",
        "kind": "кнопка"
       }
@@ -8518,7 +8532,7 @@
       {
        "node": "ch2_school",
        "chapter": 2,
-       "line": 134,
+       "line": 152,
        "file": "ch02.ink",
        "kind": "текст"
       },
@@ -8770,7 +8784,7 @@
       {
        "node": "ch3_hook",
        "chapter": 3,
-       "line": 305,
+       "line": 310,
        "file": "ch03.ink",
        "kind": "кнопка"
       }

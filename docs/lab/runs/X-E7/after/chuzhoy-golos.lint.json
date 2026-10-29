@@ -315,7 +315,7 @@
           "key": "C-13.words_share",
           "node": null,
           "chapter": null,
-          "message": "22 % кнопок длиннее нормы в словах (76 из 341)",
+          "message": "22 % кнопок длиннее нормы в словах (76 из 344)",
           "threshold": "> 15 % доля кнопок истории (messenger-genre:RED-08, narrative-testing:RED-26)",
           "owner": "story-choices"
         },
@@ -377,6 +377,56 @@
           "chapter": null,
           "message": "«почти всегда первая кнопка» в 95 % даёт «scapegoat» — правильный ответ угадывается по позиции",
           "threshold": "≥ 90 % доля прогонов персоны (narrative-testing:PAT-04, narrative-testing:RED-28)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.spokes_max",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor: 7 вариантов",
+          "threshold": "> 4 варианта (failbetter-qbn:P-17)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Джесс говорит, ты вернулась мокрая» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Пока тишина» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Это правда?» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
+          "owner": "story-choices"
+        },
+        {
+          "check": "C-19",
+          "level": "hint",
+          "key": "C-19.exit_unwarned",
+          "node": "ch2_rumor",
+          "chapter": 2,
+          "message": "хаб ch2_rumor закрывается кнопкой «Слухи сейчас про всех» без предупреждения",
+          "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
           "owner": "story-choices"
         },
         {
@@ -732,26 +782,12 @@
           "owner": "story-pauses"
         },
         {
-          "check": "C-31",
-          "level": "warning",
-          "key": "story.card.mismatch_ratio",
-          "node": null,
-          "chapter": null,
-          "message": "история идёт 45 ч реального времени, на карточке 6.8 дн — сожми паузы или поправь карточку",
-          "threshold": "> 1,5 раз (наша оценка; rules.md R-11, rules.md R-122)",
-          "owner": "story-time",
-          "data": {
-            "hours": 44.68666666666667,
-            "card": 6.8
-          }
-        },
-        {
           "check": "C-33",
           "level": "hint",
           "key": "C-33.max_msgs",
           "node": "ch1",
           "chapter": 1,
-          "message": "заход у ch1: 28,2 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»",
+          "message": "заход у ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -871,12 +907,12 @@
           "key": "C-33.active_max_min",
           "node": "ch1",
           "chapter": 1,
-          "message": "глава 1: 1 заходов дольше коридора (ch1: 28,2 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»)",
+          "message": "глава 1: 1 заходов дольше коридора (ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»)",
           "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
           "owner": "story-pauses",
           "data": {
             "sessions": [
-              "ch1: 28,2 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»"
+              "ch1: 28,4 мин, 55 сообщений, 12 кнопок, кончается «Элли В. перевела вам £12.00 · …»"
             ]
           }
         },
@@ -1322,7 +1358,7 @@
           "key": "C-36.vague",
           "node": "ch1",
           "chapter": 1,
-          "message": "глава 1: 9 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch1, ch1_cover, ch1_jess, ch1_lie)",
+          "message": "глава 1: 8 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch1, ch1_cover, ch1_jess, ch1_lie)",
           "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
           "owner": "story-pace",
           "model": true
@@ -1540,7 +1576,7 @@
           "key": "C-44.distance",
           "node": null,
           "chapter": null,
-          "message": "ellie и connor пишут похоже (расстояние 0,06): слов, со строчной, с точкой, «!», эмодзи",
+          "message": "ellie и connor пишут похоже (расстояние 0,07): слов, со строчной, с точкой, «!», эмодзи",
           "threshold": "< 15 % нормированное расстояние профилей (наша оценка; sheldon-character-storytelling (0,15), nicklin-writing-for-games)",
           "owner": "story-voice",
           "model": true
@@ -1900,13 +1936,14 @@
           "key": "C-48.unknown",
           "node": "ch3_owen",
           "chapter": 3,
-          "message": "глава 3: «Пайк», «Англии» — не контакты и не известные места; проверь, что они вымышленные",
+          "message": "глава 3: «Пайк», «Бристоле», «Англии» — не контакты и не известные места; проверь, что они вымышленные",
           "threshold": "> 0 слов не из контактов и белого списка (procedural-storytelling:RED-13, CLAUDE.md: всё вымышлено)",
           "owner": "story-voice",
           "model": true,
           "data": {
             "words": [
               "Пайк",
+              "Бристоле",
               "Англии"
             ]
           }
@@ -2154,17 +2191,6 @@
           }
         },
         {
-          "check": "C-49",
-          "level": "hint",
-          "key": "C-49.teaser_chapter",
-          "node": null,
-          "chapter": null,
-          "message": "затравка 2 «Шесть номеров. Писать можно всем, кроме …» называет «Номер Лили», а игрок слышит это имя впервые в главе 2 — спойлер",
-          "threshold": "> 1 глава (README.md «teasers»: из завязки и первой главы, без поворотов после главы 1, edgerton-hooked:PAT-06#нюанс)",
-          "owner": "story-release",
-          "model": true
-        },
-        {
           "check": "C-52",
           "level": "hint",
           "key": "C-52.loop",
@@ -2361,6 +2387,17 @@
           "suppressed": "«Вам» — вежливое обращение Джудит с заглавной (так же у Харта), а не имя и не термин"
         },
         {
+          "check": "C-32",
+          "level": "warning",
+          "key": "C-32.no_answer",
+          "node": "ch2_unknown",
+          "chapter": 2,
+          "message": "ch2_unknown: «не ответил» ведёт к финалу в fin_truth, а #silent той же развилки — в fin_unproven: отсутствие не должно стоить дороже молчания",
+          "threshold": "> 0 вариантов, потерянных «неотвечающим» (rules.md R-74, rules.md R-120)",
+          "owner": "story-time",
+          "suppressed": "D-02 — «не ответил» не блокирует номер за игрока, поэтому пути расходятся с #silent «Заблокировать»"
+        },
+        {
           "check": "C-43",
           "level": "hint",
           "key": "C-43.open_loop",
@@ -2442,8 +2479,8 @@
       "skipped": [],
       "counts": {
         "error": 0,
-        "warning": 3,
-        "hint": 181
+        "warning": 2,
+        "hint": 185
       }
     }
   ]
