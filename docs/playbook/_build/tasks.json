@@ -2284,6 +2284,52 @@
       "timeoutMin": 360
     },
     {
+      "id": "E-08",
+      "wave": "w5-release",
+      "type": "engine",
+      "title": "Главы невидимы игроку: внутренняя единица автора, не интерфейс",
+      "deps": [
+        "X-E7"
+      ],
+      "writes": [
+        "src/engine/**",
+        "src/ui/**",
+        "src/styles/**",
+        "docs/capabilities.json",
+        "docs/PROMPT.md",
+        "scripts/build-prompt.mjs",
+        "README.md",
+        "CLAUDE.md",
+        "e2e/**",
+        "examples/e2e.story.json",
+        "examples/demo.story.json",
+        "docs/style.md",
+        ".claude/skills/story-plan/SKILL.md",
+        ".claude/skills/story-plan/references/**",
+        ".claude/skills/story-release/references/card.md",
+        ".claude/skills/story-release/references/teasers.md",
+        ".claude/skills/chapter-write/SKILL.md",
+        "docs/playbook/rules.md",
+        "docs/playbook/superseded.md"
+      ],
+      "inputs": [
+        "docs/playbook/_build/INTENT.md",
+        "docs/playbook/superseded.md — отменённое решениями автора, выше базы",
+        "CLAUDE.md"
+      ],
+      "accept": [
+        "npm run build",
+        "npm run check:story",
+        "HEADLESS=1 npm run test:e2e",
+        "npm run prompt -- --quiet",
+        "npm run story:pack -- --check",
+        "SINGLE=1 npm run build",
+        "npm run test:lint",
+        "node docs/playbook/_build/checks/skill-check.mjs story-plan --min-refs 9 --min-scripts 3"
+      ],
+      "spec": "**Решение автора (29.10.2026):** игрок не видит глав — как в Lifeline: история просто идёт, и неизвестно, сколько осталось. Номер главы в переписке — книжная условность, он ломает ощущение живого собеседника и выдаёт масштаб. Для автора и инструментов главы остаются внутренней единицей: файлы `chNN.ink`, `chapter-write`, проверки пропорций и сессий, платная граница на стыке, журнал и ревизия.\n1. **Интерфейс без глав:** убрать плашку «N глав» с карточки (`StoryTile`; число героев и два времени остаются), список глав на экране истории (`StoryScreen`), системные строки «Глава N» / название главы в чате и списке чатов (тег `#chapter` в истории остаётся — движок по нему считает стык, но игроку его не показывает). Стык главы для игрока — просто пауза персонажа.\n2. **Платная граница без слова «глава»:** «Бесплатная часть пройдена…», «дальше — платное продолжение»; на карточке вместо «1-я бесплатно» — «начало бесплатно» (или аналог без номера). Поле `free_chapters` в `meta.json` остаётся (это внутренняя граница).\n3. **Реестр** `docs/capabilities.json` (`chapter`, `paywall`, `storyfile` — `looks`), `docs/PROMPT.md` через `npm run prompt`, README, CLAUDE.md (testid, таблица историй), e2e на фикстуре: на главном и экране истории нет слова «глава» и числа глав; в чате нет строки главы; граница работает.\n4. **Свод и скиллы:** в `docs/playbook/superseded.md` — решение A-08 «главы невидимы игроку» (что отменено: показ глав на карточке, экране истории и в чате; чем заменено); в `rules.md` правила, которые требуют показывать главу игроку, — пометка. `docs/style.md` — системные строки без «Глава N». `story-plan`: правило «число глав — по содержанию, не заранее: глава ≈ один день мира или одна большая сцена с крючком на конце; пропорции и длину проверяют C-38 и `story:sessions`, 5 или 20 — решает план». `story-release` (`card.md`, `teasers.md`): карточка без числа глав. `chapter-write`: «глава — внутренняя единица, игрок её не видит».\nТекст сценариев историй не трогать."
+    },
+    {
       "id": "W5",
       "title": "Итог волны выпуска",
       "wave": "w5-release",
@@ -2292,7 +2338,8 @@
         "S-release",
         "S-kb",
         "X-E7",
-        "E-07"
+        "E-07",
+        "E-08"
       ],
       "writes": [],
       "spec": "Ревью выпуска, базы знаний и переработки трёх историй (Э7): цикл работает на реальном материале, боли автора закрыты.",
@@ -2326,7 +2373,7 @@
         "docs/playbook/REVIEW.md",
         "docs/playbook/flow-example.md"
       ],
-      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.\n\nПо просьбе T-02 (п. 3): ссылки «по полю `ink` из `src/stories/*.json`» в `docs/playbook/story-findings.md` и `REVIEW.md` перевести на новую форму (`src/stories/<id>/chNN.ink:строка` или `story:pack -- --flat`).\n\nСверь `docs/playbook/flow-example.md` (T-16) с тем, что построено: имена скриптов скиллов, ремонтных приёмов F-NN, команд и флагов. Пример писался до скиллов и называет скрипты по `flow-review.md` §C; расхождения поправь в примере.\n\nПо просьбе T-03b (п. 9): таблица согласования порогов в `docs/playbook/REVIEW.md` — числа заменить ключами `thresholds.json` (таблица соответствия — `reports/T-03b/build.md`).\n\n`docs/playbook/build-plan.md` §13 и чек-лист §15: строки про Э4 и Э6 пометить «отменено решением автора 28.10; режимы и напоминания — в X-E7 (переработка «Чужого голоса»)»; три истории → «Чужой голос», две другие скрыты (E-07).",
+      "spec": "Итоговая документация:\n- в `CLAUDE.md`:\n  - раздел «Агенты и скиллы»;\n  - таблица «симптом → скилл» на 15–20 строк;\n  - команды `story:*`, `kb:*`, `lab:*`, `skills:test`;\n  - проверка перед коммитом;\n  - структура `docs/stories/`, `docs/lab/`, `docs/style.md`;\n- README — коротко для людей;\n- в `build-plan.md` — пометки «сделано» и ссылки на итоговые файлы.\n\nТаблицу «симптом → скилл» проверь `npm run lab:triggers -- --runs 3`.\n\nПо просьбе T-02 (п. 3): ссылки «по полю `ink` из `src/stories/*.json`» в `docs/playbook/story-findings.md` и `REVIEW.md` перевести на новую форму (`src/stories/<id>/chNN.ink:строка` или `story:pack -- --flat`).\n\nСверь `docs/playbook/flow-example.md` (T-16) с тем, что построено: имена скриптов скиллов, ремонтных приёмов F-NN, команд и флагов. Пример писался до скиллов и называет скрипты по `flow-review.md` §C; расхождения поправь в примере.\n\nПо просьбе T-03b (п. 9): таблица согласования порогов в `docs/playbook/REVIEW.md` — числа заменить ключами `thresholds.json` (таблица соответствия — `reports/T-03b/build.md`).\n\n`docs/playbook/build-plan.md` §13 и чек-лист §15: строки про Э4 и Э6 пометить «отменено решением автора 28.10; режимы и напоминания — в X-E7 (переработка «Чужого голоса»)»; три истории → «Чужой голос», две другие скрыты (E-07).\n\nПосле E-08: в документации «главы» — внутренняя единица автора, игрок их не видит (решение автора 29.10).",
       "accept": [
         "npm run build",
         "npm run check:story",
