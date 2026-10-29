@@ -1,7 +1,7 @@
 ---
 name: story-fix
 description: "Примени правки из ревью: почини найденное, возьми вариант Б по пункту 3, исправь эти находки; покажи, какие реплики поменялись; не сломалось ли что после правки; сократи историю до 10 минут или в одну сессию. Применяет только одобренное, дифф до и после."
-allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Edit(src/stories/**), Edit(docs/stories/**)
 metadata:
   version: 2
 ---

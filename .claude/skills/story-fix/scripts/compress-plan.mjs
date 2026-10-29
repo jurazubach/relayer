@@ -13,7 +13,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/compress-plan.mjs --story <id> (
   сессии      медиана сессий; --session — цель одна сессия: перечислены паузы от story.pause.session_s,
               которые надо убрать или сжать (узел, глава, длина)
   реплики     строк у персоны random (story:trace): сколько оставить при том же темпе
-  контакты    по уровням story:cast против attn.chats.waiting (ch1) — сколько собеседников вмещает короткая
+  контакты    по уровням story:cast против story.short.contacts_max — сколько собеседников вмещает короткая
   переменные  story:vars против attn.state.axes (short_vars_max при истории до short_min)
   финалы      story:endings — сколько финалов и какие решают переменные
 
@@ -53,7 +53,7 @@ const short = target != null && target <= shortMin;
 const pauses = (p?.middle?.sessions ?? []).filter((s) => s.pauseBefore >= sessionS).map((s) => ({ knot: s.knot, chapter: s.chapter, pause_s: s.pauseBefore }));
 const levels = cast?.levels ?? {};
 const main = (levels['ось'] ?? []).length + (levels['сторона'] ?? []).length;
-const contactsCap = T.value('attn.chats.waiting').ch1;
+const contactsCap = T.value('story.short.contacts_max');
 const varsCount = vars?.vars?.length ?? null;
 const varsCap = short ? T.value('attn.state.axes').short_vars_max : T.value('attn.state.axes').axes_max;
 
@@ -65,7 +65,7 @@ const plan = {
   keep_lines: lines && ratio ? Math.round(lines * Math.min(1, ratio)) : null,
   pauses_to_remove: oneSession ? pauses : [],
   cut: [
-    { what: 'контакты, с кем говорят (ось и сторона)', now: main, cap: contactsCap, key: 'attn.chats.waiting.ch1', all: Object.values(levels).flat().length },
+    { what: 'контакты, с кем говорят (ось и сторона)', now: main, cap: contactsCap, key: 'story.short.contacts_max', all: Object.values(levels).flat().length },
     { what: 'переменные', now: varsCount, cap: varsCap, key: short ? 'attn.state.axes.short_vars_max' : 'attn.state.axes.axes_max' },
     { what: 'финалы', now: ends?.endings?.length ?? null, deciders: (ends?.deciders ?? []).map((d) => d.name ?? d).slice(0, 6) },
   ],

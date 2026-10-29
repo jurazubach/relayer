@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allMarks, findEndings, nodeIds, parseInk, parseDelay, stripComments, tokenize, walk, resolveTarget } from './ink.mjs';
 import { compile, formatMessages } from './compile.mjs';
+import { finalNodes } from '../story/core/graph.mjs';
 import { NO_ANSWER, choiceRole, noAnswer, play, reminderSeries, seeded, strategies } from './bot.mjs';
 import {
   compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, parseStory, sameRuntime, splitInk,
@@ -238,6 +239,21 @@ test('ink: финалы — по меткам, без меток — по -> END
   const shared = findEndings(parseInk('=== fin ===\n{ x:\n  // финал: свет\n  Свет.\n- else:\n  // финал: тьма\n  Тьма.\n}\n-> END\n'));
   assert.deepEqual(shared.endings.map((x) => [x.id, x.name, x.line]), [['fin', 'свет', 3], ['fin', 'тьма', 6]]);
   assert.deepEqual(shared.unmarked, []);
+});
+
+test('graph: финал с кнопкой-реакцией — финал, распределитель не теряется, узлы над ним — не финалы', () => {
+  const src = [
+    '=== door ===', '* [да] ~ x = true', '* [нет]', '- -> route',
+    '=== route ===', '{ x: -> good | -> bad }',
+    '=== good ===', 'Свет.', '-> coda ->', '* [спасибо]', '* [ладно]', '- -> END',
+    '=== bad ===', 'Тьма.', '* [прости]', '- -> END',
+    '=== coda ===', 'Конец.', '->->',
+    // две кнопки-реакции сходятся в один хвост — это не два финала
+    '=== r1 ===', '* [а] -> tail', '* [б] -> tail', '=== tail ===', '* [в]', '- -> END',
+  ].join('\n');
+  const { final, distributors } = finalNodes(parseInk(src));
+  assert.deepEqual([...final].sort(), ['bad', 'good', 'tail']);
+  assert.deepEqual([...distributors], ['route']);
 });
 
 test('ink: несколько файлов — номера строк и главы по порядку', () => {

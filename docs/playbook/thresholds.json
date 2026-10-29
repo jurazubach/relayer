@@ -364,6 +364,27 @@
       }
     ]
   },
+  "story.short.contacts_max": {
+    "value": 2,
+    "unit": "контакта, с кем говорят (ось и сторона), в короткой истории",
+    "op": ">",
+    "level": "hint",
+    "basis": "source",
+    "sources": [
+      "attention-merged.md §2.7: «один-два контакта, у каждого своя функция»",
+      "sheldon-character-storytelling:attention§1",
+      "dille-ultimate-guide:attention§1"
+    ],
+    "checks": [],
+    "calibrated_on": null,
+    "history": [
+      {
+        "date": "2026-10-29",
+        "task": "X-E7",
+        "change": "заведён для compress-plan.mjs (story-fix --compress) вместо attn.chats.waiting.ch1: тот считает чаты, ждущие ответа одновременно, а не состав короткой истории (просьба X-E3)"
+      }
+    ]
+  },
   "story.reading.per_day_min": {
     "value": {
       "min": 10,

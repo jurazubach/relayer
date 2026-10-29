@@ -83,7 +83,7 @@ export function timeline(events, { tree, away = false } = {}) {
     if (e.type === 'remind') {
       // игрок молчит у кнопок: в реальном времени это настоящее ожидание, по клику напоминаний нет
       tReal += e.seconds;
-      items.push({ type: 'remind', n: e.n, wait: e.seconds, text: e.text, options: e.options.map((o) => o.text), knot: e.knot, chapter, tReal, tClick });
+      items.push({ type: 'remind', n: e.n, wait: e.seconds, text: e.text, options: e.options.map((o) => o.text), labels: e.options.map((o) => choiceTags(o).label ?? o.text), knot: e.knot, chapter, tReal, tClick });
       continue;
     }
     if (e.type === 'stall') { items.push({ type: 'stall', reminders: e.reminders, reason: e.reason, knot: e.knot, chapter, tReal, tClick }); continue; }

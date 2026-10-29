@@ -441,6 +441,24 @@ export const MUTANTS = [
       ],
     ],
   },
+  {
+    id: 'm30-early-flag-first-rule',
+    zone: 'story-endings',
+    check: 'C-06',
+    node: 'ch4_choice',
+    broken: 'последняя кнопка пишет выбор, но первое правило распределителя смотрит ранний флаг asked_mira из глав 1–3: кто спрашивал Миру, тот получает «сделку», что бы ни нажал у вертолёта (LOCAL-17)',
+    lint: ['C-40'],
+    lint_auto: false,
+    lint_why: 'C-06 видит, что последняя кнопка пишет переменную и распределитель её читает; что раннее правило перекрывает её, прямо ловит только threshold-visibility.mjs скилла (перекрытие последнего выбора), а линт — симптом C-40: все кнопки ведут в один финал',
+    catches: ['ashwell-standard-patterns:RED-06'],
+    edits: [
+      ['VAR clue_frost = false\n', 'VAR clue_frost = false\nVAR last_move = ""\n'],
+      [
+        '* {clue_badge} [Покажи пилоту журнал и следы]\n    -> end_expose\n* {trust_lev >= 1} [Отпусти его, но забери ящик]\n    -> end_deal\n* {bold >= 1} [Встань у вертолёта и не пускай]\n    -> end_stop',
+        '* {clue_badge} [Покажи пилоту журнал и следы]\n    ~ last_move = "expose"\n* {trust_lev >= 1} [Отпусти его, но забери ящик]\n    ~ last_move = "deal"\n* {bold >= 1} [Встань у вертолёта и не пускай]\n    ~ last_move = "stop"\n-\n{\n- asked_mira: -> end_deal\n- last_move == "expose": -> end_expose\n- last_move == "stop": -> end_stop\n- else: -> end_deal\n}',
+      ],
+    ],
+  },
 ];
 
 // Ключ основы (LOCAL-07): что в _base по-настоящему сломано или спорно, хотя story:lint на ней молчит
