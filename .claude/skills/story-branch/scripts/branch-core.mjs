@@ -13,11 +13,16 @@ export const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/branch-core.mjs --help
 
 Общий модуль скилла story-branch: сам ничего не печатает, его используют
   branch-impact.mjs  — влияние каждой кнопки развилки на переменные, оси, финалы, чаты и объём;
-  branch-budget.mjs  — дорогие ветки против бюджета и доля текста за прохождение.
+  branch-budget.mjs  — дорогие ветки против бюджета и доля текста за прохождение;
+  story-plan/scripts/plan-check.mjs и plan-compare.mjs — тот же счёт дорогих развилок (expensiveBudget),
+                       поэтому на одной истории или скелете все три печатают одно число.
 Определения (ключи — docs/playbook/thresholds.json):
   область кнопки   узлы, куда попадают только через эту кнопку (статический граф, как у story:endings)
   слияние          ближайший узел, достижимый из всех кнопок развилки; «шагов до слияния» — переходов до него
-  дорогая кнопка   в области не меньше story.branch.expensive.msgs сообщений, или свой финал, или свой контакт (#unlock)
+  дорогая кнопка   в области не меньше story.branch.expensive.msgs сообщений (на скелете — строк-сцен
+                   story.branch.expensive.skeleton_lines), или свой финал, или свой контакт (#unlock)
+  скелет           история с «// core: D-NN» в начале главного файла (story-plan, skeleton-format.md):
+                   строка скелета — сцена, а не сообщение, поэтому порог объёма свой
   дорогая развилка хотя бы одна дорогая кнопка; бюджет — story.branch.budget.min…story.branch.budget.max на историю,
                    story.branch.budget.short — на историю короче story.branch.budget.short_msgs сообщений
   доля игроков     в скольких прогонах бота (персона random) кнопку нажали хотя бы раз`;
@@ -94,6 +99,12 @@ function reach(graph, starts) {
   return seen;
 }
 
+/** Скелет плана (story-plan): «// core: D-NN» в первых строках главного файла; у готовой истории этой строки нет. */
+export function isSkeleton(story) {
+  const main = story.files?.[story.main] ?? Object.values(story.files ?? {})[0] ?? '';
+  return /^\s*\/\/\s*core:\s*D-\d+/m.test(main.split('\n').slice(0, 12).join('\n'));
+}
+
 /** Сообщения узла (без функций) — объём области кнопки. */
 function knotMsgs(knot) {
   let n = 0;
@@ -118,6 +129,8 @@ export function analyze(ref, o = {}) {
   const msgs = new Map(p.tree.knots.map((k) => [k.id, knotMsgs(k)]));
   const totalMsgs = [...msgs.values()].reduce((a, b) => a + b, 0);
   const chapters = Math.max(1, ...p.tree.knots.map((k) => k.chapter ?? 1));
+  const skeleton = isSkeleton(p.story);
+  const minMsgs = T.value(skeleton ? 'story.branch.expensive.skeleton_lines' : 'story.branch.expensive.msgs');
 
   const points = [];
   for (const k of p.tree.knots) {
@@ -157,7 +170,7 @@ export function analyze(ref, o = {}) {
         const ownEndings = own.filter((id) => endingIds.has(id));
         const hops = merge.length ? Math.min(...merge.map((m) => o1.reach.get(m))) + (o1.s.targets.size ? 1 : 0) : null;
         const ownContacts = [...contacts].filter((c) => !otherContacts.has(c));
-        const expensive = ownMsgs >= T.value('story.branch.expensive.msgs') || ownEndings.length > 0 || [...unlocks].some((u) => !others.some((x) => x.s.unlocks.has(u)));
+        const expensive = ownMsgs >= minMsgs || ownEndings.length > 0 || [...unlocks].some((u) => !others.some((x) => x.s.unlocks.has(u)));
         const kind = expensive ? 'дорогая' : o1.s.targets.size ? 'ветка' : writes.size ? 'память' : 'окраска';
         return {
           text: c0(o1.choice), to: o1.choice.tags?.to ?? null, line: o1.choice.line, conds: o1.choice.conds ?? [],
@@ -197,7 +210,7 @@ export function analyze(ref, o = {}) {
     for (const list of byKnot.values()) for (const x of list) x.op.share = x.hits / runs;
   }
   const seenShare = seen.length && totalMsgs ? seen.reduce((a, b) => a + b, 0) / seen.length / totalMsgs : null;
-  return { p, id: p.story.id, path: p.story.path, minutes: p.story.meta?.minutes ?? null, chapters, totalMsgs, axes, finalVars: [...finalVars], endings: [...endingIds], points, runs, seenShare };
+  return { p, id: p.story.id, path: p.story.path, minutes: p.story.meta?.minutes ?? null, chapters, totalMsgs, axes, finalVars: [...finalVars], endings: [...endingIds], points, runs, seenShare, skeleton, minMsgs };
 }
 
 function sumDist(opts, id) { return opts.reduce((a, o) => a + (o.reach.get(id) ?? 1e9), 0); }
@@ -208,3 +221,24 @@ export function budgetFor(totalMsgs) {
   if (totalMsgs < T.value('story.branch.budget.short_msgs')) return { min: T.value('story.branch.budget.short'), max: T.value('story.branch.budget.short'), short: true };
   return { min: T.value('story.branch.budget.min'), max: T.value('story.branch.budget.max'), short: false };
 }
+
+/**
+ * Дорогие развилки против бюджета — единственный счёт для story-branch и story-plan.
+ * @param {object} a результат analyze()
+ */
+export function spend(a) {
+  const budget = budgetFor(a.totalMsgs);
+  const list = a.points.filter((x) => x.expensive);
+  const perChapter = {};
+  for (const x of list) perChapter[x.chapter] = (perChapter[x.chapter] ?? 0) + 1;
+  const used = list.length;
+  return {
+    used, budget, left: budget.max - used, per_chapter: perChapter, skeleton: a.skeleton,
+    min_msgs: { key: a.skeleton ? 'story.branch.expensive.skeleton_lines' : 'story.branch.expensive.msgs', value: a.minMsgs },
+    status: used > budget.max ? 'сверх' : used < budget.min ? 'мало' : 'в бюджете',
+    list: list.map((x) => ({ knot: x.knot, chapter: x.chapter, line: x.line, merge: x.merge })),
+  };
+}
+
+/** spend() по ссылке на историю или скелет, без бота: для plan-check и plan-compare. */
+export const expensiveBudget = (ref) => spend(analyze(ref, { runs: 0 }));

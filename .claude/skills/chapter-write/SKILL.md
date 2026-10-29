@@ -2,7 +2,7 @@
 name: chapter-write
 description: "Напиши главу по плану: следующую главу, главы 1–2 до теста, главы 3–N после теста, перепиши главу начисто; разверни скелет главы в реплики; как начать главу, чтобы помнила выборы прошлой. Глава на ink по плану, facts.md и docs/style.md, оба режима, напоминания, проверка хуком."
 user-invocable: false
-allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Bash(node scripts/hooks/full.mjs *)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Bash(node scripts/hooks/full.mjs *), Bash(rm docs/stories/*/context-ch*.md)
 metadata:
   version: 1
 ---
@@ -36,7 +36,19 @@ metadata:
    [references/decisions-chapter.md](references/decisions-chapter.md).
 2. **Пакет.** `node ${CLAUDE_SKILL_DIR}/scripts/chapter-context.mjs --story <id> --chapter N`. Сначала факты:
    выпиши имена, время, числа и VAR об игроке по [references/facts-anchor.md](references/facts-anchor.md). Глава 1 —
-   сначала эталон первой минуты по `story-opening`. Есть агент `chapter-writer` — отдай ему пакет (`--out <файл>`).
+   сначала эталон первой минуты по `story-opening`. **Глава в фоне — агент `chapter-writer`** (когда —
+   [references/decisions-chapter.md](references/decisions-chapter.md)): пакет в репозиторий —
+   `node ${CLAUDE_SKILL_DIR}/scripts/chapter-context.mjs --story <id> --chapter N --out docs/stories/<id>/context-chNN.md`
+   (агент в фоне читает только файлы проекта), затем задание агенту ровно этими полями:
+   ```
+   история: <id>                глава: N
+   пакет: docs/stories/<id>/context-chNN.md (в репозитории; удалить после ответа агента)
+   работа: новая | начисто: <D-NN или пункт ревью>
+   одобрено: <кем, что — «автор, <дата>: переписать гл. N начисто по D-NN»; для новой главы «—»>
+   конец: крючок к главе N+1 | beta_stop | финалы
+   ```
+   «Начисто» без `одобрено:` агент не пишет: одобрение берут у автора до вызова. После ответа: удали пакет (`rm docs/stories/<id>/context-chNN.md`), сам прогони шаг 6 и сверь отчёт агента с ink
+   (шаг 7); шаги 3–5 делает агент. Без агента — шаги 3–8 сам.
 3. **Каркас.** Сцены из строки плана и скелета → узлы, кнопки, `~`, переходы, по строке-заглушке на узел. Вход в главу
    с `#chapter` и условными первыми строками по VAR на стыке — [references/ink-idioms.md](references/ink-idioms.md)
    (R-27); сцены — [references/scene.md](references/scene.md). Проверь:
@@ -50,7 +62,8 @@ metadata:
    событие первым после, у каждой развилки, где ждут ответа, — `- (ask)`, `#remind` и `#noanswer` или `#silent`.
    Конец главы — крючок; часть для теста кончается узлом `beta_stop`.
 6. **Замер.** `node ${CLAUDE_SKILL_DIR}/scripts/chapter-lint.mjs --story <id> --chapter N`, затем
-   `node scripts/hooks/full.mjs <id>` (сам включит `--partial` при `beta_stop`). Ошибки чини. По симптомам из таблицы
+   `node scripts/hooks/full.mjs <id> --new` (сам включит `--partial` при `beta_stop`; `--new` — только ошибки, которых
+   нет в версии из git). Ошибки главы N и новые ошибки чини; прежние ошибки других глав — строкой в отчёте, не здесь. По симптомам из таблицы
    «симптом → скилл» в `CLAUDE.md` позови нужный диагностический скилл (`story-voice`, `story-pace`, `story-choices`,
    `story-pauses`, `story-time`, `story-continuity`), а не все подряд.
 7. **Сверка.** Каждую находку сверь с ink и правилом: узел, контекст, исключение из нюансов —
@@ -95,12 +108,13 @@ metadata:
 
 Главу скилл пишет сам в `src/stories/<id>/`. Остальное — через `story-desk` после одобрения: отчёт
 `docs/stories/<id>/reviews/<дата>-chapter-write.md` (находки, строки facts.md, вопросы); строка для `STATUS.md`:
-«гл. N написана <дата>: chapter-lint ✓, full ✓, напоминаний K, фактов в реестр M — reviews/…»; шаг
+«гл. N написана <дата>: chapter-lint ✓, full --new ✓ (прежних P), напоминаний K, фактов в реестр M — reviews/…»; шаг
 `chapters:1-2` → `review` после глав 1–2.
 
 ## Готово, когда
 
-Глава компилируется; `chapter-lint.mjs` и `node scripts/hooks/full.mjs <id>` без ошибок; «кнопка ждёт вечно» только
+Глава компилируется; `chapter-lint.mjs --chapter N` без ошибок и `node scripts/hooks/full.mjs <id> --new` без новых
+ошибок (весь полный отчёт зелёным быть не обязан: на истории бывают прежние ошибки других глав); «кнопка ждёт вечно» только
 там, где это записано в плане; находки сверены с ink; строки facts.md предложены; отчёт передан `story-desk`.
 
 ## Объясни

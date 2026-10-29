@@ -1,0 +1,3 @@
+✗ файлы фраз:
+  docs/lab/triggers/_routing.json: нет массива «positive»
+  docs/lab/triggers/_routing.json: нет массива «negative»

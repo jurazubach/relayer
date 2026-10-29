@@ -1,7 +1,8 @@
 // Проверка скелета до текста (шаг 5а цикла, build-plan.md §2): формат скелета, check:story, story:lint --plan,
 // story:endings и расписание пауз — одним отчётом, числа берутся у команд как есть. Своё здесь — то, что
-// команды не считают: хребет и «река» (доля узлов, которые видят все и почти никто), дорогие развилки против
-// бюджета, копятся ли переменные финала до последней главы (yorke-into-the-woods:P-10).
+// команды не считают: хребет и «река» (доля узлов, которые видят все и почти никто), копятся ли переменные финала
+// до последней главы (yorke-into-the-woods:P-10). Дорогие развилки — не свой счёт, а expensiveBudget() скилла
+// story-branch: одно число с branch-budget.mjs и на истории, и на скелете.
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -11,6 +12,7 @@ import { nodeIds, resolveTarget } from '../../../../scripts/lib/ink.mjs';
 import { compileInput, loadStory, parseStory } from '../../../../scripts/lib/story.mjs';
 import { thresholds } from '../../../../scripts/lib/thresholds.mjs';
 import { lintStory } from '../../../../scripts/lint/core.mjs';
+import { expensiveBudget } from '../../story-branch/scripts/branch-core.mjs';
 import { checkSkeleton } from './skeleton.mjs';
 import { resolveRef, schedule } from './schedule.mjs';
 
@@ -27,7 +29,9 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-check.mjs (--story <id> | -
                 (bateman-game-writing:P-01), выше skill.plan.spine.max_share — коридор (ashwell-standard-patterns:RED-01)
   река          доля узлов кроме финалов, куда попадает меньше skill.plan.river.rare_visits прогонов
                 (skill.plan.river.max_rare_share, failbetter-qbn:P-06)
-  развилки      дорогие (кнопки ведут в разные узлы, не в финалы) против skill.plan.branches: на историю и на главу
+  развилки      дорогие против бюджета story.branch.budget.min…max — счёт branch-core.mjs скилла story-branch
+                (то же число, что у branch-budget.mjs): кнопка с областью от story.branch.expensive.msgs сообщений,
+                на скелете от story.branch.expensive.skeleton_lines строк-сцен, своим финалом или контактом
   финал первым  переменные, которые решают финал, меняются до последней главы хотя бы в
                 skill.plan.final_vars.min_share прогонов (yorke-into-the-woods:P-10)
   время         schedule.mjs: реальное время и по клику, стыки глав, тёмная ночь (R-33), C-31/C-32/C-38/C-42
@@ -44,7 +48,10 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-check.mjs (--story <id> | -
 const T = thresholds();
 const pct = (x) => `${Math.round(x * 100)}%`;
 
-/** Дорогие развилки: на одной развилке кнопки уходят в разные узлы (не в финалы). */
+/**
+ * Развилки, где кнопки уходят в разные узлы (не в финалы). Бюджет дорогих развилок этим не считается — он
+ * у expensiveBudget() скилла story-branch; функцию держит самопроверка selftest-story-plan.mjs (requests.md T-21).
+ */
 export function expensiveForks(tree) {
   const ids = new Set(nodeIds(tree));
   const byId = new Map(tree.knots.map((k) => [k.id, k]));
@@ -132,11 +139,10 @@ export async function measure(ref, { runs = T.value('bot.runs'), time = true, fr
     const rare = body.filter((n) => b.visits.get(n) / b.runs < T.value('skill.plan.river').rare_visits);
     m.spine = { share: all.length ? spine.length / all.length : 0, nodes: spine.length, total: all.length, low: all.length && spine.length / all.length < T.value('skill.plan.spine.min_share'), high: all.length && spine.length / all.length > T.value('skill.plan.spine.max_share') };
     m.river = { rare: rare.slice(0, 8), share: body.length ? rare.length / body.length : 0, high: body.length && rare.length / body.length > T.value('skill.plan.river').max_rare_share };
-    const forks = expensiveForks(b.tree);
-    const per = new Map();
-    for (const f of forks) per.set(f.chapter, (per.get(f.chapter) ?? 0) + 1);
-    const budget = T.value('skill.plan.branches');
-    m.branches = { total: forks.length, per_chapter: Object.fromEntries(per), over_chapters: [...per].filter(([, n]) => n > budget.per_chapter).map(([c]) => c), over: forks.length > budget.max, under: forks.length < budget.min, list: forks };
+    try {
+      const sp = expensiveBudget(ref);
+      m.branches = { total: sp.used, budget: sp.budget, status: sp.status, per_chapter: sp.per_chapter, skeleton: sp.skeleton, min_msgs: sp.min_msgs, over: sp.status === 'сверх', under: sp.status === 'мало', list: sp.list };
+    } catch (e) { m.errors.push(`нет данных: branch-budget.mjs --story ${ref} (${e.message.split('\n')[0]})`); }
     const deciders = m.endings?.deciders ?? [];
     // переменная, которую пишет только последняя глава, — кнопка финала (R-102 у story-endings), а не накопленное
     m.final_vars = deciders.map((v) => {
@@ -199,8 +205,9 @@ if (isMain) {
   if (m.spine) console.log(`   хребет: ${m.spine.nodes} из ${m.spine.total} узлов видят все прогоны (${pct(m.spine.share)})${m.spine.low ? ' ⚠ меньше skill.plan.spine.min_share — клубок' : m.spine.high ? ` · больше skill.plan.spine.max_share — коридор, если дорогих развилок почти нет и переменные читает только финал (ashwell-standard-patterns:RED-01)` : ''}`);
   if (m.river) console.log(`   река: редких узлов ${pct(m.river.share)}${m.river.high ? ` ⚠ больше skill.plan.river.max_rare_share: ${m.river.rare.join(', ')}` : ''}`);
   if (m.branches) {
-    const bd = T.value('skill.plan.branches');
-    console.log(`   дорогие развилки: ${m.branches.total} (бюджет ${bd.min}–${bd.max}, на главу до ${bd.per_chapter}: skill.plan.branches)${m.branches.over ? ' ⚠ сверх бюджета' : m.branches.under ? ' · меньше бюджета — вариативность только состоянием' : ''}${m.branches.over_chapters.length ? ` · ⚠ много в гл. ${m.branches.over_chapters.join(', ')}` : ''}`);
+    const br = m.branches;
+    const where = Object.entries(br.per_chapter).map(([c, n]) => `гл.${c}: ${n}`).join(', ');
+    console.log(`   дорогие развилки: ${br.total} (бюджет ${br.budget.min}–${br.budget.max}${br.budget.short ? ', короткая история' : ''}: story.branch.budget; ${br.skeleton ? 'скелет — от' : 'от'} ${br.min_msgs.value} ${br.skeleton ? 'строк-сцен' : 'сообщений'} в ветке)${br.over ? ' ⚠ сверх бюджета' : br.under ? ' · меньше бюджета — вариативность только состоянием' : ''}${where ? ` · ${where}` : ''} · подробно: story-branch/scripts/branch-budget.mjs`);
   }
   if (m.contacts) console.log(`   говорят по главам: ${Object.entries(m.contacts).map(([c, s]) => `гл.${c}: ${s.length}`).join(' · ')}`);
   if (m.time && !m.time.error) {

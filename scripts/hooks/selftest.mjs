@@ -1,17 +1,22 @@
-// Самопроверка хуков: разбор путей, снимки git, режимы post-edit (Edit, Bash, мимо историй), session-start, full.
+// Самопроверка хуков: разбор путей, снимки git, режимы post-edit (Edit, Bash, мимо историй), session-start, full,
+// сторож агентов agent-guard (белые списки четырёх агентов и их frontmatter).
 // Пробная история кладётся во временную папку src/stories/<id>/ (не в git) и удаляется в конце.
 // Запуск: npm run test:hooks [-- --only <подстрока>]
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { appendFileSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { appendFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { AGENTS, guard } from './agent-guard.mjs';
 import { changedSince, clip, isPartial, MAX_CHARS, ROOT, storyOfPath, storySnapshot } from './core.mjs';
 
 const HELP = `npm run test:hooks [-- --only <подстрока>]
 
 Самопроверка scripts/hooks: storyOfPath, снимок git status src/stories, обрезка вывода,
 post-edit.mjs на входе хука (Edit по файлу истории, Bash со снимком, правка мимо историй,
-повтор без новых ошибок, часть истории с beta_stop), session-start.mjs и full.mjs. Пробная история создаётся во временной
+повтор без новых ошибок, часть истории с beta_stop), session-start.mjs, full.mjs (и --new против git),
+agent-guard.mjs: что пропускает и что режет у story-architect, chapter-writer, story-auditor, cold-reader,
+и что их frontmatter зовёт сторожа, а не node -e. Пробная история создаётся во временной
 папке src/stories/zz-hooktest-<pid>/ и удаляется в конце. claude -p здесь не запускается.
 
   --only <текст>  только тесты, в названии которых есть текст
@@ -139,6 +144,114 @@ const tests = [
     const full = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), ID, '--json'], { cwd: ROOT, encoding: 'utf8' });
     assert.equal(JSON.parse(full.stdout).stories[0].partial, true);
     writeFileSync(INK, GOOD);
+  }],
+  ['full --new: прежние ошибки не новые, новая история — все новые', () => {
+    // the-number в git с ошибками C-01: против HEAD новых нет, код 0, хотя ошибки есть
+    const old = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), 'the-number', '--new', '--json'], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(old.status, 0, old.stderr);
+    const o = JSON.parse(old.stdout).stories[0];
+    assert.equal(o.new_errors.length, 0);
+    assert.ok(o.old_errors > 0, 'у the-number в HEAD есть прежние ошибки');
+    // пробной истории нет в git: сломанный переход — новая ошибка, код 1
+    writeFileSync(INK, GOOD + '\n=== broken\n-> no_such_knot\n');
+    const fresh = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), ID, '--new'], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(fresh.status, 1, fresh.stderr);
+    assert.match(fresh.stdout, /новых ошибок 1 против HEAD \(истории там нет\)/);
+    const badRev = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/full.mjs'), ID, '--base', 'no-such-rev-zz'], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(badRev.status, 2);
+    writeFileSync(INK, GOOD);
+  }],
+  ['agent-guard: story-architect — свои планы и команды чтения', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'guard-'));
+    const run = { agent_id: 'a1', cwd: dir };
+    const bash = (command) => guard('story-architect', { ...run, tool_name: 'Bash', tool_input: { command } }, { dir });
+    const write = (file_path, tool_name = 'Write') => guard('story-architect', { ...run, tool_name, tool_input: { file_path } }, { dir });
+    for (const c of ['npm run -s story:lint -- --plan --story x', 'npm run check:story -- docs/stories/x/plans/skeleton-v1.ink',
+      'node .claude/skills/story-plan/scripts/plan-check.mjs --file docs/stories/x/plans/skeleton-v1.ink',
+      `node ${ROOT}/.claude/skills/story-branch/scripts/branch-budget.mjs --story x`,
+      'node .claude/skills/story-desk/scripts/idea-park.mjs --story x --kind план --text "a; b" --dry-run', 'ls docs/stories/x/plans']) {
+      assert.ok(bash(c).allow, c);
+      assert.equal(bash(c).approve, true);
+    }
+    for (const c of ['npm run story:lint && rm -rf src', 'node .claude/skills/story-plan/scripts/skeleton.mjs --new --story x',
+      'node .claude/skills/story-desk/scripts/idea-park.mjs --story x --kind план --text a', 'npm run story:cold-read -- --ask',
+      'node .claude/skills/chapter-write/scripts/chapter-lint.mjs --story x', 'cat ../secret', 'node -e 1', 'ls > out']) {
+      assert.ok(!bash(c).allow, c);
+    }
+    assert.match(bash('node -e 1').reason, /^story-architect: одна команда/);
+    assert.ok(write('docs/stories/x/plans/plan-v1.md').allow);
+    assert.ok(write('docs/stories/x/plans/skeleton-v2.ink').allow);
+    mkdirSync(join(dir, 'docs/stories/x/plans'), { recursive: true });
+    writeFileSync(join(dir, 'docs/stories/x/plans/plan-v1.md'), 'свой');
+    writeFileSync(join(dir, 'docs/stories/x/plans/plan-v3.md'), 'чужой');
+    assert.ok(write('docs/stories/x/plans/plan-v1.md', 'Edit').allow, 'свой файл можно править');
+    assert.match(write('docs/stories/x/plans/plan-v3.md', 'Edit').reason, /писал не ты/);
+    for (const f of ['docs/stories/x/plans/skeleton.ink', 'docs/stories/x/STATUS.md', 'src/stories/x/ch01.ink', 'docs/stories/x/plans/../STATUS.md']) {
+      assert.ok(!write(f).allow, f);
+    }
+    rmSync(dir, { recursive: true, force: true });
+  }],
+  ['agent-guard: chapter-writer — одна история, одна глава, story.ink только Edit', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'guard-'));
+    const run = { agent_id: 'w1', cwd: ROOT };
+    const write = (file_path, tool_name = 'Write') => guard('chapter-writer', { ...run, tool_name, tool_input: { file_path } }, { dir });
+    const bash = (command) => guard('chapter-writer', { ...run, tool_name: 'Bash', tool_input: { command } }, { dir });
+    assert.ok(write(`src/stories/${ID}/ch03.ink`).allow);
+    assert.ok(write(`src/stories/${ID}/ch3.ink`, 'Edit').allow, 'ch03 и ch3 — одна глава');
+    assert.match(write(`src/stories/${ID}/ch04.ink`).reason, /одна глава за запуск, уже ch3/);
+    assert.ok(write(`src/stories/${ID}/story.ink`, 'Edit').allow);
+    assert.match(write(`src/stories/${ID}/story.ink`).reason, /только точечно через Edit/);
+    assert.match(write('src/stories/no-such-story-zz/ch01.ink').reason, /новую историю заводит не агент/);
+    assert.ok(!write(`src/stories/${ID}/meta.json`).allow);
+    assert.ok(!write('docs/stories/x/facts.md').allow);
+    for (const c of [`node scripts/hooks/full.mjs ${ID} --new`, `node .claude/skills/chapter-write/scripts/chapter-lint.mjs --story ${ID} --chapter 3`,
+      'npm run -s story:trace -- --story x --persona unresponsive', 'npm run -s check:story', 'wc -l src/stories/x/ch03.ink']) {
+      assert.ok(bash(c).allow, c);
+    }
+    for (const c of ['node .claude/skills/chapter-write/scripts/chapter-context.mjs --story x --chapter 3 --out p.md',
+      'npm run story:trace -- --from-save x.json', 'npm run -s story:lint -- x --new', 'node .claude/skills/story-plan/scripts/plan-check.mjs --story x', 'git commit -am x']) {
+      assert.ok(!bash(c).allow, c);
+    }
+    rmSync(dir, { recursive: true, force: true });
+  }],
+  ['agent-guard: story-auditor и cold-reader — только чтение', () => {
+    const a = (tool_name, tool_input) => guard('story-auditor', { tool_name, tool_input });
+    assert.ok(a('Bash', { command: 'npm run -s story:diff -- --story x' }).allow);
+    assert.equal(a('Bash', { command: 'npm run -s story:lint -- x' }).approve, false, 'аудитор не одобряет сам — решают права');
+    assert.ok(a('Bash', { command: 'node .claude/skills/story-voice/scripts/voice-check.mjs --story x' }).allow);
+    assert.ok(!a('Bash', { command: 'node .claude/skills/story-fix/scripts/apply.mjs --story x' }).allow);
+    assert.ok(!a('Bash', { command: 'npm run story:cold-read -- --ask' }).allow);
+    assert.match(a('Write', { file_path: 'docs/stories/x/reviews/r.md' }).reason, /только чтение/);
+    assert.ok(a('Read', { file_path: 'src/stories/x/ch01.ink' }).allow);
+    const c = (command) => guard('cold-reader', { tool_name: 'Bash', tool_input: { command } });
+    assert.ok(c('npm run story:cold-read -- --story x --node ch1 --ask --profile "торопливый"').allow);
+    assert.ok(!c('npm run story:cold-read -- --story x; cat ~/.ssh/id_rsa').allow);
+    assert.ok(!c('npm run story:lint').allow);
+    assert.ok(!guard('nobody', { tool_name: 'Bash', tool_input: { command: 'ls' } }).allow);
+  }],
+  ['agent-guard: CLI — одобрение, отказ с кодом 2, сломанный вход закрывает', () => {
+    const cli = (agent, input) => spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/agent-guard.mjs'), agent], { cwd: ROOT, input, encoding: 'utf8' });
+    const ok = cli('story-architect', JSON.stringify({ agent_id: `cli-${process.pid}`, tool_name: 'Bash', tool_input: { command: 'npm run -s story:status -- --all' } }));
+    assert.equal(ok.status, 0);
+    assert.equal(JSON.parse(ok.stdout).hookSpecificOutput.permissionDecision, 'allow');
+    const quiet = cli('story-auditor', JSON.stringify({ tool_name: 'Bash', tool_input: { command: 'npm run -s story:status' } }));
+    assert.equal(quiet.status, 0);
+    assert.equal(quiet.stdout, '');
+    const no = cli('cold-reader', JSON.stringify({ tool_name: 'Bash', tool_input: { command: 'rm -rf /' } }));
+    assert.equal(no.status, 2);
+    assert.match(no.stderr, /^cold-reader: /);
+    assert.ok(no.stderr.length < 300, 'отказ — одна короткая строка');
+    assert.equal(cli('chapter-writer', 'не json').status, 2);
+  }],
+  ['agent-guard: frontmatter агентов зовёт сторожа, а не node -e', () => {
+    for (const name of Object.keys(AGENTS)) {
+      const fm = readFileSync(join(ROOT, '.claude/agents', `${name}.md`), 'utf8').match(/^---\n([\s\S]*?)\n---\n/)[1];
+      assert.doesNotMatch(fm, /node -e/, name);
+      const calls = [...fm.matchAll(/command:\s*(.+)/g)].map((m) => m[1]);
+      assert.ok(calls.length, `${name}: нет хука PreToolUse`);
+      for (const c of calls) assert.match(c, new RegExp(`scripts/hooks/agent-guard\\.mjs ${name}$`), name);
+      if (/\b(Write|Edit)\b/.test(fm.match(/^tools:.*$/m)?.[0] ?? '')) assert.match(fm, /matcher: "Write\|Edit/, `${name}: пишет — нужен сторож записи`);
+    }
   }],
   ['RELAYER_HOOKS=off выключает хук', () => {
     const r = spawnSync(process.execPath, [join(ROOT, 'scripts/hooks/post-edit.mjs')], { cwd: ROOT, input: JSON.stringify({ tool_name: 'Edit', tool_input: { file_path: INK } }), encoding: 'utf8', env: { ...process.env, RELAYER_HOOKS: 'off' } });

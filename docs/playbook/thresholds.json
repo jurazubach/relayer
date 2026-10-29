@@ -401,7 +401,9 @@
       "narrative-postmortems:P-06"
     ],
     "checks": [
-      "story-branch/scripts/branch-core.mjs"
+      "story-branch/scripts/branch-core.mjs",
+      "story-plan/scripts/plan-check.mjs",
+      "story-plan/scripts/plan-compare.mjs"
     ],
     "calibrated_on": null,
     "history": [
@@ -409,6 +411,36 @@
         "date": "2026-10-28",
         "task": "S-branch",
         "change": "заведён: с какого объёма кнопка — дорогая ветка, а не окраска (сцена в 10 сообщений, наша оценка); кроме объёма дорогой делают свой финал и свой контакт"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "один счёт дорогих развилок для story-branch и story-plan: plan-check.mjs и plan-compare.mjs зовут expensiveBudget() из branch-core.mjs; на скелете порог объёма — story.branch.expensive.skeleton_lines"
+      }
+    ]
+  },
+  "story.branch.expensive.skeleton_lines": {
+    "value": 3,
+    "unit": "строк-сцен скелета в области кнопки",
+    "op": "≥",
+    "level": null,
+    "basis": "our_estimate",
+    "sources": [
+      "meaningful-choice:P-15",
+      "failbetter-qbn:P-01: строка скелета — сцена, в узле до 3 строк (skill.plan.skeleton.run_lines)",
+      "story.branch.expensive.msgs: сцена в 10 сообщений ≈ 3 строки-сцены скелета (наша оценка)"
+    ],
+    "checks": [
+      "story-branch/scripts/branch-core.mjs",
+      "story-plan/scripts/plan-check.mjs",
+      "story-plan/scripts/plan-compare.mjs"
+    ],
+    "calibrated_on": "docs/playbook/_build/reports/A-architect/run3-kanatka/skeleton-v1.ink, skeleton-v2.ink: ветки-сцены по 3 строки — дорогие, отклик в 1 строку — нет",
+    "history": [
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "заведён: на скелете (// core: D-NN) строка — сцена, а не сообщение; с порогом story.branch.expensive.msgs branch-budget занижал скелет (A-architect, прогон 3: 1 против 3)"
       }
     ]
   },
@@ -424,7 +456,9 @@
       "R-26"
     ],
     "checks": [
-      "story-branch/scripts/branch-budget.mjs"
+      "story-branch/scripts/branch-budget.mjs",
+      "story-plan/scripts/plan-check.mjs",
+      "story-plan/scripts/plan-compare.mjs"
     ],
     "calibrated_on": null,
     "history": [
@@ -432,6 +466,11 @@
         "date": "2026-10-28",
         "task": "S-branch",
         "change": "заведён: нижняя граница бюджета дорогих веток (3–5 на историю от 50 сообщений, meaningful-choice:P-15#нюанс)"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "поглотил skill.plan.branches (min = 3…5, тот же бюджет; ключ удалён вместе с per_chapter = 2 — порога на главу у бюджета нет, plan-check показывает раскладку по главам без порога): бюджет дорогих развилок один для story-branch и story-plan"
       }
     ]
   },
@@ -448,7 +487,9 @@
       "emshort-structures:RED-07"
     ],
     "checks": [
-      "story-branch/scripts/branch-budget.mjs"
+      "story-branch/scripts/branch-budget.mjs",
+      "story-plan/scripts/plan-check.mjs",
+      "story-plan/scripts/plan-compare.mjs"
     ],
     "calibrated_on": null,
     "history": [
@@ -456,6 +497,11 @@
         "date": "2026-10-28",
         "task": "S-branch",
         "change": "заведён: потолок бюджета дорогих веток; сверх него новая ветка — только вместо старой"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "поглотил skill.plan.branches (max = 3…5, тот же бюджет; ключ удалён вместе с per_chapter = 2 — порога на главу у бюджета нет, plan-check показывает раскладку по главам без порога): бюджет дорогих развилок один для story-branch и story-plan"
       }
     ]
   },
@@ -567,6 +613,11 @@
         "date": "2026-10-28",
         "task": "S-branch",
         "change": "заведён: веер в середине — ветки не сходятся за столько узлов (главы 2…N-1)"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "поглотил skill.plan.spine.events.merge_within (= 2, то же «ветки сводятся не дальше чем через два узла» R-25); подполе удалено"
       }
     ]
   },
@@ -10098,15 +10149,14 @@
     "value": {
       "short": 3,
       "min": 5,
-      "max": 10,
-      "merge_within": 2
+      "max": 10
     },
-    "unit": "событий хребта; узлов до схождения ветки",
+    "unit": "событий хребта",
     "op": null,
     "level": null,
     "basis": "source",
     "sources": [
-      "R-25: хребет из 5–10 событий (в короткой истории — 3), ветки сводятся не дальше чем через два узла"
+      "R-25: хребет из 5–10 событий (в короткой истории — 3); схождение веток — story.branch.fan.merge_hops"
     ],
     "calibrated_on": null,
     "history": [
@@ -10114,6 +10164,11 @@
         "date": "2026-10-28",
         "task": "S-plan",
         "change": "заведён: числа правила о хребте — ключом, а не в тексте скилла"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "удалено подполе merge_within (= 2): дублировало story.branch.fan.merge_hops"
       }
     ]
   },
@@ -10135,29 +10190,6 @@
         "date": "2026-10-28",
         "task": "S-plan",
         "change": "заведён: «река, а не дерево» в plan-compare.mjs"
-      }
-    ]
-  },
-  "skill.plan.branches": {
-    "value": {
-      "min": 3,
-      "max": 5,
-      "per_chapter": 2
-    },
-    "unit": "дорогих развилок (кнопки ведут в разные узлы) на историю / на главу",
-    "op": ">",
-    "level": "hint",
-    "basis": "source",
-    "sources": [
-      "flow-review.md §A, шаг 3: число дорогих веток против бюджета 3–5",
-      "rules.md, правило о вариативности состоянием (владелец story-branch): на главу 1–2 развилки в разные узлы"
-    ],
-    "calibrated_on": null,
-    "history": [
-      {
-        "date": "2026-10-28",
-        "task": "S-plan",
-        "change": "заведён: бюджет дорогих развилок в plan-compare.mjs; свести с ключом бюджета story-branch, когда он появится"
       }
     ]
   },
@@ -10473,7 +10505,7 @@
       }
     ]
   },
-  "skill.brainstorm.logline.max_words": {
+  "story.logline.max_words": {
     "value": 35,
     "unit": "слов",
     "op": ">",
@@ -10481,6 +10513,7 @@
     "basis": "source",
     "sources": [
       "snyder-save-the-cat:GREEN-01: логлайн до 35 слов",
+      "R-02 (владелец story-core)",
       "flow-review.md §C story-brainstorm: premise-check.mjs"
     ],
     "calibrated_on": null,
@@ -10489,7 +10522,16 @@
         "date": "2026-10-28",
         "task": "S-brainstorm",
         "change": "заведён: длина логлайна направления (premise-check.mjs)"
+      },
+      {
+        "date": "2026-10-29",
+        "task": "T-21",
+        "change": "переименован из skill.brainstorm.logline.max_words: логлайн R-02 — общее определение истории (владелец story-core), читают premise-check.mjs и core-check.mjs"
       }
+    ],
+    "checks": [
+      "story-brainstorm/scripts/premise-check.mjs",
+      "story-core/scripts/core-check.mjs"
     ]
   },
   "skill.brainstorm.rule.max_words": {

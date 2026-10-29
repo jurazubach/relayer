@@ -1,0 +1,22 @@
+Фраз: 19 × 5 прогонов = 95 запусков claude, по 3 одновременно…
+
+скилл             попадания    ложные      обход  отказы  вместо него
+────────────────  ───────────  ──────────  ─────  ──────  ──────────────
+story-brainstorm  0% (0/5)     0% (0/90)                  story-branch×5
+story-branch      97% (58/60)  14% (5/35)                 story-plan×2
+story-cast        100% (5/5)   0% (0/90)
+story-choices     100% (5/5)   0% (0/90)
+story-desk        100% (5/5)   0% (0/90)
+story-endings     100% (5/5)   0% (0/90)
+story-mystery     100% (5/5)   0% (0/90)
+story-plan        —            2% (2/95)
+story-review      100% (5/5)   0% (0/90)
+
+Мимо:
+  ждали story-branch · вышло story-plan, story-branch, story-branch, story-branch, story-plan · «Где в плане поставить развилку, после которой у игрока будут разные собеседники и разные концовки?»
+  ждали story-brainstorm · вышло story-branch, story-branch, story-branch, story-branch, story-branch · «Придумай неожиданный поворот: кто-то из друзей героя окажется не тем, кем кажется»
+
+Отказов в правах: 0; недействительных прогонов: 0
+
+Всего: 93% проверок прошло (88/95), 134 с
+Записано: docs/playbook/_build/reports/T-21/triggers/story-branch.json

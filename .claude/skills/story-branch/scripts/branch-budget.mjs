@@ -1,15 +1,16 @@
 // Бюджет дорогих веток: сколько потрачено и сколько осталось, какую долю текста видит одно прохождение,
 // где дорогая ветка достаётся меньшинству и где веер в середине не сходится. Отвечает на «и ещё сюда ветку»
 // числом, а не на глаз (meaningful-choice:P-15, LESSON-10; R-26, R-37).
-import { analyze, budgetFor, T } from './branch-core.mjs';
+import { analyze, spend, T } from './branch-core.mjs';
 import { storyRefs } from '../../../../scripts/lib/story.mjs';
 
 const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/branch-budget.mjs [--story <id|путь>] [--add <сообщений>] [--runs N] [--json]
 
 Бюджет дорогих веток (скилл story-branch).
-  потрачено   дорогих развилок (хотя бы одна кнопка с областью от story.branch.expensive.msgs сообщений, своим финалом
-              или своим контактом) против бюджета story.branch.budget.min…story.branch.budget.max; история короче
-              story.branch.budget.short_msgs сообщений — story.branch.budget.short
+  потрачено   дорогих развилок (хотя бы одна кнопка с областью от story.branch.expensive.msgs сообщений — на скелете
+              от story.branch.expensive.skeleton_lines строк-сцен, — своим финалом или своим контактом) против бюджета
+              story.branch.budget.min…story.branch.budget.max; история короче story.branch.budget.short_msgs
+              сообщений — story.branch.budget.short. Тот же счёт печатают plan-check и plan-compare скилла story-plan
   доля текста сколько сообщений истории видит одно прохождение бота в среднем, против story.branch.seen_share.min и
               story.branch.seen_share.max (R-37); у короткой истории не сравнивается (narrative-testing:P-13)
   редкая      дорогая кнопка, которую нажимают меньше C-15.rare_branch_share игроков (R-37, ashwell-standard-patterns:P-10)
@@ -42,7 +43,8 @@ const report = [];
 try {
   for (const ref of storyRefs((opt('--story') ?? '').split(',').filter(Boolean))) {
     const a = analyze(ref, { runs });
-    const budget = budgetFor(a.totalMsgs);
+    const sp = spend(a);
+    const budget = sp.budget;
     const spent = a.points.filter((x) => x.expensive).map((x) => ({
       knot: x.knot, chapter: x.chapter, line: x.line, merge: x.merge,
       options: x.options.filter((o) => o.expensive).map((o) => ({ text: o.text, own_msgs: o.own_msgs, own_endings: o.own_endings, unlocks: o.unlocks, share: o.share })),
@@ -60,7 +62,7 @@ try {
       else if (kinds.has('память')) c.memory++;
       else c.colour++;
     }
-    const used = spent.length;
+    const used = sp.used;
     const what = add == null ? null : (() => {
       const total = a.totalMsgs + add;
       const seen = a.seenShare == null ? null : a.seenShare * a.totalMsgs;
@@ -72,7 +74,7 @@ try {
     })();
     report.push({
       id: a.id, path: a.path, minutes: a.minutes, chapters: a.chapters, total_msgs: a.totalMsgs, runs: a.runs,
-      budget, used, left: budget.max - used, status: used > budget.max ? 'сверх' : used < budget.min ? 'мало' : 'в бюджете',
+      skeleton: a.skeleton, budget, used, left: sp.left, status: sp.status,
       seen_share: a.seenShare, seen_status: a.seenShare == null ? null : budget.short ? 'короткая — не сравнивается' : a.seenShare < K.seenMin ? 'мало' : a.seenShare > K.seenMax ? 'много' : 'норма',
       spent, rare, fan, by_chapter: byChapter, what_if: what,
     });
@@ -85,13 +87,13 @@ try {
 // exitCode, а не process.exit: иначе большой --json в трубу обрезается
 const json = args.includes('--json');
 if (json) {
-  console.log(JSON.stringify({ stories: report, keys: { expensive_msgs: T.value('story.branch.expensive.msgs'), ...K } }, null, 1));
+  console.log(JSON.stringify({ stories: report, keys: { expensive_msgs: T.value('story.branch.expensive.msgs'), expensive_skeleton_lines: T.value('story.branch.expensive.skeleton_lines'), ...K } }, null, 1));
 }
 
 const pct = (x) => (x == null ? '—' : `${Math.round(x * 100)}%`);
 for (const r of json ? [] : report) {
   const b = r.budget;
-  console.log(`${r.path} · глав ${r.chapters} · сообщений ${r.total_msgs}${r.minutes ? ` · ≈${r.minutes} мин` : ''}`);
+  console.log(`${r.path}${r.skeleton ? ' · скелет' : ''} · глав ${r.chapters} · ${r.skeleton ? 'строк-сцен' : 'сообщений'} ${r.total_msgs}${r.minutes ? ` · ≈${r.minutes} мин` : ''}`);
   console.log(`  дорогие развилки: ${r.used} из ${b.min}…${b.max}${b.short ? ' (короткая история)' : ''} — ${r.status}; осталось ${Math.max(0, r.left)}`);
   for (const x of r.spent) {
     for (const o of x.options) console.log(`    гл. ${x.chapter} ${x.knot}: [${o.text.slice(0, 36)}] своё ${o.own_msgs} сообщ.${o.own_endings.length ? `, финал ${o.own_endings.join(', ')}` : ''}${o.unlocks.length ? `, #unlock ${o.unlocks.join(', ')}` : ''} · игроков ${pct(o.share)}`);

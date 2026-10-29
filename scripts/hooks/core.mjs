@@ -113,10 +113,10 @@ function runJson(script, args) {
  * partial — story:lint --partial; по умолчанию сам, если в истории есть узел beta_stop (isPartial).
  * Находки приводятся к одному виду: { level, check, where, message, threshold? }.
  */
-export function checkStory(id, { quick = true, partial = isPartial(id) } = {}) {
+export function checkStory(id, { quick = true, partial = isPartial(id), ref = id } = {}) {
   const findings = [];
   // seed 1, как у story:lint: одинаковый сценарий — одинаковые находки, и «новые» не мигают от случайности бота
-  const cs = runJson(join(ROOT, 'scripts/check-story.mjs'), [id, '--seed', '1']);
+  const cs = runJson(join(ROOT, 'scripts/check-story.mjs'), [ref, '--seed', '1']);
   const s = cs.json?.stories?.[0];
   if (!s) {
     findings.push({ level: 'error', check: 'check:story', where: 'история', message: firstLines(cs.stderr) || 'check:story не запустился' });
@@ -139,9 +139,9 @@ export function checkStory(id, { quick = true, partial = isPartial(id) } = {}) {
   const lintScript = join(ROOT, 'scripts/lint/lint.mjs');
   // быстрый режим — story:lint --changed --quick --summary: сводка не длиннее skill.hook.max_output_chars
   const part = partial ? ['--partial'] : [];
-  let lint = runJson(lintScript, quick ? [id, '--changed', '--quick', '--summary', ...part] : [id, ...part]);
+  let lint = runJson(lintScript, quick ? [ref, '--changed', '--quick', '--summary', ...part] : [ref, ...part]);
   // правку откатили к версии из git — --changed историю не видит, а прежние находки нельзя счесть исправленными
-  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [id, '--quick', '--summary', ...part]);
+  if (quick && lint.json && !lint.json.stories.length) lint = runJson(lintScript, [ref, '--quick', '--summary', ...part]);
   if (!lint.json) {
     findings.push({ level: 'error', check: 'story:lint', where: 'история', message: firstLines(lint.stderr) || 'story:lint не запустился' });
   }
@@ -157,6 +157,29 @@ export function checkStory(id, { quick = true, partial = isPartial(id) } = {}) {
 }
 
 export const fingerprint = (f) => `${f.check}|${f.where}|${f.message}`;
+
+/**
+ * Та же проверка на версии истории из git (по умолчанию HEAD): база для «новых ошибок». Глава пишется на истории,
+ * где в других главах уже есть ошибки, и «весь отчёт зелёный» для неё недостижим — сравнивают с тем, что было.
+ * Истории нет в ревизии — база пустая (новая история: все ошибки новые).
+ */
+export function checkBase(id, { rev = 'HEAD', quick = false } = {}) {
+  const dir = mkdtempSync(join(tmpdir(), 'relayer-base-'));
+  try {
+    const paths = [`${STORIES}/${id}`, `${STORIES}/${id}.json`];
+    const listed = spawnSync('git', ['ls-tree', '--name-only', rev, '--', ...paths], { cwd: ROOT, encoding: 'utf8' });
+    if (listed.status !== 0) throw new Error(`git: нет ревизии ${rev}`);
+    const have = listed.stdout.split('\n').filter(Boolean);
+    if (!have.length) return { id, rev, missing: true, compiled: true, findings: [] };
+    const tar = spawnSync('git', ['archive', '--format=tar', rev, '--', ...have], { cwd: ROOT, maxBuffer: 256 * 1024 * 1024 });
+    const untar = spawnSync('tar', ['-x', '-C', dir], { input: tar.stdout });
+    if (tar.status !== 0 || untar.status !== 0) throw new Error(`git archive ${rev} не распаковался`);
+    const ref = join(dir, have[0]);
+    return { rev, ...checkStory(id, { quick, partial: isPartial(id, dir), ref }) };
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
 
 export function counts(findings) {
   const c = { error: 0, warning: 0, hint: 0 };

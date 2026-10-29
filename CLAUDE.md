@@ -122,7 +122,8 @@ docs/playbook/thresholds.json  единственное место чисел и
 docs/style.md              стиль повествования: код-стайл историй (ST-NN), образцы SG-NN и антиобразцы AS-NN
 scripts/kb/                база знаний: kb:clean (очистка входа), story:coverage, кластеры
 scripts/hooks/             хуки Claude Code: проверка после правки src/stories, статус при старте; full.mjs — полный прогон главы
-                           (история с узлом beta_stop — сама с story:lint --partial)
+                           (история с узлом beta_stop — сама с story:lint --partial; --new — только новые ошибки против git);
+                           agent-guard.mjs <агент> — сторож PreToolUse агентов .claude/agents (белый список на агента)
 scripts/lab/               эксперименты: lab:triggers, skills:test и сборка мутантов
 docs/lab/                  журнал экспериментов, baseline.md, runs/, мутанты, фразы срабатывания, cases/ (кейсы наших историй, руками не править)
 e2e/                       Playwright: smoke / modes / reminders / choice-log .spec.ts (проверки), shots.spec.ts (снимки, @shots), fixture.ts

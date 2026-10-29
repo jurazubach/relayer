@@ -10,8 +10,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: |
-            node -e 'let s="";process.stdin.on("data",(d)=>(s+=d)).on("end",()=>{let c="";try{c=String(JSON.parse(s).tool_input?.command??"").trim()}catch{}if(/^npm run (-s )?story:cold-read( -- [^;&|<>`$\\\n\r]*)?$/.test(c))process.exit(0);console.error("cold-reader: разрешена только одна команда npm run story:cold-read -- … без ; && | > и подстановок");process.exit(2)})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs cold-reader
 ---
 
 Ты — запускающий холодного читателя. Сам ты не читатель: у тебя в контексте git status и задание, а читатель
