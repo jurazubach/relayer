@@ -32,7 +32,7 @@
 |---|---|
 | `run.mjs` | один прогон `claude -p` в слепой копии (`--write` — Edit и Write для правящих скиллов) |
 | `runs/*.phrase.txt` | фраза автора дословно |
-| `runs/*.result.json` | время, ходы, стоимость, отказы, ответ скилла |
+| `runs/*.result.json` | время, ходы, стоимость, отказы, ответ скилла (у `fix4` — восстановлен по выводу, ответ — в `fix4.digest.md`) |
 | `runs/*.digest.md` | сжатый транскрипт (`X-E2/digest.mjs`); полные потоки `stream-json` в репозиторий не положены |
 | `before/`, `after1/`, `after2/` | снимки метрик `X-E3/snap.sh` (+ `choices.txt` — профиль кнопок `story-choices/choices.mjs`): до, после переписи, после второго захода |
 | `metrics.md` | `X-E3/compare.mjs before after2` и дополнительные метрики Э7 |
