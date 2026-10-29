@@ -496,7 +496,7 @@ TH-41, TH-42, TH-48.
 
 | ID | тема | владелец | файл | опора | ссылаются |
 |---|---|---|---|---|---|
-| TH-95 | карточка: обещание, жанр, темы | `story-release` | `card.md` (`card-check.mjs`) | R-11; C-49; `choiceofgames:LESSON-05`; `edgerton:LESSON-06`, PAT-06; `video:P-10`; `schell:LESSON-10`; `messenger:RED-12`; `dille:P-02`; `video:GREEN-01`, RED-08 | `story-brainstorm/market.md` |
+| TH-95 | карточка: обещание, жанр, темы | `story-release` | `card.md` (`card-check.mjs`), `teasers.md` | R-11; C-49; `choiceofgames:LESSON-05`; `edgerton:LESSON-06`, PAT-06; `video:P-10`; `schell:LESSON-10`; `messenger:RED-12`; `dille:P-02`; `video:GREEN-01`, RED-08 | `story-brainstorm/market.md` |
 | TH-96 | этика и монетизация, тёмные паттерны | `story-release` | `ethics.md` | R-115; `attention` С-4; `алиас:attention§5` ×30; около 25 уроков в 15 разборах; `build-plan.md` §12; `ashwell:LESSON-13`; `dille:LESSON-10`; `failbetter:LESSON-11`; `maass:LESSON-08`; `messenger:LESSON-03`; `mobile:LESSON-09`; `narrative-postmortems:LESSON-04`; `schell:LESSON-04`; `serial:LESSON-14`; `sheldon:LESSON-04`; `skolnick:LESSON-09`; `truby:LESSON-09`; `yorke:LESSON-06` | `story-time`, `story-pauses`, `story-plan` |
 | TH-97 | платная граница: место и обещание | `story-release` | `free-boundary-gate.md` (`boundary-check.mjs`) | `choiceofgames:P-23`; `serial:P-12`; `mckee:LESSON-08`; `yorke:LESSON-01`, `LESSON-02`; `edgerton:LESSON-04`, `LESSON-05`; `mobile:LESSON-06`; `INTENT.md` «Платная граница» | `story-plan/free-boundary.md` |
 | TH-98 | две длительности на карточке | `story-release` | `two-durations.md` (`durations.mjs`) | A-05; фазы gap и typing в `engine.ts` | ссылается на `story-time/length.md` |
