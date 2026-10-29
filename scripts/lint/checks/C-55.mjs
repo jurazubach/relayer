@@ -18,12 +18,14 @@ export default {
         const next = run.choices.find((c) => c.at > l.i);
         if (!next) continue;
         if (run.lines.slice(l.i + 1, next.at).some(isIncoming)) continue;
-        all.add(`${l.knot}|${next.key}`, () => ({ knot: l.knot, choice: next }));
+        // один стык — одна находка, даже если за ним по разным веткам разные кнопки
+        const p = all.add(l.knot, () => ({ knot: l.knot, buttons: [] }));
+        if (!p.buttons.includes(next.texts[0])) p.buttons.push(next.texts[0]);
       }
     }
     for (const p of all.values()) {
       if (p.n <= T.value('C-55.buttons')) continue;
-      find('C-55.buttons', { node: p.knot, chapter: st.chapterOf(p.knot), message: `${p.knot}: за строкой #chapter сразу кнопки («${short(p.choice.texts[0], 30)}») без входящей реплики — стык ничего не объясняет, а на платной границе кнопки закрытой главы покажутся до paywall` });
+      find('C-55.buttons', { node: p.knot, chapter: st.chapterOf(p.knot), message: `${p.knot}: за строкой #chapter сразу кнопки (${p.buttons.map((t) => `«${short(t, 30)}»`).join(' / ')}) без входящей реплики — стык ничего не объясняет, а на платной границе кнопки закрытой главы покажутся до paywall` });
     }
   },
 };

@@ -1,10 +1,10 @@
 // Самопроверка T-22: хвосты «глав невидимых» (A-08) и ревизия без тега. C-49 (и) — слово «глава» на карточке,
 // C-55 — за #chapter реплика, а не кнопки; точка анкеты playtest-kit по реплике перед паузой стыка;
-// revision-check без тега сравнивает с коммитом последней смены revision. Дефект и чистый двойник, выдуманные
-// истории. Подключается из selftest.mjs.
+// revision-check без тега сравнивает с коммитом последней смены revision; две активные истории — ⚠, не ✗.
+// Дефект и чистый двойник, выдуманные истории. Подключается из selftest.mjs.
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +13,7 @@ import { loadThresholds } from '../lib/thresholds.mjs';
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const KIT = join(ROOT, '.claude/skills/story-playtest/scripts/playtest-kit.mjs');
 const REVISION = join(ROOT, '.claude/skills/story-release/scripts/revision-check.mjs');
+const STATUS = join(ROOT, '.claude/skills/story-desk/scripts/story-status.mjs');
 
 const card = (over = {}) => ({
   title: 'Маяк', tagline: 'Смотритель маяка пишет тебе в шторм', synopsis: 'Смотритель пропал. Ты отвечаешь на его сообщения.',
@@ -79,6 +80,23 @@ export function register(test, { has, hasNot, lint, keys }) {
     const s = survey({ testers: 3, point: p, T });
     assert.ok(!T.re('C-49.chapter_word').test(s));
     assert.match(s, /Заполните два раза\. Первый — когда Ида напишет/);
+  });
+
+  test('story-status --check: две «активная: да» — ⚠ и код 0, флаг не снимается', () => {
+    const dir = mkdtempSync(join(tmpdir(), 't22-status-'));
+    try {
+      const run = (...a) => spawnSync('node', [STATUS, ...a, '--dir', dir], { encoding: 'utf8' });
+      run('--init', 'alpha');
+      run('--init', 'beta');
+      const beta = join(dir, 'beta/STATUS.md');
+      writeFileSync(beta, readFileSync(beta, 'utf8').replace('активная: нет', 'активная: да'));
+      const r = run('--check');
+      assert.equal(r.status, 0, r.stdout + r.stderr);
+      assert.match(r.stdout, /^⚠ «активная: да» у 2 историй: alpha, beta/m);
+      assert.match(r.stdout, /только по слову автора/);
+      assert.match(readFileSync(beta, 'utf8'), /активная: да/, '--check ничего не правит');
+      assert.equal(JSON.parse(run('--check', '--json').stdout).global.length, 1);
+    } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 
   test('revision-check: без тега — сравнение с коммитом последней смены revision; правка после неё без подъёма — ✗', () => {
