@@ -1,10 +1,10 @@
 // Сборка и раскладка историй: папка src/stories/<id>/ (исходник) ⇄ один .json (загрузка, Pages, телефон).
 // Запуск: npm run story:pack [-- …], npm run story:unpack [-- …]
-import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { compile, formatMessages } from './lib/compile.mjs';
 import {
-  STORIES_DIR, compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, sameRuntime,
+  STORIES_DIR, compileInput, glueStory, imageData, imageMime, layoutProblems, listStories, loadStory, packStory, sameRuntime,
   storyFromJson, unpackStory, writeFolder,
 } from './lib/story.mjs';
 
@@ -130,6 +130,17 @@ function check() {
       const back = folder.files[name === story.main ? mainName : name];
       if (story.form === 'folder' && back !== story.files[name]) problems.push(`${name}: после сборки и раскладки файл другой`);
     }
+    for (const [name, img] of Object.entries(story.images)) {
+      if (!img.file) continue;
+      const back = folder.images[basename(img.file)];
+      if (!back || !back.equals(readFileSync(img.file))) problems.push(`images/${basename(img.file)}: после сборки и раскладки картинка другая`);
+      else if (imageData({ file: img.file }) !== packed.images?.[name]) problems.push(`images/${basename(img.file)}: в .json картинка другая`);
+    }
+    const stems = Object.keys(story.images).map((n) => n.toLowerCase());
+    const twins = stems.filter((n, i) => stems.indexOf(n) !== i);
+    if (story.form === 'folder') {
+      for (const n of new Set(twins)) problems.push(`images/${n}.*: два файла с одним именем — игра покажет только один`);
+    }
     if (story.order.length > 1 && JSON.stringify(packStory(again)) !== JSON.stringify(packed)) problems.push('сборка разложенной истории даёт другой .json');
 
     // склейка в один ink играется так же, как INCLUDE
@@ -164,5 +175,9 @@ function check() {
 function fromFolder(folder, story) {
   const order = Object.keys(folder.files);
   const [main, ...rest] = order;
-  return { ...folder.meta, id: folder.meta.id ?? story.id, ink: folder.files[main], ...(rest.length ? { includes: Object.fromEntries(rest.map((n) => [n, folder.files[n]])) } : {}) };
+  const pics = Object.entries(folder.images ?? {}).map(([file, bytes]) => [file.replace(/\.[^.]+$/, ''), bytes, file]);
+  const images = pics.length
+    ? { images: Object.fromEntries(pics.sort(([a], [b]) => (a < b ? -1 : 1)).map(([name, bytes, file]) => [name, `data:${imageMime(file)};base64,${bytes.toString('base64')}`])) }
+    : {};
+  return { ...folder.meta, id: folder.meta.id ?? story.id, ink: folder.files[main], ...(rest.length ? { includes: Object.fromEntries(rest.map((n) => [n, folder.files[n]])) } : {}), ...images };
 }

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Engine, View } from '../engine';
-import { formatTime } from '../engine';
+import { formatTime, previewText } from '../engine';
 import { Avatar } from './Avatar';
 import { BellIcon, GearIcon } from './Icons';
 
@@ -75,7 +75,7 @@ export function ChatsScreen({
                   </span>
                   <span className="chat-row__bottom">
                     <span className={typing ? 'chat-row__preview chat-row__preview--typing' : 'chat-row__preview'}>
-                      {typing ? 'печатает…' : last ? (last.kind === 'out' ? 'Вы: ' : '') + last.text : ''}
+                      {typing ? 'печатает…' : last ? (last.kind === 'out' ? 'Вы: ' : '') + previewText(last) : ''}
                     </span>
                     {waiting && <span className="badge badge--wait">ждёт ответа</span>}
                     {!waiting && unread > 0 && <span className="badge">{unread}</span>}

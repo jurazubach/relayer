@@ -107,6 +107,11 @@ export interface Story {
   ink: string;
   /** Остальные файлы ink по именам из INCLUDE: { "ch01.ink": "…" }. */
   includes?: Record<string, string>;
+  /**
+   * Картинки фото-сообщений (#photo:имя) по имени без расширения. У встроенной — адреса файлов
+   * из папки src/stories/<id>/images/, в файле .json (story:pack, загрузка) — data:-адреса.
+   */
+  images?: Record<string, string>;
   /** Откуда взялась: лежит в коде или загружена с устройства. Не хранится в файле. */
   origin: 'builtin' | 'upload';
 }

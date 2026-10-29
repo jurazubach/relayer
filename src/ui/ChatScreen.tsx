@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Engine, View } from '../engine';
+import type { Engine, Msg, View } from '../engine';
 import { formatTime } from '../engine';
 import { Avatar } from './Avatar';
 import { BackIcon, CameraIcon, GearIcon } from './Icons';
+import { PhotoViewer } from './PhotoViewer';
 
 /** Переписка: сообщения и варианты ответа вместо поля ввода. */
 export function ChatScreen({
@@ -14,6 +15,7 @@ export function ChatScreen({
   onDebug,
   onOpen,
   paywall,
+  images,
 }: {
   engine: Engine;
   view: View;
@@ -21,6 +23,8 @@ export function ChatScreen({
   onBack: () => void;
   onDebug: () => void;
   onOpen: (thread: string) => void;
+  /** Картинки истории по имени (#photo:имя → адрес). Нет файла — пузырь-заглушка с описанием. */
+  images?: Record<string, string>;
   /** Плашка платной границы: история стоит, пока продолжение закрыто. */
   paywall?: ReactNode;
 }) {
@@ -33,6 +37,10 @@ export function ChatScreen({
   const waitingElsewhere = view.choices.length > 0 && choicesHere.length === 0;
   const otherThreads = view.choiceThreads.filter((t) => t !== thread);
   const endRef = useRef<HTMLDivElement>(null);
+  // переписка прижата к низу: картинка догружается позже пузыря и не должна уводить последнюю реплику вверх
+  const atEnd = useRef(true);
+  const [viewing, setViewing] = useState<Msg | null>(null);
+  const srcOf = (m: Msg) => (m.image ? images?.[m.image] : undefined);
 
   useEffect(() => {
     engine.markRead(thread);
@@ -71,7 +79,13 @@ export function ChatScreen({
         </button>
       </header>
 
-      <div className="chat__messages">
+      <div
+        className="chat__messages"
+        onScroll={(e) => {
+          const el = e.currentTarget;
+          atEnd.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+        }}
+      >
         {msgs.map((m, i) => {
           const prev = msgs[i - 1];
           const grouped = prev && prev.kind === m.kind && m.kind !== 'sys';
@@ -80,6 +94,22 @@ export function ChatScreen({
             return (
               <div key={m.id} className="system-line is-rising">
                 {m.text}
+              </div>
+            );
+          }
+          const src = m.kind === 'photo' ? srcOf(m) : undefined;
+          if (src) {
+            return (
+              <div key={m.id} className="message message--in is-rising">
+                <button className="photo-message photo-message--real" onClick={() => setViewing(m)} aria-label={`Открыть фото: ${m.text}`} data-testid="photo">
+                  <img
+                    className="photo-message__picture"
+                    src={src}
+                    alt={m.text}
+                    onLoad={() => atEnd.current && endRef.current?.scrollIntoView({ block: 'end' })}
+                  />
+                  <span className="photo-message__time">{formatTime(m.at)}</span>
+                </button>
               </div>
             );
           }
@@ -119,6 +149,16 @@ export function ChatScreen({
         )}
         <div ref={endRef} />
       </div>
+
+      {viewing && srcOf(viewing) && (
+        <PhotoViewer
+          src={srcOf(viewing)!}
+          alt={viewing.text}
+          sender={contact.name}
+          time={formatTime(viewing.at)}
+          onClose={() => setViewing(null)}
+        />
+      )}
 
       <footer className="chat__composer">
         {choicesHere.length > 0 ? (

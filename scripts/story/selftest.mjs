@@ -2,7 +2,7 @@
 // Запуск: npm run test:story-cmd [-- --json] [-- --only <подстрока>]
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -29,7 +29,7 @@ import { buildStatic } from '../lint/static.mjs';
 const HELP = `npm run test:story-cmd [-- --json] [-- --only <подстрока>]
 
 Самопроверка story:trace, story:vars, story:sessions, story:cast, story:endings, story:rule,
-story:status, story:diff, story:cold-read: синтетические истории scripts/story/fixtures/*.ink
+story:status, story:diff, story:cold-read, story:images: синтетические истории scripts/story/fixtures/*.ink
 (каждая деталь там — под проверку), состояние историй fixtures/stories/, три истории src/stories
 (персоны доходят до конца, финалы находятся, --json читается) и одна ревизия git для story:diff.
 cold-read --ask (вызов claude -p) здесь не запускается: проверяются переписка, протокол и разбор изоляции.
@@ -583,6 +583,39 @@ test('cold-read: шкала интереса по точкам из ответа
   assert.equal(x[3].quote, 'Акция только сегодня');
   assert.equal(x[3].why, 'реклама вместо истории');
   assert.deepEqual(interestOf('Итог: дочитал бы'), []);
+});
+
+test('images: имя без брифа — ошибка, бриф без файла — todo, без имени — заглушка; каталог чистый', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'story-img-'));
+  try {
+    const ink = join(dir, 'pier.ink');
+    writeFileSync(ink, ['# contact: mira, Мира, teal', 'ты тут? #from:mira', '- Записка на двери #photo:note #delay:2s', 'Карта причала #photo:map.webp', 'Старая заглушка #photo', '-> END', ''].join('\n'));
+    const state = join(dir, 'state');
+    const r = cmd('images', [ink, '--check', '--dir', state]);
+    assert.equal(r.code, 1, r.out + r.err);
+    assert.match(r.out, /note: #photo:note без брифа и без файла \(pier\.ink:3/);
+    assert.match(r.out, /map: #photo:map без брифа/, 'расширение в теге не входит в имя');
+
+    mkdirSync(join(state, 'pier'), { recursive: true });
+    writeFileSync(join(state, 'pier', 'images.json'), JSON.stringify({ images: {
+      note: { kind: 'screen', template: 'note', shows: 'записка', data: { text: 'не туда смотришь' } },
+      map: { kind: 'photo', shows: 'карта', prompt: 'a paper map', boxes: [{ id: 'x', desc: 'map', bbox: [0.6, 0.1, 0.2, 0.9] }] },
+      lost: { kind: 'screen', template: 'chat', shows: 'никто не ссылается', data: {} },
+    } }));
+    const j = cmdJson('images', [ink, '--dir', state])[0];
+    const by = Object.fromEntries(j.items.map((i) => [i.name, i]));
+    assert.equal(by.note.state, 'todo');
+    assert.equal(by.note.used[0].text, 'Записка на двери', 'маркер выбора и теги не входят в описание');
+    assert.deepEqual(by.map.problems, ['рамка x: bbox [y0, x0, y1, x1] долями 0..1, y первым']);
+    assert.equal(by.lost.state, 'unused');
+    assert.equal(j.stubs.length, 1);
+    assert.equal(j.stubs[0].text, 'Старая заглушка');
+    assert.ok(j.warnings.some((w) => w.startsWith('lost: бриф есть')));
+
+    for (const id of CATALOG) assert.equal(cmd('images', [id, '--check']).code, 0, `${id}: story:images --check`);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 // ───────── прогон

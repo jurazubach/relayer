@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Contact, Msg } from '../engine';
+import { previewText } from '../engine';
 import { Avatar } from './Avatar';
 
 /**
@@ -37,7 +38,7 @@ export function Notice({
         <Avatar contact={contact} size={36} />
         <span className="notice__body">
           <span className="notice__name">{contact.name}</span>
-          <span className="notice__text">{msg.text}</span>
+          <span className="notice__text">{previewText(msg)}</span>
         </span>
       </button>
     </div>

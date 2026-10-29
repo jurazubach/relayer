@@ -1,0 +1,574 @@
+{
+  "look": {
+    "photo": "Amateur smartphone photo taken by a teenager in Vyshenky, a village near Kyiv on a bay of the Dnipro river, late October. Ordinary phone camera: natural or available light, slight noise and softness, casual off-centre framing, nothing staged, cinematic or glossy. Fictional people only, no recognisable brands or logos, no readable text unless the brief asks for it.",
+    "screen": "dark"
+  },
+  "images": {
+    "ch01-members": {
+      "kind": "screen",
+      "template": "list",
+      "shows": "Оля шлёт скрин участников общего чата вечеринки: кто там был — список имён для первых сообщений; Лиля серая, а сама Оля из чата вышла.",
+      "clue": "серая строка «Лиля 💧» и подпись «Оля вышла из чата» — видны в пузыре без открытия",
+      "data": {
+        "header": "Купала 🔥",
+        "headerSub": "6 участников",
+        "rows": [
+          {
+            "name": "Костя",
+            "sub": "был(а) вчера"
+          },
+          {
+            "name": "Ника",
+            "sub": "в сети"
+          },
+          {
+            "name": "Тарас",
+            "sub": "был(а) недавно"
+          },
+          {
+            "name": "Соня",
+            "sub": "был(а) недавно"
+          },
+          {
+            "name": "Остап",
+            "sub": "был(а) давно"
+          },
+          {
+            "name": "Лиля 💧",
+            "sub": "был(а) 24 июня",
+            "dim": true
+          }
+        ],
+        "footer": "Оля вышла из чата"
+      },
+      "status": "draft"
+    },
+    "ch01-mom": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Оля доказывает алиби скрином переписки с мамой — но время на скрине обрезано, проверить, когда пришло «ты где?», нельзя.",
+      "clue": "нет ни часов сверху, ни времени у сообщений — скрин подозрительно обрезан",
+      "data": {
+        "title": "мама",
+        "hideTimes": true,
+        "messages": [
+          {
+            "text": "ты где?"
+          }
+        ],
+        "height": 260
+      },
+      "status": "draft"
+    },
+    "ch04-microsd": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "shows": "Оля нашла в кармане своей куртки чужую карту памяти и показывает её на ладони.",
+      "clue": "крошечная чёрная карта microSD в центре ладони — узнаётся в пузыре 280 точек",
+      "prompt": "Close-up phone photo looking down at the open left palm of a teenage girl, fingers slightly curled, a chipped dark nail polish. In the middle of the palm lies one tiny black microSD memory card, about the size of a fingernail, its gold contacts catching the light. Behind the hand, out of focus: the dark sleeve of a padded jacket and a dim bedroom floor. Warm light from a single bedside lamp from the left, deep shadows, slight motion blur, grainy evening phone photo.",
+      "boxes": [
+        {
+          "id": "palm",
+          "desc": "an open teenage girl's palm, fingers slightly curled, warm lamp light",
+          "bbox": [
+            0.18,
+            0.08,
+            0.9,
+            0.92
+          ]
+        },
+        {
+          "id": "card",
+          "desc": "one tiny black microSD card with gold contacts lying in the centre of the palm",
+          "bbox": [
+            0.44,
+            0.38,
+            0.58,
+            0.62
+          ]
+        }
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "status": "draft",
+      "pick": "s3",
+      "note": "s1, s2 — карта похожа на плату с деталями; s3 — ряд контактов у короткого края, читается как microSD. Карта крупнее настоящей (≈ ноготь) — в пузыре это помогает."
+    },
+    "ch08-note": {
+      "kind": "screen",
+      "template": "note",
+      "shows": "Заметка в телефоне Лили, которую подбросила Ника: «это Остап Бондарь» — и правка сегодня в 05:38, когда Лили уже не было.",
+      "clue": "строка «Изменено: сегодня, 05:38» над текстом — улика против того, кто прислал",
+      "data": {
+        "edited": "Изменено: сегодня, 05:38",
+        "text": "это Остап Бондарь!! он держал меня за руку",
+        "height": 200
+      },
+      "status": "draft"
+    },
+    "ch04-diary": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "shows": "Страница дневника Лили её почерком: просьба не дать обвинить Олю — написана заранее, будто Лиля чего-то боялась.",
+      "clue": "строчки почерком читаются в пузыре; бумага — тетрадь в линейку, а не распечатка",
+      "prompt": "Phone photo taken from above of an open spiral-bound school notebook lying on a wooden desk. The right-hand page is lined paper, slightly creased, with a faint coffee ring in the corner; the upper half of the page is blank, no writing at all. The left page is turned away and out of focus. A ballpoint pen lies across the bottom edge. Cool grey daylight from a window on the left, soft shadow of the spiral, slightly tilted framing.",
+      "boxes": [
+        {
+          "id": "page",
+          "desc": "a blank lined notebook page, no writing, slightly creased paper",
+          "bbox": [
+            0.1,
+            0.12,
+            0.9,
+            0.92
+          ]
+        },
+        {
+          "id": "pen",
+          "desc": "a blue ballpoint pen lying across the bottom of the page",
+          "bbox": [
+            0.8,
+            0.2,
+            0.9,
+            0.8
+          ]
+        }
+      ],
+      "overlay": [
+        {
+          "text": "если что-то случится,\nне дайте им обвинить олю",
+          "bbox": [
+            0.3,
+            0.33,
+            0.5,
+            0.88
+          ],
+          "font": "hand",
+          "color": "#22306b",
+          "size": 0.046,
+          "rotate": -3,
+          "align": "left",
+          "opacity": 0.88
+        }
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "status": "draft",
+      "pick": "s1",
+      "note": "s1 — чёткие линейки и пустой лист; s2 бумага без линеек, s3 лист под углом. Лист в s1 начинается на x≈0.3 (спираль 0.1–0.28): рамка overlay сдвинута туда."
+    },
+    "ch02-mercury": {
+      "kind": "screen",
+      "template": "post",
+      "theme": "light",
+      "shows": "Оля шлёт новость местного канала: суд по Лиле в пятницу, и тут же — что на том же карьере погиб Денис Кравец. Игрок впервые слышит это имя.",
+      "clue": "имя «Денис Кравец» в тексте новости рядом с датой суда",
+      "data": {
+        "source": "Вишенки сегодня · канал",
+        "author": "Вишенки сегодня",
+        "title": "Суд по делу Лили Марченко — в пятницу в 10:00",
+        "text": "На том же карьере два года назад погиб Денис Кравец."
+      },
+      "status": "draft"
+    },
+    "ch02-watch": {
+      "kind": "screen",
+      "template": "post",
+      "shows": "Пост в общем чате посёлка: аноним «Соседский дозор» в 01:12 выставил скрин сообщения игрока — легенду раскрыли.",
+      "clue": "под постом — скрин твоего же сообщения (имя размыто, «Здравствуйте» узнаётся)",
+      "data": {
+        "source": "Вишенки · соседи",
+        "author": "Соседский дозор",
+        "time": "01:12",
+        "text": "Кто-то под видом опроса выспрашивает наших детей про карьер.",
+        "quote": {
+          "title": "скрин переписки",
+          "text": "Здравствуйте",
+          "blurred": "! Я Саша. Делаю учебный опрос: безопасность на вечеринках под открытым небом. Можно пару вопросов?"
+        }
+      },
+      "note": "имя и легенда у игрока свои ({alias}, cover student/honest) — во вложенном скрине всё после «Здравствуйте» размыто",
+      "status": "draft"
+    },
+    "ch03-beth-lily": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Соня показывает сообщение Лили из той ночи: в 00:52 Лиля писала про куртку Оли у костра.",
+      "clue": "время 00:52 и «её куртка у костра»",
+      "data": {
+        "title": "Лиля 💧",
+        "subtitle": "был(а) 24 июня",
+        "height": 240,
+        "messages": [
+          {
+            "text": "если оля спросит, её куртка у костра. пусть заберёт сама",
+            "time": "00:52"
+          }
+        ]
+      },
+      "status": "draft"
+    },
+    "ch05-frame1": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "shows": "Первый кадр видео с карты памяти: ночь два года назад, свет телефона, Денис стоит на уступе над водой карьера.",
+      "clue": "одинокая фигура мальчика на краю уступа, под ним чёрная вода",
+      "prompt": "A dark, grainy frame from a shaky phone video filmed at night inside an old flooded stone quarry. The camera stands on the quarry rim and looks across at a high rock ledge jutting out from the sheer quarry wall: a vertical drop of many metres of bare grey rock below the ledge, and far below, at the bottom of the frame, black still water. On the very tip of the high ledge stands a thin fifteen-year-old boy in a t-shirt and shorts, seen from the side, arms slightly out for balance, looking down at the water. The harsh white beam of a phone torch from behind the camera lights the ledge and the boy; the rest fades into darkness. Heavy digital noise, motion blur, blown-out highlights, crushed blacks, a low-quality phone video still from a few years ago.",
+      "boxes": [
+        {
+          "id": "ledge",
+          "desc": "the tip of a high rock ledge jutting out from a sheer quarry wall, lit by a phone torch",
+          "bbox": [
+            0.3,
+            0.25,
+            0.45,
+            0.85
+          ]
+        },
+        {
+          "id": "boy",
+          "desc": "a thin fifteen-year-old boy standing on the tip of the ledge, seen from the side, arms slightly out",
+          "bbox": [
+            0.12,
+            0.45,
+            0.34,
+            0.65
+          ]
+        },
+        {
+          "id": "drop",
+          "desc": "a sheer vertical drop of bare grey rock wall below the ledge",
+          "bbox": [
+            0.45,
+            0.25,
+            0.82,
+            0.85
+          ]
+        },
+        {
+          "id": "water",
+          "desc": "black still water far below at the bottom of the quarry",
+          "bbox": [
+            0.82,
+            0,
+            1,
+            1
+          ]
+        }
+      ],
+      "seeds": [
+        4,
+        5,
+        6
+      ],
+      "status": "draft",
+      "note": "попытка 1 (сиды 1–3): мальчик на плоском камне у самой воды — нет высоты. Попытка 2: уступ высоко в стене карьера, обрыв и вода внизу рамками. Выбран s4: край уступа, обрыв и вода внизу читаются; s5, s6 — уступ как площадка, меньше напряжения",
+      "pick": "s4"
+    },
+    "ch05-frame2": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "refs": [
+        "ch05-frame1"
+      ],
+      "shows": "Второй кадр: тот же уступ, сбоку у куста — Оля и Костя, лица видно. Оля этого и боится: она в кадре.",
+      "clue": "два подростка сбоку у куста, лица в свете телефона",
+      "prompt": "The same dark grainy night phone video frame of the same flooded quarry, the same high rock ledge jutting out of the sheer quarry wall, the same harsh phone torch light from behind the camera, the same black water far below. Change only this: the boy is gone from the tip of the ledge, and on the quarry rim at the upper left, beside a dark bush, stand two young teenagers close together — a girl with long hair in a hoodie and a boy in a dark jacket — their faces lit white by the torch, looking towards the edge. Keep the same camera angle, the same rock wall and drop, the same heavy noise and motion blur of a cheap phone video. Nobody else in the frame.",
+      "boxes": [
+        {
+          "id": "teens",
+          "desc": "a girl in a hoodie and a boy in a dark jacket standing close together on the quarry rim beside a dark bush, faces lit white by a phone torch",
+          "bbox": [
+            0.06,
+            0.03,
+            0.4,
+            0.42
+          ]
+        },
+        {
+          "id": "bush",
+          "desc": "a dark bush on the quarry rim",
+          "bbox": [
+            0.04,
+            0,
+            0.3,
+            0.16
+          ]
+        }
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "status": "draft",
+      "pick": "s3",
+      "note": "референс ch05-frame1 держит место во всех трёх. s2 отклонён: за подростками лишняя пара ног — третий человек в кадре, спойлер; s1 — у мальчика в руке фонарь, путает, кто снимает; s3 — двое у куста, чисто"
+    },
+    "ch05-frame3": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "shows": "Третий кадр: почти чёрный экран — камера опущена, только голоса. Игрок понимает, что главное на записи не видно, а слышно.",
+      "clue": "почти чёрный кадр, лишь серая кромка камня и блик",
+      "prompt": "An almost completely black frame from a phone video recorded at night: the camera is pointing at the ground and moving. Only a faint grey streak of rock at the lower edge and a small smeared highlight of a phone torch are visible; everything else is pure black with heavy digital noise and motion blur. No people visible.",
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "status": "draft",
+      "pick": "s3",
+      "note": "s3 — почти чёрный кадр, серая кромка камня и размытый блик; s1, s2 тоже годятся, s3 темнее"
+    },
+    "ch06-dan": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Майя показывает последнее сообщение брата: «она здесь. иду наверх» — была какая-то «она».",
+      "clue": "«она здесь» и время 23:41",
+      "data": {
+        "title": "Ден",
+        "height": 240,
+        "messages": [
+          {
+            "text": "она здесь. иду наверх",
+            "time": "23:41"
+          }
+        ]
+      },
+      "status": "draft"
+    },
+    "ch06-lily-maya": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Майя показывает сообщение Лили за полчаса до смерти: нашла запись, наверху стоял не один человек.",
+      "clue": "«там не все, кто стоял наверху» и 00:24, 24 июня",
+      "data": {
+        "title": "Лиля 💧",
+        "subtitle": "был(а) 24 июня",
+        "messages": [
+          {
+            "day": "24 июня"
+          },
+          {
+            "text": "я нашла запись той ночи. там не все, кто стоял наверху. завтра скажу кто. сначала поговорю с ней",
+            "time": "00:24"
+          }
+        ]
+      },
+      "status": "draft"
+    },
+    "ch07-request": {
+      "kind": "screen",
+      "template": "list",
+      "shows": "Тарас, админ чата посёлка, показывает заявку анонима «Соседский дозор»: адрес при вступлении — Береговая, 4.",
+      "clue": "ответ на вопрос об адресе: «Береговая, 4» и время заявки 01:04",
+      "data": {
+        "header": "Вишенки · соседи",
+        "headerSub": "заявки на вступление",
+        "title": "Соседский дозор",
+        "subtitle": "заявка · 01:04",
+        "noAvatars": true,
+        "rows": [
+          {
+            "name": "Береговая, 4",
+            "sub": "Вопрос 3 · Ваш адрес? (видит только админ)"
+          }
+        ],
+        "footer": "Заявка одобрена"
+      },
+      "note": "«одобрена» — Тарас её пропустил («Почему вы его пропустили?»)",
+      "status": "draft"
+    },
+    "ch08-phone": {
+      "kind": "photo",
+      "aspect": "3:4",
+      "shows": "С номера Лили присылают фото её телефона, будто найденного под камнями у старой лестницы.",
+      "clue": "телефон в прозрачном водонепроницаемом чехле на шнурке, экран в трещинах",
+      "prompt": "Night phone photo taken with the flash, looking down at rough grey stones at the foot of old stone steps by a quarry. In the centre lies a smartphone inside a clear plastic waterproof pouch for rowing, with a bright neon-green lanyard cord coiled beside it. The phone's black screen is shattered with a spiderweb of cracks visible through the clear plastic. Wet stones, a few dry leaves, harsh flash light falling off into darkness at the edges.",
+      "boxes": [
+        {
+          "id": "phone",
+          "desc": "a smartphone with a shattered black screen inside a clear plastic waterproof pouch",
+          "bbox": [
+            0.3,
+            0.25,
+            0.72,
+            0.75
+          ]
+        },
+        {
+          "id": "lanyard",
+          "desc": "a coiled neon-green lanyard cord on the stones",
+          "bbox": [
+            0.65,
+            0.3,
+            0.85,
+            0.8
+          ]
+        }
+      ],
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "status": "draft",
+      "pick": "s1",
+      "note": "s1 — паутина трещин видна сквозь чехол, на фоне старые каменные ступени («у старой лестницы»); s2 трещины слабее, s3 ступени тёмные"
+    },
+    "ch09-bill": {
+      "kind": "screen",
+      "template": "list",
+      "theme": "light",
+      "shows": "Мама Лили присылает детализацию номера за ту ночь: кому и когда Лили писала, и звонок в 01:19 на …314.",
+      "clue": "последняя строка — исходящий вызов 01:19, 0:14, на …314",
+      "data": {
+        "title": "Детализация",
+        "subtitle": "067 342 18 59 · 24 июня",
+        "noAvatars": true,
+        "rows": [
+          {
+            "name": "СМС → …188",
+            "right": "00:24"
+          },
+          {
+            "name": "СМС → …650",
+            "right": "00:41"
+          },
+          {
+            "name": "СМС → …650",
+            "right": "00:43"
+          },
+          {
+            "name": "СМС → …650",
+            "right": "00:46"
+          },
+          {
+            "name": "СМС → …777",
+            "right": "00:52"
+          },
+          {
+            "name": "СМС → …777",
+            "right": "00:53"
+          },
+          {
+            "name": "СМС → …314",
+            "right": "00:55"
+          },
+          {
+            "name": "Исходящий вызов → …314",
+            "sub": "0:14",
+            "right": "01:19"
+          }
+        ]
+      },
+      "status": "draft"
+    },
+    "ch09-beth-lily": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Соня показывает второе сообщение Лили, которое тогда скрыла: Оля её заблокировала.",
+      "clue": "«она меня заблокировала» и 00:53 — сразу под сообщением 00:52",
+      "data": {
+        "title": "Лиля 💧",
+        "subtitle": "был(а) 24 июня",
+        "messages": [
+          {
+            "text": "если оля спросит, её куртка у костра. пусть заберёт сама",
+            "time": "00:52"
+          },
+          {
+            "text": "она меня заблокировала. глупая. скажи ей что я не злюсь",
+            "time": "00:53"
+          }
+        ]
+      },
+      "note": "00:52 уже было в ch03 — повтор держит связь двух сцен",
+      "status": "draft"
+    },
+    "ch10-maya-voice": {
+      "kind": "screen",
+      "template": "post",
+      "shows": "Майя выложила дорожку с уступа и назвала голос: Ника Гаврилюк.",
+      "clue": "дорожка и подпись «Это голос Ники Гаврилюк»",
+      "data": {
+        "author": "Майя Кравец",
+        "text": "Это голос Ники Гаврилюк",
+        "audio": {}
+      },
+      "status": "draft"
+    },
+    "ch10-maya-jess": {
+      "kind": "screen",
+      "template": "post",
+      "shows": "Майя выложила пост без записи: Ника стояла наверху, когда погиб её брат.",
+      "clue": "имя Ники Гаврилюк в посте",
+      "data": {
+        "author": "Майя Кравец",
+        "text": "Ника Гаврилюк стояла наверху, когда погиб мой брат"
+      },
+      "status": "draft"
+    },
+    "ch10-maya-count": {
+      "kind": "screen",
+      "template": "post",
+      "shows": "Майя выложила дорожку с уступа с вопросом без имени: «Кто считает до трёх?»",
+      "clue": "дорожка и подпись «Кто считает до трёх?»",
+      "data": {
+        "author": "Майя Кравец",
+        "text": "Кто считает до трёх?",
+        "audio": {}
+      },
+      "status": "draft"
+    },
+    "ch10-maya-many": {
+      "kind": "screen",
+      "template": "post",
+      "shows": "Майя выложила пост без записи и без имени: наверху был не один человек.",
+      "clue": "«наверху стоял не один человек»",
+      "data": {
+        "author": "Майя Кравец",
+        "text": "Два года назад наверху стоял не один человек"
+      },
+      "status": "draft"
+    },
+    "ch10-lily-ellie": {
+      "kind": "screen",
+      "template": "chat",
+      "shows": "Финал: Оля видит сообщения Лили, которые не дошли из-за блокировки — Лиля не злилась.",
+      "clue": "три сообщения Лили и «Не доставлено»",
+      "data": {
+        "title": "Оля",
+        "messages": [
+          {
+            "day": "24 июня"
+          },
+          {
+            "text": "оля",
+            "time": "00:41",
+            "out": true
+          },
+          {
+            "text": "не будь дурой",
+            "time": "00:43",
+            "out": true
+          },
+          {
+            "text": "разблокируй. я не злюсь",
+            "time": "00:46",
+            "out": true,
+            "fail": true
+          }
+        ]
+      },
+      "note": "скрин с телефона Лили: её сообщения справа. В facts.md 00:43 длиннее («карта будет в твоей куртке») — на скрине ровно строка ink",
+      "status": "draft"
+    }
+  }
+}

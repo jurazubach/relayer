@@ -46,6 +46,8 @@ metadata:
    агент `cold-reader` на каждую точку шага 3. Не в фоне: вызовы одного сообщения и так идут параллельно, а права
    скилла на команды живут до конца хода — после фонового агента `merge-findings` получит отказ. Каждый ответ дословно — Write в папку прогона: `lens-<линза>.md`, `cold-<…>.md`
    (Write отказан — сводишь сам по [references/priority.md](references/priority.md) и говоришь, что без `merge-findings`).
+   Есть строки `#photo` (`npm run -s story:images -- <id>`) — линза «картинки» в главной сессии: `story-images` через
+   Skill, только находки по его `choosing.md`; ответ — `lens-story-images.md` в ту же папку прогона.
 5. **QA «шесть списков».** `node ${CLAUDE_SKILL_DIR}/scripts/qa-six.mjs --story <id>`, по списку — `--list <имя>`,
    по контакту — `--contact <id>`. Сверь кандидатов с узлами, запиши `qa-six.md` в папку прогона: шесть
    разделов, пустой — «проверено, нет» ([references/qa-six.md](references/qa-six.md)). Не в `--plan`.

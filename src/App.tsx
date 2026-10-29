@@ -132,6 +132,7 @@ function GameShell({
             onOpen={game.openChat}
             onDebug={() => setDebug(true)}
             paywall={paywall(false)}
+            images={story.images}
           />
         ) : (
           <ChatsScreen

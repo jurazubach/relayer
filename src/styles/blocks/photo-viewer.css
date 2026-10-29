@@ -1,0 +1,71 @@
+/* Блок photo-viewer — фото на весь экран поверх переписки, как в мессенджере. */
+.photo-viewer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--layer-overlay);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-page);
+  animation: rise var(--dur-fast) ease-out;
+}
+
+.photo-viewer__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: calc(var(--safe-top) + var(--space-2)) var(--space-2) var(--space-2);
+  color: var(--color-fg);
+}
+
+.photo-viewer__title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.photo-viewer__sender {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.photo-viewer__time {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.photo-viewer__stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding-bottom: var(--safe-bottom);
+  overflow: hidden;
+}
+
+/* приближено: картинка в настоящую величину, двигается прокруткой и щипком */
+.photo-viewer__stage--zoomed {
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow: auto;
+}
+
+.photo-viewer__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+  touch-action: pinch-zoom;
+}
+
+.photo-viewer__img--zoomed {
+  max-width: none;
+  max-height: none;
+  width: 200%;
+  margin: auto;
+  cursor: zoom-out;
+}

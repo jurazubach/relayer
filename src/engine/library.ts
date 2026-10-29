@@ -1,5 +1,5 @@
 import { parseStoryFile } from './bundle';
-import { plural, type Mode } from './engine';
+import { imageName, plural, type Mode } from './engine';
 import { FLAGS } from './flags';
 import { readProgress, type Progress } from './progress';
 import type { Story, StoryFile } from './story';
@@ -20,6 +20,12 @@ type StoryMeta = Omit<StoryFile, 'ink' | 'includes'>;
 const metas = import.meta.glob<StoryMeta>('../stories/*/meta.json', { eager: true, import: 'default' });
 const inks = import.meta.glob<string>('../stories/*/**/*.ink', { eager: true, query: '?raw', import: 'default' });
 const files = import.meta.glob<StoryFile>('../stories/*.json', { eager: true, import: 'default' });
+// картинки фото-сообщений: Vite кладёт их в сборку отдельными файлами и отдаёт адреса
+const pictures = import.meta.glob<string>('../stories/*/images/*.{webp,png,jpg,jpeg,gif,avif}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
 const MAIN = 'story.ink';
 
@@ -30,11 +36,17 @@ function fromFolder(alias: string, meta: StoryMeta): Story {
   const prefix = `../stories/${alias}/`;
   const own = Object.entries(inks).filter(([path]) => path.startsWith(prefix));
   const includes = Object.fromEntries(own.map(([path, text]) => [path.slice(prefix.length), text]).filter(([name]) => name !== MAIN));
+  const images = Object.fromEntries(
+    Object.entries(pictures)
+      .filter(([path]) => path.startsWith(prefix + 'images/'))
+      .map(([path, url]) => [imageName(path.slice(prefix.length + 'images/'.length)), url]),
+  );
   return {
     ...(meta as Story),
     id: meta.id || alias,
     ink: own.find(([path]) => path === prefix + MAIN)?.[1] ?? '',
     includes,
+    ...(Object.keys(images).length ? { images } : {}),
     origin: 'builtin' as const,
   };
 }

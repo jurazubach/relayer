@@ -44,6 +44,12 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       return { error: 'Поле "includes" — объект { "ch01.ink": "текст главы" }' };
     }
     if (!file.title?.trim()) return { error: 'В истории нет названия (поле "title")' };
+    if (
+      file.images != null &&
+      (typeof file.images !== 'object' || Object.values(file.images).some((u) => typeof u !== 'string' || !u.startsWith('data:image/')))
+    ) {
+      return { error: 'Поле "images" — объект { "ch01-note": "data:image/webp;base64,…" }: так его собирает story:pack' };
+    }
     if (badFreeChapters(file.free_chapters)) {
       return { error: 'Поле "free_chapters" — целое число от 1: сколько первых глав бесплатно' };
     }
@@ -91,6 +97,7 @@ export function parseStoryFile(fileName: string, text: string): ParseResult {
       cover: file.cover ?? DEFAULT_COVER,
       ink,
       includes,
+      ...(file.images && Object.keys(file.images).length ? { images: file.images } : {}),
       origin: 'upload',
     },
   };
@@ -102,8 +109,23 @@ export function toStoryFile(story: Story): string {
   return JSON.stringify(file, null, 2);
 }
 
-export function downloadStory(story: Story) {
-  const blob = new Blob([toStoryFile(story)], { type: 'application/json' });
+/** Адрес картинки → data:-адрес: у встроенной истории картинки лежат файлами сборки, а выгрузка — один файл. */
+async function inlineImage(url: string): Promise<string> {
+  if (url.startsWith('data:')) return url;
+  const blob = await (await fetch(url)).blob();
+  return new Promise((done, fail) => {
+    const reader = new FileReader();
+    reader.onload = () => done(String(reader.result));
+    reader.onerror = () => fail(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+export async function downloadStory(story: Story) {
+  const images = story.images
+    ? Object.fromEntries(await Promise.all(Object.entries(story.images).map(async ([name, url]) => [name, await inlineImage(url)])))
+    : undefined;
+  const blob = new Blob([toStoryFile({ ...story, ...(images ? { images } : {}) })], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `${story.id}.story.json`;

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<!-- Скрины для фото-сообщений: render.mjs подставляет бриф вместо DATA и снимает #shot.
+     Мессенджер без марки: никаких логотипов и узнаваемых приложений — всё в историях вымышлено. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Neucha&family=Marck+Script&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0e1015; --surface: #1a1d24; --line: #2a2f39; --fg: #eef0f3; --muted: #8b93a1;
+    --in: #23272f; --out: #3d7bff; --out-fg: #fff; --accent: #5b8cff; --danger: #ff6b6b;
+    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+  .light {
+    --bg: #ffffff; --surface: #f2f3f5; --line: #e2e4e8; --fg: #111318; --muted: #7a818c;
+    --in: #eceef1; --out: #3d7bff; --out-fg: #fff; --accent: #2f6bff;
+  }
+  body { background: #000; font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  #shot { width: 390px; display: flex; flex-direction: column; background: var(--bg); color: var(--fg); overflow: hidden; }
+  /* снизу полоса под метку времени: в пузыре игры она лежит в правом нижнем углу картинки и закрыла бы последнюю строку */
+  #shot:not(.overlay) { padding-bottom: 30px; }
+
+  .status { display: flex; justify-content: space-between; align-items: center; padding: 10px 22px 4px; font-size: 15px; font-weight: 600; }
+  .status__icons { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+  .battery { width: 24px; height: 11px; border: 1.5px solid var(--fg); border-radius: 3px; position: relative; opacity: .9; }
+  .battery::after { content: ''; position: absolute; inset: 1.5px; right: auto; width: var(--charge, 60%); background: var(--fg); border-radius: 1px; }
+
+  .head { display: flex; align-items: center; gap: 10px; padding: 8px 14px 10px; border-bottom: 1px solid var(--line); }
+  .head__back { font-size: 26px; color: var(--accent); line-height: 1; width: 16px; }
+  .head__title { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .head__name { font-size: 16px; font-weight: 600; }
+  .head__sub { font-size: 12px; color: var(--muted); }
+  .ava { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #fff; flex: none; }
+
+  /* chat */
+  /* сообщения прижаты к низу, как в настоящем чате: высоту скрина задаёт data.height */
+  .msgs { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; padding: 12px 10px 14px; }
+  .day { align-self: center; font-size: 12px; color: var(--muted); background: var(--surface); padding: 3px 10px; border-radius: 10px; margin: 6px 0; }
+  .msg { max-width: 78%; padding: 7px 11px 6px; border-radius: 18px; font-size: 16px; line-height: 1.32; background: var(--in); align-self: flex-start; display: flex; flex-wrap: wrap; column-gap: 8px; align-items: flex-end; }
+  .msg--out { align-self: flex-end; background: var(--out); color: var(--out-fg); }
+  .msg__from { width: 100%; font-size: 13px; font-weight: 600; color: var(--accent); }
+  .msg__time { margin-left: auto; font-size: 11px; opacity: .6; font-variant-numeric: tabular-nums; }
+  .msg__fail { align-self: flex-end; font-size: 12px; color: var(--danger); margin: -1px 6px 4px; }
+
+  /* note */
+  .note { padding: 6px 20px 26px; }
+  .note__app { color: var(--accent); font-size: 16px; padding: 4px 0 14px; }
+  .note__edited { color: var(--muted); font-size: 13px; text-align: center; padding-bottom: 14px; }
+  .note__title { font-size: 26px; font-weight: 700; padding-bottom: 8px; }
+  .note__text { font-size: 17px; line-height: 1.42; white-space: pre-wrap; }
+
+  /* list */
+  .list__title { padding: 10px 18px 2px; font-size: 22px; font-weight: 700; }
+  .list__sub { padding: 0 18px 10px; color: var(--muted); font-size: 13px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 9px 18px; border-bottom: 1px solid var(--line); }
+  .row__main { flex: 1; min-width: 0; }
+  .row__name { font-size: 16px; }
+  .row__sub { font-size: 13px; color: var(--muted); }
+  .row__right { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+  .row--dim { opacity: .38; }
+  .list__footer { text-align: center; color: var(--muted); font-size: 13px; padding: 14px 18px 18px; }
+
+  /* post */
+  .post { padding: 14px 16px 16px; }
+  .post__source { font-size: 13px; color: var(--muted); padding-bottom: 10px; }
+  .post__who { display: flex; gap: 10px; align-items: center; padding-bottom: 10px; }
+  .post__author { font-weight: 600; font-size: 15px; }
+  .post__time { font-size: 12px; color: var(--muted); }
+  .post__title { font-size: 21px; font-weight: 700; line-height: 1.25; padding-bottom: 8px; }
+  .post__text { font-size: 16px; line-height: 1.4; white-space: pre-wrap; }
+  /* вложенный скрин сообщения: blurred — то, что у игроков разное (имя, легенда), размыто */
+  .quote { margin-top: 12px; padding: 10px 12px 12px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
+  .quote__title { font-size: 13px; font-weight: 600; color: var(--muted); padding-bottom: 8px; }
+  .quote .msg { max-width: 92%; }
+  .blur { filter: blur(4px); }
+  .post__img { width: 100%; border-radius: 12px; margin-top: 10px; display: block; }
+  .audio { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 10px 12px; border-radius: 14px; background: var(--surface); }
+  .audio__play { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; color: #fff; font-size: 13px; flex: none; }
+  .audio__wave { flex: 1; display: flex; align-items: center; gap: 2px; height: 28px; }
+  .audio__wave i { flex: 1; background: var(--muted); border-radius: 1px; }
+  .audio__dur { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .post__stats { font-size: 13px; color: var(--muted); padding-top: 12px; }
+
+  /* overlay: фото FLUX + текст поверх (почерк, надпись) — буквы точные, а не от модели */
+  #shot.overlay { position: relative; width: auto; background: #000; }
+  #shot.overlay img { display: block; }
+  .layer { position: absolute; display: flex; align-items: center; line-height: 1.15; white-space: pre-wrap; transform-origin: center; mix-blend-mode: multiply; }
+  .f-hand { font-family: 'Caveat', 'Marck Script', cursive; font-weight: 500; }
+  .f-neat { font-family: 'Neucha', 'Caveat', cursive; }
+  .f-script { font-family: 'Marck Script', 'Caveat', cursive; }
+  .f-print { font-family: var(--font); font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="shot"></div>
+<script>
+const D = /*DATA*/null;
+const $ = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const COLORS = ['#e8833a', '#3d7bff', '#2fb380', '#c25bd6', '#e05a6a', '#c9a227', '#4bb3c4', '#8a8f98'];
+const colorOf = (s) => COLORS[[...String(s)].reduce((a, c) => a + c.codePointAt(0), 0) % COLORS.length];
+const ava = (name, size) => { const a = $('div', 'ava', (name || '?').trim()[0].toUpperCase()); a.style.background = colorOf(name); if (size) { a.style.width = a.style.height = size + 'px'; } return a; };
+const shot = document.getElementById('shot');
+const d = D.data || {};
+
+function status(time) {
+  const s = $('div', 'status');
+  s.append($('span', '', time));
+  const icons = $('span', 'status__icons');
+  icons.append($('span', '', '▂▄▆'), $('span', 'battery'));
+  s.append(icons);
+  shot.append(s);
+}
+
+function head(title, sub, back = true) {
+  const h = $('div', 'head');
+  if (back) h.append($('span', 'head__back', '‹'));
+  const t = $('div', 'head__title');
+  t.append($('span', 'head__name', title));
+  if (sub) t.append($('span', 'head__sub', sub));
+  h.append(t, ava(title));
+  shot.append(h);
+}
+
+const build = {
+  chat() {
+    if (d.status) status(d.status);
+    if (d.title) head(d.title, d.subtitle);
+    const box = $('div', 'msgs');
+    for (const m of d.messages || []) {
+      if (m.day) { box.append($('div', 'day', m.day)); continue; }
+      const b = $('div', m.out ? 'msg msg--out' : 'msg');
+      if (m.from) b.append($('span', 'msg__from', m.from));
+      b.append($('span', '', m.text));
+      if (m.time && !d.hideTimes) b.append($('span', 'msg__time', m.time));
+      box.append(b);
+      if (m.fail) box.append($('div', 'msg__fail', m.fail === true ? 'Не доставлено' : m.fail));
+    }
+    shot.append(box);
+  },
+  note() {
+    if (d.status) status(d.status);
+    const n = $('div', 'note');
+    n.append($('div', 'note__app', '‹ ' + (d.app || 'Заметки')));
+    if (d.edited) n.append($('div', 'note__edited', d.edited));
+    if (d.title) n.append($('div', 'note__title', d.title));
+    n.append($('div', 'note__text', d.text || ''));
+    shot.append(n);
+  },
+  list() {
+    if (d.status) status(d.status);
+    if (d.header) head(d.header, d.headerSub);
+    if (d.title) shot.append($('div', 'list__title', d.title));
+    if (d.subtitle) shot.append($('div', 'list__sub', d.subtitle));
+    for (const r of d.rows || []) {
+      const row = $('div', r.dim ? 'row row--dim' : 'row');
+      if (!d.noAvatars) row.append(ava(r.avatar || r.name, 38));
+      const main = $('div', 'row__main');
+      main.append($('div', 'row__name', r.name));
+      if (r.sub) main.append($('div', 'row__sub', r.sub));
+      row.append(main);
+      if (r.right) row.append($('div', 'row__right', r.right));
+      shot.append(row);
+    }
+    if (d.footer) shot.append($('div', 'list__footer', d.footer));
+  },
+  post() {
+    if (d.status) status(d.status);
+    const p = $('div', 'post');
+    if (d.source) p.append($('div', 'post__source', d.source));
+    const who = $('div', 'post__who');
+    const names = $('div');
+    names.append($('div', 'post__author', d.author || ''));
+    if (d.time) names.append($('div', 'post__time', d.time));
+    who.append(ava(d.author || '?', 40), names);
+    p.append(who);
+    if (d.title) p.append($('div', 'post__title', d.title));
+    if (d.text) p.append($('div', 'post__text', d.text));
+    if (d.quote) {
+      const q = $('div', 'quote');
+      if (d.quote.title) q.append($('div', 'quote__title', d.quote.title));
+      const m = $('div', d.quote.out === false ? 'msg' : 'msg msg--out');
+      const t = $('span', '', d.quote.text || '');
+      if (d.quote.blurred) t.append($('span', 'blur', d.quote.blurred));
+      m.append(t);
+      q.append(m);
+      q.style.display = 'flex'; q.style.flexDirection = 'column';
+      p.append(q);
+    }
+    if (D.imageSrc) { const img = $('img', 'post__img'); img.src = D.imageSrc; p.append(img); }
+    if (d.audio) {
+      const a = $('div', 'audio');
+      a.append($('div', 'audio__play', '▶'));
+      const w = $('div', 'audio__wave');
+      for (let i = 0; i < 42; i++) { const bar = $('i'); bar.style.height = (20 + 80 * Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.45))) + '%'; w.append(bar); }
+      a.append(w);
+      if (d.audio.duration) a.append($('span', 'audio__dur', d.audio.duration));
+      p.append(a);
+    }
+    if (d.stats) p.append($('div', 'post__stats', d.stats));
+    shot.append(p);
+  },
+  overlay() {
+    shot.className = 'overlay';
+    const img = $('img');
+    img.src = D.imageSrc;
+    img.width = D.width; img.height = D.height;
+    shot.append(img);
+    for (const o of D.overlay || []) {
+      const [y0, x0, y1, x1] = o.bbox;
+      const l = $('div', 'layer f-' + (o.font || 'hand'), o.text);
+      Object.assign(l.style, {
+        left: x0 * D.width + 'px', top: y0 * D.height + 'px', width: (x1 - x0) * D.width + 'px', height: (y1 - y0) * D.height + 'px',
+        color: o.color || '#1d2a5a', fontSize: (o.size || 0.06) * D.height + 'px', opacity: o.opacity ?? 0.9,
+        justifyContent: o.align === 'center' ? 'center' : o.align === 'right' ? 'flex-end' : 'flex-start',
+        transform: `rotate(${o.rotate || 0}deg)`,
+      });
+      shot.append(l);
+    }
+  },
+};
+
+if (D.theme === 'light') shot.classList.add('light');
+if (d.height) shot.style.minHeight = d.height + 'px';
+build[D.kind === 'photo' ? 'overlay' : D.template]();
+window.__ready = Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => null))]);
+</script>
+</body>
+</html>

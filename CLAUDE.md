@@ -27,6 +27,7 @@ npm run story:diff          # метрики и реплики истории д
 npm run story:rule          # текст свода по ID: правило R-NN, проверка C-NN, решение автора A-NN
 npm run story:status        # где история в цикле: docs/stories/<id>/STATUS.md (--all)
 npm run story:cold-read     # холодное чтение: видимая переписка до узла для claude -p из пустого каталога
+npm run story:images        # картинки #photo: где стоят, бриф и файл, чего не хватает (--todo, --check, --name)
 npm run test:story-cmd      # самопроверка команд story:*
 npm run skills:test         # мутанты docs/lab/mutants: ловит ли story:lint (и скилл через --skill) дефекты своей зоны
 npm run test:lab:mutants    # самопроверка skills:test: сборка мутантов, ключ, вердикт
@@ -43,7 +44,7 @@ npm run test:lab:triggers   # самопроверка lab:triggers
 npm run test:hooks          # самопроверка хуков .claude/settings.json (scripts/hooks)
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary && npm run kb:clean -- --verify && node .claude/skills/story-kb/scripts/kb-index.mjs --check && node .claude/skills/story-kb/scripts/kb-contradictions.mjs --check && npm run test:hooks`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run story:images -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary && npm run kb:clean -- --verify && node .claude/skills/story-kb/scripts/kb-index.mjs --check && node .claude/skills/story-kb/scripts/kb-contradictions.mjs --check && npm run test:hooks`.
 `kb:clean -- --verify` — после `story:coverage`: в свежем клоне `docs/books/_clean/` нет, её собирает `story:coverage`.
 Тест срабатывания (`lab:triggers`) в проверку не входит: он гоняет `claude -p` — по скиллу при правке его описания или таблицы «симптом → скилл».
 
@@ -103,15 +104,16 @@ src/engine/useRouter.ts    маршруты (home | story | game) с запом�
 src/engine/useLibrary.ts   список историй, загрузка, удаление, сброс прогресса
 src/engine/useGame.ts      одна игровая сессия: компиляция, тиканье, уведомления
 src/engine/index.ts        бочка: ui импортирует только отсюда («../engine»)
-src/ui/                    HomeScreen, StoryTile, StoryScreen, ChatsScreen, ChatScreen,
+src/ui/                    HomeScreen, StoryTile, StoryScreen, ChatsScreen, ChatScreen, PhotoViewer,
                            DebugSheet, Notice, ErrorScreen, Avatar, Icons
 src/styles/                tokens.css, base.css, blocks/*.css
-src/stories/<алиас>/        истории: meta.json + story.ink + ch01.ink…; новая папка = новая история
+src/stories/<алиас>/        истории: meta.json + story.ink + ch01.ink…; новая папка = новая история;
+                           images/<имя>.webp — картинки фото-сообщений #photo:имя
 examples/demo.story.json   пример истории одним файлом (шаблон для авторов)
 examples/e2e.story.json    фикстура e2e: тесты и снимки идут на ней, а не на историях каталога
 docs/capabilities.json     реестр возможностей чата
-docs/stories/<id>/          состояние истории в цикле: STATUS.md, decisions.md (D-NN), ideas.md, facts.md, plans/, reviews/, playtests/
-.claude/skills/<имя>/       21 скилл: SKILL.md, references/, scripts/*.mjs (раздел «Агенты и скиллы»)
+docs/stories/<id>/          состояние истории в цикле: STATUS.md, decisions.md (D-NN), ideas.md, facts.md, images.json (брифы картинок), plans/, reviews/, playtests/
+.claude/skills/<имя>/       22 скилла: SKILL.md, references/, scripts/*.mjs (раздел «Агенты и скиллы»)
 .claude/agents/*.md         4 агента: story-architect, chapter-writer, story-auditor, cold-reader
 docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
 docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
@@ -153,7 +155,7 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 |---|---|---|
 | `src/stories/the-number/` | THE NUMBER (без серии) — скрыта | 25 |
 | `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно — скрыта | 40 |
-| `src/stories/chuzhoy-golos/` | Векскомб · Чужой голос | 40 |
+| `src/stories/chuzhoy-golos/` | Вишенки · Чужой голос | 40 |
 
 Скрытые (`hidden: true` в `meta.json`, решение автора 28.10: в работе только «Чужой голос») не видны
 на главном и не едут в `dist/stories/` на Pages; открываются по `?story=<id>`, а `story:*`, линт и тесты
@@ -179,6 +181,12 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 - в файле главы до первого `===` — только комментарии и `VAR`; `INCLUDE` — только из главного файла;
 - функции и общие узлы до первой главы — в `common.ink`.
 `npm run story:pack -- --check` это проверяет.
+
+Картинки фото-сообщений — `src/stories/<алиас>/images/<имя>.webp` (png, jpg тоже), в сценарии — строка
+`описание #photo:имя`: текст строки остаётся описанием (заглушка, пока файла нет, и `alt`). Каталог подхватывает
+папку сам, `story:pack` кладёт картинки в `.json` полем `"images"` (data:-адреса), `story:unpack` раскладывает обратно.
+Брифы (что на кадре, промпт FLUX, шаблон скрина) — `docs/stories/<id>/images.json`, делает их скилл `story-images`;
+рабочие файлы генерации — `images-work/` (не в git).
 
 Если рядом лежат папка и `.json` с одним id, источник — папка, а `.json` — копия от `story:pack`:
 так считают и сайт, и `check:story`, и `scripts/lib`.
@@ -211,8 +219,8 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 **Скиллы** — `.claude/skills/<имя>/`: `SKILL.md` (ядро), `references/` (развилки, приёмы, ремонт `fixes/F-NN-*.md`,
 `explain.md`), `scripts/*.mjs` — обёртки над `scripts/lib`, у каждого `--help`, запуск
 `node .claude/skills/<имя>/scripts/<скрипт>.mjs`.
-- **Входы** (8, видны в меню `/`): `story-desk`, `story-brainstorm`, `story-branch`, `story-review`, `story-fix`,
-  `story-playtest`, `story-release`, `story-kb`.
+- **Входы** (9, видны в меню `/`): `story-desk`, `story-brainstorm`, `story-branch`, `story-review`, `story-fix`,
+  `story-playtest`, `story-release`, `story-kb`, `story-images`.
 - **Модули** (13, `user-invocable: false`): создание — `story-core`, `story-plan`, `chapter-write`; линзы ревью —
   `story-opening`, `story-pace`, `story-pauses`, `story-time`, `story-choices`, `story-endings`, `story-cast`,
   `story-voice`, `story-continuity`, `story-mystery`. Их вызывают входы или главная сессия через `Skill` по таблице
@@ -284,6 +292,7 @@ docs/style.md      код-стайл историй: §1 короткая вер
 | почини, одобряю (кнопки, финал, паузы — тема любая), примени одобренные правки, возьми вариант Б, покажи реплики до и после, не сломалось ли что, сократи до N минут | `story-fix` |
 | что говорит база про…, откуда правило, книги спорят — кто прав, почему не как в книге, разбери сцену как наставник, дай упражнение | `story-kb` |
 | можно выпускать, проверь перед релизом, затравки не спойлерят, два времени на карточке, граница на крючке и честна ли перед выпуском, поднять ли ревизию после правки, собери .json для тестеров | `story-release` |
+| вместо картинки заглушка, нужна ли тут картинка, напиши промпт для фото, сгенерируй через FLUX, собери скрин переписки, картинка не читается в пузыре | `story-images` |
 
 ## Реестр возможностей
 
@@ -312,7 +321,7 @@ docs/style.md      код-стайл историй: §1 короткая вер
   `thread-<id>`, `chat`, `notice`, `notices`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `choice-log`, `choice-log-export`,
   `skip-next`, `revision-notice`, `revision-notice-ok`, `tile-free-<id>`, `free-chapters`,
-  `paywall`, `paywall-buy`, `paywall-stub`, `chapters-open`.
+  `paywall`, `paywall-buy`, `paywall-stub`, `chapters-open`, `photo`, `photo-viewer`, `photo-viewer-close`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).
   И `width: 100%` у `.phone` не убирать: с автоотступами в flex-колонке он ужимается

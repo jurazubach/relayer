@@ -14,6 +14,7 @@
 | `story:rule <ID>` | текст правила, проверки, решения или приёма из свода с порогами `thresholds.json`, владельцем (`owners.md`) и отменами (`superseded.md`) |
 | `story:status [--all]` | `docs/stories/<id>/STATUS.md` и `decisions.md`: активная история, шаг, три последних решения; `--all` — таблица |
 | `story:cold-read` | видимая переписка до узла для холодного читателя в режимах opening / return / click / guess / voices; `--ask` — сам читатель через `claude -p` с проверкой изоляции, `--profile` — профиль читателя, `--last N` — срез |
+| `story:images` | картинки фото-сообщений: строки `#photo`, брифы `docs/stories/<id>/images.json`, файлы `src/stories/<id>/images/`; состояния ready / todo / missing / unused, `--todo` — контекст сцены для брифа, `--name` — одна картинка, `--check` — код 1 на ошибках |
 
 Самопроверка — `npm run test:story-cmd` (синтетика в `fixtures/`, состояние историй в `fixtures/stories/`,
 три истории каталога и одна ревизия git; `cold-read --ask` не вызывается).

@@ -1,0 +1,21 @@
+#!/bin/zsh
+# Запускает команду под общим замком GPU: одна модель картинок за раз (две не влезают в память и портят замеры).
+# Честная очередь: у каждого ждущего — файл-билет, первым идёт старший; замок — папка. Очередь общая с другими
+# проектами на этой машине (spine-forge), поэтому параллельная генерация там подождёт нас, а мы — её.
+#   gpu-run <команда> [аргументы…]
+# Папка очереди: $FLUX_GPU_QUEUE (по умолчанию ~/.cache/flux-gpu). Билет мёртвого процесса удаляется сам; замок
+# убитого процесса — `rmdir <очередь>/lock`, проверив, что ничего не генерируется (pgrep -fl "flux3|run_batch").
+Q=${FLUX_GPU_QUEUE:-$HOME/.cache/flux-gpu}; LOCK=$Q/lock; T=$Q/tickets
+mkdir -p "$T"
+TICKET="$T/$(perl -MTime::HiRes=time -e 'printf "%017.6f", time')-$$"
+touch "$TICKET"
+trap 'rm -f "$TICKET"' EXIT INT TERM
+while true; do
+  for t in "$T"/*(N); do kill -0 "${t##*-}" 2>/dev/null || rm -f "$t"; done
+  first=("$T"/*(N)); [[ "${first[1]}" == "$TICKET" ]] && mkdir "$LOCK" 2>/dev/null && break
+  sleep 2
+done
+trap 'rmdir "$LOCK"; rm -f "$TICKET"' EXIT INT TERM
+rm -f "$TICKET"
+echo "[gpu-run] start $(date +%H:%M:%S): $*" >&2
+"$@"

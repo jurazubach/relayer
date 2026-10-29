@@ -1,0 +1,8 @@
+#!/bin/zsh
+# Запускает скрипт Python интерпретатором установленного flux3-mlx (в нём mlx, numpy, scipy, Pillow),
+# изолированно (-I): из текущей папки ничего не подхватится.
+#   fluxpy <script.py> [аргументы…]
+# Другой интерпретатор — $FLUX_PYTHON. Перенесено из rubicon-generating-images-with-flux (spine-forge).
+PY=${FLUX_PYTHON:-$(head -1 "$(command -v flux3-mlx)" 2>/dev/null | sed 's/^#!//')}
+[[ -x "$PY" ]] || { echo "fluxpy: flux3-mlx не установлен (интерпретатора нет) — references/setup.md" >&2; exit 2; }
+exec "$PY" -I "$@"

@@ -8,6 +8,11 @@ export interface Msg {
   kind: Kind;
   text: string;
   at: number;
+  /**
+   * Картинка фото-сообщения: имя файла из папки images/ истории без расширения (#photo:имя).
+   * Текст строки тогда — описание картинки: подпись-заглушка, пока файла нет, и alt.
+   */
+  image?: string;
 }
 
 /**
@@ -44,6 +49,7 @@ interface Pending {
   thread: string;
   kind: Kind;
   text: string;
+  image?: string;
   delayMs: number;
   delayDone: number;
   gapMs: number;
@@ -202,6 +208,12 @@ function parseDelay(value: string): number {
 }
 
 /** Сколько человек «набирает» сообщение. Примерно 20 знаков в секунду, как на телефоне. */
+/** Сообщение одной строкой для списка чатов и уведомления: у фото с картинкой — «Фото», как в мессенджере. */
+export const previewText = (m: Pick<Msg, 'text' | 'image'>) => (m.image ? '📷 Фото' : m.text);
+
+/** #photo:ch01-note.webp и #photo:ch01-note — одна картинка: в истории она ищется по имени без расширения. */
+export const imageName = (value: string) => value.trim().replace(/\.(webp|png|jpe?g|gif|avif)$/i, '');
+
 function typingTime(kind: Kind, text: string): number {
   if (kind === 'sys') return 0;
   if (kind === 'out') return 0;
@@ -398,6 +410,7 @@ export class Engine {
       let delay = 0;
       const unlock: string[] = [];
       let chapter: string | undefined;
+      let image: string | undefined;
       const renames: [string, string][] = [];
       for (const raw of tags) {
         const [k, ...rest] = raw.split(':');
@@ -406,7 +419,7 @@ export class Engine {
         if (key === 'from') this.speaker = value;
         else if (key === 'me') { kind = 'out'; thread = value; }
         else if (key === 'sys') { kind = 'sys'; if (value) thread = value; }
-        else if (key === 'photo') kind = 'photo';
+        else if (key === 'photo') { kind = 'photo'; if (value) image = imageName(value); }
         else if (key === 'delay') delay += parseDelay(value);
         else if (key === 'unlock') unlock.push(value);
         else if (key === 'chapter') chapter = value || text;
@@ -438,6 +451,7 @@ export class Engine {
         thread,
         kind,
         text,
+        ...(image ? { image } : {}),
         delayMs: this.carryDelay + delay,
         delayDone: 0,
         gapMs: gapTime(kind, text, this.afterPlayer),
@@ -538,7 +552,7 @@ export class Engine {
       this.chapter = p.chapter;
       this.chapterNo++;
     }
-    this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at });
+    this.messages.push({ id: this.nextId++, thread: p.thread, kind: p.kind, text: p.text, at, ...(p.image ? { image: p.image } : {}) });
     this.lastThread = p.thread;
     // поднять чат наверх списка
     this.unlocked = [p.thread, ...this.unlocked.filter((t) => t !== p.thread)];
@@ -597,7 +611,7 @@ export class Engine {
       // по клику пауз нет, но скачок времени мира игрок должен увидеть
       if (this.mode === 'click' && !p.jumpShown && p.delayMs >= TIME_JUMP_LABEL_H * 3_600_000) {
         p.jumpShown = true;
-        const label: Pending = { ...p, kind: 'sys', text: jumpLabel(p.delayMs), unlock: [], chapter: undefined };
+        const label: Pending = { ...p, kind: 'sys', text: jumpLabel(p.delayMs), image: undefined, unlock: [], chapter: undefined };
         this.commit(label, Math.round(start + (dt - real / (this.fastTyping ? 4 : 1))));
         fresh.push(this.messages[this.messages.length - 1]);
       }

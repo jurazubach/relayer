@@ -4,12 +4,22 @@
 //                                старые файлы без "includes" держат весь сценарий в "ink"
 //   путь/к/истории.ink           голый сценарий, как принимает «Загрузить историю»
 // Здесь же раскладка и сборка (story:pack / story:unpack): splitInk, glueStory, packStory, unpackStory.
+// Картинки фото-сообщений (#photo:имя) лежат в папке истории файлами images/<имя>.webp, а в .json —
+// полем "images": { "<имя>": "data:image/webp;base64,…" }: файл истории остаётся одним файлом.
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { parseInk } from './ink.mjs';
 
 export const STORIES_DIR = 'src/stories';
 const MAIN = 'story.ink';
+
+const MIME = { webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', avif: 'image/avif' };
+const EXT = { 'image/webp': 'webp', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/avif': 'avif' };
+export const IMAGE_RE = /\.(webp|png|jpe?g|gif|avif)$/i;
+/** Тип картинки по имени файла: image/webp, image/png… */
+export const imageMime = (file) => MIME[file.split('.').pop().toLowerCase()];
+/** Имя картинки без расширения: так её зовёт тег #photo:имя и так её ищет игра. */
+export const imageStem = (name) => name.replace(IMAGE_RE, '');
 
 /**
  * @typedef {object} LoadedStory
@@ -21,6 +31,8 @@ const MAIN = 'story.ink';
  * @property {Record<string, string>} files  все файлы ink: главный и подключённые INCLUDE
  * @property {string[]} order   порядок файлов: главный, затем INCLUDE по ходу текста
  * @property {string} ink       текст главного файла
+ * @property {Record<string, {file?: string, data?: string}>} images  картинки по имени без расширения:
+ *           у папки — путь к файлу images/…, у .json — data:-адрес
  */
 
 /** История по id («the-number») или пути (файл .json / .ink или папка). */
@@ -38,11 +50,12 @@ export function loadStory(ref, { dir = STORIES_DIR } = {}) {
 /** История из объекта .json (файл или результат packStory): name — имя файла, из него id по умолчанию. */
 export function storyFromJson(data, { path = '(json)', name = 'story.json' } = {}) {
   if (typeof data.ink !== 'string') throw new Error(`в ${path} нет поля "ink"`);
-  const { ink, includes, ...meta } = data;
+  const { ink, includes, images, ...meta } = data;
   // собранная из папки — те же имена файлов, что в папке: ошибки указывают на story.ink и ch01.ink
   const main = includes ? MAIN : name.replace(/(\.story)?\.json$/, '.ink');
   const id = meta.id ?? name.replace(/(\.story)?\.json$/, '');
-  return finish({ id, path, form: 'json', meta, main, base: null, files: { [main]: ink, ...includes } });
+  const pics = Object.fromEntries(Object.entries(images ?? {}).map(([name, url]) => [name, { data: url }]));
+  return finish({ id, path, form: 'json', meta, main, base: null, files: { [main]: ink, ...includes }, images: pics });
 }
 
 function loadFolder(path, shown) {
@@ -50,7 +63,24 @@ function loadFolder(path, shown) {
   const meta = existsSync(metaFile) ? JSON.parse(readFileSync(metaFile, 'utf8')) : {};
   const main = meta.main ?? MAIN;
   if (!existsSync(join(path, main))) throw new Error(`в папке ${shown} нет ${main}`);
-  return finish({ id: meta.id ?? basename(path), path: shown, form: 'folder', meta, main, base: path, files: { [main]: readFileSync(join(path, main), 'utf8') } });
+  const picDir = join(path, 'images');
+  const images = existsSync(picDir)
+    ? Object.fromEntries(readdirSync(picDir).filter((n) => IMAGE_RE.test(n)).sort().map((n) => [imageStem(n), { file: join(picDir, n) }]))
+    : {};
+  return finish({ id: meta.id ?? basename(path), path: shown, form: 'folder', meta, main, base: path, files: { [main]: readFileSync(join(path, main), 'utf8') }, images });
+}
+
+/** data:-адрес картинки истории: из файла папки или как есть из .json. */
+export function imageData(img) {
+  if (img.data) return img.data;
+  return `data:${imageMime(img.file)};base64,${readFileSync(img.file).toString('base64')}`;
+}
+
+/** data:-адрес → { ext, bytes }: для раскладки .json обратно в папку. */
+export function imageBytes(url) {
+  const m = url.match(/^data:([^;,]+);base64,(.*)$/s);
+  if (!m || !EXT[m[1]]) throw new Error(`картинка не data:image/…;base64: ${url.slice(0, 40)}…`);
+  return { ext: EXT[m[1]], bytes: Buffer.from(m[2], 'base64') };
 }
 
 /** Подтягивает INCLUDE рекурсивно. У .json-истории подключать неоткуда — это ошибка компиляции, не загрузки. */
@@ -75,7 +105,7 @@ function finish(s) {
     }
   }
   const { base, ...rest } = s;
-  return { ...rest, order: order.filter((f) => f in s.files), ink: s.files[s.main] };
+  return { images: {}, ...rest, order: order.filter((f) => f in s.files), ink: s.files[s.main] };
 }
 
 function resolvePath(ref, dir) {
@@ -222,10 +252,21 @@ export function glueStory(story) {
 export function packStory(story, { flat = false } = {}) {
   const { includes: _drop, main: _main, ...meta } = story.meta;
   const out = { format: 'relayer-story', version: 1, ...meta, id: meta.id ?? story.id };
+  const names = Object.keys(story.images ?? {}).sort();
+  const images = names.length ? { images: Object.fromEntries(names.map((n) => [n, imageData(story.images[n])])) } : {};
   const many = story.order.length > 1;
-  if (flat || !many) return { ...out, ink: many ? glueStory(story) : story.files[story.main] };
+  if (flat || !many) return { ...out, ink: many ? glueStory(story) : story.files[story.main], ...images };
   const includes = Object.fromEntries(story.order.slice(1).map((n) => [n, story.files[n]]));
-  return { ...out, ink: story.files[story.main], includes };
+  return { ...out, ink: story.files[story.main], includes, ...images };
+}
+
+/** Картинки истории для записи в папку: { "ch01-note.webp": Buffer }. */
+function imageFiles(story) {
+  return Object.fromEntries(Object.entries(story.images ?? {}).map(([name, img]) => {
+    if (img.file) return [basename(img.file), readFileSync(img.file)];
+    const { ext, bytes } = imageBytes(img.data);
+    return [`${name}.${ext}`, bytes];
+  }));
 }
 
 /** Папка из истории любой формы: { meta, files }. Сценарий одним текстом режется по главам. */
@@ -233,18 +274,21 @@ export function unpackStory(story) {
   const { main: _main, ...meta } = story.meta;
   if (story.order.length > 1) {
     const files = Object.fromEntries(story.order.map((n) => [n === story.main ? MAIN : n, story.files[n]]));
-    return { meta: { ...meta, id: meta.id ?? story.id }, files };
+    return { meta: { ...meta, id: meta.id ?? story.id }, files, images: imageFiles(story) };
   }
   const split = splitInk(story.files[story.main]);
-  return { meta: { ...meta, id: meta.id ?? story.id }, files: split.files };
+  return { meta: { ...meta, id: meta.id ?? story.id }, files: split.files, images: imageFiles(story) };
 }
 
 /** Записывает папку истории. Лишние .ink из прошлой раскладки удаляются: источник — то, что пишем. */
-export function writeFolder(dir, { meta, files }) {
+export function writeFolder(dir, { meta, files, images = {} }) {
   mkdirSync(dir, { recursive: true });
   for (const name of readdirSync(dir)) if (name.endsWith('.ink') && !(name in files)) rmSync(join(dir, name));
   writeFileSync(join(dir, 'meta.json'), JSON.stringify(meta, null, 2) + '\n');
   for (const [name, text] of Object.entries(files)) writeFileSync(join(dir, name), text);
+  if (!Object.keys(images).length) return;
+  mkdirSync(join(dir, 'images'), { recursive: true });
+  for (const [name, bytes] of Object.entries(images)) writeFileSync(join(dir, 'images', name), bytes);
 }
 
 /**

@@ -1,7 +1,7 @@
 // Самопроверка scripts/lib: маленькие синтетические примеры ink и три истории каталога.
 // Запуск: npm run test:lib [-- --json] [-- --only <подстрока>]
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allMarks, findEndings, nodeIds, parseInk, parseDelay, stripComments, tokenize, walk, resolveTarget } from './ink.mjs';
@@ -10,7 +10,7 @@ import { finalNodes } from '../story/core/graph.mjs';
 import { NO_ANSWER, choiceRole, noAnswer, play, reminderSeries, seeded, strategies } from './bot.mjs';
 import {
   compileInput, glueStory, layoutProblems, listStories, loadStory, packStory, parseStory, sameRuntime, splitInk,
-  storyFromJson, unpackStory,
+  storyFromJson, unpackStory, writeFolder,
 } from './story.mjs';
 
 const HELP = `npm run test:lib [-- --json] [-- --only <подстрока>]
@@ -586,6 +586,32 @@ test('story: .json от story:pack читается как папка и рас�
   const flat = packStory(folder, { flat: true });
   assert.equal(flat.includes, undefined);
   assert.equal(sameRuntime(compile(flat.ink).json, compile(compileInput(back)).json), true);
+});
+
+test('story: картинки папки images/ едут в .json data:-адресами и раскладываются обратно байт в байт', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'lib-img-'));
+  try {
+    const src = join(dir, 'pier');
+    mkdirSync(join(src, 'images'), { recursive: true });
+    writeFileSync(join(src, 'meta.json'), JSON.stringify({ id: 'pier', title: 'Причал' }));
+    writeFileSync(join(src, 'story.ink'), 'Записка #photo:note\n-> END\n');
+    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
+    writeFileSync(join(src, 'images', 'note.png'), png);
+    writeFileSync(join(src, 'images', 'readme.txt'), 'не картинка');
+    const story = loadStory(src);
+    assert.deepEqual(Object.keys(story.images), ['note']);
+    const packed = packStory(story);
+    assert.equal(packed.images.note, `data:image/png;base64,${png.toString('base64')}`);
+    const back = storyFromJson(JSON.parse(JSON.stringify(packed)), { name: 'pier.story.json' });
+    assert.equal('images' in back.meta, false, 'картинки не попадают в meta.json');
+    const out = join(dir, 'out');
+    writeFolder(out, unpackStory(back));
+    assert.ok(readFileSync(join(out, 'images', 'note.png')).equals(png));
+    assert.equal(readFileSync(join(out, 'meta.json'), 'utf8').includes('data:image'), false);
+    assert.deepEqual(packStory(loadStory(out)).images, packed.images);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('story: раскладка ловит узел в главном файле, текст до узла в главе и лишний INCLUDE', () => {
