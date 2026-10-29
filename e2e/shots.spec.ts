@@ -41,7 +41,7 @@ test('снимки экранов', { tag: '@shots' }, async ({ page }) => {
     .getByRole('heading', { name: 'Файл истории', exact: true })
     .evaluate((el) => el.scrollIntoView({ block: 'end' }));
   await page.waitForTimeout(300);
-  await shot(page, '3b-story-chapters');
+  await shot(page, '3b-story-file');
 
   await page.getByTestId('play').click();
   await page.locator('[data-testid^="thread-"]').first().waitFor();
@@ -97,7 +97,7 @@ test('снимки сброса по ревизии', { tag: '@shots' }, async (
   await shot(page, '9-game-revision');
 });
 
-// платная граница: закрытые главы на экране истории, плашка в чате и над списком чатов
+// платная граница: «начало бесплатно» на экране истории, плашка в чате и над списком чатов
 test('снимки платной границы', { tag: '@shots' }, async ({ page }) => {
   await fixtureOnHome(page);
   await page.getByTestId(`tile-${FIXTURE.id}`).click();

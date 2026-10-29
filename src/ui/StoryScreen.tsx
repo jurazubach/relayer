@@ -8,6 +8,7 @@ import {
   freeLine,
   isOutdated,
   modeSizes,
+  plural,
   revisionOf,
   sizeLabel,
   storyPalette,
@@ -23,7 +24,8 @@ const MODE_TEXT: Record<Mode, { name: string; hint: string }> = {
 };
 
 /**
- * Экран истории: о чём, как играется, герои, главы. Отсюда её запускают.
+ * Экран истории: о чём, как играется, герои. Отсюда её запускают.
+ * Списка глав нет (A-08): игрок не знает, сколько осталось, как в живой переписке.
  * Он же витрина для автора: загрузил свой файл — сразу видно, как он будет выглядеть.
  */
 export function StoryScreen({
@@ -37,7 +39,7 @@ export function StoryScreen({
 }: {
   story: Story;
   progress: Progress | null;
-  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — платной границы нет. */
   free: number | null;
   /** Режим важен только новой игре: начатая продолжается в своём. */
   onPlay: (mode: Mode) => void;
@@ -62,8 +64,8 @@ export function StoryScreen({
     ? progress.ended
       ? 'История пройдена'
       : progress.locked && free !== null
-        ? `Бесплатные главы пройдены · ${formatAgo(progress.savedAt)}`
-        : `${progress.chapter || `${progress.messages} сообщений`} · ${formatAgo(progress.savedAt)}`
+        ? `Бесплатная часть пройдена · ${formatAgo(progress.savedAt)}`
+        : `${progress.messages} ${plural(progress.messages, 'сообщение', 'сообщения', 'сообщений')} · ${formatAgo(progress.savedAt)}`
     : sizeLabel(story);
 
   return (
@@ -169,7 +171,7 @@ export function StoryScreen({
           <span className="story__where">{where}</span>
           {free !== null && (
             <span className="story__free" data-testid="free-chapters">
-              {freeLine(free, story.chapters?.length)}
+              {freeLine}
             </span>
           )}
         </div>
@@ -221,35 +223,10 @@ export function StoryScreen({
           </section>
         )}
 
-        {!!story.chapters?.length && (
-          <section className="info">
-            <h2 className="info__title">Главы</h2>
-            <ol className="chapters">
-              {story.chapters.map((ch, i) => (
-                <li
-                  className={free !== null && i >= free ? 'chapters__item chapters__item--locked' : 'chapters__item'}
-                  key={ch.title}
-                  data-testid={free !== null && i >= free ? 'chapter-locked' : undefined}
-                >
-                  <span className="chapters__no">{i + 1}</span>
-                  <span className="chapters__body">
-                    <span className="chapters__top">
-                      <span className="chapters__title">{ch.title}</span>
-                      {ch.when && <span className="chapters__when">{ch.when}</span>}
-                      {free !== null && i >= free && <span className="chapters__lock">платно</span>}
-                    </span>
-                    {ch.about && <span className="chapters__about">{ch.about}</span>}
-                  </span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )}
-
         <section className="info info--separated">
           <h2 className="info__title">Файл истории</h2>
           <p className="info__text info__text--muted">
-            Один .json: описание, герои, главы и сценарий. Можно выгрузить, поправить и загрузить обратно.
+            Один .json: описание, герои и сценарий. Можно выгрузить, поправить и загрузить обратно.
           </p>
           <div className="btn-row">
             <button className="btn" onClick={() => downloadStory(story)} data-testid="export">
