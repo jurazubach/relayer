@@ -529,7 +529,7 @@ test('настоящая база: owners.md §8, clusters.json свежий, р
   const kinds = (k) => res.matrix.filter((x) => x.kind === k).length;
   assert.ok(kinds('P') > 450 && kinds('RED') > 400, 'ID базы на месте');
   assert.equal(kinds('R'), 122);
-  assert.equal(kinds('C'), 54);
+  assert.equal(kinds('C'), 55);
   assert.equal(kinds('F'), 15);
   assert.equal(kinds('attn'), 30);
   assert.equal(kinds('attention'), 150, '150 разделов attention.md');

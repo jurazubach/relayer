@@ -1,7 +1,7 @@
 ---
 name: story-release
 description: "Можно выпускать? Проверь историю перед выпуском: все ли главы, линт, вторая волна теста; карточка и затравки не спойлерят и не врут, два времени честные; платная граница на крючке; поднять ли ревизию; нет ли тёмных паттернов; собери .json для загрузки."
-allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Edit(src/stories/*/meta.json)
 metadata:
   version: 1
 ---
@@ -12,9 +12,9 @@ metadata:
 **Готово ли:** все главы, `story:lint` без ошибок, вторая волна теста. **Честно ли:** карточка и затравки без
 спойлеров и вранья (C-49, R-11), два времени (A-05), платная граница на сильном крючке с выплатой сразу
 (INTENT), этика и монетизация (R-115, [ethics.md](references/ethics.md) — единственный источник). **Не ломает
-ли:** ревизия и сохранения, файл `story:pack`. Скилл ничего не правит: даёт вердикт, находки и варианты; правит
-`story-fix` по одобренному, пишет состояние `story-desk`. Числа — только из команд, пороги — ключами
-`docs/playbook/thresholds.json`.
+ли:** ревизия и сохранения, файл `story:pack`. Скилл не правит текст: даёт вердикт, находки и варианты; правит
+`story-fix`, состояние пишет `story-desk`. Сам — только `meta.json` по одобрению (`revision`, минуты и дни карточки).
+Числа — только из команд, пороги — ключами `docs/playbook/thresholds.json`.
 
 **Команды — по одной на вызов, ровно как написаны:** без `cd`, пайпов, `;`, `&&`, `>`, `$?`, `| head`.
 Составная команда получает отказ в правах. Упала команда — «нет данных: <команда>», не угадывай.
@@ -50,8 +50,9 @@ metadata:
    продажа паузы, платный выбор, наказание бесплатного пути. Спор «так можно?» — [attention.md](references/attention.md),
    классификация — [systems/dark-patterns.md](references/systems/dark-patterns.md).
 7. **Ревизия и файл.** `node ${CLAUDE_SKILL_DIR}/scripts/revision-check.mjs --story <id>` — ломает ли правка
-   сохранения ([versioning.md](references/versioning.md)); `node ${CLAUDE_SKILL_DIR}/scripts/pack.mjs <id>` —
-   `story:pack --check`. Собрать файл (`--write`) и поставить тег — только после одобрения.
+   сохранения ([versioning.md](references/versioning.md)); ✗ — `revision` +1 только по одобрению;
+   `node ${CLAUDE_SKILL_DIR}/scripts/pack.mjs <id>` — `story:pack --check`. Собрать файл (`--write`) и поставить тег —
+   только после одобрения.
 8. **Сверка.** Каждую находку замера сверь с ink и правилом (`npm run -s story:rule C-NN`): узел, контекст,
    исключения («когда не работает» в references). Ложная — в отчёт с причиной, не в находки (LOCAL-04).
 9. **Отчёт и состояние.** Вердикт, находки, варианты («советую»), режим «объясни» по запросу; предложи

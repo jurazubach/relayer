@@ -10,7 +10,7 @@ import { loadThresholds, validateThresholds } from '../lib/thresholds.mjs';
 
 const HELP = `npm run story:lint [-- <id | путь> …] [флаги]
 
-Проверки сценария C-01…C-54 из docs/playbook/checks.md, C-53 — валидатор разметки. Пороги и их
+Проверки сценария C-01…C-55 из docs/playbook/checks.md, C-53 — валидатор разметки. Пороги и их
 опора — docs/playbook/thresholds.json. Статические проверки читают ink, остальные — журнал случайного
 бота (seed 1: одинаковый вход — одинаковые находки). Порог с deferred:E-NN ждёт фичи движка и
 пропускается (виден в --json, skipped).

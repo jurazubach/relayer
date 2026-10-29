@@ -2,7 +2,7 @@
 name: story-plan
 description: "Нужен план истории: сколько глав, где развилки и хребет, где паузы и платная граница, с чего начинать писать; сделай скелет до текста; сравни варианты плана; граф почти линейный или ветки разрослись; не хватает середины или опоры. План, skeleton.ink, проверка числами."
 user-invocable: false
-allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
+allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*), Edit(src/stories/**), Edit(docs/stories/**)
 metadata:
   version: 1
 ---
@@ -107,7 +107,8 @@ metadata:
 
 ## Состояние
 
-План и скелеты скилл пишет сам в `docs/stories/<id>/plans/` (новая версия — новый файл). Остальное — через
+План и скелеты скилл пишет сам в `docs/stories/<id>/plans/` (новая версия — новый файл); одобренную разметку
+плана (`build-plan.md` §9: метки и `#chapter`) в главах `src/stories/<id>/` — тоже сам, реплики не трогает. Остальное — через
 `story-desk` после одобрения автора (в конвейере — королевы): отчёт `docs/stories/<id>/reviews/<дата>-story-plan.md`
 (находки и таблица сравнения); строка для `STATUS.md`: «план <дата>: v2 из 3, скелет ✓ plan-check, финалов K, граница
 после гл.N — reviews/…»; поле `план:` и шаг `plan` → `skeleton`; отвергнутые варианты с причиной — в `ideas.md`.

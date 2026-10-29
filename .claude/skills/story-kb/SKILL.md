@@ -25,7 +25,9 @@ metadata:
 - `node ${CLAUDE_SKILL_DIR}/scripts/kb-contradictions.mjs <слова>` — споры: решение, кто держит, «⚠ сверить с
   A-NN»; `--attn` — сводные споры по вниманию с ключами; `--skill`, `--alias`.
 - `node ${CLAUDE_SKILL_DIR}/scripts/kb-index.mjs --alias <алиас>` — о чём разбор, главные темы, владельцы.
-- `npm run -s story:rule R-NN` (или `C-NN`, `A-NN`) — текст правила, проверки, решения автора.
+- `npm run -s story:rule R-NN` (или `C-NN`, `A-NN`, `'#attn-…'`) — текст правила, проверки, решения автора,
+  раздела внимания. **ID с `#` — всегда в одинарных кавычках** (`kb-search.mjs '#attn-return-silence'`): без
+  них оболочка считает `#…` комментарием, и команда уходит без аргумента.
 
 ## Границы
 

@@ -1,7 +1,7 @@
 // C-49. Факты, хронология, карточка: числа карточки есть в тексте, synopsis не спойлерит поздних героев и
 // называет роль игрока, пункты features звучат в истории, затравки — из завязки и главы 1, обещанные финалы
-// есть. Хронология — по docs/stories/<id>/facts.md, если он есть; ложь героя помечается
-// «// намеренно: C-49 ложь». Таблица фактов — для глаз, без вердикта.
+// есть, глав карточка не называет (A-08). Хронология — по docs/stories/<id>/facts.md, если он есть; ложь героя
+// помечается «// намеренно: C-49 ложь». Таблица фактов — для глаз, без вердикта.
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { walk } from '../../lib/ink.mjs';
@@ -88,6 +88,13 @@ export default {
     if ((meta.features ?? []).length && inCh1 === T.value('C-49.feature_ch1')) find('C-49.feature_ch1', { chapter: 1, message: 'ни один пункт карточки не звучит в главе 1 — обещание сбывается слишком поздно' });
     // (ж) затравки: 2–3, из завязки и главы 1, без поздних имён и чисел, по docs/style.md
     if (Array.isArray(meta.teasers)) teasersCheck(ctx, find, { texts, heroes, firstMention, firstCh });
+    // (и) глав игрок не видит (A-08): карточка не возвращает их словами; series («Сезон 2») — название, не счёт
+    const chapterWord = T.re('C-49.chapter_word');
+    const fields = [['tagline', meta.tagline], ['synopsis', meta.synopsis], ...(meta.features ?? []).map((f, i) => [`features ${i + 1}`, f]), ...(Array.isArray(meta.teasers) ? meta.teasers.map((t, i) => [`затравка ${i + 1}`, t]) : [])];
+    for (const [field, text] of fields) {
+      const m = typeof text === 'string' && text.match(chapterWord);
+      if (m) find('C-49.chapter_word', { message: `${field} «${short(text)}»: «${m[0]}» — глав игрок не видит (A-08), масштаб истории говорят два времени карточки` });
+    }
     // (з) карточка обещает финалы — столько их и есть у обычного игрока
     const promise = [...(meta.features ?? []), meta.tagline ?? '', meta.synopsis ?? ''].find((f) => endingsWord.test(f) && promisedEndings(f) !== 1);
     if (promise) {

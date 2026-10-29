@@ -436,6 +436,20 @@ test('rule: проверка, решение автора, отмена; неи�
   assert.match(bad.err, /R-9999/);
 });
 
+test('rule: якорь внимания #attn-… — с «#» и без, раздел до следующего заголовка, владелец из owners.md', () => {
+  assert.equal(normalizeId('#attn-return-silence'), '#attn-return-silence');
+  assert.equal(normalizeId('attn-Return-Silence'), '#attn-return-silence', 'без кавычек оболочка съедает «#»');
+  const e = lookupId('#attn-return-silence');
+  assert.match(e.text, /^### 5\.7\. .*\{#attn-return-silence\}/);
+  assert.ok(!/\{#attn-return-click\}/.test(e.text), 'захватил следующий раздел');
+  assert.ok(e.owners.some((o) => /story-time/.test(o['владелец'] ?? '')));
+  const ok = cmd('rule', ['#attn-return-silence', '--brief']);
+  assert.equal(ok.code, 0, ok.err);
+  assert.match(ok.out, /раздел внимания/);
+  const bad = cmd('rule', ['#attn-nope']);
+  assert.equal(bad.code, 2);
+});
+
 // ───────── story:status
 
 const STATES = join(HERE, 'fixtures/stories');
