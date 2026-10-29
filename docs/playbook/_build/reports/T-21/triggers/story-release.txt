@@ -1,0 +1,24 @@
+Фраз: 19 × 5 прогонов = 95 запусков claude, по 3 одновременно…
+
+скилл           попадания    ложные     обход  отказы  вместо него
+──────────────  ───────────  ─────────  ─────  ──────  ─────────────────────────────────────
+story-desk      100% (5/5)   0% (0/81)
+story-endings   100% (5/5)   1% (1/81)
+story-pauses    —            6% (5/86)
+story-plan      —            3% (3/86)
+story-playtest  —            6% (5/86)
+story-release   80% (45/56)  0% (0/30)  2      4       story-plan×3, none×7, story-endings×1
+story-review    100% (5/5)   0% (0/81)
+story-time      100% (5/5)   0% (0/81)
+
+Мимо:
+  ждали story-release · вышло story-release, story-plan, story-release, story-plan, story-plan · «После какой главы поставить платную границу, чтобы не было обидно?»
+  ждали story-release · вышло story-release, отказ, отказ, none, отказ · «Собери историю в один json, чтобы залить тестерам, и проверь, что ничего не потерялось»
+  ждали story-release · вышло none, none, none+обход(story-release), none, none+обход(story-release) · «Не будет ли это тёмным паттерном — сделать первую главу бесплатной, а остальное платным?»
+  ждали story-release · вышло story-release, story-release, story-release, story-release, none · «в synopsis я назвал злодея — это ок для карточки?»
+  ждали story-release · вышло story-release, story-release, story-endings, story-release, отказ · «Карточка обещает, что выбор меняет финал, — это правда для нашей истории? Перед выпуском хочу честную витрину»
+
+Отказов в правах: 9 (Bash ×9 (npm run story:pack -- --check dist/stories/chuzhoy-golos.story.json && node -e "const j=require('./dist/stories/chuzhoy… · OUT=/private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-T-21/0c70c7ca-291c-4ac8-89a2-40cb0320a639… · S=/private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-T-21/43e106a4-ed8b-4216-a49c-a3cf6a4b7703/s… · for s in chuzhoy-golos the-number slepoe-pyatno; do echo "== $s"; node -e "const m=require('./src/stories/$s/meta.json'… · ls e2e && HEADLESS=1 E2E_PORT=4373 npx playwright test --reporter=line 2>&1 | tail -60 · …ещё 4)); недействительных прогонов: 9 — в доли не входят; на Bash/Skill: Bash ×9 (npm run story:pack -- --check dist/stories/chuzhoy-golos.story.json && node -e "const j=require('./dist/stories/chuzhoy… · OUT=/private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-T-21/0c70c7ca-291c-4ac8-89a2-40cb0320a639… · S=/private/tmp/claude-501/-Users-y-zubach-dev-jurazubach-relayer--worktrees-T-21/43e106a4-ed8b-4216-a49c-a3cf6a4b7703/s… · for s in chuzhoy-golos the-number slepoe-pyatno; do echo "== $s"; node -e "const m=require('./src/stories/$s/meta.json'… · ls e2e && HEADLESS=1 E2E_PORT=4373 npx playwright test --reporter=line 2>&1 | tail -60 · …ещё 4)
+
+Всего: 87% проверок прошло (75/86), 195 с, от $2.27 (оборванные прогоны цену не сообщают)
+Записано: docs/playbook/_build/reports/T-21/triggers/story-release.json

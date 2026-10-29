@@ -1,0 +1,28 @@
+Фраз: 28 × 5 прогонов = 140 запусков claude, по 3 одновременно…
+
+скилл             попадания     ложные      обход  отказы  вместо него
+────────────────  ────────────  ──────────  ─────  ──────  ───────────
+story-brainstorm  100% (10/10)  0% (0/107)
+story-branch      100% (10/10)  0% (0/107)
+story-core        100% (5/5)    0% (0/112)
+story-desk        100% (10/10)  0% (0/107)
+story-endings     100% (5/5)    0% (0/112)
+story-fix         71% (5/7)     0% (0/110)         3       none×2
+story-kb          100% (10/10)  0% (0/107)
+story-mystery     100% (5/5)    0% (0/112)
+story-opening     100% (5/5)    0% (0/112)
+story-pauses      100% (10/10)  0% (0/107)
+story-plan        100% (5/5)    0% (0/112)
+story-playtest    100% (10/10)  0% (0/107)
+story-release     100% (5/5)    0% (0/112)
+story-review      100% (10/10)  0% (0/107)
+story-time        100% (5/5)    0% (0/112)
+story-voice       100% (5/5)    0% (0/112)
+
+Мимо:
+  ждали story-fix · вышло отказ, none, отказ, none, отказ · «Ок, исправь второй и четвёртый пункт»
+
+Отказов в правах: 31 (Bash ×28 (node -e 'const t=require("./docs/playbook/_build/tasks.json");const a=Array.isArray(t)?t:(t.tasks||Object.values(t));co… · cd docs/playbook/_build; ls reports | grep -i 21; cat reports/T-21/triggers/_routing.txt reports/T-21/triggers/_routing… · node -e 'const t=require("./docs/playbook/_build/tasks.json");const a=Array.isArray(t)?t:(t.tasks||Object.values(t));co… · ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e; HEADLESS=1 npx playwright test --project=phone --reporter=line 2>&1 | tail -60 · …ещё 20), Read ×3 (/Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21/node_modules/vite/client.d.ts · /Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21/node_modules/typescript/package.json)); недействительных прогонов: 23 — в доли не входят; на Bash/Skill: Bash ×28 (node -e 'const t=require("./docs/playbook/_build/tasks.json");const a=Array.isArray(t)?t:(t.tasks||Object.values(t));co… · cd docs/playbook/_build; ls reports | grep -i 21; cat reports/T-21/triggers/_routing.txt reports/T-21/triggers/_routing… · node -e 'const t=require("./docs/playbook/_build/tasks.json");const a=Array.isArray(t)?t:(t.tasks||Object.values(t));co… · ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e; HEADLESS=1 npx playwright test --project=phone --reporter=line 2>&1 | tail -60 · …ещё 20)
+
+Всего: 98% проверок прошло (115/117), 279 с, от $3.32 (оборванные прогоны цену не сообщают)
+Записано: docs/playbook/_build/reports/T-21/triggers/_routing-group.json

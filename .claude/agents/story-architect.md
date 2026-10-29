@@ -12,13 +12,11 @@ hooks:
     - matcher: "Write|Edit|MultiEdit|NotebookEdit"
       hooks:
         - type: command
-          command: |-
-            node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const fs=require("fs"),os=require("os"),path=require("path");let j={};try{j=JSON.parse(s)}catch{}const t=j.tool_input||{};const p=String(t.file_path||t.notebook_path||"");const abs=path.resolve(j.cwd||process.cwd(),p);const m=abs.match(/\/docs\/stories\/[a-z0-9-]+\/plans\/(plan-v[0-9]+[a-z]?\.md|skeleton-v[0-9]+[a-z]?\.ink)$/);if(!p||!m||p.includes("..")){console.error("story-architect: писать можно только docs/stories/<id>/plans/plan-vN.md и skeleton-vN.ink");process.exit(2)}const log=path.join(os.tmpdir(),"story-architect-"+String(j.agent_id||j.session_id||"x").replace(/[^A-Za-z0-9_-]/g,"")+".txt");let mine=[];try{mine=fs.readFileSync(log,"utf8").split("\n")}catch{}if(fs.existsSync(abs)){if(!mine.includes(abs)){console.error("story-architect: "+path.basename(abs)+" уже есть, его писал не ты: новая версия — новый файл со следующим N");process.exit(2)}}else fs.appendFileSync(log,abs+"\n");console.log(JSON.stringify({hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"allow",permissionDecisionReason:"story-architect: свой файл в plans/"}}))})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs story-architect
     - matcher: "Bash"
       hooks:
         - type: command
-          command: |-
-            node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{let c="";try{c=String(JSON.parse(s).tool_input.command||"").trim()}catch{}const q=c.replace(/\x27[^\x27]*\x27/g,"Q").replace(/"(?:[^"$\x60\\]|\\[^"$\x60\\\n])*"/g,"Q");const ok=/^(npm run (-s )?(story:(lint|trace|vars|sessions|cast|endings|rule|status)|check:story)( |$)|node (\S*\/)?\.claude\/skills\/(story-(plan|branch|core)\/scripts\/[a-z-]+|story-desk\/scripts\/idea-park)\.mjs( |$)|grep( -[A-Za-z]+)* |ls( -[A-Za-z]+)*( |$))/.test(q)&&!/[;&|<>$\x60\x27"\\\n]|\.\.\/|--(out|ask|answer-file|write|new|take)\b/.test(q)&&(!/idea-park/.test(q)||/--(list|dry-run)\b/.test(q));if(!ok){console.error("story-architect: одна команда — npm run story:<чтение> или check:story, скрипт story-plan/story-branch/story-core, idea-park --list|--dry-run, grep, ls; без ; & | > $ и --out/--ask/--write/--new");process.exit(2)}console.log(JSON.stringify({hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"allow",permissionDecisionReason:"story-architect: команда чтения"}}))})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs story-architect
 ---
 
 # story-architect — варианты плана в фоне
@@ -91,7 +89,8 @@ hooks:
    `node .claude/skills/story-plan/scripts/skeleton.mjs --check --file docs/stories/<id>/plans/skeleton-vN.ink`.
 7. **Замер каждого варианта.** `node .claude/skills/story-plan/scripts/plan-check.mjs --file <скелет>` и
    `node .claude/skills/story-branch/scripts/branch-budget.mjs --story <скелет>` (бюджет дорогих веток считает
-   `story-branch`). Каждое ✗ — правка в своём скелете (`Edit`) и повторный замер. Не уходит после правки по
+   `story-branch`; `plan-check` печатает то же число — счёт один, на скелете от `story.branch.expensive.skeleton_lines`
+   строк-сцен в ветке). Каждое ✗ — правка в своём скелете (`Edit`) и повторный замер. Не уходит после правки по
    `flags.md` — вариант остаётся с ✗ и причиной в выходе, не прячь его и не подгоняй числа.
 8. **Сверка.** Каждое ⚠ сверь с узлом и `flags.md`: подтверждено или «ложное: почему» (стык последней главы в C-38,
    переменная-кнопка последней главы, задуманный ранний финал). Правило — `npm run -s story:rule <ID>`.

@@ -62,9 +62,9 @@ runCli(HELP, async (args) => {
     if (!ironyRe.test(l)) add('warn', 'R-02', 'логлайн', 'нет противопоставления (словарь dict.logline_irony: «но», «а», «хотя», «=»): нет иронии — нет истории');
     if (!/(^|[^\p{L}])(ты|тебе|тебя|тобой|игрок)([^\p{L}]|$)/iu.test(l)) add('warn', 'R-02', 'логлайн', 'не названа роль игрока («ты — …»)');
     const words = l.split(/\s+/).filter(Boolean).length;
-    const max = maybe('skill.brainstorm.logline.max_words');
-    if (max == null) add('info', 'R-02', 'логлайн', `${words} слов; порог — нет ключа skill.brainstorm.logline.max_words (длина по R-02: npm run story:rule R-02)`);
-    else if (words > max) add('warn', 'R-02', 'логлайн', `${words} слов > skill.brainstorm.logline.max_words = ${max}`);
+    const max = maybe('story.logline.max_words');
+    if (max == null) add('info', 'R-02', 'логлайн', `${words} слов; порог — нет ключа story.logline.max_words (длина по R-02: npm run story:rule R-02)`);
+    else if (words > max) add('warn', 'R-02', 'логлайн', `${words} слов > story.logline.max_words = ${max}`);
   }
   // вопрос
   if (f['вопрос']) {
@@ -128,7 +128,13 @@ runCli(HELP, async (args) => {
           if (!v) add('warn', 'C-53', 'оси', `ось «${a}»: нет такой VAR в ink`);
           else if (!v.writes.length) add('warn', 'R-39', 'оси', `ось «${a}»: не пишется ни одной записью`);
           else if (!v.reads.length) add('warn', 'C-01', 'оси', `ось «${a}»: пишется ${v.writes.length} раз, не читается нигде`);
-          else add('ok', 'R-39', 'оси', `ось «${a}»: записей ${v.writes.length}, чтений видно/скрыто ${v.visibleReads ?? 0}/${v.hiddenReads ?? 0}${v.readByFinal ? ', читает финал' : ''}${v.flags?.length ? ` · ${v.flags.join(', ')}` : ''}`);
+          else {
+            // ось, которую игрок не слышит до финала, — «финал решает скрытая проверка»: это не ✓, даже если она читается
+            const quiet = (v.flags ?? []).filter((x) => ['невидимая', 'только финал', 'молчит'].includes(x));
+            const line = `ось «${a}»: записей ${v.writes.length}, чтений видно/скрыто ${v.visibleReads ?? 0}/${v.hiddenReads ?? 0}${v.readByFinal ? ', читает финал' : ''}${v.flags?.length ? ` · ${v.flags.join(', ')}` : ''}`;
+            if (quiet.length) add('warn', 'C-03', 'оси', `${line} — игрок не слышит, что ось что-то значит: нужен видимый отклик до финала (story-endings, story-choices)`);
+            else add('ok', 'R-39', 'оси', line);
+          }
         }
       }
     }

@@ -15,7 +15,7 @@ node \${CLAUDE_SKILL_DIR}/scripts/premise-check.mjs --directions <id> [--round N
 node \${CLAUDE_SKILL_DIR}/scripts/premise-check.mjs --story <id> [--json]
 
 Логлайн (R-02, snyder-save-the-cat:GREEN-01):
-  · не длиннее skill.brainstorm.logline.max_words слов;
+  · не длиннее story.logline.max_words слов;
   · есть роль игрока — «ты / тебе / тебя» (dict.player_role);
   · есть противопоставление — «но / а / хотя / =» (dict.logline_irony): без него нет иронии.
 Ядро-правило (R-04, R-05):
@@ -33,10 +33,10 @@ const words = (s) => (String(s).match(/[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*/gu) ?? [
 
 /** Форма логлайна: длина, «ты», противопоставление. */
 export function checkLogline(text, T = thresholds()) {
-  const max = T.value('skill.brainstorm.logline.max_words');
+  const max = T.value('story.logline.max_words');
   const n = words(text);
   const issues = [];
-  if (n > max) issues.push({ level: 'warning', what: `логлайн ${n} слов (> ${max}, skill.brainstorm.logline.max_words)` });
+  if (n > max) issues.push({ level: 'warning', what: `логлайн ${n} слов (> ${max}, story.logline.max_words)` });
   if (!T.re('dict.player_role').test(text)) {
     // «игрок» в третьем лице — роль названа, но не так, как её услышит игрок: форма R-02 — «ты — X»
     if (/(^|[^\p{L}])игрок/iu.test(text)) issues.push({ level: 'warning', what: 'роль игрока в третьем лице («игрок…») — форма R-02: «ты — X»' });

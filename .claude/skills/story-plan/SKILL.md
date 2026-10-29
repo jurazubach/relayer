@@ -24,7 +24,7 @@ metadata:
 - **Вход:** ядро D-NN (`story-core`), просьба «план», «скелет», «сравни планы»; после теста или ревью — новая версия
   плана (Б-1); найденный ревью пропуск опоры (F-15).
 - **Выход:** `plans/plan-vN.md` и `plans/skeleton-vN.ink`, сравнение `plan-compare.mjs`, активный `plans/skeleton.ink`
-  после выбора; отвергнутые варианты и строка для `STATUS.md` — через `story-desk`.
+  после выбора; отвергнутые варианты — `idea-park.mjs`, строка для `STATUS.md` — через `story-desk`.
 - **Не здесь:** ядро, ставка, оси — `story-core`; куда свернуть посреди работы и бюджет веток — `story-branch`; главы
   начисто — `chapter-write`; ревью скелета — `story-review --plan`; распределитель и видимость порога финала —
   `story-endings`; длина и режимы — `story-time`; крючки пауз — `story-pauses`; проверка границы перед выпуском —
@@ -43,6 +43,16 @@ metadata:
    [references/hubs.md](references/hubs.md); глава — по [references/chapter-formula.md](references/chapter-formula.md);
    паузы — [references/schedule.md](references/schedule.md); граница — [references/free-boundary.md](references/free-boundary.md).
    Запиши `plans/plan-vN.md` по [references/skeleton-format.md](references/skeleton-format.md).
+   **Варианты в фоне — агент `story-architect`** (шаги 4–7 он делает сам и возвращает таблицу `plan-compare`).
+   Задание ровно этими полями:
+   ```
+   история: <id>                ядро: D-NN (из STATUS.md)
+   вариантов: 2 | 3             бесплатных глав: N (free_chapters из meta.json)
+   рамка: минут по клику, дней, глав, жанр — что сказал автор (или «—»)
+   повод: новая история | новая версия плана после хода story-branch (D-NN хода) | Б-1 после теста
+   ```
+   После ответа: `core:` в его первой строке сверь с `ядро:` в `STATUS.md` (разошлись — варианты устарели, заново);
+   находки сверь сам (шаг 7) и переходи к шагу 8 с его таблицей.
 5. **Скелет.** Заготовка: `node ${CLAUDE_SKILL_DIR}/scripts/skeleton.mjs --new --story <id> --chapters <N>`. Прочитай
    `docs/style.md` §6 (кнопки) и §8 (время мира, паузы) прямо перед тем, как писать кнопки и строки-сцены; формы на ink —
    [references/patterns-structures.md](references/patterns-structures.md). Затем
@@ -55,6 +65,8 @@ metadata:
 8. **Показ автору.** Таблица `plan-compare.mjs`, по варианту: опоры, финалы, цена, что трудно; совет с правилами по ID и
    вопрос с вариантами: «беру v2 / v2, но … / ещё вариант / объясни». Споры — [references/contradictions.md](references/contradictions.md).
 9. **После выбора.** Выбранный скелет — копией в `plans/skeleton.ink`, затем `npm run story:lint -- --plan --story <id>`.
+   Отвергнутые варианты — в банк скриптом `idea-park.mjs` скилла `story-desk`: `--story <id> --kind план --text "…"
+   --why "<число из сравнения>" --when "<условие>" --from plans/plan-vN.md` (готовые строки даёт агент).
    Дальше `story-review --plan`, потом `chapter-write` главы 1–2. Пропуск опоры из ревью — приём
    [references/fixes/F-15-missing-beat.md](references/fixes/F-15-missing-beat.md).
 

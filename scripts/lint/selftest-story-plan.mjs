@@ -7,8 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkSkeleton, template } from '../../.claude/skills/story-plan/scripts/skeleton.mjs';
-import { expensiveForks } from '../../.claude/skills/story-plan/scripts/plan-check.mjs';
-import { parseInk } from '../lib/ink.mjs';
+import { expensiveBudget } from '../../.claude/skills/story-branch/scripts/branch-core.mjs';
 import { thresholds } from '../lib/thresholds.mjs';
 
 const FORMAT = fileURLToPath(new URL('../../.claude/skills/story-plan/references/skeleton-format.md', import.meta.url));
@@ -82,11 +81,16 @@ export function register(test, { lint }) {
     assert.ok(long.warnings.some((w) => /проза/.test(w)), long.warnings.join('; '));
   });
 
-  test('story-plan: дорогие развилки — кнопки в разные узлы, распределитель в финалы не считается', () => {
-    const forks = expensiveForks(parseInk(SMALL));
-    assert.equal(forks.length, 1);
-    assert.deepEqual(forks[0].targets.sort(), ['ch1.away', 'ch1.near']);
-    const toEndings = `-> a\n=== a ===\nвыбирай #from:rui\n* [да #to:rui]\n    -> f1\n* [нет #to:rui]\n    -> f2\n// финал: один\n=== f1 ===\nраз #from:rui\n-> END\n// финал: два\n=== f2 ===\nдва #from:rui\n-> END`;
-    assert.equal(expensiveForks(parseInk(toEndings)).length, 0);
+  test('story-plan: дорогие развилки — счёт story-branch: ветка от skeleton_lines строк-сцен, свой финал', () => {
+    const scene = T.value('story.branch.expensive.skeleton_lines');
+    const small = expensiveBudget(save('fork.ink', SMALL));
+    assert.equal(small.skeleton, true);
+    assert.equal(small.min_msgs.key, 'story.branch.expensive.skeleton_lines');
+    assert.equal(small.used, 0, 'отклик в одну строку — не дорогая ветка');
+    const lines = Array.from({ length: scene }, (_, i) => `[1.${i + 2}] сцена: на корме ${i + 1} #from:rui`).join('\n');
+    const wide = expensiveBudget(save('fork-wide.ink', SMALL.replace('[1.2] отклик: на корме чей-то рюкзак #from:rui', lines)));
+    assert.equal(wide.used, 1, JSON.stringify(wide.list));
+    const toEndings = `// core: D-01\n-> a\n=== a ===\nвыбирай #from:rui\n* [да #to:rui]\n    -> f1\n* [нет #to:rui]\n    -> f2\n// финал: один\n=== f1 ===\nраз #from:rui\n-> END\n// финал: два\n=== f2 ===\nдва #from:rui\n-> END`;
+    assert.equal(expensiveBudget(save('fork-endings.ink', toEndings)).used, 1, 'распределитель в свои финалы — дорогой');
   });
 }

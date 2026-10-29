@@ -24,7 +24,9 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/stale-check.mjs --story <id> [--
 playtests/) и src/stories/<id>/. Время правки — по git (незакоммиченное — по файлу), время решения — коммит,
 где D-NN появился в decisions.md.
 
-  1. ядро     планы и скелеты с «core: D-NN» не того ядра, что в STATUS.md; без отметки — по времени
+  1. ядро     plans/plan-vN.md («core: D-NN» первой строкой), plans/skeleton-vN.ink и plans/skeleton.ink
+              («// core: D-NN» первой строкой — так пишут story-plan и story-architect) не того ядра, что в
+              STATUS.md; без отметки — по времени
   2. факты    facts.md старше текущего ядра
   3. главы    файлы глав старше ядра, которое заменило прежнее (перечитать целиком:
               truby-anatomy-of-story:LESSON-05), и старше текущего плана (сверка Б-1); первое ядро без

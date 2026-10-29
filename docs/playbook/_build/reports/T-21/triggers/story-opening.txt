@@ -1,0 +1,19 @@
+Фраз: 20 × 5 прогонов = 100 запусков claude, по 3 одновременно…
+
+скилл          попадания    ложные     обход  отказы  вместо него
+─────────────  ───────────  ─────────  ─────  ──────  ───────────
+story-cast     100% (5/5)   0% (0/89)
+story-choices  100% (5/5)   0% (0/89)
+story-endings  100% (5/5)   0% (0/89)
+story-opening  94% (60/64)  0% (0/30)         1       none×4
+story-pace     100% (5/5)   0% (0/89)
+story-pauses   100% (5/5)   0% (0/89)
+story-time     100% (5/5)   0% (0/89)
+
+Мимо:
+  ждали story-opening · вышло none, none, none, none, отказ · «Срок и ставка звучат, только если нажать «А что случилось?», остальные о дедлайне не знают»
+
+Отказов в правах: 6 (Bash ×6 (grep -rni "что случилось" src/stories examples docs/stories 2>/dev/null | head -20; git -C . log --oneline -3 -- src/st… · ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --project=phone --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · HEADLESS=1 npm run test:e2e -- --reporter=line 2>&1 | tail -60 · …ещё 1)); недействительных прогонов: 6 — в доли не входят; на Bash/Skill: Bash ×6 (grep -rni "что случилось" src/stories examples docs/stories 2>/dev/null | head -20; git -C . log --oneline -3 -- src/st… · ls e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --project=phone --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · HEADLESS=1 npm run test:e2e -- --reporter=line 2>&1 | tail -60 · …ещё 1)
+
+Всего: 96% проверок прошло (90/94), 176 с, от $1.31 (оборванные прогоны цену не сообщают)
+Записано: docs/playbook/_build/reports/T-21/triggers/story-opening.json

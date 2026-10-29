@@ -1,0 +1,18 @@
+Фраз: 21 × 5 прогонов = 105 запусков claude, по 3 одновременно…
+
+скилл             попадания     ложные      обход  отказы  вместо него
+────────────────  ────────────  ──────────  ─────  ──────  ───────────
+story-brainstorm  100% (5/5)    0% (0/95)
+story-choices     —             5% (5/100)
+story-core        100% (5/5)    0% (0/95)
+story-desk        100% (60/60)  0% (0/40)
+story-kb          100% (5/5)    0% (0/95)
+story-opening     —             5% (5/100)
+story-plan        100% (5/5)    0% (0/95)
+story-review      100% (5/5)    0% (0/95)
+story-voice       —             5% (5/100)
+
+Отказов в правах: 5 (Bash ×5 (HEADLESS=1 E2E_PORT=4373 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60 · HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · HEADLESS=1 E2E_PORT=4273 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60 · ls e2e; git diff --stat HEAD -- src e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)); недействительных прогонов: 5 — в доли не входят; на Bash/Skill: Bash ×5 (HEADLESS=1 E2E_PORT=4373 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60 · HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · ls e2e && HEADLESS=1 E2E_PORT=4273 npx playwright test --reporter=line 2>&1 | tail -60 · HEADLESS=1 E2E_PORT=4273 npx playwright test --grep-invert @shots --reporter=line 2>&1 | tail -60 · ls e2e; git diff --stat HEAD -- src e2e; HEADLESS=1 npx playwright test --reporter=line 2>&1 | tail -60)
+
+Всего: 100% проверок прошло (100/100), 161 с, от $0.57 (оборванные прогоны цену не сообщают)
+Записано: docs/playbook/_build/reports/T-21/triggers/story-desk.json

@@ -1,0 +1,23 @@
+Фраз: 19 × 5 прогонов = 95 запусков claude, по 3 одновременно…
+
+скилл          попадания    ложные     обход  отказы  вместо него
+─────────────  ───────────  ─────────  ─────  ──────  ───────────
+story-choices  —            6% (5/80)
+story-desk     100% (5/5)   0% (0/75)
+story-fix      78% (39/50)  0% (0/30)         10      none×11
+story-opening  —            6% (5/80)
+story-pace     100% (5/5)   0% (0/75)
+story-review   100% (5/5)   0% (0/75)
+story-voice    100% (5/5)   0% (0/75)
+
+Мимо:
+  ждали story-fix · вышло story-fix, none, none, отказ, отказ · «Ок, по третьему пункту бери вариант Б, по пятому — А, остальное не трогай»
+  ждали story-fix · вышло none, none, none, none, отказ · «Покажи, какие реплики поменялись после твоей правки — было и стало»
+  ждали story-fix · вышло story-fix, story-fix, story-fix, story-fix, none · «Ты поправил вторую главу — ничего не сломалось в других ветках?»
+  ждали story-fix · вышло story-fix, story-fix, story-fix, story-fix, none · «Вноси исправления из разбора пауз, я согласен со всеми P1»
+  ждали story-fix · вышло отказ, отказ, none, none, none · «давай применяй что предложил по хабу, вариант с тремя адресатами»
+
+Отказов в правах: 15 (Bash ×15 (cd docs/stories/chuzhoy-golos/reviews; grep -n -iE "вариант|^#+ |^\| *[0-9]+ *\|" 2026-10-28-story-review.md | head -60… · cd docs/stories/chuzhoy-golos/reviews; grep -n -E "^(#+ *)?(\*\*)?[0-9]+\.|вариант|Вариант" 2026-10-28-story-review.md … · cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21; find . -path ./node_modules -prune -o -newer docs/stories/ch… · find . -name "lens-story-choices*" -not -path "./node_modules/*" 2>/dev/null; find docs -newer docs/stories/chuzhoy-gol… · cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21; ls -t docs/stories/*/ docs/stories/*/* 2>/dev/null | head -8… · …ещё 10)); недействительных прогонов: 15 — в доли не входят; на Bash/Skill: Bash ×15 (cd docs/stories/chuzhoy-golos/reviews; grep -n -iE "вариант|^#+ |^\| *[0-9]+ *\|" 2026-10-28-story-review.md | head -60… · cd docs/stories/chuzhoy-golos/reviews; grep -n -E "^(#+ *)?(\*\*)?[0-9]+\.|вариант|Вариант" 2026-10-28-story-review.md … · cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21; find . -path ./node_modules -prune -o -newer docs/stories/ch… · find . -name "lens-story-choices*" -not -path "./node_modules/*" 2>/dev/null; find docs -newer docs/stories/chuzhoy-gol… · cd /Users/y.zubach/dev/jurazubach/relayer/.worktrees/T-21; ls -t docs/stories/*/ docs/stories/*/* 2>/dev/null | head -8… · …ещё 10)
+
+Всего: 86% проверок прошло (69/80), 234 с, от $3.90 (оборванные прогоны цену не сообщают)
+Записано: docs/playbook/_build/reports/T-21/triggers/story-fix.json

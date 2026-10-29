@@ -16,7 +16,7 @@ const HELP = `node \${CLAUDE_SKILL_DIR}/scripts/plan-compare.mjs (--story <id> |
   финалы        число по меткам, доли, перекос (C-40.dominant_share), редкие (C-40.rare_share)
   финал первым  переменные финала копятся до последней главы (skill.plan.final_vars.min_share)
   хребет, река  skill.plan.spine.min_share и max_share, skill.plan.river
-  развилки      дорогие против skill.plan.branches (на историю и на главу)
+  развилки      дорогие против story.branch.budget.min…max — счёт branch-core.mjs скилла story-branch (как branch-budget)
   говорящие     сколько контактов пишут в главе 1 и в самой людной главе
   время         реальное (story.length.target_h, story.length.max_h) и по клику; тёмная ночь (skill.plan.dark_night_h)
   граница       --free N: крючок в конце главы N по C-39 (где ставить — free-boundary.md, проверяет story-release)
@@ -62,7 +62,6 @@ const metric = (r) => {
   const lint = m.lint ?? [];
   const dec = (m.final_vars ?? []).filter((x) => !x.last_only);
   const busiest = Object.values(m.contacts ?? {}).reduce((a, x) => Math.max(a, x.length), 0);
-  const bd = T.value('skill.plan.branches');
   return {
     'ядро': `${s.core ?? '—'}${statusCore && s.core && s.core !== statusCore ? ` ✗ (активное ${statusCore})` : ''}`,
     'глав · строк-сцен': `${s.chapters ?? '—'} · ${s.scenes ?? '—'}`,
@@ -72,7 +71,7 @@ const metric = (r) => {
     'финал первым': dec.length ? `${dec.filter((x) => !x.low).length} из ${dec.length} копятся${dec.some((x) => x.low) ? ' ⚠' : ''}` : (m.final_vars?.length ? 'только кнопка' : '—'),
     'хребет': m.spine ? `${pct(m.spine.share)}${m.spine.low ? ' ⚠' : m.spine.high ? ' коридор?' : ''}` : '—',
     'редкие узлы': m.river ? `${pct(m.river.share)}${m.river.high ? ' ⚠' : ''}` : '—',
-    'дорогие развилки': m.branches ? `${m.branches.total} (${bd.min}–${bd.max})${m.branches.over ? ' ⚠' : ''}${m.branches.over_chapters.length ? ` гл.${m.branches.over_chapters.join(',')}⚠` : ''}` : '—',
+    'дорогие развилки': m.branches ? `${m.branches.total} (${m.branches.budget.min}–${m.branches.budget.max})${m.branches.over ? ' ⚠' : m.branches.under ? ' мало' : ''}` : '—',
     'говорят: гл.1 · максимум': m.contacts ? `${(m.contacts[1] ?? []).length} · ${busiest}` : '—',
     'реальное время': m.time?.real ? `${h(m.time.real.median)}${m.time.real.median > lim.max ? ' ✗' : m.time.real.median > lim.target ? ' ⚠' : ''}` : '—',
     'по клику (скелет)': m.time?.click ? `${Math.round(m.time.click.median / 60)} мин` : '—',

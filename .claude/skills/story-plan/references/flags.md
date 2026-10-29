@@ -14,7 +14,7 @@
 | ⚠ проза вместо строк-сцен | `skeleton.mjs --check` (`skill.plan.skeleton.run_lines`) | одна строка на сцену | `failbetter-qbn:P-01` |
 | ⚠ хребет тонкий: клубок | `plan-check.mjs` (`skill.plan.spine.min_share`) | горлышки на границах глав | `bateman-game-writing:P-01`, `GREEN-01` |
 | ⚠ много редких узлов | `plan-check.mjs` (`skill.plan.river`) | своди ветки, редкое — только финалы и награда | `failbetter-qbn:P-06`, `GREEN-01` |
-| ⚠ дорогих развилок сверх бюджета | `plan-check.mjs` (`skill.plan.branches`) | отложенное ветвление вместо узлов | R-26 у `story-branch` |
+| ⚠ дорогих развилок сверх бюджета | `plan-check.mjs` = `branch-budget.mjs` (`story.branch.budget.*`) | отложенное ветвление вместо узлов | R-26 у `story-branch` |
 | ⚠ переменная финала не копится | `plan-check.mjs` (`skill.plan.final_vars.min_share`) | место записи в ранней главе | `yorke-into-the-woods:P-10` |
 | ⚠ развилка сходится без записи; первые главы одинаковы | C-01, C-25 | `~` в ветке; видимый отклик в главе 1 | `ashwell-standard-patterns:RED-02`, `RED-03` |
 | ⚠ финал забирает почти всех или почти никого | C-40, `plan-compare.mjs` | условия, «последний шанс» (`story-endings`) | `failbetter-qbn:RED-02` |

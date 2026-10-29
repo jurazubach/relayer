@@ -15,10 +15,13 @@
       "Skill",
       "Bash(npm run story*)",
       "Bash(npm run -s story*)",
+      "Bash(npm run -s check:story*)",
       "Bash(npm run check:story*)",
       "Bash(node scripts/hooks/full.mjs *)",
       "Bash(node scripts/story/*)",
-      "Bash(node .claude/skills/*)"
+      "Bash(node .claude/skills/*)",
+      "Bash(node */.claude/skills/*)",
+      "Bash(rm docs/stories/*/context-ch*.md)"
     ]
   },
   "skillOverrides": {

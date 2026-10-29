@@ -9,8 +9,7 @@ hooks:
     - matcher: "Bash"
       hooks:
         - type: command
-          command: |-
-            node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{let c="";try{c=String(JSON.parse(s).tool_input.command||"").trim()}catch{}const q=c.replace(/\x27[^\x27]*\x27/g,"Q").replace(/"(?:[^"$\x60\\]|\\[^"$\x60\\\n])*"/g,"Q");const ok=/^(npm run (-s )?story:(lint|trace|vars|sessions|cast|endings|diff|rule|status)( |$)|node (\S*\/)?\.claude\/skills\/story-(opening|pace|pauses|time|choices|endings|cast|voice|continuity|mystery)\/scripts\/[a-z-]+\.mjs( |$)|grep( -[A-Za-z]+)* )/.test(q)&&!/[;&|<>$\x60\x27"\\\n]|\.\.\/|--(out|ask|answer-file)\b/.test(q);if(!ok){console.error("story-auditor: только чтение — одна команда: npm run story:<чтение>, скрипт линзы или grep; без ; & | > $ и --out/--ask");process.exit(2)}})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs story-auditor
 ---
 
 # story-auditor — одна линза, изолированно, только чтение

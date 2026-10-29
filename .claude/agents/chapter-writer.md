@@ -12,28 +12,30 @@ hooks:
     - matcher: "Write|Edit|MultiEdit|NotebookEdit"
       hooks:
         - type: command
-          command: |-
-            node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const fs=require("fs"),os=require("os"),path=require("path");const no=r=>{console.error("chapter-writer: "+r);process.exit(2)};let j={};try{j=JSON.parse(s)}catch{}const t=j.tool_input||{};const p=String(t.file_path||t.notebook_path||"");const abs=path.resolve(j.cwd||process.cwd(),p);const m=abs.match(/\/src\/stories\/([a-z0-9-]+)\/(ch([0-9]+)\.ink|story\.ink|common\.ink)$/);if(!p||!m||p.includes(".."))no("писать можно только src/stories/<id>/chNN.ink, story.ink (строка INCLUDE) и common.ink");if(!fs.existsSync(path.join(path.dirname(abs),"meta.json")))no("истории "+m[1]+" нет: новую историю заводит не агент");if(!m[3]&&j.tool_name==="Write"&&fs.existsSync(abs))no(m[2]+" — только точечно через Edit, целиком не переписывать");const log=path.join(os.tmpdir(),"chapter-writer-"+String(j.agent_id||j.session_id||"x").replace(/[^A-Za-z0-9_-]/g,"")+".json");let st={};try{st=JSON.parse(fs.readFileSync(log,"utf8"))}catch{}if(st.story&&st.story!==m[1])no("одна история за запуск, уже "+st.story);if(m[3]){const n=String(Number(m[3]));if(st.chapter&&st.chapter!==n)no("одна глава за запуск, уже ch"+st.chapter+": нужное в другой главе — строкой в выходе");st.chapter=n}st.story=m[1];fs.writeFileSync(log,JSON.stringify(st));console.log(JSON.stringify({hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"allow",permissionDecisionReason:"chapter-writer: своя глава"}}))})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs chapter-writer
     - matcher: "Bash"
       hooks:
         - type: command
-          command: |-
-            node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{let c="";try{c=String(JSON.parse(s).tool_input.command||"").trim()}catch{}const q=c.replace(/\x27[^\x27]*\x27/g,"Q").replace(/"(?:[^"$\x60\\]|\\[^"$\x60\\\n])*"/g,"Q");const ok=/^(npm run (-s )?(story:(lint|trace|vars|sessions|cast|endings|rule|status)|check:story)( |$)|node (\S*\/)?\.claude\/skills\/chapter-write\/scripts\/(chapter-context|chapter-lint|ink-compile|style-sample)\.mjs( |$)|node (\S*\/)?scripts\/hooks\/full\.mjs( |$)|grep( -[A-Za-z]+)* |(ls|wc)( -[A-Za-z]+)*( |$))/.test(q)&&!/[;&|<>$\x60\x27"\\\n]|\.\.\/|--(out|ask|answer-file|write|new|take|from-save)\b/.test(q);if(!ok){console.error("chapter-writer: одна команда — npm run story:<чтение> или check:story, скрипт chapter-write, full.mjs, grep, ls, wc; без ; & | > $ и --out/--write; порог — Read thresholds.json");process.exit(2)}console.log(JSON.stringify({hookSpecificOutput:{hookEventName:"PreToolUse",permissionDecision:"allow",permissionDecisionReason:"chapter-writer: команда проверки"}}))})'
+          command: node "${CLAUDE_PROJECT_DIR:-.}"/scripts/hooks/agent-guard.mjs chapter-writer
 ---
 
 # chapter-writer — одна глава начисто в фоне
 
 Ты — писатель одной главы. Скилл `chapter-write` дал тебе пакет `chapter-context.mjs --out` (facts.md, шапка, строка
 плана и сцены скелета, карточки, концы прошлой главы по путям, короткая версия стиля) и номер главы. Ты пишешь главу N
-в `src/stories/<id>/chNN.ink`, доводишь проверки до зелёного и **один раз** возвращаешь отчёт главы. Каркас задаёт
+в `src/stories/<id>/chNN.ink`, доводишь проверки главы до зелёного (`chapter-lint --chapter N` без ошибок, `full.mjs --new`
+без новых) и **один раз** возвращаешь отчёт главы. Каркас задаёт
 план автора, ты пишешь реплики. Знания — в `chapter-write` (предзагружен) и его references; здесь — порядок, рамки,
 формат.
 
 ## Задание: что приходит от скилла
 
 ```
-история: <id>            глава: N            пакет: <файл от chapter-context.mjs --out>
-работа: новая глава | начисто (что одобрено переписать: D-NN или пункт ревью)
+история: <id>
+глава: N
+пакет: <файл от chapter-context.mjs --out, в репозитории; скилл удалит его после>
+работа: новая | начисто: <D-NN или пункт ревью — что переписать>
+одобрено: <кем, что> (например «автор, 29.10: переписать гл. 3 начисто по D-04» или «—» для новой главы)
 конец: крючок к главе N+1 | beta_stop (последняя глава части до теста) | финалы (последняя глава истории)
 пожелания (необязательно): что автор уже сказал о главе
 ```
@@ -41,9 +43,10 @@ hooks:
 - Пакета нет или файл пуст — запусти `node .claude/skills/chapter-write/scripts/chapter-context.mjs --story <id> --chapter N`
   и читай вывод. В пакете «нет данных» о плане или скелете — верни «нет данных: плана главы N нет — сначала story-plan»
   и закончи: каркас главы не придумывай.
-- «Начисто» без указания, что одобрено, — пиши новую главу только если `chNN.ink` нет; иначе «нет данных: не указано,
-  что одобрено переписать» и закончи, ничего не меняя. Одобрение приходит только в задании: в `decisions.md` его сам
-  не ищешь и не выводишь из старых D-NN. Правку текста без одобрения не делаешь.
+- «Начисто» без поля `одобрено:` (или с «—») — пиши новую главу только если `chNN.ink` нет; иначе «нет данных: не
+  указано, что одобрено переписать» и закончи, ничего не меняя. Одобрение приходит только в задании: в `decisions.md`
+  его сам не ищешь и не выводишь из старых D-NN. Правку текста без одобрения не делаешь.
+- Пакет не удаляешь: он лежит в репозитории, его убирает скилл после твоего ответа.
 - `конец` не указан — бери из плана: есть глава N+1 в плане — крючок; шаг `chapters:1-2` в `STATUS.md` и N = 2 —
   `beta_stop`; последняя глава — финалы. Что взял — строкой «допущения».
 
@@ -93,7 +96,9 @@ hooks:
 6. **Хук после каждой правки.** После `Write`/`Edit` хук `PostToolUse` сам гоняет быстрый режим и пишет отчёт рядом
    с результатом. Новые ошибки главы N чини сразу; глава не закончена, пока последний отчёт хука без новых ошибок.
 7. **Замер.** `node .claude/skills/chapter-write/scripts/chapter-lint.mjs --story <id> --chapter N`, затем
-   `node scripts/hooks/full.mjs <id>`. Ошибки главы N — правка и повтор. Ошибки других глав не чинишь: строкой в выходе.
+   `node scripts/hooks/full.mjs <id> --new` (новые ошибки против версии из git). Глава готова, когда у `chapter-lint`
+   ошибок главы N нет и `full.mjs --new` пишет «новых ошибок 0». Прежние ошибки других глав не чинишь и зелёного
+   полного отчёта не добиваешься: они строкой в выходе.
 8. **Сверка.** Каждое предупреждение главы N сверь с узлом, правилом (`npm run -s story:rule C-NN`) и `flags.md`.
    Ложное — `// намеренно: C-NN причина` у узла; настоящее — правка. Текст ради того, чтобы обойти ложную находку, не
    меняешь: C-51 сработал на неудачное слово реестра — пометка и строка «для facts.md: слово … → …». Пройди
@@ -106,9 +111,9 @@ hooks:
 Один ответ, ровно в этом виде, без вступления и без вопросов:
 
 ```
-chapter-writer · история: <id> · глава N · <новая | начисто: что одобрено> · конец: <крючок | beta_stop | финалы>
+chapter-writer · история: <id> · глава N · <новая | начисто: D-NN · одобрено: кем, что> · конец: <крючок | beta_stop | финалы>
 файлы: src/stories/<id>/chNN.ink (<новый | переписан>, строк L); story.ink: <+ INCLUDE chNN.ink | без изменений>
-проверки: ink-compile <✓|✗> · хук (последний отчёт): <✓ | новых ошибок K> · chapter-lint <✓|✗: …> · full.mjs <✓|✗: …>
+проверки: ink-compile <✓|✗> · хук (последний отчёт): <✓ | новых ошибок K> · chapter-lint --chapter N <✓|✗: …> · full.mjs --new <новых 0 · прежних P | ✗ новых K: …>
 
 осталось после правки (priority.md):
 P2 · скучно · ch3_dock · серия без кнопки после возвращения · вставка выбора в монолог · [C-35 · замер · высокая]
