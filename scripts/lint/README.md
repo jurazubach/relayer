@@ -1,6 +1,6 @@
 # scripts/lint — story:lint
 
-Проверки сценария C-01…C-54 по `docs/playbook/checks.md`. Пороги, словари и их опора — только в
+Проверки сценария C-01…C-55 по `docs/playbook/checks.md`. Пороги, словари и их опора — только в
 `docs/playbook/thresholds.json`: код проверки берёт значение по ключу, ключа нет — исключение.
 Самопроверка — `npm run test:lint`.
 

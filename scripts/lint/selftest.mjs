@@ -15,7 +15,7 @@ import { loadThresholds, validateThresholds, THRESHOLDS_PATH } from '../lib/thre
 
 const HELP = `npm run test:lint [-- --json] [-- --only <подстрока>]
 
-Самопроверка story:lint: на каждую проверку C-01…C-54 — маленькая выдуманная история с дефектом
+Самопроверка story:lint: на каждую проверку C-01…C-55 — маленькая выдуманная история с дефектом
 (находка есть) и, где это имеет смысл, без него (находки нет); вторая волна и проверки скиллов — selftest-*.mjs (подключаются сами).
 Подавление «// намеренно:»; уровни из thresholds.json; схема thresholds.json (опора, deferred:E-NN),
 сверка engine.typing с engine.ts; ключи вместо чисел в claude-code-format.md, attention-merged.md §6,
@@ -631,7 +631,7 @@ test('style.md, checks.md, rules.md: каждый ключ в тексте су�
   for (const k of ['story.length.target_h', 'story.length.max_h', 'story.pause.max_h', 'story.tail.max_delay_min', 'story.reminders.max', 'story.sleep_morning.min_h', 'engine.click.time_jump_label']) assert.ok(rules.includes(`\`${k}\``), `rules.md: ${k}`);
 });
 
-test('у каждой проверки C-01…C-54 из checks.md есть модуль и хотя бы один ключ', () => {
+test('у каждой проверки C-01…C-55 из checks.md есть модуль и хотя бы один ключ', () => {
   const ids = [...readFileSync(join(ROOT, 'docs/playbook/checks.md'), 'utf8').matchAll(/^### (C-\d\d)\./gm)].map((m) => m[1]);
   const have = new Set(checks.map((c) => c.id));
   for (const id of ids) {
