@@ -1,5 +1,5 @@
 import type { Progress, Story } from '../engine';
-import { formatAgo, freeChip, isOutdated, keepShortWords, storyCounts, storyTeasers, timeLines } from '../engine';
+import { formatAgo, freeChip, isOutdated, keepShortWords, plural, storyCounts, storyTeasers, timeLines } from '../engine';
 
 /**
  * Карточка истории на главном экране: на всю ширину, обложкой.
@@ -31,7 +31,7 @@ export function StoryTile({
       ? 'Пройдено'
       : progress.locked && free !== null
         ? 'Бесплатная часть пройдена'
-        : `${progress.messages} сообщений`;
+        : `${progress.messages} ${plural(progress.messages, 'сообщение', 'сообщения', 'сообщений')}`;
   const ago = progress && !progress.ended && progress.savedAt ? formatAgo(progress.savedAt) : '';
   const own = story.origin === 'upload';
   const going = !!progress && !progress.ended;

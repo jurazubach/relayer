@@ -8,6 +8,7 @@ import {
   freeLine,
   isOutdated,
   modeSizes,
+  plural,
   revisionOf,
   sizeLabel,
   storyPalette,
@@ -64,7 +65,7 @@ export function StoryScreen({
       ? 'История пройдена'
       : progress.locked && free !== null
         ? `Бесплатная часть пройдена · ${formatAgo(progress.savedAt)}`
-        : `${progress.messages} сообщений · ${formatAgo(progress.savedAt)}`
+        : `${progress.messages} ${plural(progress.messages, 'сообщение', 'сообщения', 'сообщений')} · ${formatAgo(progress.savedAt)}`
     : sizeLabel(story);
 
   return (
