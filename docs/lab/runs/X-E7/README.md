@@ -21,6 +21,8 @@
 | 10 | `story-release` (гейт 1) | `runs/release.phrase.txt` | карточка, `release/` |
 | 11 | `story-fix` (по панели «после») | `runs/fix3.phrase.txt` | глава 1 у блока Коннора, метки «по клику», нестыковки |
 | 12 | `story-playtest` (набор для друзей) и `story-release` (гейт 2) | `runs/kit.phrase.txt`, `runs/release2.phrase.txt` | `docs/stories/chuzhoy-golos/playtests/wave-1/`, ревизия 2, `.json` |
+| 13 | `story-review` целиком (после) | `runs/review2.phrase.txt` | 55 находок (P1 0, P2 26, P3 29), `review-after/` |
+| 14 | `story-fix` (по ревью «после», «хватит правки») | `runs/fix4.phrase.txt` | `end_silence`, нестыковки, цены до нажатия, крючки на стыках |
 
 Недействительные прогоны (с `permission_denials`) — в `runs/*.result.json` поле `permission_denials`; первые
 прогоны панели «до» и ядра лежат в `runs/invalid/` (отказ на `Monitor` и на составной `Bash`). Сводка отказов — в
@@ -34,8 +36,10 @@
 | `runs/*.phrase.txt` | фраза автора дословно |
 | `runs/*.result.json` | время, ходы, стоимость, отказы, ответ скилла (у `fix4` — восстановлен по выводу, ответ — в `fix4.digest.md`) |
 | `runs/*.digest.md` | сжатый транскрипт (`X-E2/digest.mjs`); полные потоки `stream-json` в репозиторий не положены |
-| `before/`, `after1/`, `after2/` | снимки метрик `X-E3/snap.sh` (+ `choices.txt` — профиль кнопок `story-choices/choices.mjs`): до, после переписи, после второго захода |
-| `metrics.md` | `X-E3/compare.mjs before after2` и дополнительные метрики Э7 |
+| `before/`, `after1/`, `after2/`, `after/` | снимки метрик `X-E3/snap.sh` (+ `choices.txt` — профиль кнопок `story-choices/choices.mjs`): до (`master`), после переписи, после второго захода, итог (JSON — только у `before/` и `after/`) |
+| `metrics.md` | `X-E3/compare.mjs before after` и метрики болей автора |
 | `story-diff.txt` | `npm run story:diff -- master . --story chuzhoy-golos` |
-| `review/` | отчёт ревью целиком, ответы линз и читателей |
+| `review/`, `review-after/` | ревью целиком до и после переработки: отчёт, ответы линз и читателей |
+| `panel-before/`, `panel-before-answer.md`, `panel-after-answer.md` | панели холодных читателей (ответы читателей «после» — `docs/stories/chuzhoy-golos/playtests/sim-2026-10-29-after/`) |
+| `cold/` | холодный читатель на ветке блока Коннора после правки по панели |
 | `release/` | ответы гейта и дифф карточки |
