@@ -1,5 +1,7 @@
 // ============ ГЛАВА 9 · суббота, утро ============
 
+// игрок уже прождал у кнопки в ветке «не ответил» (3 мин; long — 10 мин с напоминанием): столько же снимается
+// с паузы перед следующей сценой
 
 === ch9 ===
 Суббота, утро · Лестница #sys:judith #chapter #delay:5h
@@ -8,8 +10,12 @@
     ~ jess_alarmed = true
 }
 {bill_asked: -> ch9_bill}
-Конверт от оператора за июнь так и лежит на столе. #from:judith #delay:1m
-Джессика придёт в восемь. Как каждую субботу. #delay:30s
+{note_shown_to == "judith":
+    Конверт от оператора за июнь лежит у меня нераспечатанный. Я не открываю их с июня. #from:judith #delay:1m
+- else:
+    Конверт от оператора за июнь так и лежит на столе. #from:judith #delay:1m
+}
+Джессика придёт в восемь. Как каждую субботу. #from:judith #delay:30s
 {jess_alarmed:
     Вчера я сказала ей, что Вы ищете телефон Лилиан. Я не подумала. #delay:40s
 }
@@ -19,7 +25,8 @@
     Хорошо. Когда она уйдёт. #from:judith #delay:3m
 * [Как Вы? #to:judith]
     Плохо. Спасибо, что спросили. #from:judith #delay:3m
-* [#noanswer:10m]
+* [#noanswer:3m]
+    ~ c9_waited = true
 - Пойду поставлю чайник. Две чашки, как всегда. #from:judith #delay:1m
 Джудит Марш не в сети #sys:judith
 -> ch9_owen
@@ -38,11 +45,11 @@
 * (direct) [Спросите её прямо #to:judith]
     ~ jess_alarmed = true
     Хорошо. Спрошу. #from:judith #delay:2m
-* [#remind:15m] Она всегда приходит на пять минут раньше.
+* [#remind:8m] Она всегда приходит на пять минут раньше.
     -> ask
-* [#remind:15m] Я достала две чашки. Как всегда.
+* [#remind:8m] Я достала две чашки. Как всегда.
     -> ask
-* [#noanswer:10m]
+* [#noanswer]
     Я ничего не буду менять. #from:judith
 - Звонок в дверь. #from:judith #delay:1m
 Джудит Марш не в сети #sys:judith
@@ -70,8 +77,29 @@
 ~ clue_bill = true
 ->->
 
+// пауза между сценами главы: прождал у кнопки — пауза короче на столько же
+// намеренно: C-02 c9_waited_long — служебный учёт ожидания у кнопки для длины паузы, а не состояние, которое копит игрок
+=== ch9_gap ===
+{
+- c9_waited_long:
+    #delay:10m
+- c9_waited:
+    #delay:17m
+- else:
+    #delay:20m
+}
+~ c9_waited = false
+~ c9_waited_long = false
+->->
+
 === ch9_owen ===
-Мой отец нанял адвоката. #from:owen #delay:5m
+{c9_waited:
+    #delay:2m
+- else:
+    #delay:5m
+}
+~ c9_waited = false
+Мой отец нанял адвоката. #from:owen
 Нам надо поговорить 🙂 #delay:20s
 {hart_fooled || hart_exposed:
     Харт — это был я. Глупо, знаю. #delay:30s
@@ -94,10 +122,16 @@
         -> ch9_turn
     ** [Промолчать #to:owen #silent]
         -> ch9_owen_off
+    ** [#noanswer:3m]
+        ~ c9_waited = true
+        -> ch9_owen_off
 * [Промолчать #to:owen #silent]
     -> ch9_owen_off
-* [#remind:15m] Адвокат уже сидит у нас в гостиной 🙂
+* [#remind:5m] Адвокат уже сидит у нас в гостиной 🙂
     -> ask
+* [#noanswer]
+    ~ c9_waited_long = true
+    -> ch9_owen_off
 
 === ch9_owen_off ===
 Как скажешь 🙂 #from:owen #delay:2m
@@ -112,7 +146,7 @@
 я нашёл её на уступе. около часа #delay:30s
 она сказала: карты в телефоне уже нет. и бросила мой телефон в воду #delay:30s
 я схватил её за запястье. она упала #delay:30s
-синяк — это я #delay:20s
+если на руке у неё нашли след — это мои пальцы #delay:20s
 она плыла. я видел. и ушёл #delay:40s
 на верхней тропе стояла джесс #delay:1m
 ~ clue_owen_saw = true
@@ -128,27 +162,27 @@
 * [Ты оставил её в воде. Ничего не обещаю #to:owen]
     знаю #from:owen #delay:5m
     всё равно скажу #delay:20s
-* [#remind:10m] я этого никому не говорил. ни отцу ни адвокату
-    -> ask
-* [#noanswer:10m]
+* [#noanswer:3m]
+    ~ c9_waited = true
     ладно #from:owen
 - адвокат зовёт. отец не знает ничего из этого #from:owen #delay:1m
 Оуэн Брайт не в сети #sys:owen
 -> ch9_maya
 
 === ch9_maya ===
+-> ch9_gap ->
 {
 - clue_whisper:
-    Тренер прислал видео гонок. #from:maya #delay:20m
+    Тренер прислал видео гонок. #from:maya
     Я искала голос Дэна. #delay:20s
     На старте рулевая считает: «на счёт три». #delay:40s
     Та же пауза перед «три». Как на записи. #delay:30s
     Кто сидел у них рулевой в тот год, тренер не говорит. Ты знаешь? #delay:30s
 - maya_target == "owen":
-    Отец Брайта вызвал на меня полицию. #from:maya #delay:20m
+    Отец Брайта вызвал на меня полицию. #from:maya
     Я в машине у пирса. Скажи мне, что ты знаешь. #delay:30s
 - else:
-    Я в машине у пирса. Вторые сутки. #from:maya #delay:20m
+    Я в машине у пирса. Вторые сутки. #from:maya
     Скажи мне, что ты знаешь. #delay:30s
 }
 - (ask)
@@ -169,9 +203,10 @@
         У меня было два года. #from:maya #delay:3m
     }
     -> ch9_maya_after
-* [#remind:15m] Я у лодочной. Отсюда видно стойки с их гичками.
+* [#remind:5m] Я у лодочной. Отсюда видно стойки с их гичками.
     -> ask
-* [#noanswer:10m]
+* [#noanswer]
+    ~ c9_waited_long = true
     -> ch9_maya_after
 
 === ch9_named ===
@@ -194,15 +229,16 @@
 -> ch9_judith
 
 === ch9_judith ===
+-> ch9_gap ->
 {
 - clue_bill:
-    Я разложила её записки по датам. #from:judith #delay:30m
+    Я разложила её записки по датам. #from:judith
 - bill_asked:
-    Она ушла. Я открыла конверт. #from:judith #delay:30m
+    Она ушла. Я открыла конверт. #from:judith
     -> ch9_receipt ->
     А в восемь я налила ей чай. #delay:40s
 - else:
-    Я открыла конверт сама. Из-за записки с номера Лилиан. #from:judith #delay:30m
+    Я открыла конверт сама. Из-за записки с номера Лилиан. #from:judith
     Я хотела знать, кто ещё знает код её телефона. #delay:30s
     -> ch9_receipt ->
 }
@@ -215,9 +251,7 @@
     -> ask
 * [Что было на сожжённых страницах? #to:judith]
     -> ch9_diary
-* [#remind:15m] Записки заняли весь стол. Я не могу их убрать.
-    -> ask
-* [#noanswer:10m]
+* [#noanswer:3m]
     Я скажу сама. #from:judith
     -> ch9_diary
 
@@ -235,9 +269,9 @@ Kind regards, J. Marsh. #delay:10s
 === ch9_jess ===
 {
 - jess_alarmed:
-    вы спрашивали у джудит про лили?? зачем?? #from:jess #delay:30m
+    вы спрашивали у джудит про лили?? зачем?? #from:jess #delay:20m
 - else:
-    у лодочной с утра стоит машина маи кин!! #from:jess #delay:30m
+    у лодочной с утра стоит машина маи кин!! #from:jess #delay:20m
     она что-то про меня знает?? #delay:20s
 }
 - (ask)
@@ -248,9 +282,10 @@ Kind regards, J. Marsh. #delay:10s
 * [Джесс, тебе есть что мне сказать? #to:jess]
     нет!! простите #from:jess #delay:5m
     -> ch9_jess_off
-* [#remind:15m] я правда не понимаю что происходит
+* [#remind:5m] я правда не понимаю что происходит
     -> ask
-* [#noanswer:10m]
+* [#noanswer]
+    ~ c9_waited_long = true
     -> ch9_jess_off
 
 === ch9_conf ===
@@ -271,7 +306,8 @@ Kind regards, J. Marsh. #delay:10s
     }
 * [Иди домой, Джесс #to:jess]
     иду #from:jess #delay:2m
-* [#noanswer:10m]
+* [#noanswer:3m]
+    ~ c9_waited = true
 - -> ch9_jess_off
 
 === ch9_jess_off ===
@@ -289,6 +325,7 @@ Kind regards, J. Marsh. #delay:10s
 }
 мы стояли вдвоём. он боялся #delay:40s
 я сказала: на счёт три. как в лодке. я всегда так считаю #delay:40s
+я это никому не говорила. только вам #delay:30s
 - (ask)
 * [И что потом? #to:jess]
 * [Тебе было пятнадцать #to:jess]
@@ -297,18 +334,19 @@ Kind regards, J. Marsh. #delay:10s
 * [За это два года платила Элли #to:jess]
     ~ jess_bond -= 1
     я знаю #from:jess #delay:5m
-* [#remind:10m] я стираю и пишу заново
-    -> ask
-* [#noanswer:5m]
+* [#noanswer:3m]
+    я стираю и пишу заново #from:jess
 - я толкнула его. чуть-чуть. как новичков с мостков #from:jess #delay:1m
 он поскользнулся #delay:30s
 оуэн сказал: тебя тут не было. беги #delay:40s
 и я побежала #delay:30s
 ->->
 
+// намеренно: C-17 это не выбор между людьми: улику Бет либо пересылают Элли, либо нет, — знакомство с Элли тут ничего не предрешает
 === ch9_beth ===
 {c8_beth_done: -> ch9_ellie}
-у меня есть ещё одно сообщение от лили #from:beth #delay:20m
+-> ch9_gap ->
+у меня есть ещё одно сообщение от лили #from:beth
 эм. я тогда показала не всё #delay:30s
 {not beth_written:
     ~ jess_clues += 1
@@ -323,17 +361,19 @@ Lily 💧 00:53 — она меня заблокировала. глупая. с
     она не злилась #delay:10s
 * [Спасибо, Бет #to:beth]
     простите что так поздно #from:beth #delay:1m
-* [#noanswer:5m]
+* [#noanswer:3m]
+    ~ c9_waited = true
 - мама зовёт. простите #from:beth #delay:1m
 Бет не в сети #sys:beth
 -> ch9_ellie
 
 === ch9_ellie ===
+-> ch9_gap ->
 {
 - maya_target == "jess":
-    мая кин написала мне. «я ошиблась насчёт тебя». и всё #from:ellie #delay:30m
+    мая кин написала мне. «я думала на тебя. прости». и всё #from:ellie
 - else:
-    в школьном чате все обсуждают пост маи. я вышла из чата #from:ellie #delay:30m
+    в школьном чате все обсуждают пост маи. я вышла из чата #from:ellie
 }
 {ch9_beth.fwd:
     я сохранила её сообщение. то от бет #delay:40s
@@ -348,9 +388,10 @@ Lily 💧 00:53 — она меня заблокировала. глупая. с
     значит мне не показалось #delay:1m
 * [Пока не могу сказать. Скоро скажу #to:ellie]
     ок #from:ellie #delay:1m
-* [#remind:15m] мама спрашивает почему я весь день с телефоном
+* [#remind:5m] мама спрашивает почему я весь день с телефоном
     -> ask
-* [#noanswer:10m]
+* [#noanswer]
+    ~ c9_waited_long = true
     ок. я тут #from:ellie
 - {ellie_block_told:
     если всё выйдет наружу — я скажу им про блок. сама #from:ellie #delay:2m
@@ -360,7 +401,8 @@ Lily 💧 00:53 — она меня заблокировала. глупая. с
 -> ch9_hook
 
 === ch9_hook ===
-Я позвонила Джессике. #from:judith #delay:20m
+-> ch9_gap ->
+Я позвонила Джессике. #from:judith
 Попросила прийти завтра в половине шестого, до моей смены. #delay:30s
 Сказала, что хочу отдать ей вещи Лилиан. #delay:30s
 Я хочу видеть её лицо, когда спрошу про 01:19. #delay:40s
@@ -371,14 +413,21 @@ Lily 💧 00:53 — она меня заблокировала. глупая. с
     Я не одна. Вы же будете на связи. #from:judith #delay:3m
 * [Хорошо #to:judith]
     Хорошо. #from:judith #delay:2m
-* [#noanswer:5m]
+* [#noanswer:3m]
+    ~ c9_waited = true
 - Kind regards, J. Marsh. #from:judith #delay:10s
+{c9_waited:
+    #delay:7m
+- else:
+    #delay:10m
+}
+~ c9_waited = false
 {
 - jess_promised:
-    в четыре я буду на лодочной #from:jess #delay:10m
+    в четыре я буду на лодочной #from:jess
     потом скажу всё. только вам #delay:30s
 - else:
-    джудит позвала меня завтра в полшестого утра!! #from:jess #delay:10m
+    джудит позвала меня завтра в полшестого утра!! #from:jess
     отдать вещи лили. почему сейчас?? #delay:20s
 }
 - (ask)
@@ -388,9 +437,9 @@ Lily 💧 00:53 — она меня заблокировала. глупая. с
     я подумаю #delay:30s
 * [Не знаю #to:jess]
     вы тоже не знаете #from:jess #delay:3m
-* [#remind:10m] я лежу и смотрю в потолок
+* [#remind:5m] я лежу и смотрю в потолок
     -> ask
-* [#noanswer:10m]
+* [#noanswer]
 - всё равно не усну #from:jess #delay:1m
 Джесс не в сети #sys:jess
 -> ch10

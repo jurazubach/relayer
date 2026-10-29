@@ -102,6 +102,19 @@ VAR maya_post = 0
 VAR maya_go = false
 VAR maya_at_door = false
 VAR judith_promised = false
+VAR c2_told_night = false
+VAR c2_asked_accident = false
+VAR c2_answered_unknown = false
+VAR c3_wait = 0
+VAR c3_owen_doubt = false
+VAR c3_owen_tip = false
+VAR c3_note_cc = false
+VAR ch4_waited = false
+VAR c5_waited = false
+VAR c9_waited = false
+VAR c9_waited_long = false
+VAR c10_asked_phone = false
+VAR c10_pressed = false
 
 // ---- служебные флаги глав ----
 VAR c7_ellie_out = false

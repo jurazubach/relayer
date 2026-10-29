@@ -3,7 +3,7 @@
 // Джесс — рулевая, «на счёт три» (план v1 §7, ствол гл. 6)
 
 === ch6 ===
-Пятница, день · Сестра #from:maya #sys:maya #chapter #delay:2h
+Пятница, день · Сестра #from:maya #sys:maya #chapter #delay:90m
 // сохранение старого пилота: исход лежал в ending, а не в act1
 {
 - act1 == "" && ending != "":
@@ -26,7 +26,7 @@
     ~ maya_trust += 1
     Вопросы про карьер в этом городе задают только с твоего номера. #from:maya #delay:30s
     Остальные здесь молчат два года. #delay:15s
-* [#noanswer:10m]
+* [#noanswer:3m]
 - -> ch6_story
 
 === ch6_story ===
@@ -39,7 +39,7 @@
 * [Дэн, 23:41: «она здесь. иду наверх». Лили, 00:24: «там не все, кто стоял наверху… сначала поговорю с ней» #to:notes #label:Сохранить в заметки]
     ~ note_she = true
 * [Не сохранять #to:notes #silent]
-* [#noanswer:5m]
+* [#noanswer:3m]
 - -> ch6_ask
 
 === ch6_ask ===
@@ -58,7 +58,12 @@
 - (ask)
 * [Отправляю все три #to:maya #label:Отправить Мае все три файла]
     ~ maya_files = 2
-    ~ maya_trust += 2
+    {
+    - asked_ellie:
+        ~ maya_trust += 1
+    - else:
+        ~ maya_trust += 2
+    }
     Вы отправили 3 файла #sys:maya #delay:10s
     {
     - cut_frames: -> ch6_cut
@@ -68,17 +73,42 @@
     ~ maya_files = 1
     ~ maya_trust += 1
     Вы отправили 1 файл #sys:maya #delay:10s
-    Почему не все? #from:maya #delay:30s
-    Ладно. Мне хватит голоса. #delay:20s
+    {not asked_ellie:
+        Почему не все? #from:maya #delay:30s
+        Ладно. Мне хватит голоса. #delay:20s
+    }
     -> ch6_files_done
-* [Сестра Денни просит запись. Можно? #to:ellie #label:Спросить Элли]
-    -> ch6_ask_ellie
+// Элли отвечает и возвращает к кнопкам Маи (спица хаба)
+* (asked_ellie) [Сестра Денни просит запись. Можно? #to:ellie #label:Спросить Элли]
+    {
+    - act1 == "owen":
+        ты у меня спрашиваешь? после оуэна? #from:ellie #delay:20m
+        делай что хочешь #delay:20s
+    - act1 == "ellie_alone_owen":
+        отправь. мне уже всё равно #from:ellie #delay:20m
+    - world == "hidden":
+        без моего имени. помнишь? #from:ellie #delay:20m
+        третий можно. там меня нет #delay:20s
+    - else:
+        она имеет право. там её брат #from:ellie #delay:20m
+        отправь #delay:20s
+    }
+    {
+    - act1 != "owen":
+        ~ ellie_trust += 1
+    }
+    -> ask
 * [Нет. Запись не моя #to:maya]
     ~ maya_trust -= 1
-    Понятно. #from:maya #delay:30s
-    Найду другой способ. #delay:10s
+    {
+    - asked_ellie:
+        Понятно. Элли решает за тебя. #from:maya #delay:30s
+    - else:
+        Понятно. #from:maya #delay:30s
+        Найду другой способ. #delay:10s
+    }
     -> ch6_files_done
-* [#remind:15m] Мне не нужно всё. Только голос в темноте. #from:maya
+* [#remind:8m] Мне не нужно всё. Только голос в темноте. #from:maya
     -> ask
 * [#noanswer]
     Ладно. Поищу другой способ. #from:maya
@@ -86,53 +116,18 @@
 
 === ch6_cut ===
 Во втором вырезано. Кто резал? #from:maya #delay:3m
+- (ask)
 * [Элли. Там были она и Коннор #to:maya]
     ~ maya_trust += 1
     Спасибо, что не врёшь. #from:maya #delay:30s
 * [Не знаю #to:maya]
     ~ maya_trust -= 1
     Знаешь. #from:maya #delay:30s
-* [#noanswer:10m]
+* [#remind:5m] Склейка грубая, по живому. Полиция так не режет. #from:maya
+    -> ask
+* [#noanswer]
     Ладно. Разберусь сама. #from:maya
 - -> ch6_files_done
-
-=== ch6_ask_ellie ===
-{
-- act1 == "owen":
-    ты у меня спрашиваешь? после оуэна? #from:ellie #delay:20m
-    делай что хочешь #delay:20s
-- act1 == "ellie_alone_owen":
-    отправь. мне уже всё равно #from:ellie #delay:20m
-- world == "hidden":
-    без моего имени. помнишь? #from:ellie #delay:20m
-    третий можно. там меня нет #delay:20s
-- else:
-    она имеет право. там её брат #from:ellie #delay:20m
-    отправь #delay:20s
-}
-{
-- act1 != "owen":
-    ~ ellie_trust += 1
-}
-* [Отправляю все три #to:maya #label:Отправить Мае все три файла]
-    ~ maya_files = 2
-    ~ maya_trust += 1
-    Вы отправили 3 файла #sys:maya #delay:10s
-    {
-    - cut_frames: -> ch6_cut
-    }
-    -> ch6_files_done
-* [Отправляю только третий #to:maya #label:Отправить Мае только третий файл]
-    ~ maya_files = 1
-    ~ maya_trust += 1
-    Вы отправили 1 файл #sys:maya #delay:10s
-    -> ch6_files_done
-* [Мая, извини. Нет #to:maya]
-    ~ maya_trust -= 1
-    Понятно. Элли решает за тебя. #from:maya #delay:30s
-    -> ch6_files_done
-* [#noanswer:10m]
-    -> ch6_files_done
 
 === ch6_files_done ===
 {
@@ -150,24 +145,24 @@
 - act1 == "owen":
     -> ch6_ellie_owen
 - act1 == "ellie_together":
-    спасибо за утро. правда #from:ellie #delay:30m
+    спасибо за утро. правда #from:ellie #delay:20m
     мама со мной не разговаривает #delay:20s
 - act1 == "adjourned" || act1 == "adjourned_cut":
-    меня вызывали ещё раз. после перерыва #from:ellie #delay:30m
+    меня вызывали ещё раз. после перерыва #from:ellie #delay:20m
     {act1 == "adjourned_cut":
         спрашивали зачем я резала запись. я сказала испугалась #delay:20s
     }
 - act1 == "ellie_alone_truth":
-    я дошла сама. и сказала всё #from:ellie #delay:30m
+    я дошла сама. и сказала всё #from:ellie #delay:20m
     про денни тоже #delay:20s
 - act1 == "ellie_hides":
-    я выбросила карту. с пирса #from:ellie #delay:30m
+    я выбросила карту. с пирса #from:ellie #delay:20m
     теперь запись только у тебя #delay:20s
 - act1 == "ellie_alone_owen":
-    я отдала карту оуэну. он обещал #from:ellie #delay:30m
+    я отдала карту оуэну. он обещал #from:ellie #delay:20m
     прости. я решила сама. и решила не так #delay:30s
 - else:
-    меня теперь ненавидят по-другому #from:ellie #delay:30m
+    меня теперь ненавидят по-другому #from:ellie #delay:20m
     раньше думали что я её бросила. теперь знают что я врала про денни #delay:20s
 }
 а после зала оуэн ждал меня у выхода #delay:30s
@@ -175,7 +170,7 @@
 -> ch6_ellie_talk
 
 === ch6_ellie_owen ===
-мои файлы у оуэна. из-за тебя #from:ellie #delay:30m
+мои файлы у оуэна. из-за тебя #from:ellie #delay:20m
 он пришёл за картой. я отдала. у него и так всё было #delay:30s
 * [Прости. Это была ошибка #to:ellie]
     ~ ellie_trust += 1
@@ -188,9 +183,12 @@
 * [Промолчать #to:ellie #silent]
     ~ ellie_trust -= 1
     Элли не в сети #sys:ellie #delay:5m
+    #delay:20m
     -> ch6_jess
-* [#noanswer:10m]
+* [#noanswer:3m]
     Элли не в сети #sys:ellie
+    // пауза перед Джесс короче на время ожидания у кнопок
+    #delay:17m
     -> ch6_jess
 
 === ch6_ellie_talk ===
@@ -213,17 +211,20 @@
 * [Ты как после зала? #to:ellie]
     ~ ellie_trust += 1
     плохо. но лучше чем в июне #from:ellie #delay:1m
-* [#noanswer:10m]
+* [#noanswer:3m]
     ладно. мама зовёт #from:ellie
-- -> ch6_jess
+    #delay:17m
+    -> ch6_jess
+- #delay:20m
+-> ch6_jess
 
 === ch6_jess ===
 {
 - world == "open":
-    омг вы видели что в группе?? #from:jess #delay:30m
+    омг вы видели что в группе?? #from:jess
     все только про денни и говорят
 - else:
-    в группе уже пишут про вердикт #from:jess #delay:30m
+    в группе уже пишут про вердикт #from:jess
     несчастный случай. я думала вы что-то найдёте
 }
 {
@@ -248,7 +249,7 @@
     мы были в одной лодке
 * [Про запись ничего не знаю #to:jess]
     ну ладно. если что пишите #from:jess #delay:30s
-* [#remind:10m] просто все спрашивают а я не знаю что отвечать #from:jess
+* [#remind:5m] просто все спрашивают а я не знаю что отвечать #from:jess
     -> ask
 * [#noanswer]
     ладно. если что пишите #from:jess
@@ -279,6 +280,7 @@
     }
     А копию свою удали. Для твоего же спокойствия 🙏 #delay:20s
 }
+- (ask)
 * [Удалено #to:owen #label:Соврать, что файлы удалены]
     ~ owen_reply = "deleted"
     Умница 🙂 #from:owen #delay:1m
@@ -288,17 +290,22 @@
 * [Промолчать #to:owen #silent]
     ~ owen_reply = "silent"
     Молчание тоже ответ 🙂 #from:owen #delay:1m
-* [#noanswer:10m]
+* [#remind:5m] Это просто файл. Удалить дольше, чем прочитать 🙂 #from:owen
+    -> ask
+* [#noanswer]
     ~ owen_reply = "silent"
-- -> ch6_judith
+    #delay:10m
+    -> ch6_judith
+- #delay:20m
+-> ch6_judith
 
 === ch6_judith ===
 {
 - judith_revealed:
-    Пишу с основного номера. Прятаться больше незачем. #from:judith #delay:30m
+    Пишу с основного номера. Прятаться больше незачем. #from:judith
     -> ch6_judith_jess
 }
-Второй номер был мой. «{cover == "honest":Вы не из Векскомба.|Это не опрос.}» писала я. #from:judith #delay:30m
+Второй номер был мой. «{cover == "honest":Вы не из Векскомба.|Это не опрос.}» писала я. #from:judith
 #rename:unknown, Джудит Марш (второй номер)
 {unknown_blocked:
     Вы тогда заблокировали тот номер. Правильно сделали. #delay:20s
@@ -311,7 +318,7 @@
     Денни. И Элли. Больше я об этом писать не буду. #from:judith #delay:2m
 * [Почему Вы показываете это сейчас? #to:judith]
     Слушание прошло. Мне больше нечего беречь. #from:judith #delay:2m
-* [#noanswer:5m]
+* [#noanswer:3m]
 - -> ch6_judith_jess
 
 === ch6_judith_jess ===
@@ -329,6 +336,9 @@
 ~ judith_revealed = true
 Джессика заходила сегодня, хотя обычно приходит по субботам. #delay:30s
 Спрашивала о Вас. Что Вы ещё делаете. #delay:10s
+{jess_clues >= 1:
+    Сказала, что Вы её в чём-то подозреваете. Пирог так и не разрезала. #delay:20s
+}
 * [Не рассказывайте ей обо мне #to:judith]
     ~ judith_guarded = true
     Хорошо. Почему? #from:judith #delay:2m
@@ -339,15 +349,18 @@
     Больше никто не приходит. #delay:20s
 * [Промолчать #to:judith #silent]
     Kind regards, J. Marsh. #from:judith #delay:5m
-* [#noanswer:10m]
+* [#noanswer:3m]
     Kind regards, J. Marsh. #from:judith
-- -> ch6_hook
+    #delay:17m
+    -> ch6_hook
+- #delay:20m
+-> ch6_hook
 
 === ch6_hook ===
 {
 - maya_files >= 1:
     ~ whisper_known = true
-    Третий файл. Под его «давай, прыгай» есть второй голос. #from:maya #delay:30m
+    Третий файл. Под его «давай, прыгай» есть второй голос. #from:maya
     Девичий. «на счёт три, дэн. раз. два». #delay:30s
     ~ clue_whisper = true
     Мая отправила вам 1 файл #sys:maya #delay:10s
@@ -356,18 +369,18 @@
     }
 - world == "open":
     ~ whisper_known = true
-    Полиция всё-таки дала семье послушать. Один раз, в кабинете. #from:maya #delay:30m
+    Полиция всё-таки дала семье послушать. Один раз, в кабинете. #from:maya
     Я записала из кармана. Под его «давай, прыгай» есть второй голос. #delay:20s
     Девичий. «на счёт три, дэн». #delay:30s
     ~ clue_whisper = true
 - world == "owen":
     ~ whisper_known = true
-    Брайт прислал мне третий файл. Сам. «послушай внимательно, там её голос 🙂». #from:maya #delay:30m
+    Брайт прислал мне третий файл. Сам. «послушай внимательно, там её голос 🙂». #from:maya
     Я подняла средние частоты. Под его «давай, прыгай» есть второй голос. #delay:20s
     Девичий. «на счёт три, дэн». #delay:30s
     ~ clue_whisper = true
 - else:
-    Записи у меня нет. Есть шесть минут. #from:maya #delay:30m
+    Записи у меня нет. Есть шесть минут. #from:maya
     Дэн написал «она здесь». Лили написала «сначала поговорю с ней». #delay:20s
     В 00:30 Лили ушла к воде с Элли Вэнс. Это знает весь город. #delay:20s
 }
@@ -392,13 +405,13 @@
     Джесс Холлис? #from:maya #delay:40s
     Рулевые так считают в каждой лодке. Это привычка, а не имя. #delay:20s
     Но я запомню. #delay:10s
-* {note_she} [В 00:30 Лили говорила с Элли и всё равно шла в полицию #to:maya #label:Показать запись из заметок]
+* {note_she && not ellie_water} [Лили писала «сначала поговорю с ней». Элли она бы назвала по имени #to:maya #label:Показать запись из заметок]
     ~ maya_trust += 1
-    Допустим. «Сначала поговорю с ней» — и поговорила. #from:maya #delay:40s
-    Тогда «она» у Дэна — не Элли. Тогда кто? #delay:20s
+    Допустим. Про лучшую подругу «сначала поговорю с ней» не пишут. #from:maya #delay:40s
+    Тогда «она» у Дэна, может, и не Элли. Тогда кто? #delay:20s
 * [Не езжай к ней #to:maya]
     Я два года не ездила. Хватит. #from:maya #delay:40s
-* [#noanswer:5m]
+* [#noanswer:3m]
 - Я выезжаю в Векскомб. #from:maya #delay:20s
 Ты ведь знаешь, где живёт Элли? #delay:10s
 Ладно. Найду сама. #delay:20s
