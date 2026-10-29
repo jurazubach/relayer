@@ -12,8 +12,10 @@ docs/stories/<id>/
                      кто что пишет, что устарело
   decisions.md       журнал D-NN — формат в decisions-log.md
   ideas.md           банк идей I-NN — формат в ideas-bank.md
+  directions.md      раунды направлений — пишет story-brainstorm (формат: story-brainstorm/references/directions-format.md)
   plans/plan-vN.md   версии плана; первая строка «core: D-NN» — на каком ядре построен
-  plans/skeleton.ink скелет всей истории («// core: D-NN» в первых строках)
+  plans/skeleton-vN.ink  скелет версии плана N (story-plan, агент story-architect)
+  plans/skeleton.ink скелет выбранного плана — копия skeleton-vN.ink («// core: D-NN» в первых строках)
   facts.md           правда мира: кто что знает, хронология (ведёт story-continuity)
   reviews/<дата>-<скилл>.md  отчёты ревью и диагностических скиллов (story-review, story-choices …)
   playtests/wave-N/  комплект и сводка волны теста (story-playtest)
@@ -29,6 +31,7 @@ Ink истории лежит отдельно, в `src/stories/<id>/` (глав
 |---|---|---|---|
 | `STATUS.md` | `story-desk` (шаг, активная, ведущие, «Устарело»); `decision-add.mjs --set-core / --set-plan` | все скиллы первым шагом, хук `SessionStart` | на каждом переходе шага и при смене ядра или плана |
 | `decisions.md` | `story-desk` по согласию автора (в конвейере — королевы) | `story-review` (отклонённые находки), `story-fix`, `stale-check.mjs` | каждое решение — новая запись, старые не правятся |
+| `directions.md` | `story-brainstorm` | `story-brainstorm` («ещё», повторы раундов), `story-core`, `story-desk` | новый раунд — в конец файла; старые не правятся, кроме статуса |
 | `ideas.md` | `story-desk` (`idea-park.mjs`) | `story-brainstorm` (банк для новых направлений), `story-branch` | отвергли направление, план, развилку, рецепт тестера |
 | `plans/*` | `story-plan`, агент `story-architect` | `chapter-write`, `stale-check.mjs` | новая версия — новый файл, не правка старого |
 | `facts.md` | `story-continuity` | `chapter-write` (пакет главы), ревью | глава добавила факт — в том же коммите |

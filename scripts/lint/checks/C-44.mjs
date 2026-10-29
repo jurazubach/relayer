@@ -44,7 +44,7 @@ export function cardMarkers(voice) {
   if (!voice) return null;
   const t = (typeof voice === 'string' ? voice : Object.values(voice).flat().join(' · ')).toLowerCase();
   const out = {};
-  if (/строчн/.test(t)) out.case = 'lower';
+  if (/строчн|без заглавн|без больш/.test(t)) out.case = 'lower';
   else if (/заглавн|с большой/.test(t)) out.case = 'upper';
   if (/без точ|точек нет|не ставит точ/.test(t)) out.period = false;
   else if (/точк|точкой/.test(t)) out.period = true;

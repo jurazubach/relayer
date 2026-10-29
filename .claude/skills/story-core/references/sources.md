@@ -11,8 +11,8 @@
 - `failbetter-qbn:contra-5` — Видимость против тайны (`docs/books/_clean/failbetter-qbn/for-relayer.md:135`)
 - `R-84` — Сделай противника соперником за ту же вещь, что нужна герою: запись, ключ, правду, человека. Он пишет игроку сам — не реже раза в две главы, во второй половине… (`docs/playbook/rules.md:456` · K-R-84)
 - `skolnick-video-game-storytelling:GREEN-05` — Противник пишет сам и объясняет свою логику (`docs/books/_clean/skolnick-video-game-storytelling/flags.md:13` · K-R-84)
-- `skolnick-video-game-storytelling:P-10` — Дай антагонисту мотив, который он может объяснить (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:96` · K-R-84)
-- `skolnick-video-game-storytelling:P-10#нюанс` — нюанс к P-10 (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:206`)
+- `skolnick-video-game-storytelling:P-10` — Дай антагонисту мотив, который он может объяснить (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:103` · K-R-84)
+- `skolnick-video-game-storytelling:P-10#нюанс` — нюанс к P-10 (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:213`)
 - `skolnick-video-game-storytelling:PAT-06` — Антагонист объясняет себя сам (`docs/books/_clean/skolnick-video-game-storytelling/patterns.md:142`)
 - `skolnick-video-game-storytelling:PAT-06#нюанс` — нюанс к PAT-06 (`docs/books/_clean/skolnick-video-game-storytelling/patterns.md:202`)
 - `snyder-save-the-cat:GREEN-08` — У антагониста число своих реплик и знаний об игроке растёт от главы к главе (`docs/books/_clean/snyder-save-the-cat/flags.md:16` · K-R-84)
@@ -154,8 +154,8 @@
 - `skolnick-video-game-storytelling:GREEN-04` — Каждая следующая глава поднимает ставку: новый противник, срок ближе, цена выше (`docs/books/_clean/skolnick-video-game-storytelling/flags.md:12` · K-R-31)
 - `skolnick-video-game-storytelling:LESSON-03` — Зафиксируй модель выбора и реакции до того, как пишешь следующие главы (`docs/books/_clean/skolnick-video-game-storytelling/lessons.md:23` · K-R-31)
 - `skolnick-video-game-storytelling:LESSON-11` — Проверяй ставку сцены на человеке, который её прожил или знает (`docs/books/_clean/skolnick-video-game-storytelling/lessons.md:85` · K-R-31)
-- `skolnick-video-game-storytelling:P-08` — Поднимай ставки к каждой главе (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:82` · K-R-31)
-- `skolnick-video-game-storytelling:P-08#нюанс` — нюанс к P-08 (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:205`)
+- `skolnick-video-game-storytelling:P-08` — Поднимай ставки к каждой главе (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:89` · K-R-31)
+- `skolnick-video-game-storytelling:P-08#нюанс` — нюанс к P-08 (`docs/books/_clean/skolnick-video-game-storytelling/principles.md:212`)
 - `skolnick-video-game-storytelling:PAT-05` — Лестница давления (escalating conflict) (`docs/books/_clean/skolnick-video-game-storytelling/patterns.md:130`)
 - `skolnick-video-game-storytelling:PAT-05#нюанс` — нюанс к PAT-05 (`docs/books/_clean/skolnick-video-game-storytelling/patterns.md:201`)
 - `skolnick-video-game-storytelling:RED-11` — Две соседние главы с одинаковой ставкой (`docs/books/_clean/skolnick-video-game-storytelling/flags.md:31` · K-R-31)
@@ -188,7 +188,7 @@
 - `truby-anatomy-of-story:RED-02` — Слабость только психологическая, без жертвы (`docs/books/_clean/truby-anatomy-of-story/flags.md:24` · K-R-06)
 - `vogler-writers-journey:LESSON-05` — Сделай героя таким, которому правда нужен игрок (`docs/books/_clean/vogler-writers-journey/lessons.md:51` · K-R-01)
 
-## story-core/scripts/header-check.mjs
+## story-core/scripts/core-check.mjs
 - `R-01` — Перед первой строкой ink запиши шапку из четырёх строк: // логлайн: (R-02), // вопрос: (R-03), // ставка: (что потеряет и к какому сроку, R-17), // оси: (2–3… (`docs/playbook/rules.md:64` · K-R-01)
 
 ## story-core/theme.md
@@ -201,8 +201,8 @@
 - `mckee-story:P-02` — Называй ценность парой полюсов, а не темой (`docs/books/_clean/mckee-story/principles.md:22`)
 - `mckee-story:P-03` — Доводи главную ценность до «хуже противоположного» (`docs/books/_clean/mckee-story/principles.md:29`)
 - `mckee-story:SYS-4` — S-4. Шкала ценности: позитив → противоположное → противоречащее → отрицание отрицания (`docs/books/_clean/mckee-story/principles.md:237`)
-- `meaningful-choice:P-14` — Если ветка не расходится, ставь в выбор дилемму, которую проверит финал (`docs/books/_clean/meaningful-choice/principles.md:93` · K-meaningful-choice:P-14)
-- `meaningful-choice:P-14#нюанс` — нюанс к P-14 (`docs/books/_clean/meaningful-choice/principles.md:171`)
+- `meaningful-choice:P-14` — Если ветка не расходится, ставь в выбор дилемму, которую проверит финал (`docs/books/_clean/meaningful-choice/principles.md:94` · K-meaningful-choice:P-14)
+- `meaningful-choice:P-14#нюанс` — нюанс к P-14 (`docs/books/_clean/meaningful-choice/principles.md:172`)
 - `R-07` — Дай герою одну веру, которая ему мешает, и запиши её в ядре истории рядом с именем героя. В каждой главе поставь одну кнопку, которая на эту веру давит. (`docs/playbook/rules.md:92` · K-R-07)
 - `truby-anatomy-of-story:P-01` — Запиши посылку так, чтобы в ней была перемена (`docs/books/_clean/truby-anatomy-of-story/principles.md:7` · K-R-01)
 - `truby-anatomy-of-story:P-01#нюанс` — нюанс к P-01 (`docs/books/_clean/truby-anatomy-of-story/principles.md:195`)

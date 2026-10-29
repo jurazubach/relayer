@@ -43,7 +43,8 @@ export default {
 
     // оси: переменные существуют, пишутся кнопками и читаются распределителем
     if (head.оси) {
-      for (const raw of head.оси.split(/[,;/]/)) {
+      // пояснения в скобках («доверие Мирона, счётчик») — не имена: core-snapshot.mjs --header пишет их так
+      for (const raw of head.оси.replace(/\([^)]*\)/g, '').split(/[,;/]/)) {
         const name = raw.trim().match(/^[\p{L}_][\p{L}\p{N}_]*/u)?.[0];
         if (!name) continue;
         const v = st.vars.index.get(name);

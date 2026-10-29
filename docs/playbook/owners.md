@@ -63,7 +63,7 @@
 
 | ID | тема | владелец | файл | ссылаются |
 |---|---|---|---|---|
-| R-01 | шапка ink из 4 строк | `story-core` | `scripts/header-check.mjs`, `SKILL.md` | `story-plan/skeleton-format.md`, `chapter-write` |
+| R-01 | шапка ink из 4 строк | `story-core` | `scripts/core-check.mjs`, `SKILL.md` | `story-plan/skeleton-format.md`, `chapter-write` |
 | R-02 | логлайн «ты — X, пишет Y, но Z» | `story-core` | `logline.md` | `story-brainstorm/patterns-premise.md` (`premise-check.mjs`) |
 | R-03 | один главный вопрос | `story-core` | `decisions-stakes.md` | `story-endings/decisions-endings.md`, `story-cast` (R-90) |
 | R-04 | ядро-правило мира, «обычно…, а здесь…» | `story-brainstorm` | `patterns-premise.md` | `story-core` |
@@ -321,7 +321,7 @@ S-time так же забрала в «опору» `story-time` две стро
 | TH-10 | оси-переменные, противовес, растущие счётчики | `story-core` | `axes.md` | R-39, R-41; `choiceofgames:P-08`…`P-10`; `failbetter:P-02`, `P-03`, `P-05`; `emshort:P-14`; `sheldon:P-07`, PAT-01; `narrative-postmortems:P-02`; `cron:PAT-04`; `emshort:LESSON-04`; `failbetter:PAT-05`, PAT-08, RED-12; `mobile:GREEN-03`; `narrative-postmortems:RED-04`; `nicklin:LESSON-02`; `skolnick:PAT-07` | `story-choices/echo.md`, `story-plan` |
 | TH-11 | противник с целью и контрпланом | `story-core` | `antagonist.md` | R-84; `truby:P-07`, `P-08`, `P-17`; `skolnick:P-10`, PAT-06; `yorke:P-11`; `snyder:P-11` | `story-cast` |
 | TH-12 | тема и ценности, вера героя | `story-core` | `theme.md` | R-07; `mckee:P-01`…`P-03`; `truby:P-01`; `meaningful:P-14`; `bateman:LESSON-08`; `truby:P-15` | `story-review/lenses.md`, `story-cast/arcs.md` |
-| TH-13 | календарь мира: сюжетные дни в двух режимах | `story-core` | `time-model.md` | A-02, A-04; число сюжетных дней и смена дня мира по главам (наше); база — через TH-47 | ссылается на `story-time/clock.md` (TH-47) |
+| TH-13 | календарь мира: сюжетные дни в двух режимах | `story-core` | `time-model.md`, `scripts/world-clock.mjs` | A-02, A-04; число сюжетных дней и смена дня мира по главам (наше); база — через TH-47 | ссылается на `story-time/clock.md` (TH-47) |
 | TH-14 | логлайн | `story-core` | `logline.md` | R-02; `snyder:P-01`, PAT-01; `snyder:SYS-1` | `story-brainstorm/patterns-premise.md` |
 
 ### `story-branch`
