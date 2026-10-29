@@ -4,7 +4,7 @@ description: "Выбор не ощущается: пустые кнопки, к�
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 2
+  version: 3
 ---
 
 # story-choices — чтобы выбор ощущался
@@ -50,6 +50,8 @@ metadata:
 8. **Правка.** Прочитай `docs/style.md` (ST-NN о репликах и кнопках) прямо перед тем, как писать реплику,
    кнопку или пример ink. Симптом → приём: [references/decisions-choices.md](references/decisions-choices.md).
    Два-три варианта, до/после на ink, теги только `ready`.
+   **Одобрено → вызови `Skill story-fix` с пунктом и вариантом; сам `Edit` не делай** — и когда одобрение пришло в той
+   же фразе («почини, вариант выбери сам, одобряю»): страховка `fix-guard` и дифф реплик есть только у `story-fix`.
 9. **Отчёт и состояние.** Сначала находки строками формата, потом разговор и правки. В конце предложи записать
    находки в состояние через `story-desk` (раздел «Состояние»); применяет только одобренное.
 
