@@ -37,8 +37,8 @@
      "why": "финал читает ellie_trust, ellie_reaction, ellie_water, ellie_block_told, ellie_testifies, cover, quit_job, found_jacket_self, cut_frames",
      "first": 1,
      "unlock": null,
-     "lines": 460,
-     "blocks": 223,
+     "lines": 462,
+     "blocks": 224,
      "buttons": 108,
      "chapters": [
       1,
@@ -100,7 +100,7 @@
       "ellie_testifies": 2
      },
      "played": {
-      "median": 188,
+      "median": 189,
       "share": 1
      }
     },
@@ -111,8 +111,8 @@
      "why": "финал читает judith_revealed, judith_waits, judith_promised",
      "first": 2,
      "unlock": 2,
-     "lines": 204,
-     "blocks": 99,
+     "lines": 206,
+     "blocks": 100,
      "buttons": 42,
      "chapters": [
       2,
@@ -154,7 +154,7 @@
       "final_choice": 2
      },
      "played": {
-      "median": 75,
+      "median": 76,
       "share": 1
      }
     },
@@ -165,7 +165,7 @@
      "why": "финал читает jess_suspicious, jess_bond, jess_clues, jess_confessed, jess_promised, jess_alarmed, c10_asked_phone, c10_pressed",
      "first": 1,
      "unlock": null,
-     "lines": 191,
+     "lines": 192,
      "blocks": 114,
      "buttons": 51,
      "chapters": [
@@ -215,7 +215,7 @@
       "final_choice": 2
      },
      "played": {
-      "median": 92,
+      "median": 93,
       "share": 1
      }
     },
@@ -340,7 +340,7 @@
      "first": 1,
      "unlock": null,
      "lines": 89,
-     "blocks": 48,
+     "blocks": 46,
      "buttons": 23,
      "chapters": [
       1,

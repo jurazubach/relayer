@@ -344,7 +344,7 @@
       {
        "node": "ch5_maya",
        "chapter": 5,
-       "line": 293,
+       "line": 297,
        "file": "ch05.ink",
        "kind": "текст"
       },
@@ -365,14 +365,14 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 379,
+       "line": 382,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "fin_silence",
        "chapter": 10,
-       "line": 537,
+       "line": 543,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -659,14 +659,14 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст"
       },
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст"
       },
@@ -1113,7 +1113,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 289,
+       "line": 290,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "jess_bond"
@@ -1192,7 +1192,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -1234,7 +1234,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -1454,7 +1454,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -1653,7 +1653,7 @@
       {
        "node": "fin_herself",
        "chapter": 10,
-       "line": 409,
+       "line": 412,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "hart_exposed"
@@ -1961,7 +1961,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 377,
+       "line": 380,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -2104,7 +2104,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -2112,7 +2112,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -2213,7 +2213,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -2389,7 +2389,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -2397,7 +2397,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -2507,7 +2507,7 @@
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 508,
+       "line": 511,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -2805,7 +2805,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 377,
+       "line": 380,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "note_threat"
@@ -3501,7 +3501,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -3509,7 +3509,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -3776,7 +3776,7 @@
       {
        "node": "ch10_ellie",
        "chapter": 10,
-       "line": 240,
+       "line": 241,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -3879,15 +3879,23 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_whisper"
       },
       {
+       "node": "ch9_ellie",
+       "chapter": 9,
+       "line": 387,
+       "file": "ch09.ink",
+       "kind": "текст",
+       "via": "clue_whisper"
+      },
+      {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 137,
+       "line": 138,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
@@ -3895,7 +3903,7 @@
       {
        "node": "ch10_anon",
        "chapter": 10,
-       "line": 178,
+       "line": 179,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
@@ -3927,14 +3935,14 @@
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 508,
+       "line": 511,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
       }
      ],
      "ownReads": 13,
-     "visibleReads": 32,
+     "visibleReads": 33,
      "hiddenReads": 0,
      "firstWrite": 5,
      "firstRead": 6,
@@ -4130,7 +4138,7 @@
       {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 134,
+       "line": 135,
        "file": "ch10.ink",
        "kind": "переход",
        "via": "maya_target"
@@ -4138,7 +4146,7 @@
       {
        "node": "fin_silence",
        "chapter": 10,
-       "line": 530,
+       "line": 536,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "maya_stopped"
@@ -4211,7 +4219,7 @@
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 508,
+       "line": 511,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -4314,15 +4322,23 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_whisper"
       },
       {
+       "node": "ch9_ellie",
+       "chapter": 9,
+       "line": 387,
+       "file": "ch09.ink",
+       "kind": "текст",
+       "via": "clue_whisper"
+      },
+      {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 137,
+       "line": 138,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
@@ -4330,7 +4346,7 @@
       {
        "node": "ch10_anon",
        "chapter": 10,
-       "line": 178,
+       "line": 179,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
@@ -4362,14 +4378,14 @@
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 508,
+       "line": 511,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "clue_whisper"
       }
      ],
      "ownReads": 5,
-     "visibleReads": 24,
+     "visibleReads": 25,
      "hiddenReads": 0,
      "firstWrite": 6,
      "firstRead": 6,
@@ -4481,7 +4497,7 @@
       {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 134,
+       "line": 135,
        "file": "ch10.ink",
        "kind": "переход"
       }
@@ -4777,7 +4793,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 289,
+       "line": 290,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -4955,7 +4971,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка"
       },
@@ -4986,7 +5002,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -4994,7 +5010,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -5285,7 +5301,7 @@
       {
        "node": "fin_herself",
        "chapter": 10,
-       "line": 409,
+       "line": 412,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "hart_exposed"
@@ -5443,7 +5459,7 @@
       {
        "node": "fin_coda",
        "chapter": 10,
-       "line": 571,
+       "line": 577,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -5522,7 +5538,7 @@
       {
        "node": "fin_unproven",
        "chapter": 10,
-       "line": 434,
+       "line": 437,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "maya_post"
@@ -5638,7 +5654,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -5646,7 +5662,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -5748,7 +5764,7 @@
       {
        "node": "ch10_ellie",
        "chapter": 10,
-       "line": 241,
+       "line": 242,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -5854,7 +5870,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -5906,7 +5922,14 @@
       {
        "node": "ch9_judith",
        "chapter": 9,
-       "line": 247,
+       "line": null,
+       "file": "ch09.ink",
+       "kind": "реплика"
+      },
+      {
+       "node": "ch9_judith",
+       "chapter": 9,
+       "line": 250,
        "file": "ch09.ink",
        "kind": "кнопка"
       },
@@ -5920,7 +5943,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 305,
+       "line": 308,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -5934,7 +5957,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 363,
+       "line": 366,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -5948,7 +5971,7 @@
       {
        "node": "fin_scapegoat",
        "chapter": 10,
-       "line": 467,
+       "line": 470,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -5962,7 +5985,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "proof"
@@ -5976,8 +5999,8 @@
        "via": "proof"
       }
      ],
-     "ownReads": 8,
-     "visibleReads": 8,
+     "ownReads": 9,
+     "visibleReads": 9,
      "hiddenReads": 2,
      "firstWrite": 8,
      "firstRead": 9,
@@ -6126,7 +6149,7 @@
       {
        "node": "fin_herself",
        "chapter": 10,
-       "line": 409,
+       "line": 412,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -6187,14 +6210,14 @@
       {
        "node": "ch10_owen",
        "chapter": 10,
-       "line": 225,
+       "line": 226,
        "file": "ch10.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch10_owen",
        "chapter": 10,
-       "line": 233,
+       "line": 234,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -6222,7 +6245,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 363,
+       "line": 366,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -6245,7 +6268,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 361,
+       "line": 364,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "note_ladder"
@@ -6277,7 +6300,7 @@
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 278,
+       "line": 281,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_owen_saw"
@@ -6285,7 +6308,7 @@
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 280,
+       "line": 283,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_owen_saw"
@@ -6301,7 +6324,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "proof"
@@ -6361,7 +6384,7 @@
       {
        "node": "fin_scapegoat",
        "chapter": 10,
-       "line": 462,
+       "line": 465,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -6404,9 +6427,16 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка"
+      },
+      {
+       "node": "ch9_ellie",
+       "chapter": 9,
+       "line": 387,
+       "file": "ch09.ink",
+       "kind": "текст"
       },
       {
        "node": "ch10",
@@ -6418,14 +6448,14 @@
       {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 154,
+       "line": 155,
        "file": "ch10.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 156,
+       "line": 157,
        "file": "ch10.ink",
        "kind": "кнопка"
       },
@@ -6488,7 +6518,7 @@
       {
        "node": "fin_scapegoat",
        "chapter": 10,
-       "line": 467,
+       "line": 470,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -6526,7 +6556,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -6534,7 +6564,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -6566,7 +6596,7 @@
       {
        "node": "fin_silence",
        "chapter": 10,
-       "line": 530,
+       "line": 536,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "maya_stopped"
@@ -6574,7 +6604,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "proof"
@@ -6588,8 +6618,8 @@
        "via": "proof"
       }
      ],
-     "ownReads": 14,
-     "visibleReads": 18,
+     "ownReads": 15,
+     "visibleReads": 19,
      "hiddenReads": 7,
      "firstWrite": 9,
      "firstRead": 2,
@@ -6673,7 +6703,7 @@
       {
        "node": "fin_silence",
        "chapter": 10,
-       "line": 530,
+       "line": 536,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -6752,14 +6782,14 @@
       {
        "node": "fin_unproven",
        "chapter": 10,
-       "line": 441,
+       "line": 444,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "fin_ellie_owen",
        "chapter": 10,
-       "line": 562,
+       "line": 568,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -6945,7 +6975,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -7071,21 +7101,28 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка"
       },
       {
+       "node": "ch9_ellie",
+       "chapter": 9,
+       "line": 387,
+       "file": "ch09.ink",
+       "kind": "текст"
+      },
+      {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 137,
+       "line": 138,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "ch10_anon",
        "chapter": 10,
-       "line": 178,
+       "line": 179,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -7113,7 +7150,7 @@
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 508,
+       "line": 511,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -7128,7 +7165,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -7240,7 +7277,7 @@
       {
        "node": "ch10_maya",
        "chapter": 10,
-       "line": 134,
+       "line": 135,
        "file": "ch10.ink",
        "kind": "переход",
        "via": "maya_target"
@@ -7272,7 +7309,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -7280,7 +7317,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -7310,8 +7347,8 @@
        "via": "ellie_trust"
       }
      ],
-     "ownReads": 17,
-     "visibleReads": 38,
+     "ownReads": 18,
+     "visibleReads": 39,
      "hiddenReads": 3,
      "firstWrite": 6,
      "firstRead": 2,
@@ -7397,7 +7434,7 @@
       {
        "node": "ch10_owen",
        "chapter": 10,
-       "line": 225,
+       "line": 226,
        "file": "ch10.ink",
        "kind": "кнопка"
       },
@@ -7435,7 +7472,7 @@
       {
        "node": "ch10_owen",
        "chapter": 10,
-       "line": 225,
+       "line": 226,
        "file": "ch10.ink",
        "kind": "кнопка",
        "via": "owen_turned"
@@ -7443,7 +7480,7 @@
       {
        "node": "ch10_owen",
        "chapter": 10,
-       "line": 233,
+       "line": 234,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "owen_turned"
@@ -7475,7 +7512,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 363,
+       "line": 366,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "owen_turned"
@@ -7499,7 +7536,7 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 361,
+       "line": 364,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "note_ladder"
@@ -7531,7 +7568,7 @@
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 278,
+       "line": 281,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_owen_saw"
@@ -7539,7 +7576,7 @@
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 280,
+       "line": 283,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "clue_owen_saw"
@@ -7618,28 +7655,28 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 296,
+       "line": 299,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 361,
+       "line": 364,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "fin_revenge",
        "chapter": 10,
-       "line": 495,
+       "line": 498,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "proof"
@@ -7708,14 +7745,14 @@
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 278,
+       "line": 281,
        "file": "ch09.ink",
        "kind": "кнопка"
       },
       {
        "node": "ch9_jess",
        "chapter": 9,
-       "line": 280,
+       "line": 283,
        "file": "ch09.ink",
        "kind": "кнопка"
       },
@@ -7895,7 +7932,7 @@
       {
        "node": "ch9_ellie",
        "chapter": 9,
-       "line": 383,
+       "line": 387,
        "file": "ch09.ink",
        "kind": "кнопка",
        "via": "jess_clues"
@@ -7988,14 +8025,14 @@
       {
        "node": "fin_truth",
        "chapter": 10,
-       "line": 361,
+       "line": 364,
        "file": "ch10.ink",
        "kind": "текст"
       },
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 306,
+       "line": 309,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "proof"
@@ -8215,7 +8252,7 @@
       {
        "node": "fin_unproven",
        "chapter": 10,
-       "line": 434,
+       "line": 437,
        "file": "ch10.ink",
        "kind": "текст"
       },
@@ -8335,7 +8372,7 @@
       {
        "node": "fin_unproven",
        "chapter": 10,
-       "line": 434,
+       "line": 437,
        "file": "ch10.ink",
        "kind": "текст",
        "via": "maya_post"
@@ -8427,7 +8464,7 @@
       {
        "node": "fin_silence",
        "chapter": 10,
-       "line": 524,
+       "line": 527,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -9168,7 +9205,7 @@
       {
        "node": "ch10_door",
        "chapter": 10,
-       "line": 291,
+       "line": 294,
        "file": "ch10.ink",
        "kind": "текст"
       }
@@ -9297,7 +9334,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 274,
+       "line": 278,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -9305,7 +9342,7 @@
       {
        "node": "end_silence",
        "chapter": 5,
-       "line": 277,
+       "line": 281,
        "file": "ch05.ink",
        "kind": "текст",
        "via": "ellie_trust"
@@ -9389,7 +9426,7 @@
       {
        "node": "ch9_beth",
        "chapter": 9,
-       "line": 347,
+       "line": 350,
        "file": "ch09.ink",
        "kind": "переход"
       }

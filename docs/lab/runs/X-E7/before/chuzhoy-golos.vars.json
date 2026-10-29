@@ -4,8 +4,18 @@
    "id": "chuzhoy-golos",
    "path": "src/stories/chuzhoy-golos",
    "chapters": 10,
-   "final": [],
-   "distributors": [],
+   "final": [
+    "fin_truth",
+    "fin_herself",
+    "fin_unproven",
+    "fin_scapegoat",
+    "fin_puppet",
+    "fin_revenge",
+    "fin_silence"
+   ],
+   "distributors": [
+    "ch10_route"
+   ],
    "counts": {
     "мёртвая": 0,
     "невидимая": 8,
@@ -107,7 +117,7 @@
      "firstWrite": 1,
      "firstRead": 1,
      "firstVisible": 1,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -192,7 +202,7 @@
      "firstWrite": 1,
      "firstRead": 1,
      "firstVisible": 1,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -682,7 +692,7 @@
      "firstWrite": 1,
      "firstRead": 2,
      "firstVisible": 2,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "owen_contacted",
       "quit_job",
@@ -894,7 +904,7 @@
      "firstWrite": 1,
      "firstRead": 3,
      "firstVisible": 3,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "jess_bond"
@@ -1333,7 +1343,7 @@
      "firstWrite": 1,
      "firstRead": 1,
      "firstVisible": 1,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "ellie_trust"
@@ -1445,7 +1455,7 @@
      "firstWrite": 1,
      "firstRead": 5,
      "firstVisible": 5,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "hart_exposed"
@@ -1724,7 +1734,7 @@
      "firstWrite": 4,
      "firstRead": 5,
      "firstVisible": 5,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -1855,7 +1865,7 @@
      "firstWrite": 3,
      "firstRead": 2,
      "firstVisible": 2,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "exposed_fake",
@@ -2114,7 +2124,7 @@
      "firstWrite": 4,
      "firstRead": 2,
      "firstVisible": 2,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "note_beth",
       "connor_jacket"
@@ -2405,7 +2415,7 @@
      "firstWrite": 5,
      "firstRead": 5,
      "firstVisible": 5,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "act1"
@@ -3133,7 +3143,7 @@
      "firstWrite": 5,
      "firstRead": 2,
      "firstVisible": 2,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "cut_frames",
       "ellie_trust",
@@ -3566,7 +3576,7 @@
      "firstWrite": 6,
      "firstRead": 6,
      "firstVisible": 6,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "whisper_known",
@@ -3726,7 +3736,7 @@
      "firstWrite": 6,
      "firstRead": 7,
      "firstVisible": 7,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "note_she",
       "whisper_known",
@@ -3905,7 +3915,7 @@
      "firstWrite": 6,
      "firstRead": 6,
      "firstVisible": 6,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "whisper_known"
@@ -4092,7 +4102,7 @@
      "firstWrite": 6,
      "firstRead": 7,
      "firstVisible": 7,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "whisper_known",
       "tom_proof"
@@ -4337,7 +4347,7 @@
      "firstWrite": 6,
      "firstRead": 6,
      "firstVisible": 6,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "maya_files",
       "world"
@@ -4589,7 +4599,7 @@
      "firstWrite": 6,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "jess_suspicious"
      ],
@@ -4975,7 +4985,7 @@
      "firstWrite": 6,
      "firstRead": 8,
      "firstVisible": 8,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "hart_exposed"
@@ -5185,7 +5195,7 @@
      "firstWrite": 7,
      "firstRead": 7,
      "firstVisible": 7,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "maya_target",
@@ -5638,7 +5648,7 @@
      "firstWrite": 8,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "proof"
@@ -5823,7 +5833,7 @@
      "firstWrite": 9,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "jess_promised",
@@ -5935,7 +5945,7 @@
      "firstWrite": 8,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "owen_knows",
       "owen_reply",
@@ -6127,7 +6137,7 @@
      "firstWrite": 8,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "owen_turned",
@@ -6281,7 +6291,7 @@
      "firstWrite": 9,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "ladder_known"
      ],
@@ -6323,7 +6333,7 @@
      "firstWrite": 9,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": [
@@ -6463,7 +6473,7 @@
      "firstWrite": 9,
      "firstRead": 9,
      "firstVisible": 9,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "c10_dawn",
@@ -6540,7 +6550,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "maya_trust",
       "jess_confessed"
@@ -6630,7 +6640,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [
       "c10_maya_door"
@@ -6670,7 +6680,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -6727,7 +6737,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -6846,7 +6856,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [],
      "feeds": [],
      "flags": []
@@ -6914,7 +6924,7 @@
      "firstWrite": 10,
      "firstRead": 10,
      "firstVisible": 10,
-     "readByFinal": false,
+     "readByFinal": true,
      "derivedFrom": [
       "bill_found",
       "ladder_known",

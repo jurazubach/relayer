@@ -315,7 +315,7 @@
           "key": "C-13.words_share",
           "node": null,
           "chapter": null,
-          "message": "22 % кнопок длиннее нормы в словах (76 из 344)",
+          "message": "22 % кнопок длиннее нормы в словах (75 из 344)",
           "threshold": "> 15 % доля кнопок истории (messenger-genre:RED-08, narrative-testing:RED-26)",
           "owner": "story-choices"
         },
@@ -465,7 +465,7 @@
           "key": "C-19.no_exit",
           "node": "ch9_judith",
           "chapter": 9,
-          "message": "хаб ch9_judith: выход «Что было на сожжённых страницах?» доступен сразу и без условия — можно уйти, ничего не спросив; нет ни + , ни выхода по счётчику",
+          "message": "хаб ch9_judith: выход «От сожжённых страниц что-то осталось?» доступен сразу и без условия — можно уйти, ничего не спросив; нет ни + , ни выхода по счётчику",
           "threshold": "= 0 выходов с условием или + (emshort-structures:RED-05, failbetter-qbn:RED-11)",
           "owner": "story-choices"
         },
@@ -485,7 +485,7 @@
           "key": "C-19.exit_unwarned",
           "node": "ch9_judith",
           "chapter": 9,
-          "message": "хаб ch9_judith закрывается кнопкой «Что было на сожжённых страницах?» без предупреждения",
+          "message": "хаб ch9_judith закрывается кнопкой «От сожжённых страниц что-то осталось?» без предупреждения",
           "threshold": "= 0 #label или предупреждений (narrative-postmortems:RED-06, bateman-game-writing:RED-13)",
           "owner": "story-choices"
         },
@@ -837,7 +837,7 @@
           "key": "C-33.max_msgs",
           "node": "ch7",
           "chapter": 7,
-          "message": "заход у ch7: 116,2 мин, 48 сообщений, 9 кнопок, кончается «Элли не в сети»",
+          "message": "заход у ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -857,7 +857,7 @@
           "key": "C-33.max_msgs",
           "node": "ch9",
           "chapter": 9,
-          "message": "заход у ch9: 199,6 мин, 63 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
+          "message": "заход у ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -867,7 +867,7 @@
           "key": "C-33.max_msgs",
           "node": "ch9_bill",
           "chapter": 9,
-          "message": "заход у ch9_bill: 205,1 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+          "message": "заход у ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -877,7 +877,7 @@
           "key": "C-33.max_msgs",
           "node": "ch10",
           "chapter": 10,
-          "message": "заход у ch10: 42,6 мин, 68 сообщений, 10 кнопок, кончается «Конец»",
+          "message": "заход у ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -887,7 +887,7 @@
           "key": "C-33.max_msgs",
           "node": "ch9_bill",
           "chapter": 9,
-          "message": "заход у ch9_bill: 200,5 мин, 64 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+          "message": "заход у ch9_bill: 200,7 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»",
           "threshold": "> 30 сообщений за сессию (schell-art-of-game-design:§2)",
           "owner": "story-pauses"
         },
@@ -978,7 +978,7 @@
               "end_owen: 15,5 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»",
               "end_ellie_hides: 13,2 мин, 9 сообщений, 2 кнопок, кончается «Мая не в сети»",
               "end_coroner: 19,9 мин, 14 сообщений, 2 кнопок, кончается «Мая не в сети»",
-              "end_silence: 13,7 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»",
+              "end_silence: 13,8 мин, 11 сообщений, 2 кнопок, кончается «Мая не в сети»",
               "end_silence: 14,1 мин, 9 сообщений, 2 кнопок, кончается «Мая не в сети»",
               "end_ellie_truth: 13,2 мин, 10 сообщений, 2 кнопок, кончается «Мая не в сети»",
               "end_ellie_together: 12,7 мин, 11 сообщений, 1 кнопок, кончается «Мая не в сети»"
@@ -1006,12 +1006,12 @@
           "key": "C-33.active_max_min",
           "node": "ch7",
           "chapter": 7,
-          "message": "глава 7: 1 заходов дольше коридора (ch7: 116,2 мин, 48 сообщений, 9 кнопок, кончается «Элли не в сети»)",
+          "message": "глава 7: 1 заходов дольше коридора (ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»)",
           "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
           "owner": "story-pauses",
           "data": {
             "sessions": [
-              "ch7: 116,2 мин, 48 сообщений, 9 кнопок, кончается «Элли не в сети»"
+              "ch7: 116,6 мин, 49 сообщений, 9 кнопок, кончается «Элли не в сети»"
             ]
           }
         },
@@ -1036,14 +1036,14 @@
           "key": "C-33.active_max_min",
           "node": "ch9",
           "chapter": 9,
-          "message": "глава 9: 3 заходов дольше коридора (ch9: 199,6 мин, 63 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»; ch9_bill: 205,1 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»)",
+          "message": "глава 9: 3 заходов дольше коридора (ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»; ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»)",
           "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
           "owner": "story-pauses",
           "data": {
             "sessions": [
-              "ch9: 199,6 мин, 63 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
-              "ch9_bill: 205,1 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»",
-              "ch9_bill: 200,5 мин, 64 сообщений, 10 кнопок, кончается «Джесс не в сети»"
+              "ch9: 200,1 мин, 64 сообщений, 10 кнопок, кончается «Джудит Марш не в сети»",
+              "ch9_bill: 205,4 мин, 68 сообщений, 10 кнопок, кончается «Джесс не в сети»",
+              "ch9_bill: 200,7 мин, 66 сообщений, 10 кнопок, кончается «Джесс не в сети»"
             ]
           }
         },
@@ -1053,12 +1053,12 @@
           "key": "C-33.active_max_min",
           "node": "ch10",
           "chapter": 10,
-          "message": "глава 10: 1 заходов дольше коридора (ch10: 42,6 мин, 68 сообщений, 10 кнопок, кончается «Конец»)",
+          "message": "глава 10: 1 заходов дольше коридора (ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»)",
           "threshold": "> 6 мин активного чтения (rules.md R-62, narrative-postmortems:§2)",
           "owner": "story-pauses",
           "data": {
             "sessions": [
-              "ch10: 42,6 мин, 68 сообщений, 10 кнопок, кончается «Конец»"
+              "ch10: 41,8 мин, 69 сообщений, 10 кнопок, кончается «Конец»"
             ]
           }
         },
@@ -1198,7 +1198,7 @@
           "key": "C-35.monologue",
           "node": "ch10_judith",
           "chapter": 10,
-          "message": "ch10_judith: judith пишет 7 реплик без ответа игрока",
+          "message": "ch10_judith: judith пишет 8 реплик без ответа игрока",
           "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
           "owner": "story-pace"
         },
@@ -1236,6 +1236,16 @@
           "check": "C-35",
           "level": "hint",
           "key": "C-35.monologue",
+          "node": "ch7_block",
+          "chapter": 7,
+          "message": "ch7_block: ellie пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
           "node": "ch8_hart_files",
           "chapter": 8,
           "message": "ch8_hart_files: hart пишет 6 реплик без ответа игрока, начало в ch8_hart, узлов 2",
@@ -1256,9 +1266,9 @@
           "check": "C-35",
           "level": "hint",
           "key": "C-35.monologue",
-          "node": "ch9_receipt",
+          "node": "ch9_judith",
           "chapter": 9,
-          "message": "ch9_receipt: judith пишет 7 реплик без ответа игрока, начало в ch9_judith, узлов 2",
+          "message": "ch9_judith: judith пишет 8 реплик без ответа игрока",
           "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
           "owner": "story-pace"
         },
@@ -1279,6 +1289,16 @@
           "node": "ch9_owen",
           "chapter": 9,
           "message": "ch9_owen: owen пишет 6 реплик без ответа игрока",
+          "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-35",
+          "level": "hint",
+          "key": "C-35.monologue",
+          "node": "ch9_receipt",
+          "chapter": 9,
+          "message": "ch9_receipt: judith пишет 7 реплик без ответа игрока, начало в ch9_judith, узлов 2",
           "threshold": "> 5 реплик одного #from подряд (rules.md R-61, yorke-into-the-woods)",
           "owner": "story-pace"
         },
@@ -1446,7 +1466,7 @@
           "key": "C-36.vague",
           "node": "ch9_bill",
           "chapter": 9,
-          "message": "глава 9: 14 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch9_bill, ch9_owen, ch9_turn, ch9_maya)",
+          "message": "глава 9: 15 мест, где подряд идут реплики без цифры, имени, цитаты и фото (ch9_bill, ch9_owen, ch9_turn, ch9_maya)",
           "threshold": "≥ 3 входящих подряд без конкретики (cron-wired-for-story:RED-11, maass-fire-in-fiction:RED-05)",
           "owner": "story-pace",
           "model": true
@@ -1470,6 +1490,16 @@
           "chapter": 10,
           "message": "в финальной главе паузы не короче, чем в середине: темп не растёт",
           "threshold": "≥ 1 отношение медианы пауз последней главы к медиане середины (serial-hooks:S6, snyder-save-the-cat:B7)",
+          "owner": "story-pace"
+        },
+        {
+          "check": "C-38",
+          "level": "hint",
+          "key": "C-38.pause_spread",
+          "node": "ch10",
+          "chapter": 10,
+          "message": "ch10: 5 пауз одной длины подряд — ритм не дышит",
+          "threshold": "< 2 раз (max / min) (messenger-genre:§2, messenger-genre:RED-04)",
           "owner": "story-pace"
         },
         {
@@ -1550,17 +1580,6 @@
           "model": true
         },
         {
-          "check": "C-39",
-          "level": "hint",
-          "key": "C-39.link",
-          "node": "ch10",
-          "chapter": 10,
-          "message": "крючок главы 9 не подхвачен в начале главы 10",
-          "threshold": "= 0 общих существительных (mckee-story:§6, mckee-story:RED-14)",
-          "owner": "story-pauses",
-          "model": true
-        },
-        {
           "check": "C-41",
           "level": "hint",
           "key": "C-41.ending_ratio",
@@ -1631,7 +1650,7 @@
           "key": "C-44.outlier_features",
           "node": "ch8_night",
           "chapter": 8,
-          "message": "connor: 2 строки вне профиля голоса (например, «про свет пока никому. если она вылезла с…»)",
+          "message": "connor: 1 строка вне профиля голоса (например, «про свет пока никому. если она вылезла с…»)",
           "threshold": "≥ 2 признака (narrative-testing:§2, narrative-testing:RED-08)",
           "owner": "story-voice",
           "model": true
@@ -1864,16 +1883,6 @@
           "check": "C-46",
           "level": "hint",
           "key": "C-46.button_nodes",
-          "node": "ch3_owen",
-          "chapter": 3,
-          "message": "кнопка «Откуда у тебя мой номер?» повторяется в ch3_owen, ch5_maya",
-          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
-          "owner": "story-voice"
-        },
-        {
-          "check": "C-46",
-          "level": "hint",
-          "key": "C-46.button_nodes",
           "node": "end_ellie_together",
           "chapter": 5,
           "message": "кнопка «Я тут» повторяется в end_ellie_together, ch10",
@@ -1887,16 +1896,6 @@
           "node": "ch6_cut",
           "chapter": 6,
           "message": "кнопка «Не знаю» повторяется в ch6_cut, ch9_hook",
-          "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
-          "owner": "story-voice"
-        },
-        {
-          "check": "C-46",
-          "level": "hint",
-          "key": "C-46.button_nodes",
-          "node": "ch6_judith",
-          "chapter": 6,
-          "message": "кнопка «Что было на сожжённых страницах?» повторяется в ch6_judith, ch9_judith",
           "threshold": "≥ 2 узла (inkle-ingold:RED-11)",
           "owner": "story-voice"
         },
@@ -2053,7 +2052,7 @@
           "key": "C-49.facts",
           "node": null,
           "chapter": null,
-          "message": "таблица фактов: 12 слов-якорей стоят рядом с разными числами (перев…: 12, 00, 200; вперё…: 12, 00; вауче…: 10, 5; вопро…: 5, 10) — для сверки с хронологией, полная таблица в --json",
+          "message": "таблица фактов: 13 слов-якорей стоят рядом с разными числами (перев…: 12, 00, 200; вперё…: 12, 00; вауче…: 10, 5; вопро…: 5, 10) — для сверки с хронологией, полная таблица в --json",
           "threshold": "> 0 расхождений с facts.md (dille-ultimate-guide:RED-04, narrative-testing:RED-10)",
           "owner": "story-release",
           "model": true,
@@ -2165,6 +2164,17 @@
                 ],
                 "knots": [
                   "ch9_receipt"
+                ]
+              },
+              {
+                "anchor": "whisp",
+                "numbers": [
+                  "1",
+                  "2"
+                ],
+                "knots": [
+                  "ch9_ellie",
+                  "fin_revenge"
                 ]
               },
               {

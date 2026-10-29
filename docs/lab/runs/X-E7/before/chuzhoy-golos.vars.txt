@@ -1,16 +1,16 @@
 src/stories/chuzhoy-golos · переменных 80 · глав 10
-   финальные узлы: — · распределители: —
+   финальные узлы: fin_truth, fin_herself, fin_unproven, fin_scapegoat, fin_puppet, fin_revenge, fin_silence · распределители: ch10_route
 
    VAR                пиш.  видно/скрыто  главы  финал  метки                 где пишется → где читается
    ─────────────────  ────  ────────────  ─────  ─────  ────────────────────  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-   alias              4     5/3           1→1                                 ch1_terms×4 → ch1_terms×4, ch2_judith×2, ch8_hart, fin_truth
-   cover              3     6/1           1→1                                 ch1_terms×3 → ch1_unknown, ch2_judith×3, ch6_judith, ch7_tom +1
+   alias              4     5/3           1→1    да                           ch1_terms×4 → ch1_terms×4, ch2_judith×2, ch8_hart, fin_truth
+   cover              3     6/1           1→1    да                           ch1_terms×3 → ch1_unknown, ch2_judith×3, ch6_judith, ch7_tom +1
    opener             3     6/0           1→1                                 ch1_terms×3 → ch1_hub×4, ch1_connor, ch1_connor_skip
-   ellie_trust        23    19/14         1→2                                 ch1×2, ch1_party, ch1_evening, ch1_ellie_lie +15 → ch2_judith_intro×2, end_silence×2, ch7_ellie, fin_truth×2 +11
+   ellie_trust        23    19/14         1→2    да                           ch1×2, ch1_party, ch1_evening, ch1_ellie_lie +15 → ch2_judith_intro×2, end_silence×2, ch7_ellie, fin_truth×2 +11
    judith_trust       4     1/0           2→8           молчит                ch2_judith_who×2, ch4_reveal×2 → ch8_show_judith
    jess_push          2     0/1           1→1           невидимая             ch1_jess×2 → ch1_jess
    jess_done          2     1/0           1→1                                 ch1_jess, ch1_jess_sus → ch1_hub
-   jess_suspicious    1     4/3           1→3                                 ch1_jess_sus → ch3_fake, ch6, ch9_jess_conf×2, ch10_split +2
+   jess_suspicious    1     4/3           1→3    да                           ch1_jess_sus → ch3_fake, ch6, ch9_jess_conf×2, ch10_split +2
    jess_rumor         1     2/1           2→7           молчит                ch2_rumor → ch7_connor, ch9_jess×2
    beth_written       1     2/0           1→2                                 ch1_hub → ch2_beth, ch9_beth
    connor_told        1     0/1           1→2           невидимая             ch1_connor_soft → ch2
@@ -18,61 +18,61 @@ src/stories/chuzhoy-golos · переменных 80 · глав 10
    connor_ally        1     6/0           3→4                                 ch3_connor → ch4_bluff, ch7_connor, ch8_connor, ch5_owen +2
    connor_to_owen     1     2/0           3→3                                 ch3_connor → ch3_hook, ch7_connor
    connor_jacket      1     2/0           3→4                                 ch3_cc_body → ch4_jacket, ch7_ellie
-   owen_contacted     1     9/1           1→1                                 ch1_owen → ch1_evening, ch3_owen, ch2_judith_intro×2, end_silence×2 +3
-   owen_knows         3     10/0          1→5           молчит                ch1_owen, ch3_owen_probe×2 → ch5_owen, ch6_owen, ch8_hart×2, ch10_owen +4
+   owen_contacted     1     9/1           1→1    да                           ch1_owen → ch1_evening, ch3_owen, ch2_judith_intro×2, end_silence×2 +3
+   owen_knows         3     10/0          1→5    да     молчит                ch1_owen, ch3_owen_probe×2 → ch5_owen, ch6_owen, ch8_hart×2, ch10_owen +4
    owen_weakened      1     2/0           4→5                                 ch4_bluff → ch5_owen, end_owen
    confronted_night   1     0/1           1→2           невидимая             ch1_confront → ch2_ellie
    unknown_blocked    1     1/1           1→6           молчит                ch1_unknown → ch4, ch6_judith
    told_judith_ellie  1     1/0           2→4                                 ch2_judith_who → ch4_reveal
    note_connor        1     2/0           1→2                                 ch1_connor_soft → ch2_ellie, ch8_connor_talk
    note_beth          1     3/0           2→4                                 ch2_beth → ch4_jacket, ch7_ellie×2
-   note_threat        1     3/0           4→5                                 ch4_threat → end_coroner, ch9_owen, fin_truth
-   quit_job           1     10/4          3→2                                 ch3 → ch3_fake, ch3_connor_relay, ch4_blocked, ch4_ellie +7
+   note_threat        1     3/0           4→5    да                           ch4_threat → end_coroner, ch9_owen, fin_truth
+   quit_job           1     10/4          3→2    да                           ch3 → ch3_fake, ch3_connor_relay, ch4_blocked, ch4_ellie +7
    exposed_fake       2     2/1           3→9           молчит                ch3_fake×2 → ch9_owen, ch9_jess×2
    called_bluff       1     1/0           4→5                                 ch4_bluff → ch5_owen
    ellie_reaction     3     4/1           4→5                                 ch4_confess×3 → end_coroner, end_ellie, fin_ellie_ref×3
-   found_jacket_self  1     8/1           4→2                                 ch4_jacket → ch7_ellie×2, ch2_judith_intro×2, end_silence×2, fin_truth×2 +1
-   cut_frames         2     18/15         5→5                                 ch5×2 → ch5_files, end_coroner, end_ellie_truth, ch6_ask +13
+   found_jacket_self  1     8/1           4→2    да                           ch4_jacket → ch7_ellie×2, ch2_judith_intro×2, end_silence×2, fin_truth×2 +1
+   cut_frames         2     18/15         5→5    да                           ch5×2 → ch5_files, end_coroner, end_ellie_truth, ch6_ask +13
    judith_revealed    1     3/0           4→5                                 ch4_reveal → ch5_final, ch6_judith×2
    ending             8     16/15         6→6                                 ch6, fin_truth, fin_herself, fin_unproven +4 → ch6×5, fin_coda×4, ch6_ask_ellie×3, ch6_ellie×7 +7
-   act1               9     23/16         5→2                                 end_coroner×2, end_ellie_truth, end_ellie_together, end_ellie_hides +3 → ch6×5, ch6_ask_ellie×3, ch6_ellie×7, ch6_owen×2 +12
-   world              15    40/1          6→6                                 ch6×3, ch7×3, ch8×3, ch9×3 +1 → ch6_ask×2, ch6_ask_ellie, ch6_jess, ch6_owen +21
-   maya_trust         16    6/0           6→7                                 ch6, ch6_ask×3, ch6_cut×2, ch6_ask_ellie×2 +7 → ch7_maya_pull, ch9_maya, ch10_maya×2, ch10_maya_wait +1
-   maya_files         4     16/1          6→6                                 ch6_ask×2, ch6_ask_ellie×2 → ch6_files_done, ch6_hook×3, ch10_maya_go×2, fin_revenge×2 +6
-   maya_target        8     14/2          6→7                                 ch6_hook, ch7_gate, ch7_alibi, ch7_maya_jess +4 → ch7_post, ch8_show_maya, ch8_maya×2, ch9_owen +10
-   whisper_known      3     25/2          6→6                                 ch6_hook×3 → ch6_hook, ch7_gate, ch7_post×3, ch9_maya×4 +13
+   act1               9     23/16         5→2    да                           end_coroner×2, end_ellie_truth, end_ellie_together, end_ellie_hides +3 → ch6×5, ch6_ask_ellie×3, ch6_ellie×7, ch6_owen×2 +12
+   world              15    40/1          6→6    да                           ch6×3, ch7×3, ch8×3, ch9×3 +1 → ch6_ask×2, ch6_ask_ellie, ch6_jess, ch6_owen +21
+   maya_trust         16    6/0           6→7    да                           ch6, ch6_ask×3, ch6_cut×2, ch6_ask_ellie×2 +7 → ch7_maya_pull, ch9_maya, ch10_maya×2, ch10_maya_wait +1
+   maya_files         4     16/1          6→6    да                           ch6_ask×2, ch6_ask_ellie×2 → ch6_files_done, ch6_hook×3, ch10_maya_go×2, fin_revenge×2 +6
+   maya_target        8     14/2          6→7    да                           ch6_hook, ch7_gate, ch7_alibi, ch7_maya_jess +4 → ch7_post, ch8_show_maya, ch8_maya×2, ch9_owen +10
+   whisper_known      3     25/2          6→6    да                           ch6_hook×3 → ch6_hook, ch7_gate, ch7_post×3, ch9_maya×4 +13
    note_she           2     8/1           6→7                                 ch6_story, ch6_story_note → ch7, ch9_bill, ch7_maya_pull, ch9_maya +3
    jess_warned        1     1/0           6→7                                 ch6_jess → ch7_maya
-   jess_bond          7     4/3           6→9           молчит                ch6, ch7_jess_caught×2, ch9_jess_conf×2, ch10_dawn +1 → ch9_jess_conf×2, ch10_split×2, ch10_door, ch10_route +1
+   jess_bond          7     4/3           6→9    да     молчит                ch6, ch7_jess_caught×2, ch9_jess_conf×2, ch10_dawn +1 → ch9_jess_conf×2, ch10_split×2, ch10_door, ch10_route +1
    jess_clues         14    1/1           6→9           молчит                ch6_jess, ch7_connor×2, ch7_maya_jess, ch7_tom×2 +8 → ch9_jess×2
    ellie_water        3     1/0           6→7                                 ch6_ellie_talk, ch7, ch7_gate → ch7
    ellie_warned       2     5/0           6→7                                 ch6_ellie_talk, ch7 → ch7_gate×2, ch7_connor, ch7, ch8_connor_talk
    ellie_alibi        4     1/0           7→8                                 ch7_connor×3, ch8_connor_talk → ch8_connor_talk
-   owen_reply         3     7/0           6→8                                 ch6_owen×3 → ch8_hart×3, ch9_owen, fin_truth×2, fin_herself
+   owen_reply         3     7/0           6→8    да                           ch6_owen×3 → ch8_hart×3, ch9_owen, fin_truth×2, fin_herself
    judith_guarded     1     4/0           6→9           молчит                ch6_judith → ch9_bill, ch9_morning, ch9_jess, ch9_jess_conf
-   tom_proof          1     15/1          7→7                                 ch7_tom → ch7_jess, ch8_maya×2, ch7_post, ch8_show_maya +8
+   tom_proof          1     15/1          7→7    да                           ch7_tom → ch7_jess, ch8_maya×2, ch7_post, ch8_show_maya +8
    note_minute        1     1/0           7→7                                 ch7_tom → ch7_jess
    tom_hold           1     4/0           7→10          только финал, молчит  ch7_tom_queue → ch10_maya_go×2, fin_coda, ch10_door
    maya_posted        3     4/3           7→7                                 ch7_tom_queue×2, ch7_maya_pull → ch7_jess×2, ch8_show_ellie, ch8_maya, ch8_beth_gate +2
    jess_exposed       1     2/0           7→8                                 ch7_jess_caught → ch8_jess_a, ch8_jess_b
    ellie_block_told   3     2/1           7→9                                 ch7_ellie_block, ch8_beth, ch9_beth → ch9_ellie_end, ch10_ellie×2
    note_shown_to      4     4/1           8→8                                 ch8_show×4 → ch8_jess×2, ch8_hart, ch8_judith, ch9_owen
-   fake_note_caught   4     3/5           8→9                                 ch8_finder, ch8_ellie_sees, ch8_show_judith, ch9_fake → ch9_fake, ch9_jess×2, ch10_door×3, ch10_route×2
+   fake_note_caught   4     3/5           8→9    да                           ch8_finder, ch8_ellie_sees, ch8_show_judith, ch9_fake → ch9_fake, ch9_jess×2, ch10_door×3, ch10_route×2
    bill_asked         3     0/1           8→9           невидимая             ch8_show_judith, ch8_judith, ch9_morning → ch9
-   bill_found         3     8/6           9→9                                 ch9_bill, ch9_bill_day, ch9_bill_late → ch9_maya, ch9_jess×2, ch9_jess_conf, ch9_ellie_end +6
+   bill_found         3     8/6           9→9    да                           ch9_bill, ch9_bill_day, ch9_bill_late → ch9_maya, ch9_jess×2, ch9_jess_conf, ch9_ellie_end +6
    hart_fooled        1     3/0           8→9                                 ch8_hart → ch9_owen, ch10_owen, fin_coda
-   hart_exposed       3     4/0           8→9                                 ch8_hart, ch8_hart_check×2 → ch9_owen, fin_truth×2, fin_herself
-   ladder_known       1     16/5          8→9                                 ch8_connor_ladder → ch9_owen, ch10_owen×4, ch10_door×5, ch9_maya×2 +8
-   owen_turned        2     13/4          9→9                                 ch9_owen_turn, ch10_owen → ch9_maya×2, ch9_jess×2, ch10_split, ch10_judith +7
-   owen_deal          1     2/0           9→10          только финал          ch9_owen_turn → ch10_owen, fin_scapegoat
-   jess_confessed     3     10/4          9→9                                 ch9_jess_conf, ch10_dawn, ch10_full → ch10_dawn, ch10_maya×2, ch10_maya_wait, ch10_door×3 +4
+   hart_exposed       3     4/0           8→9    да                           ch8_hart, ch8_hart_check×2 → ch9_owen, fin_truth×2, fin_herself
+   ladder_known       1     16/5          8→9    да                           ch8_connor_ladder → ch9_owen, ch10_owen×4, ch10_door×5, ch9_maya×2 +8
+   owen_turned        2     13/4          9→9    да                           ch9_owen_turn, ch10_owen → ch9_maya×2, ch9_jess×2, ch10_split, ch10_judith +7
+   owen_deal          1     2/0           9→10   да     только финал          ch9_owen_turn → ch10_owen, fin_scapegoat
+   jess_confessed     3     10/4          9→9    да                           ch9_jess_conf, ch10_dawn, ch10_full → ch10_dawn, ch10_maya×2, ch10_maya_wait, ch10_door×3 +4
    jess_promised      1     1/1           9→9                                 ch9_jess_conf → ch9_hook, ch10_split
-   maya_stopped       1     1/0           10→10                               ch10_maya_wait → fin_silence
-   maya_posts         2     7/1           10→10                               ch10_maya, ch10_maya_go → ch10_maya_go, ch10_door×3, ch10_route, fin_truth +2
-   judith_waits       1     1/1           10→10                               ch10_judith → ch10_door, ch10_route
-   ellie_testifies    3     3/0           10→10                               ch10_ellie×3 → fin_truth, fin_unproven, fin_ellie_owen
-   final_choice       4     6/5           10→10                               ch10_door×4 → ch10_route×5, fin_unproven×4, fin_revenge×2
-   proof              6     1/1           10→10                               ch10_door×6 → ch10_door, ch10_route
+   maya_stopped       1     1/0           10→10  да                           ch10_maya_wait → fin_silence
+   maya_posts         2     7/1           10→10  да                           ch10_maya, ch10_maya_go → ch10_maya_go, ch10_door×3, ch10_route, fin_truth +2
+   judith_waits       1     1/1           10→10  да                           ch10_judith → ch10_door, ch10_route
+   ellie_testifies    3     3/0           10→10  да                           ch10_ellie×3 → fin_truth, fin_unproven, fin_ellie_owen
+   final_choice       4     6/5           10→10  да                           ch10_door×4 → ch10_route×5, fin_unproven×4, fin_revenge×2
+   proof              6     1/1           10→10  да                           ch10_door×6 → ch10_door, ch10_route
    c6_morning         2     0/2           6→6           невидимая             ch6, ch6_ask_ellie → ch6_ask_ellie, ch6_ellie
    c7_ellie_out       2     2/0           7→7                                 ch7_gate×2 → ch7_connor, ch8_connor_talk
    c7_post_ellie      1     6/3           7→7                                 ch7_post → ch7_tom, ch7_tom_queue×2, ch7_jess, ch8_show_ellie +4

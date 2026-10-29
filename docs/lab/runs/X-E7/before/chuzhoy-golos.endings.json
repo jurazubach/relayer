@@ -4,8 +4,18 @@
    "id": "chuzhoy-golos",
    "path": "src/stories/chuzhoy-golos",
    "source": "end",
-   "final": [],
-   "distributors": [],
+   "final": [
+    "fin_truth",
+    "fin_herself",
+    "fin_unproven",
+    "fin_scapegoat",
+    "fin_puppet",
+    "fin_revenge",
+    "fin_silence"
+   ],
+   "distributors": [
+    "ch10_route"
+   ],
    "unmarked": [],
    "runs": 1602,
    "personas": {

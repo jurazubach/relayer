@@ -1,5 +1,5 @@
 src/stories/chuzhoy-golos · финалов 7 (по -> END, меток нет) · прохождений 1602
-   распределители: — · финальные узлы: —
+   распределители: ch10_route · финальные узлы: fin_truth, fin_herself, fin_unproven, fin_scapegoat, fin_puppet, fin_revenge, fin_silence
    финал          узел           всего      гл.  random  silent  first  last  refuse  curiou  trusti  suspic  distra  unresp
    ─────────────  ─────────────  ─────────  ───  ──────  ──────  ─────  ────  ──────  ──────  ──────  ──────  ──────  ──────
    fin_truth      fin_truth      191 · 12%  10   23%     0%      100%   0%    0%      0%      0%      28%     23%     21%

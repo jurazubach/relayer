@@ -63,18 +63,18 @@
      "runs": 200,
      "counts": {
       "herself": 74,
-      "unproven": 104,
-      "revenge": 22
+      "revenge": 23,
+      "unproven": 103
      }
     },
     "suspicious": {
      "runs": 200,
      "counts": {
-      "scapegoat": 69,
-      "silence": 46,
-      "truth": 55,
-      "unproven": 17,
-      "herself": 13
+      "scapegoat": 71,
+      "silence": 48,
+      "truth": 52,
+      "unproven": 18,
+      "herself": 11
      }
     },
     "distracted": {
@@ -100,9 +100,9 @@
      "name": "truth",
      "node": "fin_truth",
      "declared": true,
-     "line": 343,
-     "runs": 179,
-     "share": 0.11173533083645443,
+     "line": 346,
+     "runs": 176,
+     "share": 0.10986267166042447,
      "chapters": [
       10
      ],
@@ -114,7 +114,7 @@
       "refuse": 0,
       "curious": 0,
       "trusting": 0,
-      "suspicious": 55,
+      "suspicious": 52,
       "distracted": 62,
       "unresponsive": 0
      },
@@ -135,7 +135,7 @@
      "endingVar": [
       {
        "value": "truth",
-       "n": 179
+       "n": 176
       }
      ]
     },
@@ -143,9 +143,9 @@
      "name": "herself",
      "node": "fin_herself",
      "declared": true,
-     "line": 387,
-     "runs": 143,
-     "share": 0.08926342072409488,
+     "line": 390,
+     "runs": 141,
+     "share": 0.08801498127340825,
      "chapters": [
       10
      ],
@@ -157,7 +157,7 @@
       "refuse": 0,
       "curious": 0,
       "trusting": 74,
-      "suspicious": 13,
+      "suspicious": 11,
       "distracted": 28,
       "unresponsive": 0
      },
@@ -175,7 +175,7 @@
      "endingVar": [
       {
        "value": "herself",
-       "n": 143
+       "n": 141
       }
      ]
     },
@@ -183,7 +183,7 @@
      "name": "unproven",
      "node": "fin_unproven",
      "declared": true,
-     "line": 416,
+     "line": 419,
      "runs": 203,
      "share": 0.12671660424469414,
      "chapters": [
@@ -196,8 +196,8 @@
       "last": 0,
       "refuse": 0,
       "curious": 0,
-      "trusting": 104,
-      "suspicious": 17,
+      "trusting": 103,
+      "suspicious": 18,
       "distracted": 41,
       "unresponsive": 0
      },
@@ -219,9 +219,9 @@
      "name": "scapegoat",
      "node": "fin_scapegoat",
      "declared": true,
-     "line": 453,
-     "runs": 352,
-     "share": 0.21972534332084895,
+     "line": 456,
+     "runs": 354,
+     "share": 0.2209737827715356,
      "chapters": [
       10
      ],
@@ -233,7 +233,7 @@
       "refuse": 0,
       "curious": 200,
       "trusting": 0,
-      "suspicious": 69,
+      "suspicious": 71,
       "distracted": 41,
       "unresponsive": 0
      },
@@ -247,7 +247,7 @@
      "endingVar": [
       {
        "value": "scapegoat",
-       "n": 352
+       "n": 354
       }
      ]
     },
@@ -255,9 +255,9 @@
      "name": "revenge",
      "node": "fin_revenge",
      "declared": true,
-     "line": 491,
-     "runs": 27,
-     "share": 0.016853932584269662,
+     "line": 494,
+     "runs": 28,
+     "share": 0.017478152309612985,
      "chapters": [
       10
      ],
@@ -268,7 +268,7 @@
       "last": 1,
       "refuse": 0,
       "curious": 0,
-      "trusting": 22,
+      "trusting": 23,
       "suspicious": 0,
       "distracted": 2,
       "unresponsive": 0
@@ -288,7 +288,7 @@
      "endingVar": [
       {
        "value": "revenge",
-       "n": 27
+       "n": 28
       }
      ]
     },
@@ -296,9 +296,9 @@
      "name": "silence",
      "node": "fin_silence",
      "declared": true,
-     "line": 518,
-     "runs": 698,
-     "share": 0.43570536828963796,
+     "line": 521,
+     "runs": 700,
+     "share": 0.4369538077403246,
      "chapters": [
       10
      ],
@@ -310,7 +310,7 @@
       "refuse": 200,
       "curious": 0,
       "trusting": 0,
-      "suspicious": 46,
+      "suspicious": 48,
       "distracted": 26,
       "unresponsive": 200
      },
@@ -324,7 +324,7 @@
      "endingVar": [
       {
        "value": "silence",
-       "n": 698
+       "n": 700
       }
      ]
     }
@@ -332,64 +332,64 @@
    "deciders": [
     {
      "name": "final_choice",
-     "gain": 0.4275,
+     "gain": 0.42625,
      "accuracy": 0.86375,
      "values": [
       {
        "value": "silent",
        "ending": "silence",
-       "share": 0.9124183006535947,
-       "runs": 765
+       "share": 0.9138381201044387,
+       "runs": 766
       },
       {
        "value": "owen",
        "ending": "scapegoat",
        "share": 1,
-       "runs": 351
+       "runs": 353
       },
       {
        "value": "mercy",
        "ending": "unproven",
-       "share": 0.5167785234899329,
+       "share": 0.5134228187919463,
        "runs": 298
       },
       {
        "value": "truth",
        "ending": "truth",
-       "share": 0.9623655913978495,
-       "runs": 186
+       "share": 0.9617486338797814,
+       "runs": 183
       }
      ]
     },
     {
      "name": "maya_post",
-     "gain": 0.18625000000000003,
-     "accuracy": 0.6225,
+     "gain": 0.1875,
+     "accuracy": 0.625,
      "values": [
       {
        "value": 1,
        "ending": "silence",
-       "share": 0.7845579078455791,
-       "runs": 803
+       "share": 0.7860696517412935,
+       "runs": 804
       },
       {
        "value": 2,
        "ending": "scapegoat",
-       "share": 0.534446764091858,
-       "runs": 479
+       "share": 0.540084388185654,
+       "runs": 474
       },
       {
        "value": 0,
        "ending": "unproven",
-       "share": 0.34591194968553457,
-       "runs": 318
+       "share": 0.34782608695652173,
+       "runs": 322
       }
      ]
     },
     {
      "name": "c2_answered_unknown",
      "gain": 0.16062500000000002,
-     "accuracy": 0.596875,
+     "accuracy": 0.598125,
      "values": [
       {
        "value": false,
@@ -400,32 +400,32 @@
       {
        "value": true,
        "ending": "scapegoat",
-       "share": 0.42912371134020616,
+       "share": 0.43170103092783507,
        "runs": 776
       }
      ]
     },
     {
      "name": "act1",
-     "gain": 0.15625,
-     "accuracy": 0.5925,
+     "gain": 0.155625,
+     "accuracy": 0.593125,
      "values": [
       {
        "value": "ellie_alone_truth",
        "ending": "silence",
-       "share": 0.7690476190476191,
+       "share": 0.7642857142857142,
        "runs": 420
       },
       {
        "value": "ellie_alone_owen",
        "ending": "silence",
-       "share": 0.8071979434447301,
+       "share": 0.8123393316195373,
        "runs": 389
       },
       {
        "value": "owen",
        "ending": "unproven",
-       "share": 0.2861111111111111,
+       "share": 0.2833333333333333,
        "runs": 360
       },
       {
@@ -437,7 +437,7 @@
       {
        "value": "ellie_together",
        "ending": "scapegoat",
-       "share": 0.5392156862745098,
+       "share": 0.5588235294117647,
        "runs": 102
       },
       {
@@ -451,12 +451,12 @@
     {
      "name": "judith_waits",
      "gain": 0.15500000000000003,
-     "accuracy": 0.59125,
+     "accuracy": 0.5925,
      "values": [
       {
        "value": true,
        "ending": "silence",
-       "share": 0.6096069868995633,
+       "share": 0.611353711790393,
        "runs": 1145
       },
       {
@@ -475,7 +475,7 @@
     "first": {
      "who": "ellie",
      "kind": "in",
-     "text": "в июне на карьере утонула лили"
+     "text": "в июне на карьере утонула лили. моя лучшая подруга"
     },
     "endings": {
      "truth": [
