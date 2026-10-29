@@ -7,7 +7,7 @@
 на моём шкафчике написали #from:ellie
 маркером, после того поста в watch. неважно что #delay:8s
 и мама сказала, денег больше нет #delay:20s
-а слушание послезавтра
+а слушание завтра
 можешь больше не
 - (ask)
 * [Я продолжу бесплатно #to:ellie]
@@ -160,7 +160,7 @@
 - первым его лайкнул оуэн. через минуту после поста #from:jess #delay:8s
 {jess_bond > 0:говорю только Вам|просто говорю}
 - (ask)
-* [Оуэн, Wexcombe Watch — это ты? #to:owen]
+* (asked_owen) [Оуэн, Wexcombe Watch — это ты? #to:owen]
     ~ exposed_fake = true
     Ты серьёзно? 😂 #from:owen #delay:2m
     Я лайкаю всё, что про город
@@ -284,8 +284,13 @@
     Не надо так
 }
 {exposed_fake and not connor_to_owen:
-    Говорят, ты ищешь, кто ведёт Watch 🙂 #from:owen
-    Маленький город
+    {ch3_fake.asked_owen:
+        Всё ещё думаешь, что Watch веду я? 🙂 #from:owen
+        Зря
+    - else:
+        Говорят, ты ищешь, кто ведёт Watch 🙂 #from:owen
+        Маленький город
+    }
 }
 {not connor_to_owen and not exposed_fake:
     {c3_owen_tip:
