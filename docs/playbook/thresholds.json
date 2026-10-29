@@ -371,9 +371,7 @@
     "level": "hint",
     "basis": "source",
     "sources": [
-      "attention-merged.md §2.7: «один-два контакта, у каждого своя функция»",
-      "sheldon-character-storytelling:attention§1",
-      "dille-ultimate-guide:attention§1"
+      "attention-merged.md §2.7: «один-два контакта, у каждого своя функция» (опора строк sheldon-character-storytelling и dille-ultimate-guide attention §1)"
     ],
     "checks": [],
     "calibrated_on": null,
