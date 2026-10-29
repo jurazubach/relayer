@@ -106,7 +106,7 @@ function GameShell({
   const [debug, setDebug] = useState(false);
   const locked = game.view?.locked;
   const paywall = (inList: boolean) =>
-    locked ? <Paywall chapter={locked.chapter} title={story.chapters?.[locked.chapter - 1]?.title} inList={inList} /> : undefined;
+    locked ? <Paywall inList={inList} /> : undefined;
 
   return (
     <div className="phone">

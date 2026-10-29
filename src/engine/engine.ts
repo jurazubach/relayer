@@ -134,6 +134,8 @@ interface SaveData {
   read: Record<string, number>;
   nextId: number;
   carryDelay: number;
+  /** Заголовок главы прошёл, а сообщения после него ещё нет (кнопки сразу за заголовком). */
+  carryChapter?: string;
   savedAt: number;
   chapter?: string;
   renamed?: Record<string, string>;
@@ -249,6 +251,7 @@ export class Engine {
   private read: Record<string, number> = {};
   private nextId = 1;
   private carryDelay = 0;
+  private carryChapter: string | undefined;
   /** Следующее входящее идёт сразу после ответа игрока: собеседнику нужно время прочитать. */
   private afterPlayer = false;
   private chapter = '';
@@ -353,6 +356,7 @@ export class Engine {
     this.read = {};
     this.nextId = 1;
     this.carryDelay = 0;
+    this.carryChapter = undefined;
     this.chapter = '';
     this.chapterNo = 0;
     this.silence = null;
@@ -412,9 +416,19 @@ export class Engine {
         }
       }
       renames.forEach(([id, name]) => this.rename(id, name));
+      // заголовок главы (A-08) игрок не видит: стык для него — просто пауза персонажа.
+      // Глава начинается со следующего сообщения, оно же несёт паузу и стоит на платной границе
+      if (chapter && kind === 'sys') {
+        this.carryDelay += delay;
+        this.carryChapter = chapter;
+        unlock.forEach((id) => this.unlock(id));
+        continue;
+      }
+      if (!chapter && this.carryChapter) chapter = this.carryChapter;
       if (!text) {
         // строка без текста: только теги, переносим паузу и открытия на следующую строку
         this.carryDelay += delay;
+        if (chapter) this.carryChapter = chapter;
         unlock.forEach((id) => this.unlock(id));
         continue;
       }
@@ -434,6 +448,7 @@ export class Engine {
         chapter,
       };
       this.carryDelay = 0;
+      this.carryChapter = undefined;
       this.afterPlayer = false;
     }
     if (!this.pending && !this.story.canContinue) {
@@ -695,6 +710,7 @@ export class Engine {
     this.choiceThread = null;
     this.ended = false;
     this.carryDelay = 0;
+    this.carryChapter = undefined;
     this.silence = null;
     this.waitDone = 0;
     this.lastRemind = null;
@@ -828,6 +844,7 @@ export class Engine {
       read: this.read,
       nextId: this.nextId,
       carryDelay: this.carryDelay,
+      carryChapter: this.carryChapter,
       savedAt: this.lastTick,
       chapter: this.chapter,
       renamed: this.renamed,
@@ -876,6 +893,7 @@ export class Engine {
       this.read = d.read;
       this.nextId = d.nextId;
       this.carryDelay = d.carryDelay;
+      this.carryChapter = d.carryChapter;
       this.chapter = d.chapter ?? '';
       this.chapterNo = d.chapterNo ?? (this.chapter ? 1 : 0);
       this.renamed = d.renamed ?? {};

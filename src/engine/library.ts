@@ -114,22 +114,20 @@ export function modeSizes(story: Pick<Story, 'minutes' | 'days'>): Partial<Recor
 
 /**
  * Подпись объёма истории: «≈ 35 мин по клику · ≈ 2 дня в реальном времени».
- * Оба числа видны до выбора режима; без них — число глав.
+ * Оба числа видны до выбора режима; без них — «Новая история»: число глав игроку не показываем (A-08).
  */
-export function sizeLabel(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string {
+export function sizeLabel(story: Pick<Story, 'minutes' | 'days'>): string {
   return sizeLines(story).join(' · ');
 }
 
 /** То же по строкам — для узкой карточки, где одна строка не помещается. */
-export function sizeLines(story: Pick<Story, 'minutes' | 'days' | 'chapters'>): string[] {
+export function sizeLines(story: Pick<Story, 'minutes' | 'days'>): string[] {
   const parts = timeLines(story);
-  if (parts.length) return parts;
-  const chapters = story.chapters?.length;
-  return [chapters ? `${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}` : 'Новая история'];
+  return parts.length ? parts : ['Новая история'];
 }
 
 /**
- * Только время, без запасной подписи главами: карточка показывает главы отдельно.
+ * Только время, без запасной подписи «Новая история».
  * «в реальном времени» склеено неразрывными пробелами: на узкой карточке строка
  * переносится целиком после числа, а не рвёт «реальном / времени».
  */
@@ -145,16 +143,13 @@ export function timeLines(story: Pick<Story, 'minutes' | 'days'>): string[] {
 export const storyPeople = (story: Pick<Story, 'characters'>) => (story.characters ?? []).filter((c) => !c.service);
 
 /**
- * Числа в углу карточки: «5 глав», «5 героев». Чего в файле нет, того и на карточке нет.
+ * Числа в углу карточки: «5 героев». Чего в файле нет, того и на карточке нет.
+ * Числа глав здесь нет (A-08): оно выдаёт масштаб, и переписка перестаёт казаться живой.
  * Герой здесь — тот, кто пишет в чат: запись без id — это сам игрок («Вы», «Ты»), его не считаем.
  */
-export function storyCounts(story: Pick<Story, 'chapters' | 'characters'>): string[] {
-  const chapters = story.chapters?.length ?? 0;
+export function storyCounts(story: Pick<Story, 'characters'>): string[] {
   const people = storyPeople(story).filter((c) => c.id).length;
-  return [
-    ...(chapters ? [`${chapters} ${plural(chapters, 'глава', 'главы', 'глав')}`] : []),
-    ...(people ? [`${people} ${plural(people, 'герой', 'героя', 'героев')}`] : []),
-  ];
+  return people ? [`${people} ${plural(people, 'герой', 'героя', 'героев')}`] : [];
 }
 
 /**

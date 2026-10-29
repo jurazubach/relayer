@@ -144,7 +144,7 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 Три готовые истории: две по пять глав, «Чужой голос» — десять (пилот и сезон в одной истории;
 «Пилот» в названиях и заголовках не пишем):
 
-| папка | на карточке | ≈ минут |
+| папка | на карточке (числа глав там нет) | ≈ минут |
 |---|---|---|
 | `src/stories/the-number/` | THE NUMBER (без серии) — скрыта | 25 |
 | `src/stories/slepoe-pyatno/` | 01:42 · Слепое пятно — скрыта | 40 |
@@ -155,6 +155,9 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 видят их как обычно.
 
 Над названием мелко — `series`, крупно — `title`; в сценарии `# title:` повторяет их через « · ».
+Главы игрок не видит (решение A-08, `docs/playbook/superseded.md`): ни числа на карточке, ни списка на экране истории,
+ни строки `#chapter` в переписке — стык для него просто пауза персонажа; платная граница — «начало бесплатно».
+Для автора и инструментов глава остаётся единицей: файлы `chNN.ink`, проверки, `free_chapters`, журнал, отладка.
 Флаги в примерах опираются на `the-number`, e2e — на фикстуру `examples/e2e.story.json`. Всё в историях вымышлено: никаких
 реальных компаний, людей и точных цифр из настоящих инцидентов.
 
@@ -237,7 +240,7 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
   `upload-error`, `story`, `play`, `reset`, `story-back`, `export`, `delete-story`, `contacts`,
   `thread-<id>`, `chat`, `notice`, `notices`, `back-story`, `debug-home`, `mode-realtime`, `mode-click`, `mode-confirm`,
   `choice-log`, `choice-log-export`,
-  `skip-next`, `revision-notice`, `revision-notice-ok`, `tile-free-<id>`, `free-chapters`, `chapter-locked`,
+  `skip-next`, `revision-notice`, `revision-notice-ok`, `tile-free-<id>`, `free-chapters`,
   `paywall`, `paywall-buy`, `paywall-stub`, `chapters-open`.
 - Экраны внутри `.phone` — колонка на flex. У блоков, которые не должны ужиматься,
   ставь `flex: none` (на этом уже обжигались: обложка истории сплющивалась).

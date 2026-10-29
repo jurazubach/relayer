@@ -26,7 +26,7 @@ test('главный экран показывает карточку истор
   await expect(card.locator('..')).toContainText('свой файл');
 });
 
-test('карточка показывает затравки, главы и героев', async ({ page }) => {
+test('карточка показывает затравки и героев, глав не показывает', async ({ page }) => {
   await fixtureOnHome(page);
   const teasers = page.getByTestId(`tile-teasers-${FIXTURE.id}`);
   for (const t of FIXTURE.teasers!) await expect(teasers).toContainText(t);
@@ -35,7 +35,7 @@ test('карточка показывает затравки, главы и ге
   // игрок (запись без id) и служебные контакты в число героев не входят
   const people = FIXTURE.characters!.filter((c) => c.id && !c.service).length;
   expect(people).toBeLessThan(FIXTURE.characters!.length);
-  await expect(counts).toContainText(new RegExp(`${FIXTURE.chapters!.length}\\s+глав`));
+  await expect(counts).not.toContainText(/глав/i);
   await expect(counts).toContainText(new RegExp(`${people}\\s+геро`));
   await expect(page.getByTestId(tile)).toContainText('по клику');
 });
@@ -83,8 +83,9 @@ test('карточка открывает описание истории', asyn
   await expect(story).toContainText('О чём');
   await expect(story).toContainText('Герои');
   for (const c of FIXTURE.characters!) await expect(story).toContainText(c.name);
-  await expect(story).toContainText('Главы');
-  for (const ch of FIXTURE.chapters!) await expect(story).toContainText(ch.title);
+  // главы — внутренняя единица автора (A-08): ни списка, ни названий
+  await expect(story).not.toContainText(/глав/i);
+  for (const ch of FIXTURE.chapters!) await expect(story).not.toContainText(ch.title);
   await expect(page.getByTestId('play')).toContainText('Начать');
 });
 

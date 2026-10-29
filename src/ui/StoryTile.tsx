@@ -4,7 +4,7 @@ import { formatAgo, freeChip, isOutdated, keepShortWords, storyCounts, storyTeas
 /**
  * Карточка истории на главном экране: на всю ширину, обложкой.
  * Порядок — то, что игрок решает за три секунды: о чём (название и логлайн),
- * чем зацепит (затравки пузырями, как входящие), сколько займёт (главы, герои, время).
+ * чем зацепит (затравки пузырями, как входящие), сколько займёт (герои и время). Глав игрок не видит (A-08): неизвестно, сколько осталось.
  * Начатая история вместо затравок показывает, где игрок остановился: зачем начинать, он уже знает.
  */
 export function StoryTile({
@@ -15,7 +15,7 @@ export function StoryTile({
 }: {
   story: Story;
   progress: Progress | null;
-  /** Сколько глав бесплатно, пока продолжение закрыто; null — закрытых глав нет. */
+  /** Сколько глав бесплатно, пока продолжение закрыто; null — платной границы нет. */
   free: number | null;
   onOpen: () => void;
 }) {
@@ -30,8 +30,8 @@ export function StoryTile({
     : progress.ended
       ? 'Пройдено'
       : progress.locked && free !== null
-        ? 'Бесплатные главы пройдены'
-        : progress.chapter || `${progress.messages} сообщений`;
+        ? 'Бесплатная часть пройдена'
+        : `${progress.messages} сообщений`;
   const ago = progress && !progress.ended && progress.savedAt ? formatAgo(progress.savedAt) : '';
   const own = story.origin === 'upload';
   const going = !!progress && !progress.ended;
@@ -61,7 +61,7 @@ export function StoryTile({
               ))}
               {free !== null && (
                 <span className="story-tile__chip" data-testid={`tile-free-${story.id}`}>
-                  {freeChip(free)}
+                  {freeChip}
                 </span>
               )}
             </span>

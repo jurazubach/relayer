@@ -89,7 +89,6 @@ export function ChatsScreen({
 
       <footer className="screen__footer">
         {engine.title}
-        {view.chapter ? ` · ${view.chapter}` : ''}
       </footer>
     </div>
   );
