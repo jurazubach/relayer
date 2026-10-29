@@ -118,7 +118,7 @@ export function DebugSheet({
                 <p className="sheet__note">
                   Ждём выбор игрока. Если он молчит, через {formatDuration(view.silence.leftMs)}{' '}
                   {view.silence.remind ? 'персонаж напомнит' : 'история пойдёт веткой «не ответил»'}
-                  {view.silence.realMs === null ? ' (без пауз — только по кнопке ниже).' : ` (реально ${formatDuration(view.silence.realMs)}).`}
+                  {view.silence.manual ? ' (без пауз — только по кнопке ниже).' : ' (настоящее время, ускорение на него не действует).'}
                 </p>
               ) : (
                 <p className="sheet__note">

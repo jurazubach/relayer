@@ -125,6 +125,19 @@ interface Fork {
   reminders: number;
 }
 
+/**
+ * Кнопки развилки, пока персонаж печатает напоминание: ink уже ушёл в ветку напоминания,
+ * а игрок может ответить, не дожидаясь его. Нажатие возвращает ink к развилке.
+ */
+interface Held {
+  state: string;
+  choices: ChoiceView[];
+  choiceThread: string | null;
+  speaker: string;
+  lastThread: string;
+  fork: Fork | null;
+}
+
 interface SaveData {
   v: 1 | 2;
   storyId: string;
@@ -154,6 +167,7 @@ interface SaveData {
   /** Сохранения до журнала выборов его не знают: журнал начинается с места, где игрок сейчас. */
   log?: LogEntry[];
   fork?: Fork | null;
+  held?: Held | null;
   startedAt?: number;
   /** Ревизия сценария, под которую записано состояние. Сохранения до ревизий её не знают: это 1. */
   revision?: number;
@@ -275,6 +289,7 @@ export class Engine {
   private lastRemind: { ms: number; key: string } | null = null;
   private log: LogEntry[] = [];
   private fork: Fork | null = null;
+  private held: Held | null = null;
   /** Когда началась игра: в выгрузке журнала. */
   startedAt = Date.now();
   mode: Mode = DEFAULT_MODE;
@@ -376,6 +391,7 @@ export class Engine {
     this.lastRemind = null;
     this.log = [];
     this.fork = null;
+    this.held = null;
     this.startedAt = Date.now();
     for (const id of Object.keys(this.renamed)) {
       const original = this.originalNames.get(id);
@@ -470,6 +486,7 @@ export class Engine {
       const silence: Silence = { reminders: [], target: null, key: '' };
       const sources: string[] = [];
       let silentIndex = -1;
+      this.held = null;
       this.choices = [];
       for (const c of this.story.currentChoices) {
         const tags = c.tags ?? [];
@@ -534,6 +551,17 @@ export class Engine {
     const hidden = this.story.currentChoices.find((c) => c.index === step.index);
     this.record(step.remind ? 'remind' : 'noanswer', step.remind ? null : -1, hidden?.text ?? '');
     if (step.remind && this.fork) this.fork.reminders++;
+    // собеседник пишет напоминание, а клавиатуру у игрока не отнимают: кнопки остаются до конца напоминания
+    this.held = step.remind
+      ? {
+          state: this.story.state.toJson(),
+          choices: this.choices,
+          choiceThread: this.choiceThread,
+          speaker: this.speaker,
+          lastThread: this.lastThread,
+          fork: this.fork,
+        }
+      : null;
     this.lastRemind = step.remind && this.silence ? { ms: step.ms, key: this.silence.key } : null;
     this.lastThread = this.choiceThread ?? this.lastThread;
     this.afterPlayer = false;
@@ -590,11 +618,12 @@ export class Engine {
     let fired = false;
     while (guard++ < 1000) {
       if (!this.pending) {
-        // игрок молчит у кнопок: напоминания и ветка «не ответил» идут по тому же времени, что и паузы,
-        // поэтому офлайн они тоже догоняются. «Без пауз» (∞) кнопку не торопит: только «пропустить»
+        // игрок молчит у кнопок: напоминания и ветка «не ответил» догоняются офлайн, как паузы,
+        // но отладочное ускорение их не торопит: при ×60 пять минут на раздумье стали бы пятью секундами.
+        // «Без пауз» (∞) кнопку тоже не торопит: только «пропустить»
         const step = this.speed === Infinity ? null : this.nextSilence();
         if (!step) break;
-        const k = this.speed / (this.fastTyping ? 4 : 1);
+        const k = 1 / (this.fastTyping ? 4 : 1);
         const left = step.ms - this.waitDone;
         if (real * k < left) {
           this.waitDone += real * k;
@@ -661,6 +690,7 @@ export class Engine {
   }
 
   choose(index: number) {
+    if (this.held?.choices.some((c) => c.index === index)) this.resumeFork();
     if (this.pending || !this.choices.length) return;
     const choice = this.choices.find((c) => c.index === index);
     if (!choice) return;
@@ -680,6 +710,21 @@ export class Engine {
     this.lastRemind = null;
     this.advance();
     this.emit();
+  }
+
+  /** Игрок ответил, пока печаталось напоминание: недописанное напоминание отменяется, ink снова у развилки. */
+  private resumeFork() {
+    const h = this.held!;
+    this.held = null;
+    this.story.state.LoadJson(h.state);
+    this.pending = null;
+    this.carryDelay = 0;
+    this.carryChapter = undefined;
+    this.choices = h.choices;
+    this.choiceThread = h.choiceThread;
+    this.speaker = h.speaker;
+    this.lastThread = h.lastThread;
+    this.fork = h.fork;
   }
 
   /** Отладка: следующее сообщение приходит сразу — без паузы, раздумья и набора; у кнопок — следующее напоминание. */
@@ -729,6 +774,7 @@ export class Engine {
     this.waitDone = 0;
     this.lastRemind = null;
     this.fork = null;
+    this.held = null;
     this.messages.push({ id: this.nextId++, thread: this.lastThread || this.speaker || 'unknown', kind: 'sys', text: `переход к «${knot}»`, at: Date.now() });
     this.advance();
     this.emit();
@@ -817,14 +863,15 @@ export class Engine {
       ? {
           remind: step.remind,
           leftMs: Math.max(0, step.ms - this.waitDone),
-          realMs: this.speed === Infinity ? null : Math.max(0, step.ms - this.waitDone) / this.speed,
+          /** «Без пауз»: молчание не кончается само, только «пропустить до следующего». */
+          manual: this.speed === Infinity,
         }
       : null;
     return {
       messages: this.messages,
       threads: this.unlocked,
-      choices: this.choices,
-      choiceThreads: [...new Set(this.choices.map((c) => c.thread))],
+      choices: this.held?.choices ?? this.choices,
+      choiceThreads: [...new Set((this.held?.choices ?? this.choices).map((c) => c.thread))],
       ended: this.ended,
       chapter: this.chapter,
       /** История стоит на платной границе: номер закрытой главы, с 1. */
@@ -868,6 +915,7 @@ export class Engine {
       lastRemind: this.lastRemind,
       log: this.log,
       fork: this.fork,
+      held: this.held,
       startedAt: this.startedAt,
       revision: this.revision,
       chapterNo: this.chapterNo,
@@ -917,6 +965,7 @@ export class Engine {
       this.lastRemind = d.lastRemind ?? null;
       this.log = d.log ?? [];
       this.fork = d.fork ?? null;
+      this.held = d.held ?? null;
       this.startedAt = d.startedAt ?? this.startedAt;
       for (const [id, name] of Object.entries(this.renamed)) this.contact(id).name = name;
       this.lastTick = d.savedAt ?? Date.now();

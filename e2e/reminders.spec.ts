@@ -126,6 +126,36 @@ test('ответ до напоминания отменяет его', async ({ 
   await expect(page.getByTestId('chat')).not.toContainText('алё');
 });
 
+test('пока печатается напоминание, кнопки на месте, и ответ его отменяет', async ({ page }) => {
+  await upload(page, QUICK);
+  await page.getByTestId('play').click();
+  await page.getByTestId('thread-ann').click();
+  // напоминание уже набирается: собеседник пишет, а клавиатуру у игрока не отнимают
+  await expect(page.locator('.typing-dots')).toBeVisible({ timeout: 6_000 });
+  await expect(page.locator('.choice')).toHaveCount(2);
+  await page.locator('.choice', { hasText: 'Звони' }).click();
+  const chat = page.getByTestId('chat');
+  await expect(page.locator('.message--out')).toHaveText(/Звони/);
+  await expect(chat).toContainText('звоню');
+  await page.waitForTimeout(3_000);
+  await expect(chat).not.toContainText('алё');
+  await expect(chat).not.toContainText('ладно, сама решу');
+});
+
+test('ускорение пауз в отладке не сокращает молчание у кнопки', async ({ page }) => {
+  await upload(page, { ...QUICK, ink: QUICK.ink.replaceAll('#remind:2s', '#remind:5s') });
+  await page.getByTestId('play').click();
+  await page.getByTestId('thread-ann').click();
+  await expect(page.locator('.choice')).toHaveCount(2);
+  await openDebug(page);
+  await page.getByRole('button', { name: '×60' }).click();
+  await page.getByRole('button', { name: 'Готово' }).click();
+  // при ×60 пять секунд прошли бы за 0,1 с
+  await page.waitForTimeout(2_000);
+  await expect(page.getByTestId('chat')).not.toContainText('алё');
+  await expect(page.getByTestId('chat')).toContainText('алё, ты тут?', { timeout: 8_000 });
+});
+
 test('по клику напоминаний нет: кнопка ждёт игрока', async ({ page }) => {
   await upload(page, QUICK);
   await page.getByTestId('mode-click').click();
@@ -177,6 +207,23 @@ test('с включёнными уведомлениями сообщение и
   await uploadFixture(page);
   await page.goto(FIXTURE_GAME);
   await page.getByTestId(`thread-${PLOT.first}`).click();
+  const header = page.locator('.chat__header');
+  const before = await header.boundingBox();
   await page.locator('.choice', { hasText: PLOT.choice }).click();
-  await expect(page.getByTestId('notice')).toBeVisible();
+  const notice = page.getByTestId('notice');
+  await expect(notice).toBeVisible();
+  // баннер поверх экрана: шапка чата не сдвигается
+  expect(await header.boundingBox()).toEqual(before);
+
+  // взмах вверх убирает баннер, чат не открывается
+  const box = (await notice.boundingBox())!;
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x, y - 30, { steps: 3 });
+  await page.mouse.move(x, y - 60, { steps: 3 });
+  await page.mouse.up();
+  await expect(notice).toHaveCount(0);
+  await expect(header).toContainText(FIXTURE.characters!.find((c) => c.id === PLOT.first)!.name);
 });

@@ -1,18 +1,21 @@
 /*
  * Блок notice — уведомление о сообщении в другом чате.
- * Встаёт в поток над экраном и сдвигает его вниз, поэтому ничего не перекрывает.
+ * Баннер поверх экрана, как в телефоне: экран под ним не двигается. Взмах вверх убирает его.
  */
 .notice {
-  flex: none;
-  overflow: hidden;
-  max-height: 160px;
-  padding: calc(var(--safe-top) + var(--space-2)) var(--space-3) 6px;
-  background: var(--color-bg);
-  animation: notice-open var(--dur-base) ease-out;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: var(--layer-notice);
+  padding: calc(var(--safe-top) + var(--space-2)) var(--space-2) 0;
+  /* пустые поля по бокам не перехватывают нажатия у экрана под баннером */
+  pointer-events: none;
+  animation: notice-in var(--dur-base) ease-out;
 }
 
 .notice--leaving {
-  animation: notice-close var(--dur-base) ease-in forwards;
+  animation: notice-out var(--dur-base) ease-in forwards;
 }
 
 .notice__card {
@@ -22,9 +25,21 @@
   width: 100%;
   padding: var(--space-3);
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-bubble);
-  background: var(--color-raise);
+  border-radius: var(--radius-xl);
+  background: var(--color-glass);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(var(--blur-glass));
   text-align: left;
+  pointer-events: auto;
+  /* вертикальный жест — наш, страница под пальцем не прокручивается */
+  touch-action: none;
+  user-select: none;
+  transition: transform var(--dur-fast) ease-out;
+}
+
+/* пока палец ведёт, баннер идёт за ним без запаздывания */
+.notice__card--dragging {
+  transition: none;
 }
 
 .notice__body {
@@ -46,26 +61,15 @@
   text-overflow: ellipsis;
 }
 
-/* когда уведомление сверху, экрану отступ под чёлку уже не нужен */
-.notice + .screen .screen__header,
-.notice + .screen .chat__header {
-  padding-top: var(--space-2);
-}
-
-@keyframes notice-open {
+@keyframes notice-in {
   from {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
+    transform: translateY(-120%);
   }
 }
 
-@keyframes notice-close {
+@keyframes notice-out {
   to {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    transform: translateY(-120%);
     opacity: 0;
   }
 }
