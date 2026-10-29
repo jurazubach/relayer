@@ -12,3 +12,4 @@
 - **Все прогоны `claude -p` — Opus** (`--model claude-opus-5-5`), включая вспомогательные (права, окружение): решение автора.
 - **Слепая копия** для отложенной выборки — по рецепту `docs/lab/runs/X-E2mini/README.md`, без `docs/playbook/local-lessons.md`.
 - Прогоны с `permission_denials` в `result` — недействительны: считай и показывай их отдельно.
+- Живые прогоны правящих скиллов — `claude -p --allowedTools Edit Write`, без `--resume` (с ним `allowed-tools` скилла не действуют): каждая реплика автора — новая сессия с полным контекстом во фразе. На macOS нет `timeout` — `perl -e 'alarm 590; exec @ARGV' claude -p …`.
