@@ -8,7 +8,9 @@
 ## Что такое «дорогая»
 
 Развилка дорогая, если хотя бы у одной её кнопки (`branch-core.mjs`):
-- своя область — не меньше `story.branch.expensive.msgs` сообщений, которые видны только через эту кнопку;
+- своя область — не меньше `story.branch.expensive.msgs` сообщений, которые видны только через эту кнопку (на скелете
+  с `// core: D-NN` — `story.branch.expensive.skeleton_lines` строк-сцен; тот же счёт печатают `plan-check.mjs` и
+  `plan-compare.mjs`);
 - или свой финал, недостижимый через соседние кнопки;
 - или свой контакт: кнопка открывает чат (`#unlock`), которого нет на соседних путях.
 
@@ -85,7 +87,8 @@ node ${CLAUDE_SKILL_DIR}/scripts/branch-budget.mjs --story docs/stories/<id>/pla
 
 ## Источники
 
-- R-26; `owners.md` TH-18; ключи `story.branch.budget.*`, `story.branch.expensive.msgs`, `story.branch.fan.merge_hops`,
+- R-26; `owners.md` TH-18; ключи `story.branch.budget.*`, `story.branch.expensive.msgs`, `story.branch.expensive.skeleton_lines`,
+  `story.branch.fan.merge_hops`,
   `story.branch.seen_share.*`, `C-15.rare_branch_share`.
 - `meaningful-choice:P-15`, `LESSON-10`; `messenger-genre:LESSON-02`; `emshort-structures:RED-07`;
   `narrative-postmortems:P-06`.

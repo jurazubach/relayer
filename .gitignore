@@ -25,3 +25,6 @@ docs/books/_pipeline/inputs
 .worktrees
 docs/playbook/_build/runtime
 docs/books/_clean
+
+# пакет агента chapter-writer: скилл удаляет после ответа, при обрыве сессии не должен уехать в коммит
+docs/stories/*/context-ch*.md
