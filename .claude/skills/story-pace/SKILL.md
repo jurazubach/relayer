@@ -4,7 +4,7 @@ description: "Игроку станет скучно: середина пров�
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 1
+  version: 2
 ---
 
 # story-pace — где игроку станет скучно
@@ -50,6 +50,8 @@ metadata:
 8. **Правка.** Прочитай `docs/style.md` (ST-01, ST-02, ST-52) прямо перед тем, как писать реплику, кнопку или пример
    ink. Симптом → приём: [references/decisions-pace.md](references/decisions-pace.md). Два-три варианта, до/после на
    ink, теги только `ready`.
+   **Одобрено → вызови `Skill story-fix` с пунктом и вариантом; сам `Edit` не делай** — и когда одобрение пришло в той
+   же фразе («почини, вариант выбери сам, одобряю»): страховка `fix-guard` и дифф реплик есть только у `story-fix`.
 9. **Отчёт и состояние.** Сначала находки строками формата, потом разговор и правки. В конце предложи записать
    находки через `story-desk` (раздел «Состояние»); применяется только одобренное.
 

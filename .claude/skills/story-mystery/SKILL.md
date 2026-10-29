@@ -4,7 +4,7 @@ description: "Разгадку угадывают с первой главы и�
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 1
+  version: 2
 ---
 
 # story-mystery — честная загадка
@@ -51,6 +51,8 @@ metadata:
    кнопку или пример ink. Симптом → решение: [references/decisions-mystery.md](references/decisions-mystery.md);
    приёмы — [references/patterns-mystery.md](references/patterns-mystery.md). Два-три варианта, до/после на ink,
    теги только `ready`; после правки — повтор шагов 2–3.
+   **Одобрено → вызови `Skill story-fix` с пунктом и вариантом; сам `Edit` не делай** — и когда одобрение пришло в той
+   же фразе («почини, вариант выбери сам, одобряю»): страховка `fix-guard` и дифф реплик есть только у `story-fix`.
 8. **Отчёт и состояние.** Сначала находки строками формата, потом разговор и правки. В конце предложи записать
    находки через `story-desk` (раздел «Состояние»); применяет только одобренное.
 

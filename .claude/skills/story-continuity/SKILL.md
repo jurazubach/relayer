@@ -4,7 +4,7 @@ description: "Персонаж знает то, чего ему не писал�
 user-invocable: false
 allowed-tools: Bash(npm run story*), Bash(npm run -s story*), Bash(node ${CLAUDE_SKILL_DIR}/scripts/*)
 metadata:
-  version: 1
+  version: 2
 ---
 
 # story-continuity — кто что знает на каждом пути
@@ -53,6 +53,8 @@ metadata:
    кнопку или пример ink. Приём — [F-13](references/fixes/F-13-merge-guard.md) или форма из
    [references/patterns-continuity.md](references/patterns-continuity.md). Два-три варианта, до/после на ink,
    теги только `ready`. Черновик `facts.md` — текстом в отчёт, не в файл.
+   **Одобрено → вызови `Skill story-fix` с пунктом и вариантом; сам `Edit` не делай** — и когда одобрение пришло в той
+   же фразе («почини, вариант выбери сам, одобряю»): страховка `fix-guard` и дифф реплик есть только у `story-fix`.
 8. **Отчёт и состояние.** Сначала находки строками формата, потом разговор и правки. В конце предложи
    записать находки (и `facts.md`, если нужен) через `story-desk`; применяется только одобренное.
 
