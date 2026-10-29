@@ -13,7 +13,7 @@ npm run build               # tsc -b && vite build → dist/ (+ dist/stories/*.s
 npm run preview             # посмотреть собранное
 npm run check:story         # бот прогоняет сценарии 400 раз (редкие ветки добирает до 2000): тупики, финалы, длительность
 npm run graph               # карта сюжета: граф узлов, реплики и выборы → graph/index.html (-- --open)
-npm run story:pack          # папки историй → один .json для загрузки (dist/stories/); -- --check: без потерь
+npm run story:pack          # папки историй → один .json для загрузки (dist/stories/); -- --check: без потерь; -- --flat: главы одним полем ink
 npm run story:unpack        # история одним .json → папка src/stories/<id>/ с главами
 npm run test:lib            # самопроверка scripts/lib: синтетические примеры ink и три истории
 npm run story:lint          # проверки C-01…C-55 по checks.md (--strict, --summary, --changed --quick, --partial, --plan, --json)
@@ -38,12 +38,14 @@ npm run story:coverage      # покрытие знаний скиллами: с
 npm run test:coverage       # самопроверка story:coverage
 npm run kb:clean            # очищенная копия базы docs/books/_clean/ (не в git) без строк про наши истории; -- --verify
 npm run test:kb:clean       # самопроверка kb:clean
-npm run lab:triggers        # тест срабатывания скиллов: claude -p на фразу (-- --skill <имя>, --dry-run); тратит запуски Opus
+npm run lab:triggers        # тест срабатывания скиллов: claude -p на фразу (-- --skill <имя>, --runs N, --dry-run); тратит запуски Opus
 npm run test:lab:triggers   # самопроверка lab:triggers
 npm run test:hooks          # самопроверка хуков .claude/settings.json (scripts/hooks)
 ```
 
-Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary && npm run test:hooks`.
+Проверка перед коммитом: `npm run check:story && npm run test:lib && npm run test:lint && npm run test:story-cmd && npm run skills:test && npm run test:lab:mutants && npm run story:pack -- --check && npm run build && npm run test:e2e && npm run prompt -- --quiet && npm run test:coverage && npm run story:coverage -- --summary && npm run kb:clean -- --verify && node .claude/skills/story-kb/scripts/kb-index.mjs --check && node .claude/skills/story-kb/scripts/kb-contradictions.mjs --check && npm run test:hooks`.
+`kb:clean -- --verify` — после `story:coverage`: в свежем клоне `docs/books/_clean/` нет, её собирает `story:coverage`.
+Тест срабатывания (`lab:triggers`) в проверку не входит: он гоняет `claude -p` — по скиллу при правке его описания или таблицы «симптом → скилл».
 
 ### Playwright
 
@@ -108,6 +110,9 @@ src/stories/<алиас>/        истории: meta.json + story.ink + ch01.in
 examples/demo.story.json   пример истории одним файлом (шаблон для авторов)
 examples/e2e.story.json    фикстура e2e: тесты и снимки идут на ней, а не на историях каталога
 docs/capabilities.json     реестр возможностей чата
+docs/stories/<id>/          состояние истории в цикле: STATUS.md, decisions.md (D-NN), ideas.md, facts.md, plans/, reviews/, playtests/
+.claude/skills/<имя>/       21 скилл: SKILL.md, references/, scripts/*.mjs (раздел «Агенты и скиллы»)
+.claude/agents/*.md         4 агента: story-architect, chapter-writer, story-auditor, cold-reader
 docs/books/<алиас>/         база знаний сценариста: разборы 30 книг и статей (как собирать — docs/books/README.md)
 docs/playbook/             свод из базы: правила генератора, проверки, находки по историям, план скиллов
 scripts/lib/               общая библиотека разбора: ink.mjs (дерево), compile.mjs, bot.mjs (прохождения
@@ -185,10 +190,76 @@ e2e/                       Playwright: smoke / modes / reminders / choice-log .s
 В `characters` поля `voice` (карточка голоса) и `arc` (функция по главам) — служебные: экран истории
 их не показывает, иначе «виновная с главы 8» станет спойлером.
 
-## Скиллы: симптом → скилл
+## Агенты и скиллы
 
-Скиллы лежат в `.claude/skills/`, подхватываются сами по описанию. Модули (`user-invocable: false`) зовут входы
-или главная сессия по этой таблице. Каждый новый скилл дописывает сюда свою строку.
+Историю ведут по циклу (`docs/playbook/build-plan.md` §2, пример — `flow-example.md`): идея → направления → ядро →
+план и скелет → главы 1–2 с заглушкой `beta_stop` → ревью → правки → время и режимы → тест, волна 1 → сверка плана →
+главы 3–N → полное ревью → тест, волна 2 → выпуск. Автор накидывает и выбирает, скиллы предлагают варианты, пишут,
+меряют и правят.
+
+- **Первый шаг любого скилла** — `docs/stories/<id>/STATUS.md` (шаг цикла, ядро, план, открытые вопросы); пишущие
+  и правящие читают ещё `docs/style.md`. Хук при старте печатает `npm run story:status -- --all`.
+- **Числа считают команды, модель судит.** Упала команда — «нет данных: <команда>», а не оценка на глаз. Пороги —
+  только ключами `docs/playbook/thresholds.json`.
+- **Текст правится только по одобрению.** Линзы предлагают варианты; применяет `story-fix` (готовая глава) или
+  `chapter-write` (новая). Отклонённая находка записывается в `decisions.md` с хэшем узла и не всплывает, пока узел
+  не изменится.
+- **Находка** — одной строкой: `P1 · непонятно · <узел> · симптом · правка (F-NN) · [C-NN · замер | модель | человек]`;
+  в отчётах есть режим «объясни» (почему так и что говорит база).
+- **Решения автора выше базы:** `docs/playbook/superseded.md` (A-01…A-08) и `docs/stories/<id>/decisions.md`.
+
+**Скиллы** — `.claude/skills/<имя>/`: `SKILL.md` (ядро), `references/` (развилки, приёмы, ремонт `fixes/F-NN-*.md`,
+`explain.md`), `scripts/*.mjs` — обёртки над `scripts/lib`, у каждого `--help`, запуск
+`node .claude/skills/<имя>/scripts/<скрипт>.mjs`.
+- **Входы** (8, видны в меню `/`): `story-desk`, `story-brainstorm`, `story-branch`, `story-review`, `story-fix`,
+  `story-playtest`, `story-release`, `story-kb`.
+- **Модули** (13, `user-invocable: false`): создание — `story-core`, `story-plan`, `chapter-write`; линзы ревью —
+  `story-opening`, `story-pace`, `story-pauses`, `story-time`, `story-choices`, `story-endings`, `story-cast`,
+  `story-voice`, `story-continuity`, `story-mystery`. Их вызывают входы или главная сессия через `Skill` по таблице
+  ниже; читать `SKILL.md` модуля по пути вместо вызова нельзя.
+
+**Агенты** — `.claude/agents/`, все на Opus. Оркестрирует только главная сессия: агенты не запускают агентов
+и не зовут входы. Пути каждого агента сторожит `scripts/hooks/agent-guard.mjs` (хук `PreToolUse` в его
+frontmatter, белый список на агента): поле `tools` ограничивает только имена инструментов.
+
+| агент | кто зовёт | что делает | пишет |
+|---|---|---|---|
+| `story-architect` | `story-core`, `story-plan`, `story-branch` | 2–3 плана по ядру D-NN в фоне, к каждому `skeleton-vN.ink`, сравнение `plan-compare`; автора не спрашивает | `docs/stories/<id>/plans/` |
+| `chapter-writer` | `chapter-write` | одну главу по пакету `chapter-context.mjs --out`, до зелёного быстрого хука и `chapter-lint` | `src/stories/<id>/chNN.ink`, строка `INCLUDE` |
+| `story-auditor` | `story-review` | один диагностический скилл изолированно, по узлам из `story:lint`, по копии на линзу | ничего |
+| `cold-reader` | `story-playtest`, `story-review`, `story-opening`, `story-pauses`, `story-time`, `story-voice`, `story-mystery` | обёртка над `npm run story:cold-read -- --ask`: читатель видит только переписку | ничего |
+
+**Хуки** (`.claude/settings.json`, `scripts/hooks/`): `SessionStart` — статус историй; `PostToolUse` после правки
+`src/stories/**` — быстрый режим (`check:story` и `story:lint --changed --quick --summary`, у истории с `beta_stop` —
+`--partial`); по окончании главы — `node scripts/hooks/full.mjs <id>` (`--new` — только новые ошибки против git).
+
+### Где лежит работа
+
+```
+docs/stories/<id>/
+  STATUS.md        шаг цикла (idea … release), «активная: да», ведёт, ядро D-NN, план, открытые вопросы
+  decisions.md     D-NN: дата, кто, что, почему, опора, что заменяет; отклонённые находки с хэшем узла
+  ideas.md         предложенное и не взятое: причина и «когда вернуться» (общий банк — story-desk idea-park.mjs)
+  facts.md         правда и хронология мира, что кто знает (story-continuity, C-49)
+  plans/           plan-vN.md (первая строка core: D-NN) и skeleton-vN.ink
+  reviews/         <дата>-<скилл>.md — отчёты ревью, гейта, правок
+  playtests/       wave-N/ — набор и ответы тестеров; sim-<дата>/ — симулированная панель
+docs/lab/
+  journal.md       журнал экспериментов Э1…Э7: что, на чём, итог, уроки LOCAL-NN
+  baseline.md      базовый снимок метрик (Э1, тег stories-v1)
+  runs/            прогоны экспериментов и lab:triggers
+  triggers/        фразы срабатывания: <скилл>.json (positive / negative / neighbors), _routing.json
+  mutants/         _base, мутанты mNN-* и key.json для skills:test
+  cases/           кейсы наших историй из базы (kb:clean) — генерируется, руками не править
+docs/style.md      код-стайл историй: §1 короткая версия, правила ST-NN, образцы SG-NN, антиобразцы AS-NN,
+                   §14 как это проверяется (story:lint, style-diff.mjs в story-voice)
+```
+
+### Симптом → скилл
+
+Скиллы подхватываются сами по описанию; таблица — маршрут для главной сессии, когда фраза автора подходит
+нескольким. Строка на скилл; новый скилл дописывает свою. Правишь строку или описание скилла — перемерь его:
+`npm run lab:triggers -- --skill <имя> --runs 3` (фразы — `docs/lab/triggers/`).
 
 | симптом словами автора | скилл |
 |---|---|
